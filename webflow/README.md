@@ -200,3 +200,38 @@ Re-tested rather than assumed. Both hosts are refused by the egress proxy:
 
 Unlike the fonts, there is no alternative reachable source for these. They have to be uploaded
 by hand through Webflow's Assets panel.
+
+---
+
+## Logo
+
+The real MuayTix logo is now on the site. It is the "muaytix" wordmark - red "muay",
+blue "tix", red dot over the i - 400x150 PNG with a transparent background.
+
+Saved here at `webflow/assets/muaytix-logo.png` so it is never lost again; it was never
+in the Manus export.
+
+Uploaded to Webflow assets (id `6a9091cbb18714faba249bcc`) and placed in all five brand
+positions: desktop header, mobile header, mobile menu, dispatch sidebar card, footer.
+
+Two notes on how it was fitted:
+
+**It replaced both the placeholder square and the "MUAYTIX" text.** The build originally
+assumed a small square icon sitting next to the words "MUAYTIX / TONIGHT". The real logo is a
+complete wordmark, so keeping both would have printed the name twice. The blue square and the
+"MUAYTIX" text were removed; the small blue "TONIGHT" label was kept, because the site is
+MUAYTIXTONIGHT.COM and the logo alone does not carry that half of the name.
+
+**Transparent background confirmed** - 73% of the pixels are fully transparent and all four
+corners are clear. That matters because the logo also sits on the near-black footer and mobile
+menu, where a white-background file would have shown as a white box.
+
+Sizes: 36px tall in the header, 40px in the mobile menu, 42px in the footer, 20px in the
+sidebar card. Width scales automatically.
+
+### Note on linking images
+
+`data_whtml_builder` will not attach an image by URL, even a Webflow CDN URL for an asset that
+already exists - it reports "does not exist in asset library" and leaves the element empty.
+Insert the image element first, then bind the asset with
+`data_element_tool > set_image_asset` using the asset ID.
