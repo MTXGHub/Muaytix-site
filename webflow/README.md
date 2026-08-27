@@ -102,3 +102,56 @@ could not do.
 
 Everything above is in the Webflow staging/Designer state. The site has not been published,
 so the live URL still shows the previous content.
+
+---
+
+## Post-build fix: empty combo classes
+
+The first build rendered badly. Cause: **Webflow treats a second class on an element as a
+combo class, and the WHTML builder created every combo empty.**
+
+```
+.button--black          background #18181d   <- global class, holds the styles
+.button.button--black   {}                   <- combo, what the element resolves to
+```
+
+Any element written as `class="base modifier"` therefore rendered with base styles only.
+That hit roughly 30 elements: every button lost its fill, the ticket card was not blue, the
+newsletter card was not dark, horizontal cards were not horizontal, brand marks were the
+wrong size, `fighter--right` did not right-align.
+
+Fixed by populating each combo via `data_style_tool > update_style` with
+`parent_style_names` set to the parent chain:
+
+```
+update_style({
+  style_name: "button--black",
+  parent_style_names: ["button"],
+  properties: [{ property_name: "background-color", property_value: "#18181d" }, ...]
+})
+```
+
+Three-class chains need the full parent chain, e.g. `.button.button--blue.sidebar-card__button`
+is `style_name: "sidebar-card__button"`, `parent_style_names: ["button", "button--blue"]`.
+
+**Lesson for future WHTML inserts on this site:** either give each element exactly one class
+carrying complete styles, or plan to populate the combos in a second pass. The builder will
+not do it.
+
+### What survived the parser (verified)
+
+`clip-path` (button notches, badges, corner notches, brand mark), layered `background-image`
+gradients, `position: sticky`, `backdrop-filter`, `aspect-ratio`, `clamp()`, `transform`,
+CSS grid with `minmax()`.
+
+### What did not survive
+
+CSS custom properties — `.page-shell` lost its `--brand-*` definitions. Not an issue here
+because every value was inlined as a literal hex before insertion. Do not rely on `var()`
+in WHTML inserts on this site.
+
+### Still-present clutter
+
+22 orphan `.mtt-*` styles remain from the original hero that was deleted before this build
+(`mtt-hero`, `mtt-headline`, `mtt-cta`, ...). The elements are gone; only the style
+definitions linger in the Designer's style panel. Safe to delete.
