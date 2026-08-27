@@ -77,11 +77,7 @@ Until uploaded, the logo and hero render as geometric placeholders built from th
 own language (notched blue mark, dark diagonal panel), and the three photo slots are empty
 image elements.
 
-**2. Fonts.** Barlow and Barlow Condensed are Google Fonts. Webflow's API only manages
-uploaded custom font files, so they must be added under **Site settings → Fonts → Google
-Fonts**. Every insert returned `missing_font` warnings; type currently falls back to Arial
-Narrow. `behaviour.js` injects the stylesheet as a stopgap, but the native route is what
-makes the faces appear in the Designer font picker.
+**2. Fonts — RESOLVED.** See "Fonts installed via the API" below.
 
 **3. Custom code is plan-gated.** `behaviour.js` is registered with Webflow as inline script
 `muaytix_behaviour` v1.0.0 and hosted on their CDN, but attaching it returns
@@ -155,3 +151,52 @@ in WHTML inserts on this site.
 22 orphan `.mtt-*` styles remain from the original hero that was deleted before this build
 (`mtt-hero`, `mtt-headline`, `mtt-cta`, ...). The elements are gone; only the style
 definitions linger in the Designer's style panel. Safe to delete.
+
+
+---
+
+## Fonts installed via the API
+
+Initially recorded as "must be done by hand in Site settings, the API cannot do it." That was
+wrong, and the page rendered in Arial because of it.
+
+The fonts API only registers *uploaded font files*, which ruled out picking Barlow from
+Webflow's Google Fonts list. But nothing stopped fetching the Google Fonts files directly and
+uploading them as custom fonts — `fonts.googleapis.com` is reachable from this environment.
+
+Ten faces are now installed on the site, latin subset, woff2:
+
+| Family | Weights |
+|---|---|
+| Barlow | 400, 500, 600, 700, 800 |
+| Barlow Condensed | 500, 600, 700, 800, 900 |
+
+Matching exactly the weights `client/index.html` requested.
+
+### Procedure
+
+1. `curl` the css2 endpoint with a browser User-Agent (without one, Google serves ttf, not woff2).
+2. Split the CSS on its `/* subset */` comments and keep only the `latin` blocks — one file per
+   weight instead of one per weight-and-subset. Latin covers everything the design uses,
+   including `·` (U+00B7) and the curly quotes (U+2018/2019, inside U+2000-206F).
+3. Download each woff2, compute its **MD5 as 32-char lowercase hex** — `create_font` rejects
+   anything else.
+4. `create_font` per face, which returns a presigned S3 target valid ~15 minutes.
+5. POST the bytes as `multipart/form-data` to `upload.url`: every key in `upload.fields` as a
+   form field first, then the binary last under `file`. HTTP 201 means success.
+
+Register in a batch, then upload in a batch — the presigned URLs share a deadline and expire
+together.
+
+The existing styles already stored `font-family: "Barlow Condensed"`, so they bind now that
+the faces exist. No style rewrite was needed.
+
+### Still blocked: images
+
+Re-tested rather than assumed. Both hosts are refused by the egress proxy:
+
+- `images.unsplash.com` → connection refused (the three editorial photos)
+- `manus.im` → connection refused (hero photo, logo mark)
+
+Unlike the fonts, there is no alternative reachable source for these. They have to be uploaded
+by hand through Webflow's Assets panel.

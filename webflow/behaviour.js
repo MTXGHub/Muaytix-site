@@ -9,6 +9,9 @@
  * which is Webflow's paid-site-plan gate. Attach it once the site is on a paid plan,
  * either in Site settings > Custom code, or via data_scripts_tool > add_site_script.
  *
+  * Loads Barlow via injected stylesheet - NO LONGER NEEDED, the faces are now installed
+ * as Webflow custom fonts. Strip the font block if this script is ever attached.
+ *
  * Covers three behaviours that the React original handled in component state:
  *   1. Countdown  - Home.tsx <Countdown/> used a rolling 68h from page load, which is
  *                   mockup behaviour (it resets on every refresh). Replaced here with a
