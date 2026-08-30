@@ -64,6 +64,11 @@ function json(body: unknown, status: number, origin: string) {
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
+// Postgres hands back "19:00:00"; the widget only ever prints hours and minutes.
+function hhmm(t: string | null): string | null {
+  return t ? t.slice(0, 5) : null;
+}
+
 Deno.serve(async (req: Request) => {
   const origin = req.headers.get("origin") ?? "";
   const origins = await originsForTenant();
@@ -88,7 +93,11 @@ Deno.serve(async (req: Request) => {
   try {
     // ---- the calendar ------------------------------------------------------
     // Answers "which nights are on between these dates", which nothing in the
-    // current system can do: today the dates are typed into the widget.
+    // current system can do: today the dates are typed into the widget by hand.
+    //
+    // Reads event_calendar, one row per night. The old availability view is one
+    // row per class, so drawing a month meant loading every class for every
+    // night to show none of them.
     if (action === "events") {
       const from = String(body.from ?? "");
       const to = String(body.to ?? "");
@@ -97,35 +106,41 @@ Deno.serve(async (req: Request) => {
       }
 
       const { data, error } = await supabase
-        .from("event_ticket_availability")
-        .select("event_key,event_name,event_description,starts_at,ends_at,venue_name,venue_timezone")
-        .gte("starts_at", `${from}T00:00:00+07:00`)
-        .lte("starts_at", `${to}T23:59:59+07:00`)
-        .order("starts_at");
+        .from("event_calendar")
+        .select("event_key,event_name,event_description,short_name,accent_colour,local_date,local_start_time,local_end_time,venue_name,venue_timezone")
+        .gte("local_date", from)
+        .lte("local_date", to)
+        .order("local_date");
       if (error) throw error;
 
-      // The view is one row per class, so collapse to one row per night.
-      const seen = new Map<string, unknown>();
-      for (const row of data ?? []) {
-        if (!seen.has(row.event_key)) {
-          seen.set(row.event_key, {
-            eventKey: row.event_key,
-            name: row.event_name,
-            description: row.event_description,
-            startsAt: row.starts_at,
-            endsAt: row.ends_at,
-            venue: row.venue_name,
-            timezone: row.venue_timezone,
-          });
-        }
-      }
-      return json({ events: [...seen.values()] }, 200, origin);
+      return json({
+        events: (data ?? []).map((row) => ({
+          eventKey: row.event_key,
+          date: row.local_date,          // already the Bangkok calendar day
+          name: row.event_name,
+          shortName: row.short_name,
+          colour: row.accent_colour,
+          description: row.event_description,
+          startTime: hhmm(row.local_start_time),
+          endTime: hhmm(row.local_end_time),
+          venue: row.venue_name,
+          timezone: row.venue_timezone,
+        })),
+      }, 200, origin);
     }
 
     // ---- one night ---------------------------------------------------------
     if (action === "availability") {
       const eventKey = String(body.eventKey ?? "").trim();
       if (!eventKey) return json({ error: "Event reference is missing." }, 400, origin);
+
+      const { data: header, error: headerError } = await supabase
+        .from("event_calendar")
+        .select("*")
+        .eq("event_key", eventKey)
+        .maybeSingle();
+      if (headerError) throw headerError;
+      if (!header) return json({ error: "That fight night could not be found." }, 404, origin);
 
       const { data: rows, error } = await supabase
         .from("event_ticket_availability")
@@ -152,17 +167,19 @@ Deno.serve(async (req: Request) => {
         byClass.set(p.event_ticket_class_id, list);
       }
 
-      const first = rows[0];
       return json(
         {
           event: {
-            eventKey: first.event_key,
-            name: first.event_name,
-            description: first.event_description,
-            startsAt: first.starts_at,
-            endsAt: first.ends_at,
-            venue: first.venue_name,
-            timezone: first.venue_timezone,
+            eventKey: header.event_key,
+            date: header.local_date,
+            name: header.event_name,
+            shortName: header.short_name,
+            colour: header.accent_colour,
+            description: header.event_description,
+            startTime: hhmm(header.local_start_time),
+            endTime: hhmm(header.local_end_time),
+            venue: header.venue_name,
+            timezone: header.venue_timezone,
           },
           // Every class is returned, sold out and closed included, each with its
           // own status. Hiding them is what sends a guest to a competitor.
@@ -173,6 +190,8 @@ Deno.serve(async (req: Request) => {
               name: r.ticket_class_name,
               description: r.ticket_class_description,
               status: r.status,
+              colour: r.ticket_class_colour,
+              ink: r.ticket_class_ink,
               closedExplanation: r.closed_explanation,
               assignedSeating: r.assigned_seating,
               maximumSeatsTogether: r.maximum_seats_together,

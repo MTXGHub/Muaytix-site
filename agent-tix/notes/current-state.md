@@ -130,3 +130,51 @@ Read off `clever-responder`, since a rebuild has to match it or regress:
   the current layout it is the first control a guest meets.
 - **Two font stacks across the estate.** The booking widgets load Montserrat; the
   muaytixtonight.com Webflow build uses Barlow and Barlow Condensed.
+
+---
+
+## V2 as at 30 August 2026
+
+### What is now live in `agent-tix-build`
+
+| Piece | State |
+|---|---|
+| Schema | 7 migrations, all applied |
+| Data | 1–7 September 2026, 7 nights, 22 inventory rows, 24 standing prices |
+| `availability` | v3, deployed |
+| `create-checkout` | v3, deployed |
+| `stripe-webhook-v2` | v1, deployed — needs its signing secret |
+| Widget | `agent-tix/widget/booking-widget.html`, 46 browser tests passing |
+
+### The one thing that keeps the two systems apart
+
+V1 and V2 share a single Stripe account, so **both webhook endpoints receive
+every event for the account**. Each has to recognise its own work and ignore the
+rest.
+
+V1 decides a session is its own purely by the presence of `reservation_id` in
+the session metadata. If V2 had used the same key — and it did, until this was
+caught — then every V2 booking would have reached V1's webhook, which would have
+looked the reservation up in the V1 database, not found it, thrown, and returned
+500. Stripe would then have retried it for hours. No money lost and no ticket
+sent, but a stream of failures against the live endpoint and precisely the kind
+of cross-talk that is supposed to be impossible.
+
+V2 therefore writes `v2_reservation_id` and `source: agent_tix_v2`. V1 sees no
+`reservation_id` and drops the event as "not a MuayTix session". V2 requires
+both keys and drops everything else. Neither can act on the other's bookings.
+
+This is worth remembering before any change to Stripe metadata on either side.
+
+### Still not done
+
+- `expire_stale_reservations()` has nothing calling it on a schedule. Seats do
+  come back on their own — Stripe fires `checkout.session.expired` about 31
+  minutes after an abandoned checkout and the webhook releases them — so this is
+  a backstop for the case where that event never arrives, not the main path.
+  Still worth a cron before this carries real volume.
+- Ticket fulfilment is out of scope by instruction and remains manual.
+- Only the first week of September is loaded. The rest of September through
+  December is a data job, not a build.
+- The three widget modes (full month, filtered weekday, single event) — this is
+  the full-month mode only.

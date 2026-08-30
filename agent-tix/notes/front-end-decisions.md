@@ -70,3 +70,41 @@ above the calendar and the full date printed in the event band.
   until instructed, with 5 September opened first.
 - **Third Class prices** (from the database, not the widget's hardcoded copy):
   USD 31, EUR 27, GBP 23, CNY 210, AUD 44, THB 1000.
+
+## Wired to the live database — 30 August 2026
+
+The prototype is now a working widget at `agent-tix/widget/booking-widget.html`.
+The design is unchanged; only where the numbers come from has changed.
+
+- **Nothing about the schedule is hardcoded any more.** The prototype generated
+  the fight nights from rules in JavaScript — Monday, Tuesday and Friday are
+  Knockout, the last Monday is Buakaw, and so on — and carried its own copy of
+  every promotion name, colour, seat class, price and currency. All of it now
+  comes back from the database on load. The four month buttons are built from
+  whichever months actually have nights on sale. Load 2027 and the widget sells
+  2027 with no release.
+- **Two new columns pairs made that possible.** `event_series.short_name` and
+  `.accent_colour` carry what the calendar prints under each date;
+  `ticket_classes.accent_colour` and `.accent_ink` carry the seat class colours.
+  Two colour values per class rather than one, because the vibrant yellow that
+  works as trim is unreadable as type — the same finding that produced the
+  beige-looking compromise the widget had before.
+- **The Bangkok date is worked out in the database, not the browser.** A guest
+  in Los Angeles at 9pm is already on tomorrow's date at the stadium. The
+  calendar view returns the local date as a plain string and the widget matches
+  strings, so no timezone arithmetic happens on a phone at all.
+- **Prices never travel from the browser.** The widget sends the night, the
+  class, a quantity and a currency. What that costs is read server side.
+- **Quantity is capped by what is genuinely left.** The dropdown offers six when
+  six remain, not ten. The count itself is still never shown.
+
+Two findings from the widget code review are now closed:
+
+- **Every call has a timeout** — twelve seconds to read, twenty to check out.
+  A hanging request now says so instead of spinning indefinitely.
+- **A failed first load offers a retry.** Previously the widget would sit empty
+  for good. It now names the problem and gives the guest a button.
+
+Still open from that review: the single universal widget in three modes (full
+month, filtered weekday, single event). This build is the full-month mode. The
+other two reuse the same seat-class grid and are the next front-end job.

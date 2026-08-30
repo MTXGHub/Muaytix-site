@@ -11,8 +11,12 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import Stripe from "npm:stripe@^22";
 
 const TENANT = "muaytix";
-const HOLD_MINUTES = 35;      // our hold
-const SESSION_MINUTES = 30;   // Stripe's own expiry, deliberately the shorter of the two
+// Stripe refuses a Checkout Session that expires less than 30 minutes out, and
+// its clock is a network hop later than ours, so exactly 30 is a coin toss.
+// 31 clears it. Our own hold outlives the session either way, so a guest who
+// pays at the very last second still has stock waiting for them.
+const HOLD_MINUTES = 36;
+const SESSION_MINUTES = 31;
 
 const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
 const supabaseUrl = Deno.env.get("SUPABASE_URL");
@@ -174,9 +178,15 @@ Deno.serve(async (req: Request) => {
       body.successUrl, "https://muaytix.com/payment-successful?session_id={CHECKOUT_SESSION_ID}", origins);
     const cancelUrl = safeReturnUrl(body.cancelUrl, "https://muaytix.com/payment-failed", origins);
 
+    // The key is deliberately NOT `reservation_id`. V1 and V2 share one Stripe
+    // account, so both webhook endpoints see every event. V1 decides a session
+    // is its own purely by the presence of `reservation_id` in metadata, and
+    // would then look up a V2 reservation in the V1 database, fail, return 500
+    // and be retried by Stripe for hours. Naming it differently means V1 ignores
+    // V2 sessions outright, which is what "two separate systems" has to mean.
     const metadata: Record<string, string> = {
       source: "agent_tix_v2",
-      reservation_id: String(reservationId),
+      v2_reservation_id: String(reservationId),
       event_key: row.event_key,
       event_name: row.event_name,
       ticket_class: row.ticket_class_name,
