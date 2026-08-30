@@ -110,7 +110,7 @@ button,select{font:inherit;color:inherit}
 .cal{padding:24px 26px 26px}
 .dow,.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .dow{margin-bottom:6px}
-.dow span{text-align:center;font-size:11px;font-weight:700;letter-spacing:.09em;
+.dow span{text-align:center;font-size:13px;font-weight:700;letter-spacing:.09em;
   text-transform:uppercase;color:var(--muted);padding:2px 0}
 .day{position:relative;min-height:62px;padding:7px 5px 6px;border:1.5px solid transparent;
   border-radius:11px;background:var(--surface-2);cursor:pointer;text-align:center;
@@ -403,7 +403,18 @@ months.addEventListener("click", function(e){
   state.m = +b.getAttribute("data-m");
   renderMonths();
   renderCal();
+  revealCalendar();
 });
+
+// On a narrow screen the dates sit below the fold, so switching month looks
+// like nothing happened. Scroll only when the grid is not already fully in
+// view, which leaves desktop alone rather than jumping the page for no reason.
+function revealCalendar(){
+  var g = grid.getBoundingClientRect();
+  if(g.top >= 0 && g.bottom <= window.innerHeight) return;
+  var head = cal.querySelector(".sec-label.gap") || grid;
+  head.scrollIntoView({behavior:"smooth", block:"start"});
+}
 
 /* ---------------- calendar ---------------- */
 function renderCal(){
