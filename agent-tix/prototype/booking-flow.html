@@ -13,7 +13,12 @@
   --ring:#C4122F;
   --shadow:0 1px 2px rgba(20,17,14,.05), 0 8px 24px rgba(20,17,14,.07);
   --shadow-lg:0 2px 4px rgba(20,17,14,.06), 0 18px 44px rgba(20,17,14,.12);
-  --rs:#2FA04A; --cc:#3A86D4; --leo:#D2A62A; --tc:#E8631A;
+  /* Each class has two values: the vibrant one for solid trim, and an ink one
+     with enough contrast for text and borders. Bright yellow cannot do both. */
+  --rs:#2FA04A;  --rs-ink:#1E7A38;
+  --cc:#3A86D4;  --cc-ink:#2565AE;
+  --leo:#FFD400; --leo-ink:#8A6A00;
+  --tc:#E8631A;  --tc-ink:#B84A0C;
   --blue:#1f5bff; --blue-on:#1540C9; --blue-ink:#FFFFFF;
   color-scheme:light;
 }
@@ -25,6 +30,7 @@
     --lim-fg:#E5B064; --lim-bg:#2C2113;
     --full-fg:#EE8C8C; --full-bg:#2E1717;
     --shut-fg:#A79C91; --shut-bg:#252119;
+    --rs-ink:#62D689; --cc-ink:#79B4F0; --leo-ink:#FFD400; --tc-ink:#FF9557;
     --ring:#F2547A;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.4);
     --shadow-lg:0 2px 4px rgba(0,0,0,.5), 0 18px 44px rgba(0,0,0,.55);
@@ -38,6 +44,7 @@
   --lim-fg:#E5B064; --lim-bg:#2C2113;
   --full-fg:#EE8C8C; --full-bg:#2E1717;
   --shut-fg:#A79C91; --shut-bg:#252119;
+  --rs-ink:#62D689; --cc-ink:#79B4F0; --leo-ink:#FFD400; --tc-ink:#FF9557;
   --ring:#F2547A;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.4);
   --shadow-lg:0 2px 4px rgba(0,0,0,.5), 0 18px 44px rgba(0,0,0,.55);
@@ -173,23 +180,23 @@ button,select{font:inherit;color:inherit}
 .pick{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:9px;
   padding:16px 15px 15px 20px;border:1.5px solid var(--line);border-radius:12px;
   background:var(--surface);cursor:pointer;text-align:left;transition:.15s;overflow:hidden}
-.pick:hover{border-color:var(--c);transform:translateY(-2px);box-shadow:var(--shadow)}
+.pick:hover{border-color:var(--ci);transform:translateY(-2px);box-shadow:var(--shadow)}
 .pick-bar{position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
 .pick-name{font-family:"Barlow Condensed";font-size:22px;font-weight:700;line-height:1.02}
 .pick--off{opacity:.72}
 .pick--off:hover{transform:none;box-shadow:none;border-color:var(--line)}
 
 /* step 3b — the one chosen class, framed in its own colour */
-.detail{border:2px solid var(--c);border-radius:14px;padding:20px 22px;background:var(--surface)}
+.detail{border:2px solid var(--ci);border-radius:14px;padding:20px 22px;background:var(--surface)}
 .detail-k{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--c);margin-bottom:8px}
+  color:var(--ci);margin-bottom:8px}
 .detail-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:10px}
 .detail-h{font-size:clamp(24px,2.6vw,30px);font-weight:800;line-height:1.05}
 .detail-d{font-size:14.5px;line-height:1.55;color:var(--muted);max-width:66ch;margin-bottom:16px}
-.detail-change{margin-top:15px;border:1.5px solid var(--c);background:var(--surface);color:var(--c);
+.detail-change{margin-top:15px;border:1.5px solid var(--ci);background:var(--surface);color:var(--ci);
   padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;letter-spacing:.07em;
   text-transform:uppercase;cursor:pointer;transition:.15s}
-.detail-change:hover{background:var(--c);color:#fff}
+.detail-change:hover{background:var(--ci);color:#fff}
 
 .note{padding:12px 13px;border-radius:9px;font-size:13.5px;line-height:1.5;
   background:var(--shut-bg);color:var(--ink-2)}
@@ -320,16 +327,16 @@ var SHORT = {rk:"Knockout", np:"New Power", py:"Petchyindee", rws:"RWS", kp:"Kia
 // `tag` is the strapline on each ticket graphic. Kept for reference; the widget
 // does not print it, since the description below the name already says it.
 var CLASSES = [
-  {code:"ringside", name:"Ringside",    tag:"Closest to the ring",           c:"var(--rs)",  seated:true,
+  {code:"ringside", name:"Ringside",    tag:"Closest to the ring",           c:"var(--rs)",  ci:"var(--rs-ink)",  seated:true,
    d:"Reserved seating just metres from the ring, placing you close to every entrance, exchange and celebration.",
    p:{gbp:5700, usd:7700, eur:6700, thb:250000, aud:10900, cny:52000}},
-  {code:"club",     name:"Club Class",  tag:"Elevated view of the entire ring", c:"var(--cc)", seated:true,
+  {code:"club",     name:"Club Class",  tag:"Elevated view of the entire ring", c:"var(--cc)", ci:"var(--cc-ink)", seated:true,
    d:"Our most popular ticket, offering panoramic views from elevated seating with reserved seats throughout the evening.",
    p:{gbp:4100, usd:5500, eur:4800, thb:180000, aud:7900, cny:38000}},
-  {code:"leo",      name:"LEO Section", tag:"Where the atmosphere lives",     c:"var(--leo)", seated:false,
+  {code:"leo",      name:"LEO Section", tag:"Where the atmosphere lives",     c:"var(--leo)", ci:"var(--leo-ink)", seated:false,
    d:"Elevated seating in Section 10, offering panoramic views and one of the stadium's most energetic atmospheres.",
    p:{gbp:3400, usd:4600, eur:4000, thb:150000, aud:6600, cny:31000}},
-  {code:"third",    name:"Third Class", tag:"360 degree view of the action",  c:"var(--tc)",  seated:false,
+  {code:"third",    name:"Third Class", tag:"360 degree view of the action",  c:"var(--tc)",  ci:"var(--tc-ink)",  seated:false,
    d:"Guaranteed seating in the upper terraces, with a panoramic 360-degree view across the ring and stadium.",
    p:{gbp:2300, usd:3100, eur:2700, thb:100000, aud:4400, cny:21000}}
 ];
@@ -538,7 +545,7 @@ function pickButton(t){
   var st = statusFor(state.date, t.code);
   var meta = statusMeta(st);
   var live = (st === "available" || st === "limited");
-  return '<button class="pick'+(live?"":" pick--off")+'" data-pick="'+t.code+'" style="--c:'+t.c+'">'+
+  return '<button class="pick'+(live?"":" pick--off")+'" data-pick="'+t.code+'" style="--c:'+t.c+';--ci:'+t.ci+'">'+
     '<span class="pick-bar"></span>'+
     '<span class="pick-name">'+esc(t.name)+'</span>'+
     '<span class="pill '+meta.cls+'"><i></i>'+meta.label+'</span>'+
@@ -581,7 +588,7 @@ function classDetail(t){
       '</div>';
   }
 
-  return '<section class="detail" style="--c:'+t.c+'">'+
+  return '<section class="detail" style="--c:'+t.c+';--ci:'+t.ci+'">'+
     '<div class="detail-k">You have chosen</div>'+
     '<div class="detail-top">'+
       '<h3 class="detail-h">'+esc(t.name)+'</h3>'+
