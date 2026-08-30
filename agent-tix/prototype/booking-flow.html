@@ -89,13 +89,13 @@ button,select{font:inherit;color:inherit}
 
 /* month buttons */
 .months{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:4px}
-.mbtn{padding:13px 10px;border:1.5px solid var(--blue);border-radius:11px;background:var(--blue);
+/* border-width stays 3px on every state so selecting a month shifts nothing */
+.mbtn{padding:12px 10px;border:3px solid var(--blue);border-radius:11px;background:var(--blue);
   font-family:"Barlow Condensed";font-size:19px;font-weight:700;letter-spacing:.02em;
   cursor:pointer;transition:.15s;color:var(--blue-ink)}
-.mbtn:hover{background:var(--blue-on);border-color:var(--blue-on)}
-/* the chosen month sits darker, with a ring, so it still reads as selected */
-.mbtn.on{background:var(--blue-on);border-color:var(--blue-on);
-  box-shadow:0 0 0 3px color-mix(in srgb, var(--blue) 34%, transparent)}
+.mbtn:hover:not(.on){background:var(--blue-on);border-color:var(--blue-on)}
+/* chosen month reverses out: white fill, blue border, blue type */
+.mbtn.on{background:var(--surface);border-color:var(--blue);color:var(--blue)}
 
 /* calendar */
 .cal{padding:24px 26px 26px}
