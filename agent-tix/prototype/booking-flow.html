@@ -175,10 +175,6 @@ button,select{font:inherit;color:inherit}
 .pick:hover{border-color:var(--c);transform:translateY(-2px);box-shadow:var(--shadow)}
 .pick-bar{position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
 .pick-name{font-family:"Barlow Condensed";font-size:22px;font-weight:700;line-height:1.02}
-.pick-price{font-family:"Barlow Condensed";font-size:21px;font-weight:700;
-  font-variant-numeric:tabular-nums;line-height:1;margin-top:auto}
-.pick-price s{text-decoration:none;font-family:Barlow;font-size:10px;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:7px}
 .pick--off{opacity:.72}
 .pick--off:hover{transform:none;box-shadow:none;border-color:var(--line)}
 
@@ -218,10 +214,13 @@ button,select{font:inherit;color:inherit}
 .sel select:focus-visible{border-color:var(--c,var(--blue));box-shadow:0 0 0 3px color-mix(in srgb, var(--c,var(--blue)) 22%, transparent)}
 .sel select:disabled{opacity:.55;cursor:not-allowed;background:var(--surface-2)}
 
-.total{display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:12px 14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line-2)}
-.total span{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-.total b{font-family:"Barlow Condensed";font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.sums{border:1px solid var(--line-2);border-radius:10px;background:var(--surface-2);overflow:hidden}
+.sum{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px}
+.sum span{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.sum b{font-family:"Barlow Condensed";font-size:20px;font-weight:700;
+  font-variant-numeric:tabular-nums;line-height:1}
+.sum--total{border-top:1px solid var(--line-2);background:var(--surface)}
+.sum--total b{font-size:26px;font-weight:800}
 
 .go{width:100%;min-height:50px;padding:12px;border:0;border-radius:10px;background:var(--ink);
   color:var(--ground);font-family:"Barlow Condensed";font-size:17px;font-weight:700;
@@ -509,7 +508,6 @@ function seatStep(){
   if(!state.cls){
     return '<div class="tix-h">'+
              '<h3><span class="num">3</span>Select your seat class</h3>'+
-             '<em>Prices are per ticket</em>'+
            '</div>'+
            '<div class="picker">'+ CLASSES.map(pickButton).join("") +'</div>';
   }
@@ -522,12 +520,10 @@ function pickButton(t){
   var st = statusFor(state.date, t.code);
   var meta = statusMeta(st);
   var live = (st === "available" || st === "limited");
-  var cur = "gbp";
   return '<button class="pick'+(live?"":" pick--off")+'" data-pick="'+t.code+'" style="--c:'+t.c+'">'+
     '<span class="pick-bar"></span>'+
     '<span class="pick-name">'+esc(t.name)+'</span>'+
     '<span class="pill '+meta.cls+'"><i></i>'+meta.label+'</span>'+
-    (live ? '<span class="pick-price"><s>from</s>'+money(cur, t.p[cur])+'</span>' : '')+
   '</button>';
 }
 
@@ -559,13 +555,16 @@ function classDetail(t){
             '</select></div></div>'+
         '</div>'+
         '<div data-seat="'+t.code+'" data-max="'+seats+'"></div>'+
-        '<div class="total"><span>Total</span><b data-total="'+t.code+'">&mdash;</b></div>'+
+        '<div class="sums">'+
+          '<div class="sum"><span>Price per ticket</span><b data-unit="'+t.code+'">&mdash;</b></div>'+
+          '<div class="sum sum--total"><span>Total</span><b data-total="'+t.code+'">&mdash;</b></div>'+
+        '</div>'+
         '<button class="go" data-go="'+t.code+'" disabled>Select number of tickets</button>'+
       '</div>';
   }
 
   return '<section class="detail" style="--c:'+t.c+'">'+
-    '<div class="detail-k">Your seat class</div>'+
+    '<div class="detail-k">You have chosen</div>'+
     '<div class="detail-top">'+
       '<h3 class="detail-h">'+esc(t.name)+'</h3>'+
       '<span class="pill '+meta.cls+'"><i></i>'+meta.label+'</span>'+
@@ -643,6 +642,8 @@ function update(code){
   var qty = state.qty[code] || 0;
   var cur = state.cur[code] || "gbp";
 
+  var unitEl = out.querySelector('[data-unit="'+code+'"]');
+  if(unitEl) unitEl.textContent = money(cur, t.p[cur]);
   totalEl.textContent = qty ? money(cur, t.p[cur]*qty) : "\u2014";
 
   var maxTogether = seatWrap ? +seatWrap.getAttribute("data-max") : 10;
