@@ -157,13 +157,6 @@ button,select{font:inherit;color:inherit}
 .tix-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;margin-bottom:16px}
 .tix-h h3{display:flex;align-items:center;gap:9px;font-size:20px;font-weight:700}
 .tix-h em{font-style:normal;font-size:12.5px;color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-
-.card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
-  border-radius:14px;overflow:hidden;transition:.18s}
-.card:hover{box-shadow:var(--shadow)}
-.card.off{opacity:.72}
-.card-rule{height:3px;background:var(--c)}
 
 /* status pill */
 .pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;
@@ -174,20 +167,42 @@ button,select{font:inherit;color:inherit}
 .pill.full{color:var(--full-fg);background:var(--full-bg)}
 .pill.shut{color:var(--shut-fg);background:var(--shut-bg)}
 
-.card-body{display:flex;flex-direction:column;flex:1;gap:11px;padding:15px 15px 16px}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.card-name{font-size:19px;font-weight:700;line-height:1.05}
-.card-d{font-size:13px;line-height:1.5;color:var(--muted)}
-.card-from{font-size:13px;font-weight:600;color:var(--ink-2)}
-.card-from b{font-family:"Barlow Condensed";font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+/* step 3a — the four choices, no detail */
+.picker{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.pick{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:9px;
+  padding:16px 15px 15px 20px;border:1.5px solid var(--line);border-radius:12px;
+  background:var(--surface);cursor:pointer;text-align:left;transition:.15s;overflow:hidden}
+.pick:hover{border-color:var(--c);transform:translateY(-2px);box-shadow:var(--shadow)}
+.pick-bar{position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
+.pick-name{font-family:"Barlow Condensed";font-size:22px;font-weight:700;line-height:1.02}
+.pick-price{font-family:"Barlow Condensed";font-size:21px;font-weight:700;
+  font-variant-numeric:tabular-nums;line-height:1;margin-top:auto}
+.pick-price s{text-decoration:none;font-family:Barlow;font-size:10px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:7px}
+.pick--off{opacity:.72}
+.pick--off:hover{transform:none;box-shadow:none;border-color:var(--line)}
 
-.note{padding:10px 11px;border-radius:9px;font-size:12.5px;line-height:1.45;background:var(--shut-bg);color:var(--ink-2)}
+/* step 3b — the one chosen class, framed in its own colour */
+.detail{border:2px solid var(--c);border-radius:14px;padding:20px 22px;background:var(--surface)}
+.detail-k{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--c);margin-bottom:8px}
+.detail-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:10px}
+.detail-h{font-size:clamp(24px,2.6vw,30px);font-weight:800;line-height:1.05}
+.detail-d{font-size:14.5px;line-height:1.55;color:var(--muted);max-width:66ch;margin-bottom:16px}
+.detail-change{margin-top:16px;border:2px solid var(--c);background:var(--surface);color:var(--c);
+  padding:9px 16px;border-radius:9px;font-size:12px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;cursor:pointer;transition:.15s}
+.detail-change:hover{background:var(--c);color:#fff}
+
+.note{padding:12px 13px;border-radius:9px;font-size:13.5px;line-height:1.5;
+  background:var(--shut-bg);color:var(--ink-2)}
 .note.warn{background:var(--lim-bg);color:var(--lim-fg)}
 .note b{font-weight:700}
 .ack{display:flex;gap:8px;align-items:flex-start;margin-top:9px;cursor:pointer;font-weight:600}
 .ack input{width:16px;height:16px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--ink)}
 
-.fields{display:flex;flex-direction:column;gap:9px;margin-top:auto}
+.fields{display:flex;flex-direction:column;gap:12px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .f label{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 .f label .num{width:17px;height:17px;font-size:10px}
@@ -195,62 +210,41 @@ button,select{font:inherit;color:inherit}
 .sel:after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;
   border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);
   transform:translateY(-70%) rotate(45deg);pointer-events:none}
-.sel select{width:100%;min-height:44px;padding:9px 34px 9px 12px;border:1.5px solid var(--line);
-  border-radius:10px;background:var(--surface);font-size:14.5px;font-weight:600;
-  appearance:none;-webkit-appearance:none;cursor:pointer;transition:.15s}
+/* one border rule for every state, so no select ever looks different from its neighbour */
+.sel select{width:100%;min-height:46px;padding:9px 34px 9px 12px;border:1.5px solid var(--line);
+  border-radius:10px;background:var(--surface);color:var(--ink);font-size:15px;font-weight:600;
+  appearance:none;-webkit-appearance:none;cursor:pointer;transition:.15s;outline:none}
 .sel select:hover:not(:disabled){border-color:var(--ink-2)}
+.sel select:focus-visible{border-color:var(--c,var(--blue));box-shadow:0 0 0 3px color-mix(in srgb, var(--c,var(--blue)) 22%, transparent)}
 .sel select:disabled{opacity:.55;cursor:not-allowed;background:var(--surface-2)}
 
 .total{display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:11px 13px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line-2)}
+  padding:12px 14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line-2)}
 .total span{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-.total b{font-family:"Barlow Condensed";font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.total b{font-family:"Barlow Condensed";font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
 
-.go{width:100%;min-height:48px;padding:12px;border:0;border-radius:10px;background:var(--ink);
-  color:var(--ground);font-family:"Barlow Condensed";font-size:16px;font-weight:700;
+.go{width:100%;min-height:50px;padding:12px;border:0;border-radius:10px;background:var(--ink);
+  color:var(--ground);font-family:"Barlow Condensed";font-size:17px;font-weight:700;
   letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:.15s}
 .go:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-lg)}
-.go:disabled{background:var(--line);color:var(--muted);cursor:not-allowed;transform:none;box-shadow:none}
-.go.quiet{background:var(--surface-2);color:var(--muted);border:1.5px solid var(--line)}
+/* waiting, not broken: an outline that reads as "one more thing to do" */
+.go:disabled{background:transparent;color:var(--muted);border:1.5px dashed var(--line);
+  cursor:not-allowed;transform:none;box-shadow:none}
 
-/* ---------- mobile accordion ---------- */
-.stage.is-mobile .cards{display:flex;flex-direction:column;gap:9px}
-.stage.is-mobile .card{border-radius:12px}
-.stage.is-mobile .card-rule{display:none}
-.row{display:none}
-.stage.is-mobile .row{display:flex;align-items:center;gap:11px;width:100%;padding:11px;
-  border:0;background:none;cursor:pointer;text-align:left}
-/* a slim colour bar keeps each class identifiable now the artwork has gone */
-.row-bar{width:4px;align-self:stretch;min-height:38px;flex:0 0 auto;border-radius:99px;background:var(--c)}
-/* align-items keeps the status pill hugging its text instead of stretching the row */
-.row-mid{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:5px}
-.row-name{font-family:"Barlow Condensed";font-size:18px;font-weight:700;line-height:1}
-.row-end{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:0 0 auto}
-.row-price{font-family:"Barlow Condensed";font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
-.row-price s{display:block;text-decoration:none;font-family:Barlow;font-size:9px;font-weight:600;
-  letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-.chev{width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);
-  transform:rotate(45deg) translate(-2px,-2px);transition:transform .2s}
-.card.open .chev{transform:rotate(-135deg) translate(-2px,-2px)}
-.stage.is-mobile .card-inner{display:none}
-.stage.is-mobile .card.open .card-inner{display:block;border-top:1px solid var(--line-2)}
-.stage.is-mobile .card-top{display:none}
+@media (max-width:860px){ .picker{grid-template-columns:repeat(2,1fr)} }
+.stage.is-mobile .picker{grid-template-columns:repeat(2,1fr)}
+.stage.is-mobile .pair{grid-template-columns:1fr}
+@media (max-width:520px){ .pair{grid-template-columns:1fr} }
 
 /* footer strip */
 .foot{padding:16px 26px 22px;border-top:1px solid var(--line-2);background:var(--surface-2);
   display:flex;flex-wrap:wrap;gap:8px 22px;font-size:12px;color:var(--muted);font-weight:600}
 .foot span{display:inline-flex;align-items:center;gap:6px}
 
-@media (max-width:1000px){ .cards{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:720px){
   .mast,.cal,.tix,.foot{padding-left:16px;padding-right:16px}
   .band{margin-left:16px;margin-right:16px;padding:18px 16px}
-  .cards{display:flex;flex-direction:column;gap:9px}
-  .card-rule{display:none}
-  .row{display:flex;align-items:center;gap:11px;width:100%;padding:11px;border:0;background:none;cursor:pointer;text-align:left}
-  .card-inner{display:none}
-  .card.open .card-inner{display:block;border-top:1px solid var(--line-2)}
-  .card-top{display:none}
+  .detail{padding:18px 16px}
   .day .tag{display:none}
   .day{min-height:54px}
   .months{grid-template-columns:repeat(2,1fr)}
@@ -379,10 +373,11 @@ function seatsTogetherFor(date, code){
   return h < 34 ? (2 + (h % 3)) : 10;   // sometimes a small block, usually plenty
 }
 
-var state = {y:2026, m:8, date:null, open:null, qty:{}, cur:{}};
+var state = {y:2026, m:8, date:null, cls:null, qty:{}, cur:{}};
 
 var $ = function(id){return document.getElementById(id);};
 var grid = $("grid"), out = $("out"), stage = $("stage"), months = $("months");
+var cal = document.querySelector(".cal");
 
 function money(cur, minor){
   var v = minor/100;
@@ -441,50 +436,35 @@ grid.addEventListener("click", function(e){
   var b = e.target.closest("[data-d]");
   if(!b) return;
   state.date = b.getAttribute("data-d");
-  state.open = null; state.qty = {}; state.cur = {};
+  state.cls = null; state.qty = {}; state.cur = {};
   renderCal();
   loading();
 });
 
+/* ---------------- one section at a time ----------------
+   Choosing a date hands the screen over to the event, exactly as choosing a
+   class then hands it to that class. Only one step is ever on screen. */
 
-/* ---------------- selected date ---------------- */
 function loading(){
+  cal.hidden = true;
   out.innerHTML = '<div class="load"><div class="spin"></div>Checking live availability&hellip;</div>';
-  out.scrollIntoView({behavior:"smooth", block:"nearest"});
-  // In the live widget the real availability check usually returns faster than
-  // this. Treat it as a minimum time on screen, so the message is readable
-  // rather than a flicker.
+  out.scrollIntoView({behavior:"smooth", block:"start"});
+  // The real check will often be quicker; treat this as a minimum time on
+  // screen so the message reads rather than flickers.
   setTimeout(render, 1500);
 }
 
-function render(){
-  var parts = state.date.split("-");
-  var y = +parts[0], m = +parts[1]-1, d = +parts[2];
-  var ev = eventFor(y,m,d), s = SERIES[ev];
-  var dow = DAYS[new Date(Date.UTC(y,m,d)).getUTCDay()];
+function backToDates(){
+  state.date = null; state.cls = null; state.qty = {}; state.cur = {};
+  out.innerHTML = "";
+  cal.hidden = false;
+  renderCal();
+  cal.scrollIntoView({behavior:"smooth", block:"start"});
+}
 
-  var html =
-    '<section class="band">'+
-      '<div class="band-k">Your fight night</div>'+
-      '<h2 class="band-h">'+esc(s.name)+'</h2>'+
-      '<div class="band-when">'+
-        '<span>'+icon("cal")+esc(dow+" "+d+" "+MONTHS[m]+" "+y)+'</span>'+
-        '<span>'+icon("clock")+esc(fmt12(s.s)+" – "+fmt12(s.e))+'</span>'+
-        '<span>'+icon("pin")+'Rajadamnern Stadium</span>'+
-      '</div>'+
-      '<p class="band-d">'+esc(s.d)+'</p>'+
-      '<button class="band-change" id="chg">Change date</button>'+
-    '</section>'+
-    '<section class="tix">'+
-      '<div class="tix-h"><h3><span class="num">3</span>Select your seat class</h3><em>Prices are per ticket</em></div>'+
-      '<div class="cards" id="cards">'+ CLASSES.map(card).join("") +'</div>'+
-    '</section>';
-
-  out.innerHTML = html;
-  $("chg").addEventListener("click", function(){
-    document.querySelector(".cal").scrollIntoView({behavior:"smooth", block:"start"});
-  });
-  wire();
+function eventOn(key){
+  var p = key.split("-"), y = +p[0], m = +p[1]-1, d = +p[2];
+  return { y:y, m:m, d:d, code:eventFor(y,m,d), dow:DAYS[new Date(Date.UTC(y,m,d)).getUTCDay()] };
 }
 
 function fmt12(t){
@@ -507,162 +487,189 @@ function statusMeta(st){
   return {cls:"shut", label:"Closed"};
 }
 
-function card(t){
+function render(){
+  var e = eventOn(state.date), s = SERIES[e.code];
+  out.innerHTML =
+    '<section class="band">'+
+      '<div class="band-k">Your fight night</div>'+
+      '<h2 class="band-h">'+esc(s.name)+'</h2>'+
+      '<div class="band-when">'+
+        '<span>'+icon("cal")+esc(e.dow+" "+e.d+" "+MONTHS[e.m]+" "+e.y)+'</span>'+
+        '<span>'+icon("clock")+esc(fmt12(s.s)+" \u2013 "+fmt12(s.e))+'</span>'+
+        '<span>'+icon("pin")+'Rajadamnern Stadium</span>'+
+      '</div>'+
+      '<p class="band-d">'+esc(s.d)+'</p>'+
+      '<button class="band-change" data-back-date>Change date</button>'+
+    '</section>'+
+    '<section class="tix">'+ seatStep() +'</section>';
+  bind();
+}
+
+function seatStep(){
+  if(!state.cls){
+    return '<div class="tix-h">'+
+             '<h3><span class="num">3</span>Select your seat class</h3>'+
+             '<em>Prices are per ticket</em>'+
+           '</div>'+
+           '<div class="picker">'+ CLASSES.map(pickButton).join("") +'</div>';
+  }
+  return '<div class="tix-h"><h3><span class="num">3</span>Your seats</h3></div>'+
+         classDetail(byCode(state.cls));
+}
+
+/* ---- 3a: the four choices, name and status only ---- */
+function pickButton(t){
   var st = statusFor(state.date, t.code);
   var meta = statusMeta(st);
-  var live = (st==="available" || st==="limited");
-  var cur = state.cur[t.code] || "gbp";
-  var from = money(cur, t.p[cur]);
+  var live = (st === "available" || st === "limited");
+  var cur = "gbp";
+  return '<button class="pick'+(live?"":" pick--off")+'" data-pick="'+t.code+'" style="--c:'+t.c+'">'+
+    '<span class="pick-bar"></span>'+
+    '<span class="pick-name">'+esc(t.name)+'</span>'+
+    '<span class="pill '+meta.cls+'"><i></i>'+meta.label+'</span>'+
+    (live ? '<span class="pick-price"><s>from</s>'+money(cur, t.p[cur])+'</span>' : '')+
+  '</button>';
+}
 
-  var body = "";
+/* ---- 3b: the one chosen class ---- */
+function classDetail(t){
+  var st = statusFor(state.date, t.code);
+  var meta = statusMeta(st);
+  var live = (st === "available" || st === "limited");
+  var cur = state.cur[t.code] || "gbp";
+  var body;
+
   if(st === "closed"){
-    body = '<div class="note">'+esc(CLOSED_COPY)+'</div>'+
-           '<button class="go quiet" disabled>Not on sale yet</button>';
+    body = '<div class="note">'+esc(CLOSED_COPY)+'</div>';
   } else if(st === "full"){
-    body = '<div class="note">Every '+esc(t.name)+' seat for this date has gone. Another class may still have space.</div>'+
-           '<button class="go quiet" disabled>Fully booked</button>';
+    body = '<div class="note">Every '+esc(t.name)+' seat for this date has gone. '+
+           'Another class may still have space.</div>';
   } else {
     var seats = t.seated ? seatsTogetherFor(state.date, t.code) : 10;
     body =
       '<div class="fields">'+
-        '<div class="f"><label for="q-'+t.code+'"><span class="num">4</span>Number of tickets</label>'+
-          '<div class="sel"><select id="q-'+t.code+'" data-q="'+t.code+'">'+
-            '<option value="">Select</option>'+ qtyOpts(t.code) +
-          '</select></div></div>'+
-        '<div class="f"><label for="c-'+t.code+'"><span class="num">5</span>Choose your currency</label>'+
-          '<div class="sel"><select id="c-'+t.code+'" data-c="'+t.code+'">'+
-            CUR.map(function(c){return '<option value="'+c[0]+'"'+(c[0]===cur?" selected":"")+'>'+c[1]+'</option>';}).join("")+
-          '</select></div></div>'+
+        '<div class="pair">'+
+          '<div class="f"><label for="q-'+t.code+'"><span class="num">4</span>Number of tickets</label>'+
+            '<div class="sel"><select id="q-'+t.code+'" data-q="'+t.code+'">'+
+              '<option value="">Select</option>'+ qtyOpts() +
+            '</select></div></div>'+
+          '<div class="f"><label for="c-'+t.code+'"><span class="num">5</span>Choose your currency</label>'+
+            '<div class="sel"><select id="c-'+t.code+'" data-c="'+t.code+'">'+
+              CUR.map(function(c){ return '<option value="'+c[0]+'"'+(c[0]===cur?" selected":"")+'>'+c[1]+'</option>'; }).join("")+
+            '</select></div></div>'+
+        '</div>'+
         '<div data-seat="'+t.code+'" data-max="'+seats+'"></div>'+
         '<div class="total"><span>Total</span><b data-total="'+t.code+'">&mdash;</b></div>'+
-        '<button class="go" data-go="'+t.code+'" disabled>Continue to checkout</button>'+
+        '<button class="go" data-go="'+t.code+'" disabled>Select number of tickets</button>'+
       '</div>';
   }
 
-  return ''+
-  '<article class="card'+(live?"":" off")+'" data-card="'+t.code+'" style="--c:'+t.c+'">'+
-    '<div class="card-rule"></div>'+
-    '<button class="row" data-row="'+t.code+'" aria-expanded="false">'+
-      '<span class="row-bar"></span>'+
-      '<span class="row-mid">'+
-        '<span class="row-name">'+esc(t.name)+'</span>'+
-        '<span class="pill '+meta.cls+'"><i></i>'+meta.label+'</span>'+
-      '</span>'+
-      '<span class="row-end">'+
-        (live ? '<span class="row-price">'+from+'<s>from</s></span>' : '')+
-        '<span class="chev"></span>'+
-      '</span>'+
-    '</button>'+
-    '<div class="card-inner">'+
-      '<div class="card-body">'+
-        '<div class="card-top">'+
-          '<div><div class="card-name">'+esc(t.name)+'</div></div>'+
-          '<span class="pill '+meta.cls+'"><i></i>'+meta.label+'</span>'+
-        '</div>'+
-        '<p class="card-d">'+esc(t.d)+'</p>'+
-        body+
-      '</div>'+
+  return '<section class="detail" style="--c:'+t.c+'">'+
+    '<div class="detail-k">Your seat class</div>'+
+    '<div class="detail-top">'+
+      '<h3 class="detail-h">'+esc(t.name)+'</h3>'+
+      '<span class="pill '+meta.cls+'"><i></i>'+meta.label+'</span>'+
     '</div>'+
-  '</article>';
+    '<p class="detail-d">'+esc(t.d)+'</p>'+
+    body+
+    '<button class="detail-change" data-back-class>Change seat class</button>'+
+  '</section>';
 }
 
-function qtyOpts(code){
+function qtyOpts(){
   var o = "";
   for(var i=1;i<=10;i++) o += '<option value="'+i+'">'+i+(i===1?" ticket":" tickets")+'</option>';
   return o;
 }
 
 /* ---------------- interaction ---------------- */
-function wire(){
-  var cards = $("cards");
-  if(!cards) return;
+function bind(){
+  out.addEventListener("click", onClick);
+  out.addEventListener("change", onChange);
+  if(state.cls) update(state.cls);
+}
 
-  cards.addEventListener("click", function(e){
-    var row = e.target.closest("[data-row]");
-    if(row){
-      var code = row.getAttribute("data-row");
-      var el = cards.querySelector('[data-card="'+code+'"]');
-      var isOpen = el.classList.contains("open");
-      Array.prototype.forEach.call(cards.querySelectorAll(".card"), function(c){
-        c.classList.remove("open");
-        var r = c.querySelector("[data-row]"); if(r) r.setAttribute("aria-expanded","false");
-      });
-      if(!isOpen){
-        el.classList.add("open");
-        row.setAttribute("aria-expanded","true");
-        state.open = code;
-        setTimeout(function(){ el.scrollIntoView({behavior:"smooth", block:"nearest"}); }, 60);
-      } else { state.open = null; }
-      return;
-    }
-    var go = e.target.closest("[data-go]");
-    if(go && !go.disabled){
-      var c2 = go.getAttribute("data-go");
-      var t = byCode(c2);
-      var q = state.qty[c2], cu = state.cur[c2] || "gbp";
-      go.textContent = "Opening secure checkout…";
-      go.disabled = true;
-      setTimeout(function(){
-        alert("Prototype — no payment is taken.\n\n"+
-              t.name+" × "+q+"\n"+
-              money(cu, t.p[cu]*q)+"\n\n"+
-              "In the real widget this hands straight over to Stripe.");
-        go.textContent = "Continue to checkout";
-        go.disabled = false;
-      }, 700);
-    }
-  });
+function onClick(e){
+  if(e.target.closest("[data-back-date]")) { backToDates(); return; }
 
-  cards.addEventListener("change", function(e){
-    var q = e.target.getAttribute("data-q");
-    var c = e.target.getAttribute("data-c");
-    if(q){ state.qty[q] = e.target.value ? +e.target.value : 0; update(q); }
-    if(c){ state.cur[c] = e.target.value; update(c); refreshFrom(c); }
-    if(e.target.hasAttribute("data-ack")) update(e.target.getAttribute("data-ack"));
-  });
+  var pick = e.target.closest("[data-pick]");
+  if(pick){
+    state.cls = pick.getAttribute("data-pick");
+    out.querySelector(".tix").innerHTML = seatStep();
+    update(state.cls);
+    out.querySelector(".tix").scrollIntoView({behavior:"smooth", block:"nearest"});
+    return;
+  }
 
-  CLASSES.forEach(function(t){ update(t.code); });
+  if(e.target.closest("[data-back-class]")){
+    state.cls = null;
+    out.querySelector(".tix").innerHTML = seatStep();
+    out.querySelector(".tix").scrollIntoView({behavior:"smooth", block:"nearest"});
+    return;
+  }
+
+  var go = e.target.closest("[data-go]");
+  if(go && !go.disabled){
+    var t = byCode(go.getAttribute("data-go"));
+    var q = state.qty[t.code], cu = state.cur[t.code] || "gbp";
+    go.textContent = "Opening secure checkout\u2026";
+    go.disabled = true;
+    setTimeout(function(){
+      alert("Prototype \u2014 no payment is taken.\n\n"+
+            t.name+" \u00d7 "+q+"\n"+ money(cu, t.p[cu]*q) +"\n\n"+
+            "In the real widget this hands straight over to Stripe.");
+      go.disabled = false;
+      update(t.code);
+    }, 700);
+  }
+}
+
+function onChange(e){
+  var q = e.target.getAttribute("data-q");
+  var c = e.target.getAttribute("data-c");
+  if(q){ state.qty[q] = e.target.value ? +e.target.value : 0; update(q); }
+  if(c){ state.cur[c] = e.target.value; update(c); }
+  if(e.target.hasAttribute("data-ack")) update(e.target.getAttribute("data-ack"));
 }
 
 function byCode(c){ for(var i=0;i<CLASSES.length;i++) if(CLASSES[i].code===c) return CLASSES[i]; }
 
-function refreshFrom(code){
-  var t = byCode(code), cur = state.cur[code] || "gbp";
-  var el = document.querySelector('[data-card="'+code+'"] .row-price');
-  if(el) el.innerHTML = money(cur, t.p[cur]) + "<s>from</s>";
-}
-
 function update(code){
   var t = byCode(code);
-  var totalEl = document.querySelector('[data-total="'+code+'"]');
+  var totalEl = out.querySelector('[data-total="'+code+'"]');
   if(!totalEl) return;
-  var go = document.querySelector('[data-go="'+code+'"]');
-  var seatWrap = document.querySelector('[data-seat="'+code+'"]');
+  var go = out.querySelector('[data-go="'+code+'"]');
+  var seatWrap = out.querySelector('[data-seat="'+code+'"]');
   var qty = state.qty[code] || 0;
   var cur = state.cur[code] || "gbp";
 
-  totalEl.textContent = qty ? money(cur, t.p[cur]*qty) : "—";
+  totalEl.textContent = qty ? money(cur, t.p[cur]*qty) : "\u2014";
 
   var maxTogether = seatWrap ? +seatWrap.getAttribute("data-max") : 10;
   var needsAck = t.seated && qty > maxTogether;
 
   if(seatWrap){
-    if(needsAck){
-      if(!seatWrap.dataset.built){
-        seatWrap.innerHTML =
-          '<div class="note warn"><b>We can seat '+maxTogether+' of your group together.</b> '+
-          'The rest will be in the same class, but not side by side.'+
-          '<label class="ack"><input type="checkbox" data-ack="'+code+'">'+
-          '<span>That&rsquo;s fine &mdash; book anyway</span></label></div>';
-        seatWrap.dataset.built = "1";
-      }
-    } else {
+    if(needsAck && !seatWrap.dataset.built){
+      seatWrap.innerHTML =
+        '<div class="note warn"><b>We can seat '+maxTogether+' of your group together.</b> '+
+        'The rest will be in the same class, but not side by side.'+
+        '<label class="ack"><input type="checkbox" data-ack="'+code+'">'+
+        '<span>That&rsquo;s fine &mdash; book anyway</span></label></div>';
+      seatWrap.dataset.built = "1";
+    } else if(!needsAck){
       seatWrap.innerHTML = "";
       seatWrap.dataset.built = "";
     }
   }
-  var ack = document.querySelector('[data-ack="'+code+'"]');
-  if(go) go.disabled = !qty || (needsAck && !(ack && ack.checked));
+
+  var ack = out.querySelector('[data-ack="'+code+'"]');
+  if(go){
+    var blocked = !qty || (needsAck && !(ack && ack.checked));
+    go.disabled = blocked;
+    go.textContent = !qty ? "Select number of tickets"
+                   : blocked ? "Confirm seating above"
+                   : "Continue to checkout";
+  }
 }
 
 /* ---------------- preview toggle ---------------- */
@@ -670,12 +677,6 @@ function setView(mobile){
   stage.classList.toggle("is-mobile", mobile);
   $("vD").setAttribute("aria-pressed", String(!mobile));
   $("vM").setAttribute("aria-pressed", String(mobile));
-  var cards = $("cards");
-  if(cards) Array.prototype.forEach.call(cards.querySelectorAll(".card"), function(c){
-    c.classList.remove("open");
-    var r = c.querySelector("[data-row]"); if(r) r.setAttribute("aria-expanded","false");
-  });
-  state.open = null;
 }
 $("vD").addEventListener("click", function(){ setView(false); });
 $("vM").addEventListener("click", function(){ setView(true); });

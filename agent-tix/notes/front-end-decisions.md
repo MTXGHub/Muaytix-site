@@ -33,10 +33,16 @@ above the calendar and the full date printed in the event band.
 - **Month banner** between "Choose your date" and the grid: "You are choosing dates for
   SEPTEMBER 2026". Four month buttons make it possible to pick a date while thinking
   you are in another month, and the grid itself never named the month.
-- **Mobile layout is an accordion**, which is the answer to the scroll-length problem
-  the brief left open. All four classes fit one screen with status and price visible,
-  so a sold-out class reads at a glance; tapping one opens its artwork and controls,
-  and only one opens at a time. Still to be judged by the business owner.
+- **One section at a time.** The accordion was tried and rejected: with a class open,
+  the collapsed rows above and below kept their prices, colours and status pills, so
+  three treatments competed and nothing said which one you were filling in. The widget
+  now hands the screen from step to step. Choosing a date hides the month buttons and
+  calendar and shows the event; choosing a class replaces the four choices with that
+  class alone. Change date and Change seat class step back.
+- **The four seat choices carry name, status and from-price only.** No description, no
+  controls. Section 4 of the brief is still met: all four show for the date, sold-out
+  and closed included, each with its status. A closed class stays clickable so its
+  explanation is one tap away, but shows no purchase controls.
 - **No ticket artwork in the widget.** This reverses Section 10 of the design brief,
   which asked for the graphics to be used prominently. A 1024px square per class costs
   a great deal of height for something the guest has already chosen, and the widget is
