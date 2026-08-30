@@ -14,6 +14,7 @@
   --shadow:0 1px 2px rgba(20,17,14,.05), 0 8px 24px rgba(20,17,14,.07);
   --shadow-lg:0 2px 4px rgba(20,17,14,.06), 0 18px 44px rgba(20,17,14,.12);
   --rs:#2FA04A; --cc:#3A86D4; --leo:#D2A62A; --tc:#E8631A;
+  --blue:#1f5bff; --blue-on:#1540C9; --blue-ink:#FFFFFF;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
@@ -61,9 +62,9 @@ button,select{font:inherit;color:inherit}
 .seg button{border:0;background:none;padding:7px 15px;border-radius:999px;font-size:12px;font-weight:700;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:.15s}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
-/* numbered step badge, used in three places */
+/* numbered step badge */
 .num{display:inline-grid;place-items:center;width:20px;height:20px;flex:0 0 auto;border-radius:50%;
-  background:var(--ink);color:var(--ground);font-family:Barlow;font-size:11px;font-weight:700;
+  background:var(--blue);color:var(--blue-ink);font-family:Barlow;font-size:11px;font-weight:700;
   line-height:1;font-variant-numeric:tabular-nums}
 
 /* ---------- widget shell ---------- */
@@ -81,13 +82,6 @@ button,select{font:inherit;color:inherit}
 .mast-city{display:block;font-family:"Barlow Condensed";font-weight:600;
   font-size:clamp(18px,2.2vw,24px);line-height:1.15;color:var(--muted);letter-spacing:.03em}
 
-/* how-to strip */
-.step{padding:22px 26px 0}
-.howto{list-style:none;display:flex;flex-wrap:wrap;gap:9px 10px;margin:0;padding:0}
-.howto li{display:flex;align-items:center;gap:8px;padding:7px 13px 7px 8px;
-  border:1px solid var(--line);border-radius:999px;background:var(--surface-2);
-  font-size:13px;font-weight:600;color:var(--ink-2);white-space:nowrap}
-
 /* section label */
 .sec-label{display:flex;align-items:center;gap:9px;margin:0 0 11px;
   font-size:15px;font-weight:700;letter-spacing:.01em}
@@ -95,14 +89,16 @@ button,select{font:inherit;color:inherit}
 
 /* month buttons */
 .months{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:4px}
-.mbtn{padding:13px 10px;border:1.5px solid var(--line);border-radius:11px;background:var(--surface);
+.mbtn{padding:13px 10px;border:1.5px solid var(--blue);border-radius:11px;background:var(--blue);
   font-family:"Barlow Condensed";font-size:19px;font-weight:700;letter-spacing:.02em;
-  cursor:pointer;transition:.15s;color:var(--ink-2)}
-.mbtn:hover{border-color:var(--ink-2);color:var(--ink)}
-.mbtn.on{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+  cursor:pointer;transition:.15s;color:var(--blue-ink)}
+.mbtn:hover{background:var(--blue-on);border-color:var(--blue-on)}
+/* the chosen month sits darker, with a ring, so it still reads as selected */
+.mbtn.on{background:var(--blue-on);border-color:var(--blue-on);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--blue) 34%, transparent)}
 
 /* calendar */
-.cal{padding:18px 26px 26px}
+.cal{padding:24px 26px 26px}
 .dow,.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .dow{margin-bottom:6px}
 .dow span{text-align:center;font-size:11px;font-weight:700;letter-spacing:.09em;
@@ -124,7 +120,6 @@ button,select{font:inherit;color:inherit}
 .stage.is-mobile .day{min-height:54px}
 .stage.is-mobile .day .tag{display:none}
 .stage.is-mobile .months{grid-template-columns:repeat(2,1fr)}
-.stage.is-mobile .howto li{width:100%}
 
 /* selected event band */
 .band{background:var(--ink);color:#F5F1EC;padding:24px 26px}
@@ -276,7 +271,6 @@ button,select{font:inherit;color:inherit}
   .day .tag{display:none}
   .day{min-height:54px}
   .months{grid-template-columns:repeat(2,1fr)}
-  .howto li{width:100%}
 }
 </style>
 
@@ -297,16 +291,6 @@ button,select{font:inherit;color:inherit}
       <span class="mast-venue">Rajadamnern Stadium</span>
       <span class="mast-city">Bangkok</span>
     </div>
-
-    <section class="step">
-      <ol class="howto">
-        <li><span class="num">1</span>Select your month</li>
-        <li><span class="num">2</span>Choose your date</li>
-        <li><span class="num">3</span>Select your seat class</li>
-        <li><span class="num">4</span>Select number of tickets</li>
-        <li><span class="num">5</span>Choose your currency</li>
-      </ol>
-    </section>
 
     <section class="cal">
       <div class="sec-label"><span class="num">1</span>Select your month</div>
