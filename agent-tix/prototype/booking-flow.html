@@ -552,8 +552,8 @@ function classDetail(t){
   if(st === "closed"){
     body = '<div class="note">'+esc(CLOSED_COPY)+'</div>';
   } else if(st === "full"){
-    body = '<div class="note">Every '+esc(t.name)+' seat for this date has gone. '+
-           'Another class may still have space.</div>';
+    body = '<div class="note">'+esc(t.name)+' is now officially Fully Booked. '+
+           'Click the Change seat class button below to check alternative section availability.</div>';
   } else {
     var seats = t.seated ? seatsTogetherFor(state.date, t.code) : 10;
     body =
