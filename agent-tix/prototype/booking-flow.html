@@ -61,7 +61,10 @@ button,select{font:inherit;color:inherit}
 .seg button{border:0;background:none;padding:7px 15px;border-radius:999px;font-size:12px;font-weight:700;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:.15s}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
-.chrome-note{max-width:1180px;margin:0 auto;padding:10px 20px 0;font-size:13px;color:var(--muted)}
+/* numbered step badge, used in three places */
+.num{display:inline-grid;place-items:center;width:20px;height:20px;flex:0 0 auto;border-radius:50%;
+  background:var(--ink);color:var(--ground);font-family:Barlow;font-size:11px;font-weight:700;
+  line-height:1;font-variant-numeric:tabular-nums}
 
 /* ---------- widget shell ---------- */
 .stage{padding:18px 20px 80px}
@@ -70,29 +73,36 @@ button,select{font:inherit;color:inherit}
 .stage.is-mobile .mtx{max-width:400px}
 
 /* masthead */
-.mast{display:flex;align-items:center;justify-content:space-between;gap:14px;
-  padding:18px 26px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}
-.wordmark{font-family:"Barlow Condensed";font-weight:800;font-size:26px;letter-spacing:-.01em;line-height:1}
-.wordmark .m{color:var(--ring)} .wordmark .t{color:var(--cc)}
-.mast-meta{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right}
+.mast{padding:20px 26px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}
+.mast-lead{display:block;font-size:12px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.mast-venue{display:block;font-family:"Barlow Condensed";font-weight:800;
+  font-size:clamp(26px,3.2vw,36px);line-height:1.02;letter-spacing:.005em}
+.mast-city{display:block;font-family:"Barlow Condensed";font-weight:600;
+  font-size:clamp(18px,2.2vw,24px);line-height:1.15;color:var(--muted);letter-spacing:.03em}
 
-/* step heading */
-.step{padding:26px 26px 0}
-.step-k{display:flex;align-items:baseline;gap:10px;margin-bottom:3px}
-.step-n{font-family:"Barlow Condensed";font-weight:700;font-size:12px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted)}
-.step-h{font-size:clamp(23px,2.6vw,31px);font-weight:700;line-height:1.1}
-.step-s{margin-top:5px;font-size:14px;color:var(--muted);max-width:62ch}
+/* how-to strip */
+.step{padding:22px 26px 0}
+.howto{list-style:none;display:flex;flex-wrap:wrap;gap:9px 10px;margin:0;padding:0}
+.howto li{display:flex;align-items:center;gap:8px;padding:7px 13px 7px 8px;
+  border:1px solid var(--line);border-radius:999px;background:var(--surface-2);
+  font-size:13px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+
+/* section label */
+.sec-label{display:flex;align-items:center;gap:9px;margin:0 0 11px;
+  font-size:15px;font-weight:700;letter-spacing:.01em}
+.sec-label.gap{margin-top:22px}
+
+/* month buttons */
+.months{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:4px}
+.mbtn{padding:13px 10px;border:1.5px solid var(--line);border-radius:11px;background:var(--surface);
+  font-family:"Barlow Condensed";font-size:19px;font-weight:700;letter-spacing:.02em;
+  cursor:pointer;transition:.15s;color:var(--ink-2)}
+.mbtn:hover{border-color:var(--ink-2);color:var(--ink)}
+.mbtn.on{background:var(--ink);border-color:var(--ink);color:var(--ground)}
 
 /* calendar */
-.cal{padding:16px 26px 26px}
-.cal-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-.cal-month{font-size:20px;font-weight:700;letter-spacing:.02em}
-.cal-nav{display:flex;gap:6px}
-.cal-nav button{width:34px;height:34px;border:1px solid var(--line);background:var(--surface);
-  border-radius:9px;cursor:pointer;color:var(--ink-2);display:grid;place-items:center;transition:.15s}
-.cal-nav button:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
-.cal-nav button:disabled{opacity:.32;cursor:not-allowed}
+.cal{padding:18px 26px 26px}
 .dow,.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .dow{margin-bottom:6px}
 .dow span{text-align:center;font-size:11px;font-weight:700;letter-spacing:.09em;
@@ -113,6 +123,8 @@ button,select{font:inherit;color:inherit}
 .day.shut .n{color:var(--muted);opacity:.55;text-decoration:line-through}
 .stage.is-mobile .day{min-height:54px}
 .stage.is-mobile .day .tag{display:none}
+.stage.is-mobile .months{grid-template-columns:repeat(2,1fr)}
+.stage.is-mobile .howto li{width:100%}
 
 /* selected event band */
 .band{background:var(--ink);color:#F5F1EC;padding:24px 26px}
@@ -137,7 +149,7 @@ button,select{font:inherit;color:inherit}
 /* ticket area */
 .tix{padding:24px 26px 30px}
 .tix-h{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:16px}
-.tix-h h3{font-size:20px;font-weight:700}
+.tix-h h3{display:flex;align-items:center;gap:9px;font-size:20px;font-weight:700}
 .tix-h em{font-style:normal;font-size:12.5px;color:var(--muted)}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 
@@ -197,8 +209,9 @@ button,select{font:inherit;color:inherit}
 .ack input{width:16px;height:16px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--ink)}
 
 .fields{display:flex;flex-direction:column;gap:9px;margin-top:auto}
-.f label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;
+.f label{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.f label .num{width:17px;height:17px;font-size:10px}
 .sel{position:relative}
 .sel:after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;
   border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);
@@ -262,6 +275,8 @@ button,select{font:inherit;color:inherit}
   .card-top{display:none}
   .day .tag{display:none}
   .day{min-height:54px}
+  .months{grid-template-columns:repeat(2,1fr)}
+  .howto li{width:100%}
 }
 </style>
 
@@ -274,31 +289,30 @@ button,select{font:inherit;color:inherit}
     </div>
   </div>
 </div>
-<p class="chrome-note">Real September&ndash;December dates, real prices, real fight times. Availability is simulated so you can see every state.</p>
 
 <div class="stage" id="stage">
   <div class="mtx">
     <div class="mast">
-      <div class="wordmark"><span class="m">muay</span><span class="t">tix</span></div>
-      <div class="mast-meta">Rajadamnern Stadium<br>Bangkok</div>
+      <span class="mast-lead">Book Tickets for</span>
+      <span class="mast-venue">Rajadamnern Stadium</span>
+      <span class="mast-city">Bangkok</span>
     </div>
 
     <section class="step">
-      <div class="step-k">
-        <span class="step-n">Step 1</span>
-        <h2 class="step-h">Pick your night</h2>
-      </div>
-      <p class="step-s">Every night has a different promotion and a different start time. Choose a date to see what&rsquo;s on and what&rsquo;s left.</p>
+      <ol class="howto">
+        <li><span class="num">1</span>Select your month</li>
+        <li><span class="num">2</span>Choose your date</li>
+        <li><span class="num">3</span>Select your seat class</li>
+        <li><span class="num">4</span>Select number of tickets</li>
+        <li><span class="num">5</span>Choose your currency</li>
+      </ol>
     </section>
 
     <section class="cal">
-      <div class="cal-bar">
-        <div class="cal-month" id="calMonth">September 2026</div>
-        <div class="cal-nav">
-          <button id="prevM" aria-label="Previous month">&#8249;</button>
-          <button id="nextM" aria-label="Next month">&#8250;</button>
-        </div>
-      </div>
+      <div class="sec-label"><span class="num">1</span>Select your month</div>
+      <div class="months" id="months"></div>
+
+      <div class="sec-label gap"><span class="num">2</span>Choose your date</div>
       <div class="dow"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
       <div class="grid" id="grid"></div>
     </section>
@@ -353,7 +367,9 @@ var SYM = {gbp:"£", usd:"$", eur:"€", thb:"฿", aud:"A$", cny:"¥"};
 var CLOSED_COPY = "Third Class for this date is currently closed. Third Class is usually opened by the stadium once the other seat classes are full or close to full.";
 
 var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+var MONTHS_S = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var PICKABLE = [8,9,10,11];   // Sep–Dec 2026, the agreed scope
 
 /* ---- schedule, generated from the recurring pattern ---- */
 function iso(y,m,d){return y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");}
@@ -390,10 +406,9 @@ function seatsTogetherFor(date, code){
 }
 
 var state = {y:2026, m:8, date:null, open:null, qty:{}, cur:{}};
-var MIN = {y:2026, m:8}, MAX = {y:2026, m:11};
 
 var $ = function(id){return document.getElementById(id);};
-var grid = $("grid"), out = $("out"), stage = $("stage");
+var grid = $("grid"), out = $("out"), stage = $("stage"), months = $("months");
 
 function money(cur, minor){
   var v = minor/100;
@@ -403,12 +418,25 @@ function money(cur, minor){
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 
+/* ---------------- month buttons ---------------- */
+function renderMonths(){
+  months.innerHTML = PICKABLE.map(function(m){
+    var on = (m === state.m);
+    return '<button class="mbtn'+(on?" on":"")+'" data-m="'+m+'"'+(on?' aria-current="true"':'')+'>'+
+           MONTHS_S[m]+' 2026</button>';
+  }).join("");
+}
+
+months.addEventListener("click", function(e){
+  var b = e.target.closest("[data-m]");
+  if(!b) return;
+  state.m = +b.getAttribute("data-m");
+  renderMonths();
+  renderCal();
+});
+
 /* ---------------- calendar ---------------- */
 function renderCal(){
-  $("calMonth").textContent = MONTHS[state.m] + " " + state.y;
-  $("prevM").disabled = (state.y === MIN.y && state.m <= MIN.m);
-  $("nextM").disabled = (state.y === MAX.y && state.m >= MAX.m);
-
   var first = new Date(Date.UTC(state.y, state.m, 1)).getUTCDay();
   var lead = (first + 6) % 7;                       // week starts Monday
   var days = new Date(Date.UTC(state.y, state.m+1, 0)).getUTCDate();
@@ -425,7 +453,7 @@ function renderCal(){
     }
     var s = SERIES[ev];
     html += '<button class="day'+(state.date===key?" sel":"")+'" data-d="'+key+'" '+
-            'style="--evt:'+s.c+'" aria-label="'+esc(s.name)+', '+DAYS[new Date(Date.UTC(state.y,state.m,d)).getUTCDay()]+' '+d+' '+MONTHS[state.m]+'">'+
+            'style="--evt:'+s.c+'" aria-label="'+esc(s.name)+', '+DAYS[new Date(Date.UTC(state.y,state.m,d)).getUTCDay()]+' '+d+' '+MONTHS[state.m]+' '+state.y+'">'+
             '<span class="n">'+d+'</span>'+
             '<span class="dot"></span>'+
             '<span class="tag">'+esc(SHORT[ev])+'</span></button>';
@@ -442,8 +470,6 @@ grid.addEventListener("click", function(e){
   loading();
 });
 
-$("prevM").addEventListener("click", function(){ if(state.m>MIN.m){state.m--; renderCal();} });
-$("nextM").addEventListener("click", function(){ if(state.m<MAX.m){state.m++; renderCal();} });
 
 /* ---------------- selected date ---------------- */
 function loading(){
@@ -471,7 +497,7 @@ function render(){
       '<button class="band-change" id="chg">Change date</button>'+
     '</section>'+
     '<section class="tix">'+
-      '<div class="tix-h"><h3>Step 2 &middot; Choose your seats</h3><em>Prices are per ticket</em></div>'+
+      '<div class="tix-h"><h3><span class="num">3</span>Select your seat class</h3><em>Prices are per ticket</em></div>'+
       '<div class="cards" id="cards">'+ CLASSES.map(card).join("") +'</div>'+
     '</section>';
 
@@ -533,11 +559,11 @@ function card(t){
     var seats = t.seated ? seatsTogetherFor(state.date, t.code) : 10;
     body =
       '<div class="fields">'+
-        '<div class="f"><label for="q-'+t.code+'">How many tickets</label>'+
+        '<div class="f"><label for="q-'+t.code+'"><span class="num">4</span>Number of tickets</label>'+
           '<div class="sel"><select id="q-'+t.code+'" data-q="'+t.code+'">'+
             '<option value="">Select</option>'+ qtyOpts(t.code) +
           '</select></div></div>'+
-        '<div class="f"><label for="c-'+t.code+'">Pay in</label>'+
+        '<div class="f"><label for="c-'+t.code+'"><span class="num">5</span>Choose your currency</label>'+
           '<div class="sel"><select id="c-'+t.code+'" data-c="'+t.code+'">'+
             CUR.map(function(c){return '<option value="'+c[0]+'"'+(c[0]===cur?" selected":"")+'>'+c[1]+'</option>';}).join("")+
           '</select></div></div>'+
@@ -689,6 +715,7 @@ function setView(mobile){
 $("vD").addEventListener("click", function(){ setView(false); });
 $("vM").addEventListener("click", function(){ setView(true); });
 
+renderMonths();
 renderCal();
 })();
 </script>
