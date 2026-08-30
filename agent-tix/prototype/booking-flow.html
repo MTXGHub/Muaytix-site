@@ -154,7 +154,7 @@ button,select{font:inherit;color:inherit}
 
 /* ticket area */
 .tix{padding:24px 26px 30px}
-.tix-h{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:16px}
+.tix-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;margin-bottom:16px}
 .tix-h h3{display:flex;align-items:center;gap:9px;font-size:20px;font-weight:700}
 .tix-h em{font-style:normal;font-size:12.5px;color:var(--muted)}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
@@ -164,33 +164,6 @@ button,select{font:inherit;color:inherit}
 .card:hover{box-shadow:var(--shadow)}
 .card.off{opacity:.72}
 .card-rule{height:3px;background:var(--c)}
-
-/* ticket artwork stand-in */
-.art{position:relative;aspect-ratio:1;background:#0B0908;overflow:hidden;
-  display:grid;place-items:center;text-align:center;padding:14% 11%}
-.art:before{content:"";position:absolute;inset:7px;border:1.5px solid var(--c);opacity:.42;border-radius:3px}
-.art:after{content:"";position:absolute;inset:11px;border:.5px solid var(--c);opacity:.22;border-radius:2px}
-.art-foil{position:absolute;left:0;top:0;bottom:0;width:8%;
-  background:linear-gradient(160deg,#7be0c4,#cfa8f0 28%,#f5d98a 55%,#8fd0f5 78%,#b6f0d2);
-  opacity:.62;mix-blend-mode:screen}
-.art-in{position:relative;z-index:1}
-.art-gloves{display:flex;justify-content:center;gap:2px;margin-bottom:6%}
-.art-gloves i{width:26%;padding-bottom:26%;height:0;border-radius:46% 46% 40% 40%/52% 52% 34% 34%;display:block}
-.art-gloves i:first-child{background:linear-gradient(150deg,#E4413C,#8E1512);transform:rotate(-13deg)}
-.art-gloves i:last-child{background:linear-gradient(210deg,#3D7BD8,#15316E);transform:rotate(13deg)}
-.art-name{font-family:"Barlow Condensed";font-weight:800;color:var(--c);line-height:.92;
-  font-size:clamp(19px,3.1cqw,40px);letter-spacing:.005em;
-  text-shadow:0 2px 0 rgba(0,0,0,.5)}
-.art-tag{margin-top:5%;font-size:8.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
-  color:rgba(255,255,255,.62);line-height:1.35}
-.art-perf{position:absolute;left:0;right:0;bottom:16%;height:1px;
-  background:repeating-linear-gradient(90deg,rgba(255,255,255,.34) 0 5px,transparent 5px 11px)}
-.art-mark{position:absolute;left:0;right:0;bottom:5%;z-index:1;
-  font-family:"Barlow Condensed";font-weight:800;font-size:13px;color:#fff;letter-spacing:-.01em}
-.art-mark s{text-decoration:none;color:var(--ring)}
-.art-ph{position:absolute;top:8px;right:8px;z-index:2;background:rgba(0,0,0,.62);
-  color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.22);border-radius:5px;
-  padding:3px 6px;font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 
 /* status pill */
 .pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;
@@ -247,11 +220,10 @@ button,select{font:inherit;color:inherit}
 .row{display:none}
 .stage.is-mobile .row{display:flex;align-items:center;gap:11px;width:100%;padding:11px;
   border:0;background:none;cursor:pointer;text-align:left}
-.row-th{width:52px;height:52px;flex:0 0 auto;border-radius:8px;background:#0B0908;
-  border:1.5px solid var(--c);display:grid;place-items:center;padding:4px;overflow:hidden}
-.row-th span{font-family:"Barlow Condensed";font-weight:800;font-size:9px;line-height:.95;
-  color:var(--c);text-align:center;letter-spacing:.01em}
-.row-mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+/* a slim colour bar keeps each class identifiable now the artwork has gone */
+.row-bar{width:4px;align-self:stretch;min-height:38px;flex:0 0 auto;border-radius:99px;background:var(--c)}
+/* align-items keeps the status pill hugging its text instead of stretching the row */
+.row-mid{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:5px}
 .row-name{font-family:"Barlow Condensed";font-size:18px;font-weight:700;line-height:1}
 .row-end{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:0 0 auto}
 .row-price{font-family:"Barlow Condensed";font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
@@ -262,7 +234,6 @@ button,select{font:inherit;color:inherit}
 .card.open .chev{transform:rotate(-135deg) translate(-2px,-2px)}
 .stage.is-mobile .card-inner{display:none}
 .stage.is-mobile .card.open .card-inner{display:block;border-top:1px solid var(--line-2)}
-.stage.is-mobile .art{aspect-ratio:1;border-radius:0}
 .stage.is-mobile .card-top{display:none}
 
 /* footer strip */
@@ -348,6 +319,8 @@ var SERIES = {
 };
 var SHORT = {rk:"Knockout", np:"New Power", py:"Petchyindee", rws:"RWS", kp:"Kiatpetch", bk:"All Star"};
 
+// `tag` is the strapline on each ticket graphic. Kept for reference; the widget
+// does not print it, since the description below the name already says it.
 var CLASSES = [
   {code:"ringside", name:"Ringside",    tag:"Closest to the ring",           c:"var(--rs)",  seated:true,
    d:"Reserved seating just metres from the ring, placing you close to every entrance, exchange and celebration.",
@@ -541,19 +514,6 @@ function card(t){
   var cur = state.cur[t.code] || "gbp";
   var from = money(cur, t.p[cur]);
 
-  var art =
-    '<div class="art" style="--c:'+t.c+'">'+
-      '<div class="art-foil"></div>'+
-      '<span class="art-ph">Artwork</span>'+
-      '<div class="art-in">'+
-        '<div class="art-gloves"><i></i><i></i></div>'+
-        '<div class="art-name">'+esc(t.name.toUpperCase())+'</div>'+
-        '<div class="art-tag">'+esc(t.tag)+'</div>'+
-      '</div>'+
-      '<div class="art-perf"></div>'+
-      '<div class="art-mark">muayti<s>x</s></div>'+
-    '</div>';
-
   var body = "";
   if(st === "closed"){
     body = '<div class="note">'+esc(CLOSED_COPY)+'</div>'+
@@ -583,7 +543,7 @@ function card(t){
   '<article class="card'+(live?"":" off")+'" data-card="'+t.code+'" style="--c:'+t.c+'">'+
     '<div class="card-rule"></div>'+
     '<button class="row" data-row="'+t.code+'" aria-expanded="false">'+
-      '<span class="row-th" style="--c:'+t.c+'"><span>'+esc(t.name.toUpperCase())+'</span></span>'+
+      '<span class="row-bar"></span>'+
       '<span class="row-mid">'+
         '<span class="row-name">'+esc(t.name)+'</span>'+
         '<span class="pill '+meta.cls+'"><i></i>'+meta.label+'</span>'+
@@ -594,7 +554,6 @@ function card(t){
       '</span>'+
     '</button>'+
     '<div class="card-inner">'+
-      art+
       '<div class="card-body">'+
         '<div class="card-top">'+
           '<div><div class="card-name">'+esc(t.name)+'</div></div>'+

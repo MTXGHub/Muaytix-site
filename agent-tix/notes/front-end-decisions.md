@@ -37,14 +37,18 @@ above the calendar and the full date printed in the event band.
   the brief left open. All four classes fit one screen with status and price visible,
   so a sold-out class reads at a glance; tapping one opens its artwork and controls,
   and only one opens at a time. Still to be judged by the business owner.
+- **No ticket artwork in the widget.** This reverses Section 10 of the design brief,
+  which asked for the graphics to be used prominently. A 1024px square per class costs
+  a great deal of height for something the guest has already chosen, and the widget is
+  to stay lean. The graphics keep their place elsewhere on the site and on social.
+  Removing them took the desktop cards from roughly 1050px to 453px. Each class keeps
+  its colour: a rule across the top of the card on desktop, a slim bar on the mobile row.
 - **Event name.** "All Star Elite Fighter by Buakaw" is correct. Supabase currently
   holds "All-Star Fight by Buakaw" on three dates, which is wrong on both the name and
   the spelling of Buakaw. Not corrected in production; V2 is a fresh build.
 
 ## Outstanding
 
-- **Ticket artwork.** The four class graphics are stand-ins. The real files are needed
-  as attachments; they arrived in conversation as images, which cannot be embedded.
 - **Currencies.** Six are priced (GBP, USD, EUR, THB, AUD, CNY). JPY and SGD are
   confirmed for 1 September but have no prices yet; CAD is unconfirmed.
 - **Third Class has no stock from 1 September.** It exists in `ticket_inventory` for
