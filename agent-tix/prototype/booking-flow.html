@@ -85,7 +85,7 @@ button,select{font:inherit;color:inherit}
 /* section label */
 .sec-label{display:flex;align-items:center;gap:9px;margin:0 0 11px;
   font-size:15px;font-weight:700;letter-spacing:.01em}
-.sec-label.gap{margin-top:22px}
+.sec-label.gap{margin-top:36px}
 
 /* month buttons */
 .months{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:4px}
@@ -329,7 +329,9 @@ var CLASSES = [
    p:{gbp:2300, usd:3100, eur:2700, thb:100000, aud:4400, cny:21000}}
 ];
 
-var CUR = [["gbp","GBP £"],["usd","USD $"],["eur","EUR €"],["thb","THB ฿"],["aud","AUD $"],["cny","CNY ¥"]];
+var CUR = [["usd","USD $"],["eur","EUR €"],["gbp","GBP £"],["aud","AUD $"],["cny","CNY ¥"],["thb","THB ฿"]];
+// The dropdown opens on whichever currency leads the list.
+var DEFAULT_CUR = CUR[0][0];
 var SYM = {gbp:"£", usd:"$", eur:"€", thb:"฿", aud:"A$", cny:"¥"};
 var CLOSED_COPY = "Third Class for this date is currently closed. Third Class is usually opened by the stadium once the other seat classes are full or close to full.";
 
@@ -532,7 +534,7 @@ function classDetail(t){
   var st = statusFor(state.date, t.code);
   var meta = statusMeta(st);
   var live = (st === "available" || st === "limited");
-  var cur = state.cur[t.code] || "gbp";
+  var cur = state.cur[t.code] || DEFAULT_CUR;
   var body;
 
   if(st === "closed"){
@@ -610,7 +612,7 @@ function onClick(e){
   var go = e.target.closest("[data-go]");
   if(go && !go.disabled){
     var t = byCode(go.getAttribute("data-go"));
-    var q = state.qty[t.code], cu = state.cur[t.code] || "gbp";
+    var q = state.qty[t.code], cu = state.cur[t.code] || DEFAULT_CUR;
     go.textContent = "Opening secure checkout\u2026";
     go.disabled = true;
     setTimeout(function(){
@@ -640,7 +642,7 @@ function update(code){
   var go = out.querySelector('[data-go="'+code+'"]');
   var seatWrap = out.querySelector('[data-seat="'+code+'"]');
   var qty = state.qty[code] || 0;
-  var cur = state.cur[code] || "gbp";
+  var cur = state.cur[code] || DEFAULT_CUR;
 
   var unitEl = out.querySelector('[data-unit="'+code+'"]');
   if(unitEl) unitEl.textContent = money(cur, t.p[cur]);
