@@ -53,10 +53,20 @@ above the calendar and the full date printed in the event band.
   holds "All-Star Fight by Buakaw" on three dates, which is wrong on both the name and
   the spelling of Buakaw. Not corrected in production; V2 is a fresh build.
 
+- **Locked to the light theme.** The widget is embedded in a light Tilda page, so
+  following the guest's phone would make it look foreign inside its own page. The dark
+  theme blocks were removed rather than left unreachable.
+
 ## Outstanding
 
-- **Currencies.** Six are priced (GBP, USD, EUR, THB, AUD, CNY). JPY and SGD are
-  confirmed for 1 September but have no prices yet; CAD is unconfirmed.
-- **Third Class has no stock from 1 September.** It exists in `ticket_inventory` for
-  August only. The current calendar widget fabricates the card in JavaScript when the
-  database returns nothing, which is why its prices are hardcoded there.
+- **Currencies: six, and staying at six.** USD, EUR, GBP, AUD, CNY, THB. JPY and SGD
+  were dropped on 30 August: a UK Stripe account cannot hold them as settlement
+  currencies. CAD undecided. Adding one later is a data change, not a build.
+- **Third Class needs a Stripe product per date.** Every one of the 371 rows in
+  `ticket_inventory` carries its own `stripe_product_id` and `stripe_price_id` — 371
+  rows, 371 distinct products. So a new Third Class row cannot take money until a
+  Stripe product exists for it, and the Stripe connector is not authorised in this
+  session. Agreed plan: 50 seats on every RWS Saturday, all held at `not_released`
+  until instructed, with 5 September opened first.
+- **Third Class prices** (from the database, not the widget's hardcoded copy):
+  USD 31, EUR 27, GBP 23, CNY 210, AUD 44, THB 1000.

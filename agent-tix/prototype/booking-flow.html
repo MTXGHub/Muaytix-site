@@ -22,34 +22,8 @@
   --blue:#1f5bff; --blue-on:#1540C9; --blue-ink:#FFFFFF;
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --ground:#100E0C; --surface:#1A1714; --surface-2:#211D19;
-    --ink:#F5F1EC; --ink-2:#D5CCC2; --muted:#9C9187; --line:#332D27; --line-2:#292420;
-    --ok-fg:#6FD199; --ok-bg:#12291C;
-    --lim-fg:#E5B064; --lim-bg:#2C2113;
-    --full-fg:#EE8C8C; --full-bg:#2E1717;
-    --shut-fg:#A79C91; --shut-bg:#252119;
-    --rs-ink:#62D689; --cc-ink:#79B4F0; --leo-ink:#FFD400; --tc-ink:#FF9557;
-    --ring:#F2547A;
-    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.4);
-    --shadow-lg:0 2px 4px rgba(0,0,0,.5), 0 18px 44px rgba(0,0,0,.55);
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --ground:#100E0C; --surface:#1A1714; --surface-2:#211D19;
-  --ink:#F5F1EC; --ink-2:#D5CCC2; --muted:#9C9187; --line:#332D27; --line-2:#292420;
-  --ok-fg:#6FD199; --ok-bg:#12291C;
-  --lim-fg:#E5B064; --lim-bg:#2C2113;
-  --full-fg:#EE8C8C; --full-bg:#2E1717;
-  --shut-fg:#A79C91; --shut-bg:#252119;
-  --rs-ink:#62D689; --cc-ink:#79B4F0; --leo-ink:#FFD400; --tc-ink:#FF9557;
-  --ring:#F2547A;
-  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.4);
-  --shadow-lg:0 2px 4px rgba(0,0,0,.5), 0 18px 44px rgba(0,0,0,.55);
-  color-scheme:dark;
-}
+/* Locked to light. The widget is embedded in a light Tilda page, so following
+   the guest's phone theme would make it look foreign inside its own page. */
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--ground);color:var(--ink);
