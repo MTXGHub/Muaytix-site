@@ -223,17 +223,21 @@ button,select{font:inherit;color:inherit}
 .sum--total{border-top:1px solid var(--line-2);background:var(--surface)}
 .sum--total b{font-size:26px;font-weight:800}
 
-.go{width:100%;min-height:50px;padding:12px;border:0;border-radius:10px;background:var(--ink);
-  color:var(--ground);font-family:"Barlow Condensed";font-size:17px;font-weight:700;
-  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:.15s}
+/* sized to the words, not the panel — full width only where the panel is narrow */
+.go{min-height:44px;padding:11px 26px;border:0;border-radius:9px;background:var(--ink);
+  color:var(--ground);font-family:"Barlow Condensed";font-size:15px;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.15s;
+  align-self:flex-start}
 .go:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-lg)}
 /* waiting, not broken: an outline that reads as "one more thing to do" */
 .go:disabled{background:transparent;color:var(--muted);border:1.5px dashed var(--line);
   cursor:not-allowed;transform:none;box-shadow:none}
+@media (max-width:640px){ .go{width:100%;align-self:stretch} }
 
 @media (max-width:860px){ .picker{grid-template-columns:repeat(2,1fr)} }
 .stage.is-mobile .picker{grid-template-columns:repeat(2,1fr)}
 .stage.is-mobile .pair{grid-template-columns:1fr}
+.stage.is-mobile .go{width:100%;align-self:stretch}
 @media (max-width:520px){ .pair{grid-template-columns:1fr} }
 
 /* footer strip */
@@ -625,7 +629,7 @@ function onClick(e){
   if(go && !go.disabled){
     var t = byCode(go.getAttribute("data-go"));
     var q = state.qty[t.code], cu = state.cur[t.code] || DEFAULT_CUR;
-    go.textContent = "Opening secure checkout\u2026";
+    go.textContent = "Reserving your tickets\u2026";
     go.disabled = true;
     setTimeout(function(){
       alert("Prototype \u2014 no payment is taken.\n\n"+
@@ -683,7 +687,7 @@ function update(code){
     go.disabled = blocked;
     go.textContent = !qty ? "Select number of tickets"
                    : blocked ? "Confirm seating above"
-                   : "Continue to checkout";
+                   : "Reserve your tickets";
   }
 }
 
