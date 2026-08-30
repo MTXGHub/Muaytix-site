@@ -145,9 +145,9 @@ button,select{font:inherit;color:inherit}
 .band-change:hover{background:rgba(245,241,236,.1)}
 
 /* loading */
-.load{padding:52px 26px;text-align:center;color:var(--muted);font-size:14px;font-weight:600}
-.spin{width:22px;height:22px;margin:0 auto 12px;border:2.5px solid var(--line);
-  border-top-color:var(--ink);border-radius:50%;animation:sp .7s linear infinite}
+.load{padding:56px 26px;text-align:center;color:var(--ink-2);font-size:16px;font-weight:600}
+.spin{width:26px;height:26px;margin:0 auto 14px;border:3px solid var(--line);
+  border-top-color:var(--blue);border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 
 /* ticket area */
@@ -473,9 +473,12 @@ grid.addEventListener("click", function(e){
 
 /* ---------------- selected date ---------------- */
 function loading(){
-  out.innerHTML = '<div class="load"><div class="spin"></div>Checking tonight&rsquo;s availability&hellip;</div>';
+  out.innerHTML = '<div class="load"><div class="spin"></div>Checking live availability&hellip;</div>';
   out.scrollIntoView({behavior:"smooth", block:"nearest"});
-  setTimeout(render, 620);
+  // In the live widget the real availability check usually returns faster than
+  // this. Treat it as a minimum time on screen, so the message is readable
+  // rather than a flicker.
+  setTimeout(render, 1500);
 }
 
 function render(){
