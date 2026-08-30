@@ -97,6 +97,15 @@ button,select{font:inherit;color:inherit}
 /* chosen month reverses out: white fill, blue border, blue type */
 .mbtn.on{background:var(--surface);border-color:var(--blue);color:var(--blue)}
 
+/* which month am I looking at — guards against picking a date in the wrong month */
+.month-note{display:flex;align-items:center;gap:11px;margin:0 0 14px;padding:12px 15px;
+  border:2px solid var(--blue);border-radius:10px;
+  background:color-mix(in srgb, var(--blue) 10%, var(--surface));
+  color:var(--ink-2);font-size:14.5px;font-weight:600;line-height:1.25}
+.month-note svg{flex:0 0 auto;color:var(--blue)}
+.month-note b{font-family:"Barlow Condensed";font-size:22px;font-weight:800;
+  letter-spacing:.035em;color:var(--blue);white-space:nowrap}
+
 /* calendar */
 .cal{padding:24px 26px 26px}
 .dow,.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
@@ -297,6 +306,10 @@ button,select{font:inherit;color:inherit}
       <div class="months" id="months"></div>
 
       <div class="sec-label gap"><span class="num">2</span>Choose your date</div>
+      <p class="month-note">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg>
+        <span>You are choosing dates for <b id="monthNote">SEPTEMBER 2026</b></span>
+      </p>
       <div class="dow"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
       <div class="grid" id="grid"></div>
     </section>
@@ -421,6 +434,8 @@ months.addEventListener("click", function(e){
 
 /* ---------------- calendar ---------------- */
 function renderCal(){
+  $("monthNote").textContent = MONTHS[state.m].toUpperCase() + " " + state.y;
+
   var first = new Date(Date.UTC(state.y, state.m, 1)).getUTCDay();
   var lead = (first + 6) % 7;                       // week starts Monday
   var days = new Date(Date.UTC(state.y, state.m+1, 0)).getUTCDate();
