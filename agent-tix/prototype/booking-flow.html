@@ -1,0 +1,694 @@
+<title>Agent Tix Booking Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#F6F4F1; --surface:#FFFFFF; --surface-2:#FBFAF8;
+  --ink:#14110E; --ink-2:#3A342D; --muted:#6E655C; --line:#E2DDD6; --line-2:#EFEBE5;
+  --ok-fg:#136B3B; --ok-bg:#E6F2EA;
+  --lim-fg:#8A5200; --lim-bg:#FBF0DE;
+  --full-fg:#9C1F1F; --full-bg:#F8E8E8;
+  --shut-fg:#645B52; --shut-bg:#EDEAE5;
+  --ring:#C4122F;
+  --shadow:0 1px 2px rgba(20,17,14,.05), 0 8px 24px rgba(20,17,14,.07);
+  --shadow-lg:0 2px 4px rgba(20,17,14,.06), 0 18px 44px rgba(20,17,14,.12);
+  --rs:#2FA04A; --cc:#3A86D4; --leo:#D2A62A; --tc:#E8631A;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#100E0C; --surface:#1A1714; --surface-2:#211D19;
+    --ink:#F5F1EC; --ink-2:#D5CCC2; --muted:#9C9187; --line:#332D27; --line-2:#292420;
+    --ok-fg:#6FD199; --ok-bg:#12291C;
+    --lim-fg:#E5B064; --lim-bg:#2C2113;
+    --full-fg:#EE8C8C; --full-bg:#2E1717;
+    --shut-fg:#A79C91; --shut-bg:#252119;
+    --ring:#F2547A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.4);
+    --shadow-lg:0 2px 4px rgba(0,0,0,.5), 0 18px 44px rgba(0,0,0,.55);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#100E0C; --surface:#1A1714; --surface-2:#211D19;
+  --ink:#F5F1EC; --ink-2:#D5CCC2; --muted:#9C9187; --line:#332D27; --line-2:#292420;
+  --ok-fg:#6FD199; --ok-bg:#12291C;
+  --lim-fg:#E5B064; --lim-bg:#2C2113;
+  --full-fg:#EE8C8C; --full-bg:#2E1717;
+  --shut-fg:#A79C91; --shut-bg:#252119;
+  --ring:#F2547A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.4);
+  --shadow-lg:0 2px 4px rgba(0,0,0,.5), 0 18px 44px rgba(0,0,0,.55);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font:400 15px/1.55 Barlow,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;font-family:"Barlow Condensed",Barlow,sans-serif;text-wrap:balance;letter-spacing:.005em}
+p{margin:0}
+button,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ring);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ---------- review chrome (not part of the widget) ---------- */
+.chrome{max-width:1180px;margin:0 auto;padding:22px 20px 6px}
+.chrome-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.chrome-title{font-size:13px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.seg button{border:0;background:none;padding:7px 15px;border-radius:999px;font-size:12px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:.15s}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+.chrome-note{max-width:1180px;margin:0 auto;padding:10px 20px 0;font-size:13px;color:var(--muted)}
+
+/* ---------- widget shell ---------- */
+.stage{padding:18px 20px 80px}
+.mtx{max-width:1120px;margin:0 auto;background:var(--surface);border:1px solid var(--line);
+  border-radius:16px;box-shadow:var(--shadow);overflow:hidden;transition:max-width .28s ease}
+.stage.is-mobile .mtx{max-width:400px}
+
+/* masthead */
+.mast{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:18px 26px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}
+.wordmark{font-family:"Barlow Condensed";font-weight:800;font-size:26px;letter-spacing:-.01em;line-height:1}
+.wordmark .m{color:var(--ring)} .wordmark .t{color:var(--cc)}
+.mast-meta{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right}
+
+/* step heading */
+.step{padding:26px 26px 0}
+.step-k{display:flex;align-items:baseline;gap:10px;margin-bottom:3px}
+.step-n{font-family:"Barlow Condensed";font-weight:700;font-size:12px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted)}
+.step-h{font-size:clamp(23px,2.6vw,31px);font-weight:700;line-height:1.1}
+.step-s{margin-top:5px;font-size:14px;color:var(--muted);max-width:62ch}
+
+/* calendar */
+.cal{padding:16px 26px 26px}
+.cal-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.cal-month{font-size:20px;font-weight:700;letter-spacing:.02em}
+.cal-nav{display:flex;gap:6px}
+.cal-nav button{width:34px;height:34px;border:1px solid var(--line);background:var(--surface);
+  border-radius:9px;cursor:pointer;color:var(--ink-2);display:grid;place-items:center;transition:.15s}
+.cal-nav button:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+.cal-nav button:disabled{opacity:.32;cursor:not-allowed}
+.dow,.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.dow{margin-bottom:6px}
+.dow span{text-align:center;font-size:11px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted);padding:2px 0}
+.day{position:relative;min-height:62px;padding:7px 5px 6px;border:1.5px solid transparent;
+  border-radius:11px;background:var(--surface-2);cursor:pointer;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:5px;transition:.15s}
+.day:hover:not(:disabled){border-color:var(--line);transform:translateY(-1px)}
+.day:disabled{background:transparent;cursor:default}
+.day .n{font-family:"Barlow Condensed";font-weight:700;font-size:20px;line-height:1;
+  font-variant-numeric:tabular-nums}
+.day .tag{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--muted);line-height:1.15;max-width:100%;overflow:hidden}
+.day .dot{width:5px;height:5px;border-radius:50%;background:var(--evt,var(--muted))}
+.day.sel{border-color:var(--ink);background:var(--ink)}
+.day.sel .n{color:var(--ground)} .day.sel .tag{color:rgba(255,255,255,.72)}
+.day.none .n{color:var(--muted);opacity:.4}
+.day.shut .n{color:var(--muted);opacity:.55;text-decoration:line-through}
+.stage.is-mobile .day{min-height:54px}
+.stage.is-mobile .day .tag{display:none}
+
+/* selected event band */
+.band{background:var(--ink);color:#F5F1EC;padding:24px 26px}
+.band-k{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:rgba(245,241,236,.6);margin-bottom:9px}
+.band-h{font-size:clamp(24px,3vw,34px);font-weight:800;line-height:1.06;letter-spacing:.01em}
+.band-when{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:15px;font-weight:600}
+.band-when span{display:inline-flex;align-items:center;gap:7px}
+.band-when svg{opacity:.55;flex:0 0 auto}
+.band-d{margin-top:13px;font-size:14.5px;line-height:1.55;color:rgba(245,241,236,.8);max-width:66ch}
+.band-change{margin-top:16px;border:1px solid rgba(245,241,236,.28);background:none;color:#F5F1EC;
+  padding:9px 16px;border-radius:9px;font-size:12px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;cursor:pointer;transition:.15s}
+.band-change:hover{background:rgba(245,241,236,.1)}
+
+/* loading */
+.load{padding:52px 26px;text-align:center;color:var(--muted);font-size:14px;font-weight:600}
+.spin{width:22px;height:22px;margin:0 auto 12px;border:2.5px solid var(--line);
+  border-top-color:var(--ink);border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ticket area */
+.tix{padding:24px 26px 30px}
+.tix-h{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:16px}
+.tix-h h3{font-size:20px;font-weight:700}
+.tix-h em{font-style:normal;font-size:12.5px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+
+.card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;transition:.18s}
+.card:hover{box-shadow:var(--shadow)}
+.card.off{opacity:.72}
+.card-rule{height:3px;background:var(--c)}
+
+/* ticket artwork stand-in */
+.art{position:relative;aspect-ratio:1;background:#0B0908;overflow:hidden;
+  display:grid;place-items:center;text-align:center;padding:14% 11%}
+.art:before{content:"";position:absolute;inset:7px;border:1.5px solid var(--c);opacity:.42;border-radius:3px}
+.art:after{content:"";position:absolute;inset:11px;border:.5px solid var(--c);opacity:.22;border-radius:2px}
+.art-foil{position:absolute;left:0;top:0;bottom:0;width:8%;
+  background:linear-gradient(160deg,#7be0c4,#cfa8f0 28%,#f5d98a 55%,#8fd0f5 78%,#b6f0d2);
+  opacity:.62;mix-blend-mode:screen}
+.art-in{position:relative;z-index:1}
+.art-gloves{display:flex;justify-content:center;gap:2px;margin-bottom:6%}
+.art-gloves i{width:26%;padding-bottom:26%;height:0;border-radius:46% 46% 40% 40%/52% 52% 34% 34%;display:block}
+.art-gloves i:first-child{background:linear-gradient(150deg,#E4413C,#8E1512);transform:rotate(-13deg)}
+.art-gloves i:last-child{background:linear-gradient(210deg,#3D7BD8,#15316E);transform:rotate(13deg)}
+.art-name{font-family:"Barlow Condensed";font-weight:800;color:var(--c);line-height:.92;
+  font-size:clamp(19px,3.1cqw,40px);letter-spacing:.005em;
+  text-shadow:0 2px 0 rgba(0,0,0,.5)}
+.art-tag{margin-top:5%;font-size:8.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:rgba(255,255,255,.62);line-height:1.35}
+.art-perf{position:absolute;left:0;right:0;bottom:16%;height:1px;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.34) 0 5px,transparent 5px 11px)}
+.art-mark{position:absolute;left:0;right:0;bottom:5%;z-index:1;
+  font-family:"Barlow Condensed";font-weight:800;font-size:13px;color:#fff;letter-spacing:-.01em}
+.art-mark s{text-decoration:none;color:var(--ring)}
+.art-ph{position:absolute;top:8px;right:8px;z-index:2;background:rgba(0,0,0,.62);
+  color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.22);border-radius:5px;
+  padding:3px 6px;font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+
+/* status pill */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;
+  font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}
+.pill i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.pill.ok{color:var(--ok-fg);background:var(--ok-bg)}
+.pill.lim{color:var(--lim-fg);background:var(--lim-bg)}
+.pill.full{color:var(--full-fg);background:var(--full-bg)}
+.pill.shut{color:var(--shut-fg);background:var(--shut-bg)}
+
+.card-body{display:flex;flex-direction:column;flex:1;gap:11px;padding:15px 15px 16px}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.card-name{font-size:19px;font-weight:700;line-height:1.05}
+.card-d{font-size:13px;line-height:1.5;color:var(--muted)}
+.card-from{font-size:13px;font-weight:600;color:var(--ink-2)}
+.card-from b{font-family:"Barlow Condensed";font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+
+.note{padding:10px 11px;border-radius:9px;font-size:12.5px;line-height:1.45;background:var(--shut-bg);color:var(--ink-2)}
+.note.warn{background:var(--lim-bg);color:var(--lim-fg)}
+.note b{font-weight:700}
+.ack{display:flex;gap:8px;align-items:flex-start;margin-top:9px;cursor:pointer;font-weight:600}
+.ack input{width:16px;height:16px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--ink)}
+
+.fields{display:flex;flex-direction:column;gap:9px;margin-top:auto}
+.f label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.sel{position:relative}
+.sel:after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;
+  border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);
+  transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.sel select{width:100%;min-height:44px;padding:9px 34px 9px 12px;border:1.5px solid var(--line);
+  border-radius:10px;background:var(--surface);font-size:14.5px;font-weight:600;
+  appearance:none;-webkit-appearance:none;cursor:pointer;transition:.15s}
+.sel select:hover:not(:disabled){border-color:var(--ink-2)}
+.sel select:disabled{opacity:.55;cursor:not-allowed;background:var(--surface-2)}
+
+.total{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:11px 13px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line-2)}
+.total span{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.total b{font-family:"Barlow Condensed";font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+
+.go{width:100%;min-height:48px;padding:12px;border:0;border-radius:10px;background:var(--ink);
+  color:var(--ground);font-family:"Barlow Condensed";font-size:16px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:.15s}
+.go:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-lg)}
+.go:disabled{background:var(--line);color:var(--muted);cursor:not-allowed;transform:none;box-shadow:none}
+.go.quiet{background:var(--surface-2);color:var(--muted);border:1.5px solid var(--line)}
+
+/* ---------- mobile accordion ---------- */
+.stage.is-mobile .cards{display:flex;flex-direction:column;gap:9px}
+.stage.is-mobile .card{border-radius:12px}
+.stage.is-mobile .card-rule{display:none}
+.row{display:none}
+.stage.is-mobile .row{display:flex;align-items:center;gap:11px;width:100%;padding:11px;
+  border:0;background:none;cursor:pointer;text-align:left}
+.row-th{width:52px;height:52px;flex:0 0 auto;border-radius:8px;background:#0B0908;
+  border:1.5px solid var(--c);display:grid;place-items:center;padding:4px;overflow:hidden}
+.row-th span{font-family:"Barlow Condensed";font-weight:800;font-size:9px;line-height:.95;
+  color:var(--c);text-align:center;letter-spacing:.01em}
+.row-mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.row-name{font-family:"Barlow Condensed";font-size:18px;font-weight:700;line-height:1}
+.row-end{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:0 0 auto}
+.row-price{font-family:"Barlow Condensed";font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.row-price s{display:block;text-decoration:none;font-family:Barlow;font-size:9px;font-weight:600;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.chev{width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);
+  transform:rotate(45deg) translate(-2px,-2px);transition:transform .2s}
+.card.open .chev{transform:rotate(-135deg) translate(-2px,-2px)}
+.stage.is-mobile .card-inner{display:none}
+.stage.is-mobile .card.open .card-inner{display:block;border-top:1px solid var(--line-2)}
+.stage.is-mobile .art{aspect-ratio:1;border-radius:0}
+.stage.is-mobile .card-top{display:none}
+
+/* footer strip */
+.foot{padding:16px 26px 22px;border-top:1px solid var(--line-2);background:var(--surface-2);
+  display:flex;flex-wrap:wrap;gap:8px 22px;font-size:12px;color:var(--muted);font-weight:600}
+.foot span{display:inline-flex;align-items:center;gap:6px}
+
+@media (max-width:1000px){ .cards{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:720px){
+  .mast,.step,.cal,.band,.tix,.foot{padding-left:16px;padding-right:16px}
+  .cards{display:flex;flex-direction:column;gap:9px}
+  .card-rule{display:none}
+  .row{display:flex;align-items:center;gap:11px;width:100%;padding:11px;border:0;background:none;cursor:pointer;text-align:left}
+  .card-inner{display:none}
+  .card.open .card-inner{display:block;border-top:1px solid var(--line-2)}
+  .card-top{display:none}
+  .day .tag{display:none}
+  .day{min-height:54px}
+}
+</style>
+
+<div class="chrome">
+  <div class="chrome-row">
+    <div class="chrome-title">Agent Tix &middot; booking flow prototype</div>
+    <div class="seg" role="group" aria-label="Preview size">
+      <button id="vD" aria-pressed="true">Desktop</button>
+      <button id="vM" aria-pressed="false">Mobile</button>
+    </div>
+  </div>
+</div>
+<p class="chrome-note">Real September&ndash;December dates, real prices, real fight times. Availability is simulated so you can see every state.</p>
+
+<div class="stage" id="stage">
+  <div class="mtx">
+    <div class="mast">
+      <div class="wordmark"><span class="m">muay</span><span class="t">tix</span></div>
+      <div class="mast-meta">Rajadamnern Stadium<br>Bangkok</div>
+    </div>
+
+    <section class="step">
+      <div class="step-k">
+        <span class="step-n">Step 1</span>
+        <h2 class="step-h">Pick your night</h2>
+      </div>
+      <p class="step-s">Every night has a different promotion and a different start time. Choose a date to see what&rsquo;s on and what&rsquo;s left.</p>
+    </section>
+
+    <section class="cal">
+      <div class="cal-bar">
+        <div class="cal-month" id="calMonth">September 2026</div>
+        <div class="cal-nav">
+          <button id="prevM" aria-label="Previous month">&#8249;</button>
+          <button id="nextM" aria-label="Next month">&#8250;</button>
+        </div>
+      </div>
+      <div class="dow"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <div id="out"></div>
+
+    <div class="foot">
+      <span>Secure checkout by Stripe</span>
+      <span>Instant e-ticket by email</span>
+      <span>Face-value pricing</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var SERIES = {
+  rk:{name:"Rajadamnern Knockout", s:"19:00", e:"21:00", c:"#B0342E",
+      d:"Fast-paced three-round fights, chasing a knockout from the opening bell."},
+  np:{name:"New Power Traditional Muay Thai", s:"18:00", e:"22:00", c:"#4A7A3F",
+      d:"Classic five-round Muay Thai from Thailand's longest-standing promoter, fuelled by an electric local atmosphere."},
+  py:{name:"Petchyindee Traditional Muay Thai", s:"18:00", e:"22:00", c:"#8A5A9E",
+      d:"Traditional Muay Thai with technical five-round fights, fuelled by a passionate local crowd."},
+  rws:{name:"RWS Rajadamnern World Series", s:"19:10", e:"22:00", c:"#2F6FC4",
+      d:"World-class championship Muay Thai meets the energy of a Saturday-night global broadcast."},
+  kp:{name:"Kiatpetch Traditional Muay Thai", s:"18:00", e:"22:00", c:"#C08A2E",
+      d:"Technical fighters blend fast-paced three-round bouts with classic five-round Muay Thai before a lively Sunday-night local crowd."},
+  bk:{name:"All Star Elite Fighter by Buakaw", s:"19:00", e:"21:00", c:"#C4122F",
+      d:"Thailand takes on the world across seven three-round bouts, promoted by Muay Thai icon Buakaw."}
+};
+var SHORT = {rk:"Knockout", np:"New Power", py:"Petchyindee", rws:"RWS", kp:"Kiatpetch", bk:"All Star"};
+
+var CLASSES = [
+  {code:"ringside", name:"Ringside",    tag:"Closest to the ring",           c:"var(--rs)",  seated:true,
+   d:"Reserved seating just metres from the ring, placing you close to every entrance, exchange and celebration.",
+   p:{gbp:5700, usd:7700, eur:6700, thb:250000, aud:10900, cny:52000}},
+  {code:"club",     name:"Club Class",  tag:"Elevated view of the entire ring", c:"var(--cc)", seated:true,
+   d:"Our most popular ticket, offering panoramic views from elevated seating with reserved seats throughout the evening.",
+   p:{gbp:4100, usd:5500, eur:4800, thb:180000, aud:7900, cny:38000}},
+  {code:"leo",      name:"LEO Section", tag:"Where the atmosphere lives",     c:"var(--leo)", seated:false,
+   d:"Elevated seating in Section 10, offering panoramic views and one of the stadium's most energetic atmospheres.",
+   p:{gbp:3400, usd:4600, eur:4000, thb:150000, aud:6600, cny:31000}},
+  {code:"third",    name:"Third Class", tag:"360 degree view of the action",  c:"var(--tc)",  seated:false,
+   d:"Guaranteed seating in the upper terraces, with a panoramic 360-degree view across the ring and stadium.",
+   p:{gbp:2300, usd:3100, eur:2700, thb:100000, aud:4400, cny:21000}}
+];
+
+var CUR = [["gbp","GBP £"],["usd","USD $"],["eur","EUR €"],["thb","THB ฿"],["aud","AUD $"],["cny","CNY ¥"]];
+var SYM = {gbp:"£", usd:"$", eur:"€", thb:"฿", aud:"A$", cny:"¥"};
+var CLOSED_COPY = "Third Class for this date is currently closed. Third Class is usually opened by the stadium once the other seat classes are full or close to full.";
+
+var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+/* ---- schedule, generated from the recurring pattern ---- */
+function iso(y,m,d){return y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");}
+function lastMondayOf(y,m){
+  var d = new Date(Date.UTC(y, m+1, 0));
+  while(d.getUTCDay() !== 1) d.setUTCDate(d.getUTCDate()-1);
+  return d.getUTCDate();
+}
+function eventFor(y,m,d){
+  if(iso(y,m,d) === "2026-12-26") return null;           // no fight, Boxing Day
+  if(m === 11 && d > 31) return null;
+  var dow = new Date(Date.UTC(y,m,d)).getUTCDay();       // 0 Sun .. 6 Sat
+  if(dow === 1 && d === lastMondayOf(y,m)) return "bk";
+  if(dow === 1 || dow === 2 || dow === 5) return "rk";
+  if(dow === 3) return "np";
+  if(dow === 4) return "py";
+  if(dow === 6) return "rws";
+  if(dow === 0) return "kp";
+  return null;
+}
+
+/* ---- simulated availability, stable per date+class ---- */
+function hash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0);}
+function statusFor(date, code){
+  var h = hash(date+"|"+code) % 100;
+  if(code === "third") return h < 74 ? "closed" : (h < 88 ? "limited" : "available");
+  if(h < 8)  return "full";
+  if(h < 30) return "limited";
+  return "available";
+}
+function seatsTogetherFor(date, code){
+  var h = hash(date+"|seats|"+code) % 100;
+  return h < 34 ? (2 + (h % 3)) : 10;   // sometimes a small block, usually plenty
+}
+
+var state = {y:2026, m:8, date:null, open:null, qty:{}, cur:{}};
+var MIN = {y:2026, m:8}, MAX = {y:2026, m:11};
+
+var $ = function(id){return document.getElementById(id);};
+var grid = $("grid"), out = $("out"), stage = $("stage");
+
+function money(cur, minor){
+  var v = minor/100;
+  var frac = (minor % 100 === 0) ? 0 : 2;
+  return SYM[cur] + v.toLocaleString("en-GB",{minimumFractionDigits:frac, maximumFractionDigits:2});
+}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+
+/* ---------------- calendar ---------------- */
+function renderCal(){
+  $("calMonth").textContent = MONTHS[state.m] + " " + state.y;
+  $("prevM").disabled = (state.y === MIN.y && state.m <= MIN.m);
+  $("nextM").disabled = (state.y === MAX.y && state.m >= MAX.m);
+
+  var first = new Date(Date.UTC(state.y, state.m, 1)).getUTCDay();
+  var lead = (first + 6) % 7;                       // week starts Monday
+  var days = new Date(Date.UTC(state.y, state.m+1, 0)).getUTCDate();
+  var html = "";
+  for(var i=0;i<lead;i++) html += '<button class="day none" disabled></button>';
+
+  for(var d=1; d<=days; d++){
+    var key = iso(state.y, state.m, d);
+    var ev = eventFor(state.y, state.m, d);
+    if(!ev){
+      html += '<button class="day shut" disabled title="No fight this night">'+
+              '<span class="n">'+d+'</span><span class="tag">No fight</span></button>';
+      continue;
+    }
+    var s = SERIES[ev];
+    html += '<button class="day'+(state.date===key?" sel":"")+'" data-d="'+key+'" '+
+            'style="--evt:'+s.c+'" aria-label="'+esc(s.name)+', '+DAYS[new Date(Date.UTC(state.y,state.m,d)).getUTCDay()]+' '+d+' '+MONTHS[state.m]+'">'+
+            '<span class="n">'+d+'</span>'+
+            '<span class="dot"></span>'+
+            '<span class="tag">'+esc(SHORT[ev])+'</span></button>';
+  }
+  grid.innerHTML = html;
+}
+
+grid.addEventListener("click", function(e){
+  var b = e.target.closest("[data-d]");
+  if(!b) return;
+  state.date = b.getAttribute("data-d");
+  state.open = null; state.qty = {}; state.cur = {};
+  renderCal();
+  loading();
+});
+
+$("prevM").addEventListener("click", function(){ if(state.m>MIN.m){state.m--; renderCal();} });
+$("nextM").addEventListener("click", function(){ if(state.m<MAX.m){state.m++; renderCal();} });
+
+/* ---------------- selected date ---------------- */
+function loading(){
+  out.innerHTML = '<div class="load"><div class="spin"></div>Checking tonight&rsquo;s availability&hellip;</div>';
+  out.scrollIntoView({behavior:"smooth", block:"nearest"});
+  setTimeout(render, 620);
+}
+
+function render(){
+  var parts = state.date.split("-");
+  var y = +parts[0], m = +parts[1]-1, d = +parts[2];
+  var ev = eventFor(y,m,d), s = SERIES[ev];
+  var dow = DAYS[new Date(Date.UTC(y,m,d)).getUTCDay()];
+
+  var html =
+    '<section class="band">'+
+      '<div class="band-k">Your fight night</div>'+
+      '<h2 class="band-h">'+esc(s.name)+'</h2>'+
+      '<div class="band-when">'+
+        '<span>'+icon("cal")+esc(dow+" "+d+" "+MONTHS[m]+" "+y)+'</span>'+
+        '<span>'+icon("clock")+esc(fmt12(s.s)+" – "+fmt12(s.e))+'</span>'+
+        '<span>'+icon("pin")+'Rajadamnern Stadium</span>'+
+      '</div>'+
+      '<p class="band-d">'+esc(s.d)+'</p>'+
+      '<button class="band-change" id="chg">Change date</button>'+
+    '</section>'+
+    '<section class="tix">'+
+      '<div class="tix-h"><h3>Step 2 &middot; Choose your seats</h3><em>Prices are per ticket</em></div>'+
+      '<div class="cards" id="cards">'+ CLASSES.map(card).join("") +'</div>'+
+    '</section>';
+
+  out.innerHTML = html;
+  $("chg").addEventListener("click", function(){
+    document.querySelector(".cal").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+  wire();
+}
+
+function fmt12(t){
+  var p = t.split(":"), h = +p[0], mm = p[1];
+  var ap = h >= 12 ? "pm" : "am", hh = h % 12 || 12;
+  return hh + (mm === "00" ? "" : ":"+mm) + ap;
+}
+
+function icon(k){
+  var a = 'width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"';
+  if(k==="cal")   return '<svg '+a+'><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg>';
+  if(k==="clock") return '<svg '+a+'><circle cx="8" cy="8" r="6.2"/><path d="M8 4.6V8l2.4 1.4"/></svg>';
+  return '<svg '+a+'><path d="M8 14.5s5-4.2 5-8a5 5 0 0 0-10 0c0 3.8 5 8 5 8Z"/><circle cx="8" cy="6.4" r="1.8"/></svg>';
+}
+
+function statusMeta(st){
+  if(st==="available") return {cls:"ok",   label:"Available"};
+  if(st==="limited")   return {cls:"lim",  label:"Limited"};
+  if(st==="full")      return {cls:"full", label:"Fully booked"};
+  return {cls:"shut", label:"Closed"};
+}
+
+function card(t){
+  var st = statusFor(state.date, t.code);
+  var meta = statusMeta(st);
+  var live = (st==="available" || st==="limited");
+  var cur = state.cur[t.code] || "gbp";
+  var from = money(cur, t.p[cur]);
+
+  var art =
+    '<div class="art" style="--c:'+t.c+'">'+
+      '<div class="art-foil"></div>'+
+      '<span class="art-ph">Artwork</span>'+
+      '<div class="art-in">'+
+        '<div class="art-gloves"><i></i><i></i></div>'+
+        '<div class="art-name">'+esc(t.name.toUpperCase())+'</div>'+
+        '<div class="art-tag">'+esc(t.tag)+'</div>'+
+      '</div>'+
+      '<div class="art-perf"></div>'+
+      '<div class="art-mark">muayti<s>x</s></div>'+
+    '</div>';
+
+  var body = "";
+  if(st === "closed"){
+    body = '<div class="note">'+esc(CLOSED_COPY)+'</div>'+
+           '<button class="go quiet" disabled>Not on sale yet</button>';
+  } else if(st === "full"){
+    body = '<div class="note">Every '+esc(t.name)+' seat for this date has gone. Another class may still have space.</div>'+
+           '<button class="go quiet" disabled>Fully booked</button>';
+  } else {
+    var seats = t.seated ? seatsTogetherFor(state.date, t.code) : 10;
+    body =
+      '<div class="fields">'+
+        '<div class="f"><label for="q-'+t.code+'">How many tickets</label>'+
+          '<div class="sel"><select id="q-'+t.code+'" data-q="'+t.code+'">'+
+            '<option value="">Select</option>'+ qtyOpts(t.code) +
+          '</select></div></div>'+
+        '<div class="f"><label for="c-'+t.code+'">Pay in</label>'+
+          '<div class="sel"><select id="c-'+t.code+'" data-c="'+t.code+'">'+
+            CUR.map(function(c){return '<option value="'+c[0]+'"'+(c[0]===cur?" selected":"")+'>'+c[1]+'</option>';}).join("")+
+          '</select></div></div>'+
+        '<div data-seat="'+t.code+'" data-max="'+seats+'"></div>'+
+        '<div class="total"><span>Total</span><b data-total="'+t.code+'">&mdash;</b></div>'+
+        '<button class="go" data-go="'+t.code+'" disabled>Continue to checkout</button>'+
+      '</div>';
+  }
+
+  return ''+
+  '<article class="card'+(live?"":" off")+'" data-card="'+t.code+'" style="--c:'+t.c+'">'+
+    '<div class="card-rule"></div>'+
+    '<button class="row" data-row="'+t.code+'" aria-expanded="false">'+
+      '<span class="row-th" style="--c:'+t.c+'"><span>'+esc(t.name.toUpperCase())+'</span></span>'+
+      '<span class="row-mid">'+
+        '<span class="row-name">'+esc(t.name)+'</span>'+
+        '<span class="pill '+meta.cls+'"><i></i>'+meta.label+'</span>'+
+      '</span>'+
+      '<span class="row-end">'+
+        (live ? '<span class="row-price">'+from+'<s>from</s></span>' : '')+
+        '<span class="chev"></span>'+
+      '</span>'+
+    '</button>'+
+    '<div class="card-inner">'+
+      art+
+      '<div class="card-body">'+
+        '<div class="card-top">'+
+          '<div><div class="card-name">'+esc(t.name)+'</div></div>'+
+          '<span class="pill '+meta.cls+'"><i></i>'+meta.label+'</span>'+
+        '</div>'+
+        '<p class="card-d">'+esc(t.d)+'</p>'+
+        body+
+      '</div>'+
+    '</div>'+
+  '</article>';
+}
+
+function qtyOpts(code){
+  var o = "";
+  for(var i=1;i<=10;i++) o += '<option value="'+i+'">'+i+(i===1?" ticket":" tickets")+'</option>';
+  return o;
+}
+
+/* ---------------- interaction ---------------- */
+function wire(){
+  var cards = $("cards");
+  if(!cards) return;
+
+  cards.addEventListener("click", function(e){
+    var row = e.target.closest("[data-row]");
+    if(row){
+      var code = row.getAttribute("data-row");
+      var el = cards.querySelector('[data-card="'+code+'"]');
+      var isOpen = el.classList.contains("open");
+      Array.prototype.forEach.call(cards.querySelectorAll(".card"), function(c){
+        c.classList.remove("open");
+        var r = c.querySelector("[data-row]"); if(r) r.setAttribute("aria-expanded","false");
+      });
+      if(!isOpen){
+        el.classList.add("open");
+        row.setAttribute("aria-expanded","true");
+        state.open = code;
+        setTimeout(function(){ el.scrollIntoView({behavior:"smooth", block:"nearest"}); }, 60);
+      } else { state.open = null; }
+      return;
+    }
+    var go = e.target.closest("[data-go]");
+    if(go && !go.disabled){
+      var c2 = go.getAttribute("data-go");
+      var t = byCode(c2);
+      var q = state.qty[c2], cu = state.cur[c2] || "gbp";
+      go.textContent = "Opening secure checkout…";
+      go.disabled = true;
+      setTimeout(function(){
+        alert("Prototype — no payment is taken.\n\n"+
+              t.name+" × "+q+"\n"+
+              money(cu, t.p[cu]*q)+"\n\n"+
+              "In the real widget this hands straight over to Stripe.");
+        go.textContent = "Continue to checkout";
+        go.disabled = false;
+      }, 700);
+    }
+  });
+
+  cards.addEventListener("change", function(e){
+    var q = e.target.getAttribute("data-q");
+    var c = e.target.getAttribute("data-c");
+    if(q){ state.qty[q] = e.target.value ? +e.target.value : 0; update(q); }
+    if(c){ state.cur[c] = e.target.value; update(c); refreshFrom(c); }
+    if(e.target.hasAttribute("data-ack")) update(e.target.getAttribute("data-ack"));
+  });
+
+  CLASSES.forEach(function(t){ update(t.code); });
+}
+
+function byCode(c){ for(var i=0;i<CLASSES.length;i++) if(CLASSES[i].code===c) return CLASSES[i]; }
+
+function refreshFrom(code){
+  var t = byCode(code), cur = state.cur[code] || "gbp";
+  var el = document.querySelector('[data-card="'+code+'"] .row-price');
+  if(el) el.innerHTML = money(cur, t.p[cur]) + "<s>from</s>";
+}
+
+function update(code){
+  var t = byCode(code);
+  var totalEl = document.querySelector('[data-total="'+code+'"]');
+  if(!totalEl) return;
+  var go = document.querySelector('[data-go="'+code+'"]');
+  var seatWrap = document.querySelector('[data-seat="'+code+'"]');
+  var qty = state.qty[code] || 0;
+  var cur = state.cur[code] || "gbp";
+
+  totalEl.textContent = qty ? money(cur, t.p[cur]*qty) : "—";
+
+  var maxTogether = seatWrap ? +seatWrap.getAttribute("data-max") : 10;
+  var needsAck = t.seated && qty > maxTogether;
+
+  if(seatWrap){
+    if(needsAck){
+      if(!seatWrap.dataset.built){
+        seatWrap.innerHTML =
+          '<div class="note warn"><b>We can seat '+maxTogether+' of your group together.</b> '+
+          'The rest will be in the same class, but not side by side.'+
+          '<label class="ack"><input type="checkbox" data-ack="'+code+'">'+
+          '<span>That&rsquo;s fine &mdash; book anyway</span></label></div>';
+        seatWrap.dataset.built = "1";
+      }
+    } else {
+      seatWrap.innerHTML = "";
+      seatWrap.dataset.built = "";
+    }
+  }
+  var ack = document.querySelector('[data-ack="'+code+'"]');
+  if(go) go.disabled = !qty || (needsAck && !(ack && ack.checked));
+}
+
+/* ---------------- preview toggle ---------------- */
+function setView(mobile){
+  stage.classList.toggle("is-mobile", mobile);
+  $("vD").setAttribute("aria-pressed", String(!mobile));
+  $("vM").setAttribute("aria-pressed", String(mobile));
+  var cards = $("cards");
+  if(cards) Array.prototype.forEach.call(cards.querySelectorAll(".card"), function(c){
+    c.classList.remove("open");
+    var r = c.querySelector("[data-row]"); if(r) r.setAttribute("aria-expanded","false");
+  });
+  state.open = null;
+}
+$("vD").addEventListener("click", function(){ setView(false); });
+$("vM").addEventListener("click", function(){ setView(true); });
+
+renderCal();
+})();
+</script>
