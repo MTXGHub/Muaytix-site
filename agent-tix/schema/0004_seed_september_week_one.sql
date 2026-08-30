@@ -95,14 +95,4 @@ join (values
 ) as q(event_key, class_code, total)
   on q.event_key = ev.event_key and q.class_code = tc.code;
 
-insert into public.ticket_currency_prices (event_ticket_class_id, currency, unit_amount, display_order)
-select etc.id, p.currency, p.amount, p.display_order
-from public.event_ticket_classes etc
-join public.ticket_classes tc on tc.id = etc.ticket_class_id
-join (values
-  ('ringside','usd',7700,1), ('ringside','eur',6700,2), ('ringside','gbp',5700,3), ('ringside','aud',10900,4), ('ringside','cny',52000,5), ('ringside','thb',250000,6),
-  ('club_class','usd',5500,1), ('club_class','eur',4800,2), ('club_class','gbp',4100,3), ('club_class','aud',7900,4), ('club_class','cny',38000,5), ('club_class','thb',180000,6),
-  ('leo_section','usd',4600,1), ('leo_section','eur',4000,2), ('leo_section','gbp',3400,3), ('leo_section','aud',6600,4), ('leo_section','cny',31000,5), ('leo_section','thb',150000,6),
-  ('third_class','usd',3100,1), ('third_class','eur',2700,2), ('third_class','gbp',2300,3), ('third_class','aud',4400,4), ('third_class','cny',21000,5), ('third_class','thb',100000,6)
-) as p(class_code, currency, amount, display_order)
-  on p.class_code = tc.code;
+-- Prices are seeded in 0005, where they now live.

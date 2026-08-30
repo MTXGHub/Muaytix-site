@@ -192,9 +192,4 @@ create trigger etc_set_updated_at
   before update on public.event_ticket_classes
   for each row execute function public.set_updated_at();
 
-create trigger tcp_set_updated_at
-  before update on public.ticket_currency_prices
-  for each row execute function public.set_updated_at();
-
-alter table public.event_ticket_classes   enable row level security;
-alter table public.ticket_currency_prices enable row level security;
+alter table public.event_ticket_classes enable row level security;
