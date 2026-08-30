@@ -130,19 +130,21 @@ button,select{font:inherit;color:inherit}
 .stage.is-mobile .day .tag{display:none}
 .stage.is-mobile .months{grid-template-columns:repeat(2,1fr)}
 
-/* selected event band */
-.band{background:var(--ink);color:#F5F1EC;padding:24px 26px}
-.band-k{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
-  color:rgba(245,241,236,.6);margin-bottom:9px}
+/* selected event box — white, framed in blue, blue accents */
+.band{margin:0 26px;padding:22px 24px;background:var(--surface);color:var(--ink);
+  border:2px solid var(--blue);border-radius:14px}
+.band-k{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:9px}
 .band-h{font-size:clamp(24px,3vw,34px);font-weight:800;line-height:1.06;letter-spacing:.01em}
-.band-when{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:15px;font-weight:600}
+.band-when{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:15px;
+  font-weight:600;color:var(--ink-2)}
 .band-when span{display:inline-flex;align-items:center;gap:7px}
-.band-when svg{opacity:.55;flex:0 0 auto}
-.band-d{margin-top:13px;font-size:14.5px;line-height:1.55;color:rgba(245,241,236,.8);max-width:66ch}
-.band-change{margin-top:16px;border:1px solid rgba(245,241,236,.28);background:none;color:#F5F1EC;
+.band-when svg{color:var(--blue);flex:0 0 auto}
+.band-d{margin-top:13px;font-size:14.5px;line-height:1.55;color:var(--muted);max-width:66ch}
+.band-change{margin-top:16px;border:2px solid var(--blue);background:var(--surface);color:var(--blue);
   padding:9px 16px;border-radius:9px;font-size:12px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;cursor:pointer;transition:.15s}
-.band-change:hover{background:rgba(245,241,236,.1)}
+.band-change:hover{background:var(--blue);color:var(--blue-ink)}
 
 /* loading */
 .load{padding:56px 26px;text-align:center;color:var(--ink-2);font-size:16px;font-weight:600}
@@ -270,7 +272,8 @@ button,select{font:inherit;color:inherit}
 
 @media (max-width:1000px){ .cards{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:720px){
-  .mast,.step,.cal,.band,.tix,.foot{padding-left:16px;padding-right:16px}
+  .mast,.cal,.tix,.foot{padding-left:16px;padding-right:16px}
+  .band{margin-left:16px;margin-right:16px;padding:18px 16px}
   .cards{display:flex;flex-direction:column;gap:9px}
   .card-rule{display:none}
   .row{display:flex;align-items:center;gap:11px;width:100%;padding:11px;border:0;background:none;cursor:pointer;text-align:left}
