@@ -84,31 +84,7 @@ comment on column public.event_ticket_classes.maximum_seats_together is
 
 create index etc_event_idx on public.event_ticket_classes (event_id, display_order);
 
--- ---------------------------------------------------------------------------
--- ticket_currency_prices
--- ---------------------------------------------------------------------------
--- Structurally unchanged from the live table, re-pointed at the new inventory
--- row. Server-controlled fixed prices; no public policies. Section 7 confirms
--- JPY and SGD from 1 September, CAD unconfirmed, and more over time, so the
--- currency set stays data rather than an enum.
-
-create table public.ticket_currency_prices (
-  event_ticket_class_id  uuid not null references public.event_ticket_classes(id) on delete cascade,
-  currency               text not null,
-  unit_amount            integer not null,
-  active                 boolean not null default true,
-  display_order          integer not null default 0,
-  created_at             timestamptz not null default now(),
-  updated_at             timestamptz not null default now(),
-
-  primary key (event_ticket_class_id, currency),
-
-  constraint tcp_currency_format check (currency ~ '^[a-z]{3}$'),
-  constraint tcp_unit_amount_positive check (unit_amount > 0)
-);
-
-comment on table public.ticket_currency_prices is
-  'Server-controlled fixed checkout prices by inventory row and currency. No public policies; Edge Functions access this table using the service role.';
+-- Prices live in 0005_class_level_prices.sql, one level up from here.
 
 -- ---------------------------------------------------------------------------
 -- The status rule, in one place
