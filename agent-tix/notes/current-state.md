@@ -380,13 +380,40 @@ pre-fill. That was speculation and is very likely wrong: for a guest checkout
 Stripe pre-fills from Link, the customer's own saved details, not from the
 Customer objects on this account.
 
-## Duplicate customer records — open, unrelated
+## Stripe customer records — leave them exactly as they are
 
-`customer_creation: "always"` mints a new Stripe customer on every checkout, so
-one email address now has fifteen customer records. V1 does the same, so most of
-them predate V2.
+An earlier version of this file called these "duplicate customers" and suggested
+consolidating them. That was wrong, and wrong in a way worth recording so nobody
+repeats it.
 
-The names on them differ only in capitalisation and one trailing space — they
-are the same name, not different spellings. This is untidy rather than harmful,
-and nothing reads those records: the webhook takes the guest's details from the
-checkout session itself. Left alone pending a decision.
+`customer_creation: "always"` creates a Stripe Customer record on every
+checkout. That is not waste. It is what produces the **new customers** and
+**spend per customer** figures on the Stripe dashboard — 255 new customers in
+August, with an average spend against them. Under the previous booking system
+those numbers did not exist at all: no customer detail came through, and the
+dashboard showed nothing. This is live reporting the business reads every month.
+
+Removing it would have deleted a working metric to solve a problem nobody had.
+The same shape of mistake as setting `payment_method_types`. Guarded now in
+`checkout-guards.test.mjs`.
+
+On the names: `JASON MCLELLAN`, `Jason McLellan` and `Jason Mclellan` are one
+name typed three ways. Capitalisation is formatting, not spelling, and a guest
+typing their own name however they please is normal. Nothing in this system
+should care, and nothing does — the name is stored trimmed and used to greet
+people by their first name.
+
+## V2 matches V1 on the checkout, deliberately
+
+Verified 31 August against live sessions from both systems:
+
+| | V1 | V2 |
+|---|---|---|
+| Payment methods | account configuration | account configuration |
+| `name_collection` | required | required |
+| `customer_creation` | always | always |
+| `phone_number_collection` | enabled | enabled |
+| Name stored | trimmed | trimmed |
+
+Where V1 and V2 differ, it should be because someone decided they should, not
+because a difference crept in. The guard tests exist to keep it that way.

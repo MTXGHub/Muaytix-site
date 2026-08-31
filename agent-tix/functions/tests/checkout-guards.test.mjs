@@ -54,6 +54,16 @@ check('and it is required, not optional',
       && !/name_collection[\s\S]{0,120}?optional:\s*true/.test(code),
       'name_collection must stay optional:false');
 
+// Standing instruction, 31 August 2026. A Stripe Customer record is created on
+// every checkout, exactly as V1 does. That is what feeds the "new customers"
+// and "spend per customer" figures on the Stripe dashboard — numbers the
+// business did not have at all under the previous booking system and now uses
+// every month. Removing it to tidy up the customer list would delete a live
+// reporting metric to solve a problem nobody has.
+check('a Stripe customer record is created for every booking, as in V1',
+      /customer_creation:\s*"always"/.test(code),
+      'customer_creation must stay "always" — it is what produces the new-customer and spend-per-customer reporting');
+
 check('the price is read server side, never taken from the request',
       /event_ticket_prices/.test(code) && !/body\.(unitAmount|unit_amount|amount|price)\b/.test(code));
 
