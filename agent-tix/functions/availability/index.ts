@@ -107,7 +107,7 @@ Deno.serve(async (req: Request) => {
 
       const { data, error } = await supabase
         .from("event_calendar")
-        .select("event_key,event_name,event_description,short_name,accent_colour,local_date,local_start_time,local_end_time,venue_name,venue_timezone")
+        .select("event_key,event_name,event_description,short_name,series_slug,accent_colour,local_date,local_start_time,local_end_time,venue_name,venue_timezone")
         .gte("local_date", from)
         .lte("local_date", to)
         .order("local_date");
@@ -119,6 +119,9 @@ Deno.serve(async (req: Request) => {
           date: row.local_date,          // already the Bangkok calendar day
           name: row.event_name,
           shortName: row.short_name,
+          // Which promotion this night belongs to, so a page can show only its
+          // own nights without a second request or a separate endpoint.
+          series: row.series_slug,
           colour: row.accent_colour,
           description: row.event_description,
           startTime: hhmm(row.local_start_time),

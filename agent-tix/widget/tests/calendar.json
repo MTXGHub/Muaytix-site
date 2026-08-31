@@ -1,8 +1,56 @@
 {
-  "events": [
-    {"eventKey":"rajadamnern_knockout_2026_09_01","date":"2026-09-01","name":"Rajadamnern Knockout","shortName":"Knockout","colour":"#B0342E","description":"Fast-paced three-round fights, chasing a knockout from the opening bell.","startTime":"19:00","endTime":"21:00","venue":"Rajadamnern Stadium, Bangkok","timezone":"Asia/Bangkok"},
-    {"eventKey":"new_power_2026_09_02","date":"2026-09-02","name":"New Power Traditional Muay Thai","shortName":"New Power","colour":"#4A7A3F","description":"Classic five-round Muay Thai.","startTime":"18:00","endTime":"22:00","venue":"Rajadamnern Stadium, Bangkok","timezone":"Asia/Bangkok"},
-    {"eventKey":"rws_2026_09_05","date":"2026-09-05","name":"RWS Rajadamnern World Series","shortName":"RWS","colour":"#2F6FC4","description":"World-class championship Muay Thai meets the energy of a Saturday-night global broadcast.","startTime":"19:10","endTime":"22:00","venue":"Rajadamnern Stadium, Bangkok","timezone":"Asia/Bangkok"},
-    {"eventKey":"rajadamnern_knockout_2026_10_05","date":"2026-10-05","name":"Rajadamnern Knockout","shortName":"Knockout","colour":"#B0342E","description":"Fast-paced three-round fights.","startTime":"19:00","endTime":"21:00","venue":"Rajadamnern Stadium, Bangkok","timezone":"Asia/Bangkok"}
-  ]
+ "events": [
+  {
+   "eventKey": "rajadamnern_knockout_2026_09_01",
+   "date": "2026-09-01",
+   "name": "Rajadamnern Knockout",
+   "shortName": "Knockout",
+   "colour": "#B0342E",
+   "description": "Fast-paced three-round fights, chasing a knockout from the opening bell.",
+   "startTime": "19:00",
+   "endTime": "21:00",
+   "venue": "Rajadamnern Stadium, Bangkok",
+   "timezone": "Asia/Bangkok",
+   "series": "rajadamnern-knockout"
+  },
+  {
+   "eventKey": "new_power_2026_09_02",
+   "date": "2026-09-02",
+   "name": "New Power Traditional Muay Thai",
+   "shortName": "New Power",
+   "colour": "#4A7A3F",
+   "description": "Classic five-round Muay Thai.",
+   "startTime": "18:00",
+   "endTime": "22:00",
+   "venue": "Rajadamnern Stadium, Bangkok",
+   "timezone": "Asia/Bangkok",
+   "series": "new-power"
+  },
+  {
+   "eventKey": "rws_2026_09_05",
+   "date": "2026-09-05",
+   "name": "RWS Rajadamnern World Series",
+   "shortName": "RWS",
+   "colour": "#2F6FC4",
+   "description": "World-class championship Muay Thai meets the energy of a Saturday-night global broadcast.",
+   "startTime": "19:10",
+   "endTime": "22:00",
+   "venue": "Rajadamnern Stadium, Bangkok",
+   "timezone": "Asia/Bangkok",
+   "series": "rws"
+  },
+  {
+   "eventKey": "rajadamnern_knockout_2026_10_05",
+   "date": "2026-10-05",
+   "name": "Rajadamnern Knockout",
+   "shortName": "Knockout",
+   "colour": "#B0342E",
+   "description": "Fast-paced three-round fights.",
+   "startTime": "19:00",
+   "endTime": "21:00",
+   "venue": "Rajadamnern Stadium, Bangkok",
+   "timezone": "Asia/Bangkok",
+   "series": "rajadamnern-knockout"
+  }
+ ]
 }

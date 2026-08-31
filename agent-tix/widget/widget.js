@@ -17,6 +17,11 @@
 //        data-ticket-class="Third Class"></div>
 //       one night, one seat class, opened rather than offered as a choice.
 //
+//   <div class="muaytix-ticket-selector" data-series="rws"></div>
+//       one promotion's nights only. The calendar still runs month by month;
+//       every other night is greyed out, so an RWS page shows Saturdays and
+//       nothing else, and it opens on the month holding the next one.
+//
 // The page loads this file with an ordinary script tag pointing at
 // https://jlwopomkqeawrxlapwpc.supabase.co/functions/v1/widget — the exact
 // markup is in README.md. Deliberately not written out here: a literal closing
@@ -287,6 +292,10 @@ function mount(root, opts) {
         state.events = {};
         state.months = [];
         (data.events || []).forEach(function(ev){
+          // A page may be for one promotion. Its nights are the only ones that
+          // become bookable; the rest of the month draws as an ordinary
+          // non-fight day, so the grid reads as "these are the RWS Saturdays".
+          if(opts.series && opts.series.indexOf(String(ev.series || "").toLowerCase()) === -1) return;
           state.events[ev.date] = ev;
           var k = monthKey(ev.date);
           if(state.months.indexOf(k) === -1) state.months.push(k);
@@ -294,7 +303,8 @@ function mount(root, opts) {
         state.months.sort();
 
         if(state.months.length === 0){
-          showProblem("No fight nights on sale",
+          showProblem(
+            opts.series ? "No dates on sale for this event" : "No fight nights on sale",
             "There are no dates open for booking at the moment. Please check back shortly, or message us and we will help.",
             "Check again");
           return;
@@ -706,7 +716,13 @@ function options(el) {
   var event = (el.getAttribute("data-event-id") || "").trim();
   var classes = (el.getAttribute("data-ticket-class") || "")
     .split(",").map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean);
-  return { eventKey: event || null, classes: classes.length ? classes : null };
+  var series = (el.getAttribute("data-series") || "")
+    .split(",").map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean);
+  return {
+    eventKey: event || null,
+    classes: classes.length ? classes : null,
+    series: series.length ? series : null,
+  };
 }
 
 function start() {

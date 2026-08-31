@@ -1,10 +1,3 @@
-// Agent Tix — the three ways a page can use the widget
-//
-//   node agent-tix/widget/tests/widget-modes.test.mjs
-//
-// Loads the real widget.js into a page that behaves like the live Tilda page —
-// centring everything and blacking out button text — and drives each mode.
-
 import fs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
@@ -17,9 +10,9 @@ async function loadPlaywright(){
 const pw = await loadPlaywright();
 const chromium = pw.chromium ?? pw.default.chromium;
 
-const events=JSON.parse(fs.readFileSync(new URL('./calendar.json', import.meta.url),'utf8'));
-const night =JSON.parse(fs.readFileSync(new URL('./night.json', import.meta.url),'utf8'));
-const widget=fs.readFileSync(new URL('../widget.js', import.meta.url),'utf8');
+const events=JSON.parse(fs.readFileSync(new URL('./calendar.json',import.meta.url),'utf8'));
+const night =JSON.parse(fs.readFileSync(new URL('./night.json',import.meta.url),'utf8'));
+const widget=fs.readFileSync(new URL('../widget.js',import.meta.url),'utf8');
 
 let pass=0, fail=0;
 const check=(n,ok,d='')=>{ ok?(pass++,console.log('  ok   '+n)):(fail++,console.log('  FAIL '+n+(d?'  -> '+d:''))); };
@@ -79,6 +72,40 @@ console.log('\nMode 3 — one night, one seat class');
   check('no "change seat class"', (await p.$('[data-back-class]'))===null);
   check('closed class explains itself',
     (await p.textContent('.mtx-note')).includes('usually opened by the stadium'));
+  await ctx.close();
+}
+
+console.log('\nMode 4 — one promotion only (data-series)');
+{
+  const {p,ctx}=await page('<div class="muaytix-ticket-selector" data-series="rws"></div>');
+  await p.waitForSelector('[data-grid] [data-date]',{timeout:8000});
+  const dates = await p.$$eval('[data-grid] [data-date]', b=>b.map(x=>x.dataset.date));
+  check('only that promotion is bookable', JSON.stringify(dates)==='["2026-09-05"]', JSON.stringify(dates));
+  const months = await p.$$eval('[data-months] button', b=>b.map(x=>x.textContent.trim()));
+  check('months without one of its nights are not offered',
+        JSON.stringify(months)==='["Sep 2026"]', JSON.stringify(months));
+  check('the calendar is still a calendar', await p.isVisible('[data-grid]'));
+  await p.click('[data-date="2026-09-05"]');
+  await p.waitForSelector('.mtx-pick',{timeout:8000});
+  check('the night still opens normally', (await p.textContent('.mtx-band-h'))==='RWS Rajadamnern World Series');
+  check('and can be changed', (await p.$('[data-back-date]'))!==null);
+  await ctx.close();
+}
+
+console.log('\nA promotion with nothing on sale says so');
+{
+  const ctx=await b.newContext({viewport:{width:1180,height:900}});
+  const p=await ctx.newPage();
+  await p.route('**/functions/v1/**',r=>r.fulfill({status:200,contentType:'application/json',
+    body:JSON.stringify(events)}));
+  p.on('pageerror',e=>{fail++;console.log('  FAIL page error -> '+e.message);});
+  await p.setContent(`<!doctype html><html><head><meta charset="utf-8"><title>t</title></head>
+    <body><div class="muaytix-ticket-selector" data-series="kiatpetch"></div><script>${widget}<\/script></body></html>`,
+    {waitUntil:'domcontentloaded'});
+  await p.waitForSelector('.mtx-state',{timeout:8000});
+  check('told plainly, not left blank',
+    (await p.textContent('.mtx-state h3')).includes('No dates on sale for this event'),
+    await p.textContent('.mtx-state h3'));
   await ctx.close();
 }
 
