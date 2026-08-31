@@ -12,6 +12,10 @@
 -- every five minutes and releases anything whose hold has run out, whatever the
 -- reason. It is idempotent, and it can only ever free stock, never sell it.
 
+-- pg_cron ships with Supabase but not with a stock Postgres install, so a
+-- replay of these files against a plain database will stop here. That is the
+-- environment, not the schema: skip this one file and 0009 applies on top of
+-- 0007 exactly as it does on Supabase.
 create extension if not exists pg_cron with schema pg_catalog;
 
 select cron.schedule(

@@ -315,8 +315,17 @@ paid for by nobody and cannot be sold.
 The webhook listens for four events, all of them about the checkout session.
 Nothing listens for `charge.refunded`, so a refund is invisible to the stock.
 
-This is a decision, not just a bug, which is why it has not been built:
-a refund because a guest cancelled should put the seat back on sale, but a
-goodwill or partial refund to a guest who still attends must not. Recommended
-shape is a `charge.refunded` handler that returns the stock only on a **full**
-refund, with partial refunds recorded and left alone. Small either way.
+Settled on 31 August: refunds run at one or two a month, so this stays a manual
+job. Nothing listens for `charge.refunded` and nothing should — a refund does
+not always free a seat, and no rule can tell a cancellation from a goodwill
+refund to a guest who still turns up. Guess wrong and you either oversell the
+night or lose a seat, and at that volume there is no case for guessing.
+
+What was actually missing was a safe way to do it by hand. `release_reservation`
+refuses anything that is not `held`, so returning a sold seat meant editing
+`sold_quantity` directly. `refund_reservation(reservation_id)` now does that job
+in one call: it returns the seat, marks the booking `refunded`, and refuses to
+do it twice. See `how-to-refund.md`.
+
+The 4 September LEO Section seat has been returned; that night is back to 25 of
+25 available.
