@@ -270,3 +270,53 @@ V2 did not, so Stripe returned an email and no name, and the ticket emails
 address the guest by first name. Added, with a fallback: if the pinned API
 version rejects the parameter, the session is created again without it rather
 than the whole checkout failing.
+
+
+---
+
+## Second live test — 31 August 2026, 09:35 and 09:37 UTC
+
+Two bookings, one desktop and one mobile. Both landed correctly end to end.
+
+| | Booking A | Booking B |
+|---|---|---|
+| Night | New Power, 2 September | Rajadamnern Knockout, 4 September |
+| Class | LEO Section | Club Class |
+| Price | EUR 40.00 | GBP 41.00 |
+| Paid with | Link | **Revolut Pay** |
+| Reservation to sale | 72 seconds | 119 seconds |
+| Name captured | MuayTix Ltd | Jason Mclellan |
+
+Reconciliation is exact: `sold_quantity` equals the sum of completed
+reservations on every row, and `reserved_quantity` is zero everywhere. Nothing
+stuck. One webhook delivery each, 200 in about 1.4 seconds, no retries.
+
+Three of the fixes proved themselves in live data.
+
+- **The preflight is gone.** From 09:34 onwards the edge log shows only POSTs.
+  The OPTIONS entries before that are the previous copy of the widget, still
+  embedded until the page was republished.
+- **The pre-warm works exactly as designed.** Booking A: a warm ping at 09:35:02
+  took 3,409 ms — that was the cold boot — and the real call 26 seconds later
+  took 1,960 ms. The guest never saw the boot. Booking B: warm ping 478 ms, real
+  call 1,625 ms.
+- **Revolut Pay completed cleanly**, which is the direct vindication of not
+  switching payment methods off. The earlier failure was the bank, not the
+  method: the same payment intent carries a failed `pay_by_bank` attempt
+  ("The customer cancelled the payment flow") followed by a successful one.
+
+### The gap this test exposed: a refund does not return the seat
+
+The accidental 4 September LEO Section booking was refunded in Stripe
+(`ch_3UAIgmLIQoPqkuKb0LQ2O6p4`, `amount_refunded` 3400, `refunded` true). Our
+reservation is still `completed` and `sold_quantity` is still 1. That seat is
+paid for by nobody and cannot be sold.
+
+The webhook listens for four events, all of them about the checkout session.
+Nothing listens for `charge.refunded`, so a refund is invisible to the stock.
+
+This is a decision, not just a bug, which is why it has not been built:
+a refund because a guest cancelled should put the seat back on sale, but a
+goodwill or partial refund to a guest who still attends must not. Recommended
+shape is a `charge.refunded` handler that returns the stock only on a **full**
+refund, with partial refunds recorded and left alone. Small either way.

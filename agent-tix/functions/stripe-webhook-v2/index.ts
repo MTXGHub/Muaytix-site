@@ -137,12 +137,27 @@ Deno.serve(async (req: Request) => {
       // Recorded separately from the sale itself. Whoever sends the ticket by
       // hand needs a name and an address against the booking, and a failure to
       // save them must never undo a payment that has already gone through.
-      const guestEmail = session.customer_details?.email ?? session.customer_email ?? null;
-      const guestName = session.customer_details?.name ?? null;
-      if (guestEmail || guestName) {
+      // Trimmed: what a guest types into Stripe arrives verbatim, and the live
+      // test produced "Jason Mclellan " with a trailing space. Left as-is it
+      // ends up on a ticket.
+      const tidy = (v: string | null | undefined) => {
+        const t = (v ?? "").trim();
+        return t.length > 0 ? t : null;
+      };
+      const guestEmail = tidy(session.customer_details?.email ?? session.customer_email);
+      const guestName = tidy(session.customer_details?.name);
+      // Only ever write what we actually have. Stripe can send this event twice
+      // — completed, then async_payment_succeeded — and the second copy does not
+      // always carry the same detail. Writing a null over a name we already
+      // stored would lose it.
+      const guestPatch: Record<string, string> = {};
+      if (guestEmail) guestPatch.guest_email = guestEmail;
+      if (guestName) guestPatch.guest_name = guestName;
+
+      if (Object.keys(guestPatch).length > 0) {
         const { error: guestError } = await supabase
           .from("checkout_reservations")
-          .update({ guest_email: guestEmail, guest_name: guestName })
+          .update(guestPatch)
           .eq("id", reservationId);
         if (guestError) {
           console.error("could not save guest details", {
