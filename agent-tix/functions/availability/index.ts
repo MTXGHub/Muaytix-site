@@ -113,21 +113,104 @@ Deno.serve(async (req: Request) => {
         .order("local_date");
       if (error) throw error;
 
+      // A page that asks for a seat class first needs the calendar to know, for
+      // every night at once, whether that class is on sale — otherwise the guest
+      // picks Ringside, picks a night, and only then finds out. Asked for by
+      // class code so the answer stays one row per night rather than four.
+      const classCode = String(body.classCode ?? "").trim();
+      const seatStatus = new Map<string, { status: string; closedExplanation: string | null }>();
+      if (classCode && (data ?? []).length > 0) {
+        const { data: seats, error: seatError } = await supabase
+          .from("event_ticket_availability")
+          .select("event_key,status,closed_explanation")
+          .eq("ticket_class_code", classCode)
+          .in("event_key", (data ?? []).map((r) => r.event_key));
+        if (seatError) throw seatError;
+        for (const s of seats ?? []) {
+          seatStatus.set(s.event_key, {
+            status: s.status,
+            closedExplanation: s.closed_explanation ?? null,
+          });
+        }
+      }
+
       return json({
-        events: (data ?? []).map((row) => ({
-          eventKey: row.event_key,
-          date: row.local_date,          // already the Bangkok calendar day
-          name: row.event_name,
-          shortName: row.short_name,
-          // Which promotion this night belongs to, so a page can show only its
-          // own nights without a second request or a separate endpoint.
-          series: row.series_slug,
-          colour: row.accent_colour,
-          description: row.event_description,
-          startTime: hhmm(row.local_start_time),
-          endTime: hhmm(row.local_end_time),
-          venue: row.venue_name,
-          timezone: row.venue_timezone,
+        events: (data ?? []).map((row) => {
+          const seat = seatStatus.get(row.event_key);
+          return {
+            eventKey: row.event_key,
+            date: row.local_date,          // already the Bangkok calendar day
+            name: row.event_name,
+            shortName: row.short_name,
+            // Which promotion this night belongs to, so a page can show only its
+            // own nights without a second request or a separate endpoint.
+            series: row.series_slug,
+            colour: row.accent_colour,
+            description: row.event_description,
+            startTime: hhmm(row.local_start_time),
+            endTime: hhmm(row.local_end_time),
+            venue: row.venue_name,
+            timezone: row.venue_timezone,
+            // Only present when a class was asked for. A night with no row for
+            // that class is left undefined rather than guessed at.
+            classStatus: seat ? seat.status : null,
+            classClosedExplanation: seat ? seat.closedExplanation : null,
+          };
+        }),
+      }, 200, origin);
+    }
+
+    // ---- the seat classes on their own -------------------------------------
+    // For a page that asks which seat you want before which night. Nothing here
+    // is per-night: it is the catalogue, plus a count of how many nights in the
+    // window each class is actually on sale for, so a class that is open
+    // nowhere can be shown as such instead of leading to an empty calendar.
+    if (action === "classes") {
+      const from = String(body.from ?? "");
+      const to = String(body.to ?? "");
+      if (!ISO_DATE.test(from) || !ISO_DATE.test(to)) {
+        return json({ error: "Dates must be YYYY-MM-DD." }, 400, origin);
+      }
+
+      const { data: cat, error: catError } = await supabase
+        .from("ticket_classes")
+        .select("code,name,description,accent_colour,accent_ink,display_order")
+        .eq("active", true)
+        .order("display_order");
+      if (catError) throw catError;
+
+      const { data: nights, error: nightError } = await supabase
+        .from("event_calendar")
+        .select("event_key")
+        .gte("local_date", from)
+        .lte("local_date", to);
+      if (nightError) throw nightError;
+
+      const keys = (nights ?? []).map((n) => n.event_key);
+      const onSale = new Map<string, number>();
+      if (keys.length > 0) {
+        const { data: seats, error: seatError } = await supabase
+          .from("event_ticket_availability")
+          .select("ticket_class_code,status")
+          .in("event_key", keys);
+        if (seatError) throw seatError;
+        for (const s of seats ?? []) {
+          // "On sale" means a guest could buy it right now. Sold out and closed
+          // both count as not on sale, for opposite reasons.
+          if (s.status === "available" || s.status === "limited") {
+            onSale.set(s.ticket_class_code, (onSale.get(s.ticket_class_code) ?? 0) + 1);
+          }
+        }
+      }
+
+      return json({
+        classes: (cat ?? []).map((c) => ({
+          code: c.code,
+          name: c.name,
+          description: c.description,
+          colour: c.accent_colour,
+          ink: c.accent_ink,
+          nightsOnSale: onSale.get(c.code) ?? 0,
         })),
       }, 200, origin);
     }

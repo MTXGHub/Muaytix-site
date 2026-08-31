@@ -11,7 +11,9 @@
    "endTime": "21:00",
    "venue": "Rajadamnern Stadium, Bangkok",
    "timezone": "Asia/Bangkok",
-   "series": "rajadamnern-knockout"
+   "series": "rajadamnern-knockout",
+   "classStatus": "closed",
+   "classClosedExplanation": "Ringside is usually opened by the stadium nearer the night."
   },
   {
    "eventKey": "new_power_2026_09_02",
@@ -24,7 +26,9 @@
    "endTime": "22:00",
    "venue": "Rajadamnern Stadium, Bangkok",
    "timezone": "Asia/Bangkok",
-   "series": "new-power"
+   "series": "new-power",
+   "classStatus": "fully_booked",
+   "classClosedExplanation": null
   },
   {
    "eventKey": "rws_2026_09_05",
@@ -37,7 +41,9 @@
    "endTime": "22:00",
    "venue": "Rajadamnern Stadium, Bangkok",
    "timezone": "Asia/Bangkok",
-   "series": "rws"
+   "series": "rws",
+   "classStatus": "available",
+   "classClosedExplanation": null
   },
   {
    "eventKey": "rajadamnern_knockout_2026_10_05",
@@ -50,7 +56,9 @@
    "endTime": "21:00",
    "venue": "Rajadamnern Stadium, Bangkok",
    "timezone": "Asia/Bangkok",
-   "series": "rajadamnern-knockout"
+   "series": "rajadamnern-knockout",
+   "classStatus": "limited",
+   "classClosedExplanation": null
   }
  ]
 }

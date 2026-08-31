@@ -17,6 +17,12 @@
 //        data-ticket-class="Third Class"></div>
 //       one night, one seat class, opened rather than offered as a choice.
 //
+//   <div class="muaytix-ticket-selector" data-start="seats"></div>
+//       seat first, night second. The guest picks Ringside, Club, LEO or Third
+//       Class before any date, then gets a calendar showing which nights that
+//       seat is on sale. For a guest who cares more about where they sit than
+//       which night they go.
+//
 //   <div class="muaytix-ticket-selector" data-series="rws"></div>
 //       a page built around one promotion. The calendar opens on the month
 //       holding that promotion's next night and marks its nights out, but
@@ -68,7 +74,7 @@ var DAYS    = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satu
 /* ---------------------------------------------------------------------------
    The stylesheet, injected once however many widgets are on the page
    -------------------------------------------------------------------------*/
-var CSS = "\n\n#mtx-booking{\n  --ground:#F6F4F1; --surface:#FFFFFF; --surface-2:#FBFAF8;\n  --ink:#14110E; --ink-2:#3A342D; --muted:#6E655C; --line:#E2DDD6; --line-2:#EFEBE5;\n  --ok-fg:#136B3B; --ok-bg:#E6F2EA;\n  --lim-fg:#8A5200; --lim-bg:#FBF0DE;\n  --full-fg:#9C1F1F; --full-bg:#F8E8E8;\n  --shut-fg:#645B52; --shut-bg:#EDEAE5;\n  --ring:#C4122F;\n  --shadow:0 1px 2px rgba(20,17,14,.05), 0 8px 24px rgba(20,17,14,.07);\n  --shadow-lg:0 2px 4px rgba(20,17,14,.06), 0 18px 44px rgba(20,17,14,.12);\n  /* Seat class colours are no longer listed here. They arrive with the\n     availability response, from ticket_classes.accent_colour / accent_ink, so\n     a fifth class needs no change to this file. */\n  --blue:#1f5bff; --blue-on:#1540C9; --blue-ink:#FFFFFF;\n  color-scheme:light;\n}\n/* Locked to light. The widget is embedded in a light Tilda page, so following\n   the guest's phone theme would make it look foreign inside its own page. */\n\n#mtx-booking *{box-sizing:border-box}\n#mtx-booking{background:var(--ground);color:var(--ink);\n  font:400 15px/1.55 Barlow,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;\n  -webkit-font-smoothing:antialiased;\n  /* Tilda centres the text in its blocks, and that inherits straight into the\n     widget: every description and label came out centred on the live page.\n     Stated here so the widget reads the same wherever it is embedded. */\n  text-align:left}\n#mtx-booking h1, #mtx-booking h2, #mtx-booking h3, #mtx-booking h4{margin:0;font-family:\"Barlow Condensed\",Barlow,sans-serif;text-wrap:balance;letter-spacing:.005em}\n#mtx-booking p{margin:0}\n#mtx-booking button, #mtx-booking select{font:inherit;color:inherit}\n#mtx-booking :focus-visible{outline:2px solid var(--ring);outline-offset:2px;border-radius:4px}\n@media (prefers-reduced-motion:reduce){#mtx-booking *{animation-duration:.01ms!important;transition-duration:.01ms!important}}\n\n/* numbered step badge */\n#mtx-booking .mtx-num{display:inline-grid;place-items:center;width:20px;height:20px;flex:0 0 auto;border-radius:50%;\n  background:var(--blue);color:var(--blue-ink);font-family:Barlow;font-size:11px;font-weight:700;\n  line-height:1;font-variant-numeric:tabular-nums}\n\n/* ---------- widget shell ---------- */\n#mtx-booking .mtx-stage{padding:0}\n#mtx-booking .mtx-card{max-width:1120px;margin:0 auto;background:var(--surface);border:1px solid var(--line);\n  border-radius:16px;box-shadow:var(--shadow);overflow:hidden;transition:max-width .28s ease}\n\n/* masthead */\n#mtx-booking .mtx-mast{padding:20px 26px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}\n#mtx-booking .mtx-mast-lead{display:block;font-size:12px;font-weight:700;letter-spacing:.14em;\n  text-transform:uppercase;color:var(--muted);margin-bottom:4px}\n#mtx-booking .mtx-mast-venue{display:block;font-family:\"Barlow Condensed\";font-weight:800;\n  font-size:clamp(26px,3.2vw,36px);line-height:1.02;letter-spacing:.005em}\n#mtx-booking .mtx-mast-city{display:block;font-family:\"Barlow Condensed\";font-weight:600;\n  font-size:clamp(18px,2.2vw,24px);line-height:1.15;color:var(--muted);letter-spacing:.03em}\n\n/* section label */\n#mtx-booking .mtx-sec-label{display:flex;align-items:center;gap:9px;margin:0 0 11px;\n  font-size:15px;font-weight:700;letter-spacing:.01em}\n#mtx-booking .mtx-sec-label.mtx-gap{margin-top:36px}\n\n/* month buttons */\n#mtx-booking .mtx-months{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:4px}\n/* border-width stays 3px on every state so selecting a month shifts nothing */\n#mtx-booking .mtx-mbtn{padding:12px 10px;border:3px solid var(--blue);border-radius:11px;background:var(--blue);\n  font-family:\"Barlow Condensed\";font-size:19px;font-weight:700;letter-spacing:.02em;\n  cursor:pointer;transition:.15s;color:var(--blue-ink)}\n#mtx-booking .mtx-mbtn:hover:not(.mtx-on){background:var(--blue-on);border-color:var(--blue-on)}\n/* chosen month reverses out: white fill, blue border, blue type */\n#mtx-booking .mtx-mbtn.mtx-on{background:var(--surface);border-color:var(--blue);color:var(--blue)}\n\n/* which month am I looking at \u2014 guards against picking a date in the wrong month */\n#mtx-booking .mtx-month-note{display:flex;align-items:center;gap:11px;margin:0 0 14px;padding:12px 15px;\n  border:2px solid var(--blue);border-radius:10px;\n  background:color-mix(in srgb, var(--blue) 10%, var(--surface));\n  color:var(--ink-2);font-size:14.5px;font-weight:600;line-height:1.25}\n#mtx-booking .mtx-month-note svg{flex:0 0 auto;color:var(--blue)}\n#mtx-booking .mtx-month-note b{font-family:\"Barlow Condensed\";font-size:20px;font-weight:800;\n  letter-spacing:.035em;color:var(--blue);white-space:nowrap}\n\n/* calendar */\n#mtx-booking .mtx-cal{padding:24px 26px 26px}\n#mtx-booking .mtx-dow, #mtx-booking .mtx-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}\n#mtx-booking .mtx-dow{margin-bottom:6px}\n#mtx-booking .mtx-dow span{text-align:center;font-size:13px;font-weight:700;letter-spacing:.09em;\n  text-transform:uppercase;color:var(--muted);padding:2px 0}\n#mtx-booking .mtx-day{position:relative;min-height:62px;padding:7px 5px 6px;border:1.5px solid transparent;\n  border-radius:11px;background:var(--surface-2);cursor:pointer;text-align:center;\n  display:flex;flex-direction:column;align-items:center;gap:5px;transition:.15s}\n#mtx-booking .mtx-day:hover:not(:disabled){border-color:var(--line);transform:translateY(-1px)}\n#mtx-booking .mtx-day:disabled{background:transparent;cursor:default}\n#mtx-booking .mtx-day .mtx-n{font-family:\"Barlow Condensed\";font-weight:700;font-size:20px;line-height:1;\n  font-variant-numeric:tabular-nums}\n#mtx-booking .mtx-day .mtx-tag{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;\n  color:var(--muted);line-height:1.15;max-width:100%;overflow:hidden}\n#mtx-booking .mtx-day .mtx-dot{width:5px;height:5px;border-radius:50%;background:var(--evt,var(--muted))}\n/* The promotion this page is about. Every other night is still bookable and\n   still shows what is on; this only says which ones the page is for. */\n#mtx-booking .mtx-day.mtx-hi{border-color:var(--evt,var(--blue));\n  background:color-mix(in srgb, var(--evt,var(--blue)) 9%, var(--surface))}\n#mtx-booking .mtx-day.mtx-hi .mtx-n{font-weight:800}\n#mtx-booking .mtx-day.mtx-sel{border-color:var(--ink);background:var(--ink)}\n#mtx-booking .mtx-day.mtx-sel .mtx-n{color:var(--ground)} #mtx-booking .mtx-day.mtx-sel .mtx-tag{color:rgba(255,255,255,.72)}\n#mtx-booking .mtx-day.mtx-none .mtx-n{color:var(--muted);opacity:.4}\n#mtx-booking .mtx-day.mtx-shut .mtx-n{color:var(--muted);opacity:.55;text-decoration:line-through}\n\n/* selected event box \u2014 white, framed in blue, blue accents */\n#mtx-booking .mtx-band{margin:0 26px;padding:22px 24px;background:var(--surface);color:var(--ink);\n  border:2px solid var(--blue);border-radius:14px}\n#mtx-booking .mtx-band-k{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;\n  color:var(--blue);margin-bottom:9px}\n#mtx-booking .mtx-band-h{font-size:clamp(24px,3vw,34px);font-weight:800;line-height:1.06;letter-spacing:.01em}\n#mtx-booking .mtx-band-when{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:15px;\n  font-weight:600;color:var(--ink-2)}\n#mtx-booking .mtx-band-when span{display:inline-flex;align-items:center;gap:7px}\n#mtx-booking .mtx-band-when svg{color:var(--blue);flex:0 0 auto}\n#mtx-booking .mtx-band-d{margin-top:13px;font-size:14.5px;line-height:1.55;color:var(--muted);max-width:66ch}\n/* a way back, not a call to action \u2014 sized down so it sits under the event detail */\n#mtx-booking .mtx-band-change{margin-top:15px;border:1.5px solid var(--blue);background:var(--surface);color:var(--blue);\n  padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;letter-spacing:.07em;\n  text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-band-change:hover{background:var(--blue);color:var(--blue-ink)}\n\n/* loading */\n#mtx-booking .mtx-load{padding:56px 26px;text-align:center;color:var(--ink-2);font-size:16px;font-weight:600}\n#mtx-booking .mtx-spin{width:26px;height:26px;margin:0 auto 14px;border:3px solid var(--line);\n  border-top-color:var(--blue);border-radius:50%;animation:sp .7s linear infinite}\n@keyframes sp{to{transform:rotate(360deg)}}\n\n/* ticket area */\n#mtx-booking .mtx-tix{padding:24px 26px 30px}\n#mtx-booking .mtx-tix-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;margin-bottom:16px}\n#mtx-booking .mtx-tix-h h3{display:flex;align-items:center;gap:9px;font-size:20px;font-weight:700}\n#mtx-booking .mtx-tix-h em{font-style:normal;font-size:12.5px;color:var(--muted)}\n\n/* status pill */\n#mtx-booking .mtx-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;\n  font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}\n#mtx-booking .mtx-pill i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}\n#mtx-booking .mtx-pill.mtx-ok{color:var(--ok-fg);background:var(--ok-bg)}\n#mtx-booking .mtx-pill.mtx-lim{color:var(--lim-fg);background:var(--lim-bg)}\n#mtx-booking .mtx-pill.mtx-full{color:var(--full-fg);background:var(--full-bg)}\n#mtx-booking .mtx-pill.mtx-shut{color:var(--shut-fg);background:var(--shut-bg)}\n\n/* step 3a \u2014 the four choices, no detail */\n#mtx-booking .mtx-picker{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}\n#mtx-booking .mtx-pick{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:9px;\n  padding:16px 15px 15px 20px;border:1.5px solid var(--line);border-radius:12px;\n  background:var(--surface);cursor:pointer;text-align:left;transition:.15s;overflow:hidden}\n#mtx-booking .mtx-pick:hover{border-color:var(--ci);transform:translateY(-2px);box-shadow:var(--shadow)}\n#mtx-booking .mtx-pick-bar{position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}\n#mtx-booking .mtx-pick-name{font-family:\"Barlow Condensed\";font-size:22px;font-weight:700;line-height:1.02}\n#mtx-booking .mtx-pick--off{opacity:.72}\n#mtx-booking .mtx-pick--off:hover{transform:none;box-shadow:none;border-color:var(--line)}\n\n/* step 3b \u2014 the one chosen class, framed in its own colour */\n#mtx-booking .mtx-detail{border:2px solid var(--ci);border-radius:14px;padding:20px 22px;background:var(--surface)}\n#mtx-booking .mtx-detail-k{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;\n  color:var(--ci);margin-bottom:8px}\n#mtx-booking .mtx-detail-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:10px}\n#mtx-booking .mtx-detail-h{font-size:clamp(24px,2.6vw,30px);font-weight:800;line-height:1.05}\n#mtx-booking .mtx-detail-d{font-size:14.5px;line-height:1.55;color:var(--muted);max-width:66ch;margin-bottom:16px}\n#mtx-booking .mtx-detail-change{margin-top:15px;border:1.5px solid var(--ci);background:var(--surface);color:var(--ci);\n  padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;letter-spacing:.07em;\n  text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-detail-change:hover{background:var(--ci);color:#fff}\n\n#mtx-booking .mtx-note{padding:12px 13px;border-radius:9px;font-size:13.5px;line-height:1.5;\n  background:var(--shut-bg);color:var(--ink-2)}\n#mtx-booking .mtx-note.mtx-warn{background:var(--lim-bg);color:var(--lim-fg)}\n#mtx-booking .mtx-note b{font-weight:700}\n#mtx-booking .mtx-ack{display:flex;gap:8px;align-items:flex-start;margin-top:9px;cursor:pointer;font-weight:600}\n#mtx-booking .mtx-ack input{width:16px;height:16px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--ink)}\n\n#mtx-booking .mtx-fields{display:flex;flex-direction:column;gap:12px}\n#mtx-booking .mtx-pair{display:grid;grid-template-columns:1fr 1fr;gap:17px}\n#mtx-booking .mtx-f label{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.08em;\n  text-transform:uppercase;color:var(--muted);margin-bottom:5px}\n#mtx-booking .mtx-f label .mtx-num{width:17px;height:17px;font-size:10px}\n#mtx-booking .mtx-sel{position:relative}\n#mtx-booking .mtx-sel:after{content:\"\";position:absolute;right:13px;top:50%;width:7px;height:7px;\n  border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);\n  transform:translateY(-70%) rotate(45deg);pointer-events:none}\n/* one border rule for every state, so no select ever looks different from its neighbour */\n#mtx-booking .mtx-sel select{width:100%;min-height:46px;padding:9px 34px 9px 12px;border:1.5px solid var(--line);\n  border-radius:10px;background:var(--surface);color:var(--ink);font-size:15px;font-weight:600;\n  appearance:none;-webkit-appearance:none;cursor:pointer;transition:.15s;outline:none}\n#mtx-booking .mtx-sel select:hover:not(:disabled){border-color:var(--ink-2)}\n#mtx-booking .mtx-sel select:focus-visible{border-color:var(--c,var(--blue));box-shadow:0 0 0 3px color-mix(in srgb, var(--c,var(--blue)) 22%, transparent)}\n#mtx-booking .mtx-sel select:disabled{opacity:.55;cursor:not-allowed;background:var(--surface-2)}\n\n#mtx-booking .mtx-sums{border:1px solid var(--line-2);border-radius:10px;background:var(--surface-2);overflow:hidden}\n#mtx-booking .mtx-sum{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px}\n#mtx-booking .mtx-sum span{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}\n#mtx-booking .mtx-sum b{font-family:\"Barlow Condensed\";font-size:20px;font-weight:700;\n  font-variant-numeric:tabular-nums;line-height:1}\n#mtx-booking .mtx-sum--total{border-top:1px solid var(--line-2);background:var(--surface)}\n#mtx-booking .mtx-sum--total b{font-size:26px;font-weight:800}\n\n/* sized to the words, not the panel \u2014 full width only where the panel is narrow */\n#mtx-booking .mtx-go{min-height:44px;padding:11px 26px;border:0;border-radius:9px;background:var(--ink);\n  color:#FFFFFF;font-family:\"Barlow Condensed\";font-size:15px;font-weight:700;\n  letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.15s;\n  align-self:flex-start;text-align:center}\n#mtx-booking .mtx-go:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-lg)}\n/* waiting, not broken: an outline that reads as \"one more thing to do\" */\n#mtx-booking .mtx-go:disabled{background:transparent;color:var(--muted);border:1.5px dashed var(--line);\n  cursor:not-allowed;transform:none;box-shadow:none}\n\n/* ---------- alignment, stated rather than inherited ----------\n   Setting text-align on the widget root is not enough. A host rule such as\n   `#allrecords *{text-align:center}` matches each element directly, and a\n   direct match beats an inherited value however specific the ancestor rule is.\n   The live page centred every description that way.\n\n   So every element inside the card is told explicitly, at a specificity an id\n   plus a class cannot lose to, and the handful that genuinely centre are told\n   back again one level higher. */\n#mtx-booking,\n#mtx-booking .mtx-card,\n#mtx-booking .mtx-card *{text-align:left}\n\n#mtx-booking .mtx-card .mtx-dow span,\n#mtx-booking .mtx-card .mtx-day,\n#mtx-booking .mtx-card .mtx-load,\n#mtx-booking .mtx-card .mtx-state,\n#mtx-booking .mtx-card button{text-align:center}\n@media (max-width:640px){ #mtx-booking .mtx-go{width:100%;align-self:stretch} }\n\n@media (max-width:860px){ #mtx-booking .mtx-picker{grid-template-columns:repeat(2,1fr)} }\n@media (max-width:520px){ #mtx-booking .mtx-pair{grid-template-columns:1fr} }\n\n/* footer strip */\n#mtx-booking .mtx-foot{padding:16px 26px 22px;border-top:1px solid var(--line-2);background:var(--surface-2);\n  display:flex;flex-wrap:wrap;gap:8px 22px;font-size:12px;color:var(--muted);font-weight:600}\n#mtx-booking .mtx-foot span{display:inline-flex;align-items:center;gap:6px}\n\n@media (max-width:720px){\n  #mtx-booking .mtx-mast, #mtx-booking .mtx-cal, #mtx-booking .mtx-tix, #mtx-booking .mtx-foot{padding-left:16px;padding-right:16px}\n  #mtx-booking .mtx-band{margin-left:16px;margin-right:16px;padding:18px 16px}\n  #mtx-booking .mtx-detail{padding:18px 16px}\n  #mtx-booking .mtx-day .mtx-tag{display:none}\n  #mtx-booking .mtx-day{min-height:54px}\n  #mtx-booking .mtx-months{grid-template-columns:repeat(2,1fr)}\n}\n\n/* ---------- states the prototype never had ---------- */\n/* The prototype always had its data. A live widget has to say so when it does\n   not, and give the guest a way to try again rather than a blank rectangle. */\n#mtx-booking .mtx-state{padding:56px 26px;text-align:center;color:var(--ink-2)}\n#mtx-booking .mtx-state h3{font-size:22px;font-weight:700;margin-bottom:8px}\n#mtx-booking .mtx-state p{font-size:15px;color:var(--muted);max-width:46ch;margin:0 auto}\n#mtx-booking .mtx-retry{margin-top:18px;min-height:44px;padding:11px 26px;border:0;border-radius:9px;\n  background:var(--blue);color:var(--blue-ink);font-family:\"Barlow Condensed\";font-size:15px;\n  font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-retry:hover{background:var(--blue-on)}\n/* Errors raised at the point of paying belong beside the button, not in an\n   alert box the guest has to dismiss before they can see what went wrong. */\n#mtx-booking .mtx-fail{margin-top:12px;padding:12px 13px;border-radius:9px;font-size:13.5px;line-height:1.5;\n  background:var(--full-bg);color:var(--full-fg);font-weight:600}\n";
+var CSS = "\n\n#mtx-booking{\n  --ground:#F6F4F1; --surface:#FFFFFF; --surface-2:#FBFAF8;\n  --ink:#14110E; --ink-2:#3A342D; --muted:#6E655C; --line:#E2DDD6; --line-2:#EFEBE5;\n  --ok-fg:#136B3B; --ok-bg:#E6F2EA;\n  --lim-fg:#8A5200; --lim-bg:#FBF0DE;\n  --full-fg:#9C1F1F; --full-bg:#F8E8E8;\n  --shut-fg:#645B52; --shut-bg:#EDEAE5;\n  --ring:#C4122F;\n  --shadow:0 1px 2px rgba(20,17,14,.05), 0 8px 24px rgba(20,17,14,.07);\n  --shadow-lg:0 2px 4px rgba(20,17,14,.06), 0 18px 44px rgba(20,17,14,.12);\n  /* Seat class colours are no longer listed here. They arrive with the\n     availability response, from ticket_classes.accent_colour / accent_ink, so\n     a fifth class needs no change to this file. */\n  --blue:#1f5bff; --blue-on:#1540C9; --blue-ink:#FFFFFF;\n  color-scheme:light;\n}\n/* Locked to light. The widget is embedded in a light Tilda page, so following\n   the guest's phone theme would make it look foreign inside its own page. */\n\n#mtx-booking *{box-sizing:border-box}\n#mtx-booking{background:var(--ground);color:var(--ink);\n  font:400 15px/1.55 Barlow,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;\n  -webkit-font-smoothing:antialiased;\n  /* Tilda centres the text in its blocks, and that inherits straight into the\n     widget: every description and label came out centred on the live page.\n     Stated here so the widget reads the same wherever it is embedded. */\n  text-align:left}\n#mtx-booking h1, #mtx-booking h2, #mtx-booking h3, #mtx-booking h4{margin:0;font-family:\"Barlow Condensed\",Barlow,sans-serif;text-wrap:balance;letter-spacing:.005em}\n#mtx-booking p{margin:0}\n#mtx-booking button, #mtx-booking select{font:inherit;color:inherit}\n#mtx-booking :focus-visible{outline:2px solid var(--ring);outline-offset:2px;border-radius:4px}\n@media (prefers-reduced-motion:reduce){#mtx-booking *{animation-duration:.01ms!important;transition-duration:.01ms!important}}\n\n/* numbered step badge */\n#mtx-booking .mtx-num{display:inline-grid;place-items:center;width:20px;height:20px;flex:0 0 auto;border-radius:50%;\n  background:var(--blue);color:var(--blue-ink);font-family:Barlow;font-size:11px;font-weight:700;\n  line-height:1;font-variant-numeric:tabular-nums}\n\n/* ---------- widget shell ---------- */\n#mtx-booking .mtx-stage{padding:0}\n#mtx-booking .mtx-card{max-width:1120px;margin:0 auto;background:var(--surface);border:1px solid var(--line);\n  border-radius:16px;box-shadow:var(--shadow);overflow:hidden;transition:max-width .28s ease}\n\n/* masthead */\n#mtx-booking .mtx-mast{padding:20px 26px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}\n#mtx-booking .mtx-mast-lead{display:block;font-size:12px;font-weight:700;letter-spacing:.14em;\n  text-transform:uppercase;color:var(--muted);margin-bottom:4px}\n#mtx-booking .mtx-mast-venue{display:block;font-family:\"Barlow Condensed\";font-weight:800;\n  font-size:clamp(26px,3.2vw,36px);line-height:1.02;letter-spacing:.005em}\n#mtx-booking .mtx-mast-city{display:block;font-family:\"Barlow Condensed\";font-weight:600;\n  font-size:clamp(18px,2.2vw,24px);line-height:1.15;color:var(--muted);letter-spacing:.03em}\n\n/* section label */\n#mtx-booking .mtx-sec-label{display:flex;align-items:center;gap:9px;margin:0 0 11px;\n  font-size:15px;font-weight:700;letter-spacing:.01em}\n#mtx-booking .mtx-sec-label.mtx-gap{margin-top:36px}\n\n/* month buttons */\n#mtx-booking .mtx-months{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:4px}\n/* border-width stays 3px on every state so selecting a month shifts nothing */\n#mtx-booking .mtx-mbtn{padding:12px 10px;border:3px solid var(--blue);border-radius:11px;background:var(--blue);\n  font-family:\"Barlow Condensed\";font-size:19px;font-weight:700;letter-spacing:.02em;\n  cursor:pointer;transition:.15s;color:var(--blue-ink)}\n#mtx-booking .mtx-mbtn:hover:not(.mtx-on){background:var(--blue-on);border-color:var(--blue-on)}\n/* chosen month reverses out: white fill, blue border, blue type */\n#mtx-booking .mtx-mbtn.mtx-on{background:var(--surface);border-color:var(--blue);color:var(--blue)}\n\n/* which month am I looking at \u2014 guards against picking a date in the wrong month */\n#mtx-booking .mtx-month-note{display:flex;align-items:center;gap:11px;margin:0 0 14px;padding:12px 15px;\n  border:2px solid var(--blue);border-radius:10px;\n  background:color-mix(in srgb, var(--blue) 10%, var(--surface));\n  color:var(--ink-2);font-size:14.5px;font-weight:600;line-height:1.25}\n#mtx-booking .mtx-month-note svg{flex:0 0 auto;color:var(--blue)}\n#mtx-booking .mtx-month-note b{font-family:\"Barlow Condensed\";font-size:20px;font-weight:800;\n  letter-spacing:.035em;color:var(--blue);white-space:nowrap}\n\n/* which seat am I booking \u2014 sits above the calendar in seat-first mode */\n#mtx-booking .mtx-seat-note{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 14px;\n  padding:12px 15px;border:2px solid var(--blue);border-radius:10px;\n  background:color-mix(in srgb, var(--blue) 10%, var(--surface));\n  color:var(--ink-2);font-size:14.5px;font-weight:600;line-height:1.3}\n#mtx-booking .mtx-seat-note-k{font-size:11px;font-weight:800;letter-spacing:.14em;\n  text-transform:uppercase;color:var(--muted)}\n#mtx-booking .mtx-seat-note b{font-family:\"Barlow Condensed\";font-size:20px;font-weight:800;\n  letter-spacing:.035em;color:var(--blue);white-space:nowrap}\n#mtx-booking .mtx-seat-note-d{flex:1 1 100%;font-size:13px;font-weight:500;color:var(--muted)}\n#mtx-booking .mtx-seat-change{margin-left:auto;border:1.5px solid var(--blue);background:var(--surface);\n  color:var(--blue);padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;\n  letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-seat-change:hover{background:var(--blue);color:var(--blue-ink)}\n@media (max-width:520px){ #mtx-booking .mtx-seat-change{margin-left:0} }\n\n/* calendar */\n#mtx-booking .mtx-cal{padding:24px 26px 26px}\n#mtx-booking .mtx-dow, #mtx-booking .mtx-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}\n#mtx-booking .mtx-dow{margin-bottom:6px}\n#mtx-booking .mtx-dow span{text-align:center;font-size:13px;font-weight:700;letter-spacing:.09em;\n  text-transform:uppercase;color:var(--muted);padding:2px 0}\n#mtx-booking .mtx-day{position:relative;min-height:62px;padding:7px 5px 6px;border:1.5px solid transparent;\n  border-radius:11px;background:var(--surface-2);cursor:pointer;text-align:center;\n  display:flex;flex-direction:column;align-items:center;gap:5px;transition:.15s}\n#mtx-booking .mtx-day:hover:not(:disabled){border-color:var(--line);transform:translateY(-1px)}\n#mtx-booking .mtx-day:disabled{background:transparent;cursor:default}\n#mtx-booking .mtx-day .mtx-n{font-family:\"Barlow Condensed\";font-weight:700;font-size:20px;line-height:1;\n  font-variant-numeric:tabular-nums}\n#mtx-booking .mtx-day .mtx-tag{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;\n  color:var(--muted);line-height:1.15;max-width:100%;overflow:hidden}\n#mtx-booking .mtx-day .mtx-dot{width:5px;height:5px;border-radius:50%;background:var(--evt,var(--muted))}\n/* The promotion this page is about. Every other night is still bookable and\n   still shows what is on; this only says which ones the page is for. */\n#mtx-booking .mtx-day.mtx-hi{border-color:var(--evt,var(--blue));\n  background:color-mix(in srgb, var(--evt,var(--blue)) 9%, var(--surface))}\n#mtx-booking .mtx-day.mtx-hi .mtx-n{font-weight:800}\n/* Seat-first: the chosen seat is gone this night. Dimmed, never removed \u2014 the night is still open and the other seats are still for sale. */\n#mtx-booking .mtx-day.mtx-off{opacity:.42}\n#mtx-booking .mtx-day.mtx-off:hover:not(:disabled){opacity:1}\n#mtx-booking .mtx-day.mtx-sel{border-color:var(--ink);background:var(--ink)}\n#mtx-booking .mtx-day.mtx-sel .mtx-n{color:var(--ground)} #mtx-booking .mtx-day.mtx-sel .mtx-tag{color:rgba(255,255,255,.72)}\n#mtx-booking .mtx-day.mtx-none .mtx-n{color:var(--muted);opacity:.4}\n#mtx-booking .mtx-day.mtx-shut .mtx-n{color:var(--muted);opacity:.55;text-decoration:line-through}\n\n/* selected event box \u2014 white, framed in blue, blue accents */\n#mtx-booking .mtx-band{margin:0 26px;padding:22px 24px;background:var(--surface);color:var(--ink);\n  border:2px solid var(--blue);border-radius:14px}\n#mtx-booking .mtx-band-k{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;\n  color:var(--blue);margin-bottom:9px}\n#mtx-booking .mtx-band-h{font-size:clamp(24px,3vw,34px);font-weight:800;line-height:1.06;letter-spacing:.01em}\n#mtx-booking .mtx-band-when{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:15px;\n  font-weight:600;color:var(--ink-2)}\n#mtx-booking .mtx-band-when span{display:inline-flex;align-items:center;gap:7px}\n#mtx-booking .mtx-band-when svg{color:var(--blue);flex:0 0 auto}\n#mtx-booking .mtx-band-d{margin-top:13px;font-size:14.5px;line-height:1.55;color:var(--muted);max-width:66ch}\n/* a way back, not a call to action \u2014 sized down so it sits under the event detail */\n#mtx-booking .mtx-band-change{margin-top:15px;border:1.5px solid var(--blue);background:var(--surface);color:var(--blue);\n  padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;letter-spacing:.07em;\n  text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-band-change:hover{background:var(--blue);color:var(--blue-ink)}\n\n/* loading */\n#mtx-booking .mtx-load{padding:56px 26px;text-align:center;color:var(--ink-2);font-size:16px;font-weight:600}\n#mtx-booking .mtx-spin{width:26px;height:26px;margin:0 auto 14px;border:3px solid var(--line);\n  border-top-color:var(--blue);border-radius:50%;animation:sp .7s linear infinite}\n@keyframes sp{to{transform:rotate(360deg)}}\n\n/* ticket area */\n#mtx-booking .mtx-tix{padding:24px 26px 30px}\n#mtx-booking .mtx-tix-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;margin-bottom:16px}\n#mtx-booking .mtx-tix-h h3{display:flex;align-items:center;gap:9px;font-size:20px;font-weight:700}\n#mtx-booking .mtx-tix-h em{font-style:normal;font-size:12.5px;color:var(--muted)}\n\n/* status pill */\n#mtx-booking .mtx-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;\n  font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}\n#mtx-booking .mtx-pill i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}\n#mtx-booking .mtx-pill.mtx-ok{color:var(--ok-fg);background:var(--ok-bg)}\n#mtx-booking .mtx-pill.mtx-lim{color:var(--lim-fg);background:var(--lim-bg)}\n#mtx-booking .mtx-pill.mtx-full{color:var(--full-fg);background:var(--full-bg)}\n#mtx-booking .mtx-pill.mtx-shut{color:var(--shut-fg);background:var(--shut-bg)}\n\n/* step 3a \u2014 the four choices, no detail */\n#mtx-booking .mtx-picker{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}\n#mtx-booking .mtx-pick{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:9px;\n  padding:16px 15px 15px 20px;border:1.5px solid var(--line);border-radius:12px;\n  background:var(--surface);cursor:pointer;text-align:left;transition:.15s;overflow:hidden}\n#mtx-booking .mtx-pick:hover{border-color:var(--ci);transform:translateY(-2px);box-shadow:var(--shadow)}\n#mtx-booking .mtx-pick-bar{position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}\n#mtx-booking .mtx-pick-name{font-family:\"Barlow Condensed\";font-size:22px;font-weight:700;line-height:1.02}\n#mtx-booking .mtx-pick--off{opacity:.72}\n#mtx-booking .mtx-pick--off:hover{transform:none;box-shadow:none;border-color:var(--line)}\n\n/* step 3b \u2014 the one chosen class, framed in its own colour */\n#mtx-booking .mtx-detail{border:2px solid var(--ci);border-radius:14px;padding:20px 22px;background:var(--surface)}\n#mtx-booking .mtx-detail-k{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;\n  color:var(--ci);margin-bottom:8px}\n#mtx-booking .mtx-detail-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:10px}\n#mtx-booking .mtx-detail-h{font-size:clamp(24px,2.6vw,30px);font-weight:800;line-height:1.05}\n#mtx-booking .mtx-detail-d{font-size:14.5px;line-height:1.55;color:var(--muted);max-width:66ch;margin-bottom:16px}\n#mtx-booking .mtx-detail-change{margin-top:15px;border:1.5px solid var(--ci);background:var(--surface);color:var(--ci);\n  padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;letter-spacing:.07em;\n  text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-detail-change:hover{background:var(--ci);color:#fff}\n\n#mtx-booking .mtx-note{padding:12px 13px;border-radius:9px;font-size:13.5px;line-height:1.5;\n  background:var(--shut-bg);color:var(--ink-2)}\n#mtx-booking .mtx-note.mtx-warn{background:var(--lim-bg);color:var(--lim-fg)}\n#mtx-booking .mtx-note b{font-weight:700}\n#mtx-booking .mtx-ack{display:flex;gap:8px;align-items:flex-start;margin-top:9px;cursor:pointer;font-weight:600}\n#mtx-booking .mtx-ack input{width:16px;height:16px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--ink)}\n\n#mtx-booking .mtx-fields{display:flex;flex-direction:column;gap:12px}\n#mtx-booking .mtx-pair{display:grid;grid-template-columns:1fr 1fr;gap:17px}\n#mtx-booking .mtx-f label{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.08em;\n  text-transform:uppercase;color:var(--muted);margin-bottom:5px}\n#mtx-booking .mtx-f label .mtx-num{width:17px;height:17px;font-size:10px}\n#mtx-booking .mtx-sel{position:relative}\n#mtx-booking .mtx-sel:after{content:\"\";position:absolute;right:13px;top:50%;width:7px;height:7px;\n  border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);\n  transform:translateY(-70%) rotate(45deg);pointer-events:none}\n/* one border rule for every state, so no select ever looks different from its neighbour */\n#mtx-booking .mtx-sel select{width:100%;min-height:46px;padding:9px 34px 9px 12px;border:1.5px solid var(--line);\n  border-radius:10px;background:var(--surface);color:var(--ink);font-size:15px;font-weight:600;\n  appearance:none;-webkit-appearance:none;cursor:pointer;transition:.15s;outline:none}\n#mtx-booking .mtx-sel select:hover:not(:disabled){border-color:var(--ink-2)}\n#mtx-booking .mtx-sel select:focus-visible{border-color:var(--c,var(--blue));box-shadow:0 0 0 3px color-mix(in srgb, var(--c,var(--blue)) 22%, transparent)}\n#mtx-booking .mtx-sel select:disabled{opacity:.55;cursor:not-allowed;background:var(--surface-2)}\n\n#mtx-booking .mtx-sums{border:1px solid var(--line-2);border-radius:10px;background:var(--surface-2);overflow:hidden}\n#mtx-booking .mtx-sum{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px}\n#mtx-booking .mtx-sum span{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}\n#mtx-booking .mtx-sum b{font-family:\"Barlow Condensed\";font-size:20px;font-weight:700;\n  font-variant-numeric:tabular-nums;line-height:1}\n#mtx-booking .mtx-sum--total{border-top:1px solid var(--line-2);background:var(--surface)}\n#mtx-booking .mtx-sum--total b{font-size:26px;font-weight:800}\n\n/* sized to the words, not the panel \u2014 full width only where the panel is narrow */\n#mtx-booking .mtx-go{min-height:44px;padding:11px 26px;border:0;border-radius:9px;background:var(--ink);\n  color:#FFFFFF;font-family:\"Barlow Condensed\";font-size:15px;font-weight:700;\n  letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.15s;\n  align-self:flex-start;text-align:center}\n#mtx-booking .mtx-go:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-lg)}\n/* waiting, not broken: an outline that reads as \"one more thing to do\" */\n#mtx-booking .mtx-go:disabled{background:transparent;color:var(--muted);border:1.5px dashed var(--line);\n  cursor:not-allowed;transform:none;box-shadow:none}\n\n/* ---------- alignment, stated rather than inherited ----------\n   Setting text-align on the widget root is not enough. A host rule such as\n   `#allrecords *{text-align:center}` matches each element directly, and a\n   direct match beats an inherited value however specific the ancestor rule is.\n   The live page centred every description that way.\n\n   So every element inside the card is told explicitly, at a specificity an id\n   plus a class cannot lose to, and the handful that genuinely centre are told\n   back again one level higher. */\n#mtx-booking,\n#mtx-booking .mtx-card,\n#mtx-booking .mtx-card *{text-align:left}\n\n#mtx-booking .mtx-card .mtx-dow span,\n#mtx-booking .mtx-card .mtx-day,\n#mtx-booking .mtx-card .mtx-load,\n#mtx-booking .mtx-card .mtx-state,\n#mtx-booking .mtx-card button{text-align:center}\n@media (max-width:640px){ #mtx-booking .mtx-go{width:100%;align-self:stretch} }\n\n@media (max-width:860px){ #mtx-booking .mtx-picker{grid-template-columns:repeat(2,1fr)} }\n@media (max-width:520px){ #mtx-booking .mtx-pair{grid-template-columns:1fr} }\n\n/* footer strip */\n#mtx-booking .mtx-foot{padding:16px 26px 22px;border-top:1px solid var(--line-2);background:var(--surface-2);\n  display:flex;flex-wrap:wrap;gap:8px 22px;font-size:12px;color:var(--muted);font-weight:600}\n#mtx-booking .mtx-foot span{display:inline-flex;align-items:center;gap:6px}\n\n@media (max-width:720px){\n  #mtx-booking .mtx-mast, #mtx-booking .mtx-cal, #mtx-booking .mtx-tix, #mtx-booking .mtx-foot{padding-left:16px;padding-right:16px}\n  #mtx-booking .mtx-band{margin-left:16px;margin-right:16px;padding:18px 16px}\n  #mtx-booking .mtx-detail{padding:18px 16px}\n  #mtx-booking .mtx-day .mtx-tag{display:none}\n  #mtx-booking .mtx-day{min-height:54px}\n  #mtx-booking .mtx-months{grid-template-columns:repeat(2,1fr)}\n}\n\n/* ---------- states the prototype never had ---------- */\n/* The prototype always had its data. A live widget has to say so when it does\n   not, and give the guest a way to try again rather than a blank rectangle. */\n#mtx-booking .mtx-state{padding:56px 26px;text-align:center;color:var(--ink-2)}\n#mtx-booking .mtx-state h3{font-size:22px;font-weight:700;margin-bottom:8px}\n#mtx-booking .mtx-state p{font-size:15px;color:var(--muted);max-width:46ch;margin:0 auto}\n#mtx-booking .mtx-retry{margin-top:18px;min-height:44px;padding:11px 26px;border:0;border-radius:9px;\n  background:var(--blue);color:var(--blue-ink);font-family:\"Barlow Condensed\";font-size:15px;\n  font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-retry:hover{background:var(--blue-on)}\n/* Errors raised at the point of paying belong beside the button, not in an\n   alert box the guest has to dismiss before they can see what went wrong. */\n#mtx-booking .mtx-fail{margin-top:12px;padding:12px 13px;border-radius:9px;font-size:13.5px;line-height:1.5;\n  background:var(--full-bg);color:var(--full-fg);font-weight:600}\n";
 
 function injectStyles() {
   if (document.getElementById(STYLE_ID)) return;
@@ -93,9 +99,10 @@ function shell(opts) {
         '<span class="mtx-mast-city">Bangkok</span>' +
       '</div>') +
     '<section class="mtx-cal" data-cal hidden>' +
-      '<div class="mtx-sec-label"><span class="mtx-num">1</span>Select your month</div>' +
+      '<div class="mtx-sec-label"><span class="mtx-num" data-step-month>1</span>Select your month</div>' +
       '<div class="mtx-months" data-months></div>' +
-      '<div class="mtx-sec-label mtx-gap"><span class="mtx-num">2</span>Choose your date</div>' +
+      '<div class="mtx-sec-label mtx-gap"><span class="mtx-num" data-step-date>2</span>Choose your date</div>' +
+      '<p class="mtx-seat-note" data-seatnote hidden></p>' +
       '<p class="mtx-month-note">' +
         '<svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg>' +
         '<span>You are choosing dates for <b data-monthnote></b></span>' +
@@ -130,7 +137,11 @@ function mount(root, opts) {
     cls: null,
     qty: 0,
     cur: null,
-    busy: false
+    busy: false,
+    // Seat-first mode only: the class chosen before any date was picked, and
+    // the catalogue it was chosen from.
+    picked: null,
+    catalogue: null
   };
 
   var cal    = root.querySelector("[data-cal]");
@@ -138,6 +149,9 @@ function mount(root, opts) {
   var grid   = root.querySelector("[data-grid]");
   var note   = root.querySelector("[data-monthnote]");
   var out    = root.querySelector("[data-out]");
+  var seatNote  = root.querySelector("[data-seatnote]");
+  var stepMonth = root.querySelector("[data-step-month]");
+  var stepDate  = root.querySelector("[data-step-date]");
 
   /* ---------------------------------------------------------------------------
      Helpers
@@ -285,11 +299,94 @@ function mount(root, opts) {
       openNight("");
       return;
     }
+    // Seat first. Nothing about a date is asked, or loaded, until the guest has
+    // said where they want to sit.
+    if(opts.seatsFirst && !state.picked){ loadSeatClasses(); return; }
+    loadNights();
+  }
+
+  /* ---- seat-first, step 1: which seat ---- */
+  function loadSeatClasses(){
+    cal.hidden = true;
+    showLoading("Loading seat classes");
+
+    var from = todayAtVenue();
+    call("availability", { action:"classes", from:from, to:addMonths(from, MONTHS_AHEAD) }, READ_TIMEOUT)
+      .then(function(data){
+        var list = (data.classes || []);
+        if(list.length === 0){
+          showProblem("No seats on sale",
+            "There are no seat classes open for booking at the moment. Please check back shortly, or message us and we will help.",
+            "Check again");
+          return;
+        }
+        state.catalogue = list;
+        renderSeatClasses();
+      })
+      .catch(function(err){
+        showProblem("We could not load the seat classes", err.message, "Try again");
+      });
+  }
+
+  function renderSeatClasses(){
+    panel(
+      '<section class="mtx-tix">' +
+        '<div class="mtx-tix-h"><h3><span class="mtx-num">1</span>Select your seat class</h3></div>' +
+        '<div class="mtx-picker">' + state.catalogue.map(function(c){
+          // A class open on no night at all is still shown, and still says so.
+          // Removing it would leave a guest wondering where Third Class went.
+          var off = c.nightsOnSale === 0;
+          return '<button class="mtx-pick' + (off ? " mtx-pick--off" : "") + '" data-seat="' + esc(c.code) + '" ' +
+                 'style="--c:' + esc(c.colour || "#6E655C") + ';--ci:' + esc(c.ink || "#3A342D") + '">' +
+                 '<span class="mtx-pick-bar"></span>' +
+                 '<span class="mtx-pick-name">' + esc(c.name) + '</span>' +
+                 '<span class="mtx-pill ' + (off ? "mtx-shut" : "mtx-ok") + '"><i></i>' +
+                   (off ? "Not currently on sale" : c.nightsOnSale + (c.nightsOnSale === 1 ? " night" : " nights")) +
+                 '</span></button>';
+        }).join("") + '</div>' +
+      '</section>'
+    );
+  }
+
+  /* ---- seat-first, step 2 onwards: the calendar for that seat ---- */
+  function chooseSeat(code){
+    state.picked = code;
+    // The calendar is now steps 2 and 3, because the seat took step 1.
+    if(stepMonth) stepMonth.textContent = "2";
+    if(stepDate)  stepDate.textContent  = "3";
+    warmCheckout();
+    loadNights();
+  }
+
+  function backToSeats(){
+    state.picked = null;
+    state.date = null; state.night = null; state.cls = null; state.qty = 0; state.cur = null;
+    state.events = {}; state.months = []; state.month = null;
+    if(stepMonth) stepMonth.textContent = "1";
+    if(stepDate)  stepDate.textContent  = "2";
+    if(seatNote) seatNote.hidden = true;
+    cal.hidden = true;
+    renderSeatClasses();
+    out.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  function pickedClass(){
+    var list = state.catalogue || [];
+    for(var i = 0; i < list.length; i++) if(list[i].code === state.picked) return list[i];
+    return null;
+  }
+
+  function loadNights(){
     cal.hidden = true;
     showLoading("Loading fight nights");
 
     var from = todayAtVenue();
-    call("availability", { action:"events", from:from, to:addMonths(from, MONTHS_AHEAD) }, READ_TIMEOUT)
+    var ask = { action:"events", from:from, to:addMonths(from, MONTHS_AHEAD) };
+    // Asking by class means the calendar knows, before the guest clicks, which
+    // nights their seat is actually on sale for.
+    if(state.picked) ask.classCode = state.picked;
+
+    call("availability", ask, READ_TIMEOUT)
       .then(function(data){
         state.events = {};
         state.months = [];
@@ -302,7 +399,11 @@ function mount(root, opts) {
           // paying customer there is nothing to buy when there is.
           ev.highlighted = !opts.series
             || opts.series.indexOf(String(ev.series || "").toLowerCase()) !== -1;
-          if(ev.highlighted && !firstHighlighted) firstHighlighted = ev.date;
+          // Seat-first only. `classStatus` is null on every night when no seat
+          // was asked for, which leaves every night live — the ordinary case.
+          ev.seatLive = !state.picked
+            || ev.classStatus === "available" || ev.classStatus === "limited";
+          if(ev.highlighted && ev.seatLive && !firstHighlighted) firstHighlighted = ev.date;
           state.events[ev.date] = ev;
           var k = monthKey(ev.date);
           if(state.months.indexOf(k) === -1) state.months.push(k);
@@ -326,6 +427,7 @@ function mount(root, opts) {
           : state.months[0];
         panel("");
         cal.hidden = false;
+        renderSeatNote();
         renderMonths();
         renderCal();
       })
@@ -334,6 +436,33 @@ function mount(root, opts) {
         // says what happened and offers the guest a second attempt.
         showProblem("We could not load the fight nights", err.message, "Try again");
       });
+  }
+
+  function seatName(){
+    var c = pickedClass();
+    return c ? c.name : "That seat class";
+  }
+
+  // Says, above the calendar, which seat the guest is booking and how to change
+  // it — and warns them that dimmed nights mean their seat is gone, rather than
+  // leaving them to work it out by clicking.
+  function renderSeatNote(){
+    if(!seatNote) return;
+    if(!state.picked){ seatNote.hidden = true; return; }
+    var gone = 0, total = 0;
+    for(var k in state.events){
+      if(!Object.prototype.hasOwnProperty.call(state.events, k)) continue;
+      total++;
+      if(!state.events[k].seatLive) gone++;
+    }
+    seatNote.hidden = false;
+    seatNote.innerHTML =
+      '<span class="mtx-seat-note-k">Booking</span>' +
+      '<b>' + esc(seatName()) + '</b>' +
+      (gone > 0 && gone < total
+        ? '<span class="mtx-seat-note-d">Dimmed nights are sold out for this seat \u2014 you can still open them and choose another.</span>'
+        : "") +
+      '<button class="mtx-seat-change" data-back-seat>Change seat class</button>';
   }
 
   function renderMonths(){
@@ -364,10 +493,17 @@ function mount(root, opts) {
                 '<span class="mtx-n">' + d + '</span><span class="mtx-tag">No fight</span></button>';
         continue;
       }
+      // A night where the chosen seat is gone is dimmed, never removed and never
+      // disabled: the guest can still open it and take a different seat, which
+      // is a sale we would otherwise throw away.
+      var seatGone = state.picked && !ev.seatLive;
+      var seatWord = ev.classStatus === "fully_booked" ? "sold out"
+                   : ev.classStatus === "booking_closed" ? "booking closed" : "not on sale";
       html += '<button class="mtx-day' + (state.date === key ? " mtx-sel" : "") +
-              (ev.highlighted ? " mtx-hi" : "") + '" data-date="' + key + '" ' +
+              (ev.highlighted ? " mtx-hi" : "") + (seatGone ? " mtx-off" : "") + '" data-date="' + key + '" ' +
               'style="--evt:' + esc(ev.colour || "#6E655C") + '" ' +
-              'aria-label="' + esc(ev.name + ", " + longDate(key)) + '">' +
+              'aria-label="' + esc(ev.name + ", " + longDate(key) +
+                (seatGone ? " \u2014 " + seatName() + " " + seatWord + ", other seats available" : "")) + '">' +
               '<span class="mtx-n">' + d + '</span>' +
               '<span class="mtx-dot"></span>' +
               '<span class="mtx-tag">' + esc(ev.shortName || "") + '</span></button>';
@@ -406,6 +542,12 @@ function mount(root, opts) {
         setTimeout(function(){
           if(state.date !== date) return;    // the guest moved on while we waited
           state.night = filterClasses(data);
+          // Seat first: open straight onto the seat they already chose. Not
+          // filtered to it — if it is sold out that night they need the others
+          // in front of them, not a dead end.
+          if(state.picked && state.night.classes.some(function(c){ return c.code === state.picked; })){
+            state.cls = state.picked;
+          }
           renderNight();
         }, wait);
       })
@@ -417,6 +559,7 @@ function mount(root, opts) {
 
   // A page may ask for only certain seat classes, by name or by code.
   function filterClasses(data){
+    if(opts.seatsFirst) return data;
     if(!opts.classes) return data;
     var want = opts.classes;
     var kept = data.classes.filter(function(c){
@@ -431,6 +574,7 @@ function mount(root, opts) {
     state.date = null; state.night = null; state.cls = null; state.qty = 0; state.cur = null;
     panel("");
     cal.hidden = false;
+    renderSeatNote();
     renderCal();
     cal.scrollIntoView({behavior:"smooth", block:"start"});
   }
@@ -681,6 +825,10 @@ function mount(root, opts) {
     revealCalendar();
   });
 
+  cal.addEventListener("click", function(e){
+    if(e.target.closest("[data-back-seat]")) backToSeats();
+  });
+
   grid.addEventListener("click", function(e){
     var b = e.target.closest("[data-date]");
     if(b) openNight(b.getAttribute("data-date"));
@@ -688,10 +836,15 @@ function mount(root, opts) {
 
   out.addEventListener("click", function(e){
     if(e.target.closest("[data-retry]")){
-      if(state.date) openNight(state.date); else boot();
+      if(state.date) openNight(state.date);
+      else if(opts.seatsFirst && state.picked) loadNights();
+      else boot();
       return;
     }
     if(e.target.closest("[data-back-date]")){ backToDates(); return; }
+
+    var seat = e.target.closest("[data-seat]");
+    if(seat){ chooseSeat(seat.getAttribute("data-seat")); return; }
 
     var pick = e.target.closest("[data-pick]");
     if(pick){
@@ -732,10 +885,14 @@ function options(el) {
     .split(",").map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean);
   var series = (el.getAttribute("data-series") || "")
     .split(",").map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean);
+  // Seat before date. Ignored when the page already names one night, because
+  // there is then no calendar for the seat to lead to.
+  var seatsFirst = (el.getAttribute("data-start") || "").trim().toLowerCase() === "seats";
   return {
     eventKey: event || null,
     classes: classes.length ? classes : null,
     series: series.length ? series : null,
+    seatsFirst: seatsFirst && !event,
   };
 }
 

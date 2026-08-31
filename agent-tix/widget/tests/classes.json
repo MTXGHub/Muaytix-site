@@ -1,0 +1,8 @@
+{
+ "classes": [
+  {"code":"ringside","name":"Ringside","description":"Reserved seating just metres from the ring.","colour":"#2FA04A","ink":"#1E7A38","nightsOnSale":3},
+  {"code":"club_class","name":"Club Class","description":"Our most popular ticket.","colour":"#3A86D4","ink":"#2565AE","nightsOnSale":4},
+  {"code":"leo_section","name":"LEO Section","description":"Elevated seating in Section 10.","colour":"#FFD400","ink":"#8A6A00","nightsOnSale":2},
+  {"code":"third_class","name":"Third Class","description":"Guaranteed seating in the upper terraces.","colour":"#E8631A","ink":"#B84A0C","nightsOnSale":0}
+ ]
+}
