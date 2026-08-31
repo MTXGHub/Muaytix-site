@@ -436,11 +436,20 @@ because a difference crept in. The guard tests exist to keep it that way.
 Taken from what V1 holds for its own future nights, not from August, whose
 numbers are depleted by real sales and are not a template.
 
-**Third Class sits on every night at 50, closed.** That is how V1 does it — all
-29 of its Third Class rows are closed — and it means opening a night is a switch
-rather than a data-entry job. The schema will not accept a closed class without
-an explanation, so every one carries the standing copy about the stadium opening
-it once the other classes fill. Changing that wording later is one update.
+**Third Class sits on every night at 50, closed**, because that is what the
+operator asked for: shown, but closed, with the explanation. It also means
+opening a night is a switch rather than a data-entry job. The schema will not
+accept a closed class without an explanation, so every one carries the standing
+copy about the stadium opening it once the other classes fill. Changing that
+wording later is one update.
+
+A claim that appeared here earlier — that V1 keeps all its Third Class rows
+closed — was wrong, and the mistake is worth knowing about. V1 does not use the
+word `released` for a row that is on sale; it uses `available`, and treats
+anything that is not `hidden` or `not_released` as sellable. Counting rows
+where `release_status = 'released'` therefore returns zero and looks like
+"everything is closed". In fact 26 of V1's 29 Third Class rows are on sale.
+Check the actual values in a column before counting one of them.
 
 **5 September keeps its own numbers**: Ringside 21, Club 40, LEO 10, Third 50
 open. LEO at 10 shows as Limited, which is the 20-or-more rule working.
