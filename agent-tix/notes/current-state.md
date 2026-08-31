@@ -417,3 +417,45 @@ Verified 31 August against live sessions from both systems:
 
 Where V1 and V2 differ, it should be because someone decided they should, not
 because a difference crept in. The guard tests exist to keep it that way.
+
+
+---
+
+## The season is loaded — 31 August 2026
+
+8 September to 31 December is in. 121 bookable nights, 484 inventory rows,
+2,904 resolved prices. Nothing was needed in Stripe for any of it.
+
+| | Every night | RWS Saturday |
+|---|---|---|
+| Ringside | 25 | 25 |
+| Club Class | 25 | **40** |
+| LEO Section | 25 | 25 |
+| Third Class | 50, closed | 50, closed |
+
+Taken from what V1 holds for its own future nights, not from August, whose
+numbers are depleted by real sales and are not a template.
+
+**Third Class sits on every night at 50, closed.** That is how V1 does it — all
+29 of its Third Class rows are closed — and it means opening a night is a switch
+rather than a data-entry job. The schema will not accept a closed class without
+an explanation, so every one carries the standing copy about the stadium opening
+it once the other classes fill. Changing that wording later is one update.
+
+**5 September keeps its own numbers**: Ringside 21, Club 40, LEO 10, Third 50
+open. LEO at 10 shows as Limited, which is the 20-or-more rule working.
+
+**26 December is not in the diary.** Boxing Day, no fight.
+
+**Buakaw**: 28 September, 26 October, 30 November, 28 December — the last Monday
+of each month, taking that Monday from Knockout.
+
+The nights are worked out from the recurrence on `event_series`, not from a list
+of dates. Loading 2027 means changing two dates at the top of
+`0010_load_september_to_december.sql`.
+
+### Live bookings at the point of loading
+
+Five real payments, all reconciling: 2 Sep LEO, 4 Sep Club, 5 Sep Club, 7 Sep
+LEO sold; 4 Sep LEO refunded and returned to stock. Nothing held, nothing stuck.
+The load did not disturb any of them — existing rows were left untouched.
