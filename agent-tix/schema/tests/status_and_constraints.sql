@@ -1,6 +1,9 @@
 -- Agent Tix — schema checks
 --
--- Run against a scratch database after applying 0001..0003. Every row printed
+-- Run against a scratch database with the STRUCTURE applied but no seed data:
+-- 0001, 0002, 0003, 0005, 0006, 0007, 0009. Not 0004 (it seeds a tenant this
+-- file creates for itself), not 0008 (pg_cron is Supabase-only), not 0010.
+-- Every row printed
 -- should read PASS. Exists because Design Brief Section 13 asks for tested,
 -- fixed behaviour rather than assumed behaviour, and because the 20/19 split in
 -- Section 5 is exactly the kind of off-by-one that reads correct and is not.
@@ -107,9 +110,16 @@ declare
     array['weekday 8 is not a weekday',
           $q$insert into public.event_series (tenant_id, slug, name, frequency, weekdays, default_start_time_local)
              values ('11111111-1111-1111-1111-111111111111','bad-day','Bad Day','weekly', array[8]::smallint[], '20:00')$q$],
+    -- This pointed at ticket_currency_prices, which 0005 replaced. The test
+    -- still passed, because the insert failed on "no such table" rather than on
+    -- the constraint — green for the wrong reason, and it would have stayed
+    -- green with the constraint removed.
     array['currency must be a 3-letter code',
-          $q$insert into public.ticket_currency_prices (event_ticket_class_id, currency, unit_amount)
-             values (gen_random_uuid(), 'POUNDS', 100)$q$],
+          $q$insert into public.ticket_class_prices (ticket_class_id, currency, unit_amount)
+             select id, 'POUNDS', 100 from public.ticket_classes limit 1$q$],
+    array['a price must be above zero',
+          $q$insert into public.ticket_class_prices (ticket_class_id, currency, unit_amount)
+             select id, 'zar', 0 from public.ticket_classes limit 1$q$],
     array['a class appears at most once per event',
           $q$insert into public.event_ticket_classes (tenant_id, event_id, ticket_class_id, total_quantity)
              select '11111111-1111-1111-1111-111111111111','33333333-3333-3333-3333-333333333333', id, 50
