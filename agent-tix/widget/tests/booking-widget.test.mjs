@@ -47,6 +47,21 @@ const frag   = fs.readFileSync(WIDGET, 'utf8');
 const page_html = (extra = '') => `<!doctype html><html><head><meta charset="utf-8">
 <title>t</title>${extra}</head><body style="background:#fff">${frag}</body></html>`;
 
+// What Tilda actually does to the widget. The live page centred every
+// description and turned the CTA into a solid black rectangle with invisible
+// text, because the host's rules outranked ours and its text-align inherited
+// straight in. Deliberately nastier than Tilda: an id-scoped rule, so anything
+// that survives this survives most page builders.
+const HOSTILE_HOST = `<style>
+  body { text-align: center; }
+  #allrecords, #allrecords * { text-align: center; }
+  #allrecords button { color: #000000; font-family: serif; }
+  #allrecords .day, #allrecords .note, #allrecords .pill { background: #ff00ff; color: #ff00ff; }
+  #allrecords select { border-radius: 0; }
+</style>`;
+const hostile_page = () => `<!doctype html><html><head><meta charset="utf-8"><title>t</title>
+${HOSTILE_HOST}</head><body><div id="allrecords">${frag}</div></body></html>`;
+
 let pass = 0, fail = 0;
 const check = (name, ok, detail = '') => {
   if (ok) { pass++; console.log('  ok   ' + name); }
@@ -253,6 +268,66 @@ console.log('\nHanding over to Stripe');
         JSON.stringify(sent));
   check('no price sent from the browser', !('unitAmount' in sent) && !('amount' in sent));
   check('redirected to Stripe', went === 'https://checkout.stripe.com/c/pay/test_123', String(went));
+  await ctx.close();
+}
+
+console.log('\nSurviving the page it is embedded in');
+{
+  const ctx = await browser.newContext({ viewport: { width: 1180, height: 1000 } });
+  const page = await ctx.newPage();
+  await page.route('**/functions/v1/**', async (route) => {
+    const body = JSON.parse(route.request().postData() || '{}');
+    return route.fulfill({ status: 200, contentType: 'application/json',
+      body: JSON.stringify(body.action === 'events' ? events : night) });
+  });
+  page.on('pageerror', e => { fail++; console.log('  FAIL page error -> ' + e.message); });
+  await page.setContent(hostile_page(), { waitUntil: 'domcontentloaded' });
+  await page.waitForSelector('#mtxGrid [data-date]', { timeout: 8000 });
+  await page.click('[data-date="2026-09-05"]');
+  await page.waitForSelector('.mtx-pick', { timeout: 8000 });
+
+  const eventText = await page.$eval('.mtx-band-d', el => getComputedStyle(el).textAlign);
+  check('the fight night description reads left', eventText === 'left', eventText);
+
+  await page.click('[data-pick="leo_section"]');
+  const chosen = await page.$eval('.mtx-detail-k', el => getComputedStyle(el).textAlign);
+  const classDesc = await page.$eval('.mtx-detail-d', el => getComputedStyle(el).textAlign);
+  check('"You have chosen" reads left', chosen === 'left', chosen);
+  check('the seat class description reads left', classDesc === 'left', classDesc);
+
+  // "You have chosen" must sit on its own line above the class name.
+  const stacked = await page.evaluate(() => {
+    const k = document.querySelector('.mtx-detail-k').getBoundingClientRect();
+    const h = document.querySelector('.mtx-detail-h').getBoundingClientRect();
+    return { above: k.bottom <= h.top + 1, aligned: Math.abs(k.left - h.left) < 2 };
+  });
+  check('it sits above the seat class name', stacked.above);
+  check('and lines up with it', stacked.aligned);
+
+  await page.selectOption('#mtxQty', '2');
+  const cta = await page.evaluate(() => {
+    const b = document.querySelector('[data-go]');
+    const s = getComputedStyle(b);
+    const parse = (c) => c.match(/\d+/g).slice(0, 3).map(Number);
+    const [r, g, bl] = parse(s.color);
+    const [br, bg, bb] = parse(s.backgroundColor);
+    // Relative luminance, roughly. What matters is that they are not the same.
+    const lum = (x) => 0.2126 * x[0] + 0.7152 * x[1] + 0.0722 * x[2];
+    return { text: s.color, bg: s.backgroundColor,
+             contrast: Math.abs(lum([r, g, bl]) - lum([br, bg, bb])),
+             font: s.fontFamily };
+  });
+  check('the reserve button has readable text on its background',
+        cta.contrast > 100, cta.text + ' on ' + cta.bg);
+  check('and keeps its own typeface', /Barlow/.test(cta.font), cta.font);
+
+  const day = await page.evaluate(() => {
+    document.querySelector('[data-back-date]').click();
+    return null;
+  });
+  await page.waitForSelector('#mtxGrid [data-date]');
+  const dayBg = await page.$eval('#mtxGrid [data-date]', el => getComputedStyle(el).backgroundColor);
+  check('the host cannot repaint the calendar', dayBg !== 'rgb(255, 0, 255)', dayBg);
   await ctx.close();
 }
 

@@ -66,3 +66,34 @@ off at once. Stripe already filters by currency and country, so a short list on
 one session is not a restriction to copy.
 
 `agent-tix/functions/tests/checkout-guards.test.mjs` enforces this.
+
+## Why every rule carries `#mtx-booking`
+
+The widget lives inside somebody else's page, and that page has its own
+stylesheet. On the first live embed Tilda won two fights it should never have
+been in:
+
+- **The reserve button rendered as a solid black rectangle.** Our background
+  applied but the host's rule won on `color`, so the text was dark on dark and
+  simply invisible. The button still worked; nobody could read it.
+- **Every description came out centred.** Tilda centres the text in its blocks,
+  and that inherits straight into the widget.
+
+Both were specificity. The class names are all prefixed `mtx-`, which stops the
+host's rules matching our elements by accident, but a rule like
+`#allrecords button{color:#000}` outranks a bare `.mtx-go` and wins anyway.
+
+So every rule in this file is scoped to `#mtx-booking`. An id plus a class
+beats almost anything a page builder emits, and the widget looks the same
+wherever it is embedded.
+
+Alignment needed one extra step. Setting `text-align` on the widget root does
+not help, because a host rule like `#allrecords *{text-align:center}` matches
+each element **directly**, and a direct match beats an inherited value however
+specific the ancestor is. Every element inside the card is therefore told
+explicitly, and the few that genuinely centre — weekday initials, calendar days,
+the loading and error panels, button labels — are told back again one level up.
+
+The test file drives the widget inside a deliberately hostile host page that
+does all of this and worse. If it renders correctly there, Tilda is not a
+problem.
