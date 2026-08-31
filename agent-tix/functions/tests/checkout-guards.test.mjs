@@ -42,8 +42,17 @@ check('payment methods are left to the Stripe configuration',
       !/payment_method_types/.test(code),
       'create-checkout sets payment_method_types, which overrides the account configuration and switches off Alipay, WeChat Pay and every other geo-specific method');
 
+// Standing instruction, 31 August 2026: the name is REQUIRED and stays
+// required. It is how guests are addressed by first name, and it is a signal
+// Radar uses. Making it optional to dodge a form-validation problem on Stripe's
+// own page was rejected outright, and rightly.
 check('the customer name is collected',
       /name_collection/.test(code));
+
+check('and it is required, not optional',
+      /name_collection[\s\S]{0,120}?optional:\s*false/.test(code)
+      && !/name_collection[\s\S]{0,120}?optional:\s*true/.test(code),
+      'name_collection must stay optional:false');
 
 check('the price is read server side, never taken from the request',
       /event_ticket_prices/.test(code) && !/body\.(unitAmount|unit_amount|amount|price)\b/.test(code));

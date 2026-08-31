@@ -329,3 +329,64 @@ do it twice. See `how-to-refund.md`.
 
 The 4 September LEO Section seat has been returned; that night is back to 25 of
 25 available.
+
+
+---
+
+## Standing decisions on the Stripe checkout
+
+Both of these were set by the operator after the live tests, and both are
+enforced by `agent-tix/functions/tests/checkout-guards.test.mjs`.
+
+**Payment methods are never set in code.** The account's payment method
+configuration decides. See the entry above.
+
+**The name is required and stays required.** `name_collection` with
+`optional: false`. Two reasons, both the operator's: guests are addressed by
+first name in every message, and the name is a signal Radar uses for fraud
+scoring. Making it optional to work around a form-validation problem on Stripe's
+own page was rejected, and correctly — it would trade a known security and
+service benefit for a problem we cannot even locate.
+
+## The red name box, 31 August
+
+On the mobile test the name field pre-filled, went red on the pay button with no
+message, and went through after the name was deleted and retyped.
+
+What the evidence shows:
+
+- **The trailing space did not cause it.** The submission that succeeded is the
+  one carrying the trailing space. If a trailing space were rejected, the retype
+  would have failed too.
+- **The two are connected, but in the other direction.** The red box caused the
+  retype, and the retype produced the space — on Android, tapping a predicted
+  word inserts the word and a space, which matches "after typing the final letter
+  I then clicked the pay button".
+- **The block never reached Stripe.** The PaymentIntent
+  (`pi_3UARgCLIQoPqkuKb1ALjSWMT`) was created at 09:39:04, on the successful
+  attempt. `last_payment_error` is null and there is one charge. The first click
+  submitted nothing, so this was the Checkout page's own form check — which is
+  also why there was no message: the page believed the field was empty.
+- **It is not new to V2.** V1 collects the name the same way and has for months.
+
+What is not known: why the pre-filled value failed that check. It happens inside
+Stripe's hosted page and nothing about it is visible from our side. Do not guess
+in this file. If it recurs, Stripe support can see the client-side session; the
+references to give them are session `cs_live_a1boMEYr2jRU40hazOluWU4j2wsHX0516JsgswvZvod6GoLx1mSO00mDC6`,
+payment intent `pi_3UARgCLIQoPqkuKb1ALjSWMT`, 31 August 2026 09:37–09:39 UTC.
+
+An earlier note here suggested the duplicate customer records might explain the
+pre-fill. That was speculation and is very likely wrong: for a guest checkout
+Stripe pre-fills from Link, the customer's own saved details, not from the
+Customer objects on this account.
+
+## Duplicate customer records — open, unrelated
+
+`customer_creation: "always"` mints a new Stripe customer on every checkout, so
+one email address now has fifteen customer records. V1 does the same, so most of
+them predate V2.
+
+The names on them differ only in capitalisation and one trailing space — they
+are the same name, not different spellings. This is untidy rather than harmful,
+and nothing reads those records: the webhook takes the guest's details from the
+checkout session itself. Left alone pending a decision.
