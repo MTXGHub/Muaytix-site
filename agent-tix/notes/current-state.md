@@ -178,3 +178,71 @@ This is worth remembering before any change to Stripe metadata on either side.
   December is a data job, not a build.
 - The three widget modes (full month, filtered weekday, single event) — this is
   the full-month mode only.
+
+---
+
+## What the first live test showed — 31 August 2026
+
+Five checkouts, two real payments, and four things worth fixing. The booking
+path itself did what it was built to do: the row lock held, no seat was ever
+double-sold, and the sale that reached the webhook was recorded correctly.
+
+### A paid booking that the database never heard about
+
+The second attempt succeeded. Visa debit, GBP 34.00, LEO Section on 4 September,
+charge `ch_3UAIgmLIQoPqkuKb0LQ2O6p4`, captured and not refunded. Our reservation
+row still said `held`.
+
+The webhook endpoint was created at 08:13 UTC. That session was paid at 00:03
+UTC. Stripe had nobody to tell, and does not replay events to an endpoint
+created afterwards. Reconciled by hand on 31 August by calling
+`complete_reservation` with the real session and payment intent, which is
+exactly what the webhook would have done.
+
+Two other reservations from the same window were released as `expired`; both
+were genuinely unpaid and long expired in Stripe.
+
+Nothing about this recurs now the endpoint exists. It is recorded because it is
+the one failure mode that loses money quietly: everything looks fine, the guest
+is charged, and the stock never moves.
+
+### The slowness was the CORS preflight, not Stripe
+
+From the edge logs, the first attempt of the day:
+
+| | OPTIONS | POST |
+|---|---|---|
+| Attempt 1, cold | 3,615 ms | 4,648 ms |
+| Attempt 2, warm | 595 ms | 2,103 ms |
+| Attempt 3, cold again after 8 hours idle | 3,618 ms | 1,488 ms |
+
+Sending `Content-Type: application/json` is not a CORS-safelisted value, so the
+browser sent a separate OPTIONS request and waited for the answer before sending
+anything real — and that preflight woke a cold function, so the boot was paid
+twice. The widget now sends `text/plain;charset=UTF-8` with the same JSON body,
+which the browser treats as a simple request and sends straight out. `req.json()`
+does not care what the header says.
+
+On top of that, the widget wakes `create-checkout` the moment a seat class is
+chosen, so the boot happens while the guest is still picking a quantity rather
+than after they commit.
+
+### Payment methods were wider than V1's
+
+V2 inherited the account's full payment method configuration: card, link,
+pay_by_bank, revolut_pay, klarna, afterpay, billie, alipay, wechat_pay,
+amazon_pay. V1 passes `payment_method_types: ["card", "link"]` and always has.
+
+Three of the four bad experiences in the test were bank redirects — Revolut
+opening the wrong Revolut app, and an RBS approval that was given and then
+never landed. V2 now matches V1. This is parity with what is selling today, not
+a reduction. Adding Alipay and WeChat Pay for Chinese visitors is worth doing
+deliberately, with a test behind it.
+
+### No customer name
+
+V1 passes `name_collection: { individual: { enabled: true, optional: false } }`.
+V2 did not, so Stripe returned an email and no name, and the ticket emails
+address the guest by first name. Added, with a fallback: if the pinned API
+version rejects the parameter, the session is created again without it rather
+than the whole checkout failing.

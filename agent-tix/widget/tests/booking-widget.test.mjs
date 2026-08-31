@@ -246,13 +246,64 @@ console.log('\nHanding over to Stripe');
   await page.click('[data-go]');
   await page.waitForURL(/checkout\.stripe\.com/, { timeout: 8000 });
 
-  const sent = calls.find(c => c.url.endsWith('/create-checkout')).body;
+  const sent = calls.find(c => c.url.endsWith('/create-checkout') && c.body.action !== 'warm').body;
   check('checkout asked for the right thing',
         sent.eventKey === 'rws_2026_09_05' && sent.classCode === 'leo_section' &&
         sent.quantity === 2 && sent.currency === 'usd' && sent.seatingAcknowledged === false,
         JSON.stringify(sent));
   check('no price sent from the browser', !('unitAmount' in sent) && !('amount' in sent));
   check('redirected to Stripe', went === 'https://checkout.stripe.com/c/pay/test_123', String(went));
+  await ctx.close();
+}
+
+console.log('\nThe checkout is woken before it is needed');
+{
+  const { page, ctx, calls } = await newPage();
+  await page.waitForSelector('#mtxGrid [data-date]');
+  await page.click('[data-date="2026-09-05"]');
+  await page.waitForSelector('.mtx-pick');
+  check('nothing sent to checkout before a class is picked',
+        calls.filter(c => c.url.endsWith('/create-checkout')).length === 0);
+
+  await page.click('[data-pick="leo_section"]');
+  await page.waitForFunction(() => true);
+  await page.waitForTimeout(300);
+  const warm = calls.filter(c => c.url.endsWith('/create-checkout'));
+  check('picking a class wakes the checkout', warm.length === 1, JSON.stringify(warm.map(w => w.body)));
+  check('the wake-up carries nothing that could book anything',
+        warm[0] && warm[0].body.action === 'warm' && !warm[0].body.eventKey && !warm[0].body.quantity,
+        JSON.stringify(warm[0] && warm[0].body));
+
+  // Going back and forth must not spray pings at the server.
+  await page.click('[data-back-class]');
+  await page.click('[data-pick="ringside"]');
+  await page.waitForTimeout(300);
+  check('it only ever wakes once',
+        calls.filter(c => c.url.endsWith('/create-checkout')).length === 1);
+  await ctx.close();
+}
+
+console.log('\nNo CORS preflight is provoked');
+{
+  const ctx = await browser.newContext({ viewport: { width: 1180, height: 900 } });
+  const page = await ctx.newPage();
+  const methods = [];
+  await page.route('**/functions/v1/**', async (route) => {
+    const req = route.request();
+    methods.push(req.method());
+    const body = JSON.parse(req.postData() || '{}');
+    return route.fulfill({ status: 200, contentType: 'application/json',
+      body: JSON.stringify(body.action === 'events' ? events : night) });
+  });
+  page.on('pageerror', e => { fail++; console.log('  FAIL page error -> ' + e.message); });
+  await page.setContent(page_html(), { waitUntil: 'domcontentloaded' });
+  await page.waitForSelector('#mtxGrid [data-date]');
+  await page.click('[data-date="2026-09-05"]');
+  await page.waitForSelector('.mtx-pick');
+  // An OPTIONS here would mean the guest waits for a whole extra round trip,
+  // paying a cold boot twice on the first request of the day.
+  check('every request goes straight out as a POST',
+        methods.length > 0 && methods.every(m => m === 'POST'), methods.join(','));
   await ctx.close();
 }
 

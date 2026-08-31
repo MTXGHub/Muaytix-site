@@ -410,7 +410,14 @@ function call(fn, payload, timeout){
 
   return fetch(API + "/" + fn, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    // Deliberately text/plain, not application/json. application/json is not a
+    // CORS-safelisted content type, so the browser sends a separate OPTIONS
+    // request first and waits for the answer before sending anything real. On a
+    // cold function that preflight was measured at 3.6 seconds — the guest paid
+    // the whole boot twice over, once to ask permission and once to be served.
+    // text/plain skips the preflight entirely. The body is still JSON, and the
+    // server reads it with req.json(), which does not care what the header says.
+    headers: { "Content-Type": "text/plain;charset=UTF-8" },
     body: JSON.stringify(payload),
     signal: ctrl.signal
   }).then(function(res){
@@ -735,6 +742,31 @@ function update(){
 }
 
 /* ---------------------------------------------------------------------------
+   Waking the checkout up early
+   -------------------------------------------------------------------------*/
+// create-checkout is a bigger function than the others and is often stone cold,
+// because nothing touches it until the moment a guest commits. Booting it then
+// costs several seconds at the exact point they are deciding whether to trust
+// us. So the moment a seat class is chosen we send a ping that does nothing but
+// wake it, and by the time they have picked a quantity it is ready.
+//
+// Fire and forget on purpose: if it fails, the real call simply pays the boot
+// cost as it did before. Nothing about the booking depends on it.
+var warmed = false;
+function warmCheckout(){
+  if(warmed) return;
+  warmed = true;
+  try {
+    fetch(API + "/create-checkout", {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=UTF-8" },
+      body: JSON.stringify({ action: "warm" }),
+      keepalive: true
+    }).catch(function(){});
+  } catch(e) {}
+}
+
+/* ---------------------------------------------------------------------------
    Handing over to Stripe
    -------------------------------------------------------------------------*/
 function reserve(){
@@ -806,6 +838,7 @@ out.addEventListener("click", function(e){
 
   var pick = e.target.closest("[data-pick]");
   if(pick){
+    warmCheckout();
     state.cls = pick.getAttribute("data-pick");
     state.qty = 0;
     out.querySelector(".mtx-tix").innerHTML = seatStep();

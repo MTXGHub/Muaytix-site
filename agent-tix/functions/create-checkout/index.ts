@@ -100,6 +100,13 @@ Deno.serve(async (req: Request) => {
   try { body = await req.json(); }
   catch { return json({ error: "Could not read the request." }, 400, origin); }
 
+  // A cold Edge Function takes several seconds to boot, and the guest pays that
+  // wait at the worst possible moment — the click that hands them to Stripe.
+  // The widget pings this the moment a seat class is chosen, which boots the
+  // isolate while they are still picking a quantity. It must do nothing else:
+  // this must never reserve, charge, or touch a row.
+  if (body.action === "warm") return json({ warm: true }, 200, origin);
+
   const eventKey = String(body.eventKey ?? "").trim();
   const classCode = String(body.classCode ?? "").trim();
   const quantity = Number(body.quantity);
@@ -197,8 +204,24 @@ Deno.serve(async (req: Request) => {
       seating_acknowledged: String(seatingAcknowledged),
     };
 
-    const session = await stripe.checkout.sessions.create({
+    // Same shape V1 has been selling on for months, and deliberately so.
+    //
+    // Left to the account's payment method configuration, Stripe also offers
+    // pay_by_bank, revolut_pay, klarna, afterpay, billie, alipay, wechat_pay and
+    // amazon_pay. The first live test hit two of them: Revolut opened the wrong
+    // Revolut app, and an RBS bank redirect took an approval and then dropped
+    // it. Bank redirects hand the last, most fragile step of the purchase to an
+    // app we do not control and cannot debug.
+    //
+    // Adding Alipay and WeChat Pay for Chinese visitors is a real conversation
+    // to have later. It should be a deliberate decision with a test behind it,
+    // not something inherited by leaving this line out.
+    const params = {
       mode: "payment",
+      payment_method_types: ["card", "link"],
+      // Without this Stripe returns an email and no name, and the person
+      // sending the ticket by hand has nobody to address it to.
+      name_collection: { individual: { enabled: true, optional: false } },
       line_items: [{
         quantity,
         price_data: {
@@ -220,7 +243,24 @@ Deno.serve(async (req: Request) => {
       adaptive_pricing: { enabled: false },
       metadata,
       payment_intent_data: { metadata },
-    });
+    } as Stripe.Checkout.SessionCreateParams;
+
+    // name_collection is a newer parameter than the rest of this call. If the
+    // pinned API version does not know it, Stripe rejects the whole request —
+    // which would take the checkout down rather than merely lose a name. So an
+    // unknown-parameter error retries once without it. Every other error is
+    // left to the catch below, where the hold is released.
+    let session: Stripe.Checkout.Session;
+    try {
+      session = await stripe.checkout.sessions.create(params);
+    } catch (err) {
+      const unknownParam = (err as { code?: string; param?: string }).code === "parameter_unknown"
+        && String((err as { param?: string }).param ?? "").startsWith("name_collection");
+      if (!unknownParam) throw err;
+      console.warn("name_collection not supported on this API version; continuing without it");
+      delete (params as unknown as Record<string, unknown>).name_collection;
+      session = await stripe.checkout.sessions.create(params);
+    }
 
     if (!session.url) throw new Error("Stripe returned no checkout URL");
 
