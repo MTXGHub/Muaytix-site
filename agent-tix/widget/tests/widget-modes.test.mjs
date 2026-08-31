@@ -75,15 +75,26 @@ console.log('\nMode 3 — one night, one seat class');
   await ctx.close();
 }
 
-console.log('\nMode 4 — one promotion only (data-series)');
+console.log('\nMode 4 — a page built around one promotion (data-series)');
 {
   const {p,ctx}=await page('<div class="muaytix-ticket-selector" data-series="rws"></div>');
   await p.waitForSelector('[data-grid] [data-date]',{timeout:8000});
   const dates = await p.$$eval('[data-grid] [data-date]', b=>b.map(x=>x.dataset.date));
-  check('only that promotion is bookable', JSON.stringify(dates)==='["2026-09-05"]', JSON.stringify(dates));
+  check('every fight night is still bookable',
+        JSON.stringify(dates)==='["2026-09-01","2026-09-02","2026-09-05"]', JSON.stringify(dates));
+  // The blunder this guards against: the other promotions' nights came out
+  // struck through and labelled "No fight" on nights that had fights on them,
+  // so a guest reading the calendar concluded there was nothing to buy.
+  const struck = await p.$$eval('[data-grid] .mtx-shut',
+    b=>b.map(x=>x.dataset.date||x.querySelector('.mtx-n').textContent));
+  check('"No fight" only ever lands on a night with no fight',
+        struck.join(',')==='3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30',
+        struck.join(','));
+  const lit = await p.$$eval('[data-grid] .mtx-hi', b=>b.map(x=>x.dataset.date));
+  check('this promotion is the one marked out', JSON.stringify(lit)==='["2026-09-05"]', JSON.stringify(lit));
   const months = await p.$$eval('[data-months] button', b=>b.map(x=>x.textContent.trim()));
-  check('months without one of its nights are not offered',
-        JSON.stringify(months)==='["Sep 2026"]', JSON.stringify(months));
+  check('every month with fights in it is still offered',
+        JSON.stringify(months)==='["Sep 2026","Oct 2026"]', JSON.stringify(months));
   check('the calendar is still a calendar', await p.isVisible('[data-grid]'));
   await p.click('[data-date="2026-09-05"]');
   await p.waitForSelector('.mtx-pick',{timeout:8000});
@@ -92,7 +103,18 @@ console.log('\nMode 4 — one promotion only (data-series)');
   await ctx.close();
 }
 
-console.log('\nA promotion with nothing on sale says so');
+console.log('\nA promotion page opens on its own next night');
+{
+  const {p,ctx}=await page('<div class="muaytix-ticket-selector" data-series="rajadamnern-knockout"></div>');
+  await p.waitForSelector('[data-grid] [data-date]',{timeout:8000});
+  const on = await p.$eval('[data-months] .mtx-on', b=>b.textContent.trim());
+  check('opens on the month holding it', on==='Sep 2026', on);
+  const lit = await p.$$eval('[data-grid] .mtx-hi', b=>b.map(x=>x.dataset.date));
+  check('and marks its own nights', JSON.stringify(lit)==='["2026-09-01"]', JSON.stringify(lit));
+  await ctx.close();
+}
+
+console.log('\nA promotion with nothing of its own still sells every other night');
 {
   const ctx=await b.newContext({viewport:{width:1180,height:900}});
   const p=await ctx.newPage();
@@ -102,10 +124,13 @@ console.log('\nA promotion with nothing on sale says so');
   await p.setContent(`<!doctype html><html><head><meta charset="utf-8"><title>t</title></head>
     <body><div class="muaytix-ticket-selector" data-series="kiatpetch"></div><script>${widget}<\/script></body></html>`,
     {waitUntil:'domcontentloaded'});
-  await p.waitForSelector('.mtx-state',{timeout:8000});
-  check('told plainly, not left blank',
-    (await p.textContent('.mtx-state h3')).includes('No dates on sale for this event'),
-    await p.textContent('.mtx-state h3'));
+  await p.waitForSelector('[data-grid] [data-date]',{timeout:8000});
+  const dates = await p.$$eval('[data-grid] [data-date]', b=>b.map(x=>x.dataset.date));
+  check('the calendar still sells what is on',
+        JSON.stringify(dates)==='["2026-09-01","2026-09-02","2026-09-05"]', JSON.stringify(dates));
+  check('nothing is marked out, because none of it is this promotion',
+        (await p.$$('[data-grid] .mtx-hi')).length===0);
+  check('and it does not claim there is nothing on sale', (await p.$('.mtx-state'))===null);
   await ctx.close();
 }
 
