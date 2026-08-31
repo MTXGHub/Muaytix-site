@@ -227,17 +227,41 @@ On top of that, the widget wakes `create-checkout` the moment a seat class is
 chosen, so the boot happens while the guest is still picking a quantity rather
 than after they commit.
 
-### Payment methods were wider than V1's
+### Payment methods — a mistake, corrected the same day
 
-V2 inherited the account's full payment method configuration: card, link,
-pay_by_bank, revolut_pay, klarna, afterpay, billie, alipay, wechat_pay,
-amazon_pay. V1 passes `payment_method_types: ["card", "link"]` and always has.
+Read this before touching `payment_method_types`.
 
-Three of the four bad experiences in the test were bank redirects — Revolut
-opening the wrong Revolut app, and an RBS approval that was given and then
-never landed. V2 now matches V1. This is parity with what is selling today, not
-a reduction. Adding Alipay and WeChat Pay for Chinese visitors is worth doing
-deliberately, with a test behind it.
+Two V1 sessions were sampled, both priced in THB, and both listed
+`payment_method_types: ["card", "link"]`. That was read as "V1 restricts itself
+to card and Link", and V2 was changed to match. It was wrong, and it was
+reverted within the hour on the operator's correction.
+
+THB simply does not support most methods, so Stripe had filtered them out. A V1
+session in EUR from the same week lists eleven: card, bancontact, eps, ideal,
+multibanco, link, mb_way, amazon_pay, bizum, satispay and scalapay. The V2 GBP
+sessions from the live test list card, afterpay, alipay, klarna, pay_by_bank,
+wechat_pay, link, revolut_pay, amazon_pay and billie.
+
+The account's payment method configuration (`pmc_1SFMQ8LIQoPqkuKbQ0cTntoD`) has
+Alipay, WeChat Pay, KakaoPay, Naver Pay, Payco, KR Card, Pix, iDEAL, Bancontact,
+EPS, Bizum, Satispay, Scalapay, MB Way, Multibanco, Klarna, Afterpay, Billie,
+Revolut Pay, pay_by_bank, Amazon Pay, Apple Pay and Google Pay all switched on
+and available. That breadth is the entire point of the platform: the methods are
+geo-targeted, Alipay and WeChat Pay were added for Chinese visitors with
+marketing behind them, and bookings from that market are up 400%.
+
+So the payment methods were never a V1-versus-V2 difference. Both read the same
+configuration. Setting `payment_method_types` does not narrow a list — it
+replaces the configuration entirely, switching off every geo-specific method at
+once, with no error and no failing test.
+
+`agent-tix/functions/tests/checkout-guards.test.mjs` now fails the build if the
+field reappears.
+
+The Revolut and RBS problems from the live test are therefore not a V2 fault and
+not fixable in our code: V1 offers exactly the same methods through the same
+configuration and would behave identically. Standing instruction: no payment
+method is to be switched off.
 
 ### No customer name
 

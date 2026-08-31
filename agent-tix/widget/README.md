@@ -55,3 +55,14 @@ Drives the widget through a real browser with both functions stubbed, covering
 the calendar, all four statuses, quantity and currency, the seating warning, the
 handover to Stripe, a sold-out clash, a server error, retry, and a request that
 never answers. Set `CHROMIUM_PATH` if Playwright cannot find a browser.
+
+## Standing rule: payment methods
+
+`create-checkout` must never set `payment_method_types`. Stripe's payment method
+configuration decides, and it is set up deliberately — Alipay and WeChat Pay for
+Chinese visitors, the European methods for Europe, and so on. Setting that field
+does not narrow the list, it replaces the configuration and switches all of it
+off at once. Stripe already filters by currency and country, so a short list on
+one session is not a restriction to copy.
+
+`agent-tix/functions/tests/checkout-guards.test.mjs` enforces this.

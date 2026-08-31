@@ -204,21 +204,19 @@ Deno.serve(async (req: Request) => {
       seating_acknowledged: String(seatingAcknowledged),
     };
 
-    // Same shape V1 has been selling on for months, and deliberately so.
+    // DO NOT set payment_method_types here. Leaving it out is what lets the
+    // account's payment method configuration decide, and that configuration is
+    // the product of a deliberate commercial decision: Alipay and WeChat Pay
+    // were added for Chinese visitors with marketing behind them, and that
+    // market is up 400%. Setting this field overrides the configuration
+    // wholesale and silently switches those methods off.
     //
-    // Left to the account's payment method configuration, Stripe also offers
-    // pay_by_bank, revolut_pay, klarna, afterpay, billie, alipay, wechat_pay and
-    // amazon_pay. The first live test hit two of them: Revolut opened the wrong
-    // Revolut app, and an RBS bank redirect took an approval and then dropped
-    // it. Bank redirects hand the last, most fragile step of the purchase to an
-    // app we do not control and cannot debug.
-    //
-    // Adding Alipay and WeChat Pay for Chinese visitors is a real conversation
-    // to have later. It should be a deliberate decision with a test behind it,
-    // not something inherited by leaving this line out.
+    // Stripe already filters the configuration by currency and country, which
+    // is why a THB session offers card and Link while a EUR session offers
+    // bancontact, iDEAL, Bizum, Satispay and the rest. A short list on one
+    // session is Stripe matching the currency, not a restriction to copy.
     const params = {
       mode: "payment",
-      payment_method_types: ["card", "link"],
       // Without this Stripe returns an email and no name, and the person
       // sending the ticket by hand has nobody to address it to.
       name_collection: { individual: { enabled: true, optional: false } },
