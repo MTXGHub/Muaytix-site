@@ -266,6 +266,11 @@ Deno.serve(async (req: Request) => {
             endTime: hhmm(header.local_end_time),
             venue: header.venue_name,
             timezone: header.venue_timezone,
+            // Where to send a guest we are not selling this night to. The widget
+            // decides whether to show it, and only ever does when nothing on the
+            // night is buyable.
+            divertUrl: header.divert_url ?? null,
+            divertNote: header.divert_note ?? null,
           },
           // Every class is returned, sold out and closed included, each with its
           // own status. Hiding them is what sends a guest to a competitor.
