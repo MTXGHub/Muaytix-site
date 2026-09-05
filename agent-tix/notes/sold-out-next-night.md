@@ -44,8 +44,14 @@ next date.
 Confirmed by Jason, including `/rajadamnern/petchyindee` — the extra slash is
 correct and not a slip, so leave it alone.
 
-These are hard facts about the website, not something to infer. If a page is
-ever renamed, this table is what needs changing.
+**Correct for now, and expected to change.** The site is moving to Webflow, and
+these addresses move with it.
+
+So they do not get written into the widget. They belong in the database against
+each promotion, where changing one is a single edit rather than a rebuild and a
+re-paste across every page on the site. A wrong address here sends a paying
+guest to a dead page, and it fails silently — nobody finds out until someone
+happens to click it.
 
 ## What already exists
 
