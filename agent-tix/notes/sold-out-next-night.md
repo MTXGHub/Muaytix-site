@@ -39,12 +39,13 @@ Monday is the one that stays put: Monday and Tuesday are both Rajadamnern
 Knockout, so the guest never leaves the page — the widget just moves to the
 next date.
 
-## Open before building
+## The addresses
 
-- **Check the Petchyindee address.** `/rajadamnern/petchyindee` carries a slash
-  the other six do not. Confirm it resolves before it goes in front of anyone.
-- The addresses above are hard facts about the website, not something to infer.
-  If a page is renamed, this table is what needs changing.
+Confirmed by Jason, including `/rajadamnern/petchyindee` — the extra slash is
+correct and not a slip, so leave it alone.
+
+These are hard facts about the website, not something to infer. If a page is
+ever renamed, this table is what needs changing.
 
 ## What already exists
 
