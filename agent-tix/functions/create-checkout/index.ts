@@ -11,11 +11,21 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import Stripe from "npm:stripe@^22";
 
 const TENANT = "muaytix";
-// Stripe refuses a Checkout Session that expires less than 30 minutes out, and
-// its clock is a network hop later than ours, so exactly 30 is a coin toss.
-// 31 clears it. Our own hold outlives the session either way, so a guest who
-// pays at the very last second still has stock waiting for them.
-const HOLD_MINUTES = 36;
+// We sell tickets, we do not keep them. A guest deciding at ten past five on a
+// six o'clock show does not need half an hour, and every minute their basket
+// sits there is a minute those seats are invisible to everybody else. On a
+// night with four seats left and paid advertising running, one abandoned
+// checkout takes the whole event off sale.
+//
+// So the hold is five minutes. Anyone genuinely paying is done well inside it.
+//
+// Stripe will not issue a payment page that dies sooner than 30 minutes (and
+// its clock is a network hop later than ours, so exactly 30 is a coin toss --
+// 31 clears it). The page therefore outlives our hold, and a guest can abandon
+// checkout and still pay twenty minutes later. complete_reservation handles
+// that: it takes the seats then if any are spare, and records the booking as
+// needing a refund if they are not. See schema/0015.
+const HOLD_MINUTES = 5;
 const SESSION_MINUTES = 31;
 
 const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
@@ -185,12 +195,12 @@ Deno.serve(async (req: Request) => {
       body.successUrl, "https://muaytix.com/payment-successful?session_id={CHECKOUT_SESSION_ID}", origins);
     const cancelUrl = safeReturnUrl(body.cancelUrl, "https://muaytix.com/payment-failed", origins);
 
-    // The key is deliberately NOT `reservation_id`. V1 and V2 share one Stripe
-    // account, so both webhook endpoints see every event. V1 decides a session
-    // is its own purely by the presence of `reservation_id` in metadata, and
-    // would then look up a V2 reservation in the V1 database, fail, return 500
-    // and be retried by Stripe for hours. Naming it differently means V1 ignores
-    // V2 sessions outright, which is what "two separate systems" has to mean.
+    // The key is deliberately NOT `reservation_id`. Another system on this same
+    // Stripe account decides a session is its own purely by the presence of
+    // `reservation_id` in metadata, and would then look up one of our
+    // reservations in its own database, fail, return 500 and be retried by
+    // Stripe for hours. Naming it differently means it ignores our sessions
+    // outright, which is what "two separate systems" has to mean.
     const metadata: Record<string, string> = {
       source: "agent_tix_v2",
       v2_reservation_id: String(reservationId),
