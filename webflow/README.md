@@ -235,3 +235,21 @@ sidebar card. Width scales automatically.
 already exists - it reports "does not exist in asset library" and leaves the element empty.
 Insert the image element first, then bind the asset with
 `data_element_tool > set_image_asset` using the asset ID.
+
+## Hero embed: Muay Thai Bangkok tonight
+
+`webflow/hero-tonight-embed.html` is the self-contained hero block for the
+"Muay Thai Bangkok tonight" page. It pastes into a Webflow HTML Embed as-is.
+
+It picks the night's event from `MTX_HERO_EVENTS` using the Bangkok calendar day,
+and rolls over to "Tomorrow" once that night's first bell has passed.
+
+Two things to fill in by hand:
+
+| Placeholder | Where | What to paste |
+|---|---|---|
+| `PASTE-WEBFLOW-HERO-IMAGE-URL-HERE` | `src` on the `.bg-image` element | The hero photo, uploaded to the Webflow asset library |
+| `PASTE-...-TICKET-URL-HERE` | `url` on Sunday, Wednesday, Thursday | Those nights' ticket links |
+
+Nights with a placeholder `url` keep the fallback `href` already on the button
+rather than linking to a broken address.
