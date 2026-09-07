@@ -1,0 +1,278 @@
+<style>
+  .mtx-tonight-facts{
+    --black:#0A0A0A;
+    --blue:#1F5BFF;
+    --blue-light:#3B74FF;
+    --off-white:#F3F5F7;
+    --grey-400:#9AA5C7;
+    --font-body:'Plus Jakarta Sans', sans-serif;
+    position:relative;
+    background:var(--black);
+    color:var(--off-white);
+    font-family:var(--font-body);
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mtx-tonight-facts *{box-sizing:border-box;}
+
+  .mtx-tonight-facts .texture{
+    position:absolute;inset:0;
+    background-image:repeating-linear-gradient(115deg, rgba(255,255,255,.025) 0 1px, transparent 1px 26px);
+    pointer-events:none;
+  }
+
+  .mtx-tonight-facts .inner{
+    position:relative;
+    max-width:1120px;
+    margin:0 auto;
+    padding:26px 20px 28px;
+    text-align:center;
+  }
+
+  .mtx-tonight-facts .label{
+    font-size:11.5px;
+    font-weight:bold;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:#9DB9FF;
+    margin:0 0 14px;
+  }
+
+  /* One line on desktop. On phones it wraps rather than scrolling, so no
+     part of the running order is hidden from someone about to book. */
+  .mtx-tonight-facts .rail{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:10px 22px;
+    margin:0 0 16px;
+  }
+  .mtx-tonight-facts .tl-item{
+    display:inline-flex;
+    align-items:baseline;
+    gap:6px;
+    font-size:13px;
+    line-height:1.4;
+    white-space:nowrap;
+  }
+  .mtx-tonight-facts .tl-icon{font-size:13px;line-height:1;}
+  .mtx-tonight-facts .tl-time{color:var(--off-white);font-weight:bold;}
+  .mtx-tonight-facts .tl-label{color:var(--grey-400);}
+
+  .mtx-tonight-facts .divider{
+    width:100%;max-width:220px;height:1px;
+    background:rgba(154,165,199,.22);
+    margin:0 auto 14px;
+  }
+
+  .mtx-tonight-facts .facts{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:6px 12px;
+    font-size:12.5px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--grey-400);
+    margin:0;
+  }
+  .mtx-tonight-facts .facts-name{
+    color:var(--blue-light);
+    font-weight:bold;
+  }
+  .mtx-tonight-facts .facts-sep{color:rgba(154,165,199,.5);}
+
+  @media (max-width:479px){
+    .mtx-tonight-facts .inner{padding:22px 16px 24px;}
+    .mtx-tonight-facts .rail{gap:8px 16px;}
+  }
+</style>
+
+<div class="mtx-tonight-facts">
+  <div class="texture"></div>
+  <div class="inner">
+    <p class="label" id="mtx-tl-label"></p>
+    <div class="rail" id="mtx-tl-rail"></div>
+    <div class="divider"></div>
+    <p class="facts" id="mtx-tl-facts"></p>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  // Day index matches JS Date.getDay(): 0 = Sunday ... 6 = Saturday.
+  // This uses the same day logic as the hero block, so the two always agree
+  // on which night is showing.
+  //
+  // Monday, Tuesday and Friday are all Rajadamnern Knockout and share the
+  // running order you supplied.
+  //
+  // TO FINISH: Sunday, Wednesday, Thursday and Saturday only have doors,
+  // start and close below, taken from the hero data. Their interval, dome
+  // and main card times are not known yet, and their close times are the
+  // "approx." ones. Add the real rows and facts when you have them.
+  var KNOCKOUT_TIMELINE = [
+    { time: "6:00 PM", label: "Doors Open" },
+    { time: "7:00 PM", label: "Event Starts" },
+    { time: "8:00 PM", label: "Interval" },
+    { time: "8:10 PM", label: "Dome Experience" },
+    { time: "8:15 PM", label: "Main Card" },
+    { time: "9:00 PM", label: "Event Close" }
+  ];
+  var KNOCKOUT_FACTS = ["7 Bouts", "3 Rounds", "Modern Muay Thai", "Local & International Fighters"];
+
+  var MTX_NIGHTS = [
+    { // 0: Sunday
+      name: "Kiatpetch Traditional Muay Thai",
+      timeline: [
+        { time: "5:00 PM", label: "Doors Open" },
+        { time: "6:00 PM", label: "Event Starts" },
+        { time: "10:00 PM", label: "Event Close" }
+      ],
+      facts: []
+    },
+    { // 1: Monday
+      name: "Rajadamnern Knockout",
+      timeline: KNOCKOUT_TIMELINE,
+      facts: KNOCKOUT_FACTS
+    },
+    { // 2: Tuesday
+      name: "Rajadamnern Knockout",
+      timeline: KNOCKOUT_TIMELINE,
+      facts: KNOCKOUT_FACTS
+    },
+    { // 3: Wednesday
+      name: "New Power Muay Thai",
+      timeline: [
+        { time: "5:00 PM", label: "Doors Open" },
+        { time: "6:00 PM", label: "Event Starts" },
+        { time: "10:00 PM", label: "Event Close" }
+      ],
+      facts: []
+    },
+    { // 4: Thursday
+      name: "Petchyindee Muay Thai",
+      timeline: [
+        { time: "5:00 PM", label: "Doors Open" },
+        { time: "6:00 PM", label: "Event Starts" },
+        { time: "10:00 PM", label: "Event Close" }
+      ],
+      facts: []
+    },
+    { // 5: Friday
+      name: "Rajadamnern Knockout",
+      timeline: KNOCKOUT_TIMELINE,
+      facts: KNOCKOUT_FACTS
+    },
+    { // 6: Saturday
+      name: "RWS Rajadamnern World Series",
+      timeline: [
+        { time: "6:00 PM", label: "Doors Open" },
+        { time: "7:10 PM", label: "Event Starts" },
+        { time: "10:00 PM", label: "Event Close" }
+      ],
+      facts: []
+    }
+  ];
+
+  var DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  function getBangkokDayIndex() {
+    var fmt = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Bangkok", year: "numeric", month: "numeric", day: "numeric" });
+    var parts = fmt.formatToParts(new Date());
+    var y, m, d;
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i].type === "year") y = parseInt(parts[i].value, 10);
+      if (parts[i].type === "month") m = parseInt(parts[i].value, 10);
+      if (parts[i].type === "day") d = parseInt(parts[i].value, 10);
+    }
+    return new Date(Date.UTC(y, m - 1, d)).getUTCDay();
+  }
+
+  function getBangkokMinutesNow() {
+    var fmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Bangkok", hour: "2-digit", minute: "2-digit", hour12: false });
+    var parts = fmt.formatToParts(new Date());
+    var h = 0, m = 0;
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i].type === "hour") h = parseInt(parts[i].value, 10);
+      if (parts[i].type === "minute") m = parseInt(parts[i].value, 10);
+    }
+    if (h === 24) h = 0;
+    return h * 60 + m;
+  }
+
+  function parseClockTimeToMinutes(timeStr) {
+    var match = /(\d{1,2}):(\d{2})\s*(AM|PM)/i.exec(timeStr);
+    if (!match) return 0;
+    var h = parseInt(match[1], 10);
+    var m = parseInt(match[2], 10);
+    var period = match[3].toUpperCase();
+    if (period === "PM" && h !== 12) h += 12;
+    if (period === "AM" && h === 12) h = 0;
+    return h * 60 + m;
+  }
+
+  // Picks the clock face for a time, rounded to the nearest half hour.
+  // Verified to reproduce the six icons in the original copy exactly.
+  function clockIcon(timeStr) {
+    var rounded = Math.round(parseClockTimeToMinutes(timeStr) / 30) * 30;
+    var hour = Math.floor(rounded / 60) % 12;
+    if (hour === 0) hour = 12;
+    var isHalfPast = rounded % 60 === 30;
+    return String.fromCodePoint((isHalfPast ? 0x1F55C : 0x1F550) + (hour - 1));
+  }
+
+  // "Event Starts" is the row the page rolls over on, so the timeline and the
+  // hero always show the same night.
+  function findStartMinutes(night) {
+    for (var i = 0; i < night.timeline.length; i++) {
+      if (/starts/i.test(night.timeline[i].label)) {
+        return parseClockTimeToMinutes(night.timeline[i].time);
+      }
+    }
+    return 0;
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function renderMtxTimeline() {
+    var todayIndex = getBangkokDayIndex();
+    var offset = getBangkokMinutesNow() >= findStartMinutes(MTX_NIGHTS[todayIndex]) ? 1 : 0;
+    var dayIndex = (todayIndex + offset) % 7;
+    var night = MTX_NIGHTS[dayIndex];
+
+    document.getElementById("mtx-tl-label").textContent =
+      DAY_NAMES[dayIndex] + "'s Timeline";
+
+    var rail = "";
+    for (var i = 0; i < night.timeline.length; i++) {
+      var row = night.timeline[i];
+      rail += '<span class="tl-item">' +
+                '<span class="tl-icon" aria-hidden="true">' + clockIcon(row.time) + '</span>' +
+                '<span class="tl-time">' + escapeHtml(row.time) + '</span>' +
+                '<span class="tl-label">' + escapeHtml(row.label) + '</span>' +
+              '</span>';
+    }
+    document.getElementById("mtx-tl-rail").innerHTML = rail;
+
+    var facts = '<span class="facts-name">' + escapeHtml(night.name) + '</span>';
+    for (var j = 0; j < night.facts.length; j++) {
+      facts += '<span class="facts-sep" aria-hidden="true">·</span>' +
+               '<span>' + escapeHtml(night.facts[j]) + '</span>';
+    }
+    document.getElementById("mtx-tl-facts").innerHTML = facts;
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", renderMtxTimeline);
+  } else {
+    renderMtxTimeline();
+  }
+
+})();
+</script>
