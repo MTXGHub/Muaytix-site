@@ -244,12 +244,11 @@ Insert the image element first, then bind the asset with
 It picks the night's event from `MTX_HERO_EVENTS` using the Bangkok calendar day,
 and rolls over to "Tomorrow" once that night's first bell has passed.
 
-Two things to fill in by hand:
+One thing to fill in by hand:
 
 | Placeholder | Where | What to paste |
 |---|---|---|
 | `PASTE-WEBFLOW-HERO-IMAGE-URL-HERE` | `src` on the `.bg-image` element | The hero photo, uploaded to the Webflow asset library |
-| `PASTE-...-TICKET-URL-HERE` | `url` on Sunday, Wednesday, Thursday | Those nights' ticket links |
 
-Nights with a placeholder `url` keep the fallback `href` already on the button
-rather than linking to a broken address.
+The ticket link is a single `href` on the button, shared by all seven nights.
+Change it there and it applies to the whole week.

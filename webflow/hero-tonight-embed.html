@@ -178,6 +178,8 @@
         <span class="meta-icon" aria-hidden="true">&#128205;</span>Rajadamnern Stadium, Bangkok
       </span>
     </p>
+    <!-- TICKET LINK. The same for every night of the week. This is the only
+         place to change it. -->
     <a class="cta" id="mtx-hero-cta" href="#rec3588158203"></a>
   </div>
 </div>
@@ -190,6 +192,8 @@
   // here so later blocks on the page can reuse the same event data.
   // `image` is optional: leave it "" to use the default hero photo in the
   // markup above, or paste a Webflow asset URL to give that night its own shot.
+  // There is no ticket link in here. That lives on the button in the markup
+  // above and is shared by all seven nights.
   var MTX_HERO_EVENTS = [
     { // 0: Sunday
       name: "Kiatpetch Traditional Muay Thai",
@@ -199,7 +203,6 @@
       close: "10:00 PM (approx.)",
       tagline: "Two styles of Muay Thai.",
       supporting: "Experience a rare combination of 3-round and traditional 5-round Muay Thai, with technical striking, explosive action, live traditional music and a passionate local crowd that knows the sport.",
-      url: "PASTE-KIATPETCH-TICKET-URL-HERE",
       image: ""
     },
     { // 1: Monday
@@ -210,7 +213,6 @@
       close: "9:00-9:30 PM",
       tagline: "Fast, explosive Muay Thai.",
       supporting: "Rajadamnern Knockout brings together skilled fighters, powerful match-ups and the unmistakable energy of Thailand's most iconic Muay Thai arena. From the opening bell, every round delivers speed, precision and raw determination, with the atmosphere building as each fighter pushes for a decisive finish.",
-      url: "#rec3476057303",
       image: ""
     },
     { // 2: Tuesday
@@ -221,7 +223,6 @@
       close: "9:00-9:30 PM",
       tagline: "Fast, explosive Muay Thai.",
       supporting: "Knockout brings fast, explosive Muay Thai to the heart of Bangkok. Expect 7 sharp three-round bouts, high-pressure action, and the raw energy of Thailand's most historic fight venue. Be there when the first bell rings.",
-      url: "#rec3476057303",
       image: ""
     },
     { // 3: Wednesday
@@ -232,7 +233,6 @@
       close: "10:00 PM (approx.)",
       tagline: "Raw, authentic Muay Thai.",
       supporting: "Feel the raw power of authentic Muay Thai every Wednesday night at Rajadamnern Stadium. Watch elite local fighters collide over five high-stakes rounds where precision, timing, and relentless control build explosive momentum, driven by the electric roar of Bangkok's most passionate fight crowd, proudly promoted by New Power, one of Thailand's long-established and leading Muay Thai promoters.",
-      url: "PASTE-NEW-POWER-TICKET-URL-HERE",
       image: ""
     },
     { // 4: Thursday
@@ -243,7 +243,6 @@
       close: "10:00 PM (approx.)",
       tagline: "Technical, tactical Muay Thai.",
       supporting: "The gold standard for technical stadium Muay Thai. Fighters are hand-picked, with a slower, tactical pace that rewards ring craft over knockouts.",
-      url: "PASTE-PETCHYINDEE-TICKET-URL-HERE",
       image: ""
     },
     { // 5: Friday
@@ -254,7 +253,6 @@
       close: "9:00-9:30 PM",
       tagline: "Fast, explosive Muay Thai.",
       supporting: "The highest energy event of the week. Fast-paced 3-round action where fighters hunt for the KO.",
-      url: "#rec3476057303",
       image: ""
     },
     { // 6: Saturday
@@ -265,7 +263,6 @@
       close: "10:00 PM (approx.)",
       tagline: "World-class championship Muay Thai.",
       supporting: "World-class championship Muay Thai. Exclusive Club class and LEO section available.",
-      url: "#rec3588158203",
       image: ""
     }
   ];
@@ -351,12 +348,10 @@
       }
     }
 
-    var ctaEl = document.getElementById("mtx-hero-cta");
-    ctaEl.textContent = "Book " + (offset === 0 ? "Tonight's" : "Tomorrow's") + " Tickets";
-    // Only override the fallback href when a real ticket link exists for this event.
-    if (ev.url && ev.url.indexOf("PASTE-") !== 0) {
-      ctaEl.setAttribute("href", ev.url);
-    }
+    // The script only sets the button label. The ticket link is a plain href
+    // in the markup above and is the same every night.
+    document.getElementById("mtx-hero-cta").textContent =
+      "Book " + (offset === 0 ? "Tonight's" : "Tomorrow's") + " Tickets";
   }
 
   if (document.readyState === "loading") {
