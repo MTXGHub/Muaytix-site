@@ -903,6 +903,33 @@ function mount(root, opts) {
     if(e.target.hasAttribute("data-ack")) update();
   });
 
+  // A guest who reaches Stripe and comes straight back — the X on the payment
+  // tab, or the back button — gets this page handed back to them by the browser
+  // exactly as they left it, out of its cache. Nothing re-runs. So the reserve
+  // button came back still disabled and still reading "Reserving your tickets…",
+  // because the code that set it that way assumed the page was about to be
+  // destroyed and never reset it.
+  //
+  // That left the guest looking at a dead button on the page they had just been
+  // sent away from. Tapping it did nothing. The only way out was "Change seat
+  // class", which nobody thinks to press. They were stuck, and they left.
+  //
+  // Coming back is not an error. It is a guest who wanted to change something,
+  // or did not like what they saw at the payment page, and is still here. So put
+  // the button back to work: update() already knows the right label and whether
+  // it should be enabled, and it only skips that while busy is set.
+  //
+  // The hold they abandoned expires on its own within minutes, and reserve()
+  // re-checks stock server-side before it does anything, so letting them try
+  // again cannot oversell.
+  window.addEventListener("pageshow", function(){
+    if(!state.busy) return;
+    state.busy = false;
+    var go = out.querySelector("[data-go]");
+    if(go) go.disabled = false;
+    update();
+  });
+
   boot();
 }
 

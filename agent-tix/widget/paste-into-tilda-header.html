@@ -750,6 +750,14 @@ function mount(root, opts) {
     if(e.target.hasAttribute("data-ack")) update();
   });
 
+  window.addEventListener("pageshow", function(){
+    if(!state.busy) return;
+    state.busy = false;
+    var go = out.querySelector("[data-go]");
+    if(go) go.disabled = false;
+    update();
+  });
+
   boot();
 }
 
