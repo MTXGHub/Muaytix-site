@@ -219,7 +219,7 @@ function mount(root, opts) {
     if(opts.eventKey){
       cal.hidden = true;
       state.events[""] = { eventKey: opts.eventKey };
-      openNight("");
+      openNight("", false);
       return;
     }
     if(opts.seatsFirst && !state.picked){ loadSeatClasses(); return; }
@@ -412,14 +412,14 @@ function mount(root, opts) {
   }
 
   
-  function openNight(date){
+  function openNight(date, move){
     state.date = date;
     state.cls = null; state.qty = 0; state.cur = null;
     renderCal();
 
     cal.hidden = true;
     showLoading("Checking live availability");
-    out.scrollIntoView({behavior:"smooth", block:"start"});
+    if(move !== false) out.scrollIntoView({behavior:"smooth", block:"start"});
 
     var started = Date.now();
     var eventKey = state.events[date].eventKey;

@@ -296,7 +296,12 @@ function mount(root, opts) {
     if(opts.eventKey){
       cal.hidden = true;
       state.events[""] = { eventKey: opts.eventKey };
-      openNight("");
+      // Never move the page on the way in. A day-dated widget opens its night
+      // the moment it loads, and openNight scrolls to itself — which is right
+      // when a guest picks a date and wrong when nobody asked. A page carrying
+      // three of these scrolled the guest to the last one before they had read
+      // a word of it.
+      openNight("", false);
       return;
     }
     // Seat first. Nothing about a date is asked, or loaded, until the guest has
@@ -523,14 +528,17 @@ function mount(root, opts) {
   /* ---------------------------------------------------------------------------
      Choosing a date hands the screen to the night
      -------------------------------------------------------------------------*/
-  function openNight(date){
+  // `move` is the guest's permission to take the page with us. True when they
+  // chose something and expect the screen to follow; false when the widget is
+  // simply loading and they have not asked for anything yet.
+  function openNight(date, move){
     state.date = date;
     state.cls = null; state.qty = 0; state.cur = null;
     renderCal();
 
     cal.hidden = true;
     showLoading("Checking live availability");
-    out.scrollIntoView({behavior:"smooth", block:"start"});
+    if(move !== false) out.scrollIntoView({behavior:"smooth", block:"start"});
 
     var started = Date.now();
     var eventKey = state.events[date].eventKey;
