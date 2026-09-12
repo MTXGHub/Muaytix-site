@@ -698,7 +698,7 @@ function mount(root, opts) {
                 }).join("") +
               '</select></div></div>' +
           '</div>' +
-          '<div data-seat></div>' +
+          '<div data-seatack></div>' +
           '<div class="mtx-sums">' +
             '<div class="mtx-sum"><span>Price per ticket</span><b data-unit>&mdash;</b></div>' +
             '<div class="mtx-sum mtx-sum--total"><span>Total</span><b data-total>&mdash;</b></div>' +
@@ -745,7 +745,7 @@ function mount(root, opts) {
 
     var unitEl  = out.querySelector("[data-unit]");
     var go      = out.querySelector("[data-go]");
-    var seatWrap= out.querySelector("[data-seat]");
+    var seatWrap= out.querySelector("[data-seatack]");
 
     var cur = state.cur || (t.prices[0] && t.prices[0].currency);
     state.cur = cur;
@@ -754,14 +754,23 @@ function mount(root, opts) {
     if(unitEl) unitEl.textContent = unit == null ? "—" : money(cur, unit);
     totalEl.textContent = (state.qty && unit != null) ? money(cur, unit * state.qty) : "—";
 
-    var together = t.assignedSeating ? Number(t.maximumSeatsTogether || 0) : 0;
-    var needsAck = together > 0 && state.qty > together;
+    // How many of a group we can seat side by side. null means we have not been
+    // told, so we say nothing. A real number, zero included, is a promise we have
+    // to keep: zero means the seats we hold are scattered and nobody in the group
+    // sits together. A guest booking one seat is not a group, so they never see it.
+    var together = (t.assignedSeating && t.maximumSeatsTogether != null)
+                 ? Number(t.maximumSeatsTogether) : null;
+    var needsAck = together != null && state.qty > Math.max(together, 1);
 
     if(seatWrap){
       if(needsAck && !seatWrap.dataset.built){
         seatWrap.innerHTML =
-          '<div class="mtx-note mtx-warn"><b>We can seat ' + together + ' of your group together.</b> ' +
-          'The rest will be in the same class, but not side by side.' +
+          '<div class="mtx-note mtx-warn">' +
+          (together === 0
+            ? '<b>We cannot seat your group together on this night.</b> ' +
+              'Everyone is in the same class, but the seats are apart.'
+            : '<b>We can seat ' + together + ' of your group together.</b> ' +
+              'The rest will be in the same class, but not side by side.') +
           '<label class="mtx-ack"><input type="checkbox" data-ack>' +
           '<span>That&rsquo;s fine &mdash; book anyway</span></label></div>';
         seatWrap.dataset.built = "1";
@@ -882,7 +891,7 @@ function mount(root, opts) {
     if(e.target.closest("[data-back-date]")){ backToDates(); return; }
 
     var seat = e.target.closest("[data-seat]");
-    if(seat){ chooseSeat(seat.getAttribute("data-seat")); return; }
+    if(seat && seat.getAttribute("data-seat")){ chooseSeat(seat.getAttribute("data-seat")); return; }
 
     var pick = e.target.closest("[data-pick]");
     if(pick){

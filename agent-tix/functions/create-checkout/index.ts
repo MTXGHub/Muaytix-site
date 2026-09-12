@@ -157,11 +157,19 @@ Deno.serve(async (req: Request) => {
 
     // The seating warning has to be enforced here too, not just shown in the
     // widget, or it can simply be skipped.
-    const together = Number(row.maximum_seats_together ?? 0);
-    const needsAck = row.assigned_seating === true && together > 0 && quantity > together;
+    // Null means we were never told, so there is nothing to warn about. A real
+    // number, zero included, is a promise: zero means nobody in the group sits
+    // together. One seat is not a group, so a single ticket never trips this.
+    const together = row.maximum_seats_together == null
+      ? null
+      : Number(row.maximum_seats_together);
+    const needsAck = row.assigned_seating === true && together !== null &&
+      quantity > Math.max(together, 1);
     if (needsAck && !seatingAcknowledged) {
       return json({
-        error: `We can seat ${together} of your group together. Please confirm before continuing.`,
+        error: together === 0
+          ? "We cannot seat your group together on this night. Please confirm before continuing."
+          : `We can seat ${together} of your group together. Please confirm before continuing.`,
         code: "seating_ack_required",
         maximumSeatsTogether: together,
       }, 409, origin);
