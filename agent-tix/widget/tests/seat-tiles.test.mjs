@@ -89,7 +89,7 @@ const grid = text(await page.innerText('.mtx-picker'));
 check('the word "Limited" is gone', !/limited/i.test(grid), grid);
 check('open classes say AVAILABLE', (grid.match(/AVAILABLE/g) || []).length === 2, grid);
 check('the low one says its number', /ONLY 3 LEFT/.test(grid), grid);
-check('a sold-out class still says fully booked', /FULLY BOOKED/i.test(grid), grid);
+check('a sold-out class says so plainly', /SOLD OUT/i.test(grid), grid);
 
 // --- the reason to choose ---
 check('each tile carries its reason', await page.locator('.mtx-pick-why').count() === 4);
@@ -112,6 +112,34 @@ check('sold out turns the frame red', rgb(await bar(leo)) === RED, await bar(leo
 check('no seat-class colour survives on the tile',
   ![await bar(ring), await bar(leo), await bar(club)].some(c => /255,212,0|58,134,212|232,99,26/.test(rgb(c))));
 
+// --- nothing a guest can still buy is painted red ---
+const badge = (l) => l.locator('.mtx-avail').evaluate(e => ({
+  bg: getComputedStyle(e).backgroundColor.replace(/\s/g, ''),
+  fg: getComputedStyle(e).color.replace(/\s/g, ''),
+}));
+const clubBadge = await badge(club), ringBadge = await badge(ring), leoBadge = await badge(leo);
+check('"only 5 left" is green, not red', clubBadge.bg === GREEN, JSON.stringify(clubBadge));
+check('available is green', ringBadge.bg === GREEN, JSON.stringify(ringBadge));
+check('sold out is a solid red badge, not a pale ghost',
+  leoBadge.bg === RED && leoBadge.fg === 'rgb(255,255,255)', JSON.stringify(leoBadge));
+check('a sold-out tile stays readable', await leo.evaluate(e => {
+  const o = getComputedStyle(e).opacity; return o === '' || Number(o) >= 0.99;
+}));
+
+// --- the four tiles line up ---
+const boxes = await page.locator('.mtx-pick').evaluateAll(
+  els => els.map(e => Math.round(e.getBoundingClientRect().bottom)));
+const rowA = boxes.slice(0, 2), rowB = boxes.slice(2);
+check('the top row has one flat bottom edge', Math.abs(rowA[0] - rowA[1]) <= 1, rowA.join(' vs '));
+check('the bottom row has one flat bottom edge', Math.abs(rowB[0] - rowB[1]) <= 1, rowB.join(' vs '));
+const badges = await page.locator('.mtx-avail').evaluateAll(
+  els => els.map(e => Math.round(e.getBoundingClientRect().bottom)));
+check('all four badges sit on the same baseline in their row',
+  Math.abs(badges[0] - badges[1]) <= 1 && Math.abs(badges[2] - badges[3]) <= 1, badges.join(' '));
+check('a badge is a badge, not a blob', await page.locator('.mtx-avail').first()
+  .evaluate(e => e.getBoundingClientRect().height < 48));
+
+// --- the chosen-class panel must not borrow the reserve button's styling ---
 // --- it looks pressable ---
 check('a bookable tile has an arrow', await ring.locator('.mtx-pick-go').count() === 1);
 check('a sold-out tile has none', await leo.locator('.mtx-pick-go').count() === 0);
@@ -154,6 +182,15 @@ await page.click('[data-pick="ringside"]');
 await page.waitForSelector('select[data-cur]', { timeout: 8000 });
 const chosen = await page.$eval('select[data-cur]', e => e.value);
 check('the next screen opens on the same currency, not baht', chosen === 'gbp', chosen);
+
+// mtx-go is the reserve button. A status badge that borrows it comes out as a
+// full-width black bar, which is what shipped the first time.
+const panelPill = await page.locator('.mtx-detail .mtx-pill').evaluate(e => ({
+  bg: getComputedStyle(e).backgroundColor.replace(/\s/g, ''),
+  h: Math.round(e.getBoundingClientRect().height),
+}));
+check('the chosen-class badge is not the reserve button in disguise',
+  panelPill.bg !== 'rgb(20,17,14)' && panelPill.h < 48, JSON.stringify(panelPill));
 await page.context().close();
 
 await browser.close();
