@@ -24,4 +24,4 @@ comment on column ticket_classes.tagline is
 update ticket_classes set tagline = 'Closest to the action' where code = 'ringside';
 update ticket_classes set tagline = 'Most popular'          where code = 'club_class';
 update ticket_classes set tagline = 'Best for atmosphere'   where code = 'leo_section';
-update ticket_classes set tagline = 'Best value'            where code = 'third_class';
+update ticket_classes set tagline = 'General admission'     where code = 'third_class';
