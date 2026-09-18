@@ -4,7 +4,8 @@
 // tables: list the fight nights in a range so the calendar can be drawn, and
 // return the seat classes for one chosen night.
 //
-// Never returns a remaining count. Status labels only, per the brief.
+// Returns a remaining count only once it is down to the last few, and never the
+// real figure above that — see seatsLeft further down for why.
 
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
@@ -253,6 +254,35 @@ Deno.serve(async (req: Request) => {
         byClass.set(p.event_ticket_class_id, list);
       }
 
+      // How many seats are left, but only once it is few enough to say out loud.
+      //
+      // "Only 3 left" earns a booking. "23 left" hands a competitor our trading
+      // position: watch the page at nine and again at five and they know exactly
+      // what we sold that day. So the real figure never leaves this function --
+      // anything above the threshold is sent as null, not as a number the widget
+      // is trusted to hide.
+      const SAY_REMAINING_AT = 5;
+      const { data: stock, error: stockError } = await supabase
+        .from("event_ticket_classes")
+        .select("id,quantity_available")
+        .in("id", ids);
+      if (stockError) throw stockError;
+
+      const fewLeft = new Map<string, number | null>();
+      for (const row of stock ?? []) {
+        const left = Number(row.quantity_available);
+        fewLeft.set(row.id, left > 0 && left <= SAY_REMAINING_AT ? left : null);
+      }
+
+      // The tagline is the class's own, not the night's, so it comes off
+      // ticket_classes rather than the per-night row.
+      const { data: taglines, error: taglineError } = await supabase
+        .from("ticket_classes")
+        .select("code,tagline");
+      if (taglineError) throw taglineError;
+      const taglineFor = new Map<string, string | null>();
+      for (const t of taglines ?? []) taglineFor.set(t.code, t.tagline ?? null);
+
       return json(
         {
           event: {
@@ -287,6 +317,11 @@ Deno.serve(async (req: Request) => {
               assignedSeating: r.assigned_seating,
               maximumSeatsTogether: r.maximum_seats_together,
               maxPerOrder: r.max_per_order,
+              tagline: taglineFor.get(r.ticket_class_code) ?? null,
+              // Null unless it is genuinely down to the last few. See above.
+              seatsLeft: (r.status === "available" || r.status === "limited")
+                ? (fewLeft.get(r.event_ticket_class_id) ?? null)
+                : null,
               prices: byClass.get(r.event_ticket_class_id) ?? [],
             })),
         },
