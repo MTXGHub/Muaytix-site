@@ -102,7 +102,7 @@ const leo  = page.locator('[data-pick="leo_section"]');
 const club = page.locator('[data-pick="club_class"]');
 const bar = (l) => l.locator('.mtx-pick-bar').evaluate(e => getComputedStyle(e).backgroundColor);
 const brd = (l) => l.evaluate(e => getComputedStyle(e).borderTopColor);
-const GREEN = 'rgb(0,165,80)', RED = 'rgb(156,31,31)';
+const GREEN = 'rgb(0,165,80)', RED = 'rgb(255,0,0)';   // Jason's red, not the old burgundy
 
 check('an available strip is green', rgb(await bar(ring)) === GREEN, await bar(ring));
 check('an available border is green', rgb(await brd(ring)) === GREEN, await brd(ring));
