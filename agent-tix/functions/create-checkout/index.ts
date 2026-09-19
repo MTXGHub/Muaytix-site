@@ -88,6 +88,56 @@ function safeReturnUrl(value: unknown, fallback: string, origins: Set<string>) {
   }
 }
 
+// Which advert click won this booking, as the widget saw it.
+//
+// Everything here arrives from a browser and so is treated as hostile: each
+// field is capped, anything that is not a string is dropped, and a click_id_kind
+// the database will not accept is discarded rather than allowed to fail the
+// insert. Attribution is bookkeeping -- it must never cost us a sale, so a bad
+// payload becomes no attribution and the booking carries on.
+const CLICK_KINDS = new Set(["gclid", "gbraid", "wbraid"]);
+
+type Attribution = Record<string, string | null>;
+
+function attributionFrom(value: unknown): Attribution {
+  const empty: Attribution = {
+    click_id: null, click_id_kind: null,
+    utm_source: null, utm_medium: null, utm_campaign: null,
+    utm_term: null, utm_content: null,
+    ad_group_id: null, match_type: null, device: null, clicked_at: null,
+  };
+  if (!value || typeof value !== "object") return empty;
+  const a = value as Record<string, unknown>;
+
+  const text = (v: unknown, max: number) =>
+    typeof v === "string" && v.trim() !== ""
+      // Control characters would survive a round trip through JSON and land in
+      // a report nobody can read.
+      ? v.trim().replace(/[\u0000-\u001F\u007F]/g, "").slice(0, max) || null
+      : null;
+
+  const kind = text(a.clickIdKind, 16);
+  const id = text(a.clickId, 512);
+  const clickedAt = text(a.at, 40);
+  const when = clickedAt && !Number.isNaN(Date.parse(clickedAt)) ? clickedAt : null;
+
+  return {
+    // A click id without a usable kind is not stored: the kind is what stops it
+    // being guessed at from the shape of the string later on.
+    click_id: kind && CLICK_KINDS.has(kind) ? id : null,
+    click_id_kind: kind && CLICK_KINDS.has(kind) && id ? kind : null,
+    utm_source: text(a.source, 255),
+    utm_medium: text(a.medium, 255),
+    utm_campaign: text(a.campaign, 255),
+    utm_term: text(a.term, 255),
+    utm_content: text(a.content, 255),
+    ad_group_id: text(a.adGroupId, 255),
+    match_type: text(a.matchType, 32),
+    device: text(a.device, 32),
+    clicked_at: when,
+  };
+}
+
 function longDate(iso: string, timeZone: string) {
   return new Intl.DateTimeFormat("en-GB", {
     timeZone, weekday: "long", day: "numeric", month: "long", year: "numeric",
@@ -122,6 +172,7 @@ Deno.serve(async (req: Request) => {
   const quantity = Number(body.quantity);
   const currency = String(body.currency ?? "").trim().toLowerCase();
   const seatingAcknowledged = body.seatingAcknowledged === true;
+  const attribution = attributionFrom(body.attribution);
 
   if (!eventKey || !classCode) return json({ error: "Ticket details are missing." }, 400, origin);
   if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
@@ -222,6 +273,14 @@ Deno.serve(async (req: Request) => {
       seating_acknowledged: String(seatingAcknowledged),
     };
 
+    // The click id goes to Stripe too, so a booking can be traced back to its
+    // advert from the payment record alone -- without opening our database, and
+    // without Stripe ever seeing the campaign detail, which is ours.
+    if (attribution.click_id && attribution.click_id_kind) {
+      metadata.click_id = attribution.click_id;
+      metadata.click_id_kind = attribution.click_id_kind;
+    }
+
     // DO NOT set payment_method_types here. Leaving it out is what lets the
     // account's payment method configuration decide, and that configuration is
     // the product of a deliberate commercial decision: Alipay and WeChat Pay
@@ -280,14 +339,25 @@ Deno.serve(async (req: Request) => {
 
     if (!session.url) throw new Error("Stripe returned no checkout URL");
 
-    await supabase
+    // Written with the session id rather than at reservation time, so one write
+    // carries both and a failure between the two cannot leave a row half filled.
+    const { error: attrError } = await supabase
       .from("checkout_reservations")
       .update({
         stripe_checkout_session_id: session.id,
         currency,
         unit_amount: price.unit_amount,
+        ...attribution,
       })
       .eq("id", reservationId);
+
+    // The guest is already on their way to Stripe. Losing the attribution is a
+    // reporting problem; refusing the booking over it would be a real one.
+    if (attrError) {
+      console.error("attribution not stored", {
+        reservationId, message: attrError.message,
+      });
+    }
 
     return json({
       checkoutUrl: session.url,
