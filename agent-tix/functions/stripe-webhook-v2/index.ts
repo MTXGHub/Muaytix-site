@@ -63,6 +63,76 @@ function message(err: unknown) {
   return err instanceof Error ? err.message : String(err);
 }
 
+// Where the card was issued, and what the sale settled for.
+//
+// Nationality is worked out by hand today from the card ISSUER country, which is
+// the closest proxy available -- the other country figure we hold comes from
+// GA4, which reads the visitor's IP and so reports where somebody was sitting,
+// not who they are. Stripe knows the issuer on every card payment.
+//
+// The settlement figures come from the same object and solve a separate problem:
+// bookings arrive in six currencies, so no report has been able to total them
+// without inventing an exchange rate. Stripe has already converted at the real
+// rate; this records the answer.
+//
+// It reaches Stripe again, AFTER the sale is recorded, which is the whole reason
+// it is written defensively: the guest has paid. Any failure here returns nulls
+// and is logged. It must never throw.
+type PaymentFacts = {
+  card_country: string | null;
+  payment_method_type: string | null;
+  settled_amount: number | null;
+  settled_currency: string | null;
+  stripe_fee: number | null;
+};
+
+const NO_FACTS: PaymentFacts = {
+  card_country: null, payment_method_type: null,
+  settled_amount: null, settled_currency: null, stripe_fee: null,
+};
+
+async function paymentFacts(
+  client: Stripe, paymentIntentId: string | null,
+): Promise<PaymentFacts> {
+  if (!paymentIntentId) return NO_FACTS;
+  try {
+    // Both come off the charge, so one expanded read gets everything. The
+    // balance transaction is a separate object and has to be asked for by name.
+    const intent = await client.paymentIntents.retrieve(paymentIntentId, {
+      expand: ["latest_charge", "latest_charge.balance_transaction"],
+    });
+    const charge = intent.latest_charge as Stripe.Charge | null;
+    if (!charge || typeof charge === "string") return NO_FACTS;
+
+    const details = charge.payment_method_details;
+    // Only a card carries an issuer country. Alipay and WeChat Pay carry none at
+    // all, which is why the method type is stored beside it -- otherwise a null
+    // country cannot be told from a method that never had one. Apple Pay and
+    // Google Pay arrive as type "card" and do carry a country.
+    const card = details?.card ?? null;
+    const raw = typeof card?.country === "string" ? card.country.trim().toUpperCase() : "";
+    // The column refuses anything but two letters, and a malformed value would
+    // split one country into two rows in every report.
+    const country = /^[A-Z]{2}$/.test(raw) ? raw : null;
+
+    const txn = charge.balance_transaction as Stripe.BalanceTransaction | null;
+    const settled = txn && typeof txn !== "string" ? txn : null;
+
+    return {
+      card_country: country,
+      payment_method_type: details?.type ?? null,
+      settled_amount: settled ? settled.amount : null,
+      settled_currency: settled ? settled.currency : null,
+      stripe_fee: settled ? settled.fee : null,
+    };
+  } catch (err) {
+    // A reporting column is never worth a retry of a webhook that has already
+    // banked the sale.
+    console.error("could not read payment facts", { paymentIntentId, message: message(err) });
+    return NO_FACTS;
+  }
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method !== "POST") {
     return new Response("Method not allowed", { status: 405, headers: { Allow: "POST" } });
@@ -150,9 +220,22 @@ Deno.serve(async (req: Request) => {
       // — completed, then async_payment_succeeded — and the second copy does not
       // always carry the same detail. Writing a null over a name we already
       // stored would lose it.
-      const guestPatch: Record<string, string> = {};
+      const guestPatch: Record<string, string | number> = {};
       if (guestEmail) guestPatch.guest_email = guestEmail;
       if (guestName) guestPatch.guest_name = guestName;
+
+      // Where the card was issued and what the sale settled for. Carried on the
+      // same write as the guest details because it obeys the same two rules: a
+      // failure must not undo a payment, and a second copy of the event must not
+      // write a null over something already stored.
+      const facts = await paymentFacts(stripe, paymentIntentId);
+      if (facts.card_country) guestPatch.card_country = facts.card_country;
+      if (facts.payment_method_type) guestPatch.payment_method_type = facts.payment_method_type;
+      if (facts.settled_currency) guestPatch.settled_currency = facts.settled_currency;
+      // Zero is a real settled amount on a fully discounted booking, so these are
+      // checked for null rather than for truthiness.
+      if (facts.settled_amount !== null) guestPatch.settled_amount = facts.settled_amount;
+      if (facts.stripe_fee !== null) guestPatch.stripe_fee = facts.stripe_fee;
 
       if (Object.keys(guestPatch).length > 0) {
         const { error: guestError } = await supabase
