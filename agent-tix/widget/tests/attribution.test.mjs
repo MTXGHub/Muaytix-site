@@ -96,7 +96,7 @@ check('the ad group is kept', a && a.adGroupId === '99001', a && a.adGroupId);
 check('the match type is kept', a && a.matchType === 'e', a && a.matchType);
 check('the arrival time is recorded', a && !Number.isNaN(Date.parse(a.at)), a && a.at);
 
-// First click wins. A guest won by an advert who comes back через organic search
+// First click wins. A guest won by an advert who comes back through organic search
 // two days later was still won by the advert.
 await page.goto('https://muaytix.test/tickets', { waitUntil: 'domcontentloaded' });
 check('an ordinary page view does not wipe it', (await held())?.clickId === 'Cj0KEQ_test_click');

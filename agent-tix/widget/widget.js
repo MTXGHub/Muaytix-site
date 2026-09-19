@@ -178,6 +178,50 @@ function captureAttribution() {
 // document finishes would otherwise be lost.
 captureAttribution();
 
+// ---------------------------------------------------------------------------
+// Which page they came in on, and which page they book from.
+//
+// GA4 cannot answer either. Its conversion fires on the thank-you page, so every
+// booking looks as though it happened there; and a guest returning from Stripe
+// starts a fresh GA4 session, which throws away the entry page for roughly one
+// booking in six. Neither is a problem if we simply write it down ourselves --
+// and unlike a conversion tag, this also records the page an ABANDONED checkout
+// came from, which is the half worth reading.
+var PAGE_KEY = "mtx_landing";
+
+// Path only. The query string is dropped before anything is stored or sent: it
+// is where an email address or a name ends up when a link gets shared, and none
+// of that belongs in a funnel report.
+function pathNow() {
+  try {
+    return (window.location.pathname || "/").slice(0, 255);
+  } catch (e) {
+    return null;
+  }
+}
+
+// sessionStorage, not localStorage: "where this visit started" should end when
+// the visit does. A guest who comes back next week has landed somewhere new.
+function rememberLanding() {
+  try {
+    if (!window.sessionStorage.getItem(PAGE_KEY)) {
+      window.sessionStorage.setItem(PAGE_KEY, pathNow() || "/");
+    }
+  } catch (e) {}              // private window or blocked storage: sell the ticket anyway
+}
+
+function readLanding() {
+  try {
+    return window.sessionStorage.getItem(PAGE_KEY) || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+// Same reasoning as the capture above, and on every page of the site, not only
+// the ones with a widget: the entry page is usually not the booking page.
+rememberLanding();
+
 function injectStyles() {
   if (document.getElementById(STYLE_ID)) return;
   var link = document.createElement("link");
@@ -1021,7 +1065,11 @@ function mount(root, opts) {
       quantity: state.qty,
       currency: state.cur,
       seatingAcknowledged: !!(ack && ack.checked),
-      attribution: won || undefined
+      attribution: won || undefined,
+      // Read live rather than from storage: this is the page they are standing
+      // on right now, which is the whole point of recording it.
+      pagePath: pathNow() || undefined,
+      landingPage: readLanding() || undefined
     }, CHECKOUT_TIMEOUT)
       .then(function(data){
         if(!data.checkoutUrl) throw new Error("The secure checkout could not be opened. Please try again.");

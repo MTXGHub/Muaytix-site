@@ -138,6 +138,27 @@ function attributionFrom(value: unknown): Attribution {
   };
 }
 
+// Which page the booking was made from, and which page the visit began on.
+//
+// Same posture as the attribution above: it arrives from a browser, so it is
+// capped and cleaned, and a bad value becomes null rather than failing a sale.
+//
+// A query string is stripped even though the widget already strips it. The
+// widget on the live site is a block of pasted header code, so an older copy can
+// still be cached in someone's browser for days after a change -- and a shared
+// link's query string is exactly where a stray email address turns up.
+function pagePathFrom(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const cleaned = value
+    .trim()
+    .replace(/[\u0000-\u001F\u007F]/g, "")
+    .split(/[?#]/)[0]
+    .slice(0, 255);
+  // A path, not a full URL: anything with a scheme or host is not ours to store.
+  if (!cleaned.startsWith("/") || cleaned.startsWith("//")) return null;
+  return cleaned || null;
+}
+
 function longDate(iso: string, timeZone: string) {
   return new Intl.DateTimeFormat("en-GB", {
     timeZone, weekday: "long", day: "numeric", month: "long", year: "numeric",
@@ -173,6 +194,8 @@ Deno.serve(async (req: Request) => {
   const currency = String(body.currency ?? "").trim().toLowerCase();
   const seatingAcknowledged = body.seatingAcknowledged === true;
   const attribution = attributionFrom(body.attribution);
+  const pagePath = pagePathFrom(body.pagePath);
+  const landingPage = pagePathFrom(body.landingPage);
 
   if (!eventKey || !classCode) return json({ error: "Ticket details are missing." }, 400, origin);
   if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
@@ -348,6 +371,8 @@ Deno.serve(async (req: Request) => {
         currency,
         unit_amount: price.unit_amount,
         ...attribution,
+        page_path: pagePath,
+        landing_page: landingPage,
       })
       .eq("id", reservationId);
 

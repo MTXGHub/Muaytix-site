@@ -111,6 +111,34 @@ function captureAttribution() {
 
 captureAttribution();
 
+var PAGE_KEY = "mtx_landing";
+
+function pathNow() {
+  try {
+    return (window.location.pathname || "/").slice(0, 255);
+  } catch (e) {
+    return null;
+  }
+}
+
+function rememberLanding() {
+  try {
+    if (!window.sessionStorage.getItem(PAGE_KEY)) {
+      window.sessionStorage.setItem(PAGE_KEY, pathNow() || "/");
+    }
+  } catch (e) {}              // private window or blocked storage: sell the ticket anyway
+}
+
+function readLanding() {
+  try {
+    return window.sessionStorage.getItem(PAGE_KEY) || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+rememberLanding();
+
 function injectStyles() {
   if (document.getElementById(STYLE_ID)) return;
   var link = document.createElement("link");
@@ -805,7 +833,9 @@ function mount(root, opts) {
       quantity: state.qty,
       currency: state.cur,
       seatingAcknowledged: !!(ack && ack.checked),
-      attribution: won || undefined
+      attribution: won || undefined,
+      pagePath: pathNow() || undefined,
+      landingPage: readLanding() || undefined
     }, CHECKOUT_TIMEOUT)
       .then(function(data){
         if(!data.checkoutUrl) throw new Error("The secure checkout could not be opened. Please try again.");
