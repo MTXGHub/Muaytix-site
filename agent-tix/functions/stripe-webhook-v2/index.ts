@@ -1,8 +1,12 @@
 // Agent Tix — Stripe webhook
 //
 // Turns a Stripe payment into a sale, and an abandoned checkout back into
-// available stock. It does nothing else: no email, no ticket allocation, no
+// available stock. It sends nothing: no email, no ticket allocation, no
 // notifications. Ticket fulfilment stays manual until instructed otherwise.
+//
+// It does keep the address a guest typed in before abandoning, which is a
+// record rather than a message — see the lapsed branch at the foot of the
+// handler, and 0022 for what reads it.
 //
 // Two rules matter more than the rest.
 //
@@ -263,8 +267,43 @@ Deno.serve(async (req: Request) => {
     });
     if (error) throw error;
 
+    // The seats are already back before this runs, and nothing below may change
+    // that: the hold is five minutes by decision, not by accident, and returning
+    // stock to sale beats every other thing this function does.
+    //
+    // What it keeps is the address the guest had already typed into Stripe
+    // before they ran out of time or changed their mind. Until now that was
+    // thrown away, which is why a hundred abandoned checkouts in a fortnight
+    // were a hundred strangers. Same trim as the paid branch — what a guest
+    // types arrives verbatim, trailing spaces included.
+    const tidyGuest = (v: string | null | undefined) => {
+      const t = (v ?? "").trim();
+      return t.length > 0 ? t : null;
+    };
+    const lapsedEmail = tidyGuest(session.customer_details?.email ?? session.customer_email);
+    const lapsedName = tidyGuest(session.customer_details?.name);
+    const lapsedPatch: Record<string, string> = {};
+    if (lapsedEmail) lapsedPatch.guest_email = lapsedEmail;
+    if (lapsedName) lapsedPatch.guest_name = lapsedName;
+
+    if (Object.keys(lapsedPatch).length > 0) {
+      // Logged and swallowed, never thrown. A failure here must not return 500,
+      // because Stripe would retry an event whose real work — the seats — is
+      // already done.
+      const { error: lapsedError } = await supabase
+        .from("checkout_reservations")
+        .update(lapsedPatch)
+        .eq("id", reservationId);
+      if (lapsedError) {
+        console.error("could not save details from a lapsed checkout", {
+          eventId: event.id, reservationId, message: lapsedError.message,
+        });
+      }
+    }
+
     console.info("agent tix reservation released", {
       eventId: event.id, reservationId, result: data,
+      keptAddress: Boolean(lapsedEmail),
     });
     return reply({ received: true, eventId: event.id, action: String(data ?? newStatus) });
 
