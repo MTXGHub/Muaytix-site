@@ -6,6 +6,11 @@
 //
 // Returns a remaining count only once it is down to the last few, and never the
 // real figure above that — see seatsLeft further down for why.
+//
+// It also keeps a note of what it answered — see recordLook. Ninety per cent of
+// visitors never reach the checkout, so this is the only place their experience
+// is visible at all. What we served, never who we served it to, and never on
+// the guest's time: the answer goes out first and the note is written after.
 
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
@@ -70,6 +75,67 @@ function hhmm(t: string | null): string | null {
   return t ? t.slice(0, 5) : null;
 }
 
+// What we told them, kept after the fact.
+//
+// Three rules, and all three are the reason this is safe to run on every
+// request. It never blocks: the response has already gone by the time the row
+// is written. It never throws: a failure here is logged and the guest is none
+// the wiser. And it records nothing about the person — no IP, no user agent, no
+// identifier — only which night was asked about, from which page, and what
+// state the seats were in.
+type Look = {
+  action: string;
+  page_path?: string | null;
+  from_date?: string | null;
+  to_date?: string | null;
+  class_code?: string | null;
+  nights_offered?: number | null;
+  event_key?: string | null;
+  event_date?: string | null;
+  classes_offered?: number | null;
+  available?: number | null;
+  limited?: number | null;
+  sold_out?: number | null;
+  booking_closed?: number | null;
+  dead_end?: boolean;
+  not_found?: boolean;
+  statuses?: Record<string, string> | null;
+};
+
+// Path only, query string cut off, same rule as the booking page in 0018: a
+// shared link is where an email address or a name ends up.
+function pagePathFromReferer(req: Request): string | null {
+  const raw = req.headers.get("referer");
+  if (!raw) return null;
+  try {
+    return new URL(raw).pathname.slice(0, 255) || null;
+  } catch {
+    return null;
+  }
+}
+
+function recordLook(look: Look) {
+  const written = supabase
+    .from("widget_looks")
+    .insert(look)
+    .then(
+      ({ error }) => {
+        if (error) console.error("could not record the look", { message: error.message });
+      },
+      (err) => console.error("could not record the look", { message: String(err) }),
+    );
+
+  // Supabase's runtime keeps a background promise alive past the response. If it
+  // is not there the insert is simply best effort, which is the correct
+  // trade: a missing row costs a statistic, a slow widget costs a sale.
+  try {
+    (globalThis as { EdgeRuntime?: { waitUntil: (p: Promise<unknown>) => void } })
+      .EdgeRuntime?.waitUntil?.(written);
+  } catch {
+    // Nothing to do. The promise is already running.
+  }
+}
+
 Deno.serve(async (req: Request) => {
   const origin = req.headers.get("origin") ?? "";
   const origins = await originsForTenant();
@@ -90,6 +156,7 @@ Deno.serve(async (req: Request) => {
   }
 
   const action = String(body.action ?? "");
+  const pagePath = pagePathFromReferer(req);
 
   try {
     // ---- the calendar ------------------------------------------------------
@@ -134,6 +201,15 @@ Deno.serve(async (req: Request) => {
           });
         }
       }
+
+      recordLook({
+        action: "events",
+        page_path: pagePath,
+        from_date: from,
+        to_date: to,
+        class_code: classCode || null,
+        nights_offered: (data ?? []).length,
+      });
 
       return json({
         events: (data ?? []).map((row) => {
@@ -204,6 +280,14 @@ Deno.serve(async (req: Request) => {
         }
       }
 
+      recordLook({
+        action: "classes",
+        page_path: pagePath,
+        from_date: from,
+        to_date: to,
+        nights_offered: (nights ?? []).length,
+      });
+
       return json({
         classes: (cat ?? []).map((c) => ({
           code: c.code,
@@ -227,7 +311,13 @@ Deno.serve(async (req: Request) => {
         .eq("event_key", eventKey)
         .maybeSingle();
       if (headerError) throw headerError;
-      if (!header) return json({ error: "That fight night could not be found." }, 404, origin);
+      if (!header) {
+        recordLook({
+          action: "availability", page_path: pagePath,
+          event_key: eventKey, not_found: true,
+        });
+        return json({ error: "That fight night could not be found." }, 404, origin);
+      }
 
       const { data: rows, error } = await supabase
         .from("event_ticket_availability")
@@ -236,6 +326,10 @@ Deno.serve(async (req: Request) => {
         .order("display_order");
       if (error) throw error;
       if (!rows || rows.length === 0) {
+        recordLook({
+          action: "availability", page_path: pagePath,
+          event_key: eventKey, not_found: true,
+        });
         return json({ error: "That fight night could not be found." }, 404, origin);
       }
 
@@ -282,6 +376,29 @@ Deno.serve(async (req: Request) => {
       if (taglineError) throw taglineError;
       const taglineFor = new Map<string, string | null>();
       for (const t of taglines ?? []) taglineFor.set(t.code, t.tagline ?? null);
+
+      // Counted off the same rows the guest is about to be shown, so the note
+      // and the answer can never disagree.
+      const shown = rows.filter((r) => r.status !== "hidden");
+      const countOf = (want: string) => shown.filter((r) => r.status === want).length;
+      const statuses: Record<string, string> = {};
+      for (const r of shown) statuses[String(r.ticket_class_code)] = String(r.status);
+      const buyable = countOf("available") + countOf("limited");
+
+      recordLook({
+        action: "availability",
+        page_path: pagePath,
+        event_key: header.event_key,
+        event_date: header.local_date,
+        classes_offered: shown.length,
+        available: countOf("available"),
+        limited: countOf("limited"),
+        sold_out: countOf("fully_booked"),
+        booking_closed: countOf("booking_closed"),
+        // Nothing on the night could be bought. The column this table exists for.
+        dead_end: shown.length > 0 && buyable === 0,
+        statuses,
+      });
 
       return json(
         {
