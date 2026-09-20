@@ -97,6 +97,7 @@ type Look = {
   limited?: number | null;
   sold_out?: number | null;
   booking_closed?: number | null;
+  not_released?: number | null;
   dead_end?: boolean;
   not_found?: boolean;
   statuses?: Record<string, string> | null;
@@ -395,6 +396,10 @@ Deno.serve(async (req: Request) => {
         limited: countOf("limited"),
         sold_out: countOf("fully_booked"),
         booking_closed: countOf("booking_closed"),
+        // Two different shut states, and they mean opposite things: "closed" is
+        // a class we have not released, "booking_closed" is the cutoff passing.
+        // 0023 counted only the second and left the first unaccounted for.
+        not_released: countOf("closed"),
         // Nothing on the night could be bought. The column this table exists for.
         dead_end: shown.length > 0 && buyable === 0,
         statuses,

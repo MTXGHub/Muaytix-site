@@ -78,6 +78,11 @@ check('the counts are taken from the rows the guest is shown',
 check('sold out and closed are counted separately, not lumped together',
   /sold_out: countOf\("fully_booked"\)/.test(src) &&
   /booking_closed: countOf\("booking_closed"\)/.test(src));
+// Two different shut states that mean opposite things: one is our trading
+// decision, the other is the clock. 0023 counted only the second.
+check('not released is counted separately from the cutoff passing',
+  /not_released: countOf\("closed"\)/.test(src) &&
+  /booking_closed: countOf\("booking_closed"\)/.test(src));
 check('limited counts as buyable, because it is',
   /const buyable = countOf\("available"\) \+ countOf\("limited"\)/.test(src));
 check('a night with nothing buyable is marked as a dead end',
@@ -131,6 +136,24 @@ check('it warns that days before the record began show no looks',
   /that is the record starting/.test(sql));
 check('every report counts the Bangkok day',
   (sql.match(/at time zone 'Asia\/Bangkok'/g) ?? []).length >= 4);
+
+console.log('\nWhy a night had nothing to sell');
+
+const sql24 = fs.readFileSync(
+  path.join(HERE, '..', '..', 'schema', '0024_the_status_that_was_not_counted.sql'), 'utf8');
+check('the missing column is added without disturbing what is there',
+  /add column if not exists not_released integer/.test(sql24));
+check('the reason report exists',
+  /create or replace view dead_ends_by_reason/.test(sql24));
+check('it separates our decision from the clock running out',
+  /with_cutoff_passed/.test(sql24) && /with_nothing_released/.test(sql24));
+// Sold out with nothing held back and the clock not yet a problem is the only
+// one of the three that means we could have taken more money.
+check('it isolates the one that means lost sales',
+  /sold_out_outright/.test(sql24));
+check('a night is only counted once, on the reason that applies',
+  /coalesce\(booking_closed, 0\) = 0/.test(sql24) &&
+  /coalesce\(not_released, 0\) = 0/.test(sql24));
 
 console.log(`\n${pass} passed, ${fail} failed\n`);
 process.exit(fail ? 1 : 0);
