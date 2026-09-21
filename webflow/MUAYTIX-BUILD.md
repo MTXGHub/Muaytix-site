@@ -280,3 +280,134 @@ session characterised Avoora from a two-line search summary and got it wrong.
 - Photo library
 - Content writing — the five Venue blocks carry all 150 event pages, so they are
   where the value is
+
+---
+
+# Session log — 21 September 2026 (evening)
+
+## The site now exists
+
+**MuayTix.com V2** — site id `6ab1813b1cd693d8bed0aa8c`, workspace
+`6a82f5092013c8f17470e956`, created 19:10. 25 pages. Time zone came out of the
+template as Asia/Dhaka; it should be Asia/Bangkok.
+
+`MTX Tonight` is archived and no longer returned by the API at all.
+
+**Connector note.** The Webflow connection has to be re-authorised after a new
+site is created, otherwise `list_sites` keeps serving the old grant — it showed
+the archived MTX Tonight and not the new site. Reconnecting fixed it. Worth
+checking first whenever the site list looks wrong.
+
+## Two corrections to the notes above
+
+**1. Avoora does ship with CMS collections.** Four of them, each with a working
+detail page:
+
+| Collection | id |
+|---|---|
+| Featured Works | `6ab1813d1cd693d8bed0ab24` |
+| Blogs | `6ab1813d1cd693d8bed0ab43` |
+| Case Studies | `6ab1813d1cd693d8bed0ab6a` |
+| Services | `6ab1813d1cd693d8bed0ab8d` |
+
+The earlier note said it ships without any. It does not. Events and Venues may
+still be better built fresh, but there is existing structure to reuse.
+
+**2. It is not a light-only template.** Two homepage sections ship dark:
+Featured Work and Case Studies. The near-black brand look is not a fight with
+the template, it is already half there.
+
+## Homepage running order
+
+Read off the site, not guessed:
+
+| # | Section | Type | Note |
+|---|---|---|---|
+| 1 | Navbar | component | |
+| 2 | Hero | section | background video, empty Services collection list |
+| 3 | About band | section | four stat figures |
+| 4 | Featured Work | section | **dark** |
+| 5 | Our Expertise | section | |
+| 6 | Membership Plan | section | to be deleted |
+| 7 | Client Stories | component | |
+| 8 | Awards Achievement | component | to be deleted |
+| 9 | How We Work | component | |
+| 10 | Case Studies | section | **dark**, parked for now |
+| 11 | FAQ | component | |
+| 12 | Latest Article | section | kept, becomes Bangkok guides |
+| 13 | Let's Talk | component | closing CTA |
+| 14 | Footer | component | |
+
+## Brand colours
+
+Sampled from `webflow/assets/muaytix-logo.png` rather than guessed — 13,487
+fully opaque pixels, two dominant clusters:
+
+| Colour | Hex |
+|---|---|
+| Red (the "muay" half and the dot) | `#F4201B` |
+| Blue (the "tix" half) | `#004DF2` |
+
+The template has **one** accent token, which is the whole recolouring job:
+
+- `Color/Color Primary` — was `#ff5911` (orange), now `#f4201b`
+- `Color/Color Secondary` — new, `#004df2`
+
+Both live in the `Colors` variable collection
+(`collection-01293dfa-5791-d605-b52b-9d2000beda0d`). There are two other
+collections, `Base collection` and `Spacing (Responsiveness)`, both with
+Tablet / Mobile (L) / Mobile (P) modes.
+
+## Working techniques learned tonight
+
+**Text in a Div Block cannot be set on the block.** `set_text` against a `Block`
+element returns `This element doesn't support text`. Target the `String` child
+node directly and it works. Headings take `set_text` on the heading itself.
+
+**Setting text on a heading destroys any child span.** The hero H1 held an
+`®` inside a `.Brand Mark` span; rewriting the heading removed it. Fine here,
+but on an element whose span matters, set the String child instead.
+
+**Buttons carry two text layers.** `.Primary Button Text.Is Absolute` and
+`.Is Relative` — the hover swap. Both have to be changed or the label flips back
+to the old text on hover. This pattern repeats across the template.
+
+**`element_snapshot_tool` needs the Designer open** in a browser. With it closed
+it fails with `status: false` and no useful message. Nothing else needs it.
+
+**Element IDs must be copied whole.** Truncating them produces
+`Element not found`. Child String ids are usually the parent id with the last
+character incremented, but do not rely on that — read them.
+
+## Hero copy now in place
+
+| Slot | Was | Now |
+|---|---|---|
+| H1 | "Avoora ®" | "Muay Thai" |
+| Second display line | "Studio" (a second H1) | "Bangkok", demoted to H2 |
+| Eyebrow | "Award-Winning Creative Digital Studio" | "Official Tickets · Rajadamnern Stadium" |
+| Subtitle | "We Build Digital Service with" | "Bangkok's original stadiums, booked direct" |
+| Body | agency boilerplate | "Book real seats at Bangkok's original Muay Thai stadiums. Pick your night, pick your seat, confirmed in minutes." |
+| Button (both layers) | "LET'S TALK" | "BOOK TICKETS" |
+
+The page had **two H1s**, which is an SEO fault. Now one.
+
+## Deliberately left alone — these need real facts, not invention
+
+- **Hero trust line**, currently "24+ Years of Creative Excellence"
+- **Hero profile cards** (×2), currently "Mitchel Jonson / Founder & CEO" and
+  "Michek Jonson / Founder & CEO" — the second is a typo in the template itself
+- **About band figures**: `$74M`, `95%`, `225+`, `92%`, each with a caption
+- **Which venues we actually sell.** Only Rajadamnern is confirmed from these
+  notes, so the eyebrow names only Rajadamnern. Lumpinee, RWS and the rest need
+  confirming before they go on the page.
+
+## Still to do on the homepage
+
+1. Delete Membership Plan and Awards Achievement
+2. Featured Work → fight-night listing
+3. Our Expertise → seat classes
+4. How We Work → the evening, doors to last fight
+5. About band → facts strip, once the real numbers exist
+6. Client Stories → real reviews
+7. Navbar and footer rebrand, logo upload
