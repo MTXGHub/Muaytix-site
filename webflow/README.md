@@ -1,3 +1,8 @@
+> **Note — this file is about `MTX Tonight`, a separate parked concept: a
+> one-pager advertising whatever Muay Thai is on in Bangkok tonight. It is NOT
+> the muaytix.com rebuild. For that, read `MUAYTIX-BUILD.md` in this folder.
+> The Webflow API lessons below are real and still apply to both.**
+
 # MuayTix Tonight — React → Webflow rebuild
 
 Source design: `MTXGHub/muaytix-tonight` (Manus-built Vite + React app).
