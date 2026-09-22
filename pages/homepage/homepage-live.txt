@@ -57,10 +57,10 @@
   background-color: var(--hp-ink);
   background-image:
     linear-gradient(100deg,
-      rgba(11,11,13,.95) 0%,
-      rgba(11,11,13,.88) 38%,
-      rgba(11,11,13,.66) 72%,
-      rgba(11,11,13,.52) 100%),
+      rgba(11,11,13,.92) 0%,
+      rgba(11,11,13,.68) 32%,
+      rgba(11,11,13,.30) 64%,
+      rgba(11,11,13,.10) 100%),
     url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -70,10 +70,10 @@
   .mtx-hp__hero {
     background-image:
       linear-gradient(180deg,
-        rgba(11,11,13,.86) 0%,
-        rgba(11,11,13,.74) 30%,
-        rgba(11,11,13,.88) 72%,
-        rgba(11,11,13,.96) 100%),
+        rgba(11,11,13,.90) 0%,
+        rgba(11,11,13,.72) 24%,
+        rgba(11,11,13,.44) 60%,
+        rgba(11,11,13,.20) 100%),
       url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
     background-position: center 30%;
   }
@@ -90,13 +90,6 @@
 }
 .mtx-hp__lede { max-width: 62ch; margin-top: 18px !important; color: #d3d4da; font-size: 17px; }
 .mtx-hp__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-
-.mtx-hp .mtx-hp__trustline {
-  display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 20px;
-  color: #9ca0ad; font-size: 14px;
-}
-.mtx-hp__trustline li { display: flex; align-items: center; gap: 8px; }
-.mtx-hp__trustline li + li::before { content: "\00b7"; color: #6e6e75; }
 
 .mtx-hp__facts {
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
@@ -168,13 +161,6 @@
 }
 .mtx-hp__eventlink a { color: var(--hp-accent, var(--hp-blue)); text-decoration: none; }
 .mtx-hp__eventlink a:hover { text-decoration: underline; }
-
-.mtx-hp__stepno {
-  display: block;
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
-  font-size: 46px; line-height: 1; color: var(--hp-blue);
-}
-.mtx-hp__card--step h3 { margin-top: 12px; }
 
 .mtx-hp__card--shot { padding-top: 0; overflow: hidden; }
 .mtx-hp__card--shot::before { display: none; }
@@ -278,18 +264,6 @@
 .mtx-hp__panel { margin-top: 30px; background: #fff; color: var(--hp-ink); padding: clamp(20px, 3vw, 32px); }
 .muaytix-ticket-selector { min-height: 320px; }
 
-.mtx-hp__partners {
-  display: flex; flex-wrap: wrap; gap: 10px 0; margin-top: 26px;
-  border-top: 1px solid rgba(255,255,255,.16); border-bottom: 1px solid rgba(255,255,255,.16);
-  padding: 20px 0;
-}
-.mtx-hp .mtx-hp__partners { margin-top: 26px; }
-.mtx-hp__partners li {
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
-  font-size: 16px; letter-spacing: .08em; text-transform: uppercase; color: #fff;
-}
-.mtx-hp__partners li + li::before { content: "\00b7"; color: #6e6e75; margin: 0 14px; }
-
 @media (max-width: 1000px) {
   .mtx-hp__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mtx-hp__events { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -301,12 +275,6 @@
 }
 @media (max-width: 620px) {
   .mtx-hp__events { grid-template-columns: 1fr; }
-  .mtx-hp .mtx-hp__trustline { display: block; }
-  .mtx-hp__trustline li { display: block; }
-  .mtx-hp__trustline li + li { margin-top: 4px; }
-  .mtx-hp__trustline li + li::before { content: none; }
-  .mtx-hp .mtx-hp__partners { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 18px; }
-  .mtx-hp__partners li + li::before { content: none; }
 }
 @media (max-width: 560px) {
   .mtx-hp__shell { width: min(100% - 28px, 1180px); }
@@ -324,22 +292,16 @@
       <span class="mtx-hp__eyebrow">Rajadamnern Stadium international ticket partner &middot; Bangkok</span>
       <h1>Muay Thai tickets in Bangkok</h1>
       <p class="mtx-hp__tagline">Live at Rajadamnern Stadium, every night of the week</p>
-      <p class="mtx-hp__lede">Rajadamnern Stadium hosts professional Muay Thai seven nights a week in the centre of Bangkok. MuayTix books your ticket directly from the stadium and sends it to your phone. No printing, no collection, no queue. If you are here tonight, this week or planning a trip, your night starts below.</p>
+      <p class="mtx-hp__lede">Professional Muay Thai in the centre of Bangkok. MuayTix books your ticket directly from the stadium and sends it to your phone.</p>
 
       <div class="mtx-hp__actions">
         <a class="mtx-hp__btn mtx-hp__btn--blue" href="#this-week">See what's on this week</a>
         <a class="mtx-hp__btn mtx-hp__btn--ghost" href="/rajadamnern-stadium-tickets">Book Tickets</a>
       </div>
 
-      <ul class="mtx-hp__trustline">
-        <li>International ticket partner</li>
-        <li>Tickets from the stadium's own allocation</li>
-        <li>Human help on WhatsApp</li>
-      </ul>
-
       <ul class="mtx-hp__facts">
         <li><strong>Rajadamnern Stadium</strong><span>Bangkok</span></li>
-        <li><strong>Open seven nights a week</strong><span>A different event every night</span></li>
+        <li><strong>Open seven nights a week</strong></li>
         <li><strong>Fight nights start between 6:00 PM and 7:10 PM</strong></li>
         <li><strong>Four seat classes</strong><span>From Ringside to Third Class</span></li>
         <li><strong>Named e-ticket with QR code</strong></li>
@@ -411,7 +373,6 @@
         <article class="mtx-hp__event">
           <span class="mtx-hp__day">Some Mondays</span>
           <h3>All Star Fight</h3>
-          <p>An occasional addition to the Rajadamnern schedule on selected Monday nights.</p>
           <p class="mtx-hp__eventlink"><a href="/rajadamnern-stadium-tickets">See All Star nights</a></p>
         </article>
 
@@ -445,7 +406,7 @@
     <div class="mtx-hp__shell">
       <span class="mtx-hp__kicker">Seating</span>
       <h2>Every seat watches the same fights</h2>
-      <p>The difference is how close you are and the kind of crowd around you. Four seat classes are on sale on most nights.</p>
+      <p>The difference is how close you are and the kind of crowd around you.</p>
 
       <div class="mtx-hp__grid">
         <article class="mtx-hp__card mtx-hp__card--shot">
@@ -554,7 +515,7 @@
     <div class="mtx-hp__shell">
       <span class="mtx-hp__kicker">Who you are booking with</span>
       <h2>The stadium's international ticket partner, not a reseller</h2>
-      <p>MuayTix is the international ticket partner of Rajadamnern Stadium, with a team on the ground in Bangkok. Here is what that means for you.</p>
+      <p>A team on the ground in Bangkok. Here is what that means for you.</p>
 
       <div class="mtx-hp__trustgrid">
         <article class="mtx-hp__trustcard">
@@ -588,35 +549,6 @@
     </div>
   </section>
 
-  <section class="mtx-hp__band mtx-hp__band--paper" id="how-it-works">
-    <div class="mtx-hp__shell">
-      <span class="mtx-hp__kicker">Booking</span>
-      <h2>Three steps from here to your seat</h2>
-
-      <div class="mtx-hp__grid3">
-        <article class="mtx-hp__card mtx-hp__card--step">
-          <span class="mtx-hp__stepno">1</span>
-          <h3>Choose your night</h3>
-          <p>Pick tonight, this week or a date on your trip. Then pick your seat class.</p>
-        </article>
-        <article class="mtx-hp__card mtx-hp__card--step">
-          <span class="mtx-hp__stepno">2</span>
-          <h3>Pay securely</h3>
-          <p>See your full total in your currency before you pay. Confirmation lands in your inbox straight away.</p>
-        </article>
-        <article class="mtx-hp__card mtx-hp__card--step">
-          <span class="mtx-hp__stepno">3</span>
-          <h3>Show your phone</h3>
-          <p>Open the e-ticket email at the gate, turn your screen brightness up and show the QR code.</p>
-        </article>
-      </div>
-
-      <div class="mtx-hp__ctarow">
-        <a class="mtx-hp__btn mtx-hp__btn--blue" href="/rajadamnern-stadium-tickets">Book Tickets</a>
-      </div>
-    </div>
-  </section>
-
   <section class="mtx-hp__band" id="the-venue">
     <div class="mtx-hp__shell">
       <span class="mtx-hp__kicker">The venue</span>
@@ -639,14 +571,6 @@
           <p>Yes. We sell tickets right up to the start of the event while there is availability. Popular seat classes can sell out earlier on busy nights, so if you know your date, book it.</p>
         </details>
         <details>
-          <summary>Can I arrive after the fights have started?</summary>
-          <p>Yes. The gates stay open through the evening, so you can enter at any time after the first bell.</p>
-        </details>
-        <details>
-          <summary>Which seat should I choose?</summary>
-          <p>Club Class if it is your first time or you are bringing children. LEO Section if you want the local crowd around you. Ringside if you want to be as close as possible. Third Class if you want the lowest price and a full stadium view.</p>
-        </details>
-        <details>
           <summary>Can I change my date or seat after booking?</summary>
           <p>The stadium's system does not allow changes once a ticket is issued. If your event is still some way off, message us on WhatsApp and we will do what we can.</p>
         </details>
@@ -659,22 +583,6 @@
           <p>Doors open an hour or so before the first bout. Arriving 30 minutes early gives you time to get in, find your section and settle down. Check your event page for the exact times.</p>
         </details>
       </div>
-    </div>
-  </section>
-
-  <section class="mtx-hp__band mtx-hp__band--dark" id="partner">
-    <div class="mtx-hp__shell">
-      <span class="mtx-hp__kicker mtx-hp__kicker--light">International ticket partner</span>
-      <p>MuayTix is the international ticket partner of Rajadamnern Stadium and sells tickets for every promoter that stages events there.</p>
-      <ul class="mtx-hp__partners">
-        <li>Rajadamnern Stadium</li>
-        <li>RWS</li>
-        <li>Rajadamnern Knockout</li>
-        <li>New Power</li>
-        <li>Petchyindee</li>
-        <li>Kiatpetch</li>
-        <li>All Star</li>
-      </ul>
     </div>
   </section>
 
