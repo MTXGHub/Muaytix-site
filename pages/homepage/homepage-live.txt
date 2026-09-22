@@ -92,7 +92,7 @@
 .mtx-hp__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 
 .mtx-hp__facts {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px;
   background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.16);
 }
 .mtx-hp .mtx-hp__facts { margin-top: 36px; }
@@ -261,8 +261,14 @@
 
 .mtx-hp__booking { background: var(--hp-ink); color: #fff; padding: clamp(44px, 6vw, 78px) 0; scroll-margin-top: 90px; }
 .mtx-hp__booking h2 { color: #fff; }
+
+.mtx-hp #mtx-booking h1, .mtx-hp #mtx-booking h2,
+.mtx-hp #mtx-booking h3, .mtx-hp #mtx-booking h4 { color: inherit; text-transform: none; }
+
 .mtx-hp__panel { margin-top: 30px; background: #fff; color: var(--hp-ink); padding: clamp(20px, 3vw, 32px); }
 .muaytix-ticket-selector { min-height: 320px; }
+
+.mtx-hp #mtx-booking .mtx-mast { display: none; }
 
 @media (max-width: 1000px) {
   .mtx-hp__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -289,10 +295,10 @@
 
   <section class="mtx-hp__hero">
     <div class="mtx-hp__shell">
-      <span class="mtx-hp__eyebrow">Rajadamnern Stadium international ticket partner &middot; Bangkok</span>
+      <span class="mtx-hp__eyebrow">Rajadamnern Stadium international ticket partner</span>
       <h1>Muay Thai tickets in Bangkok</h1>
       <p class="mtx-hp__tagline">Live at Rajadamnern Stadium, every night of the week</p>
-      <p class="mtx-hp__lede">Professional Muay Thai in the centre of Bangkok. MuayTix books your ticket directly from the stadium and sends it to your phone.</p>
+      <p class="mtx-hp__lede">MuayTix books your ticket directly from the stadium and sends it straight to your phone.</p>
 
       <div class="mtx-hp__actions">
         <a class="mtx-hp__btn mtx-hp__btn--blue" href="#this-week">See what's on this week</a>
@@ -300,19 +306,17 @@
       </div>
 
       <ul class="mtx-hp__facts">
-        <li><strong>Rajadamnern Stadium</strong><span>Bangkok</span></li>
-        <li><strong>Open seven nights a week</strong></li>
+        <li><strong>Rajadamnern Stadium</strong></li>
+        <li><strong>Professional fight nights</strong><span>Seven nights a week</span></li>
         <li><strong>Fight nights start between 6:00 PM and 7:10 PM</strong></li>
         <li><strong>Four seat classes</strong><span>From Ringside to Third Class</span></li>
-        <li><strong>Named e-ticket with QR code</strong></li>
-        <li><strong>Bookings accepted until the event starts</strong><span>While tickets last</span></li>
       </ul>
     </div>
   </section>
 
   <section class="mtx-hp__booking" id="this-week">
     <div class="mtx-hp__shell">
-      <span class="mtx-hp__kicker">This week in Bangkok</span>
+      <span class="mtx-hp__kicker">This week</span>
       <h2>Pick your fight night</h2>
       <p class="mtx-hp__lede">Every night is a different event with its own promoter, format and crowd. Choose your night below to see live availability and book.</p>
 

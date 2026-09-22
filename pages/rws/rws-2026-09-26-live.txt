@@ -1,0 +1,909 @@
+
+<div class="mtx-rws"
+     data-night="2026-09-26"
+     data-doors="18:00"
+     data-bell="19:10"
+     data-countdown-from="15:00"
+     data-next="/rws/">
+<style>
+
+.mtx-rws, .mtx-rws * { box-sizing: border-box; }
+.mtx-rws {
+  --rws-red: #FF1828;
+  --rws-red-dark: #C40E1F;
+  --rws-ink: #0A0A0A;
+  --rws-paper: #F5F5F5;
+  --rws-line: #DCDCE1;
+  --rws-muted: #6E6E75;
+
+  --rws-ring:  #00A651;
+  --rws-club:  #27AAE1;
+  --rws-leo:   #FFF200;
+  --rws-third: #F7941E;
+
+  font-family: Calibri, "Segoe UI", Candara, Optima, sans-serif;
+  color: var(--rws-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.mtx-rws p, .mtx-rws h1, .mtx-rws h2, .mtx-rws h3, .mtx-rws ul, .mtx-rws ol { margin: 0; padding: 0; }
+.mtx-rws ul, .mtx-rws ol { list-style: none; }
+.mtx-rws img { max-width: 100%; display: block; }
+.mtx-rws__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
+
+.mtx-rws h1, .mtx-rws h2, .mtx-rws h3 {
+  font-family: "Arial Black", "Arial Bold", Gadget, Arial, sans-serif;
+  font-weight: 900; text-transform: uppercase; letter-spacing: -.01em;
+}
+.mtx-rws h1 { font-size: clamp(34px, 5.4vw, 64px); line-height: .98; }
+.mtx-rws h2 { font-size: clamp(26px, 3.4vw, 42px); line-height: 1.05; margin-top: 8px; }
+.mtx-rws h3 { font-size: 20px; line-height: 1.15; }
+.mtx-rws__kicker {
+  display: block; color: var(--rws-red);
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+}
+
+.mtx-rws__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 54px; padding: 0 26px; border: 2px solid transparent;
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 15px; letter-spacing: .06em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: all .2s ease; text-align: center;
+}
+.mtx-rws__btn--red { background: var(--rws-red); color: #fff; }
+.mtx-rws__btn--red:hover { background: var(--rws-red-dark); color: #fff; }
+.mtx-rws__btn--ghost { background: transparent; border-color: #fff; color: #fff; }
+.mtx-rws__btn--ghost:hover { background: #fff; color: var(--rws-ink); }
+
+.mtx-rws__tlink {
+  display: inline-block; margin-top: 18px; color: var(--rws-red);
+  font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--rws-red);
+  padding-bottom: 2px;
+}
+.mtx-rws__tlink:hover { color: var(--rws-red-dark); border-bottom-color: var(--rws-red-dark); }
+
+.mtx-rws__hero { background: var(--rws-ink); color: #fff; padding: clamp(40px, 5vw, 76px) 0; }
+.mtx-rws__herogrid {
+  display: grid; grid-template-columns: 1.02fr .98fr; gap: clamp(26px, 4vw, 54px);
+  align-items: center;
+}
+.mtx-rws__herocopy { min-width: 0; }
+.mtx-rws__heroshot { min-width: 0; }
+.mtx-rws__heroshot img { width: 100%; height: auto; border: 3px solid var(--rws-red); }
+.mtx-rws__eyebrow {
+  display: block; color: var(--rws-red);
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 13px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 14px;
+}
+.mtx-rws__lede { max-width: 60ch; margin-top: 18px !important; color: #D9D9DE; font-size: 17px; }
+.mtx-rws__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+.mtx-rws__facts {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px;
+  background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.18);
+}
+
+.mtx-rws .mtx-rws__facts { margin-top: 40px; }
+.mtx-rws__facts li { background: #141416; padding: 18px 16px; }
+.mtx-rws__facts strong { display: block; font-size: 15px; font-weight: 700; line-height: 1.3; color: #fff; }
+.mtx-rws__facts span { display: block; margin-top: 3px; color: #9A9AA2; font-size: 13px; line-height: 1.35; }
+.mtx-rws__facts strong span, .mtx-rws__facts span span { display: inline; margin-top: 0; color: inherit; }
+.mtx-rws__facts .mtx-rws__flabel {
+  display: block; color: var(--rws-red); font-family: "Arial Black", Arial, sans-serif;
+  font-weight: 900; font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.mtx-rws__band { padding: clamp(42px, 5.4vw, 74px) 0; background: #fff; }
+.mtx-rws__band--paper { background: var(--rws-paper); }
+.mtx-rws__band--dark { background: #141416; color: #fff; }
+.mtx-rws__band p { max-width: 68ch; margin-top: 16px !important; font-size: 17px; }
+.mtx-rws__band--dark p { color: #D9D9DE; }
+.mtx-rws__note {
+  max-width: 68ch; margin-top: 22px !important; padding-left: 15px;
+  border-left: 3px solid var(--rws-red); color: var(--rws-muted); font-size: 15px;
+}
+.mtx-rws__band--dark .mtx-rws__note { color: #B6B6BE; }
+.mtx-rws__ctarow { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+.mtx-rws__cardbtn { width: 100%; margin-top: 22px; }
+
+.mtx-rws__jump { display: block; height: 0; scroll-margin-top: 16px; }
+
+.mtx-rws__timeline { border-top: 2px solid var(--rws-ink); }
+.mtx-rws .mtx-rws__timeline { margin-top: 28px; }
+.mtx-rws__timeline li {
+  display: grid; grid-template-columns: 22px 150px 1fr; gap: 16px; align-items: start;
+  padding: 16px 0; border-bottom: 1px solid var(--rws-line);
+}
+.mtx-rws__dotcell { display: flex; justify-content: center; padding-top: 6px; }
+.mtx-rws__mark { width: 14px; height: 14px; border-radius: 50%; flex: none; }
+.mtx-rws__mark--fixed { background: var(--rws-red); }
+.mtx-rws__mark--approx { background: #fff; border: 2px solid var(--rws-red); }
+.mtx-rws__time {
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 17px; color: var(--rws-red); line-height: 1.25;
+}
+.mtx-rws__timeline strong { display: block; font-size: 16px; }
+.mtx-rws__timeline em { display: block; margin-top: 2px; font-style: normal; color: var(--rws-muted); font-size: 15px; }
+.mtx-rws__key { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 18px; }
+.mtx-rws__key li { display: flex; align-items: center; gap: 9px; color: var(--rws-muted); font-size: 14px; }
+
+.mtx-rws__bout {
+  display: grid; grid-template-columns: 1fr 120px 1fr; align-items: center; gap: 14px;
+  padding: 22px 0; border-top: 2px solid var(--rws-ink); border-bottom: 1px solid var(--rws-line);
+}
+.mtx-rws .mtx-rws__boutwrap { margin-top: 28px; }
+.mtx-rws__title {
+  margin-top: 14px !important; color: var(--rws-red);
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 13px !important; letter-spacing: .1em; text-transform: uppercase;
+}
+.mtx-rws__corner { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.mtx-rws__corner--b { flex-direction: row-reverse; text-align: right; }
+.mtx-rws__flag { font-size: 26px; line-height: 1; flex: none; }
+.mtx-rws__fighter {
+  display: block; font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 22px; line-height: 1.08; text-transform: uppercase;
+}
+.mtx-rws__gym { display: block; margin-top: 2px; color: var(--rws-muted); font-size: 13px; line-height: 1.3; }
+.mtx-rws__mid { text-align: center; }
+.mtx-rws__boutno {
+  display: block; font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--rws-muted);
+}
+.mtx-rws__vs {
+  display: block; margin-top: 2px; font-family: "Arial Black", Arial, sans-serif;
+  font-weight: 900; font-size: 18px; text-transform: uppercase; color: var(--rws-red);
+}
+
+.mtx-rws__pending {
+  border-top: 2px solid var(--rws-ink); border-bottom: 1px solid var(--rws-line);
+  padding: 26px 0; color: var(--rws-muted); font-size: 17px; max-width: 68ch;
+}
+.mtx-rws .mtx-rws__pending { margin-top: 28px; }
+
+.mtx-rws__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+.mtx-rws__card { position: relative; background: #fff; border: 1px solid var(--rws-line); padding: 0 24px 26px; overflow: hidden; }
+.mtx-rws__card p { margin-top: 10px !important; color: var(--rws-muted); font-size: 16px; }
+.mtx-rws__card h3 { margin-top: 22px; }
+.mtx-rws__standfirst {
+  margin-top: 7px !important; color: var(--rws-red) !important;
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+}
+.mtx-rws__bestfor { font-size: 15px !important; }
+.mtx-rws__bestfor strong { color: var(--rws-ink); }
+
+.mtx-rws__shots { position: relative; margin: 0 -24px; }
+.mtx-rws__shots-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.mtx-rws__shots-track::-webkit-scrollbar { display: none; }
+.mtx-rws__shots-track img {
+  flex: 0 0 100%; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  scroll-snap-align: center; background: #E6E6EA;
+}
+@supports not (aspect-ratio: 4 / 3) {
+  .mtx-rws__shots-track img { height: 260px; }
+}
+.mtx-rws__shots-dots {
+  position: absolute; left: 0; right: 0; bottom: 11px;
+  display: flex; justify-content: center; gap: 7px;
+}
+.mtx-rws__shots-dots button {
+  width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(255,255,255,.55); cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.25); transition: background .18s ease;
+}
+.mtx-rws__shots-dots button.is-on { background: #fff; }
+.mtx-rws__shots-dots button:focus-visible { outline: 2px solid var(--rws-red); outline-offset: 2px; }
+.mtx-rws__shots-dots:empty { display: none; }
+
+.mtx-rws__maplayout { margin-top: 30px; max-width: 640px; margin-inline: auto; }
+.mtx-rws__mapfig { display: block; position: relative; text-decoration: none; }
+.mtx-rws__mapfig img { width: 100%; height: auto; }
+.mtx-rws__mapzoom {
+  position: absolute; right: 12px; bottom: 12px;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 13px; background: rgba(10,10,10,.78); color: #fff;
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.16); transition: background .18s ease;
+}
+.mtx-rws__mapfig:hover .mtx-rws__mapzoom { background: var(--rws-red); }
+.mtx-rws__mapfig:focus-visible { outline: 2px solid var(--rws-red); outline-offset: 4px; }
+.mtx-rws__keyhead {
+  margin-top: 26px !important;
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 12px !important; letter-spacing: .12em; text-transform: uppercase;
+  color: #9A9AA2 !important; padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.16);
+}
+.mtx-rws__seatkey { margin-top: 4px; }
+.mtx-rws__seatkey li {
+  display: grid; grid-template-columns: 24px 1fr auto; gap: 14px; align-items: baseline;
+  padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.16);
+}
+.mtx-rws__sw { width: 24px; height: 24px; border-radius: 4px; align-self: center; box-shadow: inset 0 0 0 1px rgba(0,0,0,.35); }
+.mtx-rws__seatname { font-family: "Arial Black", Arial, sans-serif; font-weight: 900; font-size: 17px; line-height: 1.1; text-transform: uppercase; }
+.mtx-rws__seatsec { font-size: 17px; color: #D9D9DE; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.mtx-rws__booking { background: var(--rws-ink); color: #fff; padding: clamp(44px, 6vw, 78px) 0; scroll-margin-top: 90px; }
+.mtx-rws__booking h2 { color: #fff; }
+
+.mtx-rws #mtx-booking h1, .mtx-rws #mtx-booking h2,
+.mtx-rws #mtx-booking h3, .mtx-rws #mtx-booking h4 { color: inherit; text-transform: none; }
+
+.mtx-rws__panel { margin-top: 30px; background: #fff; color: var(--rws-ink); padding: clamp(20px, 3vw, 32px); }
+.mtx-rws__fixed { display: flex; gap: 14px; padding: 20px; border: 1px solid var(--rws-red); background: #FFF4F5; margin-bottom: 22px; }
+.mtx-rws__fixed-label {
+  display: block; font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--rws-red);
+}
+.mtx-rws__fixed strong {
+  display: block; margin-top: 4px; font-family: "Arial Black", Arial, sans-serif;
+  font-weight: 900; font-size: 24px; line-height: 1.1; text-transform: uppercase;
+}
+.mtx-rws__fixed em { display: block; margin-top: 4px; font-style: normal; color: var(--rws-muted); font-size: 14px; }
+.muaytix-ticket-selector { min-height: 320px; }
+
+.mtx-rws__trustgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-rws .mtx-rws__trustgrid { margin-top: 30px; }
+.mtx-rws__trustcard { background: #fff; border: 1px solid var(--rws-line); padding: 26px 22px 24px; }
+.mtx-rws__trustcard svg { width: 30px; height: 30px; stroke: var(--rws-red); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mtx-rws__trustcard h3 { margin-top: 18px; font-size: 18px; }
+.mtx-rws__trustcard p { margin-top: 9px !important; color: var(--rws-muted); font-size: 16px; }
+
+.mtx-rws__faq { margin-top: 28px; border-top: 2px solid var(--rws-ink); }
+.mtx-rws__faq details { border-bottom: 1px solid var(--rws-line); }
+.mtx-rws__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 18px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 18px; line-height: 1.2; text-transform: uppercase;
+}
+.mtx-rws__faq summary::-webkit-details-marker { display: none; }
+.mtx-rws__faq summary::after {
+  content: "+"; flex: none; color: var(--rws-red);
+  font-family: Calibri, Arial, sans-serif; font-weight: 400;
+  font-size: 28px; line-height: 1; margin-top: -2px;
+}
+.mtx-rws__faq details[open] summary::after { content: "\2013"; }
+.mtx-rws__faq summary:focus-visible { outline: 2px solid var(--rws-red); outline-offset: 3px; }
+.mtx-rws__faq p { margin-top: 0 !important; margin-bottom: 18px !important; color: var(--rws-muted); font-size: 16px; }
+.mtx-rws__faq p + p { margin-top: 14px !important; }
+
+@media (max-width: 991px) {
+  .mtx-rws__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .mtx-rws__herogrid { grid-template-columns: 1fr; }
+  .mtx-rws__grid { grid-template-columns: 1fr; }
+  .mtx-rws__trustgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-rws__bout { grid-template-columns: 1fr; gap: 8px; }
+  .mtx-rws__mid { text-align: left; order: -1; }
+  .mtx-rws__boutno { display: inline; }
+  .mtx-rws__vs { display: inline; margin-top: 0; }
+  .mtx-rws__vs::before { content: "\00b7"; color: var(--rws-muted); margin: 0 7px; }
+  .mtx-rws__corner--b { flex-direction: row; text-align: left; }
+  .mtx-rws__timeline li { grid-template-columns: 22px 110px 1fr; gap: 12px; }
+}
+@media (max-width: 560px) {
+  .mtx-rws__shell { width: min(100% - 28px, 1180px); }
+  .mtx-rws__facts { grid-template-columns: 1fr; }
+  .mtx-rws__trustgrid { grid-template-columns: 1fr; }
+  .mtx-rws__actions .mtx-rws__btn, .mtx-rws__ctarow .mtx-rws__btn { width: 100%; }
+  .mtx-rws__faq summary { font-size: 17px; }
+  .mtx-rws__timeline li { grid-template-columns: 22px 1fr; row-gap: 4px; }
+  .mtx-rws__timeline li > div:last-child { grid-column: 2; }
+  .mtx-rws__seatkey li { grid-template-columns: 24px 1fr; row-gap: 3px; }
+  .mtx-rws__seatsec { grid-column: 2; white-space: normal; }
+}
+
+.mtx-rws .mtx-rws-v-tonight,
+.mtx-rws .mtx-rws-when-tonight,
+.mtx-rws .mtx-rws__countdown,
+.mtx-rws .mtx-rws__over { display: none; }
+
+.mtx-rws[data-state="tonight"] .mtx-rws-v-default { display: none; }
+.mtx-rws[data-state="tonight"] .mtx-rws-v-tonight { display: inline; }
+.mtx-rws[data-state="tonight"] .mtx-rws-when-tonight { display: inline; }
+.mtx-rws[data-state="tonight"] .mtx-rws__countdown { display: flex; }
+
+.mtx-rws[data-state="after"] .mtx-rws__over { display: block; }
+
+.mtx-rws__countdown {
+  align-items: center; gap: 11px; margin-top: 16px !important;
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: clamp(16px, 2.1vw, 21px);
+  letter-spacing: .03em; text-transform: uppercase; color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.mtx-rws__dot {
+  width: 11px; height: 11px; border-radius: 50%; background: var(--rws-red);
+  flex: none; box-shadow: 0 0 0 0 rgba(255,24,40,.55);
+  animation: mtx-rws-pulse 2.4s ease-out infinite;
+}
+@keyframes mtx-rws-pulse { to { box-shadow: 0 0 0 13px rgba(255,24,40,0); } }
+@media (prefers-reduced-motion: reduce) { .mtx-rws__dot { animation: none; } }
+
+.mtx-rws__over { margin-bottom: 26px; padding: 20px 22px; background: #2A0E11; border-left: 5px solid var(--rws-red); }
+.mtx-rws__over strong {
+  display: block; font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: clamp(19px, 2.5vw, 25px); line-height: 1.1; text-transform: uppercase; color: #fff;
+}
+.mtx-rws__over span { display: block; margin-top: 6px; color: #D9D9DE; font-size: 16px; }
+.mtx-rws__over .mtx-rws__btn { margin-top: 16px; }
+</style>
+
+  <section class="mtx-rws__hero">
+    <div class="mtx-rws__shell">
+
+      <div class="mtx-rws__over">
+        <strong>This fight night has finished</strong>
+        <span>The next Rajadamnern World Series night at Rajadamnern Stadium is on sale now.</span>
+        <a class="mtx-rws__btn mtx-rws__btn--red" href="/rws/">See the next RWS night</a>
+      </div>
+
+      <div class="mtx-rws__herogrid">
+        <div class="mtx-rws__herocopy">
+          <span class="mtx-rws__eyebrow"><span class="mtx-rws-when-tonight">Tonight in Bangkok</span><span class="mtx-rws-v-default">This Saturday in Bangkok</span> &middot; Saturday 26 September 2026 &middot; Rajadamnern Stadium, Bangkok</span>
+          <h1>Rajadamnern World Series</h1>
+
+          <p class="mtx-rws__countdown"><span class="mtx-rws__dot"></span><span data-mtx-countdown aria-live="polite">First bell at 7:10 PM</span></p>
+
+          <p class="mtx-rws__lede"><span class="mtx-rws-v-tonight">First bell tonight at 7:10 PM. </span><span class="mtx-rws-v-default">First bell this Saturday at 7:10 PM. </span>Saturday 26 September at Rajadamnern Stadium brings seven professional Muay Thai bouts under the RWS format, with the judges' scores shown after every round so you always know who is ahead. Doors open at 6:00 PM and the first bout begins at 7:10 PM.</p>
+
+          <div class="mtx-rws__actions">
+            <a class="mtx-rws__btn mtx-rws__btn--red" href="#booking">Book Tickets for Saturday 26 September</a>
+            <a class="mtx-rws__btn mtx-rws__btn--ghost" href="#timeline">See how the evening runs</a>
+          </div>
+        </div>
+
+        <div class="mtx-rws__heroshot">
+          <img src="https://static.tildacdn.com/tild3361-3533-4632-a361-393264633832/1000025073.webp"
+               alt="A Muay Thai fighter performing the wai kru on one knee in the ring at Rajadamnern Stadium during a Rajadamnern World Series event, with a full crowd behind the RWS ropes."
+               width="1253" height="1253" decoding="async">
+        </div>
+      </div>
+
+      <ul class="mtx-rws__facts">
+        <li>
+          <span class="mtx-rws__flabel"><span class="mtx-rws-v-tonight">Tonight in Bangkok</span><span class="mtx-rws-v-default">This Saturday in Bangkok</span></span>
+          <strong>Saturday 26 September 2026</strong>
+        </li>
+        <li><strong>Doors 6:00 PM &middot; First bout 7:10 PM</strong><span>Finishes around 10:00 PM</span></li>
+        <li><strong>Seven professional bouts</strong><span>Scores shown after every round</span></li>
+        <li><strong>Rajadamnern Stadium</strong><span>The world's first purpose-built Muay Thai stadium</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mtx-rws__band">
+    <div class="mtx-rws__shell">
+      <span class="mtx-rws__kicker">The event</span>
+      <h2>Bangkok's biggest Saturday night in Muay Thai</h2>
+      <p>On Saturday 26 September, Rajadamnern Stadium hosts seven professional bouts with Thai and international fighters on the same card. Regular bouts run three rounds, championship contests run five, and the scores go up on the screens after every round, so you can follow every fight without knowing the sport.</p>
+      <p>The full arena production, the dome show and a mixed Thai and international crowd make Saturday the most complete night to see live Muay Thai in Bangkok.</p>
+      <a class="mtx-rws__tlink" href="/rws/">New to RWS? Read what to expect &rarr;</a>
+    </div>
+  </section>
+
+  <section class="mtx-rws__band mtx-rws__band--paper" id="timeline">
+    <div class="mtx-rws__shell">
+      <span class="mtx-rws__kicker"><span class="mtx-rws-v-tonight">Tonight</span><span class="mtx-rws-v-default">This Saturday</span> &middot; Sat 26 Sep 2026</span>
+      <h2>How the evening runs</h2>
+
+      <ol class="mtx-rws__timeline">
+        <li>
+          <span class="mtx-rws__dotcell"><span class="mtx-rws__mark mtx-rws__mark--fixed"></span></span>
+          <span class="mtx-rws__time">6:00 PM</span>
+          <div><strong>Doors open</strong><em>Gates open at Rajadamnern Stadium.</em></div>
+        </li>
+        <li>
+          <span class="mtx-rws__dotcell"><span class="mtx-rws__mark mtx-rws__mark--approx"></span></span>
+          <span class="mtx-rws__time">6:15 to 6:30 PM</span>
+          <div><strong>Recommended arrival</strong><em>Time to enter, find your section and settle in.</em></div>
+        </li>
+        <li>
+          <span class="mtx-rws__dotcell"><span class="mtx-rws__mark mtx-rws__mark--fixed"></span></span>
+          <span class="mtx-rws__time">7:10 PM</span>
+          <div><strong>Event starts</strong><em>The preliminary bouts begin.</em></div>
+        </li>
+        <li>
+          <span class="mtx-rws__dotcell"><span class="mtx-rws__mark mtx-rws__mark--approx"></span></span>
+          <span class="mtx-rws__time">Approx 7:50 PM</span>
+          <div><strong>Immersive Dome Experience</strong><em>The stadium dome projection show.</em></div>
+        </li>
+        <li>
+          <span class="mtx-rws__dotcell"><span class="mtx-rws__mark mtx-rws__mark--approx"></span></span>
+          <span class="mtx-rws__time">Approx 8:00 PM</span>
+          <div><strong>Interval</strong><em>A short break before the main card.</em></div>
+        </li>
+        <li>
+          <span class="mtx-rws__dotcell"><span class="mtx-rws__mark mtx-rws__mark--approx"></span></span>
+          <span class="mtx-rws__time">Approx 8:10 PM</span>
+          <div><strong>Main card</strong><em>The championship and headline bouts.</em></div>
+        </li>
+        <li>
+          <span class="mtx-rws__dotcell"><span class="mtx-rws__mark mtx-rws__mark--approx"></span></span>
+          <span class="mtx-rws__time">Approx 10:00 PM</span>
+          <div><strong>Expected finish</strong><em>Final bout and close.</em></div>
+        </li>
+      </ol>
+
+      <ul class="mtx-rws__key">
+        <li><span class="mtx-rws__mark mtx-rws__mark--fixed"></span> Fixed time</li>
+        <li><span class="mtx-rws__mark mtx-rws__mark--approx"></span> Approximate</li>
+      </ul>
+
+      <p class="mtx-rws__note">Doors open and event start are fixed. Every timing after that is approximate and may change on the night. You may enter at any time after the event has started, as the gates remain open throughout the evening, so late arrival is fine.</p>
+    </div>
+  </section>
+
+  <section class="mtx-rws__band">
+    <div class="mtx-rws__shell">
+      <span class="mtx-rws__kicker"><span class="mtx-rws-v-tonight">Tonight</span><span class="mtx-rws-v-default">This Saturday</span> &middot; Sat 26 Sep 2026</span>
+      <h2>Saturday's headline bout</h2>
+
+      <div class="mtx-rws__boutwrap">
+        <div class="mtx-rws__bout">
+          <div class="mtx-rws__corner">
+            <span>
+              <span class="mtx-rws__fighter">Marie Ruumet</span>
+              <span class="mtx-rws__gym">Champion</span>
+            </span>
+          </div>
+          <div class="mtx-rws__mid">
+            <span class="mtx-rws__boutno">Bout 6 &middot; 112 lbs</span>
+            <span class="mtx-rws__vs">vs</span>
+          </div>
+          <div class="mtx-rws__corner mtx-rws__corner--b">
+            <span>
+              <span class="mtx-rws__fighter">Desiree Wodicker</span>
+              <span class="mtx-rws__gym">Ranked 5</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <p class="mtx-rws__title">Rajadamnern Stadium Female Flyweight World Championship</p>
+
+      <p>The full seven bout card for 26 September, in running order, is on the <a class="mtx-rws__tlink" href="/rws/fight-card" style="margin-top:0">RWS Fight Card page</a>.</p>
+
+      <p class="mtx-rws__note">Fighters and running order are as announced by Rajadamnern Stadium and may be subject to late change.</p>
+    </div>
+  </section>
+
+  <section class="mtx-rws__band mtx-rws__band--paper" id="seating">
+    <div class="mtx-rws__shell">
+      <span class="mtx-rws__kicker">Seating</span>
+      <h2>Choose where you sit</h2>
+      <p>Every seat class watches the same seven bouts. The difference is how close you are and the kind of crowd around you. The seat classes available for 26 September are shown in the booking section below.</p>
+
+      <div class="mtx-rws__grid">
+        <article class="mtx-rws__card">
+          <div class="mtx-rws__shots" data-mtx-slider>
+            <div class="mtx-rws__shots-track">
+              <img src="https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg" alt="Ringside seating at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild6430-3330-4239-b435-353230396463/1000013051.jpg" alt="Ringside seats beside the ring apron" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg" alt="Close-up view of the ring from Ringside" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg" alt="Ringside guests watching a bout" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-rws__shots-dots"></div>
+          </div>
+          <h3>Ringside</h3>
+          <p class="mtx-rws__standfirst">Closest to the ring</p>
+          <p>Ringside offers the closest viewing positions, with the strongest sense of impact as the fighters exchange strikes in the ring. Seats are assigned by the stadium when you book.</p>
+          <p class="mtx-rws__bestfor"><strong>Best for:</strong> Guests who want proximity above everything else</p>
+          <a class="mtx-rws__btn mtx-rws__btn--red mtx-rws__cardbtn" href="#booking">Book Ringside</a>
+        </article>
+
+        <article class="mtx-rws__card">
+          <div class="mtx-rws__shots" data-mtx-slider>
+            <div class="mtx-rws__shots-track">
+              <img src="https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg" alt="Club Class seating at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg" alt="The view towards the ring from Club Class" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3665-3065-4334-b531-303164393066/1000033696.jpg" alt="Club Class on a Rajadamnern fight night" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild6136-6131-4064-a639-636565363338/1000033691.jpg" alt="Elevated Club Class seats at Rajadamnern Stadium" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-rws__shots-dots"></div>
+          </div>
+          <h3>Club Class</h3>
+          <p class="mtx-rws__standfirst">Elevated and comfortable</p>
+          <p>Club Class provides elevated, assigned seating, clear views of the ring and a comfortable balance between atmosphere and viewing position.</p>
+          <p class="mtx-rws__bestfor"><strong>Best for:</strong> First visits, couples and anyone wanting a clear, unobstructed view</p>
+          <a class="mtx-rws__btn mtx-rws__btn--red mtx-rws__cardbtn" href="#booking">Book Club Class</a>
+        </article>
+
+        <article class="mtx-rws__card">
+          <div class="mtx-rws__shots" data-mtx-slider>
+            <div class="mtx-rws__shots-track">
+              <img src="https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg" alt="LEO Section at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3136-6363-4533-b935-633230626564/1000008294.jpg" alt="The view towards the ring from the LEO Section" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild6530-3266-4262-b265-633965366163/1000008588.jpg" alt="Crowd and atmosphere in the LEO Section on a fight night" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-rws__shots-dots"></div>
+          </div>
+          <h3>LEO Section</h3>
+          <p class="mtx-rws__standfirst">Where the atmosphere lives</p>
+          <p>The LEO Section is unassigned seating, but every guest is guaranteed a seat. The elevation and viewing position are the same as Club Class. It is popular with local supporters and is known for its lively atmosphere, placing guests close to the rhythm and reaction of the stadium.</p>
+          <p class="mtx-rws__bestfor"><strong>Best for:</strong> Guests who want local energy and crowd atmosphere</p>
+          <a class="mtx-rws__btn mtx-rws__btn--red mtx-rws__cardbtn" href="#booking">Book LEO Section</a>
+        </article>
+
+        <article class="mtx-rws__card">
+          <div class="mtx-rws__shots" data-mtx-slider>
+            <div class="mtx-rws__shots-track">
+              <img src="https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg" alt="Third Class seating at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-rws__shots-dots"></div>
+          </div>
+          <h3>Third Class</h3>
+          <p class="mtx-rws__standfirst">Traditional stadium viewing</p>
+          <p>Traditional stadium viewing with a full-ring perspective and strong value, offering a direct connection to the atmosphere of live Muay Thai. Seating is unassigned and every ticket guarantees a seat.</p>
+          <p class="mtx-rws__bestfor"><strong>Best for:</strong> Guests seeking the most traditional stadium view</p>
+          <a class="mtx-rws__btn mtx-rws__btn--red mtx-rws__cardbtn" href="#booking">Book Third Class</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-rws__band mtx-rws__band--dark" id="seat-map">
+    <div class="mtx-rws__shell">
+      <span class="mtx-rws__kicker">Rajadamnern Stadium</span>
+      <h2>Where each seat class sits</h2>
+      <p>The ring is at the centre and the section numbers are marked on the map. Tap the map to open it full size.</p>
+
+      <div class="mtx-rws__maplayout">
+        <a class="mtx-rws__mapfig"
+           href="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+           target="_blank" rel="noopener">
+          <img src="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+               alt="Seating map of Rajadamnern Stadium, Bangkok. The ring sits at the centre, with Singha Ringside in sections 3, 4, 5, 6 and 7 closest to it, Club Class in sections 8 and 9 behind, the LEO Section in section 10 and 3rd Class in section 11 around the outside."
+               loading="lazy" decoding="async" width="1242" height="1242">
+          <span class="mtx-rws__mapzoom">Tap to enlarge</span>
+        </a>
+
+        <p class="mtx-rws__keyhead">Seat classes and sections</p>
+        <ul class="mtx-rws__seatkey">
+          <li>
+            <span class="mtx-rws__sw" style="background: var(--rws-ring)"></span>
+            <span class="mtx-rws__seatname">Ringside</span>
+            <span class="mtx-rws__seatsec">Sections 3, 4, 5, 6 &amp; 7</span>
+          </li>
+          <li>
+            <span class="mtx-rws__sw" style="background: var(--rws-club)"></span>
+            <span class="mtx-rws__seatname">Club Class</span>
+            <span class="mtx-rws__seatsec">Sections 8 &amp; 9</span>
+          </li>
+          <li>
+            <span class="mtx-rws__sw" style="background: var(--rws-leo)"></span>
+            <span class="mtx-rws__seatname">LEO Section</span>
+            <span class="mtx-rws__seatsec">Section 10</span>
+          </li>
+          <li>
+            <span class="mtx-rws__sw" style="background: var(--rws-third)"></span>
+            <span class="mtx-rws__seatname">3rd Class</span>
+            <span class="mtx-rws__seatsec">Section 11</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-rws__booking" id="booking">
+    <div class="mtx-rws__shell">
+      <span class="mtx-rws__kicker">Book tickets</span>
+      <h2>Rajadamnern World Series at Rajadamnern Stadium</h2>
+      <p class="mtx-rws__lede">Choose your tickets for Saturday 26 September.</p>
+
+      <div class="mtx-rws__panel">
+        <div class="mtx-rws__fixed">
+          <div>
+            <span class="mtx-rws__fixed-label"><span class="mtx-rws-v-tonight">Tonight in Bangkok</span><span class="mtx-rws-v-default">This Saturday in Bangkok</span></span>
+            <strong>Saturday 26 September 2026</strong>
+            <em>Doors 6:00 PM &middot; First bout 7:10 PM &middot; Rajadamnern Stadium, Bangkok</em>
+          </div>
+        </div>
+
+        <span class="mtx-rws__jump" id="choose-seats" aria-hidden="true"></span>
+
+        <div class="muaytix-ticket-selector" data-event-id="rws_2026_09_26"></div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-rws__band">
+    <div class="mtx-rws__shell">
+      <span class="mtx-rws__kicker">Booking with MuayTix</span>
+      <h2>Who you are booking with</h2>
+      <p>MuayTix is an official ticketing partner for Rajadamnern Stadium, with a team on the ground in Bangkok.</p>
+
+      <div class="mtx-rws__trustgrid">
+        <article class="mtx-rws__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <h3>Seated together</h3>
+          <p>Book two or more tickets in one order and you sit together.</p>
+        </article>
+        <article class="mtx-rws__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <h3>Tickets already secured</h3>
+          <p>Our allocation for 26 September is booked in advance, so your ticket is guaranteed.</p>
+        </article>
+        <article class="mtx-rws__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <h3>Secure payment</h3>
+          <p>See your full total before you pay, through Stripe Checkout.</p>
+        </article>
+        <article class="mtx-rws__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM18 18h3v3h-3z"/></svg>
+          <h3>QR ticket delivery</h3>
+          <p>Your mobile ticket arrives by email within 24 hours, usually much sooner, ready to scan at the gate.</p>
+        </article>
+        <article class="mtx-rws__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <h3>Bangkok-based support</h3>
+          <p>A real team behind every booking, from first click to final bell.</p>
+        </article>
+      </div>
+
+      <div class="mtx-rws__ctarow">
+        <a class="mtx-rws__btn mtx-rws__btn--red" href="#booking">Book Tickets for Saturday 26 September</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-rws__band mtx-rws__band--paper" id="questions">
+    <div class="mtx-rws__shell">
+      <span class="mtx-rws__kicker">Your questions</span>
+      <h2>Saturday's tickets, answered</h2>
+      <div class="mtx-rws__faq">
+        <details>
+          <summary>Will our seats be together?</summary>
+          <p>Yes. Book two or more tickets in one order and you will sit together.</p>
+        </details>
+        <details>
+          <summary>How will I receive my ticket?</summary>
+          <p>By email, as a named e-ticket with a QR code, within 24 hours of booking and usually much sooner. Check spam or junk if you cannot see it.</p>
+        </details>
+        <details>
+          <summary>Can I choose my exact seat or request a particular seating area?</summary>
+          <p>Ringside and Club Class are assigned seats, allocated by the stadium when you book. LEO Section and Third Class are unassigned, so you choose where to sit within the section. Every ticket in an unassigned section still guarantees you a seat.</p>
+        </details>
+        <details>
+          <summary>Which currencies and payment methods can I use?</summary>
+          <p>Choose GBP, USD, EUR, AUD, CNY or THB in the booking widget, and Stripe Checkout will show the payment methods available for your country, currency and device. You are not limited to one way of paying.</p>
+          <p>Depending on your market that may include cards, Klarna, Revolut Pay, Apple Pay, bank payment, Alipay, WeChat Pay and other local methods. The exact options are shown before you pay.</p>
+          <p>MuayTix adds no booking fees and no currency-conversion fees to the ticket price. Paying in a currency you know also means you can see what you are spending without working out the baht yourself.</p>
+        </details>
+        <details>
+          <summary>Do I need to print my ticket?</summary>
+          <p>No. Show the QR code on your phone at the gate, with your screen brightness turned up.</p>
+        </details>
+        <details>
+          <summary>I have never watched Muay Thai before. Will I enjoy it?</summary>
+          <p>Saturday is the easiest night to start with. The scores are shown after every round, so you can follow every fight without knowing the rules, and the arena production carries the evening.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Rajadamnern World Series, Saturday 26 September 2026",
+  "startDate": "2026-09-26T19:10:00+07:00",
+  "endDate": "2026-09-26T22:00:00+07:00",
+  "doorTime": "2026-09-26T18:00:00+07:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "image": "https://static.tildacdn.com/tild3361-3533-4632-a361-393264633832/1000025073.webp",
+  "description": "Seven professional Muay Thai bouts at Rajadamnern Stadium, Bangkok. Doors 6:00 PM, first bout 7:10 PM. Scores shown after every round.",
+  "location": {
+    "@type": "Place",
+    "name": "Rajadamnern Stadium",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Ratchadamnoen Nok Road",
+      "addressLocality": "Bangkok",
+      "addressCountry": "TH"
+    }
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "Rajadamnern Stadium"
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Ringside",
+      "url": "https://muaytix.com/rws/2026-09-26#booking",
+      "price": "77.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-01-01T00:00:00+07:00"
+    },
+    {
+      "@type": "Offer",
+      "name": "Club Class",
+      "url": "https://muaytix.com/rws/2026-09-26#booking",
+      "price": "55.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-01-01T00:00:00+07:00"
+    },
+    {
+      "@type": "Offer",
+      "name": "LEO Section",
+      "url": "https://muaytix.com/rws/2026-09-26#booking",
+      "price": "46.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-01-01T00:00:00+07:00"
+    },
+    {
+      "@type": "Offer",
+      "name": "Third Class",
+      "url": "https://muaytix.com/rws/2026-09-26#booking",
+      "price": "31.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-01-01T00:00:00+07:00"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Will our seats be together?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Book two or more tickets in one order and you will sit together." }
+    },
+    {
+      "@type": "Question",
+      "name": "How will I receive my ticket?",
+      "acceptedAnswer": { "@type": "Answer", "text": "By email, as a named e-ticket with a QR code, within 24 hours of booking and usually much sooner. Check spam or junk if you cannot see it." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I choose my exact seat or request a particular seating area?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ringside and Club Class are assigned seats, allocated by the stadium when you book. LEO Section and Third Class are unassigned, so you choose where to sit within the section. Every ticket in an unassigned section still guarantees you a seat." }
+    },
+    {
+      "@type": "Question",
+      "name": "Which currencies and payment methods can I use?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Choose GBP, USD, EUR, AUD, CNY or THB in the booking widget, and Stripe Checkout will show the payment methods available for your country, currency and device. You are not limited to one way of paying. Depending on your market that may include cards, Klarna, Revolut Pay, Apple Pay, bank payment, Alipay, WeChat Pay and other local methods. The exact options are shown before you pay. MuayTix adds no booking fees and no currency-conversion fees to the ticket price." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to print my ticket?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Show the QR code on your phone at the gate, with your screen brightness turned up." }
+    },
+    {
+      "@type": "Question",
+      "name": "I have never watched Muay Thai before. Will I enjoy it?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Saturday is the easiest night to start with. The scores are shown after every round, so you can follow every fight without knowing the rules, and the arena production carries the evening." }
+    }
+  ]
+}
+</script>
+
+<script>
+
+(function () {
+  var root = document.querySelector('.mtx-rws[data-night]');
+  if (!root) return;
+
+  var NIGHT = root.getAttribute('data-night');            // 2026-09-26
+  var BELL  = (root.getAttribute('data-bell') || '19:10').split(':');
+  var FROM  = (root.getAttribute('data-countdown-from') || '15:00').split(':');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(NIGHT)) return;         // bad date, stay quiet
+
+  function two(n) { return (n < 10 ? '0' : '') + n; }
+
+  function clock(h, m) {
+    var ampm = h < 12 ? 'AM' : 'PM';
+    var h12 = h % 12; if (h12 === 0) h12 = 12;
+    return h12 + ':' + two(m) + ' ' + ampm;
+  }
+
+  function bangkokNow() {
+    var now = new Date();
+    return new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + 7 * 3600000);
+  }
+
+  function tick() {
+    var bkk = bangkokNow();
+    var today = bkk.getFullYear() + '-' + two(bkk.getMonth() + 1) + '-' + two(bkk.getDate());
+
+    var state = today < NIGHT ? 'before' : (today > NIGHT ? 'after' : 'tonight');
+    root.setAttribute('data-state', state);
+    if (state !== 'tonight') return;
+
+    var bellH = parseInt(BELL[0], 10), bellM = parseInt(BELL[1], 10);
+    var bell = new Date(bkk.getFullYear(), bkk.getMonth(), bkk.getDate(), bellH, bellM, 0, 0);
+    var from = new Date(bkk.getFullYear(), bkk.getMonth(), bkk.getDate(),
+                        parseInt(FROM[0], 10), parseInt(FROM[1], 10), 0, 0);
+    var left = bell - bkk;
+    var say;
+
+    if (left <= 0) {
+      say = 'Fighting now, gates stay open all evening';
+    } else if (bkk < from) {
+      say = 'First bell tonight at ' + clock(bellH, bellM);
+    } else {
+      var mins = Math.floor(left / 60000);
+      var hrs  = Math.floor(mins / 60);
+      mins = mins % 60;
+      say = 'First bell in ' + (hrs > 0 ? hrs + 'h ' + two(mins) + 'm' :
+            mins + (mins === 1 ? ' minute' : ' minutes'));
+    }
+
+    var out = root.querySelectorAll('[data-mtx-countdown]');
+    for (var i = 0; i < out.length; i++) out[i].textContent = say;
+  }
+
+  tick();
+  setInterval(tick, 60000);
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) tick();
+  });
+})();
+</script>
+
+<script>
+
+(function () {
+  var sliders = document.querySelectorAll('.mtx-rws [data-mtx-slider]');
+  for (var s = 0; s < sliders.length; s++) build(sliders[s]);
+
+  function build(box) {
+    var track = box.querySelector('.mtx-rws__shots-track');
+    var dots  = box.querySelector('.mtx-rws__shots-dots');
+    if (!track || !dots) return;
+    var shots = track.querySelectorAll('img');
+    if (shots.length < 2) return;   // one photo needs no dots
+
+    for (var i = 0; i < shots.length; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Photo ' + (i + 1) + ' of ' + shots.length);
+      if (i === 0) b.className = 'is-on';
+      b.addEventListener('click', go(i));
+      dots.appendChild(b);
+    }
+
+    function go(i) {
+      return function () {
+        track.scrollTo({ left: shots[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      };
+    }
+
+    var waiting = false;
+    track.addEventListener('scroll', function () {
+      if (waiting) return;
+      waiting = true;
+      window.requestAnimationFrame(function () {
+        waiting = false;
+        var at = Math.round(track.scrollLeft / track.clientWidth);
+        var buttons = dots.children;
+        for (var j = 0; j < buttons.length; j++) {
+          buttons[j].className = (j === at) ? 'is-on' : '';
+        }
+      });
+    }, { passive: true });
+  }
+})();
+</script>
+
+</div>
