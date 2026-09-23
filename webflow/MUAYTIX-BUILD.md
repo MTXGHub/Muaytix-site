@@ -1010,3 +1010,24 @@ sits in a `Text Display Large` block carrying a **`data-target` attribute** stil
 holding the template values (`74`, `95`, `225`, `92`). The text node says the
 right thing but the script counts to `data-target`, which is why the page showed
 53 and 57. **Both the text and `data-target` must be set.**
+
+### Alt text, supplied and applied
+
+Jason's wording, used verbatim, set in **two places** for each image: the CMS
+item's image field and the site asset library entry.
+
+| Class | Alt text |
+|---|---|
+| Ringside | Ringside Muay Thai tickets at Rajadamnern Stadium Bangkok, offering the closest seating to the ring for an immersive fight night experience. |
+| Club Class | Club Class Muay Thai tickets at Rajadamnern Stadium Bangkok, with elevated seating and a clear view across the entire ring. |
+| LEO Section | LEO Section Muay Thai tickets at Rajadamnern Stadium Bangkok, combining excellent ring views with the atmosphere of a live Muay Thai fight night. |
+| Third Class | Third Class Muay Thai tickets at Rajadamnern Stadium Bangkok, with traditional stadium seating and a 360-degree view of the Muay Thai action. |
+
+Checked against the section 2 rules before applying: no "official", no em dashes,
+"tickets" not "seats" as the noun. "LEO Section" is the stadium's own name for
+that block and is Jason's own wording, so it stands despite the alcohol brand
+rule, which is aimed at phrases like "Singha Ringside".
+
+**Webflow generated responsive variants automatically** on upload: 500, 800 and
+1080px wide WebP versions of each. Nothing to do; the page will serve the right
+size. Worth knowing so nobody makes them by hand later.
