@@ -1,0 +1,803 @@
+
+<div class="mtx-kp"
+     data-night="2026-09-25"
+     data-doors="18:00"
+     data-bell="19:00"
+     data-countdown-from="15:00"
+     data-next="/rajadamnern-knockout">
+<style>
+
+.mtx-kp, .mtx-kp * { box-sizing: border-box; }
+.mtx-kp {
+  --kp-blue: #1f5bff;
+  --kp-blue-dark: #1545cf;
+  --kp-red: #ff0000;
+  --kp-ink: #0b0b0d;
+  --kp-paper: #f2f2f2;
+  --kp-line: #dcdce1;
+  --kp-muted: #6e6e75;
+
+  --kp-ring:  #00A651;
+  --kp-club:  #27AAE1;
+  --kp-leo:   #FFF200;
+  --kp-third: #F7941E;
+  font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--kp-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.mtx-kp p, .mtx-kp h1, .mtx-kp h2, .mtx-kp h3, .mtx-kp ul, .mtx-kp ol { margin: 0; padding: 0; }
+.mtx-kp ul, .mtx-kp ol { list-style: none; }
+.mtx-kp img { max-width: 100%; display: block; }
+.mtx-kp__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
+
+.mtx-kp h1, .mtx-kp h2, .mtx-kp h3 {
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+}
+.mtx-kp h1 { font-size: clamp(38px, 6vw, 70px); line-height: .96; }
+.mtx-kp h2 { font-size: clamp(29px, 3.6vw, 45px); line-height: 1.03; margin-top: 8px; }
+.mtx-kp h3 { font-size: 21px; line-height: 1.15; }
+.mtx-kp__kicker {
+  display: block; color: var(--kp-blue); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 13px; letter-spacing: .13em; text-transform: uppercase;
+}
+.mtx-kp__kicker--light { color: #9ca0ad; }
+
+.mtx-kp__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 52px; padding: 0 26px; border: 2px solid transparent;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 16px; letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: all .2s ease;
+}
+.mtx-kp__btn--blue { background: var(--kp-blue); color: #fff; }
+.mtx-kp__btn--blue:hover { background: var(--kp-blue-dark); color: #fff; }
+.mtx-kp__btn--ghost { background: transparent; border-color: #fff; color: #fff; }
+.mtx-kp__btn--ghost:hover { background: #fff; color: var(--kp-ink); }
+.mtx-kp__btn--outline { background: #fff; border-color: var(--kp-ink); color: var(--kp-ink); }
+.mtx-kp__btn--outline:hover { border-color: var(--kp-blue); color: var(--kp-blue); }
+
+.mtx-kp__hero {
+  position: relative;
+  color: #fff;
+  padding: clamp(44px, 6vw, 80px) 0;
+  background-color: var(--kp-ink);
+  background-image:
+    linear-gradient(100deg,
+      rgba(11,11,13,.95) 0%,
+      rgba(11,11,13,.88) 38%,
+      rgba(11,11,13,.66) 72%,
+      rgba(11,11,13,.52) 100%),
+    url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 38%;
+}
+
+@media (max-width: 760px) {
+  .mtx-kp__hero {
+    background-image:
+      linear-gradient(180deg,
+        rgba(11,11,13,.86) 0%,
+        rgba(11,11,13,.74) 30%,
+        rgba(11,11,13,.88) 72%,
+        rgba(11,11,13,.96) 100%),
+      url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+    background-position: center 30%;
+  }
+}
+.mtx-kp__eyebrow {
+  display: block; color: var(--kp-blue); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 14px; letter-spacing: .13em; text-transform: uppercase; margin-bottom: 14px;
+}
+.mtx-kp__lede { max-width: 62ch; margin-top: 18px !important; color: #d3d4da; font-size: 17px; }
+.mtx-kp__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+.mtx-kp__facts {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px;
+  background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.16);
+}
+
+.mtx-kp .mtx-kp__facts { margin-top: 36px; }
+
+.mtx-kp__facts li {
+  background: rgba(11,11,13,.68);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  padding: 18px 16px;
+}
+.mtx-kp__facts strong { display: block; font-size: 15px; font-weight: 700; line-height: 1.3; }
+.mtx-kp__facts span { display: block; margin-top: 3px; color: #9ca0ad; font-size: 13px; line-height: 1.35; }
+
+.mtx-kp__facts strong span, .mtx-kp__facts span span { display: inline; margin-top: 0; }
+
+.mtx-kp__band { padding: clamp(42px, 5.5vw, 74px) 0; background: #fff; }
+.mtx-kp__band--paper { background: var(--kp-paper); }
+.mtx-kp__band--dark { background: #18181d; color: #fff; }
+.mtx-kp__band p { max-width: 68ch; margin-top: 16px !important; font-size: 17px; }
+.mtx-kp__band--dark p { color: #d3d4da; }
+.mtx-kp__note {
+  max-width: 68ch; margin-top: 22px !important; padding-left: 15px;
+  border-left: 3px solid var(--kp-blue); color: var(--kp-muted); font-size: 15px;
+}
+.mtx-kp__ctarow { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+.mtx-kp__cardbtn { width: 100%; margin-top: 22px; }
+
+.mtx-kp__jump { display: block; height: 0; scroll-margin-top: 16px; }
+
+.mtx-kp__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+.mtx-kp__card { position: relative; background: #fff; border: 1px solid var(--kp-line); padding: 30px 24px 26px; }
+.mtx-kp__card::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 7px;
+  background: var(--kp-blue); transform: skewX(-25deg); transform-origin: left;
+}
+.mtx-kp__card p { margin-top: 10px !important; color: var(--kp-muted); font-size: 16px; }
+.mtx-kp__cardhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.mtx-kp__standfirst {
+  margin-top: 7px !important; color: var(--kp-blue) !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+}
+.mtx-kp__bestfor { font-size: 15px !important; }
+.mtx-kp__bestfor strong { color: var(--kp-ink); }
+.mtx-kp__pill {
+  flex: none; padding: 5px 10px; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
+}
+.mtx-kp__pill--on { background: var(--kp-blue); color: #fff; }
+.mtx-kp__pill--off { background: #e6e6ea; color: var(--kp-muted); }
+
+.mtx-kp__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+.mtx-kp__tags li {
+  padding: 7px 13px; border: 1px solid rgba(255,255,255,.26);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+}
+
+.mtx-kp__timeline { margin-top: 28px; border-top: 1px solid var(--kp-line); }
+.mtx-kp__timeline li {
+  display: grid; grid-template-columns: 130px 1fr; gap: 18px;
+  padding: 16px 0; border-bottom: 1px solid var(--kp-line);
+}
+.mtx-kp__time {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 19px; color: var(--kp-blue);
+}
+.mtx-kp__timeline strong { display: block; font-size: 16px; }
+.mtx-kp__timeline em { display: block; margin-top: 2px; font-style: normal; color: var(--kp-muted); font-size: 15px; }
+
+.mtx-kp__bouts { border-top: 2px solid var(--kp-ink); }
+
+.mtx-kp .mtx-kp__bouts { margin-top: 28px; }
+.mtx-kp__bout {
+  display: grid; grid-template-columns: 1fr 120px 1fr; align-items: center; gap: 14px;
+  padding: 16px 0; border-bottom: 1px solid var(--kp-line);
+}
+.mtx-kp__corner { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.mtx-kp__corner--b { flex-direction: row-reverse; text-align: right; }
+.mtx-kp__flag { font-size: 25px; line-height: 1; flex: none; }
+.mtx-kp__name {
+  display: block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 21px; line-height: 1.08; text-transform: uppercase;
+}
+.mtx-kp__gym { display: block; margin-top: 2px; color: var(--kp-muted); font-size: 13px; line-height: 1.3; }
+.mtx-kp__mid { text-align: center; }
+.mtx-kp__boutno {
+  display: block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--kp-muted);
+}
+.mtx-kp__vs {
+  display: block; margin-top: 2px; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 17px; text-transform: uppercase; color: var(--kp-red);
+}
+
+.mtx-kp__dates { margin-top: 28px; border-top: 1px solid var(--kp-line); }
+.mtx-kp__dates li {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  padding: 16px 0; border-bottom: 1px solid var(--kp-line);
+}
+.mtx-kp__dates strong {
+  display: block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 20px; line-height: 1.1; text-transform: uppercase;
+}
+.mtx-kp__dates span { display: block; margin-top: 2px; color: var(--kp-muted); font-size: 14px; }
+.mtx-kp__dates .mtx-kp__btn { min-height: 44px; padding: 0 18px; font-size: 14px; }
+
+.mtx-kp__booking { background: var(--kp-ink); color: #fff; padding: clamp(44px, 6vw, 78px) 0; scroll-margin-top: 90px; }
+.mtx-kp__booking h2 { color: #fff; }
+
+.mtx-kp #mtx-booking h1, .mtx-kp #mtx-booking h2,
+.mtx-kp #mtx-booking h3, .mtx-kp #mtx-booking h4 { color: inherit; text-transform: none; }
+
+.mtx-kp__panel { margin-top: 30px; background: #fff; color: var(--kp-ink); padding: clamp(20px, 3vw, 32px); }
+.mtx-kp__fixed { display: flex; gap: 14px; padding: 20px; border: 1px solid var(--kp-blue); background: #f4f7ff; margin-bottom: 22px; }
+.mtx-kp__fixed-label {
+  display: block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--kp-blue);
+}
+.mtx-kp__fixed strong {
+  display: block; margin-top: 4px; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 25px; line-height: 1.1; text-transform: uppercase;
+}
+.mtx-kp__fixed em { display: block; margin-top: 4px; font-style: normal; color: var(--kp-muted); font-size: 14px; }
+
+.muaytix-ticket-selector { min-height: 320px; }
+
+@media (max-width: 1000px) {
+  .mtx-kp__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .mtx-kp__grid { grid-template-columns: 1fr; }
+  .mtx-kp__bout { grid-template-columns: 1fr; gap: 8px; }
+  .mtx-kp__mid { text-align: left; order: -1; }
+  .mtx-kp__boutno { display: inline; }
+  .mtx-kp__vs { display: inline; margin-top: 0; }
+  .mtx-kp__vs::before { content: "\00b7"; color: var(--kp-muted); margin: 0 7px; }
+  .mtx-kp__corner--b { flex-direction: row; text-align: left; }
+  .mtx-kp__timeline li { grid-template-columns: 92px 1fr; gap: 12px; }
+}
+@media (max-width: 560px) {
+  .mtx-kp__shell { width: min(100% - 28px, 1180px); }
+  .mtx-kp__facts { grid-template-columns: 1fr; }
+  .mtx-kp__actions .mtx-kp__btn, .mtx-kp__ctarow .mtx-kp__btn { width: 100%; }
+  .mtx-kp__dates li { flex-direction: column; align-items: stretch; }
+  .mtx-kp__dates .mtx-kp__btn { width: 100%; }
+}
+
+.mtx-kp .mtx-kp-v-tonight,
+.mtx-kp .mtx-kp-when-tonight,
+.mtx-kp .mtx-kp__countdown,
+.mtx-kp .mtx-kp__over { display: none; }
+
+.mtx-kp[data-state="tonight"] .mtx-kp-v-default { display: none; }
+.mtx-kp[data-state="tonight"] .mtx-kp-v-tonight { display: inline; }
+.mtx-kp[data-state="tonight"] .mtx-kp-when-tonight { display: inline; }
+.mtx-kp[data-state="tonight"] .mtx-kp__countdown { display: flex; }
+
+.mtx-kp[data-state="after"] .mtx-kp__over { display: block; }
+
+.mtx-kp__countdown {
+  align-items: center; gap: 11px; margin-top: 16px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: clamp(17px, 2.2vw, 22px);
+  letter-spacing: .04em; text-transform: uppercase; color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.mtx-kp__dot {
+  width: 11px; height: 11px; border-radius: 50%; background: var(--kp-red);
+  flex: none; box-shadow: 0 0 0 0 rgba(255,0,0,.55);
+  animation: mtx-kp-pulse 2.4s ease-out infinite;
+}
+@keyframes mtx-kp-pulse {
+  to { box-shadow: 0 0 0 13px rgba(255,0,0,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mtx-kp__dot { animation: none; }
+}
+
+.mtx-kp__over {
+  margin-bottom: 26px; padding: 20px 22px;
+  background: #2a1113; border-left: 5px solid var(--kp-red);
+}
+.mtx-kp__over strong {
+  display: block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: clamp(20px, 2.6vw, 26px); line-height: 1.1;
+  text-transform: uppercase; color: #fff;
+}
+.mtx-kp__over span { display: block; margin-top: 6px; color: #d3d4da; font-size: 16px; }
+.mtx-kp__over .mtx-kp__btn { margin-top: 16px; }
+
+.mtx-kp__card--shot { padding-top: 0; overflow: hidden; }
+
+.mtx-kp__card--shot::before { display: none; }
+.mtx-kp__card--shot > :first-child { margin-top: 0; }
+.mtx-kp__card--shot h3 { margin-top: 22px; }
+
+.mtx-kp__shots { position: relative; margin: 0 -24px; }
+.mtx-kp__shots-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.mtx-kp__shots-track::-webkit-scrollbar { display: none; }
+.mtx-kp__shots-track img {
+  flex: 0 0 100%; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  scroll-snap-align: center; background: #e6e6ea;
+}
+
+@supports not (aspect-ratio: 4 / 3) {
+  .mtx-kp__shots-track img { height: 260px; }
+}
+.mtx-kp__shots-dots {
+  position: absolute; left: 0; right: 0; bottom: 11px;
+  display: flex; justify-content: center; gap: 7px;
+}
+.mtx-kp__shots-dots button {
+  width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(255,255,255,.55); cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.25); transition: background .18s ease;
+}
+.mtx-kp__shots-dots button.is-on { background: #fff; }
+.mtx-kp__shots-dots button:focus-visible { outline: 2px solid var(--kp-blue); outline-offset: 2px; }
+
+.mtx-kp__shots-dots:empty { display: none; }
+
+@media (max-width: 860px) {
+  .mtx-kp__shots { margin: 0 -24px; }
+}
+
+.mtx-kp__trustgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-kp .mtx-kp__trustgrid { margin-top: 30px; }
+.mtx-kp__trustcard { background: #fff; border: 1px solid var(--kp-line); padding: 26px 22px 24px; }
+.mtx-kp__trustcard svg { width: 30px; height: 30px; stroke: var(--kp-blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mtx-kp__trustcard h3 { margin-top: 18px; font-size: 19px; }
+.mtx-kp__trustcard p { margin-top: 9px !important; color: var(--kp-muted); font-size: 16px; }
+
+.mtx-kp__faq { margin-top: 28px; border-top: 1px solid var(--kp-line); }
+.mtx-kp__faq details { border-bottom: 1px solid var(--kp-line); }
+.mtx-kp__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 18px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 20px; line-height: 1.15; text-transform: uppercase;
+}
+.mtx-kp__faq summary::-webkit-details-marker { display: none; }
+.mtx-kp__faq summary::after {
+  content: "+"; flex: none; color: var(--kp-blue);
+  font-family: "Barlow", Helvetica, Arial, sans-serif; font-weight: 400;
+  font-size: 26px; line-height: 1; margin-top: 2px;
+}
+.mtx-kp__faq details[open] summary::after { content: "\2013"; }
+.mtx-kp__faq summary:focus-visible { outline: 2px solid var(--kp-blue); outline-offset: 3px; }
+.mtx-kp__faq p { margin-top: 0 !important; margin-bottom: 18px !important; color: var(--kp-muted); font-size: 16px; }
+.mtx-kp__faq p + p { margin-top: 14px !important; }
+
+@media (max-width: 860px) {
+  .mtx-kp__trustgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .mtx-kp__trustgrid { grid-template-columns: 1fr; }
+  .mtx-kp__faq summary { font-size: 18px; }
+}
+
+.mtx-kp__maplayout { margin-top: 30px; max-width: 640px; margin-inline: auto; }
+
+.mtx-kp__mapfig { display: block; position: relative; text-decoration: none; }
+.mtx-kp__mapfig img { width: 100%; height: auto; }
+.mtx-kp__mapzoom {
+  position: absolute; right: 12px; bottom: 12px;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 13px; background: rgba(11,11,13,.78); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.14); transition: background .18s ease;
+}
+.mtx-kp__mapfig:hover .mtx-kp__mapzoom { background: var(--kp-blue); }
+.mtx-kp__mapfig:focus-visible { outline: 2px solid var(--kp-blue); outline-offset: 4px; }
+
+.mtx-kp__keyhead {
+  margin-top: 26px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px !important; letter-spacing: .13em; text-transform: uppercase;
+  color: #9ca0ad !important; padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+.mtx-kp__key { margin-top: 4px; }
+.mtx-kp__key li {
+  display: grid; grid-template-columns: 24px 1fr auto; gap: 14px; align-items: baseline;
+  padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.14);
+}
+.mtx-kp__sw {
+  width: 24px; height: 24px; border-radius: 4px; align-self: center;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.35);
+}
+.mtx-kp__seatname {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 18px; line-height: 1.1; text-transform: uppercase;
+}
+.mtx-kp__seatsec {
+  font-size: 17px; color: #d3d4da; white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 560px) {
+  .mtx-kp__key li { grid-template-columns: 24px 1fr; row-gap: 3px; }
+  .mtx-kp__seatsec { grid-column: 2; white-space: normal; }
+}
+
+</style>
+
+  <section class="mtx-kp__hero">
+    <div class="mtx-kp__shell">
+
+      <div class="mtx-kp__over">
+        <strong>This fight night has finished</strong>
+        <span>The next Knockout night at Rajadamnern Stadium is on sale now.</span>
+        <a class="mtx-kp__btn mtx-kp__btn--blue" href="/rajadamnern-knockout">See the next Knockout night</a>
+      </div>
+
+      <span class="mtx-kp__eyebrow"><span class="mtx-kp-when-tonight">Tonight in Bangkok &middot; </span>Friday 25 September 2026 &middot; Rajadamnern Stadium, Bangkok</span>
+      <h1>Rajadamnern Knockout</h1>
+
+      <p class="mtx-kp__countdown"><span class="mtx-kp__dot"></span><span data-mtx-countdown aria-live="polite">First bell at 7:00 PM</span></p>
+
+      <p class="mtx-kp__lede"><span class="mtx-kp-v-tonight">Tonight at Rajadamnern Stadium. Fast-paced three-round fights, chasing a knockout from the opening bell. The first fight begins at 7:00 PM.</span><span class="mtx-kp-v-default">On Friday 25 September 2026, Rajadamnern Knockout returns to Rajadamnern Stadium. Fast-paced three-round fights, chasing a knockout from the opening bell. The first fight begins at 7:00 PM.</span></p>
+      <div class="mtx-kp__actions">
+        <a class="mtx-kp__btn mtx-kp__btn--blue" href="#choose-seats"><span class="mtx-kp-v-tonight">Book seats for tonight</span><span class="mtx-kp-v-default">Book Knockout tickets</span></a>
+        <a class="mtx-kp__btn mtx-kp__btn--ghost" href="#schedule">See the evening schedule</a>
+      </div>
+
+      <ul class="mtx-kp__facts">
+        <li><strong><span class="mtx-kp-v-tonight">Tonight in Bangkok</span><span class="mtx-kp-v-default">Friday 25 September 2026</span></strong><span><span class="mtx-kp-v-tonight">Friday 25 September 2026</span><span class="mtx-kp-v-default">Bangkok's fastest-paced Muay Thai event</span></span></li>
+        <li><strong>First fight 7:00 PM</strong><span>Finishes around 9:00 PM</span></li>
+        <li><strong>Three-round bouts</strong><span>Faster pace and an earlier finish</span></li>
+        <li><strong>Rajadamnern Stadium</strong><span>The world's first purpose-built Muay Thai stadium</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mtx-kp__band">
+    <div class="mtx-kp__shell">
+      <span class="mtx-kp__kicker">The event</span>
+      <h2>Bangkok's fastest-paced Muay Thai event</h2>
+      <p>Tonight at Rajadamnern Stadium, three-round bouts deliver a faster, more immediate Muay Thai experience, with less tactical waiting and action designed to build from the opening bell through to the final fight.</p>
+      <p>The shorter format and earlier finish make it a straightforward first taste of live Muay Thai, and a good fit if your evening in Bangkok is already busy.</p>
+    </div>
+  </section>
+
+  <section class="mtx-kp__band" id="schedule">
+    <div class="mtx-kp__shell">
+      <span class="mtx-kp__kicker"><span class="mtx-kp-v-tonight">Tonight &middot; </span>Fri 25 Sep 2026</span>
+      <h2>How the evening runs</h2>
+    <ol class="mtx-kp__timeline">
+      <li>
+        <span class="mtx-kp__time">6:00 PM</span>
+        <div><strong>Doors open</strong><em>Gates open at Rajadamnern Stadium.</em></div>
+      </li>
+      <li>
+        <span class="mtx-kp__time">7:00 PM</span>
+        <div><strong>First fight</strong><em>The opening bout begins.</em></div>
+      </li>
+      <li>
+        <span class="mtx-kp__time">Through the evening</span>
+        <div><strong>Three-round bouts</strong><em>Three-round contests continue through the evening.</em></div>
+      </li>
+      <li>
+        <span class="mtx-kp__time">Around 9:00 PM</span>
+        <div><strong>Expected finish</strong><em>Final bout and close.</em></div>
+      </li>
+    </ol>
+      <p class="mtx-kp__note">Timings may be subject to minor change on the night. You may enter at any time after the event has started, as the gates remain open throughout the evening, so late arrival is fine.</p>
+    </div>
+  </section>
+
+  <section class="mtx-kp__band mtx-kp__band--paper" id="seating">
+    <div class="mtx-kp__shell">
+      <span class="mtx-kp__kicker">Seating</span>
+      <h2>Choose where you sit</h2>
+      <p>Every seat class watches the same fights. The difference is how close you are and the kind of crowd around you. The seat classes available for this date are shown in the booking section below.</p>
+    <div class="mtx-kp__grid">
+      <article class="mtx-kp__card mtx-kp__card--shot">
+        <div class="mtx-kp__shots" data-mtx-slider>
+          <div class="mtx-kp__shots-track">
+            <img src="https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg" alt="Ringside seating at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+            <img src="https://static.tildacdn.com/tild6430-3330-4239-b435-353230396463/1000013051.jpg" alt="Ringside seats beside the ring apron" loading="lazy" decoding="async">
+            <img src="https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg" alt="Close-up view of the ring from Ringside" loading="lazy" decoding="async">
+            <img src="https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg" alt="Ringside guests watching a bout" loading="lazy" decoding="async">
+          </div>
+          <div class="mtx-kp__shots-dots"></div>
+        </div>
+        <h3>Ringside</h3>
+        <p class="mtx-kp__standfirst">Closest to the ring</p>
+        <p>Ringside offers the closest viewing positions, with the strongest sense of impact as the fighters exchange strikes in the ring.</p>
+        <p class="mtx-kp__bestfor"><strong>Best for:</strong> Guests who want proximity above everything else</p>
+        <a class="mtx-kp__btn mtx-kp__btn--blue mtx-kp__cardbtn" href="#choose-seats">Book Ringside</a>
+      </article>
+      <article class="mtx-kp__card mtx-kp__card--shot">
+        <div class="mtx-kp__shots" data-mtx-slider>
+          <div class="mtx-kp__shots-track">
+            <img src="https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg" alt="Club Class seating at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+            <img src="https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg" alt="The view towards the ring from Club Class" loading="lazy" decoding="async">
+            <img src="https://static.tildacdn.com/tild3665-3065-4334-b531-303164393066/1000033696.jpg" alt="Club Class on a Rajadamnern Knockout fight night" loading="lazy" decoding="async">
+            <img src="https://static.tildacdn.com/tild6136-6131-4064-a639-636565363338/1000033691.jpg" alt="Elevated Club Class seats at Rajadamnern Stadium" loading="lazy" decoding="async">
+          </div>
+          <div class="mtx-kp__shots-dots"></div>
+        </div>
+        <h3>Club Class</h3>
+        <p class="mtx-kp__standfirst">Elevated and comfortable</p>
+        <p>Club Class provides elevated seating, clear views of the ring and a comfortable balance between atmosphere and viewing position.</p>
+        <p class="mtx-kp__bestfor"><strong>Best for:</strong> First visits, couples and anyone wanting a clear, unobstructed view</p>
+        <a class="mtx-kp__btn mtx-kp__btn--blue mtx-kp__cardbtn" href="#choose-seats">Book Club Class</a>
+      </article>
+      <article class="mtx-kp__card mtx-kp__card--shot">
+        <div class="mtx-kp__shots" data-mtx-slider>
+          <div class="mtx-kp__shots-track">
+            <img src="https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg" alt="LEO Section at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+            <img src="https://static.tildacdn.com/tild3136-6363-4533-b935-633230626564/1000008294.jpg" alt="The view towards the ring from the LEO Section" loading="lazy" decoding="async">
+            <img src="https://static.tildacdn.com/tild6530-3266-4262-b265-633965366163/1000008588.jpg" alt="Crowd and atmosphere in the LEO Section on a fight night" loading="lazy" decoding="async">
+          </div>
+          <div class="mtx-kp__shots-dots"></div>
+        </div>
+        <h3>LEO Section</h3>
+        <p class="mtx-kp__standfirst">Where the atmosphere lives</p>
+        <p>The LEO Section is unassigned seating, but every guest is guaranteed a seat. The elevation and viewing position are the same as Club Class. It is popular with local supporters and is known for its lively atmosphere, placing guests close to the rhythm and reaction of the stadium.</p>
+        <p class="mtx-kp__bestfor"><strong>Best for:</strong> Guests who want local energy and crowd atmosphere</p>
+        <a class="mtx-kp__btn mtx-kp__btn--blue mtx-kp__cardbtn" href="#choose-seats">Book LEO Section</a>
+      </article>
+      <article class="mtx-kp__card mtx-kp__card--shot">
+        <div class="mtx-kp__shots" data-mtx-slider>
+          <div class="mtx-kp__shots-track">
+            <img src="https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg" alt="Third Class seating at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+          </div>
+          <div class="mtx-kp__shots-dots"></div>
+        </div>
+        <h3>Third Class</h3>
+        <p class="mtx-kp__standfirst">Traditional stadium viewing</p>
+        <p>Traditional stadium viewing with a full-ring perspective and strong value, offering a direct connection to the atmosphere of live Muay Thai.</p>
+        <p class="mtx-kp__bestfor"><strong>Best for:</strong> Guests seeking the most traditional stadium view</p>
+      </article>
+    </div>
+    </div>
+  </section>
+
+  <section class="mtx-kp__band mtx-kp__band--dark" id="seat-map">
+    <div class="mtx-kp__shell">
+      <span class="mtx-kp__kicker">Rajadamnern Stadium</span>
+      <h2>Where each seat class sits</h2>
+      <p>The ring is at the centre and the section numbers are marked on the map. Tap the map to open it full size.</p>
+
+      <div class="mtx-kp__maplayout">
+
+        <a class="mtx-kp__mapfig"
+           href="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+           target="_blank" rel="noopener">
+          <img src="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+               alt="Seating map of Rajadamnern Stadium, Bangkok. The ring sits at the centre, with Singha Ringside in sections 3, 4, 5, 6 and 7 closest to it, Club Class in sections 8 and 9 behind, the LEO Section in section 10 and 3rd Class in section 11 around the outside."
+               loading="lazy" decoding="async" width="1242" height="1242">
+          <span class="mtx-kp__mapzoom">Tap to enlarge</span>
+        </a>
+
+        <p class="mtx-kp__keyhead">Seat classes and sections</p>
+        <ul class="mtx-kp__key">
+          <li>
+            <span class="mtx-kp__sw" style="background: var(--kp-ring)"></span>
+            <span class="mtx-kp__seatname">Singha Ringside</span>
+            <span class="mtx-kp__seatsec">Sections 3, 4, 5, 6 &amp; 7</span>
+          </li>
+          <li>
+            <span class="mtx-kp__sw" style="background: var(--kp-club)"></span>
+            <span class="mtx-kp__seatname">Club Class</span>
+            <span class="mtx-kp__seatsec">Sections 8 &amp; 9</span>
+          </li>
+          <li>
+            <span class="mtx-kp__sw" style="background: var(--kp-leo)"></span>
+            <span class="mtx-kp__seatname">LEO Section</span>
+            <span class="mtx-kp__seatsec">Section 10</span>
+          </li>
+          <li>
+            <span class="mtx-kp__sw" style="background: var(--kp-third)"></span>
+            <span class="mtx-kp__seatname">3rd Class</span>
+            <span class="mtx-kp__seatsec">Section 11</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-kp__booking" id="book-tickets">
+    <div class="mtx-kp__shell">
+      <span class="mtx-kp__kicker">Book tickets</span>
+      <h2>Rajadamnern Knockout at Rajadamnern Stadium</h2>
+      <p class="mtx-kp__lede"><span class="mtx-kp-v-tonight">Choose your seats for tonight.</span><span class="mtx-kp-v-default">Choose your seats for this Knockout event.</span></p>
+      <div class="mtx-kp__panel">
+        <div class="mtx-kp__fixed">
+          <div>
+            <span class="mtx-kp__fixed-label"><span class="mtx-kp-v-tonight">Tonight in Bangkok</span><span class="mtx-kp-v-default">Your fight night</span></span>
+            <strong>Friday 25 September 2026</strong>
+            <em>First fight 7:00 PM &middot; Rajadamnern Stadium, Bangkok</em>
+          </div>
+        </div>
+
+        <span class="mtx-kp__jump" id="choose-seats" aria-hidden="true"></span>
+
+        <div class="muaytix-ticket-selector" data-event-id="rajadamnern_knockout_2026_09_25"></div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-kp__band" id="book-with-confidence">
+    <div class="mtx-kp__shell">
+      <span class="mtx-kp__kicker">Booking with MuayTix</span>
+      <h2>Who you are booking with</h2>
+      <p>MuayTix is the international ticket partner of Rajadamnern Stadium, with a team on the ground in Bangkok.</p>
+      <div class="mtx-kp__trustgrid">
+        <article class="mtx-kp__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <h3>Seated together</h3>
+          <p>Book two or more seats in one order and you sit together.</p>
+        </article>
+        <article class="mtx-kp__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <h3>Live availability</h3>
+          <p>Check tickets available for tonight.</p>
+        </article>
+        <article class="mtx-kp__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <h3>Secure payment</h3>
+          <p>See your full total before you pay, through Stripe Checkout.</p>
+        </article>
+        <article class="mtx-kp__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM18 18h3v3h-3z"/></svg>
+          <h3>QR ticket delivery</h3>
+          <p>Your mobile ticket arrives by email, ready to scan at the gate.</p>
+        </article>
+        <article class="mtx-kp__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <h3>Bangkok-based support</h3>
+          <p>A real team behind every booking, from first click to final bell.</p>
+        </article>
+      </div>
+      <div class="mtx-kp__ctarow">
+        <a class="mtx-kp__btn mtx-kp__btn--blue" href="#choose-seats">Book tickets for tonight</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-kp__band mtx-kp__band--paper" id="questions">
+    <div class="mtx-kp__shell">
+      <span class="mtx-kp__kicker">Your questions</span>
+      <h2>Tonight's tickets, answered</h2>
+      <div class="mtx-kp__faq">
+        <details>
+          <summary>Will our seats be together?</summary>
+          <p>Yes. We understand how much it matters to watch the fights alongside your friends, family or partner, so bookings of two or more seats are always seated together.</p>
+          <p>The quantity the booking widget offers is the number of seats currently available together in that class for tonight. If it lets you select four tickets, those four tickets will be seated together.</p>
+          <p>Choose your seat class, select the number of tickets you need, and enjoy the evening together from the opening bell.</p>
+        </details>
+        <details>
+          <summary>How will I receive my ticket?</summary>
+          <p>Your QR ticket is sent by email as soon as you have booked. Check your inbox, and your junk or spam folder if it is not there.</p>
+          <p>If you cannot find it, or you need any help with your booking, message MuayTix on WhatsApp and we will sort it out.</p>
+        </details>
+        <details>
+          <summary>Can I choose my exact seat or request a particular seating area?</summary>
+          <p>Exact seat and row selection is not offered as standard, because the position that looks most attractive on a stadium map is not always the best position for the experience.</p>
+          <p>Our team is inside Rajadamnern Stadium regularly and always selects the best available seats for your event and seat class at the time you book.</p>
+          <p>Rajadamnern Stadium is smaller and more intimate than many visitors expect. Every seat class has a clear view of the ring, with no pillars or restricted-view seats.</p>
+          <p>We do not simply fill the next seats in a row. We choose the best available positions at the time of booking, and we guarantee that bookings of two or more seats are seated together.</p>
+        </details>
+        <details>
+          <summary>Which currencies and payment methods can I use?</summary>
+          <p>Choose GBP, USD, EUR, AUD, CNY or THB in the booking widget, and Stripe Checkout will show the payment methods available for your country, currency and device. You are not limited to one way of paying.</p>
+          <p>Depending on your market that may include cards, Klarna, Revolut Pay, Apple Pay, bank payment, Alipay, WeChat Pay and other local methods. The exact options are shown before you pay.</p>
+          <p>MuayTix adds no booking fees and no currency-conversion fees to the ticket price. Paying in a currency you know also means you can see what you are spending without working out the baht yourself.</p>
+        </details>
+        <details>
+          <summary>Do I need to print my ticket?</summary>
+          <p>No. MuayTix keeps your booking paper-free, so there is no hunting for a hotel printer or a print shop while you are in Bangkok.</p>
+          <p>When you arrive at Rajadamnern Stadium, go to a box-office window, have your QR ticket open on your phone and show it to the stadium staff. They scan it and process your entry.</p>
+          <p>Before you leave for the stadium, charge your phone and find the ticket email so it is easy to reach. Fight nights are busy, and having it ready keeps everything moving.</p>
+          <p>If your phone dies or you cannot find the ticket, speak to the stadium staff. They can help, and can reach the MuayTix team on WhatsApp if needed.</p>
+        </details>
+        <details>
+          <summary>I have never watched Muay Thai before. Will I enjoy it?</summary>
+          <p>Yes. You do not need to understand Muay Thai scoring, or to have watched a fight before, to enjoy a night at Rajadamnern Stadium.</p>
+          <p>Rajadamnern is not simply another place to watch Muay Thai. Lumpinee and the provincial stadiums each offer something different, but no other venue gives you this combination of stadium atmosphere, music, ceremony, crowd and live Muay Thai.</p>
+          <p>It is the kind of night that ends up being a highlight of a trip to Bangkok. Arrive, take in the atmosphere, follow the action and enjoy being part of a real fight night.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+<script>
+
+(function () {
+  var root = document.querySelector('.mtx-kp[data-night]');
+  if (!root) return;
+
+  var NIGHT = root.getAttribute('data-night');            // 2026-09-25
+  var BELL  = (root.getAttribute('data-bell') || '19:00').split(':');
+  var FROM  = (root.getAttribute('data-countdown-from') || '15:00').split(':');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(NIGHT)) return;         // bad date, stay quiet
+
+  function two(n) { return (n < 10 ? '0' : '') + n; }
+
+  function clock(h, m) {
+    var ampm = h < 12 ? 'AM' : 'PM';
+    var h12 = h % 12; if (h12 === 0) h12 = 12;
+    return h12 + ':' + two(m) + ' ' + ampm;
+  }
+
+  function bangkokNow() {
+    var now = new Date();
+    return new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + 7 * 3600000);
+  }
+
+  function tick() {
+    var bkk = bangkokNow();
+    var today = bkk.getFullYear() + '-' + two(bkk.getMonth() + 1) + '-' + two(bkk.getDate());
+
+    var state = today < NIGHT ? 'before' : (today > NIGHT ? 'after' : 'tonight');
+    root.setAttribute('data-state', state);
+    if (state !== 'tonight') return;
+
+    var bellH = parseInt(BELL[0], 10), bellM = parseInt(BELL[1], 10);
+    var bell = new Date(bkk.getFullYear(), bkk.getMonth(), bkk.getDate(),
+                        bellH, bellM, 0, 0);
+    var from = new Date(bkk.getFullYear(), bkk.getMonth(), bkk.getDate(),
+                        parseInt(FROM[0], 10), parseInt(FROM[1], 10), 0, 0);
+    var left = bell - bkk;
+    var say;
+
+    if (left <= 0) {
+      say = 'Fighting now — gates stay open all evening';
+    } else if (bkk < from) {
+      say = 'First bell tonight at ' + clock(bellH, bellM);
+    } else {
+      var mins = Math.floor(left / 60000);
+      var hrs  = Math.floor(mins / 60);
+      mins = mins % 60;
+      say = 'First bell in ' + (hrs > 0 ? hrs + 'h ' + two(mins) + 'm' :
+            mins + (mins === 1 ? ' minute' : ' minutes'));
+    }
+
+    var out = root.querySelectorAll('[data-mtx-countdown]');
+    for (var i = 0; i < out.length; i++) out[i].textContent = say;
+  }
+
+  tick();
+  setInterval(tick, 60000);
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) tick();
+  });
+})();
+</script>
+
+<script>
+
+(function () {
+  var sliders = document.querySelectorAll('.mtx-kp [data-mtx-slider]');
+  for (var s = 0; s < sliders.length; s++) build(sliders[s]);
+
+  function build(box) {
+    var track = box.querySelector('.mtx-kp__shots-track');
+    var dots  = box.querySelector('.mtx-kp__shots-dots');
+    if (!track || !dots) return;
+    var shots = track.querySelectorAll('img');
+    if (shots.length < 2) return;   // one photo needs no dots
+
+    for (var i = 0; i < shots.length; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Photo ' + (i + 1) + ' of ' + shots.length);
+      if (i === 0) b.className = 'is-on';
+      b.addEventListener('click', go(i));
+      dots.appendChild(b);
+    }
+
+    function go(i) {
+      return function () {
+        track.scrollTo({ left: shots[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      };
+    }
+
+    var waiting = false;
+    track.addEventListener('scroll', function () {
+      if (waiting) return;
+      waiting = true;
+      window.requestAnimationFrame(function () {
+        waiting = false;
+        var at = Math.round(track.scrollLeft / track.clientWidth);
+        var buttons = dots.children;
+        for (var j = 0; j < buttons.length; j++) {
+          buttons[j].className = (j === at) ? 'is-on' : '';
+        }
+      });
+    }, { passive: true });
+  }
+})();
+</script>
+
+</div>
