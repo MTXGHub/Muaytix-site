@@ -796,3 +796,57 @@ ready.
 | 3 | LEO Section | (03) |
 | 4 | Third Class | (04) |
 | — | VIP Options | draft, off the site |
+
+## Navigation and the closing block
+
+### Nav, done
+
+Six links, replacing the template's 25:
+
+| # | Label | Target |
+|---|---|---|
+| 01 | Book Tickets | `/rajadamnern-stadium-tickets` |
+| 02 | Tonight | `/muay-thai-bangkok-tonight` |
+| 03 | Rajadamnern Stadium Tickets | `/rajadamnern-stadium-tickets` |
+| 04 | RWS Tickets | `/rws/tickets` |
+| 05 | Seating | `/rajadamnern-stadium-seating` |
+| 06 | Contact | the Webflow Contact page |
+
+The template's other 19 links sat in three groups. The surplus three in Main
+Pages and the whole Inner Pages and Utility Pages groups are **hidden, not
+deleted**, so nothing is lost if the menu grows back.
+
+Also changed: the "Buy Now" button pointed at the Webflow template shop; it is
+now **WhatsApp Us** → `wa.me/66922706095`. The stock photo of three people in an
+office is hidden. The three strapline cards now read "Bangkok based, seven
+nights a week", "Rajadamnern Stadium" and "Booking now" instead of "Creative
+studio based in NY", "Est. 2026" and "Accepting Projects".
+
+The group label "Main Pages" is now "Menu".
+
+### Talk to Us, mostly done
+
+Heading is "Talk to us". The "What we offer" list is now "Fight nights" and
+carries five promotions. **The list has five slots and there are six events**,
+so All Star Fight is not in it. Either drop one or add a sixth row by hand.
+
+Office address replaced: "Bangkok, Thailand." / "MuayTix Ltd, registered in the
+UK."
+
+### The email address is a guess and needs confirming
+
+The brief says read it from the live site. muaytix.com is refused by this
+sandbox and the address is obfuscated in the HTML, so that was not possible.
+
+Set to **`tickets@muaytix.com`**, which is the account that owns the shared
+Google Drive folder, so it is a real MuayTix address. It is **not confirmed as
+the public contact address.** Replace it or confirm it before this page goes
+anywhere near a live domain.
+
+### Still open in this block
+
+- The contact **form is still there**. The brief says remove it and put two
+  large buttons in its place, WhatsApp and Email. Left alone for now because
+  deleting a form element is structural, not content
+- The five fight night names in the list are text only; their **links are not
+  set yet**
