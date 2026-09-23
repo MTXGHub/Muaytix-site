@@ -963,3 +963,50 @@ Both live in `Base collection`.
 
 **Worth knowing for later:** because the whole template hangs off these two
 tokens, any future typeface change is two writes, not a hunt through styles.
+
+## Seat class graphics, 23 September
+
+Four branded ticket graphics supplied via the Drive folder, uploaded and bound.
+Copies kept at `webflow/assets/seat-classes/`.
+
+| Order | Class | Colour on the artwork | Strapline on the design | Asset |
+|---|---|---|---|---|
+| 1 | Ringside | green | Closest to the ring | `6ab3f46e243508582ec08148` |
+| 2 | Club Class | blue | Elevated view of the entire ring | `6ab3f46e3096de66c03c349c` |
+| 3 | LEO Section | gold | Where the atmosphere lives | `6ab3f46e243508582ec081c7` |
+| 4 | Third Class | orange | 360 degree view of the action | `6ab3f46e8655e7e37b217bb2` |
+
+Square, roughly 1254px, WebP. Each strapline was copied off its own artwork into
+the `subtitle` field so the words on the page match the words in the picture.
+
+**Order changed.** Earlier instruction was Club Class first; it is now
+**Ringside, Club Class, LEO Section, Third Class**. The colours chosen blind
+earlier turned out to match the artwork, so they stand.
+
+### A CMS image field will not take a bare asset ID
+
+`update_collection_items` with `"main-thumbnail": "<assetId>"` **returns success
+and silently writes null.** No error. The field has to be an object:
+
+```
+"main-thumbnail": { "fileId": "<assetId>", "url": "<hostedUrl>" }
+```
+
+Webflow then copies the file into the collection's own asset folder and gives it
+a **new fileId**, different from the site asset ID. Always read the response back
+to confirm the field is populated rather than trusting the success status.
+
+### Still outstanding on these
+
+`alt` is null on all four. Jason is supplying the alt text.
+
+## Stats parked
+
+The four figures in the About band are **not final** and are not to be worked on
+until the real ones are supplied.
+
+Worth recording for when that happens: the numbers are animated counters. Each
+sits in a `Text Display Large` block carrying a **`data-target` attribute** still
+holding the template values (`74`, `95`, `225`, `92`). The text node says the
+right thing but the script counts to `data-target`, which is why the page showed
+53 and 57. **Both the text and `data-target` must be set.**
