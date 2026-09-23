@@ -124,6 +124,13 @@
 .mtx-ok__runs tbody tr:last-child th, .mtx-ok__runs tbody tr:last-child td { border-bottom: 0; }
 .mtx-ok__runs--home th, .mtx-ok__runs--home td b { color: var(--ok-blue); }
 /* Visually hidden, still read aloud. */
+/* The guest's own row: the line they actually came here for. */
+.mtx-ok__runs--you th, .mtx-ok__runs--you td b { color: var(--ok-green); }
+/* A run that has already left. Kept on the page rather than removed, so the
+   rhythm of two dispatches an evening is still clear. */
+.mtx-ok__gone b { opacity: .38; text-decoration: line-through; }
+.mtx-ok__gone span { opacity: .55; }
+
 .mtx-ok__vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 @media (max-width: 520px) {
@@ -210,44 +217,37 @@
 
       <h2>When your tickets arrive</h2>
 
-      <!-- ===== TONIGHT ===== -->
+      <!-- ===== BOOKED FOR TONIGHT ===== -->
+      <!-- No event is named here. The page has no way of knowing which night
+           a given guest booked, and naming the wrong one is worse than naming
+           none. "If you booked for tonight" is true for every guest who did. -->
       <div class="mtx-ok__lane mtx-ok__lane--now">
         <span class="mtx-ok__lanetag">Booked for tonight</span>
-        <h3>New Power, this evening</h3>
+        <h3>Your tickets are on the way</h3>
         <p class="mtx-ok__big">Within 15 minutes</p>
-        <p class="mtx-ok__lanep">Your tickets are on their way now. Keep an eye on your inbox.</p>
+        <p class="mtx-ok__lanep">Keep an eye on your inbox. Nothing else to do.</p>
       </div>
 
-      <!-- ===== ANY OTHER DATE ===== -->
+      <!-- ===== BOOKED FOR A LATER DATE =====
+           Everything below is written by the script at the foot of the page,
+           from the clock. Bangkok never changes its clocks, but London and New
+           York do, so their times cannot be typed in and left. Without the
+           script a guest still sees the Bangkok run times, which are fixed and
+           always true; the script adds their own time and the dates. -->
       <div class="mtx-ok__lane">
         <span class="mtx-ok__lanetag">Booked for a later date</span>
-        <h3>Two dispatches this evening</h3>
+        <h3 data-ok-heading>Dispatched twice every evening</h3>
         <p class="mtx-ok__lanep">Advance bookings go out in batches. Yours is on the next run, wherever in the world you are reading this.</p>
 
         <table class="mtx-ok__runs">
           <thead>
             <tr><th scope="col"><span class="mtx-ok__vh">City</span></th><th scope="col">First dispatch</th><th scope="col">Second dispatch</th></tr>
           </thead>
-          <tbody>
+          <tbody data-ok-runs>
             <tr class="mtx-ok__runs--home">
               <th scope="row">Bangkok</th>
-              <td><b>7:00 PM</b><span>Wed 23 Sep</span></td>
-              <td><b>10:00 PM</b><span>Wed 23 Sep</span></td>
-            </tr>
-            <tr>
-              <th scope="row">London</th>
-              <td><b>1:00 PM</b><span>Wed 23 Sep</span></td>
-              <td><b>4:00 PM</b><span>Wed 23 Sep</span></td>
-            </tr>
-            <tr>
-              <th scope="row">New York</th>
-              <td><b>8:00 AM</b><span>Wed 23 Sep</span></td>
-              <td><b>11:00 AM</b><span>Wed 23 Sep</span></td>
-            </tr>
-            <tr>
-              <th scope="row">Tokyo</th>
-              <td><b>9:00 PM</b><span>Wed 23 Sep</span></td>
-              <td><b>12:00 AM</b><span>Thu 24 Sep</span></td>
+              <td><b>7:00 PM</b><span></span></td>
+              <td><b>10:00 PM</b><span></span></td>
             </tr>
           </tbody>
         </table>
@@ -310,3 +310,116 @@
   </section>
 
 </div>
+<script>
+/* When the tickets go out, worked out from the clock rather than typed in.
+ *
+ * Advance bookings leave Bangkok at 7:00 PM and 10:00 PM. Those two times
+ * never change. What does change is what they are called everywhere else:
+ * London and New York move their clocks twice a year and Bangkok never does,
+ * so the gap between them is not a fixed number of hours. That is the whole
+ * reason this is script rather than a typed table -- a table typed in
+ * September is wrong in November.
+ *
+ * Intl does the conversion, so the rules for every zone come from the
+ * browser and stay right without anyone maintaining them.
+ *
+ * It also shows the guest their OWN time, which is the line that actually
+ * answers "when do I get my tickets". The four cities stay underneath as a
+ * reference, and any city that is already the guest's own is dropped rather
+ * than printed twice.
+ */
+(function () {
+  var runs = document.querySelector("[data-ok-runs]");
+  if (!runs || !window.Intl || !Intl.DateTimeFormat) return;
+
+  var BKK = "Asia/Bangkok";
+  var HOURS = [19, 22];                       // 7:00 PM and 10:00 PM, Bangkok
+
+  // Bangkok's wall clock right now. Bangkok is UTC+7 and has no daylight
+  // saving, ever, which is why this is arithmetic and not a lookup.
+  var now = new Date();
+  var bkk = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 7 * 3600000);
+
+  // The instant a Bangkok wall-clock hour happens, as a real point in time.
+  function runAt(dayOffset, hour) {
+    return new Date(Date.UTC(
+      bkk.getFullYear(), bkk.getMonth(), bkk.getDate() + dayOffset, hour, 0, 0
+    ) - 7 * 3600000);
+  }
+
+  // Which evening are we talking about? Once the 10:00 PM run has gone, the
+  // next dispatch is tomorrow, and saying "this evening" would be a lie.
+  var nowH = bkk.getHours() + bkk.getMinutes() / 60;
+  var day = nowH >= HOURS[1] ? 1 : 0;
+  var sent = day === 0 && nowH >= HOURS[0] ? 1 : 0;   // 7:00 PM already gone
+  var times = [runAt(day, HOURS[0]), runAt(day, HOURS[1])];
+
+  // Built from parts rather than from a locale's own pattern, so the result
+  // reads "7:00 PM" and "Wed 23 Sep" the way the rest of the page does,
+  // whatever locale the guest's browser happens to be set to.
+  function fmt(date, zone, part) {
+    try {
+      var want = part === "time"
+        ? { timeZone: zone, hour: "numeric", minute: "2-digit", hour12: true }
+        : { timeZone: zone, weekday: "short", day: "numeric", month: "short" };
+      var got = {};
+      var bits = new Intl.DateTimeFormat("en-US", want).formatToParts(date);
+      for (var i = 0; i < bits.length; i++) got[bits[i].type] = bits[i].value;
+      return part === "time"
+        ? got.hour + ":" + got.minute + " " + String(got.dayPeriod || "").toUpperCase()
+        : got.weekday + " " + got.day + " " + got.month;
+    } catch (e) { return ""; }
+  }
+
+  function row(label, zone, isHome, isYou) {
+    var tr = document.createElement("tr");
+    if (isHome) tr.className = "mtx-ok__runs--home";
+    if (isYou) tr.className = "mtx-ok__runs--you";
+    var th = document.createElement("th");
+    th.setAttribute("scope", "row");
+    th.textContent = label;
+    tr.appendChild(th);
+    for (var i = 0; i < times.length; i++) {
+      var td = document.createElement("td");
+      var b = document.createElement("b");
+      b.textContent = fmt(times[i], zone, "time");
+      var sp = document.createElement("span");
+      sp.textContent = fmt(times[i], zone, "date");
+      if (i < sent) {
+        td.className = "mtx-ok__gone";
+        sp.textContent = "Already sent";
+      }
+      td.appendChild(b); td.appendChild(sp);
+      tr.appendChild(td);
+    }
+    return tr;
+  }
+
+  var yourZone = "";
+  try { yourZone = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+
+  var CITIES = [
+    ["Bangkok",  BKK],
+    ["London",   "Europe/London"],
+    ["New York", "America/New_York"],
+    ["Tokyo",    "Asia/Tokyo"]
+  ];
+
+  runs.innerHTML = "";
+  // The guest's own time first, because it is the one they came here for.
+  if (yourZone) runs.appendChild(row("Your time", yourZone, false, true));
+  for (var c = 0; c < CITIES.length; c++) {
+    // Never print a city that is already the guest's own row.
+    if (yourZone && CITIES[c][1] === yourZone) continue;
+    runs.appendChild(row(CITIES[c][0], CITIES[c][1], CITIES[c][1] === BKK, false));
+  }
+
+  var head = document.querySelector("[data-ok-heading]");
+  if (head) {
+    head.textContent =
+      day === 1  ? "Next dispatch tomorrow evening" :
+      sent === 1 ? "One more dispatch this evening" :
+                   "Two dispatches this evening";
+  }
+})();
+</script>
