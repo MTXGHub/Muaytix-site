@@ -1,0 +1,837 @@
+<!--
+  MUAYTIX HOMEPAGE
+  Paste this whole thing into one HTML block (Tilda T123) on /
+
+  The meta title, meta description, Open Graph tags and canonical are NOT in
+  here. Tilda owns those; they go in the page's own settings. The exact text
+  to paste is in the report that came with this file.
+
+  The week list ships with tonight first and already marked, so the page is
+  right as pasted and right to a crawler. The script at the foot only keeps it
+  right tomorrow. It never decides whether tickets are on sale: the ticket
+  selector on the event pages reads the real cutoff and is the only thing
+  allowed to answer that.
+-->
+<div class="mtx-hp">
+<style>
+/* All styles are scoped under .mtx-hp so nothing here can affect the rest of
+   the site, and the site's own styles are less likely to affect this block.
+   The components, the colours and the type are the day-dated pages' own, so
+   a guest moving from here to a fight night page sees one site. */
+.mtx-hp, .mtx-hp * { box-sizing: border-box; }
+.mtx-hp {
+  --hp-blue: #1f5bff;
+  --hp-blue-dark: #1545cf;
+  --hp-rws: #FF1828;
+  --hp-rws-dark: #d40f1c;
+  --hp-ink: #0b0b0d;
+  --hp-paper: #f2f2f2;
+  --hp-line: #dcdce1;
+  --hp-muted: #6e6e75;
+  font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--hp-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.mtx-hp p, .mtx-hp h1, .mtx-hp h2, .mtx-hp h3, .mtx-hp ul, .mtx-hp ol { margin: 0; padding: 0; }
+.mtx-hp ul, .mtx-hp ol { list-style: none; }
+.mtx-hp img { max-width: 100%; display: block; }
+.mtx-hp__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
+
+/* Headings */
+.mtx-hp h1, .mtx-hp h2, .mtx-hp h3 {
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+}
+.mtx-hp h1 { font-size: clamp(38px, 6vw, 70px); line-height: .96; }
+.mtx-hp h2 { font-size: clamp(29px, 3.6vw, 45px); line-height: 1.03; margin-top: 8px; }
+.mtx-hp h3 { font-size: 21px; line-height: 1.15; }
+.mtx-hp__kicker {
+  display: block; color: var(--hp-blue); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 13px; letter-spacing: .13em; text-transform: uppercase;
+}
+
+/* Buttons */
+.mtx-hp__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 52px; padding: 0 26px; border: 2px solid transparent;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 16px; letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: all .2s ease;
+}
+.mtx-hp__btn--blue { background: var(--hp-blue); color: #fff; }
+.mtx-hp__btn--blue:hover { background: var(--hp-blue-dark); color: #fff; }
+.mtx-hp__btn--ghost { background: transparent; border-color: #fff; color: #fff; }
+.mtx-hp__btn--ghost:hover { background: #fff; color: var(--hp-ink); }
+.mtx-hp__btn--outline { background: #fff; border-color: var(--hp-ink); color: var(--hp-ink); }
+.mtx-hp__btn--outline:hover { border-color: var(--hp-blue); color: var(--hp-blue); }
+.mtx-hp__btn--red { background: var(--hp-rws); color: #fff; }
+.mtx-hp__btn--red:hover { background: var(--hp-rws-dark); color: #fff; }
+.mtx-hp__go {
+  display: inline-block; color: var(--hp-blue); text-decoration: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 15px; letter-spacing: .07em; text-transform: uppercase;
+  border-bottom: 2px solid currentColor; padding-bottom: 2px;
+}
+.mtx-hp__go:hover { color: var(--hp-blue-dark); }
+
+/* Hero.
+   It carries no .mtx-hp__band class. Both are single-class selectors, so the
+   band's `background: #fff` shorthand would win on source order alone and
+   wipe out both the photograph and the black behind it, leaving white type on
+   a white hero. The hero brings its own padding instead.
+
+   The photograph sits under a scrim rather than on its own: the dome is bright
+   teal and red and the headline is white, so without it the type would be
+   unreadable across the top third. The gradient is heavier on the left, where
+   all the words are, and thins to the right so the stadium still shows.
+
+   background-color stays as a fallback. If the image is slow, or blocked, or
+   the URL ever changes, the hero is simply black again and nothing breaks. */
+.mtx-hp__hero {
+  position: relative; color: #fff;
+  padding: clamp(60px, 8vw, 116px) 0;
+  background-color: var(--hp-ink);
+  background-image:
+    linear-gradient(100deg,
+      rgba(11,11,13,.95) 0%,
+      rgba(11,11,13,.88) 38%,
+      rgba(11,11,13,.66) 72%,
+      rgba(11,11,13,.52) 100%),
+    url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 38%;
+}
+/* On a narrow screen the hero is tall and the square crops to a column, so the
+   scrim runs top to bottom instead of left to right. */
+@media (max-width: 760px) {
+  .mtx-hp__hero {
+    background-image:
+      linear-gradient(180deg,
+        rgba(11,11,13,.86) 0%,
+        rgba(11,11,13,.74) 30%,
+        rgba(11,11,13,.88) 72%,
+        rgba(11,11,13,.96) 100%),
+      url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+    background-position: center 30%;
+  }
+}
+/* Nothing sits between the H1 and this paragraph, in the markup or on screen.
+   It is the sentence an AI engine lifts when asked where to buy tickets. */
+.mtx-hp__lede { max-width: 62ch; margin-top: 18px !important; color: #d3d4da; font-size: 17px; }
+.mtx-hp__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+/* Bands */
+.mtx-hp__band { padding: clamp(42px, 5.5vw, 74px) 0; background: #fff; }
+.mtx-hp__band--paper { background: var(--hp-paper); }
+.mtx-hp__band--dark { background: #18181d; color: #fff; }
+.mtx-hp__band p { max-width: 68ch; margin-top: 16px !important; font-size: 17px; }
+.mtx-hp__band--dark p { color: #d3d4da; }
+.mtx-hp__ctarow { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- Block 2: tonight and this week ----------
+   Tonight is the first card and the only lifted one: a blue rule across the
+   top, a "Tonight" label and its own weight. Every other night is a plain
+   card, so the eye lands on the night the guest can still buy for. */
+.mtx-hp__nights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-hp .mtx-hp__nights { margin-top: 30px; }
+.mtx-hp__night {
+  display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--hp-line); padding: 26px 22px 24px;
+}
+.mtx-hp__night--now { border-color: var(--hp-blue); box-shadow: inset 0 5px 0 0 var(--hp-blue); padding-top: 30px; }
+.mtx-hp__tag {
+  display: inline-block; align-self: flex-start; padding: 5px 10px;
+  background: var(--hp-blue); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+}
+.mtx-hp__night h3 { margin-top: 14px; }
+.mtx-hp__night--now h3 { font-size: 26px; }
+.mtx-hp .mtx-hp__when {
+  margin-top: 9px !important; color: var(--hp-muted); font-size: 15px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.mtx-hp .mtx-hp__times { margin-top: 4px !important; color: var(--hp-muted); font-size: 15px; }
+/* margin-top:auto pins the button to the foot of the card, so a short night
+   and a long one still line their buttons up across the row. */
+.mtx-hp .mtx-hp__nightcta { margin-top: auto; padding-top: 20px; }
+.mtx-hp__nightcta .mtx-hp__btn { width: 100%; }
+
+/* The same dates as plain HTML, for crawlers and AI engines that never run
+   the script above. Visually hidden, fully readable to a machine, and still
+   reachable by a screen reader. Not display:none, which they skip. */
+.mtx-hp__plain {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+/* ---------- Block 3: trust cards ---------- */
+.mtx-hp__trustgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-hp .mtx-hp__trustgrid { margin-top: 30px; }
+.mtx-hp__trustcard { background: #fff; border: 1px solid var(--hp-line); padding: 26px 22px 24px; }
+.mtx-hp__trustcard svg { width: 30px; height: 30px; stroke: var(--hp-blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mtx-hp__trustcard h3 { margin-top: 18px; font-size: 19px; }
+.mtx-hp__trustcard p { margin-top: 9px !important; color: var(--hp-muted); font-size: 16px; }
+.mtx-hp .mtx-hp__guarantee {
+  max-width: 68ch; margin-top: 26px !important; padding-left: 15px;
+  border-left: 3px solid var(--hp-blue); font-size: 17px;
+}
+.mtx-hp .mtx-hp__partlabel {
+  margin-top: 34px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px !important; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--hp-muted) !important; padding-bottom: 12px; border-bottom: 1px solid var(--hp-line);
+}
+.mtx-hp .mtx-hp__partners {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 0; margin-top: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 17px; letter-spacing: .05em; text-transform: uppercase;
+}
+.mtx-hp__partners li + li::before { content: "\00b7"; color: var(--hp-muted); margin: 0 14px; }
+
+/* ---------- Block 4: seat cards ---------- */
+.mtx-hp__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mtx-hp .mtx-hp__grid { margin-top: 28px; }
+.mtx-hp__card { position: relative; background: #fff; border: 1px solid var(--hp-line); padding: 30px 24px 26px; }
+.mtx-hp__card p { margin-top: 10px !important; color: var(--hp-muted); font-size: 16px; }
+.mtx-hp__standfirst {
+  margin-top: 7px !important; color: var(--hp-blue) !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+}
+.mtx-hp__bestfor { font-size: 15px !important; }
+.mtx-hp__bestfor strong { color: var(--hp-ink); }
+.mtx-hp__cardbtn { width: 100%; margin-top: 22px; }
+
+/* Seat photo slider. Native scroll-snap: no library, nothing to load, and a
+   swipe works on a phone whether or not the script ever runs. The dots are
+   the only part that needs it, and they are decoration.
+   aspect-ratio plus object-fit means photos of different shapes still line up
+   in the grid, so nothing has to be cropped to an exact size before upload. */
+.mtx-hp__card--shot { padding-top: 0; overflow: hidden; }
+.mtx-hp__card--shot > :first-child { margin-top: 0; }
+.mtx-hp__card--shot h3 { margin-top: 22px; }
+.mtx-hp__shots { position: relative; margin: 0 -24px; }
+.mtx-hp__shots-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.mtx-hp__shots-track::-webkit-scrollbar { display: none; }
+.mtx-hp__shots-track img {
+  flex: 0 0 100%; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  scroll-snap-align: center; background: #e6e6ea;
+}
+/* Older Safari ignores aspect-ratio; this keeps the shape rather than letting
+   the image collapse to nothing. */
+@supports not (aspect-ratio: 4 / 3) {
+  .mtx-hp__shots-track img { height: 260px; }
+}
+.mtx-hp__shots-dots {
+  position: absolute; left: 0; right: 0; bottom: 11px;
+  display: flex; justify-content: center; gap: 7px;
+}
+.mtx-hp__shots-dots button {
+  width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(255,255,255,.55); cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.25); transition: background .18s ease;
+}
+.mtx-hp__shots-dots button.is-on { background: #fff; }
+.mtx-hp__shots-dots button:focus-visible { outline: 2px solid var(--hp-blue); outline-offset: 2px; }
+/* Nothing to click through if the slider only ever holds one photo. */
+.mtx-hp__shots-dots:empty { display: none; }
+
+/* Seat map. A plain link, not a script: opening the file itself lets the
+   phone's own pinch-to-zoom do the work, and there is no lightbox to go
+   wrong. It sits centred and capped, never beside the cards. */
+.mtx-hp__maplayout { margin-top: 34px; max-width: 640px; margin-inline: auto; }
+.mtx-hp__mapfig { display: block; position: relative; text-decoration: none; }
+.mtx-hp__mapfig img { width: 100%; height: auto; }
+.mtx-hp__mapzoom {
+  position: absolute; right: 12px; bottom: 12px;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 13px; background: rgba(11,11,13,.78); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.14); transition: background .18s ease;
+}
+.mtx-hp__mapfig:hover .mtx-hp__mapzoom { background: var(--hp-blue); }
+.mtx-hp__mapfig:focus-visible { outline: 2px solid var(--hp-blue); outline-offset: 4px; }
+
+/* ---------- Block 5: the RWS band ----------
+   Red is this block and nothing else on the page. The rule under the heading
+   is the same red, so the colour reads as a section marker rather than as
+   decoration hung on a button. */
+.mtx-hp__rws .mtx-hp__kicker { color: var(--hp-rws); }
+.mtx-hp__rws h2 { padding-bottom: 16px; border-bottom: 4px solid var(--hp-rws); display: inline-block; }
+/* Four real buttons, equal width, in one row. They wrap to two and then to
+   one, so no label is ever squeezed into two ragged lines. */
+.mtx-hp__btnrow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.mtx-hp .mtx-hp__btnrow { margin-top: 28px; }
+.mtx-hp__btnrow .mtx-hp__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+.mtx-hp .mtx-hp__aftercta { margin-top: 20px !important; }
+
+/* ---------- Block 6: promoter cards ---------- */
+.mtx-hp__evs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mtx-hp .mtx-hp__evs { margin-top: 30px; }
+.mtx-hp__ev {
+  position: relative; display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--hp-line); padding: 30px 24px 26px;
+}
+.mtx-hp__ev::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 7px;
+  background: var(--hp-blue); transform: skewX(-25deg); transform-origin: left;
+}
+.mtx-hp .mtx-hp__hook {
+  margin-top: 8px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif; font-weight: 800;
+  font-size: clamp(23px, 2.5vw, 29px); line-height: 1.04; text-transform: uppercase;
+}
+.mtx-hp .mtx-hp__evbody { margin-top: 13px !important; color: var(--hp-muted); font-size: 16px; }
+.mtx-hp .mtx-hp__evwhen {
+  margin-top: 16px !important; padding-top: 14px; border-top: 1px solid var(--hp-line);
+  color: var(--hp-muted); font-size: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+}
+.mtx-hp .mtx-hp__evcta { margin-top: auto; padding-top: 20px; }
+.mtx-hp__evcta .mtx-hp__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+/* ---------- Block 7: the questions ----------
+   <details> rather than a script: it opens without JavaScript, it is readable
+   to a crawler while closed, and the browser's own find-in-page can open it.
+   The brief requires the answers to be in the DOM, collapsed by CSS only. */
+.mtx-hp__faq { margin-top: 30px; border-top: 1px solid var(--hp-line); }
+.mtx-hp__faq details { border-bottom: 1px solid var(--hp-line); }
+.mtx-hp__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 18px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 20px; line-height: 1.15; text-transform: uppercase;
+}
+.mtx-hp__faq summary::-webkit-details-marker { display: none; }
+.mtx-hp__faq summary::after {
+  content: "+"; flex: none; color: var(--hp-blue);
+  font-family: "Barlow", Helvetica, Arial, sans-serif; font-weight: 400;
+  font-size: 26px; line-height: 1; margin-top: 2px;
+}
+.mtx-hp__faq details[open] summary::after { content: "\2013"; }
+.mtx-hp__faq summary:focus-visible { outline: 2px solid var(--hp-blue); outline-offset: 3px; }
+.mtx-hp__faq p { margin-top: 0 !important; margin-bottom: 22px !important; color: var(--hp-muted); font-size: 16px; }
+
+/* ---------- Block 8: the venue ----------
+   Two columns on a wide screen, words left and the address block right, so
+   the band is not one short paragraph adrift in 1180px of white. */
+.mtx-hp__venue { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.mtx-hp .mtx-hp__venue { margin-top: 30px; }
+.mtx-hp__venue p { margin-top: 0 !important; }
+.mtx-hp__where {
+  padding: 24px 22px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.16);
+}
+.mtx-hp .mtx-hp__wherelabel {
+  margin-top: 0 !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px !important; letter-spacing: .13em; text-transform: uppercase;
+  color: #9ca0ad !important;
+}
+.mtx-hp .mtx-hp__address {
+  margin-top: 8px !important; font-size: 19px !important; color: #fff !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  letter-spacing: .02em; text-transform: uppercase; line-height: 1.2;
+}
+
+/* ---------- Breakpoints ----------
+   Each one sits with the rules it changes rather than in a block of its own at
+   the foot of the file, so nothing further down can quietly outrank it. */
+@media (max-width: 1000px) {
+  .mtx-hp__nights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-hp__btnrow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-hp__venue { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .mtx-hp__grid { grid-template-columns: 1fr; }
+  .mtx-hp__evs { grid-template-columns: 1fr; }
+  .mtx-hp__trustgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .mtx-hp__shell { width: min(100% - 28px, 1180px); }
+  .mtx-hp__nights { grid-template-columns: 1fr; }
+  .mtx-hp__btnrow { grid-template-columns: 1fr; }
+  .mtx-hp__trustgrid { grid-template-columns: 1fr; }
+  .mtx-hp__actions .mtx-hp__btn, .mtx-hp__ctarow .mtx-hp__btn { width: 100%; }
+  .mtx-hp__faq summary { font-size: 18px; }
+  /* A middot drawn with li + li::before lands at the START of a wrapped line,
+     so below the wrap point the separators go and the names stack instead. */
+  .mtx-hp .mtx-hp__partners { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 16px; }
+  .mtx-hp__partners li + li::before { content: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mtx-hp * { animation: none !important; scroll-behavior: auto !important; }
+}
+</style>
+
+  <!-- The hero photograph is a CSS background, so the browser only finds it
+       after the stylesheet parses. This tells it to start fetching straight
+       away. It is the one image above the fold; everything below lazy-loads. -->
+  <link rel="preload" as="image" href="https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg">
+
+  <!-- BLOCK 1: HERO -->
+  <section class="mtx-hp__hero">
+    <div class="mtx-hp__shell">
+      <h1>Muay Thai tickets in Bangkok</h1>
+      <p class="mtx-hp__lede">MuayTix sells tickets for Muay Thai at Rajadamnern Stadium in Bangkok, seven nights a week, as the stadium's international ticket partner. Book online, pay in your own currency and show the QR code on your phone at the gate.</p>
+      <div class="mtx-hp__actions">
+        <a class="mtx-hp__btn mtx-hp__btn--blue" href="/rajadamnern-stadium-tickets">Book Tickets</a>
+        <a class="mtx-hp__btn mtx-hp__btn--ghost" href="/new-power-muay-thai/2026-09-23" data-mtx-tonight>Tonight</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCK 2: TONIGHT AND THIS WEEK -->
+  <section class="mtx-hp__band" id="this-week">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">This week</span>
+      <h2>On tonight and this week</h2>
+      <p>Every night is a different event. Tonight is first. Tap a night to see the details and book.</p>
+
+      <ul class="mtx-hp__nights" data-mtx-week>
+        <li class="mtx-hp__night mtx-hp__night--now" data-mtx-date="2026-09-23">
+          <span class="mtx-hp__tag">Tonight</span>
+          <h3>New Power Muay Thai</h3>
+          <p class="mtx-hp__when">Wednesday 23 September</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/new-power-muay-thai/2026-09-23">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-24">
+          <h3>Petchyindee Muay Thai</h3>
+          <p class="mtx-hp__when">Thursday 24 September</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/petchyindee-muay-thai/2026-09-24">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-25">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Friday 25 September</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-09-25">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-26">
+          <h3>RWS Rajadamnern World Series</h3>
+          <p class="mtx-hp__when">Saturday 26 September</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/2026-09-26">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-27">
+          <h3>Kiatpetch Muay Thai</h3>
+          <p class="mtx-hp__when">Sunday 27 September</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/kiatpetch-muay-thai/2026-09-27">Book Tickets</a></p>
+        </li>
+      </ul>
+
+      <p class="mtx-hp__ctarow"><a class="mtx-hp__go" href="/rajadamnern-stadium-tickets">See every date to the end of the year</a></p>
+    </div>
+  </section>
+
+  <!-- BLOCK 3: WHO YOU ARE BOOKING WITH -->
+  <section class="mtx-hp__band mtx-hp__band--paper" id="booking-with">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">Who you are booking with</span>
+      <h2>The team behind your ticket</h2>
+      <p>Here is what booking with MuayTix means.</p>
+
+      <div class="mtx-hp__trustgrid">
+        <article class="mtx-hp__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v5H4z"/><path d="M4 9v11h16V9"/><path d="M12 4v16"/></svg>
+          <h3>Tickets from the stadium</h3>
+          <p>Every ticket comes from the stadium's own allocation. Nothing second-hand, nothing marked up by a middleman.</p>
+        </article>
+        <article class="mtx-hp__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <h3>Seated together</h3>
+          <p>Book two or more tickets in one order and you sit together.</p>
+        </article>
+        <article class="mtx-hp__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <h3>Pay in your own currency</h3>
+          <p>Multi-currency checkout shows your exact total before you pay. Secure payment through Stripe.</p>
+        </article>
+        <article class="mtx-hp__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM18 18h3v3h-3z"/></svg>
+          <h3>Your phone is your ticket</h3>
+          <p>A named QR e-ticket arrives by email. Show it at the gate and walk in. No printing, no collection.</p>
+        </article>
+        <article class="mtx-hp__trustcard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.9-.9L3 20.5l1.5-4.9A8.4 8.4 0 0 1 3.6 11 8.4 8.4 0 0 1 12 2.6a8.4 8.4 0 0 1 9 8.9z"/></svg>
+          <h3>Real people, every night</h3>
+          <p>The MuayTix team is on WhatsApp seven days a week and on standby at every event. If something goes wrong at the gate, message us.</p>
+        </article>
+      </div>
+
+      <p class="mtx-hp__guarantee">If we cannot provide the tickets you booked, you choose: an alternative seat class or a full refund the same day.</p>
+
+      <p class="mtx-hp__ctarow"><a class="mtx-hp__btn mtx-hp__btn--blue" href="https://wa.me/66922706095">WhatsApp MuayTix</a></p>
+
+      <p class="mtx-hp__partlabel">Tickets sold for</p>
+      <ul class="mtx-hp__partners">
+        <li>Rajadamnern Stadium</li><li>RWS</li><li>Rajadamnern Knockout</li><li>New Power</li><li>Petchyindee</li><li>Kiatpetch</li><li>All Star</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- BLOCK 4: WHERE TO SIT -->
+  <section class="mtx-hp__band" id="where-to-sit">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">Where to sit</span>
+      <h2>Four seat classes, one ring</h2>
+      <p>Every seat class watches the same fights. The difference is how close you are and the crowd around you.</p>
+
+      <div class="mtx-hp__grid">
+        <article class="mtx-hp__card mtx-hp__card--shot">
+          <div class="mtx-hp__shots" data-mtx-slider>
+            <div class="mtx-hp__shots-track">
+              <img src="https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg" alt="Ringside seating at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild6430-3330-4239-b435-353230396463/1000013051.jpg" alt="Ringside seats beside the ring apron" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg" alt="Close-up view of the ring from Ringside" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg" alt="Ringside guests watching a bout" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-hp__shots-dots"></div>
+          </div>
+          <h3>Ringside</h3>
+          <p class="mtx-hp__standfirst">Closest to the ring</p>
+          <p>The closest seats to the ring, level with the action.</p>
+          <p class="mtx-hp__bestfor"><strong>Best for:</strong> Guests who want proximity above everything else</p>
+          <a class="mtx-hp__btn mtx-hp__btn--outline mtx-hp__cardbtn" href="/rajadamnern-stadium-seating#ringside">Ringside seating</a>
+        </article>
+        <article class="mtx-hp__card mtx-hp__card--shot">
+          <div class="mtx-hp__shots" data-mtx-slider>
+            <div class="mtx-hp__shots-track">
+              <img src="https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg" alt="Club Class seating at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg" alt="The view towards the ring from Club Class" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3665-3065-4334-b531-303164393066/1000033696.jpg" alt="Club Class on a fight night at Rajadamnern Stadium" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild6136-6131-4064-a639-636565363338/1000033691.jpg" alt="Elevated Club Class seats at Rajadamnern Stadium" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-hp__shots-dots"></div>
+          </div>
+          <h3>Club Class</h3>
+          <p class="mtx-hp__standfirst">Elevated and comfortable</p>
+          <p>Elevated, assigned seats with a clear view of the whole ring.</p>
+          <p class="mtx-hp__bestfor"><strong>Best for:</strong> First visits, couples and families</p>
+          <a class="mtx-hp__btn mtx-hp__btn--outline mtx-hp__cardbtn" href="/rajadamnern-stadium-seating#club-class">Club Class seating</a>
+        </article>
+        <article class="mtx-hp__card mtx-hp__card--shot">
+          <div class="mtx-hp__shots" data-mtx-slider>
+            <div class="mtx-hp__shots-track">
+              <img src="https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg" alt="LEO Section at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3136-6363-4533-b935-633230626564/1000008294.jpg" alt="The view towards the ring from the LEO Section" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild6530-3266-4262-b265-633965366163/1000008588.jpg" alt="Crowd and atmosphere in the LEO Section on a fight night" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-hp__shots-dots"></div>
+          </div>
+          <h3>LEO Section</h3>
+          <p class="mtx-hp__standfirst">Where the atmosphere lives</p>
+          <p>Unassigned seating at the same height as Club Class, where the local supporters sit.</p>
+          <p class="mtx-hp__bestfor"><strong>Best for:</strong> Guests who want the crowd around them</p>
+          <a class="mtx-hp__btn mtx-hp__btn--outline mtx-hp__cardbtn" href="/rajadamnern-stadium-seating#leo-section">LEO Section seating</a>
+        </article>
+        <article class="mtx-hp__card mtx-hp__card--shot">
+          <div class="mtx-hp__shots" data-mtx-slider>
+            <div class="mtx-hp__shots-track">
+              <img src="https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg" alt="Third Class seating at Rajadamnern Stadium, Bangkok" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-hp__shots-dots"></div>
+          </div>
+          <h3>Third Class</h3>
+          <p class="mtx-hp__standfirst">Traditional stadium viewing</p>
+          <p>The lowest priced way in, with a full view of the stadium from the top tier.</p>
+          <p class="mtx-hp__bestfor"><strong>Best for:</strong> Guests on a budget who want the traditional stadium feel</p>
+          <a class="mtx-hp__btn mtx-hp__btn--outline mtx-hp__cardbtn" href="/rajadamnern-stadium-seating#third-class">Third Class seating</a>
+        </article>
+      </div>
+
+      <div class="mtx-hp__maplayout">
+        <a class="mtx-hp__mapfig"
+           href="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+           target="_blank" rel="noopener">
+          <img src="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+               alt="Seating map of Rajadamnern Stadium, Bangkok. The ring sits at the centre, with Singha Ringside in sections 3, 4, 5, 6 and 7 closest to it, Club Class in sections 8 and 9 behind, the LEO Section in section 10 and 3rd Class in section 11 around the outside."
+               loading="lazy" decoding="async" width="1242" height="1242">
+          <span class="mtx-hp__mapzoom">Tap to enlarge</span>
+        </a>
+      </div>
+
+      <p class="mtx-hp__ctarow"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/rajadamnern-stadium-seating">Compare every seat class</a></p>
+    </div>
+  </section>
+
+  <!-- BLOCK 5: SATURDAY NIGHTS -->
+  <section class="mtx-hp__band mtx-hp__band--paper mtx-hp__rws" id="saturday">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">Saturday nights</span>
+      <h2>Rajadamnern World Series</h2>
+      <p>RWS is Saturday night at the stadium: seven professional bouts, Thai and international fighters, and the judges' scores shown after every round so anyone can follow it. It is the busiest night of the week and the one most visitors come for.</p>
+
+      <div class="mtx-hp__btnrow">
+        <a class="mtx-hp__btn mtx-hp__btn--red" href="/rws/2026-09-26" data-mtx-saturday>This Saturday</a>
+        <a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/tickets">RWS tickets</a>
+        <a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/schedule">RWS schedule</a>
+        <a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/fight-card">RWS fight card</a>
+      </div>
+
+      <p class="mtx-hp__aftercta"><a class="mtx-hp__go" href="/rws/">About RWS</a></p>
+    </div>
+  </section>
+
+  <!-- BLOCK 6: THE REST OF THE WEEK -->
+  <section class="mtx-hp__band" id="the-week">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">The rest of the week</span>
+      <h2>Four promoters, six more nights</h2>
+      <p>A different promoter takes the ring each night, each with its own format and crowd.</p>
+
+      <div class="mtx-hp__evs">
+        <article class="mtx-hp__ev">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__hook">7 fights. 3 rounds. 80% knockout rate.</p>
+          <p class="mtx-hp__evbody">Modern three-round Muay Thai inside the historic stadium. Fast fights, Thai and international challengers, Wai Kru, live traditional music and an event built around decisive action.</p>
+          <p class="mtx-hp__evwhen">Monday, Tuesday &amp; Friday &middot; Fights from 7:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/rajadamnern-knockout">View Knockout Tickets</a></p>
+        </article>
+        <article class="mtx-hp__ev">
+          <h3>New Power Muay Thai</h3>
+          <p class="mtx-hp__hook">The long game of Muay Thai.</p>
+          <p class="mtx-hp__evbody">Traditional five-round fights where timing, scoring and momentum develop round by round. Live sarama music and a knowledgeable local crowd create one of the stadium's most traditional fight-night experiences.</p>
+          <p class="mtx-hp__evwhen">Wednesday &middot; Fights from 6:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/new-power-muay-thai">View New Power Tickets</a></p>
+        </article>
+        <article class="mtx-hp__ev">
+          <h3>Petchyindee Muay Thai</h3>
+          <p class="mtx-hp__hook">Technique. Timing. Then everything can change.</p>
+          <p class="mtx-hp__evbody">Watch fighters use balance, control and ring intelligence before the pressure suddenly opens into powerful kicks, clinching exchanges and explosive attacks. A Thursday night shaped by generations of Muay Thai knowledge.</p>
+          <p class="mtx-hp__evwhen">Thursday &middot; Fights from 6:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/petchyindee-muay-thai">View Petchyindee Tickets</a></p>
+        </article>
+        <article class="mtx-hp__ev">
+          <h3>Kiatpetch Muay Thai</h3>
+          <p class="mtx-hp__hook">A real Sunday night at the stadium.</p>
+          <p class="mtx-hp__evbody">Traditional five-round Muay Thai meets faster three-round contests, with technical Thai fighters, live traditional music and a local crowd following every change in momentum.</p>
+          <p class="mtx-hp__evwhen">Sunday &middot; Fights from 6:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/kiatpetch-muay-thai">View Kiatpetch Tickets</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCK 7: FIRST TIME? -->
+  <section class="mtx-hp__band mtx-hp__band--paper" id="first-time">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">First time?</span>
+      <h2>You do not need to know the rules</h2>
+      <p>Every bout has a clear winner, the crowd tells you when something big happens, and the night runs two to three hours. Dress is casual, children are welcome, and you can arrive after the first bell.</p>
+
+      <div class="mtx-hp__faq">
+        <details>
+          <summary>Is it suitable for families?</summary>
+          <p>Yes. Children are welcome at every event. Club Class is the easiest section with young ones because the seats are assigned and there is more room.</p>
+        </details>
+        <details>
+          <summary>What time should I arrive?</summary>
+          <p>Doors open about an hour before the first bout. Arriving 30 minutes early gives you time to get in, find your section and settle down. Each event page shows the exact times.</p>
+        </details>
+        <details>
+          <summary>Can I arrive after the fights have started?</summary>
+          <p>Yes. The gates stay open through the evening, so you can enter at any time after the first bell.</p>
+        </details>
+        <details>
+          <summary>What should I wear?</summary>
+          <p>Whatever you are comfortable in. There is no dress code. Closed shoes are a good idea if you are sitting Ringside.</p>
+        </details>
+        <details>
+          <summary>How long does a fight night last?</summary>
+          <p>Two to three hours, depending on the event. Most nights finish between 9:00 PM and 10:00 PM.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCK 8: THE VENUE -->
+  <section class="mtx-hp__band mtx-hp__band--dark" id="the-venue">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">The venue</span>
+      <h2>The world's first Muay Thai stadium</h2>
+
+      <div class="mtx-hp__venue">
+        <div>
+          <p>Rajadamnern Stadium opened in 1945 and still hosts professional Muay Thai every night of the week. Modern lights, screens and a dome show now sit inside the original ring and tiered seating.</p>
+          <div class="mtx-hp__ctarow">
+            <a class="mtx-hp__btn mtx-hp__btn--ghost" href="/rajadamnern-stadium">About the stadium</a>
+            <!-- SWAP THIS HREF for the exact Google Maps link the Stadium page uses.
+                 The brief asks for that link and it was not to hand, so this is
+                 Google's documented search URL rather than a short link invented
+                 to look like one. It resolves to the stadium; it is just not the
+                 same saved place. -->
+            <a class="mtx-hp__btn mtx-hp__btn--ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Rajadamnern+Stadium" target="_blank" rel="noopener">Directions</a>
+          </div>
+        </div>
+        <div class="mtx-hp__where">
+          <p class="mtx-hp__wherelabel">Where it is</p>
+          <p class="mtx-hp__address">Ratchadamnoen Nok Road, central Bangkok</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- The brief asks for a logo URL and the Facebook and Instagram sameAs
+     links. Those were not to hand and a guessed URL in schema is worse
+     than no URL, so the two fields are left out rather than filled in
+     with something that looks right. Send the three and they drop in.
+     Everything else here is the brief verbatim. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://muaytix.com/#organisation","name":"MuayTix","url":"https://muaytix.com","description":"MuayTix sells tickets for Muay Thai at Rajadamnern Stadium in Bangkok, seven nights a week, as the stadium's international ticket partner. Book online, pay in your own currency and show the QR code on your phone at the gate.","areaServed":{"@type":"Country","name":"Thailand"},"contactPoint":[{"@type":"ContactPoint","contactType":"customer support","telephone":"+66922706095","url":"https://wa.me/66922706095","availableLanguage":"English"}]},
+{"@type":"WebSite","@id":"https://muaytix.com/#website","name":"MuayTix","url":"https://muaytix.com","publisher":{"@id":"https://muaytix.com/#organisation"}},
+{"@type":"FAQPage","@id":"https://muaytix.com/#faq","mainEntity":[
+{"@type":"Question","name":"Is it suitable for families?","acceptedAnswer":{"@type":"Answer","text":"Yes. Children are welcome at every event. Club Class is the easiest section with young ones because the seats are assigned and there is more room."}},
+{"@type":"Question","name":"What time should I arrive?","acceptedAnswer":{"@type":"Answer","text":"Doors open about an hour before the first bout. Arriving 30 minutes early gives you time to get in, find your section and settle down. Each event page shows the exact times."}},
+{"@type":"Question","name":"Can I arrive after the fights have started?","acceptedAnswer":{"@type":"Answer","text":"Yes. The gates stay open through the evening, so you can enter at any time after the first bell."}},
+{"@type":"Question","name":"What should I wear?","acceptedAnswer":{"@type":"Answer","text":"Whatever you are comfortable in. There is no dress code. Closed shoes are a good idea if you are sitting Ringside."}},
+{"@type":"Question","name":"How long does a fight night last?","acceptedAnswer":{"@type":"Answer","text":"Two to three hours, depending on the event. Most nights finish between 9:00 PM and 10:00 PM."}}
+]}
+]}
+</script>
+
+<script>
+/* Seat photo sliders. The dots are the only part that needs a script; the
+   swipe is native scroll-snap and works without one. */
+(function () {
+  var sliders = document.querySelectorAll('.mtx-hp [data-mtx-slider]');
+  for (var s = 0; s < sliders.length; s++) build(sliders[s]);
+
+  function build(box) {
+    var track = box.querySelector('.mtx-hp__shots-track');
+    var dots  = box.querySelector('.mtx-hp__shots-dots');
+    if (!track || !dots) return;
+    var shots = track.querySelectorAll('img');
+    if (shots.length < 2) return;   // one photo needs no dots
+
+    for (var i = 0; i < shots.length; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Photo ' + (i + 1) + ' of ' + shots.length);
+      if (i === 0) b.className = 'is-on';
+      b.addEventListener('click', go(i));
+      dots.appendChild(b);
+    }
+
+    function go(i) {
+      return function () {
+        track.scrollTo({ left: shots[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      };
+    }
+
+    var waiting = false;
+    track.addEventListener('scroll', function () {
+      if (waiting) return;
+      waiting = true;
+      // One update per frame is plenty; scroll fires far more often than that.
+      window.requestAnimationFrame(function () {
+        waiting = false;
+        var at = Math.round(track.scrollLeft / track.clientWidth);
+        var buttons = dots.children;
+        for (var j = 0; j < buttons.length; j++) {
+          buttons[j].className = (j === at) ? 'is-on' : '';
+        }
+      });
+    }, { passive: true });
+  }
+})();
+</script>
+
+<script>
+/* Which night is it in Bangkok?
+ *
+ * The week list ships in date order with tonight already first and already
+ * marked, so the page is correct as pasted and correct to a crawler that
+ * never runs this. All this does is keep it correct tomorrow: it drops the
+ * nights that have gone, lifts the new tonight, and re-points the hero's
+ * Tonight button and the RWS band's This Saturday button at the right days.
+ *
+ * Bangkok is UTC+7 with no daylight saving, ever. That is the whole reason
+ * this can be a few lines rather than a timezone library.
+ *
+ * It never decides whether tickets are still on sale. The ticket selector on
+ * the event pages reads the real cutoff from the database and is the only
+ * thing allowed to answer that. So it is not asked here.
+ */
+(function () {
+  var list = document.querySelector('[data-mtx-week]');
+  if (!list) return;
+
+  var now = new Date();
+  var bkk = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + 7 * 3600000);
+  function two(n) { return (n < 10 ? '0' : '') + n; }
+  var today = bkk.getFullYear() + '-' + two(bkk.getMonth() + 1) + '-' + two(bkk.getDate());
+
+  var cards = [].slice.call(list.querySelectorAll('[data-mtx-date]'));
+  var live = [];
+
+  for (var i = 0; i < cards.length; i++) {
+    var card = cards[i];
+    if (card.getAttribute('data-mtx-date') < today) {
+      card.parentNode.removeChild(card);   // the night has gone
+      continue;
+    }
+    live.push(card);
+  }
+  if (!live.length) return;
+
+  // Whatever shipped as tonight may not be tonight any more.
+  for (var j = 0; j < live.length; j++) {
+    var isNow = live[j].getAttribute('data-mtx-date') === today;
+    live[j].classList.toggle('mtx-hp__night--now', isNow);
+    var tag = live[j].querySelector('.mtx-hp__tag');
+    if (isNow && !tag) {
+      tag = document.createElement('span');
+      tag.className = 'mtx-hp__tag';
+      tag.textContent = 'Tonight';
+      live[j].insertBefore(tag, live[j].firstChild);
+    } else if (!isNow && tag) {
+      tag.parentNode.removeChild(tag);
+    }
+    // The lifted card carries the solid button; the rest carry the outline.
+    var btn = live[j].querySelector('.mtx-hp__nightcta .mtx-hp__btn');
+    if (btn) {
+      btn.classList.toggle('mtx-hp__btn--blue', isNow);
+      btn.classList.toggle('mtx-hp__btn--outline', !isNow);
+    }
+  }
+
+  function hrefOf(card) {
+    var a = card && card.querySelector('.mtx-hp__nightcta a');
+    return a && a.getAttribute('href');
+  }
+
+  // The hero's second door: tonight if there is one, otherwise the next night.
+  var tonight = null;
+  for (var k = 0; k < live.length; k++) {
+    if (live[k].getAttribute('data-mtx-date') === today) { tonight = live[k]; break; }
+  }
+  var heroBtn = document.querySelector('[data-mtx-tonight]');
+  var next = tonight || live[0];
+  if (heroBtn && hrefOf(next)) {
+    heroBtn.setAttribute('href', hrefOf(next));
+    if (!tonight) heroBtn.textContent = 'Next fight night';
+  }
+
+  // This Saturday. The RWS card is the Saturday one, so find it by its link.
+  var satBtn = document.querySelector('[data-mtx-saturday]');
+  if (satBtn) {
+    for (var m = 0; m < live.length; m++) {
+      var href = hrefOf(live[m]);
+      if (href && href.indexOf('/rws/') === 0) { satBtn.setAttribute('href', href); break; }
+    }
+  }
+})();
+</script>
+</div>

@@ -1,0 +1,154 @@
+
+<!-- The brief asks for a logo URL and the Facebook and Instagram sameAs
+     links. Those were not to hand and a guessed URL in schema is worse
+     than no URL, so the two fields are left out rather than filled in
+     with something that looks right. Send the three and they drop in.
+     Everything else here is the brief verbatim. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://muaytix.com/#organisation","name":"MuayTix","url":"https://muaytix.com","description":"MuayTix sells tickets for Muay Thai at Rajadamnern Stadium in Bangkok, seven nights a week, as the stadium's international ticket partner. Book online, pay in your own currency and show the QR code on your phone at the gate.","areaServed":{"@type":"Country","name":"Thailand"},"contactPoint":[{"@type":"ContactPoint","contactType":"customer support","telephone":"+66922706095","url":"https://wa.me/66922706095","availableLanguage":"English"}]},
+{"@type":"WebSite","@id":"https://muaytix.com/#website","name":"MuayTix","url":"https://muaytix.com","publisher":{"@id":"https://muaytix.com/#organisation"}},
+{"@type":"FAQPage","@id":"https://muaytix.com/#faq","mainEntity":[
+{"@type":"Question","name":"Is it suitable for families?","acceptedAnswer":{"@type":"Answer","text":"Yes. Children are welcome at every event. Club Class is the easiest section with young ones because the seats are assigned and there is more room."}},
+{"@type":"Question","name":"What time should I arrive?","acceptedAnswer":{"@type":"Answer","text":"Doors open about an hour before the first bout. Arriving 30 minutes early gives you time to get in, find your section and settle down. Each event page shows the exact times."}},
+{"@type":"Question","name":"Can I arrive after the fights have started?","acceptedAnswer":{"@type":"Answer","text":"Yes. The gates stay open through the evening, so you can enter at any time after the first bell."}},
+{"@type":"Question","name":"What should I wear?","acceptedAnswer":{"@type":"Answer","text":"Whatever you are comfortable in. There is no dress code. Closed shoes are a good idea if you are sitting Ringside."}},
+{"@type":"Question","name":"How long does a fight night last?","acceptedAnswer":{"@type":"Answer","text":"Two to three hours, depending on the event. Most nights finish between 9:00 PM and 10:00 PM."}}
+]}
+]}
+</script>
+
+<script>
+/* Seat photo sliders. The dots are the only part that needs a script; the
+   swipe is native scroll-snap and works without one. */
+(function () {
+  var sliders = document.querySelectorAll('.mtx-hp [data-mtx-slider]');
+  for (var s = 0; s < sliders.length; s++) build(sliders[s]);
+
+  function build(box) {
+    var track = box.querySelector('.mtx-hp__shots-track');
+    var dots  = box.querySelector('.mtx-hp__shots-dots');
+    if (!track || !dots) return;
+    var shots = track.querySelectorAll('img');
+    if (shots.length < 2) return;   // one photo needs no dots
+
+    for (var i = 0; i < shots.length; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Photo ' + (i + 1) + ' of ' + shots.length);
+      if (i === 0) b.className = 'is-on';
+      b.addEventListener('click', go(i));
+      dots.appendChild(b);
+    }
+
+    function go(i) {
+      return function () {
+        track.scrollTo({ left: shots[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      };
+    }
+
+    var waiting = false;
+    track.addEventListener('scroll', function () {
+      if (waiting) return;
+      waiting = true;
+      // One update per frame is plenty; scroll fires far more often than that.
+      window.requestAnimationFrame(function () {
+        waiting = false;
+        var at = Math.round(track.scrollLeft / track.clientWidth);
+        var buttons = dots.children;
+        for (var j = 0; j < buttons.length; j++) {
+          buttons[j].className = (j === at) ? 'is-on' : '';
+        }
+      });
+    }, { passive: true });
+  }
+})();
+</script>
+
+<script>
+/* Which night is it in Bangkok?
+ *
+ * The week list ships in date order with tonight already first and already
+ * marked, so the page is correct as pasted and correct to a crawler that
+ * never runs this. All this does is keep it correct tomorrow: it drops the
+ * nights that have gone, lifts the new tonight, and re-points the hero's
+ * Tonight button and the RWS band's This Saturday button at the right days.
+ *
+ * Bangkok is UTC+7 with no daylight saving, ever. That is the whole reason
+ * this can be a few lines rather than a timezone library.
+ *
+ * It never decides whether tickets are still on sale. The ticket selector on
+ * the event pages reads the real cutoff from the database and is the only
+ * thing allowed to answer that. So it is not asked here.
+ */
+(function () {
+  var list = document.querySelector('[data-mtx-week]');
+  if (!list) return;
+
+  var now = new Date();
+  var bkk = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + 7 * 3600000);
+  function two(n) { return (n < 10 ? '0' : '') + n; }
+  var today = bkk.getFullYear() + '-' + two(bkk.getMonth() + 1) + '-' + two(bkk.getDate());
+
+  var cards = [].slice.call(list.querySelectorAll('[data-mtx-date]'));
+  var live = [];
+
+  for (var i = 0; i < cards.length; i++) {
+    var card = cards[i];
+    if (card.getAttribute('data-mtx-date') < today) {
+      card.parentNode.removeChild(card);   // the night has gone
+      continue;
+    }
+    live.push(card);
+  }
+  if (!live.length) return;
+
+  // Whatever shipped as tonight may not be tonight any more.
+  for (var j = 0; j < live.length; j++) {
+    var isNow = live[j].getAttribute('data-mtx-date') === today;
+    live[j].classList.toggle('mtx-hp__night--now', isNow);
+    var tag = live[j].querySelector('.mtx-hp__tag');
+    if (isNow && !tag) {
+      tag = document.createElement('span');
+      tag.className = 'mtx-hp__tag';
+      tag.textContent = 'Tonight';
+      live[j].insertBefore(tag, live[j].firstChild);
+    } else if (!isNow && tag) {
+      tag.parentNode.removeChild(tag);
+    }
+    // The lifted card carries the solid button; the rest carry the outline.
+    var btn = live[j].querySelector('.mtx-hp__nightcta .mtx-hp__btn');
+    if (btn) {
+      btn.classList.toggle('mtx-hp__btn--blue', isNow);
+      btn.classList.toggle('mtx-hp__btn--outline', !isNow);
+    }
+  }
+
+  function hrefOf(card) {
+    var a = card && card.querySelector('.mtx-hp__nightcta a');
+    return a && a.getAttribute('href');
+  }
+
+  // The hero's second door: tonight if there is one, otherwise the next night.
+  var tonight = null;
+  for (var k = 0; k < live.length; k++) {
+    if (live[k].getAttribute('data-mtx-date') === today) { tonight = live[k]; break; }
+  }
+  var heroBtn = document.querySelector('[data-mtx-tonight]');
+  var next = tonight || live[0];
+  if (heroBtn && hrefOf(next)) {
+    heroBtn.setAttribute('href', hrefOf(next));
+    if (!tonight) heroBtn.textContent = 'Next fight night';
+  }
+
+  // This Saturday. The RWS card is the Saturday one, so find it by its link.
+  var satBtn = document.querySelector('[data-mtx-saturday]');
+  if (satBtn) {
+    for (var m = 0; m < live.length; m++) {
+      var href = hrefOf(live[m]);
+      if (href && href.indexOf('/rws/') === 0) { satBtn.setAttribute('href', href); break; }
+    }
+  }
+})();
+</script>
+</div>
