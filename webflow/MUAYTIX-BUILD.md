@@ -1138,3 +1138,33 @@ both hit it. Assume any new image slot crops until checked.
 **Slot count not yet confirmed.** There are 14 `Home 1 Brand Image` elements on
 the page across repeated marquee groups, and six logos are needed. The grouping
 needs working out when the files land.
+
+## The nav logo collapsed on phones — cause and fix
+
+Reported as "almost invisible" on mobile while fine on desktop.
+
+**It was not scaled down, it was squeezed sideways**, and it was caused by the
+earlier crop fix. To stop the wordmark being cropped, `.nav-logo-link` had
+`min-width: 0px` set. That removes flexbox's automatic minimum size, which is
+the only thing stopping a flex item being crushed by its siblings.
+
+On desktop the header has room, so nothing happened. On a phone the header is
+`min-height: 60px` and the menu button competes for width, so the logo container
+collapsed to a sliver. The height was still 28px but the width had gone, and
+`object-fit: contain` then shrank the artwork to fit the narrower dimension.
+
+**Fix: `flex-shrink: 0` on the container and the image**, plus `min-width: auto`
+restored. Sizes raised at every breakpoint:
+
+| Breakpoint | Header height | Logo height |
+|---|---|---|
+| Desktop | 80px | 42px |
+| Tablet, ≤991 | 80px | 40px |
+| Large phone, ≤767 | 60px | 38px |
+| Phone, ≤479 | 60px | 36px |
+
+**Lesson: `min-width: 0` is not a harmless way to let something size to its
+content.** On a flex child it removes the crush protection. Use `flex-shrink: 0`
+instead when the intent is "size to content and never smaller".
+
+Worth checking other elements where `min-width: 0` was set for the same reason.
