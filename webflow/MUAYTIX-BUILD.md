@@ -1247,3 +1247,84 @@ hero displayed them. That is strong evidence but it is inference, not a read.
 **Watch for:** the label slot was built for four characters and now holds
 sixteen. If it wraps or crowds on mobile, the fix is on `Text XSmall Medium`
 rather than on the copy.
+
+## About section images: logo and brand icon
+
+Replaced the two template stock portraits under "MuayTix is a Bangkok based
+team" with the two graphics from the Drive folder.
+
+| Slot | Element | Asset |
+|---|---|---|
+| First (left) | `424bf3ea-03ab-2d2f-1db5-a887ec953bf6` | `6ab40203d0a6929108a5da2a` logo |
+| Second (right) | `87e81eef-e56b-eeda-4e06-60b8fd78b175` | `6ab40203193b4c7c526a03c9` brand icon |
+
+Source files: `muaytix-muay-thai-tickets-bangkok-official-logo.jpg` (1200x1200)
+and `muaytix-muay-thai-tickets-bangkok-favicon.png` (1024x1024), both square.
+Converted to WebP for the web: logo 34KB to 23KB lossy, icon 161KB to 75KB
+**lossless** (flat colour with hard edges shows ringing under lossy WebP).
+
+**Dropped "official" from the uploaded filename.** The brief bans that word in
+copy, alt text, meta and schema. Filenames become part of the public asset URL,
+so the source name would have smuggled it onto the site. Uploaded as
+`muaytix-muay-thai-tickets-bangkok-logo.webp` instead.
+
+**The cropping trap bit again, in a new form.** `.home-1-about-image` had width
+and height set to 100% and **no `object-fit` at all**, which means the CSS
+default of `fill`: the image is stretched to the slot's shape. Fine for the
+template's photos, wrong for a square logo, which would have been squashed. Set
+to `object-fit: contain` so the whole graphic shows undistorted. Running count
+of image slots that needed this: four.
+
+**Alt text is interim.** Jason is supplying the real tags. The old alt still
+described the stock portraits ("Woman wearing a cap and jacket with a motion
+blur effect"), which would have been actively wrong, so accurate placeholders
+went in for now.
+
+## Template founder card removed from the hero
+
+Found while mapping the page, not reported by Jason: the hero carried a stock
+photo of a young woman captioned **"Mitchel Jonson, Founder & CEO"**
+(`76ac859f-8802-383f-93d2-99dfa67656b0`, desktop only, hidden on tablet).
+
+Invented person, invented job title, stock photo. The brief's hard rules ban
+all three, and it is the same class of thing as the avatar circles Jason had
+just asked to remove. Hidden the whole profile card. Flagged to him, and it is
+a one-line reversal if he disagrees.
+
+## API notes learned this pass
+
+**`query_styles` never returns style properties**, only id, name and selector.
+`get_styles` with `query: "all"` is the same. The only way to read a style's
+properties through this API is to call `update_style` and read the response,
+which returns the full property set afterwards.
+
+**`query_elements` has no filters and no pagination.** The only query key is
+`element_id`; an empty query returns everything but caps the response at 50
+elements, and there is no offset. To see a whole page, call `get_all_elements`,
+which overflows the token limit and gets written to a file, then parse that file
+locally. That is by far the cheapest route and should be the default.
+
+**Large tool results land in files.** Both `get_all_elements` and Google Drive's
+`download_file_content` write to
+`.claude/projects/<project>/<session>/tool-results/`. For Drive that avoids
+paying tokens for the base64 of a large file. Decode with:
+`json.load(open(path))['content']` then `base64.b64decode`.
+
+**Setting alt text** is `data_element_settings_tool > set_settings`, and the
+shape took several tries:
+```json
+{"operations":[{"element_id":{...},
+  "settings":[{"key":"altText","static_text":{"value":"..."}}]}]}
+```
+The `static_text` wrapper is an object with a `value` key, not a bare string.
+
+**`size: 0` on an asset is normal**, not a failed upload. A known-good asset
+reports it too. The real health check is the `variants` array, which Webflow
+fills asynchronously about three minutes after upload.
+
+## Outstanding
+
+- **Real alt tags** for the two About images, from Jason.
+- **The browser favicon is still not set.** The file is now on the site as a
+  section image, but the actual favicon is a Designer setting and the API does
+  not expose it. Manual job.
