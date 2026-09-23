@@ -1204,3 +1204,46 @@ to 14vw underneath it — which is why mobile was worse than desktop.
 
 **Note the template's own tokens are named `Line Hight`,** misspelled. Left as
 is; renaming risks breaking references.
+
+## Hero tidy-up: descenders, avatars, pricing labels
+
+Three changes in one pass, all published.
+
+**1. Remaining descender overlap.** The earlier fix (92% line-height, 0.08em
+bottom padding) got most of the way but the "g" still clipped. Reasoned it
+out rather than guessing again: IBM Plex Sans Condensed carries roughly 1.2em
+between ascender top and descender bottom. At a 92% line box the overflow is
+split evenly top and bottom, leaving about 0.14em hanging below, which is more
+than the 0.08em of padding underneath it. Raised to 96% line-height and 0.2em
+padding-bottom on `.hero-header` at all four breakpoints, which covers it with
+room to spare. Font sizes untouched at 7.6vw desktop / 11.5vw tablet and below.
+
+**2. Hero avatar circles removed.** Hid `Hero Star Wrapper`
+(`1cdf43e0-d97d-545d-9519-d506454f0830`) rather than the five images inside it,
+so no empty wrapper is left taking up space. This also settles the brief's ban
+on fake avatars, since the five faces were template stock.
+
+**3. Hero tab labels now show pricing.** They were `(01)` through `(04)`.
+
+| Class | Label |
+|---|---|
+| Ringside | 2,500 THB ($77) |
+| Club Class | 1,800 THB ($55) |
+| LEO Section | 1,500 THB ($46) |
+| Third Class | 1,000 THB ($31) |
+| VIP Options (draft) | Price on request |
+
+The USD figures came from Jason. They were checked against the `from-price-thb`
+values already in the CMS and are consistent at roughly 32.5 baht to the dollar.
+
+**Where the label lives.** It is the `main-service-number` field on the Services
+collection, bound to a `Text XSmall Medium` block at
+`1cdf43e0-d97d-545d-9519-d506454f0864`. Worth recording that **the API does not
+expose CMS bindings** — `query_elements` returns the element type and style
+names but says nothing about what feeds its text. The field was identified by
+matching values instead: it held exactly `(01)` to `(05)` in the same order the
+hero displayed them. That is strong evidence but it is inference, not a read.
+
+**Watch for:** the label slot was built for four characters and now holds
+sixteen. If it wraps or crowds on mobile, the fix is on `Text XSmall Medium`
+rather than on the copy.
