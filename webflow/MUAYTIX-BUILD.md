@@ -1347,3 +1347,33 @@ exactly as written and told him what changed, so it is a one-word restore if he
 means to override his own rule here.
 
 The second tag needed no change.
+
+## Numbered section: two real figures added
+
+There is only one numbered section on the homepage, the four cards under the
+About text. No animated counters with `data-target` were found on this page, so
+the earlier note about template counter values does not apply here.
+
+| Card | Before | After |
+|---|---|---|
+| 1 | 7 / Fight nights every week | unchanged |
+| 2 | 1945 / The year Rajadamnern opened | unchanged |
+| 3 | 60 min / Same day ticket delivery | **4,500+ / Tickets sold** |
+| 4 | 7 days / Real people on WhatsApp | **80+ / Nationalities booked with us** |
+
+**Why cards three and four.** Jason gave two figures and did not say which slots
+to use. Cards one and two are distinctive and verifiable: an operational fact
+and the stadium's founding year. Cards three and four were service promises,
+and card four repeated the "7" from card one. Replacing those two gives a
+spread of operations, heritage, scale and reach, with no repeated number. Told
+him the reasoning so he can move them.
+
+**Card structure.** Each card holds two `Text Display Large` blocks, one for the
+number and one for a unit suffix, plus a `Number Subtitle`. The suffix blocks
+held " min" and " days"; both were blanked to a single space rather than
+removed, which is how card one already handles its empty slots. Verified by
+reading the tree back: card 3 now [' ', '4,500+', 'Tickets sold'], card 4 now
+['80+', ' ', 'Nationalities booked with us'].
+
+`set_text` takes `id`, not `element_id`, and must target the child `String`
+node rather than the `Block`.
