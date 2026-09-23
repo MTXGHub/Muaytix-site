@@ -1168,3 +1168,39 @@ content.** On a flex child it removes the crush protection. Use `flex-shrink: 0`
 instead when the intent is "size to content and never smaller".
 
 Worth checking other elements where `min-width: 0` was set for the same reason.
+
+## Hero headline overlapping the image below
+
+Reported as the headline running behind the hero image, on both phone and
+desktop. Read the tokens rather than just shrinking the text:
+
+| Token | Value |
+|---|---|
+| `Heading Text/Heading 1` | **9vw** desktop, **14vw** tablet and mobile |
+| `Line Hight/Line Height Tight` (used by `.hero-header`) | **80%** |
+
+**The size was not really the problem. The 80% line height was.** A line box at
+80% of the font size is shorter than the letters, so descenders — the tail of
+the "g" in Bangkok — hang outside their own line and collide with whatever
+follows. Shrinking the text alone would only have reduced the overlap, not
+removed it.
+
+Fixed on `.hero-header`, leaving the shared tokens alone so other headings are
+unaffected:
+
+| | Was | Now |
+|---|---|---|
+| Line height | 80% | **92%** |
+| Font size, desktop | 9vw | **7.6vw** |
+| Font size, tablet and mobile | 14vw | **11.5vw** |
+| Padding bottom | none | **0.08em** |
+
+The small bottom padding is belt and braces: it reserves descender space in the
+element itself, so this cannot recur if the size changes again.
+
+**Set per breakpoint deliberately.** `.hero-header` had no medium, small or tiny
+overrides, so it was inheriting a desktop value while the font size token jumped
+to 14vw underneath it — which is why mobile was worse than desktop.
+
+**Note the template's own tokens are named `Line Hight`,** misspelled. Left as
+is; renaming risks breaking references.
