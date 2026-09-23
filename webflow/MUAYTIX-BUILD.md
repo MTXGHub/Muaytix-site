@@ -582,3 +582,129 @@ before being overwritten.
 
 `query_elements` returned `429` twice while working through this. Batch actions
 into single calls where possible and expect to retry.
+
+---
+
+# Homepage build brief — progress, 23 September 2026
+
+Working to the written brief. This section records what is done, what the API
+refused, and what is left.
+
+## Two rule breaches found and fixed
+
+Both were mine, introduced before the brief arrived:
+
+- **"Official Tickets"** in the hero eyebrow. The brief bans the word outright
+  because it trips ad and search filters. Now "Rajadamnern Stadium · Bangkok".
+- **"pick your seat"** in the hero body. The brief says tickets, never seats, in
+  CTAs and copy. Replaced with the brief's own body text.
+
+## The brief's meta description fails its own rule
+
+The brief says to verify lengths by running code rather than estimating. Done,
+and the supplied description is **180 characters against its own 155 limit**. It
+also contains "seat", which section 2 bans.
+
+Shortened to 143 characters, checked by script for length, banned words and em
+dashes:
+
+> Book Muay Thai tickets in Bangkok with MuayTix, international ticket partner
+> for Rajadamnern Stadium. Secure checkout and instant confirmation.
+
+Title is fine at 35 characters.
+
+## What the Webflow API will not do
+
+Three jobs in the brief cannot be done through the API. They are Designer work:
+
+| Brief item | Why not |
+|---|---|
+| Rename collections (Featured Works → Events etc.) | No rename action exists. Only fields and items can be changed. Creating fresh collections instead would break every homepage binding, which the brief forbids |
+| Delete the template-info pages | No delete-page action. They are set to draft instead, so they will not publish |
+| Remove the Made in Webflow badge | Site settings, not exposed |
+
+**Also found: `bulk_update_pages` silently ignores the `draft` flag.** It
+accepts the field, returns success, and leaves `draft: false`. `update_page_settings`
+one page at a time works correctly. Nine pages were redone individually.
+
+## CMS, done
+
+Collections reshaped in place. Display names still say the template's words
+until renamed by hand.
+
+| Collection | ID | New fields | Items |
+|---|---|---|---|
+| Featured Works → **Events** | `6ab1813d1cd693d8bed0ab24` | nights, start-time, short-description, ticket-page-link, sort-order, event-brand-colour, show-on-homepage | 6 real, 7 template deleted |
+| Services → **Seat Classes** | `6ab1813d1cd693d8bed0ab8d` | short-description, assigned-seating, from-price-thb, row-guidance, class-colour, sort-order, seating-page-link | 5 real, 5 template deleted |
+| Case Studies → **RWS Links** | `6ab1813d1cd693d8bed0ab6a` | link-url, sort-order, short-description | 4 real, 5 template deleted |
+| **Stadiums** (new) | `6ab3e0f75eaf8a3dcb94c873` | city, opened-year, short-description, image, link | 1, Rajadamnern |
+| Blogs | `6ab1813d1cd693d8bed0ab43` | none | **template items not yet cleared** |
+
+**Seat class colours are my choice, not supplied.** The brief names colours but
+gives no hex values except RWS red. Set to Ringside `#1E9E52`, Club Class
+`#1F5BFF` (the company blue), LEO `#E8A400`, Third Class `#F26B21`, VIP
+`#7B3FA0`. Change freely; they are one CMS field each.
+
+**Event brand colour is set only on RWS** (`#FF1828`). The others are blank
+rather than invented.
+
+## Pages, done
+
+- Homepage SEO title, description and Open Graph replaced
+- Organization and FAQPage JSON-LD written to the homepage as one `@graph`
+  object. The tool rejects a bare array; it takes an object or a raw string
+- 9 pages set to draft: Home B, About B, Service B, Pricing B, Blog B,
+  Instruction, Changelog, License, Style Guide
+- 11 static pages retitled to "… | MuayTix" with placeholder descriptions
+
+**CMS template pages were left alone deliberately.** Their SEO is bound to CMS
+fields, so overwriting with static text would destroy the binding. Their
+descriptions now resolve empty because the template items are gone; fill
+`meta-description` per item instead.
+
+## Hero, done
+
+| Slot | Now reads |
+|---|---|
+| H1 | Muay Thai Tickets in Bangkok |
+| Eyebrow | Rajadamnern Stadium · Bangkok |
+| Overlay headline on the photo | Muay Thai Tickets You Can Trust. |
+| Body | MuayTix sells tickets for Muay Thai at Rajadamnern Stadium in Bangkok, seven nights a week, as the stadium's international ticket partner. Book online, pay in your own currency and show the QR code on your phone at the gate. |
+| Button | BOOK TICKETS |
+
+## Decisions taken, on the record
+
+- **Socials**: Instagram, Facebook, X, Pinterest kept, WhatsApp to be added.
+  This overrides section 6.15, which said to remove X and never mentioned
+  Pinterest. Confirmed directly.
+- **Hero H1**: the big display slot is reused for the H1 rather than deleted, so
+  the page keeps a top level heading for the SEO section to work with.
+
+## Still to do
+
+Section 6 is largely untouched below the hero. Outstanding:
+
+1. Nav links and WhatsApp button
+2. Hero: remove the five avatars, rebuild the two scrolling cards, secondary
+   text link, move the social row to the footer
+3. Logo strip, promotions as text
+4. About statement, stats block (four figures are supplied and true)
+5. Bind Fight Nights to Events, headings and button
+6. Bind Where to Sit to Seat Classes, seating map image
+7. Hide Pricing, Client Stories, Blog
+8. RWS Saturdays section, theme `#FF1828`
+9. The Venue, How Booking Works, First Time? questions
+10. Talk to Us, footer four columns, copyright
+11. Clear the Blogs collection
+12. Alt text pass across every image
+
+## Blocked on assets or answers
+
+- **Seating map**: the Tilda CDN is refused by this sandbox, so the image cannot
+  be fetched. Put it in the Drive folder instead
+- **Contact email**: the brief says read it from the live site. muaytix.com is
+  also refused by the sandbox, and it is obfuscated in the HTML. Needs supplying
+- **Promotion logos** for the strip, and fight photos for events and the two
+  hero cards
+- **Fonts**: Arial Black and Calibri not applied. Keeping the template fonts per
+  the brief's default, flagged as agreed
