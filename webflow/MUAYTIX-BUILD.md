@@ -1031,3 +1031,46 @@ rule, which is aimed at phrases like "Singha Ringside".
 **Webflow generated responsive variants automatically** on upload: 500, 800 and
 1080px wide WebP versions of each. Nothing to do; the page will serve the right
 size. Worth knowing so nobody makes them by hand later.
+
+## Correction: the seat class graphics were in the wrong section
+
+They went into the hero's small cards, because that is the only place on the
+page bound to the Seat Classes collection. They were meant for the **"Four seat
+classes, one ring"** block lower down.
+
+### Why: that section is not CMS driven at all
+
+`Our Expertise` contains **no collection list**. It is five hardcoded rows with
+five fixed image slots (`Home 1 Service Image`) that still held template stock
+photography — basketball, football, macarons, a man in a beanie, a headphones
+silhouette. **Nothing put in the CMS will ever appear there.**
+
+This matters beyond this one fix: **the brief assumes this section can be bound
+to Seat Classes, and as built it cannot be.** Either it is filled by hand, as
+done here, or it gets rebuilt as a Collection List.
+
+Filled by hand for now, keeping the template structure as the brief requires:
+
+| Row | Class | Image element |
+|---|---|---|
+| 1 | Ringside | `cfe404eb-…4c1d` |
+| 2 | Club Class | `f02b7aa6-…0b4c` |
+| 3 | LEO Section | `b466c01f-…47f2` |
+| 4 | Third Class | `24f6a1be-…98ba` |
+
+Each row now carries the class name, its description with the from price, four
+tag chips, and the supplied alt text. Section eyebrow changed from "SERVICE" to
+"WHERE TO SIT", row labels from "SERVICE" to "SEAT CLASS".
+
+**Each row holds its name and label twice** — once for the collapsed state and
+once for the open state. Both must be set or the accordion shows the old text
+when opened.
+
+### Still to do here
+
+- **Row 5 is still template content** ("Content Strategy", headphones photo) and
+  needs hiding. Hit a `429` before it was done
+- The graphics are **still also on the hero cards**, where they are cropped
+  because the slot is landscape and the artwork is square. Per the brief those
+  hero cards should be "Tonight" and "This Saturday RWS" anyway, so that section
+  needs rethinking rather than just clearing
