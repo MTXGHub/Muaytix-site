@@ -1,0 +1,191 @@
+<!-- GSAP CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+window.addEventListener('load', function () {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const counters = document.querySelectorAll('[data-target]');
+
+  counters.forEach(function (el, index) {
+    const target    = parseFloat(el.getAttribute('data-target'));
+    const isDecimal = target % 1 !== 0;
+    const suffix    = el.getAttribute('data-suffix') || '';
+
+    gsap.set(el, { opacity: 0, y: 0 });
+
+    ScrollTrigger.create({
+      trigger : el,
+      start   : 'top 85%',
+      once    : true,
+      onEnter : function () {
+
+        const entryDelay = index * 0.3;
+        gsap.to(el, { opacity: 1, duration: 0.3, delay: entryDelay });
+
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val      : target,
+          duration : 3.5,
+          delay    : entryDelay,
+          ease     : 'power2.out',
+          onUpdate : function () {
+            el.innerText = (isDecimal
+              ? obj.val.toFixed(1)
+              : Math.floor(obj.val).toLocaleString('en-GB')) + suffix;
+          },
+          onComplete: function () {
+            // Split digits after count ends
+            const finalText = el.innerText;
+            el.innerHTML = '';
+
+            finalText.split('').forEach(function (char, i) {
+              const span = document.createElement('span');
+              span.textContent = char;
+              span.style.display = 'inline-block';
+              el.appendChild(span);
+
+              // Each digit bounces with random delay
+              const randomDelay = Math.random() * 0.4;
+              const randomHeight = -(15 + Math.random() * 20);
+
+              gsap.to(span, {
+                y        : randomHeight,
+                duration : 0.35,
+                delay    : randomDelay,
+                ease     : 'power2.out',
+                onComplete: function () {
+                  gsap.to(span, {
+                    y        : 0,
+                    duration : 0.8,
+                    ease     : 'bounce.out'
+                  });
+                }
+              });
+            });
+          }
+        });
+      }
+    });
+  });
+});
+</script>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+(function () {
+
+  /* ============================================================
+     ✏️  EDIT YOUR SERVICE NAMES HERE
+  ============================================================ */
+  var SERVICE_NAMES = [
+    "UI / UX Design",
+    "Web Development",
+    "Brand Identity",
+    "Growth Ops",
+    "Content Strategy"
+  ];
+  /* ============================================================ */
+
+  function initHero() {
+var el = document.querySelector(".hero-subtitle span");
+    if (!el) return;
+
+    var items = SERVICE_NAMES.filter(Boolean);
+    if (!items.length) return;
+
+    el.innerHTML = '<span class="h-cycle"></span><span class="h-line"></span>';
+
+    var cycleEl = el.querySelector(".h-cycle");
+    var lineEl  = el.querySelector(".h-line");
+
+    gsap.set(el,      { position: "relative", display: "inline-block", whiteSpace: "nowrap" });
+    gsap.set(cycleEl, { display: "inline-block" });
+    gsap.set(lineEl,  {
+      display: "block", position: "absolute",
+      bottom: -5, left: 0, height: 2, width: "0%",
+      backgroundColor: "currentColor", borderRadius: 99,
+      transformOrigin: "left center",
+    });
+
+    /* Reserve width of longest word — no layout shifts */
+    var m = document.createElement("span");
+    m.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none;font:inherit;";
+    el.appendChild(m);
+    var maxW = 0;
+    items.forEach(function(w) { m.textContent = w; maxW = Math.max(maxW, m.offsetWidth); });
+    el.removeChild(m);
+    gsap.set(el, { minWidth: maxW });
+
+    var idx = 0;
+
+    /* ── ENTER: each letter flies up from below + unblurs ── */
+    function reveal(text, onDone) {
+      var chars = text.split("");
+
+      cycleEl.innerHTML = chars.map(function(ch) {
+        var safe = ch === " " ? " " : ch;
+        return '<span class="hc" style="display:inline-block;opacity:0;transform:translateY(20px);filter:blur(8px)">' + safe + '</span>';
+      }).join("");
+
+      var spans = Array.from(cycleEl.querySelectorAll(".hc"));
+      var tl = gsap.timeline({ onComplete: onDone });
+
+      tl.to(lineEl, { width: "100%", duration: 0.55, ease: "power2.inOut" }, 0.1);
+
+      spans.forEach(function(span, i) {
+        tl.to(span, {
+          opacity: 1, y: 0, filter: "blur(0px)",
+          duration: 0.5, ease: "expo.out"
+        }, i * 0.055);
+      });
+
+      return tl;
+    }
+
+    /* ── EXIT: each letter flies up + blurs out ── */
+    function exit(onDone) {
+      var spans = Array.from(cycleEl.querySelectorAll(".hc"));
+      var tl = gsap.timeline({ onComplete: onDone });
+
+      tl.to(lineEl, { width: "0%", duration: 0.22, ease: "power3.in" }, 0);
+
+      spans.forEach(function(span, i) {
+        tl.to(span, {
+          opacity: 0, y: -18, filter: "blur(10px)",
+          duration: 0.28, ease: "power3.in"
+        }, i * 0.022);
+      });
+
+      return tl;
+    }
+
+    function next() {
+      var word = items[idx];
+      idx = (idx + 1) % items.length;
+      reveal(word, function() {
+        gsap.delayedCall(2.2, function() {
+          exit(function() {
+            gsap.delayedCall(0.15, next);
+          });
+        });
+      });
+    }
+
+    next();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHero);
+  } else {
+    initHero();
+  }
+
+  window.Webflow && window.Webflow.push(initHero);
+})();
+</script>

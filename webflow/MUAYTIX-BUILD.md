@@ -1377,3 +1377,71 @@ reading the tree back: card 3 now [' ', '4,500+', 'Tickets sold'], card 4 now
 
 `set_text` takes `id`, not `element_id`, and must target the child `String`
 node rather than the `Block`.
+
+## The numbers were never mine to set: animated counters
+
+Jason reported the section showing 225 tickets and 92 nationalities, not the
+figures set in the previous pass. **The text edits were real but invisible.**
+
+The homepage footer carries a GSAP counter that does this:
+
+```js
+const counters = document.querySelectorAll('[data-target]');
+...
+el.innerText = isDecimal ? obj.val.toFixed(1) : Math.floor(obj.val);
+```
+
+It reads a `data-target` attribute on each number block, animates from zero to
+that value, and **overwrites `innerText`**. The four blocks still held the
+Avoora values 74, 95, 225, 92. So whatever text was typed into the block, the
+script replaced it on scroll. That is exactly the four numbers Jason was seeing.
+
+**Lesson: on this template, setting the text of a number block does nothing.**
+The attribute is the source of truth. Check `get_attributes` on any number
+before editing it. The attributes do not appear in `settings`, so the earlier
+sweep for counter elements missed them.
+
+### Two script bugs fixed while in there
+
+1. **No thousands separator.** `Math.floor(obj.val)` renders 4500 as "4500".
+   Changed to `Math.floor(obj.val).toLocaleString('en-GB')` so it reads "4,500".
+   Latent for the template, whose numbers were all under 1000.
+2. **No way to add a plus sign.** The counter owns `innerText`, so a "+" typed
+   into the block is wiped, and the sibling suffix blocks sit in inconsistent
+   DOM order across cards. Added a `data-suffix` attribute that the script
+   appends, which removes the ordering question entirely.
+
+Script validated with `new Function()` before pushing, and the output format
+checked: 4,500+ / 81 / 363. Copy kept at `webflow/homepage-footer-code.html`.
+
+### Final state of the numbered section
+
+| Card | Number | Label | data-target |
+|---|---|---|---|
+| 1 | 363 | Fight nights this year | 363 |
+| 2 | hidden | | was 95 |
+| 3 | 4,500+ | Tickets sold | 4500 plus data-suffix "+" |
+| 4 | 81 | Nationalities booked | 81 |
+
+Card 2 held "The year Rajadamnern opened", which Jason said is not relevant
+here. Hidden, along with one of the three dividers so the remaining three cards
+space evenly. **There is now a gap: three cards where the layout holds four.**
+Flagged to him for a fourth fact.
+
+Note 81 is exact, so no plus sign. 4,500 carries one.
+
+## Dormant template script worth knowing about
+
+The same footer holds a second script that cycles words in the hero subtitle,
+still loaded with Avoora's agency services:
+
+```js
+var SERVICE_NAMES = ["UI / UX Design","Web Development","Brand Identity",
+                     "Growth Ops","Content Strategy"];
+```
+
+It targets `.hero-subtitle span`. The hero subtitle currently has no child
+`span`, so `if (!el) return;` bails and nothing renders. **It is inert today but
+one span away from putting "UI / UX Design" in the MuayTix hero.** Left exactly
+as found rather than changed unasked. Obvious repurposing would be the four seat
+class names. Raised with Jason.
