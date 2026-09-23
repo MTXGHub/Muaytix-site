@@ -1445,3 +1445,61 @@ It targets `.hero-subtitle span`. The hero subtitle currently has no child
 one span away from putting "UI / UX Design" in the MuayTix hero.** Left exactly
 as found rather than changed unasked. Obvious repurposing would be the four seat
 class names. Raised with Jason.
+
+## Numbered section trimmed to two facts, hero cycle script deleted, Third Class card fixed
+
+Three separate requests in one pass.
+
+### Numbered section
+
+Jason called "363 fight nights this year" pointless and gave the exact
+nationality figure as 80, not 81 (his correction, not my error, but noted so
+the source of the earlier number is on record). Now:
+
+| Card | State |
+|---|---|
+| 1, fight nights | hidden, along with its divider |
+| 2, founding year | hidden already from the previous pass |
+| 3, tickets sold | 4,500+ (unchanged) |
+| 4, nationalities | **80+** (`data-target` 80, `data-suffix` "+") |
+
+Two of four cards now show. Jason knows there is a gap and will supply a third
+fact when he has one; left as is rather than guessed at.
+
+### Hero subtitle word-cycle script removed
+
+The footer's second script block, which cycled Avoora's service names
+("UI / UX Design", "Web Development"...) into a hero element that does not
+exist on this page, is deleted outright. The counter script is untouched and
+still in the footer alone. No visual change today since the script was inert,
+but it removes a live landmine: one hero-subtitle span away from Avoora agency
+copy appearing in the MuayTix hero.
+
+### Third Class card: fixed the actual fault, not a phantom one
+
+Jason described seeing "Ringside, Club Class, LEO Section, then Service, Growth
+Ops" instead of Third Class. Checked the front-facing Third Class card first,
+which already read correctly (title, tags, image, price all correct from the
+earlier seat-class pass). The fault was one layer behind it.
+
+**Cause found:** each seat class card carries a second, hidden "BG" block, a
+hover/scroll state overlay that mirrors the card's own label. Cards 1 to 3 had
+their BG overlay text updated when the seat classes went in. Card 4's BG
+overlay was never touched, and still read the Avoora template's fifth service:
+eyebrow "SERVICE", number "(04)", text "Growth Ops". That is exactly what
+Jason described seeing appear in place of "Third Class".
+
+Fixed: `SEAT CLASS` eyebrow and `Third Class` text on the card 4 BG overlay,
+matching the eyebrow used on the other three.
+
+**Found while in the same card, not reported by Jason:** two of Third Class's
+four tag chips were also still template values, "Core WebVitals" and "SEO
+Structure" (an SEO/dev services pair, clearly Avoora's, clearly wrong for a
+ticket seller). Replaced with "Opens when stadium fills" (from the CMS row
+guidance: "Only opens when the rest of the stadium is near full") and "From
+1,000 baht", matching the price-as-last-tag pattern the other three cards use.
+
+**Card 5 checked and left alone.** A fifth seat-class card slot exists in the
+template ("Content Strategy") but both its front block and BG overlay are
+already set to `visibility: false`. Not shown, not a live fault, no action
+needed.
