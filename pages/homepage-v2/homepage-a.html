@@ -103,23 +103,6 @@
 .mtx-hp__links a:hover { text-decoration: underline; }
 .mtx-hp__links li + li::before { content: "\00b7"; color: var(--hp-muted); margin: 0 12px; }
 
-/* The week. Each row is one link, so the whole row is the target rather than
-   the few words of the promoter's name. */
-.mtx-hp__nights { border-top: 1px solid var(--hp-line); }
-.mtx-hp .mtx-hp__nights { margin-top: 26px; }
-.mtx-hp__nights li { border-bottom: 1px solid var(--hp-line); }
-.mtx-hp__nights a {
-  display: grid; grid-template-columns: 230px 1fr; gap: 18px; align-items: baseline;
-  padding: 18px 0; text-decoration: none; color: inherit; transition: color .15s ease;
-}
-.mtx-hp__nights a:hover { color: var(--hp-blue); }
-.mtx-hp__day {
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
-  font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-blue);
-}
-.mtx-hp__what { font-size: 16.5px; color: var(--hp-muted); }
-.mtx-hp__what b { color: var(--hp-ink); font-weight: 700; }
-
 /* Seat map. A plain link, so the phone's own pinch-to-zoom does the work and
    there is no lightbox to go wrong. */
 .mtx-hp__mapfig {
@@ -159,9 +142,6 @@
    down the file can quietly outrank them. A middot separator drawn with
    li + li::before lands at the START of a wrapped line, so below the wrap
    point the separators go and the items stack instead. */
-@media (max-width: 860px) {
-  .mtx-hp__nights a { grid-template-columns: 1fr; gap: 5px; }
-}
 @media (max-width: 620px) {
   .mtx-hp__shell { width: min(100% - 28px, 1180px); }
   .mtx-hp__cta .mtx-hp__btn { width: 100%; }

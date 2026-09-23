@@ -86,20 +86,35 @@
 .mtx-hp__links a:hover { text-decoration: underline; }
 .mtx-hp__links li + li::before { content: "\00b7"; color: var(--hp-muted); margin: 0 12px; }
 
-.mtx-hp__nights { border-top: 1px solid var(--hp-line); }
-.mtx-hp .mtx-hp__nights { margin-top: 26px; }
-.mtx-hp__nights li { border-bottom: 1px solid var(--hp-line); }
-.mtx-hp__nights a, .mtx-hp__nights .mtx-hp__row {
-  display: grid; grid-template-columns: 230px 1fr; gap: 18px; align-items: baseline;
-  padding: 18px 0; text-decoration: none; color: inherit; transition: color .15s ease;
+.mtx-hp__evs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mtx-hp .mtx-hp__evs { margin-top: 30px; }
+.mtx-hp__ev {
+  position: relative; display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--hp-line); padding: 28px 24px 26px;
 }
-.mtx-hp__nights a:hover { color: var(--hp-blue); }
-.mtx-hp__day {
+.mtx-hp__ev::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 110px; height: 7px;
+  background: var(--hp-blue); transform: skewX(-25deg); transform-origin: left;
+}
+.mtx-hp__ev h3 {
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
-  font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-blue);
+  font-size: 15px; letter-spacing: .12em; text-transform: uppercase; color: var(--hp-muted);
 }
-.mtx-hp__what { font-size: 16.5px; color: var(--hp-muted); }
-.mtx-hp__what b { color: var(--hp-ink); font-weight: 700; }
+
+.mtx-hp .mtx-hp__hook {
+  margin-top: 8px;
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif; font-weight: 800;
+  font-size: clamp(25px, 2.9vw, 33px); line-height: 1.02; text-transform: uppercase;
+  letter-spacing: .01em; color: var(--hp-ink);
+}
+.mtx-hp .mtx-hp__evbody { margin-top: 14px; font-size: 16px; color: var(--hp-muted); }
+.mtx-hp .mtx-hp__when {
+  margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--hp-line);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 14px; letter-spacing: .09em; text-transform: uppercase; color: var(--hp-muted);
+}
+.mtx-hp .mtx-hp__evcta { margin-top: auto; padding-top: 20px; }
+.mtx-hp__evcta .mtx-hp__btn { width: 100%; }
 
 .mtx-hp__mapfig {
   display: block; position: relative; margin-top: 30px;
@@ -133,7 +148,7 @@
 .mtx-hp__partners li + li::before { content: "\00b7"; color: #6e6e75; margin: 0 12px; }
 
 @media (max-width: 860px) {
-  .mtx-hp__nights a, .mtx-hp__nights .mtx-hp__row { grid-template-columns: 1fr; gap: 5px; }
+  .mtx-hp__evs { grid-template-columns: 1fr; }
 }
 @media (max-width: 620px) {
   .mtx-hp__shell { width: min(100% - 28px, 1180px); }
@@ -143,8 +158,9 @@
   .mtx-hp__links li + li::before { content: none; }
   .mtx-hp .mtx-hp__partners { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 16px; }
   .mtx-hp__partners li + li::before { content: none; }
-}
-</style>
+  
+  .mtx-hp__evcta .mtx-hp__btn { padding: 0 12px; letter-spacing: .03em; }
+}</style>
 
   <section class="mtx-hp__band mtx-hp__tonight">
     <div class="mtx-hp__shell">
@@ -159,7 +175,6 @@
       <p class="mtx-hp__body">RWS is Saturday night at the stadium: seven professional bouts, Thai and international fighters, and the judges' scores shown after every round so anyone can follow it. It is the busiest night of the week and the one most visitors come for.</p>
       <p class="mtx-hp__cta"><a class="mtx-hp__btn mtx-hp__btn--red" href="/rws/2026-09-26">This Saturday's event</a></p>
       <ul class="mtx-hp__links">
-        <li><a href="/rws/tickets">RWS tickets</a></li>
         <li><a href="/rws/schedule">RWS schedule</a></li>
         <li><a href="/rws/fight-card">RWS fight card</a></li>
         <li><a href="/rws/">About RWS</a></li>
@@ -169,31 +184,47 @@
 
   <section class="mtx-hp__band" id="the-week">
     <div class="mtx-hp__shell">
-      <span class="mtx-hp__kicker">The rest of the week</span>
-      <h2>Six more nights, five promoters</h2>
+      <span class="mtx-hp__kicker">The week at Rajadamnern</span>
+      <h2>Five nights, five different fights</h2>
       <p class="mtx-hp__body">A different promoter takes the ring each night, each with its own format and crowd.</p>
-      <ul class="mtx-hp__nights">
-        <li><a href="/kiatpetch-muay-thai">
-          <span class="mtx-hp__day">Sunday</span>
-          <span class="mtx-hp__what"><b>Kiatpetch Muay Thai.</b> Traditional five-round Muay Thai from one of Thailand's established promoters.</span>
-        </a></li>
-        <li><a href="/rajadamnern-knockout">
-          <span class="mtx-hp__day">Monday, Tuesday and Friday</span>
-          <span class="mtx-hp__what"><b>Rajadamnern Knockout.</b> Seven three-round bouts, an earlier finish and the easiest first night.</span>
-        </a></li>
-        <li><span class="mtx-hp__row">
-          <span class="mtx-hp__day">Some Mondays</span>
-          <span class="mtx-hp__what"><b>All Star Fight.</b></span>
-        </span></li>
-        <li><a href="/new-power-muay-thai">
-          <span class="mtx-hp__day">Wednesday</span>
-          <span class="mtx-hp__what"><b>New Power Muay Thai.</b> Nine five-round bouts and the loudest crowd of the week.</span>
-        </a></li>
-        <li><a href="/petchyindee-muay-thai">
-          <span class="mtx-hp__day">Thursday</span>
-          <span class="mtx-hp__what"><b>Petchyindee Muay Thai.</b> Hand-picked fighters and a slower, technical pace.</span>
-        </a></li>
-      </ul>
+
+      <div class="mtx-hp__evs">
+        <article class="mtx-hp__ev">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__hook">7 fights. 3 rounds. 80% knockout rate.</p>
+          <p class="mtx-hp__evbody">Modern three-round Muay Thai inside Bangkok's historic Rajadamnern Stadium. Fast fights, Thai and international challengers, Wai Kru, live traditional music and an event built around decisive action.</p>
+          <p class="mtx-hp__when">Monday, Tuesday &amp; Friday &middot; Fights from 7:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/rajadamnern-knockout">View Knockout Tickets</a></p>
+        </article>
+        <article class="mtx-hp__ev">
+          <h3>New Power Muay Thai</h3>
+          <p class="mtx-hp__hook">The long game of Muay Thai.</p>
+          <p class="mtx-hp__evbody">Traditional five-round fights where timing, scoring and momentum develop round by round. Live sarama music and a knowledgeable local crowd create one of Rajadamnern's most traditional fight-night experiences.</p>
+          <p class="mtx-hp__when">Wednesday &middot; Fights from 6:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/new-power-muay-thai">View New Power Tickets</a></p>
+        </article>
+        <article class="mtx-hp__ev">
+          <h3>Petchyindee Muay Thai</h3>
+          <p class="mtx-hp__hook">Technique. Timing. Then everything can change.</p>
+          <p class="mtx-hp__evbody">Watch fighters use balance, control and ring intelligence before the pressure suddenly opens into powerful kicks, clinching exchanges and explosive attacks. A Thursday night shaped by generations of Muay Thai knowledge.</p>
+          <p class="mtx-hp__when">Thursday &middot; Fights from 6:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/petchyindee-muay-thai">View Petchyindee Tickets</a></p>
+        </article>
+        <article class="mtx-hp__ev">
+          <h3>RWS Rajadamnern World Series</h3>
+          <p class="mtx-hp__hook">Rajadamnern's flagship Saturday night.</p>
+          <p class="mtx-hp__evbody">Elite Thai and international fighters meet in fast three-round contests with open scoring, major-event production and championship stakes. Traditional Muay Thai meets the atmosphere of a modern international fight arena.</p>
+          <p class="mtx-hp__when">Saturday &middot; Doors open 6:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/rws/tickets">View RWS Tickets</a></p>
+        </article>
+        <article class="mtx-hp__ev">
+          <h3>Kiatpetch Muay Thai</h3>
+          <p class="mtx-hp__hook">A real Sunday night at Rajadamnern.</p>
+          <p class="mtx-hp__evbody">Traditional five-round Muay Thai meets faster three-round contests, with technical Thai fighters, live traditional music and a local crowd following every change in momentum.</p>
+          <p class="mtx-hp__when">Sunday &middot; Fights from 6:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/kiatpetch-muay-thai">View Kiatpetch Tickets</a></p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -234,7 +265,6 @@
     <div class="mtx-hp__shell">
       <h2>Who you are booking with</h2>
       <p class="mtx-hp__body">MuayTix is a Bangkok-based team. Every ticket comes from the stadium's own allocation, arrives by email as a QR code e-ticket, and is backed by real people on WhatsApp seven days a week. If we cannot provide the tickets you booked, you choose an alternative seat class or a full refund the same day.</p>
-      <p class="mtx-hp__cta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="https://wa.me/66922706095">WhatsApp MuayTix</a></p>
       <p class="mtx-hp__partlabel">Tickets sold for</p>
       <ul class="mtx-hp__partners">
         <li>Rajadamnern Stadium</li><li>RWS</li><li>Rajadamnern Knockout</li>
