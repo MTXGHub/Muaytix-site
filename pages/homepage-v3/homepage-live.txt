@@ -95,6 +95,8 @@
 
 .mtx-hp__nights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .mtx-hp .mtx-hp__nights { margin-top: 30px; }
+
+.mtx-hp__night:nth-child(n+6) { display: none; }
 .mtx-hp__night {
   display: flex; flex-direction: column;
   background: #fff; border: 1px solid var(--hp-line); padding: 26px 22px 24px;
@@ -320,37 +322,91 @@
       <h2>On tonight and this week</h2>
       <p>Every night is a different event. Tonight is first. Tap a night to see the details and book.</p>
 
+      
       <ul class="mtx-hp__nights" data-mtx-week>
-        <li class="mtx-hp__night mtx-hp__night--now" data-mtx-date="2026-09-23">
-          <span class="mtx-hp__tag">Tonight</span>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-23" data-mtx-cutoff="2026-09-23T10:30:00Z">
           <h3>New Power Muay Thai</h3>
           <p class="mtx-hp__when">Wednesday 23 September</p>
           <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/new-power-muay-thai/2026-09-23">Book Tickets</a></p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/new-power-muay-thai/2026-09-23">Book Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-09-24">
+        <li class="mtx-hp__night" data-mtx-date="2026-09-24" data-mtx-cutoff="2026-09-24T10:30:00Z">
           <h3>Petchyindee Muay Thai</h3>
           <p class="mtx-hp__when">Thursday 24 September</p>
           <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
           <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/petchyindee-muay-thai/2026-09-24">Book Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-09-25">
+        <li class="mtx-hp__night" data-mtx-date="2026-09-25" data-mtx-cutoff="2026-09-25T11:30:00Z">
           <h3>Rajadamnern Knockout</h3>
           <p class="mtx-hp__when">Friday 25 September</p>
           <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
           <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-09-25">Book Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-09-26">
+        <li class="mtx-hp__night" data-mtx-date="2026-09-26" data-mtx-cutoff="2026-09-26T11:40:00Z">
           <h3>RWS Rajadamnern World Series</h3>
           <p class="mtx-hp__when">Saturday 26 September</p>
           <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
           <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/2026-09-26">Book Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-09-27">
+        <li class="mtx-hp__night" data-mtx-date="2026-09-27" data-mtx-cutoff="2026-09-27T10:30:00Z">
           <h3>Kiatpetch Muay Thai</h3>
           <p class="mtx-hp__when">Sunday 27 September</p>
           <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
           <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/kiatpetch-muay-thai/2026-09-27">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-29" data-mtx-cutoff="2026-09-29T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Tuesday 29 September</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-09-29">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-30" data-mtx-cutoff="2026-09-30T10:30:00Z">
+          <h3>New Power Muay Thai</h3>
+          <p class="mtx-hp__when">Wednesday 30 September</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/new-power-muay-thai/2026-09-30">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-01" data-mtx-cutoff="2026-10-01T10:30:00Z">
+          <h3>Petchyindee Muay Thai</h3>
+          <p class="mtx-hp__when">Thursday 1 October</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/petchyindee-muay-thai/2026-10-01">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-02" data-mtx-cutoff="2026-10-02T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Friday 2 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-02">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-03" data-mtx-cutoff="2026-10-03T11:40:00Z">
+          <h3>RWS Rajadamnern World Series</h3>
+          <p class="mtx-hp__when">Saturday 3 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/2026-10-03">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-04" data-mtx-cutoff="2026-10-04T10:30:00Z">
+          <h3>Kiatpetch Muay Thai</h3>
+          <p class="mtx-hp__when">Sunday 4 October</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/kiatpetch-muay-thai/2026-10-04">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-05" data-mtx-cutoff="2026-10-05T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Monday 5 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-05">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-06" data-mtx-cutoff="2026-10-06T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Tuesday 6 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-06">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-07" data-mtx-cutoff="2026-10-07T10:30:00Z">
+          <h3>New Power Muay Thai</h3>
+          <p class="mtx-hp__when">Wednesday 7 October</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/new-power-muay-thai/2026-10-07">Book Tickets</a></p>
         </li>
       </ul>
 
@@ -668,41 +724,47 @@
   var list = document.querySelector('[data-mtx-week]');
   if (!list) return;
 
+  var SHOW = 5;
   var now = new Date();
+
   var bkk = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + 7 * 3600000);
   function two(n) { return (n < 10 ? '0' : '') + n; }
   var today = bkk.getFullYear() + '-' + two(bkk.getMonth() + 1) + '-' + two(bkk.getDate());
 
-  var cards = [].slice.call(list.querySelectorAll('[data-mtx-date]'));
   var live = [];
-
+  var cards = [].slice.call(list.querySelectorAll('[data-mtx-cutoff]'));
   for (var i = 0; i < cards.length; i++) {
-    var card = cards[i];
-    if (card.getAttribute('data-mtx-date') < today) {
-      card.parentNode.removeChild(card);   // the night has gone
+    var shuts = new Date(cards[i].getAttribute('data-mtx-cutoff'));
+
+    if (!isNaN(shuts) && now >= shuts) {
+      cards[i].parentNode.removeChild(cards[i]);
       continue;
     }
-    live.push(card);
+    live.push(cards[i]);
   }
   if (!live.length) return;
 
   for (var j = 0; j < live.length; j++) {
-    var isNow = live[j].getAttribute('data-mtx-date') === today;
-    live[j].classList.toggle('mtx-hp__night--now', isNow);
-    var tag = live[j].querySelector('.mtx-hp__tag');
+    var card = live[j];
+
+    card.style.display = j < SHOW ? '' : 'none';
+
+    var isNow = j === 0 && card.getAttribute('data-mtx-date') === today;
+    card.className = 'mtx-hp__night' + (isNow ? ' mtx-hp__night--now' : '');
+
+    var tag = card.querySelector('.mtx-hp__tag');
     if (isNow && !tag) {
       tag = document.createElement('span');
       tag.className = 'mtx-hp__tag';
       tag.textContent = 'Tonight';
-      live[j].insertBefore(tag, live[j].firstChild);
+      card.insertBefore(tag, card.firstChild);
     } else if (!isNow && tag) {
       tag.parentNode.removeChild(tag);
     }
 
-    var btn = live[j].querySelector('.mtx-hp__nightcta .mtx-hp__btn');
+    var btn = card.querySelector('.mtx-hp__nightcta .mtx-hp__btn');
     if (btn) {
-      btn.classList.toggle('mtx-hp__btn--blue', isNow);
-      btn.classList.toggle('mtx-hp__btn--outline', !isNow);
+      btn.className = 'mtx-hp__btn ' + (isNow ? 'mtx-hp__btn--blue' : 'mtx-hp__btn--outline');
     }
   }
 
@@ -711,15 +773,12 @@
     return a && a.getAttribute('href');
   }
 
-  var tonight = null;
-  for (var k = 0; k < live.length; k++) {
-    if (live[k].getAttribute('data-mtx-date') === today) { tonight = live[k]; break; }
-  }
+  var next = live[0];
   var heroBtn = document.querySelector('[data-mtx-tonight]');
-  var next = tonight || live[0];
   if (heroBtn && hrefOf(next)) {
     heroBtn.setAttribute('href', hrefOf(next));
-    if (!tonight) heroBtn.textContent = 'Next fight night';
+    heroBtn.textContent =
+      next.getAttribute('data-mtx-date') === today ? 'Tonight' : 'Next fight night';
   }
 
   var satBtn = document.querySelector('[data-mtx-saturday]');

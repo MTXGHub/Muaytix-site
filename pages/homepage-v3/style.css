@@ -120,6 +120,11 @@
    card, so the eye lands on the night the guest can still buy for. */
 .mtx-hp__nights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .mtx-hp .mtx-hp__nights { margin-top: 30px; }
+/* Fourteen nights are in the markup; five are on screen. The script removes
+   nights whose booking has closed, and the next one moves up on its own. So
+   the block keeps itself right for a fortnight, and a reader with no
+   JavaScript still sees five real nights rather than fourteen. */
+.mtx-hp__night:nth-child(n+6) { display: none; }
 .mtx-hp__night {
   display: flex; flex-direction: column;
   background: #fff; border: 1px solid var(--hp-line); padding: 26px 22px 24px;
