@@ -84,6 +84,57 @@
 .mtx-ok__day { display: block; margin-top: 7px; font-size: 14px; color: var(--ok-muted); }
 .mtx-ok__clock--home .mtx-ok__city { color: var(--ok-blue); }
 
+/* Two lanes: tonight, and everything else. Tonight gets the green because it
+   is the one a guest reading this on the night actually needs. */
+.mtx-ok__lane {
+  margin-top: 22px; background: #fff; border: 1px solid var(--ok-line);
+  border-radius: 12px; padding: 22px 20px;
+}
+.mtx-ok__lane--now { border-color: var(--ok-green); box-shadow: 0 0 0 1px var(--ok-green); }
+.mtx-ok__lanetag {
+  display: block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--ok-muted);
+}
+.mtx-ok__lane--now .mtx-ok__lanetag { color: var(--ok-green); }
+.mtx-ok__lane h3 { margin-top: 7px; font-size: 22px; line-height: 1.12; }
+.mtx-ok__big {
+  margin-top: 10px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: clamp(32px, 4.4vw, 44px); line-height: 1; color: var(--ok-green);
+}
+.mtx-ok .mtx-ok__lanep { margin-top: 10px; font-size: 16px; color: var(--ok-muted); }
+
+.mtx-ok__runs { width: 100%; border-collapse: collapse; margin-top: 18px; }
+.mtx-ok__runs th, .mtx-ok__runs td { text-align: left; padding: 11px 10px; border-bottom: 1px solid var(--ok-line); }
+.mtx-ok__runs thead th {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ok-muted);
+  border-bottom: 2px solid var(--ok-line);
+}
+.mtx-ok__runs tbody th {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 15px; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap;
+}
+.mtx-ok__runs td b {
+  display: block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 21px; line-height: 1; font-variant-numeric: tabular-nums;
+}
+.mtx-ok__runs td span { display: block; margin-top: 3px; font-size: 12.5px; color: var(--ok-muted); }
+.mtx-ok__runs tbody tr:last-child th, .mtx-ok__runs tbody tr:last-child td { border-bottom: 0; }
+.mtx-ok__runs--home th, .mtx-ok__runs--home td b { color: var(--ok-blue); }
+/* Visually hidden, still read aloud. */
+.mtx-ok__vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 520px) {
+  .mtx-ok__lane { padding: 18px 15px; }
+  .mtx-ok__runs th, .mtx-ok__runs td { padding: 10px 5px; }
+  .mtx-ok__runs tbody th { font-size: 13.5px; }
+  .mtx-ok__runs td b { font-size: 18px; }
+  .mtx-ok__runs td span { font-size: 11.5px; }
+  .mtx-ok__runs thead th { font-size: 10px; letter-spacing: .08em; }
+}
+
 /* What happens next */
 .mtx-ok__rows { padding: clamp(34px, 4.5vw, 54px) 0; }
 .mtx-ok__row {
@@ -148,7 +199,6 @@
 
       <div class="mtx-ok__flagrow">
         <span class="mtx-ok__flag">
-          <!-- Thailand. Five bands: red, white, blue at double height, white, red. -->
           <svg viewBox="0 0 900 600" aria-label="Flag of Thailand" role="img">
             <rect width="900" height="600" fill="#A51931"/>
             <rect y="100" width="900" height="400" fill="#F4F5F8"/>
@@ -158,29 +208,50 @@
         <span>Dispatched from Bangkok</span>
       </div>
 
-      <h2>Your tickets are sent at the next dispatch</h2>
-      <p class="mtx-ok__bandsub">Tickets are released in batches from our Bangkok office. Yours go out at the next one, wherever in the world you are reading this.</p>
+      <h2>When your tickets arrive</h2>
 
-      <!-- ===== THE DISPATCH TIME. This is the only thing on the page that ===== -->
-      <!-- ===== goes out of date. All three are the same moment.           ===== -->
-      <ul class="mtx-ok__clocks">
-        <li class="mtx-ok__clock mtx-ok__clock--home">
-          <span class="mtx-ok__city">Bangkok</span>
-          <span class="mtx-ok__time">8:00 AM</span>
-          <span class="mtx-ok__day">Wednesday 23 September</span>
-        </li>
-        <li class="mtx-ok__clock">
-          <span class="mtx-ok__city">London</span>
-          <span class="mtx-ok__time">2:00 AM</span>
-          <span class="mtx-ok__day">Wednesday 23 September</span>
-        </li>
-        <li class="mtx-ok__clock">
-          <span class="mtx-ok__city">New York</span>
-          <span class="mtx-ok__time">9:00 PM</span>
-          <span class="mtx-ok__day">Tuesday 22 September</span>
-        </li>
-      </ul>
-      <!-- ===== END OF THE DISPATCH TIME ===== -->
+      <!-- ===== TONIGHT ===== -->
+      <div class="mtx-ok__lane mtx-ok__lane--now">
+        <span class="mtx-ok__lanetag">Booked for tonight</span>
+        <h3>New Power, this evening</h3>
+        <p class="mtx-ok__big">Within 15 minutes</p>
+        <p class="mtx-ok__lanep">Your tickets are on their way now. Keep an eye on your inbox.</p>
+      </div>
+
+      <!-- ===== ANY OTHER DATE ===== -->
+      <div class="mtx-ok__lane">
+        <span class="mtx-ok__lanetag">Booked for a later date</span>
+        <h3>Two dispatches this evening</h3>
+        <p class="mtx-ok__lanep">Advance bookings go out in batches. Yours is on the next run, wherever in the world you are reading this.</p>
+
+        <table class="mtx-ok__runs">
+          <thead>
+            <tr><th scope="col"><span class="mtx-ok__vh">City</span></th><th scope="col">First dispatch</th><th scope="col">Second dispatch</th></tr>
+          </thead>
+          <tbody>
+            <tr class="mtx-ok__runs--home">
+              <th scope="row">Bangkok</th>
+              <td><b>7:00 PM</b><span>Wed 23 Sep</span></td>
+              <td><b>10:00 PM</b><span>Wed 23 Sep</span></td>
+            </tr>
+            <tr>
+              <th scope="row">London</th>
+              <td><b>1:00 PM</b><span>Wed 23 Sep</span></td>
+              <td><b>4:00 PM</b><span>Wed 23 Sep</span></td>
+            </tr>
+            <tr>
+              <th scope="row">New York</th>
+              <td><b>8:00 AM</b><span>Wed 23 Sep</span></td>
+              <td><b>11:00 AM</b><span>Wed 23 Sep</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Tokyo</th>
+              <td><b>9:00 PM</b><span>Wed 23 Sep</span></td>
+              <td><b>12:00 AM</b><span>Thu 24 Sep</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
     </div>
   </section>
