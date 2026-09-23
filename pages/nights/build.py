@@ -6,30 +6,10 @@
 # convention the site's own FAQ already states. It is called out in the report.
 import io, re, os
 
-BASE = "/tmp/claude-0/-home-user-Muaytix-site/92c34b20-70db-5c31-9f25-d0116bc68d3c/scratchpad/kp/rajadamnern-knockout-2026-09-22.html"
-OUT  = "/tmp/claude-0/-home-user-Muaytix-site/92c34b20-70db-5c31-9f25-d0116bc68d3c/scratchpad/nights"
+BASE = "/home/user/Muaytix-site/pages/knockout/rajadamnern-knockout-2026-09-22.html"
+OUT  = "/home/user/Muaytix-site/pages/nights"
 
 NIGHTS = [
- dict(key="new_power_2026_09_23", name="New Power Traditional Muay Thai", short="New Power",
-      iso="2026-09-23", long="Wednesday 23 September 2026", tiny="Wed 23 Sep 2026",
-      bell="18:00", bell12="6:00 PM", doors12="5:00 PM", finish12="10:00 PM",
-      series="/new-power-muay-thai",
-      blurb="Classic five-round Muay Thai from Thailand's longest-standing promoter, fuelled by an electric local atmosphere.",
-      h2="Classic five-round Muay Thai",
-      p1="Tonight at Rajadamnern Stadium, New Power brings classic five-round Muay Thai from Thailand's longest-standing promoter. The longer format gives fighters room to work, and the local crowd makes the atmosphere.",
-      p2="It is traditional stadium Muay Thai at full volume, and the night most likely to leave you remembering the noise as much as the fighting.",
-      fmt="Five-round bouts", fmtsub="Traditional stadium format",
-      pace="Five-round contests continue through the evening."),
- dict(key="petchyindee_2026_09_24", name="Petchyindee Traditional Muay Thai", short="Petchyindee",
-      iso="2026-09-24", long="Thursday 24 September 2026", tiny="Thu 24 Sep 2026",
-      bell="18:00", bell12="6:00 PM", doors12="5:00 PM", finish12="10:00 PM",
-      series="/rajadamnern/petchyindee",
-      blurb="Traditional Muay Thai with technical five-round fights, fuelled by a passionate local crowd.",
-      h2="Technical five-round Muay Thai",
-      p1="Tonight at Rajadamnern Stadium, Petchyindee brings traditional Muay Thai with technical five-round fights. The pace is slower and more deliberate, and it rewards ring craft over an early finish.",
-      p2="If you want to watch Muay Thai as the Thai audience watches it, this is the night for it.",
-      fmt="Five-round bouts", fmtsub="Technical, traditional pace",
-      pace="Five-round contests continue through the evening."),
  dict(key="rajadamnern_knockout_2026_09_25", name="Rajadamnern Knockout", short="Knockout",
       iso="2026-09-25", long="Friday 25 September 2026", tiny="Fri 25 Sep 2026",
       bell="19:00", bell12="7:00 PM", doors12="6:00 PM", finish12="9:00 PM",
@@ -73,7 +53,12 @@ BAND   = section("WHAT THIS EVENING IS", base)
 SCHED  = section("SCHEDULE", base)
 BOOK   = section("BOOKING", base)
 
+PREFIX = "Tonight at Rajadamnern Stadium, "
+
 for n in NIGHTS:
+    assert n["p1"].startswith(PREFIX), n["key"]
+    n["p1_default"] = "On %s at Rajadamnern Stadium, %s" % (n["long"], n["p1"][len(PREFIX):])
+
     s = base
 
     # --- wrapper: the date and times the page reads itself ---
@@ -120,7 +105,7 @@ for n in NIGHTS:
     <div class="mtx-kp__shell">
       <span class="mtx-kp__kicker">The event</span>
       <h2>{h2}</h2>
-      <p>{p1}</p>
+      <p><span class="mtx-kp-v-tonight">{p1}</span><span class="mtx-kp-v-default">{p1_default}</span></p>
       <p>{p2}</p>
     </div>
   </section>
@@ -193,6 +178,12 @@ for n in NIGHTS:
     s = s.replace("MuayTix is an official ticketing partner for Rajadamnern Stadium",
                   "MuayTix is the international ticket partner of Rajadamnern Stadium", 1)
 
+    # The trust strip's button names the promoter. It lives outside the
+    # sections replaced above, so the base page's name would otherwise stay
+    # and offer Kiatpetch visitors "Book Rajadamnern Knockout tickets".
+    assert s.count("Book Rajadamnern Knockout tickets") == 1, n["key"]
+    s = s.replace("Book Rajadamnern Knockout tickets", "Book %s tickets" % n["short"], 1)
+
     # A stray example date in a script comment.
     s = s.replace("// 2026-09-22", "// %s" % n["iso"], 1)
 
@@ -212,6 +203,28 @@ for n in NIGHTS:
     assert "#mtx-booking h1" in s, "widget heading guard lost"
     assert s.count("<h1") == 1
 
+    # Every "tonight" in the body must sit inside a tonight/default swap, or
+    # a page about Friday tells a Wednesday reader the fight is tonight. That
+    # is what this check exists to stop happening again.
+    import html as _html
+    visible = re.sub(r"<script.*?</script>", "", body_only, flags=re.S)
+    visible = re.sub(r'<span class="mtx-kp-v-tonight">.*?</span>', "", visible, flags=re.S)
+    visible = re.sub(r'<span class="mtx-kp-when-tonight">.*?</span>', "", visible, flags=re.S)
+    visible = re.sub(r"<[^>]+>", " ", visible)
+    stray = [w for w in re.findall(r"[^.!?]*\btonight\b[^.!?]*", visible, re.I)]
+    assert not stray, "%s: unguarded 'tonight': %r" % (n["key"], stray[:2])
+
     io.open(os.path.join(OUT, n["key"] + ".html"), "w", encoding="utf-8").write(s)
+
+    # The paste-ready copy, generated here so it cannot drift from the source.
+    live = re.sub(r"<style>(.*?)</style>",
+                  lambda m: "<style>" + re.sub(r"/\*.*?\*/", "", m.group(1), flags=re.S) + "</style>",
+                  s, flags=re.S)
+    live = re.sub(r"<script>(.*?)</script>",
+                  lambda m: "<script>" + re.sub(r"/\*.*?\*/", "", m.group(1), flags=re.S) + "</script>",
+                  live, flags=re.S)
+    live = re.sub(r"<!--.*?-->", "", live, flags=re.S)
+    live = re.sub(r"\n{3,}", "\n\n", live).strip() + "\n"
+    io.open(os.path.join(OUT, n["key"] + "-live.txt"), "w", encoding="utf-8").write(live)
     print("%-34s %6d bytes   bell %s  doors %s  finish %s" %
           (n["key"], len(s), n["bell12"], n["doors12"], n["finish12"]))
