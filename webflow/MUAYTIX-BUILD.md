@@ -891,3 +891,75 @@ usually do not require footer attribution, but that has not been verified.
 8. **Alt text** pass across every image
 9. **Seating map** image, waiting on the file
 10. Fight night names in the Talk to Us list need their links
+
+---
+
+# Typeface change — IBM Plex, 23 September 2026
+
+**Decision 4 reopened and changed.** Not Arial Black and Calibri, and not the
+template's Inter. The mockup specifies:
+
+- **IBM Plex Sans Condensed** for display and headings
+- **IBM Plex Sans** for body
+
+Both installed as real custom fonts on the site, not faked with a fallback.
+
+## What is installed
+
+| Family | Faces | Notes |
+|---|---|---|
+| IBM Plex Sans | 1 | **variable**, weight axis 100 to 700 |
+| IBM Plex Sans Condensed | 3 | static: 500, 600, 700 |
+
+Files kept at `webflow/assets/fonts/` so they never have to be chased again.
+
+## Google now serves IBM Plex Sans as a variable font only
+
+This caught me out and is worth recording. Requesting
+`css2?family=IBM+Plex+Sans:wght@400;500;600;700` returns **four @font-face
+blocks that all point at the same file** — one variable font, `font-stretch:
+100%`. The older v1 endpoint does the same. Downloading "four weights" gives
+four identical files with one MD5.
+
+IBM Plex Sans **Condensed** is still static, so its three weights are genuinely
+three different files.
+
+`cdn.jsdelivr.net` is **blocked by the egress proxy**, so the IBM Plex project's
+own static builds are not reachable. Only `fonts.googleapis.com` and
+`fonts.gstatic.com` are.
+
+**The fix**: `create_font` accepts an `axes` array. Register the variable file
+**once** with its real axis and Webflow handles every weight from it:
+
+```
+axes: [{ tag: "wght", name: "Weight", min: 100, max: 700, default_value: 400 }]
+```
+
+The axis range was read out of the file with `fonttools`, not assumed.
+
+## Upload flow differs slightly from assets
+
+`create_font` presigned uploads use **`Policy`** and **`Content-MD5`**
+(capitalised, and the MD5 base64-encoded, not hex) where the asset flow uses
+`policy`. Copy the returned `upload.fields` verbatim. All four returned 201.
+
+## Applying it was one variable, then six tag styles
+
+**Exactly one style in the entire template sets a typeface**: the `body` tag,
+bound to a font-family variable that was set to Inter. Changing that variable to
+IBM Plex Sans switched the whole site in one write.
+
+For the condensed display face, a second variable was added
+(`font family/Font Family Display`) and applied to the **default heading tag
+styles h1 to h6**, plus `.hero-header` and `.section-heading`. Using the tag
+styles means every heading picks it up, including ones not yet touched.
+
+| Variable | Value |
+|---|---|
+| `font family/Font Family` | IBM Plex Sans |
+| `font family/Font Family Display` | IBM Plex Sans Condensed |
+
+Both live in `Base collection`.
+
+**Worth knowing for later:** because the whole template hangs off these two
+tokens, any future typeface change is two writes, not a hunt through styles.
