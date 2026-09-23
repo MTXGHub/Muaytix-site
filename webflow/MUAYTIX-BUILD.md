@@ -749,3 +749,50 @@ rather than an empty string. So `60` carries the suffix ` min`, and `7` carries
 The template's process block has four steps and the brief gives three. Steps 1
 to 3 are written. **Step 4 still carries template copy** ("Build website") and
 needs hiding or removing.
+
+## Collection list ordering — the thing that bites
+
+The template's collection lists ship with **an empty sort**, which Webflow falls
+back to newest-first. Every list built from new CMS items therefore appears in
+reverse creation order. The hero seat classes read VIP, Third Class, LEO, Club
+Class, Ringside for exactly this reason. Adding a sort-order field does nothing
+on its own; the list has to be told to use it.
+
+Set on the wrapper (`DynamoWrapper`), not the list, via
+`data_element_settings_tool > set_settings`, key `sort`:
+
+```
+[{"fieldSlug":"sort-order","direction":"ascending"}]
+```
+
+**The key names are not guessable and the errors walk you there one at a time:**
+
+| Tried | Error |
+|---|---|
+| `fieldId` | `Invalid sort: expected fieldSlug.` |
+| `fieldSlug` + `order: asc` | `Invalid sort direction: expected "ascending" or "descending".` |
+| `fieldSlug` + `order: ascending` | same error again — the key itself is wrong |
+| `fieldSlug` + `direction: ascending` | accepted |
+
+So: **`fieldSlug` and `direction`**. Verified by reading the setting back.
+
+Applied to six lists: the hero seat classes, Fight Nights, and the four RWS
+carousel lists. The two blog lists were left alone as that section is hidden.
+
+The wrapper also exposes `source`, `filters`, `filterMatch`, `limit`, `offset`,
+`pagination`, `queryMode` and `curatedItemIds` — worth knowing for "upcoming
+nights, soonest first, 12 per page" later.
+
+## Seat class order, as requested
+
+Club Class, Ringside, LEO Section, Third Class. VIP Options set to **draft**
+rather than deleted, so it comes back with one toggle when the VIP content is
+ready.
+
+| Order | Class | Number badge |
+|---|---|---|
+| 1 | Club Class | (01) |
+| 2 | Ringside | (02) |
+| 3 | LEO Section | (03) |
+| 4 | Third Class | (04) |
+| — | VIP Options | draft, off the site |
