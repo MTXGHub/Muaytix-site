@@ -105,41 +105,29 @@
 }
 .mtx-ok .mtx-ok__lanep { margin-top: 10px; font-size: 16px; color: var(--ok-muted); }
 
-.mtx-ok__runs { width: 100%; border-collapse: collapse; margin-top: 18px; }
-.mtx-ok__runs th, .mtx-ok__runs td { text-align: left; padding: 11px 10px; border-bottom: 1px solid var(--ok-line); }
-.mtx-ok__runs thead th {
+/* The next dispatch, and only the next one. One time, in the four places
+   that matter. Bangkok leads because that is where the tickets come from. */
+.mtx-ok__runs { margin-top: 18px; border-top: 1px solid var(--ok-line); }
+.mtx-ok__runs li {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+  padding: 12px 2px; border-bottom: 1px solid var(--ok-line);
+}
+.mtx-ok__runs li:last-child { border-bottom: 0; }
+.mtx-ok__runs span {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 14px; letter-spacing: .09em; text-transform: uppercase; color: var(--ok-ink);
+}
+.mtx-ok__runs b {
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
-  font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ok-muted);
-  border-bottom: 2px solid var(--ok-line);
+  font-size: 23px; line-height: 1; font-variant-numeric: tabular-nums;
 }
-.mtx-ok__runs tbody th {
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
-  font-size: 15px; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap;
-}
-.mtx-ok__runs td b {
-  display: block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
-  font-weight: 800; font-size: 21px; line-height: 1; font-variant-numeric: tabular-nums;
-}
-.mtx-ok__runs td span { display: block; margin-top: 3px; font-size: 12.5px; color: var(--ok-muted); }
-.mtx-ok__runs tbody tr:last-child th, .mtx-ok__runs tbody tr:last-child td { border-bottom: 0; }
-.mtx-ok__runs--home th, .mtx-ok__runs--home td b { color: var(--ok-blue); }
-/* Visually hidden, still read aloud. */
-/* The guest's own row: the line they actually came here for. */
-.mtx-ok__runs--you th, .mtx-ok__runs--you td b { color: var(--ok-green); }
-/* A run that has already left. Kept on the page rather than removed, so the
-   rhythm of two dispatches an evening is still clear. */
-.mtx-ok__gone b { opacity: .38; text-decoration: line-through; }
-.mtx-ok__gone span { opacity: .55; }
+.mtx-ok__runs em { display: block; margin-top: 3px; font-style: normal; font-size: 12.5px; color: var(--ok-muted); text-align: right; }
+.mtx-ok__runs--home span, .mtx-ok__runs--home b { color: var(--ok-blue); }
 
 .mtx-ok__vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 @media (max-width: 520px) {
   .mtx-ok__lane { padding: 18px 15px; }
-  .mtx-ok__runs th, .mtx-ok__runs td { padding: 10px 5px; }
-  .mtx-ok__runs tbody th { font-size: 13.5px; }
-  .mtx-ok__runs td b { font-size: 18px; }
-  .mtx-ok__runs td span { font-size: 11.5px; }
-  .mtx-ok__runs thead th { font-size: 10px; letter-spacing: .08em; }
 }
 
 /* What happens next */
@@ -239,18 +227,9 @@
         <h3 data-ok-heading>Dispatched twice every evening</h3>
         <p class="mtx-ok__lanep">Advance bookings go out in batches. Yours is on the next run, wherever in the world you are reading this.</p>
 
-        <table class="mtx-ok__runs">
-          <thead>
-            <tr><th scope="col"><span class="mtx-ok__vh">City</span></th><th scope="col">First dispatch</th><th scope="col">Second dispatch</th></tr>
-          </thead>
-          <tbody data-ok-runs>
-            <tr class="mtx-ok__runs--home">
-              <th scope="row">Bangkok</th>
-              <td><b>7:00 PM</b><span></span></td>
-              <td><b>10:00 PM</b><span></span></td>
-            </tr>
-          </tbody>
-        </table>
+        <ul class="mtx-ok__runs" data-ok-runs>
+          <li class="mtx-ok__runs--home"><span>Bangkok</span><b>6:00 AM</b></li>
+        </ul>
       </div>
 
     </div>
@@ -333,7 +312,9 @@
   if (!runs || !window.Intl || !Intl.DateTimeFormat) return;
 
   var BKK = "Asia/Bangkok";
-  var HOURS = [19, 22];                       // 7:00 PM and 10:00 PM, Bangkok
+  // The dispatch runs, in Bangkok hours. The page shows the next one only.
+  // Change this list and the page follows.
+  var HOURS = [6, 19, 22];                    // 6:00 AM, 7:00 PM, 10:00 PM
 
   // Bangkok's wall clock right now. Bangkok is UTC+7 and has no daylight
   // saving, ever, which is why this is arithmetic and not a lookup.
@@ -349,10 +330,8 @@
 
   // Which evening are we talking about? Once the 10:00 PM run has gone, the
   // next dispatch is tomorrow, and saying "this evening" would be a lie.
-  var nowH = bkk.getHours() + bkk.getMinutes() / 60;
-  var day = nowH >= HOURS[1] ? 1 : 0;
-  var sent = day === 0 && nowH >= HOURS[0] ? 1 : 0;   // 7:00 PM already gone
-  var times = [runAt(day, HOURS[0]), runAt(day, HOURS[1])];
+  var times = [];
+  for (var t = 0; t < HOURS.length; t++) times.push(runAt(0, HOURS[t]));
 
   // Built from parts rather than from a locale's own pattern, so the result
   // reads "7:00 PM" and "Wed 23 Sep" the way the rest of the page does,
@@ -371,32 +350,13 @@
     } catch (e) { return ""; }
   }
 
-  function row(label, zone, isHome, isYou) {
-    var tr = document.createElement("tr");
-    if (isHome) tr.className = "mtx-ok__runs--home";
-    if (isYou) tr.className = "mtx-ok__runs--you";
-    var th = document.createElement("th");
-    th.setAttribute("scope", "row");
-    th.textContent = label;
-    tr.appendChild(th);
-    for (var i = 0; i < times.length; i++) {
-      var td = document.createElement("td");
-      var b = document.createElement("b");
-      b.textContent = fmt(times[i], zone, "time");
-      var sp = document.createElement("span");
-      sp.textContent = fmt(times[i], zone, "date");
-      if (i < sent) {
-        td.className = "mtx-ok__gone";
-        sp.textContent = "Already sent";
-      }
-      td.appendChild(b); td.appendChild(sp);
-      tr.appendChild(td);
-    }
-    return tr;
+  // The next run that has not left yet. Once the last one of the day has
+  // gone, it is tomorrow's first.
+  var next = null;
+  for (var n = 0; n < times.length; n++) {
+    if (times[n] > now) { next = times[n]; break; }
   }
-
-  var yourZone = "";
-  try { yourZone = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+  if (!next) next = runAt(1, HOURS[0]);
 
   var CITIES = [
     ["Bangkok",  BKK],
@@ -406,20 +366,24 @@
   ];
 
   runs.innerHTML = "";
-  // The guest's own time first, because it is the one they came here for.
-  if (yourZone) runs.appendChild(row("Your time", yourZone, false, true));
   for (var c = 0; c < CITIES.length; c++) {
-    // Never print a city that is already the guest's own row.
-    if (yourZone && CITIES[c][1] === yourZone) continue;
-    runs.appendChild(row(CITIES[c][0], CITIES[c][1], CITIES[c][1] === BKK, false));
+    var li = document.createElement("li");
+    if (CITIES[c][1] === BKK) li.className = "mtx-ok__runs--home";
+    var name = document.createElement("span");
+    name.textContent = CITIES[c][0];
+    var wrap = document.createElement("div");
+    var time = document.createElement("b");
+    time.textContent = fmt(next, CITIES[c][1], "time");
+    var when = document.createElement("em");
+    when.textContent = fmt(next, CITIES[c][1], "date");
+    wrap.appendChild(time); wrap.appendChild(when);
+    li.appendChild(name); li.appendChild(wrap);
+    runs.appendChild(li);
   }
 
   var head = document.querySelector("[data-ok-heading]");
   if (head) {
-    head.textContent =
-      day === 1  ? "Next dispatch tomorrow evening" :
-      sent === 1 ? "One more dispatch this evening" :
-                   "Two dispatches this evening";
+    head.textContent = "Your tickets go out on the next dispatch";
   }
 })();
 </script>
