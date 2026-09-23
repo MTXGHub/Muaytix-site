@@ -1,0 +1,245 @@
+<div class="mtx-hp">
+<style>.mtx-hp, .mtx-hp * { box-sizing: border-box; }
+.mtx-hp {
+  --hp-blue: #1f5bff;
+  --hp-blue-dark: #1545cf;
+  --hp-rws: #ff1828;
+  --hp-rws-dark: #c40e1f;
+  --hp-ink: #0b0b0d;
+  --hp-paper: #f2f2f2;
+  --hp-line: #dcdce1;
+  --hp-muted: #6e6e75;
+  --hp-ring:  #00A651;
+  --hp-club:  #27AAE1;
+  --hp-leo:   #FFF200;
+  --hp-third: #F7941E;
+  font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--hp-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.mtx-hp p, .mtx-hp h1, .mtx-hp h2, .mtx-hp h3, .mtx-hp ul, .mtx-hp ol { margin: 0; padding: 0; }
+.mtx-hp ul, .mtx-hp ol { list-style: none; }
+.mtx-hp img { max-width: 100%; display: block; }
+.mtx-hp__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
+
+.mtx-hp h1, .mtx-hp h2 {
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+}
+.mtx-hp h1 { font-size: clamp(38px, 6vw, 70px); line-height: .96; }
+.mtx-hp h2 { font-size: clamp(29px, 3.6vw, 45px); line-height: 1.03; }
+.mtx-hp__kicker {
+  display: block; margin-bottom: 10px; color: var(--hp-blue);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 13px; letter-spacing: .13em; text-transform: uppercase;
+}
+
+.mtx-hp__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 52px; padding: 0 26px; border: 2px solid transparent;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 16px; letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: all .2s ease;
+}
+.mtx-hp__btn--blue { background: var(--hp-blue); color: #fff; }
+.mtx-hp__btn--blue:hover { background: var(--hp-blue-dark); color: #fff; }
+.mtx-hp__btn--red { background: var(--hp-rws); color: #fff; }
+.mtx-hp__btn--red:hover { background: var(--hp-rws-dark); color: #fff; }
+.mtx-hp__btn--outline { background: transparent; border-color: var(--hp-ink); color: var(--hp-ink); }
+.mtx-hp__btn--outline:hover { border-color: var(--hp-blue); color: var(--hp-blue); }
+
+.mtx-hp__band { padding: clamp(40px, 5vw, 68px) 0; background: #fff; }
+.mtx-hp__band--paper { background: var(--hp-paper); }
+.mtx-hp__band--dark { background: var(--hp-ink); color: #fff; }
+.mtx-hp__band--dark h2 { color: #fff; }
+.mtx-hp__band p { max-width: 62ch; font-size: 17px; }
+.mtx-hp .mtx-hp__body { margin-top: 16px; }
+.mtx-hp__band--dark p { color: #d3d4da; }
+.mtx-hp .mtx-hp__cta { margin-top: 26px; }
+
+.mtx-hp__go {
+  display: inline-block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 15px; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--hp-blue); text-decoration: none;
+}
+.mtx-hp__go:hover { text-decoration: underline; }
+.mtx-hp__go::after { content: " \2192"; }
+
+.mtx-hp__hero { padding: clamp(52px, 7vw, 92px) 0; }
+
+.mtx-hp__hero p { max-width: 58ch; font-size: clamp(17px, 1.9vw, 19px); }
+
+.mtx-hp__tonight { padding: clamp(22px, 3vw, 34px) 0; background: var(--hp-paper); }
+.mtx-hp__tonight p { font-size: 17px; font-weight: 600; }
+
+.mtx-hp__rws .mtx-hp__kicker { color: var(--hp-rws); }
+.mtx-hp__rws h2 { border-top: 4px solid var(--hp-rws); padding-top: 18px; }
+.mtx-hp__links {
+  display: flex; flex-wrap: wrap; align-items: center;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 15px; letter-spacing: .06em; text-transform: uppercase;
+}
+
+.mtx-hp .mtx-hp__links { margin-top: 24px; }
+.mtx-hp__links a { color: var(--hp-rws); text-decoration: none; }
+.mtx-hp__links a:hover { text-decoration: underline; }
+.mtx-hp__links li + li::before { content: "\00b7"; color: var(--hp-muted); margin: 0 12px; }
+
+.mtx-hp__nights { border-top: 1px solid var(--hp-line); }
+.mtx-hp .mtx-hp__nights { margin-top: 26px; }
+.mtx-hp__nights li { border-bottom: 1px solid var(--hp-line); }
+.mtx-hp__nights a, .mtx-hp__nights .mtx-hp__row {
+  display: grid; grid-template-columns: 230px 1fr; gap: 18px; align-items: baseline;
+  padding: 18px 0; text-decoration: none; color: inherit; transition: color .15s ease;
+}
+.mtx-hp__nights a:hover { color: var(--hp-blue); }
+.mtx-hp__day {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-blue);
+}
+.mtx-hp__what { font-size: 16.5px; color: var(--hp-muted); }
+.mtx-hp__what b { color: var(--hp-ink); font-weight: 700; }
+
+.mtx-hp__mapfig {
+  display: block; position: relative; margin-top: 30px;
+  max-width: 560px; text-decoration: none;
+}
+.mtx-hp__mapfig img { width: 100%; height: auto; }
+.mtx-hp__mapzoom {
+  position: absolute; right: 12px; bottom: 12px;
+  display: inline-flex; align-items: center; padding: 8px 13px;
+  background: rgba(11,11,13,.78); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.14); transition: background .18s ease;
+}
+.mtx-hp__mapfig:hover .mtx-hp__mapzoom { background: var(--hp-blue); }
+.mtx-hp__mapfig:focus-visible { outline: 2px solid var(--hp-blue); outline-offset: 4px; }
+
+.mtx-hp__partlabel {
+  margin-top: 30px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px; letter-spacing: .13em; text-transform: uppercase;
+  color: #9ca0ad !important;
+}
+.mtx-hp__partners {
+  display: flex; flex-wrap: wrap; align-items: center;
+  padding: 16px 0 0; border-top: 1px solid rgba(255,255,255,.16);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 15px; letter-spacing: .08em; text-transform: uppercase; color: #fff;
+}
+.mtx-hp .mtx-hp__partners { margin-top: 10px; }
+.mtx-hp__partners li + li::before { content: "\00b7"; color: #6e6e75; margin: 0 12px; }
+
+@media (max-width: 860px) {
+  .mtx-hp__nights a, .mtx-hp__nights .mtx-hp__row { grid-template-columns: 1fr; gap: 5px; }
+}
+@media (max-width: 620px) {
+  .mtx-hp__shell { width: min(100% - 28px, 1180px); }
+  .mtx-hp__cta .mtx-hp__btn { width: 100%; }
+  .mtx-hp .mtx-hp__links { display: block; }
+  .mtx-hp__links li + li { margin-top: 8px; }
+  .mtx-hp__links li + li::before { content: none; }
+  .mtx-hp .mtx-hp__partners { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 16px; }
+  .mtx-hp__partners li + li::before { content: none; }
+}
+</style>
+
+  <section class="mtx-hp__band mtx-hp__tonight">
+    <div class="mtx-hp__shell">
+      <p>Just here for tonight? <a class="mtx-hp__go" href="/muay-thai-bangkok-tonight">Tickets for tonight</a></p>
+    </div>
+  </section>
+
+  <section class="mtx-hp__band mtx-hp__band--paper mtx-hp__rws" id="saturday">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">Saturday nights</span>
+      <h2>Rajadamnern World Series</h2>
+      <p class="mtx-hp__body">RWS is Saturday night at the stadium: seven professional bouts, Thai and international fighters, and the judges' scores shown after every round so anyone can follow it. It is the busiest night of the week and the one most visitors come for.</p>
+      <p class="mtx-hp__cta"><a class="mtx-hp__btn mtx-hp__btn--red" href="/rws/2026-09-26">This Saturday's event</a></p>
+      <ul class="mtx-hp__links">
+        <li><a href="/rws/tickets">RWS tickets</a></li>
+        <li><a href="/rws/schedule">RWS schedule</a></li>
+        <li><a href="/rws/fight-card">RWS fight card</a></li>
+        <li><a href="/rws/">About RWS</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mtx-hp__band" id="the-week">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">The rest of the week</span>
+      <h2>Six more nights, five promoters</h2>
+      <p class="mtx-hp__body">A different promoter takes the ring each night, each with its own format and crowd.</p>
+      <ul class="mtx-hp__nights">
+        <li><a href="/kiatpetch-muay-thai">
+          <span class="mtx-hp__day">Sunday</span>
+          <span class="mtx-hp__what"><b>Kiatpetch Muay Thai.</b> Traditional five-round Muay Thai from one of Thailand's established promoters.</span>
+        </a></li>
+        <li><a href="/rajadamnern-knockout">
+          <span class="mtx-hp__day">Monday, Tuesday and Friday</span>
+          <span class="mtx-hp__what"><b>Rajadamnern Knockout.</b> Seven three-round bouts, an earlier finish and the easiest first night.</span>
+        </a></li>
+        <li><span class="mtx-hp__row">
+          <span class="mtx-hp__day">Some Mondays</span>
+          <span class="mtx-hp__what"><b>All Star Fight.</b></span>
+        </span></li>
+        <li><a href="/new-power-muay-thai">
+          <span class="mtx-hp__day">Wednesday</span>
+          <span class="mtx-hp__what"><b>New Power Muay Thai.</b> Nine five-round bouts and the loudest crowd of the week.</span>
+        </a></li>
+        <li><a href="/petchyindee-muay-thai">
+          <span class="mtx-hp__day">Thursday</span>
+          <span class="mtx-hp__what"><b>Petchyindee Muay Thai.</b> Hand-picked fighters and a slower, technical pace.</span>
+        </a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mtx-hp__band mtx-hp__band--paper" id="first-time">
+    <div class="mtx-hp__shell">
+      <h2>First time?</h2>
+      <p class="mtx-hp__body">You do not need to know the rules. Every bout has a clear winner, the crowd tells you when something big happens, and the night runs two to three hours. Dress is casual, children are welcome, and you can arrive after the first bell.</p>
+    </div>
+  </section>
+
+  <section class="mtx-hp__band" id="where-to-sit">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">Where to sit</span>
+      <h2>Four seat classes, one ring</h2>
+      <p class="mtx-hp__body">Ringside, Club Class, LEO Section and Third Class all watch the same fights. The difference is how close you are and the crowd around you.</p>
+      <p class="mtx-hp__cta"><a class="mtx-hp__go" href="/rajadamnern-stadium-seating">Compare the seats</a></p>
+      <a class="mtx-hp__mapfig"
+         href="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+         target="_blank" rel="noopener">
+        <img src="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+             alt="Seating map of Rajadamnern Stadium. The ring is at the centre, with Ringside in sections 3 to 7 closest to it, Club Class in sections 8 and 9, the LEO Section in section 10 and Third Class in section 11 around the outside."
+             loading="lazy" decoding="async" width="1242" height="1242">
+        <span class="mtx-hp__mapzoom">Tap to enlarge</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="mtx-hp__band mtx-hp__band--paper" id="the-venue">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">The venue</span>
+      <h2>The world's first Muay Thai stadium</h2>
+      <p class="mtx-hp__body">Rajadamnern Stadium opened in 1945 and still hosts professional Muay Thai every night of the week. Modern lights, screens and a dome show now sit inside the original ring and tiered seating.</p>
+      <p class="mtx-hp__cta"><a class="mtx-hp__go" href="/rajadamnern-stadium">About the stadium</a></p>
+    </div>
+  </section>
+
+  <section class="mtx-hp__band mtx-hp__band--dark" id="booking-with">
+    <div class="mtx-hp__shell">
+      <h2>Who you are booking with</h2>
+      <p class="mtx-hp__body">MuayTix is a Bangkok-based team. Every ticket comes from the stadium's own allocation, arrives by email as a QR code e-ticket, and is backed by real people on WhatsApp seven days a week. If we cannot provide the tickets you booked, you choose an alternative seat class or a full refund the same day.</p>
+      <p class="mtx-hp__cta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="https://wa.me/66922706095">WhatsApp MuayTix</a></p>
+      <p class="mtx-hp__partlabel">Tickets sold for</p>
+      <ul class="mtx-hp__partners">
+        <li>Rajadamnern Stadium</li><li>RWS</li><li>Rajadamnern Knockout</li>
+        <li>New Power</li><li>Petchyindee</li><li>Kiatpetch</li><li>All Star</li>
+      </ul>
+    </div>
+  </section>
+</div>
