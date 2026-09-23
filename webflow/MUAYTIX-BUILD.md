@@ -1328,3 +1328,22 @@ fills asynchronously about three minutes after upload.
 - **The browser favicon is still not set.** The file is now on the site as a
   section image, but the actual favicon is a Designer setting and the API does
   not expose it. Manual job.
+
+## Alt tags applied to the About images
+
+Jason supplied both. Applied to the image elements and stored on the asset
+records so they carry forward if the images are reused.
+
+| Image | Alt text |
+|---|---|
+| Logo | MuayTix logo for Muay Thai tickets and fight night bookings in Bangkok, Thailand |
+| Brand icon | MuayTix blue and white M favicon with red brand mark for Muay Thai ticket bookings in Bangkok |
+
+**One word removed from the first tag, and flagged.** As supplied it read
+"MuayTix **official** logo for Muay Thai tickets...". The brief's hard rules say
+the word "official" must never appear in copy, alt text, meta or schema, with
+the stated reason that it trips ad and search blocks. Left the rest of the tag
+exactly as written and told him what changed, so it is a one-word restore if he
+means to override his own rule here.
+
+The second tag needed no change.
