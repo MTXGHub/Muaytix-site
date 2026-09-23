@@ -1109,3 +1109,32 @@ Row 5 of the seat class section is now hidden, so all four rows and nothing else
 
 Publishing is only needed to view on a phone or show someone else. Anything done
 through the API appears in the Designer immediately.
+
+## Logo strip specification
+
+Measured off the template rather than guessed. `.home-1-brand-image` renders at
+**40px tall**, width flexible, inside a flex marquee on a light background.
+
+**Spec given to Jason for the six promotion logos:**
+
+| | |
+|---|---|
+| Supply height | 120px (3x the 40px display size) |
+| Width | free, each logo its own natural width |
+| Format | SVG preferred, PNG otherwise |
+| Background | transparent, not white |
+| Colour | dark or full colour, the strip is light |
+
+Advised to leave a little padding inside the file so logos do not butt together
+in the strip.
+
+**Fixed before the files arrive:** the style was `object-fit: cover` with
+width and height at 100%, which crops. A wide logo such as "Rajadamnern
+Knockout" would have had its ends sliced off. Now `object-fit: contain`,
+`width: auto`, `height: 40px`. **This is the third time this template's
+`cover` default has been a trap** — the nav logo and the seat class images
+both hit it. Assume any new image slot crops until checked.
+
+**Slot count not yet confirmed.** There are 14 `Home 1 Brand Image` elements on
+the page across repeated marquee groups, and six logos are needed. The grouping
+needs working out when the files land.
