@@ -411,3 +411,107 @@ The page had **two H1s**, which is an SEO fault. Now one.
 5. About band → facts strip, once the real numbers exist
 6. Client Stories → real reviews
 7. Navbar and footer rebrand, logo upload
+
+---
+
+# Session log — 23 September 2026
+
+## Images: the route that works
+
+**Google Drive → site is a working pipeline**, proven end to end. The shared
+folder is `1PT7enA_GR6BRtY9JrY00T2N31f4ON7JG`. Jason drops files in, and:
+
+1. `mcp__Google_Drive__search_files` with `parentId = '<folder id>'` lists them
+2. `download_file_content` returns base64 — it is too big for the context window,
+   so it lands in a tool-results file on disk. Decode from there, never inline
+3. MD5 the bytes as 32-char lowercase hex
+4. `data_assets_tool > create_asset` returns a presigned S3 target
+5. POST the bytes as multipart/form-data: every `uploadDetails` key as a form
+   field first, the binary last under `file`. HTTP 201 means success
+6. `data_element_tool > set_image_asset` binds it to the slot
+
+Same shape as the font upload. It works.
+
+### The Designer bridge app
+
+`element_snapshot_tool` and `asset_tool > upload_image_by_url` are Designer-side:
+they need the Webflow MCP Bridge app running in a **foreground** browser tab.
+Jason works from a phone, so the tab sleeps the moment he switches to Claude and
+the bridge dies. **Treat both tools as unavailable.** Everything else — text,
+styles, colours, structure, CMS, assets via the S3 route — works without it.
+Webflow's own notice in the bridge panel says most actions no longer need it.
+
+Consequence: **work cannot be checked visually.** Read the element tree and the
+styles before changing anything, and expect Jason's screenshots to be the only
+eyes on the result.
+
+## What "check the layout first" actually means here
+
+Two avoidable messes in two days, both the same root cause — content changed
+without reading the box it goes in:
+
+**The headline.** "Avoora" is six characters, "Muay Thai" is nine. Dropped in
+blind, it overflowed and collided with the line below. The template's hero is a
+two-part lockup of two short words. `MuayTix` fits; anything longer does not.
+Ended up removing the second word and the divider line entirely — the hero H1 is
+now just `MuayTix`.
+
+**The logo.** The nav logo container is a **fixed 40×40 square** with
+`object-fit: cover`. The MuayTix wordmark is 3.2:1. Bound straight in, it would
+have been cropped to a square slice of the middle of the word. Fixed by setting
+the container to `width: auto`, height 36px (28px at tiny), and the image to
+`object-fit: contain`.
+
+**Rule: read the target style before binding an asset or setting text.** The
+template was built around specific proportions and they are not forgiving.
+
+## Logo preparation
+
+The file in Drive is `1200 × 1200`, **RGB with no alpha**, solid white
+background, and the wordmark occupies only 27% of the canvas height. Unusable as
+supplied — in a 40px nav slot the wordmark would render about a quarter size in
+a white box, and a white box on the dark footer.
+
+Prepared version saved at `webflow/assets/muaytix-logo-web.png`:
+
+- cropped to the artwork with a 12px margin → `1114 × 345`, ratio 3.23:1
+- white knocked out to transparent, **un-premultiplied** so the anti-aliased
+  edges stay clean on any background (`alpha = 255 - min(r,g,b)`, then
+  `colour = (pixel - white × (1 - alpha)) / alpha`)
+- 62% transparent, all four corners clear
+
+Uploaded as asset `6ab3d5be4e46211564f6b0aa`, alt text "MuayTix", bound to the
+navbar logo.
+
+## Hero photograph — placed the back way, needs redoing
+
+`bangkok-muay-thai-stadium-knockout.jpg` is on the hero, but **not as an asset**.
+
+The hero background is a `BackgroundVideoWrapper` playing a template MP4 — the
+rainbow gradient. There is no image slot in it. The photo went on as a
+`background-image` on `.Home 1 Hero Overlay`, the absolutely-positioned element
+already covering that area, layered under its existing dark tint:
+
+```
+background-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.55)),
+                  url('<s3 url>')
+```
+
+It works and reads well. But it is a raw URL, not a library asset, so it gets no
+compression, no alt text, and cannot be swapped without editing CSS.
+
+That first upload's asset record **404'd** and never appeared in the library,
+which is why it was done this way. The logo upload minutes later, identical
+method, registered fine. Cause unknown. **Re-check the hero asset and redo it
+properly when convenient.**
+
+## Homepage state
+
+Done: brand colours, hero headline (`MuayTix`), hero copy, hero button, hero
+photograph, navbar logo.
+
+Still template: service cards (UI UX Design, Web Development, Brand Identity),
+logo strip (ImgCompress, Galileo, Europa), Membership Plan, Awards Achievement,
+"Creative studio based in NY" and "Accepting Projects" in the nav, "Buy Now"
+button pointing at the Webflow marketplace, and every nav menu link pointing at
+template pages.
