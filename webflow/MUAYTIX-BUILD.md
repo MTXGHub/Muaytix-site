@@ -515,3 +515,70 @@ logo strip (ImgCompress, Galileo, Europa), Membership Plan, Awards Achievement,
 "Creative studio based in NY" and "Accepting Projects" in the nav, "Buy Now"
 button pointing at the Webflow marketplace, and every nav menu link pointing at
 template pages.
+
+## Social accounts
+
+The real accounts:
+
+| Network | URL |
+|---|---|
+| Instagram | `https://www.instagram.com/muaytix` |
+| Facebook | `https://www.facebook.com/muaytix` |
+| X | `https://x.com/muaytix` |
+| Pinterest | `https://www.pinterest.com/MuayTix` |
+
+**There is no LinkedIn.** The template ships four slots everywhere — Instagram,
+LinkedIn, Facebook, X — so the LinkedIn slot became Pinterest. The link alone was
+not enough; the icon had to change too, or it would have been a LinkedIn glyph
+pointing at Pinterest.
+
+### Where the social links live — four places, not one
+
+| Place | How it is set |
+|---|---|
+| Nav menu | `Social Media 01`-`04` component instances, `Link` prop each |
+| Hero, desktop row | four `Link` elements, `set_link` |
+| Hero, mobile row | four more `Link` elements, same again |
+| Closing "Let's Talk" block | `CTA` component instance, props `Link 1`-`Link 4` |
+
+The footer has 29 links but **no social links at all**, so nothing to do there.
+
+**Two Facebook links in the hero had no href at all** in the template — dead on
+both the desktop and mobile rows. Worth assuming other template links are dead
+until checked.
+
+### Icons are editable, which is the useful discovery
+
+Social icons are `HtmlEmbed` elements holding inline SVG. `data_element_settings_tool`
+reads and writes them:
+
+- read: `get_settings` with `type: "query_settings"`, `key: "code"`
+- write: `set_settings`, `key: "code"`, `static_text.value` = the SVG
+
+The template's icons use `viewBox="0 0 23 23"`, `fill="currentColor"` and
+`width/height 100%`, so they inherit size and colour from their container. Any
+replacement must keep that shape. The Pinterest glyph's native art is 384×512,
+so it is wrapped in `<g transform="translate(2.87,0) scale(0.04492)">` to sit
+correctly inside the 23×23 box rather than changing the viewBox.
+
+Icons had to be replaced in **three** places, because the CTA does not reuse the
+shared component:
+
+| Icon location | Element |
+|---|---|
+| Shared `Social Media 02` component (used by the nav) | `5352bc11-…8082` |
+| Hero desktop | `1cdf43e0-…d506454f0851` |
+| Hero mobile | `182375b2-…d2b22fa600eb` |
+| CTA block, its own four embeds | `ce0e4fc7-…6b7ddf76490c` |
+
+`aria-label` was "Linkedin" on the shared component and on the hero links; all
+updated to "Pinterest". Every social link now opens in a new tab.
+
+**Check the icon before replacing it.** The CTA's four embeds are in DOM order,
+not labelled, so the second one was read back and confirmed as the LinkedIn path
+before being overwritten.
+
+### Rate limits are real
+
+`query_elements` returned `429` twice while working through this. Batch actions
+into single calls where possible and expect to retry.
