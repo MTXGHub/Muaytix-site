@@ -708,3 +708,44 @@ Section 6 is largely untouched below the hero. Outstanding:
   hero cards
 - **Fonts**: Arial Black and Calibri not applied. Keeping the template fonts per
   the brief's default, flagged as agreed
+
+## Second pass, same day
+
+**Decision 4 closed: keeping the template fonts.** Arial Black and Calibri are
+not applied. Confirmed directly, and it matches the brief's own default.
+
+Done in this pass:
+
+| Section | What changed |
+|---|---|
+| Stats band | All four template figures replaced with the real ones: 7 fight nights, 1945, 60 min, 7 days |
+| About statement | Agency lines replaced with the briefed MuayTix statement, both copies (the line is duplicated for the scrolling effect) |
+| Fight Nights | Heading now "Five nights, five different fights" |
+| Where to Sit | Heading now "Four seat classes, one ring" |
+| RWS Saturdays | Heading now "Rajadamnern World Series" |
+| How Booking Works | Three steps written in, heading "Three steps to fight night", eyebrow "HOW IT WORKS" |
+| First Time? | All six questions and answers written in, eyebrow "FIRST TIME?", button now WhatsApp Us pointing at wa.me/66922706095 |
+| Pricing, Latest Article | Hidden, not deleted |
+
+The six questions on the page are **word for word the same** as the FAQPage
+JSON-LD written earlier. If one is edited, edit the other.
+
+### Client Stories will not hide through the API
+
+`set_visibility` returns `Element does not support setVisibility` on a
+ComponentInstance. Pricing and Latest Article are plain Sections and hid fine.
+**Client Stories has to be hidden by hand in the Designer**, or the section
+wrapped in a Div first.
+
+### The stats band has prefix and suffix slots
+
+Each figure is three separate text nodes: prefix, number, suffix. The template
+used them for `$ 74 M` and `95 %`. Blanked the unused ones with a single space
+rather than an empty string. So `60` carries the suffix ` min`, and `7` carries
+` days`.
+
+### Step 4 still shows
+
+The template's process block has four steps and the brief gives three. Steps 1
+to 3 are written. **Step 4 still carries template copy** ("Build website") and
+needs hiding or removing.
