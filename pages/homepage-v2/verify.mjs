@@ -1,12 +1,12 @@
 /* Checks the LIVE blocks — the exact text Jason pastes — not the sources. */
-import { chromium } from 'playwright';
+import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+const { chromium } = pw;
 import fs from 'fs';
 const CH = process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const shared = fs.readFileSync('_shared.css','utf8');
 const doc = '<!doctype html><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1">'
   + `<style>${shared}</style>`
-  + fs.readFileSync('homepage-block-A-live.txt','utf8')
-  + fs.readFileSync('homepage-block-B-live.txt','utf8');
+  + fs.readFileSync(process.argv[2] || 'homepage-FULL-live.txt','utf8');
 
 const br = await chromium.launch({ executablePath: CH });
 const p = await br.newPage({ viewport:{width:390,height:844}, deviceScaleFactor:2 });
