@@ -1074,3 +1074,38 @@ when opened.
   because the slot is landscape and the artwork is square. Per the brief those
   hero cards should be "Tonight" and "This Saturday RWS" anyway, so that section
   needs rethinking rather than just clearing
+
+---
+
+## Publishing — standing permission granted, 23 September
+
+**Jason has given standing permission to publish without asking each time.**
+This overrides the brief's "do not publish" instruction, which was written
+before the staging setup was settled. His reasoning, recorded so it is not
+second-guessed:
+
+- The site sits on the Webflow staging subdomain only
+- **No custom domain is attached** (`customDomains: []`), so publishing cannot
+  reach muaytix.com under any circumstances
+- He has blocked search engine crawlers
+
+**Publishing still only reaches `muaytix-com-v2.webflow.io`.** If a custom
+domain is ever attached, this permission should be re-checked, because the blast
+radius changes completely.
+
+### The published site cannot be verified from this sandbox
+
+`muaytix-com-v2.webflow.io` is refused by the egress proxy, same as webflow.com
+and muaytix.com. So:
+
+- The publish call succeeding is the only confirmation available
+- **robots.txt and the meta robots tag cannot be read**, so the crawler block is
+  taken on Jason's word rather than verified
+- Published output cannot be checked for leftover template text
+
+Row 5 of the seat class section is now hidden, so all four rows and nothing else.
+
+### Worth knowing: the Designer shows changes without publishing
+
+Publishing is only needed to view on a phone or show someone else. Anything done
+through the API appears in the Designer immediately.
