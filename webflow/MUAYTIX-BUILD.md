@@ -850,3 +850,44 @@ anywhere near a live domain.
   deleting a form element is structural, not content
 - The five fight night names in the list are text only; their **links are not
   set yet**
+
+## Footer, done
+
+The template footer has **three** link columns; the brief asks for four.
+Mapped as:
+
+| Column | Links |
+|---|---|
+| Home | All Muay Thai Tickets, Tickets for Tonight, Rajadamnern Stadium, Rajadamnern Knockout |
+| Tickets | RWS Muay Thai Hub, All RWS Tickets, RWS Schedule, RWS Fight Card |
+| Legal | Privacy Policy, Terms, Refund Policy |
+
+All eleven point at the live Tilda URLs, as the brief instructs until the
+Webflow legal pages are rewritten. The other 14 template links are hidden.
+
+**The Social column has no home.** There is no fourth group in the footer, so
+WhatsApp, Facebook and Instagram are not there yet. A fourth column has to be
+duplicated in by hand. The social icons do already appear in the Talk to Us
+block directly above it.
+
+Copyright now reads "Copyright 2025 to 2026 MuayTix Ltd. All rights reserved."
+The "Designed by Anova Flow / Powered by Webflow" credits are hidden.
+**Check the template licence before publishing** — Avoora's licence page is on
+the site at `/template-info/license`, currently drafted. Paid Webflow templates
+usually do not require footer attribution, but that has not been verified.
+
+"BACK TO HOME" is now "BACK TO TOP", which is what the button actually does.
+
+## Remaining on the homepage
+
+1. **The Venue** — Awards block still carries template award content
+2. **Logo strip** — still ImgCompress, Galileo, Europa
+3. **Hero** — five stock avatars still there, two scrolling cards still template,
+   secondary text link not added, social row not moved to the footer
+4. **Section eyebrows and sub lines** for Fight Nights, Where to Sit, RWS
+5. **Step 4** of the booking block still says "Build website"
+6. **Contact form** still present in Talk to Us
+7. **Blogs collection** still holds template items
+8. **Alt text** pass across every image
+9. **Seating map** image, waiting on the file
+10. Fight night names in the Talk to Us list need their links
