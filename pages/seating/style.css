@@ -129,6 +129,9 @@
 }
 .mtx-ss__card::before { content: ""; display: block; height: 7px; background: var(--ss-c, var(--ss-blue)); }
 .mtx-ss__card > * { margin-left: 24px; margin-right: 24px; }
+/* The photograph runs the full width of the card, unlike the text. */
+.mtx-ss__card > .mtx-ss__shots { margin-left: 0; margin-right: 0; }
+.mtx-ss__card > .mtx-ss__shots + h3 { margin-top: 20px; }
 .mtx-ss__card h3 { margin-top: 22px; font-size: 25px; }
 /* The section numbers, in the class colour, because "Section 10" is the fact
    guests search for and the one that tells them where they will be. */
@@ -149,6 +152,41 @@
 .mtx-ss__price small { display: block; font-family: "Barlow", sans-serif; font-weight: 400; font-size: 13.5px; color: var(--ss-muted); letter-spacing: 0; text-transform: none; }
 .mtx-ss__cardcta { margin-top: auto; padding-top: 20px; }
 .mtx-ss__cardcta .mtx-ss__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+/* Seat photographs on the cards. The same native scroll-snap slider the
+   day-dated pages use: no library, nothing to load, and a swipe works on a
+   phone whether or not the script runs. The dots are the only part that needs
+   it, and they are decoration.
+
+   aspect-ratio plus object-fit means photographs of different shapes still
+   line up across the four cards, so nothing has to be cropped before upload. */
+.mtx-ss__shots { position: relative; margin: 0; }
+.mtx-ss__card .mtx-ss__shots { margin-left: 0; margin-right: 0; }
+.mtx-ss__shots-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.mtx-ss__shots-track::-webkit-scrollbar { display: none; }
+/* height:auto matters. The width and height attributes on the markup, which
+   the brief asks for to stop the page jumping as images load, arrive in CSS
+   as presentational hints, and a hint for height beats aspect-ratio. Without
+   this line every photograph renders at its full 900px height instead of 4:3
+   and the cards grow to three times the size they should be. */
+.mtx-ss__shots-track img {
+  flex: 0 0 100%; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;
+  scroll-snap-align: center; background: #e6e6ea;
+}
+@supports not (aspect-ratio: 4 / 3) { .mtx-ss__shots-track img { height: 240px; } }
+.mtx-ss__shots-dots { position: absolute; left: 0; right: 0; bottom: 11px; display: flex; justify-content: center; gap: 7px; }
+.mtx-ss__shots-dots button {
+  width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(255,255,255,.55); cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.25); transition: background .18s ease;
+}
+.mtx-ss__shots-dots button.is-on { background: #fff; }
+.mtx-ss__shots-dots button:focus-visible { outline: 2px solid var(--ss-blue); outline-offset: 2px; }
+/* Nothing to click through when a class has only one photograph. */
+.mtx-ss__shots-dots:empty { display: none; }
 
 /* Booking. The widget mounts here. */
 .mtx-ss__booking { background: var(--ss-ink); color: #fff; padding: clamp(42px, 5.5vw, 74px) 0; scroll-margin-top: 16px; }
@@ -175,7 +213,7 @@
 .mtx-ss__views { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .mtx-ss .mtx-ss__views { margin-top: 30px; }
 .mtx-ss__view { background: #fff; border: 1px solid var(--ss-line); }
-.mtx-ss__view img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #e6e6ea; }
+.mtx-ss__view img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: #e6e6ea; }
 @supports not (aspect-ratio: 4 / 3) { .mtx-ss__view img { height: 260px; } }
 .mtx-ss__view div { padding: 20px 22px 24px; }
 .mtx-ss__view h3 { font-size: 20px; }

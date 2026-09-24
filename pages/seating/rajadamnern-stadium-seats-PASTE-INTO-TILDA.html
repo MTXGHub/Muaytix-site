@@ -112,6 +112,9 @@
 }
 .mtx-ss__card::before { content: ""; display: block; height: 7px; background: var(--ss-c, var(--ss-blue)); }
 .mtx-ss__card > * { margin-left: 24px; margin-right: 24px; }
+
+.mtx-ss__card > .mtx-ss__shots { margin-left: 0; margin-right: 0; }
+.mtx-ss__card > .mtx-ss__shots + h3 { margin-top: 20px; }
 .mtx-ss__card h3 { margin-top: 22px; font-size: 25px; }
 
 .mtx-ss__where {
@@ -132,6 +135,30 @@
 .mtx-ss__cardcta { margin-top: auto; padding-top: 20px; }
 .mtx-ss__cardcta .mtx-ss__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
 
+.mtx-ss__shots { position: relative; margin: 0; }
+.mtx-ss__card .mtx-ss__shots { margin-left: 0; margin-right: 0; }
+.mtx-ss__shots-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.mtx-ss__shots-track::-webkit-scrollbar { display: none; }
+
+.mtx-ss__shots-track img {
+  flex: 0 0 100%; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;
+  scroll-snap-align: center; background: #e6e6ea;
+}
+@supports not (aspect-ratio: 4 / 3) { .mtx-ss__shots-track img { height: 240px; } }
+.mtx-ss__shots-dots { position: absolute; left: 0; right: 0; bottom: 11px; display: flex; justify-content: center; gap: 7px; }
+.mtx-ss__shots-dots button {
+  width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(255,255,255,.55); cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.25); transition: background .18s ease;
+}
+.mtx-ss__shots-dots button.is-on { background: #fff; }
+.mtx-ss__shots-dots button:focus-visible { outline: 2px solid var(--ss-blue); outline-offset: 2px; }
+
+.mtx-ss__shots-dots:empty { display: none; }
+
 .mtx-ss__booking { background: var(--ss-ink); color: #fff; padding: clamp(42px, 5.5vw, 74px) 0; scroll-margin-top: 16px; }
 .mtx-ss__booking h2 { color: #fff; }
 .mtx-ss .mtx-ss__booking p { color: #d3d4da; }
@@ -151,7 +178,7 @@
 .mtx-ss__views { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .mtx-ss .mtx-ss__views { margin-top: 30px; }
 .mtx-ss__view { background: #fff; border: 1px solid var(--ss-line); }
-.mtx-ss__view img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #e6e6ea; }
+.mtx-ss__view img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: #e6e6ea; }
 @supports not (aspect-ratio: 4 / 3) { .mtx-ss__view img { height: 260px; } }
 .mtx-ss__view div { padding: 20px 22px 24px; }
 .mtx-ss__view h3 { font-size: 20px; }
@@ -271,6 +298,14 @@
       <div class="mtx-ss__cards">
 
         <article class="mtx-ss__card" style="--ss-c: var(--ss-ring)">
+          <div class="mtx-ss__shots" data-mtx-slider>
+            <div class="mtx-ss__shots-track">
+              <img src="https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg" alt="Ringside seating at Rajadamnern Stadium, Bangkok" width="1200" height="900" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild6430-3330-4239-b435-353230396463/1000013051.jpg" alt="Ringside seats beside the ring apron" width="1200" height="900" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg" alt="Ringside guests watching a bout" width="1200" height="900" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-ss__shots-dots"></div>
+          </div>
           <h3>Ringside</h3>
           <span class="mtx-ss__where">Sections 3 to 7 &middot; Floor level, main arena</span>
           <p class="mtx-ss__seat">Assigned seat, allocated from the front row backwards</p>
@@ -282,6 +317,14 @@
         </article>
 
         <article class="mtx-ss__card" style="--ss-c: var(--ss-club)">
+          <div class="mtx-ss__shots" data-mtx-slider>
+            <div class="mtx-ss__shots-track">
+              <img src="https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg" alt="Club Class seating at Rajadamnern Stadium, Bangkok" width="1200" height="900" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild3665-3065-4334-b531-303164393066/1000033696.jpg" alt="Club Class on a fight night at Rajadamnern Stadium" width="1200" height="900" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild6136-6131-4064-a639-636565363338/1000033691.jpg" alt="Elevated Club Class seats at Rajadamnern Stadium" width="1200" height="900" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-ss__shots-dots"></div>
+          </div>
           <h3>Club Class</h3>
           <span class="mtx-ss__where">Sections 8 and 9 &middot; Elevated tier, main arena</span>
           <p class="mtx-ss__seat">Assigned, numbered seat. Staff can walk you to it.</p>
@@ -293,6 +336,13 @@
         </article>
 
         <article class="mtx-ss__card" style="--ss-c: var(--ss-leo)">
+          <div class="mtx-ss__shots" data-mtx-slider>
+            <div class="mtx-ss__shots-track">
+              <img src="https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg" alt="LEO Section at Rajadamnern Stadium, Bangkok" width="1200" height="900" loading="lazy" decoding="async">
+              <img src="https://static.tildacdn.com/tild6530-3266-4262-b265-633965366163/1000008588.jpg" alt="Crowd and atmosphere in the LEO Section on a fight night" width="1200" height="900" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-ss__shots-dots"></div>
+          </div>
           <h3>LEO Section</h3>
           <span class="mtx-ss__where">Section 10 &middot; Elevated tier, facing the front of the ring</span>
           <p class="mtx-ss__seat">Unassigned seating, seat guaranteed. Choose where to sit when you arrive.</p>
@@ -304,6 +354,12 @@
         </article>
 
         <article class="mtx-ss__card" style="--ss-c: var(--ss-third)">
+          <div class="mtx-ss__shots" data-mtx-slider>
+            <div class="mtx-ss__shots-track">
+              <img src="https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg" alt="Third Class seating at Rajadamnern Stadium, Bangkok" width="1200" height="900" loading="lazy" decoding="async">
+            </div>
+            <div class="mtx-ss__shots-dots"></div>
+          </div>
           <h3>Third Class</h3>
           <span class="mtx-ss__where">Section 11 &middot; Upper tier, the highest point in the stadium</span>
           <p class="mtx-ss__seat">Unassigned seating, seat guaranteed</p>
@@ -551,6 +607,47 @@
 {"@type":"Question","name":"Can I choose my exact seat when I book?","acceptedAnswer":{"@type":"Answer","text":"Ringside and Club Class are assigned seats. Tell MuayTix your preference and we will allocate accordingly where availability allows. LEO Section and Third Class are unassigned, so you pick your position on the night."}}
 ]}
 ]}
+</script>
+
+<script>
+
+(function () {
+  var sliders = document.querySelectorAll('.mtx-ss [data-mtx-slider]');
+  for (var s = 0; s < sliders.length; s++) build(sliders[s]);
+
+  function build(box) {
+    var track = box.querySelector('.mtx-ss__shots-track');
+    var dots  = box.querySelector('.mtx-ss__shots-dots');
+    if (!track || !dots) return;
+    var shots = track.querySelectorAll('img');
+    if (shots.length < 2) return;            // one photograph needs no dots
+
+    for (var i = 0; i < shots.length; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Photo ' + (i + 1) + ' of ' + shots.length);
+      if (i === 0) b.className = 'is-on';
+      b.addEventListener('click', go(i));
+      dots.appendChild(b);
+    }
+    function go(i) {
+      return function () {
+        track.scrollTo({ left: shots[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      };
+    }
+    var waiting = false;
+    track.addEventListener('scroll', function () {
+      if (waiting) return;
+      waiting = true;
+      window.requestAnimationFrame(function () {
+        waiting = false;
+        var at = Math.round(track.scrollLeft / track.clientWidth);
+        var buttons = dots.children;
+        for (var j = 0; j < buttons.length; j++) buttons[j].className = (j === at) ? 'is-on' : '';
+      });
+    }, { passive: true });
+  }
+})();
 </script>
 
 <script>

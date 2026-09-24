@@ -18,6 +18,48 @@
 </script>
 
 <script>
+/* Seat photographs. The dots are the only part that needs a script; the swipe
+   is native scroll-snap and works without one. */
+(function () {
+  var sliders = document.querySelectorAll('.mtx-ss [data-mtx-slider]');
+  for (var s = 0; s < sliders.length; s++) build(sliders[s]);
+
+  function build(box) {
+    var track = box.querySelector('.mtx-ss__shots-track');
+    var dots  = box.querySelector('.mtx-ss__shots-dots');
+    if (!track || !dots) return;
+    var shots = track.querySelectorAll('img');
+    if (shots.length < 2) return;            // one photograph needs no dots
+
+    for (var i = 0; i < shots.length; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Photo ' + (i + 1) + ' of ' + shots.length);
+      if (i === 0) b.className = 'is-on';
+      b.addEventListener('click', go(i));
+      dots.appendChild(b);
+    }
+    function go(i) {
+      return function () {
+        track.scrollTo({ left: shots[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      };
+    }
+    var waiting = false;
+    track.addEventListener('scroll', function () {
+      if (waiting) return;
+      waiting = true;
+      window.requestAnimationFrame(function () {
+        waiting = false;
+        var at = Math.round(track.scrollLeft / track.clientWidth);
+        var buttons = dots.children;
+        for (var j = 0; j < buttons.length; j++) buttons[j].className = (j === at) ? 'is-on' : '';
+      });
+    }, { passive: true });
+  }
+})();
+</script>
+
+<script>
 /* The sticky Book Tickets button, phone only.
  *
  * It appears once the booking widget has scrolled out of sight and hides again
