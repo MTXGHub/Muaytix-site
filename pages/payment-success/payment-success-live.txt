@@ -40,16 +40,6 @@
   border-bottom: 1px solid var(--ok-line);
   padding: clamp(32px, 4.5vw, 52px) 0;
 }
-.mtx-ok__flagrow { display: flex; align-items: center; justify-content: center; gap: 13px; }
-.mtx-ok__flag {
-  width: 42px; height: 28px; flex: none; border-radius: 3px; overflow: hidden;
-  box-shadow: 0 0 0 1px rgba(11,11,13,.14), 0 2px 6px rgba(11,11,13,.12);
-}
-.mtx-ok__flag svg { display: block; width: 100%; height: 100%; }
-.mtx-ok__flagrow span {
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
-  font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ok-blue);
-}
 .mtx-ok__band h2 { margin-top: 16px; text-align: center; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.04; }
 .mtx-ok .mtx-ok__bandsub {
   margin-top: 12px; text-align: center; font-size: 16.5px; color: var(--ok-muted);
@@ -95,24 +85,8 @@
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
   font-size: clamp(32px, 4.4vw, 44px); line-height: 1; color: var(--ok-green);
 }
-.mtx-ok .mtx-ok__lanep { margin-top: 10px; font-size: 16px; color: var(--ok-muted); }
 
-.mtx-ok__runs { margin-top: 18px; border-top: 1px solid var(--ok-line); }
-.mtx-ok__runs li {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
-  padding: 12px 2px; border-bottom: 1px solid var(--ok-line);
-}
-.mtx-ok__runs li:last-child { border-bottom: 0; }
-.mtx-ok__runs span {
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
-  font-size: 14px; letter-spacing: .09em; text-transform: uppercase; color: var(--ok-ink);
-}
-.mtx-ok__runs b {
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
-  font-size: 23px; line-height: 1; font-variant-numeric: tabular-nums;
-}
-.mtx-ok__runs em { display: block; margin-top: 3px; font-style: normal; font-size: 12.5px; color: var(--ok-muted); text-align: right; }
-.mtx-ok__runs--home span, .mtx-ok__runs--home b { color: var(--ok-blue); }
+.mtx-ok__big--plain { color: var(--ok-ink) !important; margin-top: 12px !important; }
 
 .mtx-ok__vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
@@ -179,37 +153,19 @@
   <section class="mtx-ok__band">
     <div class="mtx-ok__shell">
 
-      <div class="mtx-ok__flagrow">
-        <span class="mtx-ok__flag">
-          <svg viewBox="0 0 900 600" aria-label="Flag of Thailand" role="img">
-            <rect width="900" height="600" fill="#A51931"/>
-            <rect y="100" width="900" height="400" fill="#F4F5F8"/>
-            <rect y="200" width="900" height="200" fill="#2D2A4A"/>
-          </svg>
-        </span>
-        <span>Dispatched from Bangkok</span>
-      </div>
+      <h2>When will your tickets arrive?</h2>
 
-      <h2>When your tickets arrive</h2>
-
-      
       
       <div class="mtx-ok__lane mtx-ok__lane--now">
-        <span class="mtx-ok__lanetag">Booked for tonight</span>
-        <h3>Your tickets are on the way</h3>
-        <p class="mtx-ok__big">Within 15 minutes</p>
-        <p class="mtx-ok__lanep">Keep an eye on your inbox. Nothing else to do.</p>
+        <span class="mtx-ok__lanetag">If you booked for tonight</span>
+        <h3 data-ok-tonight>Petchyindee Traditional Muay Thai, Thursday 24 September 2026</h3>
+        <p class="mtx-ok__big">Within the next 30 minutes</p>
       </div>
 
       
       <div class="mtx-ok__lane">
-        <span class="mtx-ok__lanetag">Booked for a later date</span>
-        <h3 data-ok-heading>Dispatched twice every evening</h3>
-        <p class="mtx-ok__lanep">Advance bookings go out in batches. Yours is on the next run, wherever in the world you are reading this.</p>
-
-        <ul class="mtx-ok__runs" data-ok-runs>
-          <li class="mtx-ok__runs--home"><span>Bangkok</span><b>6:00 AM</b></li>
-        </ul>
+        <span class="mtx-ok__lanetag">If you booked for tomorrow night or later</span>
+        <p class="mtx-ok__big mtx-ok__big--plain">Within the next 60 minutes</p>
       </div>
 
     </div>
@@ -272,82 +228,23 @@
 <script>
 
 (function () {
-  var runs = document.querySelector("[data-ok-runs]");
-  if (!runs || !window.Intl || !Intl.DateTimeFormat) return;
+  var line = document.querySelector("[data-ok-tonight]");
+  if (!line) return;
 
-  var BKK = "Asia/Bangkok";
-  // The dispatch runs, in Bangkok hours. The page shows the next one only.
-  // Change this list and the page follows.
-  var HOURS = [6, 19, 22];                    // 6:00 AM, 7:00 PM, 10:00 PM
+  var NIGHTS = {"2026-09-24": "Petchyindee Traditional Muay Thai","2026-09-25": "Rajadamnern Knockout","2026-09-26": "RWS Rajadamnern World Series","2026-09-27": "Kiatpetch Traditional Muay Thai","2026-09-28": "All Star Elite Fighter by Buakaw","2026-09-29": "Rajadamnern Knockout","2026-09-30": "New Power Traditional Muay Thai","2026-10-01": "Petchyindee Traditional Muay Thai","2026-10-02": "Rajadamnern Knockout","2026-10-03": "RWS Rajadamnern World Series","2026-10-04": "Kiatpetch Traditional Muay Thai","2026-10-05": "Rajadamnern Knockout","2026-10-06": "Rajadamnern Knockout","2026-10-07": "New Power Traditional Muay Thai","2026-10-08": "Petchyindee Traditional Muay Thai","2026-10-09": "Rajadamnern Knockout","2026-10-10": "RWS Rajadamnern World Series","2026-10-11": "Kiatpetch Traditional Muay Thai","2026-10-12": "Rajadamnern Knockout","2026-10-13": "Rajadamnern Knockout","2026-10-14": "New Power Traditional Muay Thai","2026-10-15": "Petchyindee Traditional Muay Thai","2026-10-16": "Rajadamnern Knockout","2026-10-17": "RWS Rajadamnern World Series","2026-10-18": "Kiatpetch Traditional Muay Thai","2026-10-19": "Rajadamnern Knockout","2026-10-20": "Rajadamnern Knockout","2026-10-21": "New Power Traditional Muay Thai","2026-10-22": "Petchyindee Traditional Muay Thai","2026-10-23": "Rajadamnern Knockout","2026-10-24": "RWS Rajadamnern World Series","2026-10-25": "Kiatpetch Traditional Muay Thai","2026-10-26": "All Star Elite Fighter by Buakaw","2026-10-27": "Rajadamnern Knockout","2026-10-28": "New Power Traditional Muay Thai","2026-10-29": "Petchyindee Traditional Muay Thai","2026-10-30": "Rajadamnern Knockout","2026-10-31": "RWS Rajadamnern World Series","2026-11-01": "Kiatpetch Traditional Muay Thai","2026-11-02": "Rajadamnern Knockout","2026-11-03": "Rajadamnern Knockout","2026-11-04": "New Power Traditional Muay Thai","2026-11-05": "Petchyindee Traditional Muay Thai","2026-11-06": "Rajadamnern Knockout","2026-11-07": "RWS Rajadamnern World Series","2026-11-08": "Kiatpetch Traditional Muay Thai","2026-11-09": "Rajadamnern Knockout","2026-11-10": "Rajadamnern Knockout","2026-11-11": "New Power Traditional Muay Thai","2026-11-12": "Petchyindee Traditional Muay Thai","2026-11-13": "Rajadamnern Knockout","2026-11-14": "RWS Rajadamnern World Series","2026-11-15": "Kiatpetch Traditional Muay Thai","2026-11-16": "Rajadamnern Knockout","2026-11-17": "Rajadamnern Knockout","2026-11-18": "New Power Traditional Muay Thai","2026-11-19": "Petchyindee Traditional Muay Thai","2026-11-20": "Rajadamnern Knockout","2026-11-21": "RWS Rajadamnern World Series","2026-11-22": "Kiatpetch Traditional Muay Thai","2026-11-23": "Rajadamnern Knockout","2026-11-24": "Rajadamnern Knockout","2026-11-25": "New Power Traditional Muay Thai","2026-11-26": "Petchyindee Traditional Muay Thai","2026-11-27": "Rajadamnern Knockout","2026-11-28": "RWS Rajadamnern World Series","2026-11-29": "Kiatpetch Traditional Muay Thai","2026-11-30": "All Star Elite Fighter by Buakaw"};
 
-  // Bangkok's wall clock right now. Bangkok is UTC+7 and has no daylight
-  // saving, ever, which is why this is arithmetic and not a lookup.
   var now = new Date();
   var bkk = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 7 * 3600000);
+  function two(n) { return (n < 10 ? "0" : "") + n; }
+  var today = bkk.getFullYear() + "-" + two(bkk.getMonth() + 1) + "-" + two(bkk.getDate());
 
-  // The instant a Bangkok wall-clock hour happens, as a real point in time.
-  function runAt(dayOffset, hour) {
-    return new Date(Date.UTC(
-      bkk.getFullYear(), bkk.getMonth(), bkk.getDate() + dayOffset, hour, 0, 0
-    ) - 7 * 3600000);
-  }
+  var name = NIGHTS[today];
+  if (!name) return;                       // no fight tonight, or past the list
 
-  // Which evening are we talking about? Once the 10:00 PM run has gone, the
-  // next dispatch is tomorrow, and saying "this evening" would be a lie.
-  var times = [];
-  for (var t = 0; t < HOURS.length; t++) times.push(runAt(0, HOURS[t]));
-
-  // Built from parts rather than from a locale's own pattern, so the result
-  // reads "7:00 PM" and "Wed 23 Sep" the way the rest of the page does,
-  // whatever locale the guest's browser happens to be set to.
-  function fmt(date, zone, part) {
-    try {
-      var want = part === "time"
-        ? { timeZone: zone, hour: "numeric", minute: "2-digit", hour12: true }
-        : { timeZone: zone, weekday: "short", day: "numeric", month: "short" };
-      var got = {};
-      var bits = new Intl.DateTimeFormat("en-US", want).formatToParts(date);
-      for (var i = 0; i < bits.length; i++) got[bits[i].type] = bits[i].value;
-      return part === "time"
-        ? got.hour + ":" + got.minute + " " + String(got.dayPeriod || "").toUpperCase()
-        : got.weekday + " " + got.day + " " + got.month;
-    } catch (e) { return ""; }
-  }
-
-  // The next run that has not left yet. Once the last one of the day has
-  // gone, it is tomorrow's first.
-  var next = null;
-  for (var n = 0; n < times.length; n++) {
-    if (times[n] > now) { next = times[n]; break; }
-  }
-  if (!next) next = runAt(1, HOURS[0]);
-
-  var CITIES = [
-    ["Bangkok",  BKK],
-    ["London",   "Europe/London"],
-    ["New York", "America/New_York"],
-    ["Tokyo",    "Asia/Tokyo"]
-  ];
-
-  runs.innerHTML = "";
-  for (var c = 0; c < CITIES.length; c++) {
-    var li = document.createElement("li");
-    if (CITIES[c][1] === BKK) li.className = "mtx-ok__runs--home";
-    var name = document.createElement("span");
-    name.textContent = CITIES[c][0];
-    var wrap = document.createElement("div");
-    var time = document.createElement("b");
-    time.textContent = fmt(next, CITIES[c][1], "time");
-    var when = document.createElement("em");
-    when.textContent = fmt(next, CITIES[c][1], "date");
-    wrap.appendChild(time); wrap.appendChild(when);
-    li.appendChild(name); li.appendChild(wrap);
-    runs.appendChild(li);
-  }
-
-  var head = document.querySelector("[data-ok-heading]");
-  if (head) {
-    head.textContent = "Your tickets go out on the next dispatch";
-  }
+  var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var MONTHS = ["January","February","March","April","May","June",
+                "July","August","September","October","November","December"];
+  line.textContent = name + ", " + DAYS[bkk.getDay()] + " " + bkk.getDate() + " "
+                   + MONTHS[bkk.getMonth()] + " " + bkk.getFullYear();
 })();
 </script>
