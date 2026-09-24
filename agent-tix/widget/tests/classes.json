@@ -3,7 +3,7 @@
   {
    "code": "ringside",
    "name": "Ringside",
-   "description": "Sections 3 to 7, floor level, main arena. The ring is a few metres away. You hear the strikes and the corner instructions.",
+   "description": "Sections 3 to 7",
    "colour": "#2FA04A",
    "ink": "#1E7A38",
    "nightsOnSale": 3,
@@ -12,16 +12,16 @@
   {
    "code": "club_class",
    "name": "Club Class",
-   "description": "Sections 8 and 9, elevated tier, main arena. Looks down across the whole ring, with the walkouts and corners in view.",
+   "description": "Sections 8 and 9",
    "colour": "#3A86D4",
    "ink": "#2565AE",
    "nightsOnSale": 4,
-   "tagline": "Elevated and comfortable"
+   "tagline": "Elevated view of the entire ring"
   },
   {
    "code": "leo_section",
    "name": "LEO Section",
-   "description": "Section 10, elevated tier, main arena, directly facing the front of the ring. The broadcast cameras and commentary team sit here, which tells you how good the front-facing view is.",
+   "description": "Section 10",
    "colour": "#FFD400",
    "ink": "#8A6A00",
    "nightsOnSale": 2,
@@ -30,11 +30,11 @@
   {
    "code": "third_class",
    "name": "Third Class",
-   "description": "Section 11, upper tier, the highest point in the stadium. A wide view over the whole arena: ring, walkout, corners and crowd in one picture.",
+   "description": "Section 11",
    "colour": "#E8631A",
    "ink": "#B84A0C",
    "nightsOnSale": 0,
-   "tagline": "Traditional stadium viewing"
+   "tagline": "360 degree view of the action"
   }
  ]
 }

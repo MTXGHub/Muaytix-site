@@ -108,15 +108,6 @@
 .mtx-ss__band--dark p { color: #d3d4da; }
 .mtx-ss__ctarow { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* Trust strip. One line, its own thin band, so it reads as a statement rather
-   than as the first paragraph of the page. */
-.mtx-ss__trust { background: var(--ss-ink); color: #fff; padding: 16px 0; }
-.mtx-ss .mtx-ss__trust p {
-  max-width: none; margin-top: 0 !important; font-size: 15.5px; color: #d3d4da;
-  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
-}
-.mtx-ss__trust b { color: #fff; font-weight: 700; }
-
 /* The four seat-class cards. Identical layout on each so a guest on a phone
    compares by scrolling once, which is what the brief asks for instead of a
    table. Each carries its class colour as a bar and a section badge. */
@@ -135,6 +126,15 @@
 .mtx-ss__card h3 { margin-top: 22px; font-size: 25px; }
 /* The section numbers, in the class colour, because "Section 10" is the fact
    guests search for and the one that tells them where they will be. */
+/* The strapline. One line, in the class colour, the way the seat-class
+   graphics carry it. It is the only line of selling on the card. */
+.mtx-ss .mtx-ss__strap {
+  margin-top: 8px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 19px; line-height: 1.12; text-transform: uppercase; letter-spacing: .02em;
+  color: var(--ss-ink); max-width: none;
+}
+
 .mtx-ss__where {
   display: inline-flex; align-items: center; gap: 9px; align-self: flex-start;
   margin-top: 10px; padding: 7px 12px; background: var(--ss-paper);
@@ -142,7 +142,6 @@
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
   font-size: 13.5px; letter-spacing: .07em; text-transform: uppercase;
 }
-.mtx-ss .mtx-ss__seat { margin-top: 13px !important; font-size: 15.5px; font-weight: 600; }
 .mtx-ss .mtx-ss__card p { margin-top: 10px !important; font-size: 16px; color: var(--ss-muted); max-width: none; }
 .mtx-ss__card p b { color: var(--ss-ink); font-weight: 700; }
 .mtx-ss__price {

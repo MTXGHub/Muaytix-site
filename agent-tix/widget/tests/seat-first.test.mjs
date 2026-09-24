@@ -58,7 +58,17 @@ console.log('\nStep 1 — the seat classes, before any date');
   check('no calendar yet', await p.isHidden('[data-cal]'));
   check('no date has been asked for', asked.every(a=>a.action!=='events'), JSON.stringify(asked));
   const counts = await p.$$eval('[data-seat] .mtx-pill', n=>n.map(x=>x.textContent.trim()));
-  check('each says how many nights it is on', counts[0]==='3 nights' && counts[1]==='4 nights', JSON.stringify(counts));
+  // It used to count nights: "Ringside, 97 nights". A guest choosing a seat
+  // class has not picked a date yet, so the number answered a question nobody
+  // had asked. Either the class can be booked or it cannot.
+  check('a class on sale says only that it is available',
+        counts[0]==='Available' && counts[1]==='Available', JSON.stringify(counts));
+  check('and no night count is shown to the guest',
+        !counts.some(c=>/night/i.test(c)), JSON.stringify(counts));
+  const straps = await p.$$eval('[data-seat] .mtx-pick-why', n=>n.map(x=>x.textContent.trim()));
+  check('each tile carries the seat class strapline',
+        straps[0]==='Closest to the ring' && straps[3]==='360 degree view of the action',
+        JSON.stringify(straps));
   check('a class on sale nowhere says so, rather than vanishing',
         counts[3]==='Not currently on sale', JSON.stringify(counts));
   await ctx.close();

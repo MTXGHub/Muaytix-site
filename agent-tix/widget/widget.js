@@ -551,12 +551,18 @@ function mount(root, opts) {
           // A class open on no night at all is still shown, and still says so.
           // Removing it would leave a guest wondering where Third Class went.
           var off = c.nightsOnSale === 0;
+          // It used to count the nights: "Ringside, 97 nights". A guest
+          // choosing a seat class has not picked a date yet and does not care
+          // how many of the next eighteen months carry it -- the number told
+          // them nothing and read like stock control. Either it can be booked
+          // or it cannot.
           return '<button class="mtx-pick' + (off ? " mtx-pick--off" : "") + '" data-seat="' + esc(c.code) + '" ' +
                  'style="--c:' + esc(c.colour || "#6E655C") + ';--ci:' + esc(c.ink || "#3A342D") + '">' +
                  '<span class="mtx-pick-bar"></span>' +
+                 (c.tagline ? '<span class="mtx-pick-why">' + esc(c.tagline) + '</span>' : "") +
                  '<span class="mtx-pick-name">' + esc(c.name) + '</span>' +
                  '<span class="mtx-pill ' + (off ? "mtx-shut" : "mtx-ok") + '"><i></i>' +
-                   (off ? "Not currently on sale" : c.nightsOnSale + (c.nightsOnSale === 1 ? " night" : " nights")) +
+                   (off ? "Not currently on sale" : "Available") +
                  '</span></button>';
         }).join("") + '</div>' +
       '</section>'
