@@ -1,0 +1,273 @@
+/* Scoped under .mtx-ss so nothing here reaches the rest of the site, and the
+   site is less likely to reach in. The type, colours and components are the
+   day-dated fight night pages' own, so a guest moving between them sees one
+   site rather than two. */
+.mtx-ss, .mtx-ss * { box-sizing: border-box; }
+.mtx-ss {
+  --ss-blue: #1f5bff;
+  --ss-blue-dark: #1545cf;
+  /* The brand blue is barely legible on the dark bands: as a kicker on #18181d
+     it measures 3.37:1. This is the same blue lifted until it clears 4.5:1,
+     and it is used only where the background is dark. */
+  --ss-blue-lift: #86a9ff;
+  --ss-ink: #0b0b0d;
+  --ss-paper: #f2f2f2;
+  --ss-line: #dcdce1;
+  --ss-muted: #6e6e75;
+
+  /* Seat-class colours, sampled from the seating map artwork so a swatch on
+     a card matches the shape on the picture exactly. */
+  --ss-ring:  #00A651;
+  --ss-club:  #27AAE1;
+  --ss-leo:   #FFF200;
+  --ss-third: #F7941E;
+
+  font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--ss-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.mtx-ss p, .mtx-ss h1, .mtx-ss h2, .mtx-ss h3, .mtx-ss ul, .mtx-ss ol { margin: 0; padding: 0; }
+.mtx-ss ul, .mtx-ss ol { list-style: none; }
+.mtx-ss img { max-width: 100%; display: block; }
+.mtx-ss__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
+
+.mtx-ss h1, .mtx-ss h2, .mtx-ss h3 {
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+}
+.mtx-ss h1 { font-size: clamp(34px, 5vw, 60px); line-height: .98; }
+.mtx-ss h2 { font-size: clamp(27px, 3.4vw, 42px); line-height: 1.04; margin-top: 8px; }
+.mtx-ss h3 { font-size: 21px; line-height: 1.15; }
+.mtx-ss__kicker {
+  display: block; color: var(--ss-blue); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 13px; letter-spacing: .13em; text-transform: uppercase;
+}
+
+/* Breadcrumb. Visible on the page as well as in the schema, which is what the
+   brief asks for: the two should never disagree. */
+.mtx-ss__crumbs { display: flex; flex-wrap: wrap; align-items: baseline; font-size: 13.5px; color: #b6b7bf; }
+.mtx-ss__crumbs a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.3); }
+.mtx-ss__crumbs a:hover { color: #fff; }
+.mtx-ss__crumbs li + li::before { content: "\203A"; margin: 0 9px; opacity: .6; }
+.mtx-ss__crumbs [aria-current] { color: #fff; }
+
+.mtx-ss__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 52px; padding: 0 26px; border: 2px solid transparent;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 16px; letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: all .2s ease;
+}
+.mtx-ss__btn--blue { background: var(--ss-blue); color: #fff; }
+.mtx-ss__btn--blue:hover { background: var(--ss-blue-dark); color: #fff; }
+.mtx-ss__btn--ghost { background: transparent; border-color: #fff; color: #fff; }
+.mtx-ss__btn--ghost:hover { background: #fff; color: var(--ss-ink); }
+.mtx-ss__btn--outline { background: #fff; border-color: var(--ss-ink); color: var(--ss-ink); }
+.mtx-ss__btn--outline:hover { border-color: var(--ss-blue); color: var(--ss-blue); }
+.mtx-ss__go {
+  display: inline-block; color: var(--ss-blue); text-decoration: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 15px; letter-spacing: .07em; text-transform: uppercase;
+  border-bottom: 2px solid currentColor; padding-bottom: 2px;
+}
+.mtx-ss__go:hover { color: var(--ss-blue-dark); }
+.mtx-ss__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+/* Hero. The photograph sits under a scrim heavier on the left, where the words
+   are, thinning to the right so the arena still shows. background-color is the
+   fallback: if the image never loads the hero is simply black. */
+.mtx-ss__hero {
+  position: relative; color: #fff;
+  padding: clamp(40px, 5vw, 72px) 0 clamp(52px, 7vw, 92px);
+  background-color: var(--ss-ink);
+  background-image:
+    linear-gradient(100deg, rgba(11,11,13,.95) 0%, rgba(11,11,13,.88) 38%,
+                    rgba(11,11,13,.66) 72%, rgba(11,11,13,.52) 100%),
+    url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+  background-repeat: no-repeat; background-size: cover; background-position: center 38%;
+}
+@media (max-width: 760px) {
+  .mtx-ss__hero {
+    background-image:
+      linear-gradient(180deg, rgba(11,11,13,.86) 0%, rgba(11,11,13,.74) 30%,
+                      rgba(11,11,13,.88) 72%, rgba(11,11,13,.96) 100%),
+      url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+    background-position: center 30%;
+  }
+}
+.mtx-ss__hero h1 { margin-top: 18px; }
+.mtx-ss__lede { max-width: 62ch; margin-top: 18px !important; color: #d3d4da; font-size: 17px; }
+
+/* Bands */
+.mtx-ss__band { padding: clamp(40px, 5vw, 70px) 0; background: #fff; }
+.mtx-ss__band--paper { background: var(--ss-paper); }
+.mtx-ss__band--dark { background: #18181d; color: #fff; }
+.mtx-ss__band--dark .mtx-ss__kicker, .mtx-ss__booking .mtx-ss__kicker { color: var(--ss-blue-lift); }
+.mtx-ss__band p { max-width: 68ch; margin-top: 16px !important; font-size: 17px; }
+.mtx-ss__band--dark p { color: #d3d4da; }
+.mtx-ss__ctarow { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Trust strip. One line, its own thin band, so it reads as a statement rather
+   than as the first paragraph of the page. */
+.mtx-ss__trust { background: var(--ss-ink); color: #fff; padding: 16px 0; }
+.mtx-ss .mtx-ss__trust p {
+  max-width: none; margin-top: 0 !important; font-size: 15.5px; color: #d3d4da;
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+}
+.mtx-ss__trust b { color: #fff; font-weight: 700; }
+
+/* The four seat-class cards. Identical layout on each so a guest on a phone
+   compares by scrolling once, which is what the brief asks for instead of a
+   table. Each carries its class colour as a bar and a section badge. */
+.mtx-ss__cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mtx-ss .mtx-ss__cards { margin-top: 30px; }
+.mtx-ss__card {
+  display: flex; flex-direction: column; position: relative;
+  background: #fff; border: 1px solid var(--ss-line); padding: 0 0 26px;
+  overflow: hidden;
+}
+.mtx-ss__card::before { content: ""; display: block; height: 7px; background: var(--ss-c, var(--ss-blue)); }
+.mtx-ss__card > * { margin-left: 24px; margin-right: 24px; }
+.mtx-ss__card h3 { margin-top: 22px; font-size: 25px; }
+/* The section numbers, in the class colour, because "Section 10" is the fact
+   guests search for and the one that tells them where they will be. */
+.mtx-ss__where {
+  display: inline-flex; align-items: center; gap: 9px; align-self: flex-start;
+  margin-top: 10px; padding: 7px 12px; background: var(--ss-paper);
+  border-left: 4px solid var(--ss-c, var(--ss-blue));
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 13.5px; letter-spacing: .07em; text-transform: uppercase;
+}
+.mtx-ss .mtx-ss__seat { margin-top: 13px !important; font-size: 15.5px; font-weight: 600; }
+.mtx-ss .mtx-ss__card p { margin-top: 10px !important; font-size: 16px; color: var(--ss-muted); max-width: none; }
+.mtx-ss__card p b { color: var(--ss-ink); font-weight: 700; }
+.mtx-ss__price {
+  margin-top: 16px !important; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 26px; color: var(--ss-ink) !important; line-height: 1.1;
+}
+.mtx-ss__price small { display: block; font-family: "Barlow", sans-serif; font-weight: 400; font-size: 13.5px; color: var(--ss-muted); letter-spacing: 0; text-transform: none; }
+.mtx-ss__cardcta { margin-top: auto; padding-top: 20px; }
+.mtx-ss__cardcta .mtx-ss__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+/* Booking. The widget mounts here. */
+.mtx-ss__booking { background: var(--ss-ink); color: #fff; padding: clamp(42px, 5.5vw, 74px) 0; scroll-margin-top: 16px; }
+.mtx-ss__booking h2 { color: #fff; }
+.mtx-ss .mtx-ss__booking p { color: #d3d4da; }
+/* Hands the widget its own headings back. The widget mounts inside this block,
+   so the heading rules above would otherwise match its headings directly, and a
+   direct match beats a colour the widget only sets on an ancestor. That is what
+   once turned a fight night's name white on a white panel. */
+.mtx-ss #mtx-booking h1, .mtx-ss #mtx-booking h2,
+.mtx-ss #mtx-booking h3, .mtx-ss #mtx-booking h4 { color: inherit; text-transform: none; }
+.mtx-ss__panel { margin-top: 26px; background: #fff; color: var(--ss-ink); padding: clamp(18px, 3vw, 30px); }
+.mtx-ss .mtx-ss__panel p { color: var(--ss-muted); }
+.muaytix-ticket-selector { min-height: 320px; }
+.mtx-ss__after { margin-top: 22px !important; }
+
+/* "Best for what you want" and "the view from" both run four short answers.
+   Two columns on a desktop, one on a phone. */
+.mtx-ss__picks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 34px; }
+.mtx-ss .mtx-ss__picks { margin-top: 30px; }
+.mtx-ss__pick h3 { font-size: 19px; color: var(--ss-blue); }
+.mtx-ss .mtx-ss__pick p { margin-top: 8px !important; font-size: 16px; max-width: none; }
+
+.mtx-ss__views { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mtx-ss .mtx-ss__views { margin-top: 30px; }
+.mtx-ss__view { background: #fff; border: 1px solid var(--ss-line); }
+.mtx-ss__view img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #e6e6ea; }
+@supports not (aspect-ratio: 4 / 3) { .mtx-ss__view img { height: 260px; } }
+.mtx-ss__view div { padding: 20px 22px 24px; }
+.mtx-ss__view h3 { font-size: 20px; }
+.mtx-ss .mtx-ss__view p { margin-top: 9px !important; font-size: 16px; color: var(--ss-muted); max-width: none; }
+
+/* Rows, and the good-to-know list. Both are short facts, one per line. */
+.mtx-ss__rows { border-top: 1px solid var(--ss-line); }
+.mtx-ss .mtx-ss__rows { margin-top: 26px; }
+.mtx-ss__rows li { display: grid; grid-template-columns: 150px 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--ss-line); }
+/* The class colour is carried by a bar, not by the words. These four are
+   sampled off the seating map artwork so a swatch matches the shape on the
+   picture, and they were never chosen to be read as type: LEO's yellow on
+   this background measures 1.04:1, which is no contrast at all. The name
+   stays in ink and the colour does its job beside it. */
+.mtx-ss__rows strong {
+  display: flex; align-items: baseline; gap: 10px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 18px; text-transform: uppercase; color: var(--ss-ink);
+}
+.mtx-ss__rows strong::before {
+  content: ""; flex: none; width: 5px; align-self: stretch;
+  background: var(--ss-c, var(--ss-blue)); box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
+}
+.mtx-ss__rows span { font-size: 16px; color: var(--ss-muted); }
+
+.mtx-ss__know { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 30px; }
+.mtx-ss .mtx-ss__know { margin-top: 26px; }
+.mtx-ss__know li { position: relative; padding-left: 22px; font-size: 16px; color: var(--ss-muted); }
+.mtx-ss__know li::before { content: ""; position: absolute; left: 0; top: 11px; width: 9px; height: 2px; background: var(--ss-blue); }
+
+/* Where the sections are. Map left, caption right on a desktop. */
+.mtx-ss__maprow { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(22px, 4vw, 44px); align-items: center; }
+.mtx-ss .mtx-ss__maprow { margin-top: 30px; }
+.mtx-ss__mapfig { display: block; position: relative; text-decoration: none; }
+.mtx-ss__mapfig img { width: 100%; height: auto; }
+.mtx-ss__mapzoom {
+  position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center;
+  padding: 8px 13px; background: rgba(11,11,13,.78); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.14); transition: background .18s ease;
+}
+.mtx-ss__mapfig:hover .mtx-ss__mapzoom { background: var(--ss-blue); }
+.mtx-ss__key { margin-top: 20px; }
+.mtx-ss__key li { display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: center; padding: 8px 0; font-size: 15.5px; }
+.mtx-ss__sw { width: 20px; height: 20px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.35); }
+
+/* FAQ. <details> rather than a script: the answers are in the HTML on load,
+   which is what both the schema and the brief require. */
+.mtx-ss__faq { margin-top: 30px; border-top: 1px solid var(--ss-line); }
+.mtx-ss__faq details { border-bottom: 1px solid var(--ss-line); }
+.mtx-ss__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 18px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 20px; line-height: 1.15; text-transform: uppercase;
+}
+.mtx-ss__faq summary::-webkit-details-marker { display: none; }
+.mtx-ss__faq summary::after {
+  content: "+"; flex: none; color: var(--ss-blue);
+  font-family: "Barlow", Helvetica, Arial, sans-serif; font-weight: 400; font-size: 26px; line-height: 1; margin-top: 2px;
+}
+.mtx-ss__faq details[open] summary::after { content: "\2013"; }
+.mtx-ss .mtx-ss__faq p { margin-top: 0 !important; margin-bottom: 22px !important; font-size: 16px; color: var(--ss-muted); }
+
+/* The sticky book button, phone only. It appears once the widget has scrolled
+   out of sight and never before, so it cannot sit on top of the widget itself.
+   The page gets padding at the foot so it cannot cover the last FAQ either. */
+.mtx-ss__sticky {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+  background: rgba(11,11,13,.94); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transform: translateY(110%); transition: transform .22s ease; display: none;
+}
+.mtx-ss__sticky .mtx-ss__btn { width: 100%; }
+.mtx-ss[data-sticky="on"] .mtx-ss__sticky { transform: translateY(0); }
+
+@media (max-width: 900px) {
+  .mtx-ss__maprow { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .mtx-ss__cards, .mtx-ss__views, .mtx-ss__picks { grid-template-columns: 1fr; }
+  .mtx-ss__know { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .mtx-ss__shell { width: min(100% - 28px, 1180px); }
+  .mtx-ss__actions .mtx-ss__btn, .mtx-ss__ctarow .mtx-ss__btn { width: 100%; }
+  .mtx-ss__rows li { grid-template-columns: 1fr; gap: 4px; }
+  .mtx-ss__faq summary { font-size: 18px; }
+  .mtx-ss__sticky { display: block; }
+  .mtx-ss { padding-bottom: 76px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mtx-ss__sticky { transition: none; }
+}

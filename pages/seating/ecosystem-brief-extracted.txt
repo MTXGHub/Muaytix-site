@@ -1,0 +1,4189 @@
+MuayTix: Rajadamnern Stadium Seating
+Ecosystem Rebuild
+Prepared 24 September 2026. Six pages, one connected system.
+Sources used: the master prompt, the Keyword Architecture Web Handoff (14 July 2026
+GSC export) and the Seat Class Source of Truth (23 September 2026). Where the two
+documents conﬂict, the Source of Truth wins, as it instructs. Nothing factual has been
+added from outside these documents except MuayTix house rules already in use on the
+site (British English, "Book Tickets" wording, no alcohol brand names, no use of
+"oﬃcial").
+PART 1: Executive diagnosis of the six-page opportunity
+What the data actually says
+Cluster Keywords Clicks Impressions What it tells us
+Seating
+comparison
+(parent)
+23 22 11,964
+Huge impressions, almost no
+clicks. Stripping out "muay
+thai ﬁght seats" (6,793
+impressions, US desktop, ruled
+out as genuine demand)
+leaves roughly 5,100 real
+impressions at positions 7 to
+10 with near-zero CTR. The
+page is visible but not chosen.
+Seat map
+and layout
+16 54 2,724
+The best-performing cluster
+today: positions 4.5 to 6.5 and
+CTRs of 1 to 6 per cent.
+Searchers already trust
+MuayTix for the map. This is
+the quickest win.
+Ringside 9 0 131 Zero clicks at positions 7 to 8.
+There is no page satisfying the
+intent. Low volume but high
+ticket value (2,500 THB) and,
+per MuayTix, the American
+
+Cluster Keywords Clicks Impressions What it tells us
+high-season market that
+wants front row.
+Club Class 14 11 401
+Positions 4 to 7, reasonable
+CTR on "view" queries. Section
+8 or 9 wording appears in
+searches. This is the 55 per
+cent product, so every extra
+visitor here matters most.
+LEO Section 10 15 661
+Two naming systems in live
+use: "leo section" and "section
+10". Neither currently sits on
+page 1 top half.
+Third Class /
+Section 11
+10 11 516
+"Section 11" outranks "third
+class" in searcher vocabulary
+by nearly 3 to 1 on
+impressions. The page must
+lead with the section number.
+Total: 82 keywords, 113 clicks, 16,397 impressions (keyword level, not page level).
+The ﬁve problems the rebuild solves
+1. Visibility without selection. The parent seating terms sit at positions 7 to 10. At that
+depth, a title that says "seating" is not enough. The page needs to be the answer to
+"which seats should I choose", not a description of seating.
+2. Two intents on one page. Map queries and choice queries currently point at one
+page. Splitting them lets each page say exactly one thing in its title and ﬁrst
+paragraph, which is what moves position 7 to position 3.
+3. No product pages. Ringside has 131 impressions and 0 clicks because there is no
+Ringside page. Searchers with money in hand ﬁnd nothing speciﬁc.
+4. Section-number blindness. Searchers say "section 10", "section 11", "section 8 or 9".
+If those relationships are not stated in plain sentences, neither Google nor an AI
+answer engine can conﬁrm them.
+5. Booking is not seat-led. Guests worry about the seat ﬁrst, then the event. The
+current ﬂow makes them choose in the wrong order.
+Two corrections to the brief, from the source of truth
+The brief lists "section 11 view" queries under Third Class and "seat view" under the
+parent. Fine, but the Source of Truth also gives MuayTix a distinctive, defensible
+point of view on rows (Row D and above in Club Class, LEO and Third Class; front
+
+row ﬁrst at Ringside). That row guidance is the single most differentiating piece of
+content in this whole system and does not appear in the keyword brief at all. It has
+been built into every child page.
+"Best seats" queries (rajadamnern stadium best seats, 5.15 per cent CTR at position
+5.96) are the highest-converting wording in the parent cluster. The parent page
+answers "best seats" by priority, not by crowning one class, exactly as the brief
+requires.
+PART 2: Search-intent and keyword architecture
+Page-by-page intent map
+Page
+Dominant
+search task Words the page must own
+Words it must
+NOT lead with
+/rajadamnern-
+stadium-seats
+Which seat
+class should I
+choose?
+seating, seats, best seats,
+seat view, choose,
+compare, class
+map, layout,
+plan, chart
+/rajadamnern-
+stadium-seat-
+map
+Where is each
+section?
+seat map, seating map,
+stadium map, seating
+plan, seating chart, layout,
+sections, plan, capacity
+best seats,
+which to choose,
+book
+/ringside
+Is Ringside
+right for me
+and how do I
+book it?
+ringside, ringside seats,
+ringside view, front row,
+Sections 3 to 7
+comparison of
+all four
+/club-class
+Is Club Class
+right for me?
+club class, Sections 8 and
+9, section 8 or 9, club
+class view, club class
+seats, numbered seat
+map
+/leo-section
+What is the
+LEO Section
+and is it for
+me?
+LEO Section, Section 10,
+leo section muay thai,
+atmosphere, betting
+nights
+second level,
+second class as
+a lead term
+/third-class
+What is Section
+11 and when
+can I sit there?
+Section 11, third class, 3rd
+class, section 11 view,
+upper tier
+budget,
+cheapest,
+farthest
+Keyword patterns that shape the content
+
+Pattern in the data Where it goes How it is used
+"best seats" family (5
+variants, 236 impressions,
+best CTRs in the parent
+cluster)
+Parent page H2
+Answered by priority: closest,
+elevated with an assigned seat,
+atmosphere, whole-stadium view
+"seat view" and "view from
+my seat"
+Parent (summary)
+and each child
+(detail)
+View-from-section photography
+with alt text; one short view
+paragraph per class on the parent,
+full section on each child
+"seating capacity" (8
+impressions, position 11) Map page
+Capacity facts: 3,078 total, 192
+Ringside, about 1,000 main arena,
+about 2,100 upper tier
+Section-number queries (8
+or 9, 10, 11)
+Child pages,
+stated as plain
+relationships
+"LEO Section is Section 10 at
+Rajadamnern Stadium." "Third
+Class is Section 11." "Club Class
+covers Sections 8 and 9."
+"muay thai ringside seats"
+(sits in parent cluster)
+Ringside child
+page
+Ringside page title and H1 carry
+"Ringside seats"; parent links to it
+with that anchor
+Map synonyms (map,
+seating map, seating plan,
+seating chart, layout, plan,
+sections)
+Map page only
+Used across H1, H2s, image alt
+text and captions, once each, not
+repeated
+"leo section muay thai" LEO page
+LEO page explains the Muay Thai-
+speciﬁc atmosphere (traditional
+nights, orchestra location,
+broadcast position)
+"3rd class" Third Class page One natural mention: "Third Class
+(sometimes written 3rd Class)"
+Cannibalisation controls
+Risk Control
+Parent vs map
+Parent has no map heading. It shows a small zone graphic with a
+caption linking to the map page. The word "map" appears in the
+parent only in that link. The map page has no "which is best" heading
+and no comparison cards.
+
+Risk Control
+Parent vs
+children on
+"view"
+Parent gives one view sentence per class and links to the child with
+"see the view from X". Children own the full view section and the
+photography.
+Children vs
+each other
+Each child is built around a different question: Ringside is about
+proximity and rows; Club Class is about assigned seats and families;
+LEO is about atmosphere and the three traditional nights; Third Class
+is about availability and the whole-arena view.
+Map vs
+children on
+section
+numbers
+Map says where Section 10 is. LEO page says what Section 10 is like.
+Map links to the child with "what it is like to sit in Section 10".
+PART 3: Six-page ecosystem and internal-linking
+architecture
+How the pages work together
+Page
+Primary
+purpose
+Commercial
+role
+Target
+visitor state
+Primary
+CTA
+Secondary
+CTA
+Place
+journ
+/rajadamnern-
+stadium-
+seats
+Compare
+four
+classes,
+decide
+Central
+conversion
+page, seat-
+led widget
+"I need to
+choose" or
+"I know
+what I
+want"
+Book
+Tickets
+(widget:
+class
+then
+date)
+Open a
+seat-class
+page
+Hub
+/rajadamnern-
+stadium-seat-
+map
+Show
+where
+everything
+is
+Orientation
+and trust;
+feeds the
+hub and
+children
+"Where will
+I actually
+sit?"
+Explore
+a seat
+class
+(four
+zone
+cards)
+Compare
+all four
+seats
+Entry
+point
+from
+map
+searc
+/ringside
+Evaluate
+and book
+Ringside
+High-value
+product
+page
+"I want
+close and I
+want to be
+sure"
+Book
+Ringside
+Tickets
+(widget:
+date)
+Compare
+with Club
+Class /
+see the
+seat map
+Prod
+
+Page Primary
+purpose
+Commercial
+role
+Target
+visitor state
+Primary
+CTA
+Secondary
+CTA
+Place
+journ
+/club-class
+Evaluate
+and book
+Club
+Class
+Highest-
+volume
+product
+page
+"I want a
+numbered
+seat,
+probably
+with family"
+Book
+Club
+Class
+Tickets
+Compare
+with LEO /
+see the
+seat map
+Prod
+/leo-section
+Evaluate
+and book
+LEO
+Product
+page with a
+night-of-
+week
+dimension
+"I want
+atmosphere
+and
+freedom to
+choose"
+Book
+LEO
+Section
+Tickets
+Compare
+with Club
+Class /
+see the
+seat map
+Prod
+/third-class
+Evaluate
+and book
+Third
+Class
+Product
+page with
+an
+availability
+dimension
+"I want to
+be in the
+building" or
+"what is
+Section
+11?"
+Book
+Third
+Class
+Tickets
+Consider
+LEO or
+Club Class
+if not on
+sale
+Prod
+The journey in one line
+Map or Google →  understand the stadium →  compare four classes on the hub →  open
+one child page if still unsure →  choose class →  choose date →  book.
+Architecture problems identiﬁed and resolved before writing
+Problem Resolution
+The brief says "Section 11" is
+the primary Third Class query,
+but the URL says third-class.
+Keep the URL. Title, H1 and ﬁrst sentence carry
+"Section 11". Changing the URL would cost existing
+equity for no gain.
+LEO page could easily become
+a betting page.
+Betting is one H2, framed around the three traditional
+nights only, positioned after view and location.
+Third Class availability is
+variable. A page that sells a
+section that is often closed
+will frustrate.
+Availability is a named H2 above the widget, and the
+widget copy explains that dates are shown only when
+Third Class is on sale (this is a requirement on the
+widget build, ﬂagged in Part 15).
+Row guidance could sound
+like MuayTix is calling front
+rows bad.
+Every row statement is phrased as a recommendation
+for a purpose, never as a warning. "There are no bad
+views" is stated on the hub and the map page.
+
+Problem Resolution
+A booking widget on every
+page contradicts the MuayTix
+preference not to push guests
+at every turn.
+The map page gets no widget. The hub and four
+product pages each get one widget, placed after the
+guest has enough to decide, plus a mobile sticky
+button that scrolls to it.
+PART 4: Conversion architecture and booking-widget
+strategy
+Principles applied
+Resolve uncertainty ﬁrst, then offer the action. On every page the widget arrives
+after the guest knows what it is, where it is, what they will see and who it suits.
+One widget per page, never repeated. Repetition on a phone reads as pressure. A
+sticky "Book Tickets" button on mobile scrolls to the single widget instead.
+Seat-led on the hub, date-led on the children. On the hub the guest picks class then
+date. On a child page the class is already chosen, so the only decision is the date.
+Trust near the top. Guests ask "where will I sit" and "who am I buying from" early. A
+one-line trust strip (international ticket partner for Rajadamnern Stadium, seat class
+and row guidance included) sits under the hero on the hub and product pages.
+Widget placement summary
+Page Widget Position Why there
+Mobile
+sticky
+button
+Hub Class then
+date
+Directly after
+the four seat-
+class cards
+(about screen 3
+on mobile)
+Fast-path visitors
+reach it via the hero
+"Book Tickets"
+anchor in one tap.
+Guided visitors reach
+it after the cards
+have done their job.
+Yes: "Book
+Tickets",
+scrolls to
+widget
+Map None n/a Intent is orientation.
+A widget here
+competes with the
+hub and pushes
+guests who came to
+look. Four zone cards
+No. A single
+"Compare
+and book
+seats"
+button at the
+end.
+
+Page Widget Position Why there
+Mobile
+sticky
+button
+under the map link to
+each product page.
+Ringside
+Date only,
+Ringside
+preselected
+After "Rows and
+seat allocation"
+The front-row
+allocation practice is
+the strongest
+reassurance on the
+page. Book
+immediately after it.
+Yes: "Book
+Ringside
+Tickets"
+Club
+Class
+Date only,
+Club Class
+preselected
+After "Rows and
+viewing
+position"
+Guests need the Row
+D guidance and the
+numbered-seat fact
+before committing.
+The sell-out note sits
+just above the
+widget.
+Yes: "Book
+Club Class
+Tickets"
+LEO
+Date only,
+LEO
+preselected
+After "Fight
+nights and
+atmosphere"
+Guests must
+understand which
+nights carry the
+betting crowd before
+choosing a date.
+Yes: "Book
+LEO Section
+Tickets"
+Third
+Class
+Date only,
+Third Class
+preselected
+After "When
+Third Class
+opens"
+Availability is the
+deciding fact. Never
+invite a date choice
+before explaining it.
+Yes: "Book
+Third Class
+Tickets"
+Fast path and guided path on the hub
+Path Trigger What happens
+Fast Hero button "Book Tickets"
+Smooth-scrolls to the widget anchor
+(#book). Class chips are visible immediately.
+Guided
+Hero button "Compare the
+four seat classes" or natural
+scroll
+Four cards, then "best seats for what you
+want", then the widget, then row guidance
+and the rest.
+Widget build requirements (for the developer)
+
+Widget on child pages must accept the seat class as a preset (for example a URL
+parameter or embed attribute) so the class chip is hidden or locked.
+Third Class widget should list only dates where Third Class is currently on sale. If
+that is not possible in the ﬁrst build, the copy has a fallback line (Part 10).
+Sold-out dates should remain visible but unselectable, with a short label, so guests
+can see that MuayTix does sell the class rather than assume the page is broken.
+Widget copy uses "Book Tickets" wording, never "book your seat".
+PART 5: /rajadamnern-stadium-seats
+A. Page strategy
+Item Detail
+URL /rajadamnern-stadium-seats (keep)
+Purpose Help the visitor compare the four seat classes and choose
+Primary intent Comparison, then commercial investigation
+Primary
+keyword rajadamnern stadium seating
+Supporting
+themes
+rajadamnern stadium seats, best seats, seat view, seat classes, which
+seats to choose, Ringside, Club Class, LEO Section, Third Class,
+section numbers
+Target user
+state
+Researching, roughly 70 per cent on mobile, unsure which of four
+names means what
+Conversion
+objective
+Class chosen, date chosen, booking started
+Primary CTA Book Tickets (seat-led widget)
+Secondary
+CTA Open the relevant seat-class page
+B. SERP package
+Element Copy Characters
+SEO title
+Rajadamnern Stadium Seating: Compare the 4 Seat
+Classes 55
+
+Element Copy Characters
+Meta
+description
+Compare Ringside, Club Class, LEO Section and Third
+Class at Rajadamnern Stadium: where each sits, the
+view, the feel and who it suits. Then book.
+146
+H1
+Rajadamnern Stadium Seating: Choose the Right Seats
+for Your Fight Night
+OG title Which Rajadamnern Stadium Seats Are Right for You?
+OG
+description
+Four seat classes, four different ways to watch the same
+ﬁght night. Compare them in two minutes and book by
+seat class.
+URL change Not recommended
+C. Page architecture
+# Section
+User
+question Format SEO role
+Conversion
+role
+Onward
+action
+1 Hero
+What is
+this page
+and can I
+book
+here?
+H1, two
+lines, two
+buttons
+H1 carries
+primary term
+Splits fast
+and guided
+paths
+Anchor to
+#book or
+#compare
+2 Trust strip
+Who am I
+buying
+from?
+One line Entity clarity
+Early
+reassurance None
+3
+The four
+seat
+classes at
+a glance
+What are
+the four
+options?
+Four
+stacked
+cards
+Section
+numbers
+stated
+explicitly
+Core
+comparison
+mechanism
+Card link
+to each
+child
+page
+4
+Booking
+widget
+I have
+decided,
+let me
+book
+Widget
+with intro
+copy
+None
+Primary
+conversion
+point
+Widget
+5
+Best seats
+for what
+you want
+Which is
+best for
+me?
+Four short
+H3
+answers
+Owns "best
+seats"
+queries
+Guided path
+resolver
+Link to
+child
+page
+
+# Section User
+question
+Format SEO role Conversion
+role
+Onward
+action
+6
+The view
+from each
+seat class
+What will I
+see?
+Four short
+paragraphs
+with
+photos
+Owns "seat
+view" queries
+Visual
+conﬁdence
+Link to
+child "see
+the view"
+7
+Rows: how
+MuayTix
+places you
+Where in
+the
+section
+will I be?
+Short copy,
+four
+bullets
+Differentiator
+content
+Trust and
+expertise
+Link to
+each child
+rows
+section
+8
+Assigned
+and
+unassigned
+seating
+explained
+Will I
+deﬁnitely
+get a
+seat?
+Two short
+paragraphs
+Kills the
+standing
+myth
+Removes
+the biggest
+LEO and
+Third Class
+objection
+Link to
+LEO and
+Third
+Class
+9
+Where the
+sections
+are
+Where are
+these on a
+map?
+One small
+graphic,
+caption,
+link
+Hands map
+intent to the
+map page
+Orientation Link to
+seat map
+10
+Good to
+know
+before you
+book
+Anything
+else I
+need?
+Six short
+bullets
+Long-tail
+coverage
+Removes
+friction
+None
+11 FAQ
+Remaining
+questions Accordion FAQ schema
+Late-stage
+objections
+Links to
+children
+12 Final CTA Ready?
+One line
+and a
+button
+None
+Return to
+widget
+Anchor to
+#book
+D. Full ﬁnal copy
+Rajadamnern Stadium Seating: Choose the Right
+Seats for Your Fight Night
+Rajadamnern Stadium has four public seat classes: Ringside, Club Class, LEO Section
+and Third Class. There are no bad views in the building. The choice is about how you
+want to experience the night: right beside the ring, elevated with a numbered seat, in the
+middle of the atmosphere, or looking over the whole arena.
+
+[Button] Compare the four seat classes →  #compare
+[Button] Book Tickets →  #book
+Trust strip
+MuayTix is the international ticket partner for Rajadamnern Stadium. Every booking
+comes with MuayTix seat and row guidance, so you sit where you meant to.
+The four seat classes at a glance {#compare}
+Four cards. Same layout on each so guests can compare by scanning down.
+Card 1: Ringside
+Sections 3 to 7, ﬂoor level, main arena
+Assigned seat, allocated from the front row backwards
+The ring is a few metres away. You hear the strikes and the corner instructions.
+Feels like: a working ﬁght-night ﬂoor. Corners, oﬃcials and broadcast crews are all
+around you.
+Suits: ﬁght fans who want maximum proximity, groups who want to sit together
+close to the ring, photographers who want close-range angles
+2,500 THB
+[Link] See Ringside seats and view →  /rajadamnern-stadium-seats/ringside
+Card 2: Club Class
+Sections 8 and 9, elevated tier, main arena
+Assigned, numbered seat. Staff can walk you to it.
+Looks down across the whole ring, with the walkouts and corners in view.
+Feels like: busy and atmospheric on a full night, and the easiest section for families
+and groups. Toilets, food and drink are close by.
+Suits: ﬁrst-time guests, families with children, anyone who wants a dependable all-
+round choice. Around 55 per cent of MuayTix guests choose Club Class.
+1,800 THB
+[Link] See Club Class seats and view →  /rajadamnern-stadium-seats/club-class
+Card 3: LEO Section
+Section 10, elevated tier, main arena, directly facing the front of the ring
+Unassigned seating, seat guaranteed. Choose where to sit when you arrive.
+The broadcast cameras and commentary team sit here, which tells you how good
+the front-facing view is.
+Feels like: where the atmosphere lives. On Wednesday, Thursday and Sunday it is
+the home of local Thai ﬁght fans and the betting crowd.
+
+Suits: couples, solo travellers and groups who like choosing their own spot, repeat
+visitors, anyone who wants the local ﬁght-night feel
+1,500 THB
+[Link] See the LEO Section and view →  /rajadamnern-stadium-seats/leo-section
+Card 4: Third Class
+Section 11, upper tier, the highest point in the stadium
+Unassigned seating, seat guaranteed
+A wide view over the whole arena: ring, walkout, corners and crowd in one picture.
+Feels like: being inside Rajadamnern on a big night. Third Class opens as the
+stadium ﬁlls, so it is at its best when the building is full.
+Suits: guests who want the full-stadium perspective, repeat visitors after a different
+angle, photographers who want a high, wide shot
+1,000 THB. Opens on selected nights only.
+[Link] See Third Class seats and view →  /rajadamnern-stadium-seats/third-class
+Book your Rajadamnern Stadium tickets {#book}
+Copy above the widget
+Choose your seat class ﬁrst, then your date. Ringside and Club Class come with an
+assigned seat. LEO Section and Third Class are unassigned: you choose your position
+when you arrive, and every ticket guarantees a seat.
+[WIDGET: Step 1 seat class, Step 2 date, Step 3 continue]
+Copy below the widget
+Not sure yet? Keep reading. The rest of this page helps you pick, and each seat class
+has its own page with photos of the view.
+Which Rajadamnern seats are best? It depends what you
+want
+There is no single best seat at Rajadamnern. There is a best seat for the night you want.
+Best for being as close as possible
+Ringside. Sections 3 to 7 sit on the ﬂoor of the main arena, a few metres from the
+ropes. If you want to feel the impact of every strike, this is the section. Sections 3 and 4
+sit either side of the ﬁghter entrance walkway, so they are the closest seats to the
+walkouts. [Link: Ringside seats at Rajadamnern]
+Best for a numbered seat and an easy night
+
+Club Class. Sections 8 and 9 are elevated, every seat is numbered, and facilities are a
+short walk away. It is the most popular choice with MuayTix guests and the most
+straightforward option for families. [Link: Club Class, Sections 8 and 9]
+Best for atmosphere
+LEO Section. Section 10 faces the front of the ring and is where the local ﬁght fans
+gather on the three traditional Muay Thai nights: Wednesday, Thursday and Sunday. It is
+also where the broadcast cameras sit, so the view straight down the ring is the one you
+see on television. [Link: LEO Section, Section 10]
+Best for seeing the whole stadium
+Third Class. Section 11 is the top of the building and shows you the entire arena at
+once. It opens when demand ﬁlls the main arena, which is exactly when the atmosphere
+is at its strongest. [Link: Third Class, Section 11]
+The view from each seat class
+Ringside
+Ring-level and close. You see the ﬁghters at eye height, with the ropes, corners and
+oﬃcials as part of the picture. Sound is as much of the experience as sight.
+[Photo: view from Ringside]
+Club Class
+An elevated view that takes in the full canvas. From Row D and above you sit clearly
+above the people moving along the walkway and look down on the whole ring.
+[Photo: view from Club Class Row D or above]
+LEO Section
+Front-facing and elevated, on the same tier as Club Class. This is the broadcast angle.
+You watch the ﬁght square-on and can follow movement across the ring easily.
+[Photo: view from LEO Section]
+Third Class
+High and wide. From Row D and above you see the ring, the walkout, the main arena
+and the crowd as one scene.
+[Photo: view from Third Class]
+Rows: how MuayTix places you
+The section decides the experience. The row decides how well you see it. MuayTix
+places guests with that in mind.
+Ringside: allocated from the front row backwards. Front row is the closest and
+most immersive position and most guests ask for it, so we allocate it ﬁrst unless
+
+you tell us otherwise.
+Club Class: we recommend Row D and above. It lifts you clearly above the walkway
+eye line for an elevated view of the whole ring.
+LEO Section: seating is unassigned, so you choose. We suggest around Row D and
+above for the best overall sightline. Arriving earlier simply gives you more choice of
+position, including the front row when it is free.
+Third Class: Rows A to C face a safety fence. Row D and above gives you the
+clearest view over the arena.
+Assigned and unassigned seating explained
+Ringside and Club Class are assigned. Your seat number is on your ticket.
+LEO Section and Third Class are unassigned. That means you choose where to sit
+within the section when you arrive. It does not mean seating is limited and it does not
+mean anyone stands. There are no standing areas at Rajadamnern Stadium, and every
+ticket guarantees a seat. [Link: how unassigned seating works in the LEO Section]
+Where the sections are
+[Small zone graphic: ring in the centre, Ringside 3 to 7 around it, Club Class 8 and 9 and
+LEO 10 on the elevated tier, Third Class 11 above]
+Caption: Ringside wraps around the ring at ﬂoor level. Club Class and LEO Section share
+the elevated tier of the main arena. Third Class is the upper tier above them. [Link: See
+the full Rajadamnern Stadium seat map]
+Good to know before you book
+The stadium is fully air-conditioned and can feel cool. A light extra layer is worth
+bringing.
+There is no formal dress code. Dress sensibly for a sporting event indoors.
+Personal photography and video are allowed. Flash between bouts only, not during
+a ﬁght.
+Food, soft drinks and beer are sold inside, and can be served directly to Ringside
+seats.
+Children are welcome in every seat class. Club Class is usually the easiest choice
+with younger children.
+Rajadamnern is compact. Photographs make the distances between sections and
+the ring look bigger than they feel in person.
+Rajadamnern Stadium seating: your questions
+
+What are the seat classes at Rajadamnern Stadium?
+Four public classes: Ringside (Sections 3 to 7), Club Class (Sections 8 and 9), LEO
+Section (Section 10) and Third Class (Section 11). VIP areas exist but are not covered
+on this page.
+Which seats are best at Rajadamnern Stadium?
+It depends on the night you want. Ringside for proximity, Club Class for a numbered
+seat and an easy night, LEO Section for atmosphere and the broadcast view, Third Class
+for the whole-stadium picture. There are no bad views anywhere in the building.
+Is Club Class or LEO Section better?
+They share the same tier and a similar elevation. Club Class gives you a numbered
+plastic seat and is the calmer choice for families. LEO gives you concrete tier seating,
+the choice of where to sit, a front-facing view and, on Wednesday, Thursday and Sunday,
+the local betting crowd and the atmosphere that comes with it.
+Do I have to arrive early for LEO Section or Third Class?
+No. Every ticket guarantees a seat. Arriving earlier only increases your choice of
+position within the section.
+Can children sit in every section?
+Yes. There is no age restriction in any of the four classes. Club Class is normally the
+easiest with younger children because of the numbered seats and nearby facilities.
+How many people does Rajadamnern Stadium hold?
+About 3,078 spectators: roughly 192 at Ringside, about 1,000 across the main arena
+including Ringside, Club Class, LEO Section and VIP, and about 2,100 in the upper tier.
+Can I choose my exact seat when I book?
+Ringside and Club Class are assigned seats. Tell MuayTix your preference and we will
+allocate accordingly where availability allows. LEO Section and Third Class are
+unassigned, so you pick your position on the night.
+Ready to choose?
+Pick your seat class, pick your date, and you are done.
+[Button] Book Tickets →  #book
+E. Booking widget integration
+Item Detail
+Position Section 4, immediately after the four cards, anchor #book
+Copy above "Choose your seat class ﬁrst, then your date. Ringside and Club Class
+come with an assigned seat. LEO Section and Third Class are
+
+Item Detail
+unassigned: you choose your position when you arrive, and every ticket
+guarantees a seat."
+Copy below "Not sure yet? Keep reading. The rest of this page helps you pick, and
+each seat class has its own page with photos of the view."
+Mobile
+behaviour
+Full-width, class chips in a 2 x 2 grid, date picker below. Hero "Book
+Tickets" button and the sticky button both scroll to #book.
+Repeat? No. Final CTA is an anchor back to #book.
+Sticky CTA Yes on mobile only, appears after the user scrolls past the widget, label
+"Book Tickets".
+F. Visual requirements
+Asset Placement Shows Ratio Filename Alt text
+Hero
+photo
+Section 1
+Wide interior
+of
+Rajadamnern,
+ring lit, main
+arena tiers
+visible
+3:2
+desktop,
+4:5
+mobile
+crop
+rajadamnern-
+stadium-
+seating-main-
+arena.jpg
+Rajadamnern
+Stadium main
+arena
+showing
+Ringside,
+Club Class
+and LEO
+Section
+around the
+ring
+Zone
+icon
+x 4
+Cards
+Stadium
+outline with
+one class
+highlighted in
+its class
+colour
+1:1
+rajadamnern-
+ringside-
+sections-3-7-
+zone.png etc.
+Rajadamnern
+Stadium zone
+graphic
+highlighting
+Ringside
+Sections 3 to
+7 (and
+equivalents)
+View
+photo
+x 4
+Section 6 Actual view
+from each
+class, Row D
+or above for
+the three
+elevated
+classes
+4:3 view-from-
+ringside-
+rajadamnern-
+stadium.jpg,
+view-from-
+club-class-
+rajadamnern-
+View of the
+ring from
+Ringside at
+Rajadamnern
+Stadium (and
+equivalents)
+
+Asset Placement Shows Ratio Filename Alt text
+stadium.jpg,
+view-from-leo-
+section-
+rajadamnern-
+stadium.jpg,
+view-from-
+third-class-
+rajadamnern-
+stadium.jpg
+Small
+zone
+map
+Section 9
+Simpliﬁed
+section
+layout, all four
+classes
+labelled with
+numbers
+1:1
+rajadamnern-
+stadium-
+seating-
+zones-
+overview.png
+Overview of
+Rajadamnern
+Stadium
+seating
+zones:
+Ringside 3 to
+7, Club Class
+8 and 9, LEO
+Section 10,
+Third Class
+11
+G. Internal links from this page
+Destination Anchor text Section User reason
+/ringside See Ringside seats and
+view Card 1 Go deeper on
+proximity
+/club-class
+See Club Class seats
+and view Card 2
+Go deeper on the
+family option
+/leo-section See the LEO Section
+and view
+Card 3 Go deeper on
+atmosphere
+/third-class
+See Third Class seats
+and view Card 4
+Go deeper on
+availability
+/ringside Ringside seats at
+Rajadamnern
+Best for
+closeness
+Conﬁrm choice
+/club-class Club Class, Sections 8
+and 9
+Best for a
+numbered seat Conﬁrm choice
+
+Destination Anchor text Section User reason
+/leo-section LEO Section, Section
+10
+Best for
+atmosphere
+Conﬁrm choice
+/third-class Third Class, Section 11
+Best for the
+whole stadium Conﬁrm choice
+/leo-section
+how unassigned
+seating works in the
+LEO Section
+Assigned and
+unassigned
+Resolve the
+standing myth
+/rajadamnern-
+stadium-seat-map
+See the full
+Rajadamnern Stadium
+seat map
+Where the
+sections are
+Orientation
+H. Structured data
+BreadcrumbList: Home →  Rajadamnern Stadium Seating.
+FAQPage for the seven FAQs. Rich-result display is limited for most sites, but the
+markup gives AI systems clean question and answer pairs to quote.
+No Product or Offer schema here. Prices are shown in copy but there are four
+products and the page is a guide, not a single product listing.
+I. CRO notes
+Guests told MuayTix the seat is the ﬁrst worry and the seller is the second. Both are
+answered within the ﬁrst two screens.
+Four identical-layout cards let a mobile user compare by scrolling once. No table is
+needed.
+The widget sits at the natural end of the "at a glance" moment: enough to decide,
+not so late that decided visitors have to hunt.
+"Best for what you want" replaces the impossible "best seat" question with four
+answerable ones, each with a link to the matching product page.
+The unassigned explanation removes the single biggest reason guests avoid the
+two cheaper classes.
+Prices appear on the cards as facts, not as a pitch.
+PART 6: /rajadamnern-stadium-seat-map
+A. Page strategy
+
+Item Detail
+URL /rajadamnern-stadium-seat-map (keep)
+Purpose Show the physical layout of the stadium and where each section
+sits relative to the ring
+Primary intent Visual, map-seeking
+Primary keyword rajadamnern stadium seat map
+Supporting
+themes
+stadium map, seating map, seating plan, seating chart, layout,
+sections, stadium plan, capacity
+Target user state
+Wants to see, not read. Often arrives from Google Images or a
+"map" query.
+Conversion
+objective
+Orient the guest, then hand them to a seat-class page or the
+comparison hub
+Primary CTA Four zone cards linking to the seat-class pages
+Secondary CTA Compare all four seat classes (hub)
+B. SERP package
+Element Copy Characters
+SEO title Rajadamnern Stadium Seat Map and Seating Plan |
+MuayTix 55
+Meta
+description
+See the Rajadamnern Stadium seat map: where Ringside
+Sections 3 to 7, Club Class 8 and 9, LEO Section 10 and
+Third Class Section 11 sit around the ring.
+152
+H1 Rajadamnern Stadium Seat Map
+OG title
+Rajadamnern Stadium Seat Map: Where Every Section
+Sits
+OG
+description
+Ringside, Club Class, LEO Section and Third Class on one
+clear map, with the section numbers and levels
+explained.
+URL change Not recommended
+C. Page architecture
+
+# Section User
+question
+Format SEO role Conversion
+role
+Onward
+action
+V
+1
+H1 and
+the map
+Show me
+the map
+H1, one
+sentence,
+full-width
+map
+Owns the
+primary term,
+image alt
+Instant
+satisfaction
+Pinch-
+zoom on
+mobile
+F
+m
+2
+How the
+layout
+works
+How do I
+read this?
+Three
+short
+paragraphs
+Layout,
+levels,
+amphitheatre
+Orientation None
+O
+s
+e
+3
+Section
+by
+section
+Where is
+X?
+Four short
+H3s, each
+with a
+zone card
+Owns
+section-
+location
+queries
+Route to
+product
+pages
+Card link
+per class
+H
+z
+i
+4
+Fighter
+entrance,
+cameras
+and
+orchestra
+Where do
+things
+happen?
+Short list Entity-rich
+detail
+Adds
+conﬁdence
+in MuayTix
+knowledge
+Link to
+Ringside
+and LEO
+A
+m
+5 Stadium
+capacity
+How big is
+it?
+Short table
+Owns
+capacity
+queries
+Sets
+expectations
+None N
+6 Rows
+explained
+Which
+rows are
+where?
+Short copy
+Supports
+"seating
+plan"
+Trust
+Link to
+hub
+rows
+section
+R
+g
+o
+7
+A little
+history
+Why is it
+shaped
+this way?
+Two
+paragraphs
+Topical
+authority None None
+A
+p
+a
+8 FAQ
+Remaining
+map
+questions
+Accordion FAQ schema Late
+objections
+Links to
+children
+N
+9 Next step Now
+what?
+One line,
+two
+buttons
+None Route to hub
+Compare
+seats /
+Book
+Tickets
+N
+D. Full ﬁnal copy
+
+Rajadamnern Stadium Seat Map
+Rajadamnern Stadium is a compact amphitheatre built around the ring. Ringside sits on
+the ﬂoor, Club Class and the LEO Section sit on the elevated tier of the main arena, and
+Third Class sits in the upper tier at the top of the building. The map below shows where
+each section is.
+[FULL-WIDTH SEAT MAP: all sections numbered, four classes in their class colours, ring
+in the centre, ﬁghter entrance walkway marked]
+Caption: Rajadamnern Stadium seating plan. Ringside Sections 3 to 7 (green), Club
+Class Sections 8 and 9 (blue), LEO Section 10 (gold), Third Class Section 11 (orange).
+How the Rajadamnern Stadium layout works
+The stadium was designed so that every seat looks down or across at the ring with
+nothing in the way. There are no internal pillars anywhere in the building.
+There are three seating levels. The ﬂoor of the main arena is Ringside. Above it, the
+elevated tier of the main arena holds Club Class and the LEO Section on the same row
+conﬁguration. Above that, the upper tier holds Third Class, the highest seats in the
+stadium.
+The whole building is smaller than it looks in photographs. Distances between the tiers
+and the ring feel shorter in person.
+Rajadamnern Stadium sections explained
+Where is Ringside? Sections 3 to 7
+Ringside is on the ﬂoor of the main arena and wraps around most of the ring. The raised
+ﬁghter entrance walkway runs between Sections 3 and 4, which makes those two
+sections smaller than Sections 5, 6 and 7 and puts them closest to the walkouts.
+Ringside seats are assigned.
+[Zone card: Ringside highlighted] [Link] What it is like to sit Ringside →  /rajadamnern-
+stadium-seats/ringside
+Where are Sections 8 and 9? Club Class
+Club Class covers Sections 8 and 9 on the elevated tier of the main arena. Every seat is
+numbered. The traditional Muay Thai orchestra plays from the rear of Section 9.
+[Zone card: Club Class highlighted] [Link] What it is like to sit in Club Class →
+/rajadamnern-stadium-seats/club-class
+Where is Section 10? LEO Section
+
+The LEO Section is Section 10. It sits on the same elevated tier as Club Class and faces
+the front of the ring directly. The principal broadcast cameras and the commentary
+team are positioned here. Seating is unassigned, with a seat guaranteed for every
+ticket.
+[Zone card: LEO highlighted] [Link] What it is like to sit in the LEO Section →
+/rajadamnern-stadium-seats/leo-section
+Where is Section 11? Third Class
+Third Class is Section 11, the upper tier at the highest point of the stadium. There is no
+seating above it. It holds about 2,100 guests and opens on busier nights as the main
+arena ﬁlls. Seating is unassigned, with a seat guaranteed for every ticket.
+[Zone card: Third Class highlighted] [Link] What it is like to sit in Third Class →
+/rajadamnern-stadium-seats/third-class
+Where things happen inside the stadium
+Fighter entrance: the raised walkway runs through Ringside between Sections 3
+and 4.
+Broadcast cameras and commentary: positioned in the LEO Section, Section 10,
+facing the front of the ring.
+Traditional orchestra: at the rear of Club Class Section 9.
+Corners, judges and production: on the ﬂoor around the ring, within a few metres of
+Ringside guests.
+[Annotated map showing the four points above]
+Rajadamnern Stadium seating capacity
+Area Approximate
+capacity
+Whole stadium 3,078
+Ringside (Sections 3 to 7) 192
+Main arena in total (Ringside, Club Class, LEO Section and VIP
+areas) 1,000
+Upper tier (Third Class, Section 11) 2,100
+Rows on the seating plan
+
+Rows run from A at the front of each section backwards. At Ringside, MuayTix allocates
+from the front row ﬁrst. In Club Class, LEO Section and Third Class, MuayTix
+recommends Row D and above for the clearest sightline over the walkway, and in Third
+Class to sit beyond the safety fence that fronts Rows A to C. [Link: How MuayTix places
+you by row]
+Why the stadium is shaped like this
+Rajadamnern was commissioned in 1941. Construction paused during the Second
+World War, and the ﬁrst ﬁght took place on 23 December 1945. It began life as an open-
+air amphitheatre in the Roman style and was later given a concrete roof, but the seating
+bowl is essentially the one designed eighty years ago: every spectator with a clear line
+to the ring.
+The stadium marked its 80th anniversary in December 2025. Since 2022 it has been
+operated by Global Sport Ventures, who launched the Rajadamnern World Series as part
+of its modernisation.
+Seat map questions
+Which sections are elevated at Rajadamnern Stadium?
+Club Class (Sections 8 and 9) and the LEO Section (Section 10) sit on the elevated tier
+of the main arena. Third Class (Section 11) is higher still, in the upper tier.
+Is the LEO Section the same as Section 10?
+Yes. LEO Section and Section 10 are the same area. It was sometimes called Second
+Class in older descriptions.
+Is Third Class the same as Section 11?
+Yes. Third Class, sometimes written 3rd Class, is Section 11.
+Are Sections 8 and 9 both Club Class?
+Yes. Club Class is made up of Sections 8 and 9.
+Is there standing room at Rajadamnern Stadium?
+No. There are no standing areas anywhere in the stadium. Every ticket, including
+unassigned LEO Section and Third Class tickets, guarantees a seat.
+Which seats are closest to the ﬁghter entrance?
+Ringside Sections 3 and 4, on either side of the raised walkway.
+Decide where you want to sit
+Now that you know where everything is, compare the four seat classes side by side, or
+go straight to booking.
+
+[Button] Compare the four seat classes →  /rajadamnern-stadium-seats
+[Button] Book Tickets →  /rajadamnern-stadium-seats#book
+E. Booking widget integration
+No widget on this page. Reasons:
+The search task is orientation. A widget above or beside the map changes the
+page's dominant purpose and starts competing with the hub for "seating" terms.
+MuayTix does not want guests to feel a booking prompt on every page. This is the
+one page in the cluster where looking is the whole point.
+Conversion still exists: four zone cards route to product pages, and the closing
+button goes to the hub widget anchor.
+Future website opportunity: an interactive map where tapping a section opens that
+class's widget in a drawer. Not for the Tilda build.
+F. Visual requirements
+Asset Placement Shows Ratio Filename Alt text
+Full seat
+map Section 1
+All
+sections
+numbered,
+four class
+colours,
+ring,
+walkway,
+VIP areas
+labelled
+but greyed
+1:1 or
+4:3,
+minimum
+2000px
+wide,
+pinch-
+zoom
+enabled
+rajadamnern-
+stadium-seat-
+map.png
+Rajadamnern
+Stadium seat
+map
+showing
+Ringside
+Sections 3 to
+7, Club Class
+Sections 8
+and 9, LEO
+Section 10
+and Third
+Class
+Section 11
+Zone
+cards x 4
+Section 3 Same map
+with one
+class
+highlighted,
+others
+faded
+1:1 rajadamnern-
+stadium-map-
+ringside-
+sections-3-
+7.png,
+rajadamnern-
+stadium-map-
+club-class-
+sections-8-
+9.png,
+rajadamnern-
+stadium-map-
+Rajadamnern
+Stadium
+map with
+Ringside
+Sections 3 to
+7 highlighted
+(and
+equivalents)
+
+Asset Placement Shows Ratio Filename Alt text
+leo-section-
+10.png,
+rajadamnern-
+stadium-map-
+third-class-
+section-
+11.png
+Annotated
+map
+Section 4
+Fighter
+entrance,
+cameras,
+orchestra,
+corners
+marked
+4:3
+rajadamnern-
+stadium-
+layout-ﬁghter-
+entrance-
+cameras-
+orchestra.png
+Rajadamnern
+Stadium
+layout
+showing the
+ﬁghter
+entrance
+walkway,
+broadcast
+camera
+position in
+Section 10
+and
+orchestra
+position in
+Section 9
+Side
+elevation
+(optional)
+Section 2
+Three
+levels in
+cross-
+section:
+ﬂoor,
+elevated
+tier, upper
+tier
+16:9
+rajadamnern-
+stadium-
+seating-
+levels-cross-
+section.png
+Cross-
+section of
+Rajadamnern
+Stadium
+seating
+levels:
+Ringside
+ﬂoor,
+elevated
+main arena
+tier, upper
+tier
+Archive
+photo
+(optional)
+Section 7
+Historic
+exterior or
+open-air
+era, only if
+MuayTix
+holds
+rights
+3:2
+rajadamnern-
+stadium-
+open-air-
+amphitheatre-
+history.jpg
+Rajadamnern
+Stadium in
+its original
+open-air
+amphitheatre
+form
+
+G. Internal links from this page
+Destination Anchor text Section User reason
+/ringside
+What it is like to sit
+Ringside
+Section
+3
+From location to
+experience
+/club-class What it is like to sit in
+Club Class
+Section
+3
+Same
+/leo-section What it is like to sit in
+the LEO Section
+Section
+3 Same
+/third-class
+What it is like to sit in
+Third Class
+Section
+3 Same
+/rajadamnern-stadium-
+seats#rows
+How MuayTix places
+you by row
+Section
+6
+Row guidance lives
+on the hub
+/rajadamnern-stadium-
+seats
+Compare the four seat
+classes
+Section
+9 Decision step
+/rajadamnern-stadium-
+seats#book
+Book Tickets Section
+9
+Direct to widget
+H. Structured data
+BreadcrumbList.
+ImageObject on the main map with name, description and contentUrl, so the map is
+eligible for image search with MuayTix as the source.
+StadiumOrArena (Place) with name, address (to be supplied),
+maximumAttendeeCapacity 3078 and a hasMap reference to this page. Only if
+MuayTix is comfortable marking up the venue on a partner site; otherwise omit.
+FAQPage for the six FAQs.
+I. CRO notes
+The map is the ﬁrst thing on screen, no scrolling. That alone should lift CTR and
+reduce pogo-sticking on the cluster's best-ranking terms.
+Each "where is" answer ends with a link phrased as experience ("what it is like"),
+which is the natural next question after location.
+Capacity, history and points of interest turn a picture page into a reference page
+that earns links and AI citations without pulling it towards sales.
+The page never says "best" and never compares. That protects the hub.
+
+PART 7: /rajadamnern-stadium-seats/ringside
+A. Page strategy
+Item Detail
+URL /rajadamnern-stadium-seats/ringside (keep)
+Purpose Help a visitor decide whether Ringside suits them, and book it
+Primary intent Commercial investigation
+Primary
+keyword
+rajadamnern stadium ringside view
+Supporting
+themes
+ringside seats, ringside, front row, Sections 3 to 7, muay thai ringside
+seats, proximity, ﬁghter entrance
+Target user
+state
+High intent, often already knows Ringside, frequently wants front
+row, wants certainty about what they are buying
+Conversion
+objective Date chosen, Ringside booked
+Primary CTA Book Ringside Tickets
+Secondary CTA Compare with Club Class / see the seat map
+B. SERP package
+Element Copy Characters
+SEO title
+Rajadamnern Stadium Ringside Seats: View, Rows and
+Booking 58
+Meta
+description
+Ringside at Rajadamnern Stadium is Sections 3 to 7,
+ﬂoor level and metres from the ring. What you see, how
+the rows work, who it suits and how to book.
+152
+H1 Ringside Seats at Rajadamnern Stadium
+OG title Ringside at Rajadamnern Stadium: A Few Metres from
+the Ring
+OG
+description
+Sections 3 to 7, ﬂoor level, assigned seats allocated from
+the front row ﬁrst. The view, the sound and how to book.
+
+Element Copy Characters
+URL change Not recommended
+C. Page architecture
+# Section
+User
+question Format SEO role
+Conversion
+role
+Onward
+action V
+1 Hero
+What is
+Ringside
+here?
+H1,
+deﬁnition
+paragraph,
+button
+Owns
+primary
+terms
+Fast path
+anchor #book
+R
+p
+ri
+cl
+2 Trust
+strip
+Who am I
+buying from?
+One line Entity Reassurance None N
+3
+Where
+Ringside
+is
+Where will I
+sit?
+Short copy,
+zone map
+Section
+numbers
+explicit
+Orientation
+Seat
+map
+link
+Z
+m
+4
+The view
+from
+Ringside
+What will I
+see?
+Copy plus
+photos
+Owns
+"ringside
+view"
+Visual
+conﬁdence None
+Tw
+vi
+p
+5 What it
+feels like
+What is the
+atmosphere?
+Copy Entity-
+rich
+Sets
+expectation
+honestly
+None
+C
+ac
+p
+6
+Rows
+and seat
+allocation
+Can I get
+front row?
+Copy and
+bullets
+Owns
+"front
+row"
+Strongest
+reassurance
+on the page
+Leads
+into
+widget
+R
+d
+7 Widget Book it Widget None
+Primary
+conversion Widget N
+8
+Sections
+3 and 4
+vs 5, 6
+and 7
+Which
+Ringside
+section?
+Short copy Long-tail Reﬁnes the
+choice None W
+p
+9
+Who
+Ringside
+suits
+Is it for me? Bullets Suitability Qualiﬁcation None N
+10
+Good to
+know
+Practical
+details Bullets Long-tail
+Friction
+removal None N
+
+# Section User
+question
+Format SEO role Conversion
+role
+Onward
+action
+V
+11
+If
+Ringside
+is not
+quite
+right
+Alternatives Two short
+paragraphs
+Cross-
+link
+Retain the
+guest
+Club
+Class,
+LEO
+links
+N
+12 FAQ Remaining
+questions Accordion FAQ
+schema
+Late
+objections None N
+13 Final CTA Book Button None
+Return to
+widget #book N
+D. Full ﬁnal copy
+Ringside Seats at Rajadamnern Stadium
+Ringside is Sections 3 to 7 at Rajadamnern Stadium: assigned seats on the ﬂoor of the
+main arena, a few metres from the ropes. It is the closest a spectator can get to a Muay
+Thai ﬁght, and it is built around proximity, sound and energy rather than a wide
+overview.
+[Button] Book Ringside Tickets →  #book
+Trust strip
+Booked through MuayTix, the international ticket partner for Rajadamnern Stadium.
+Ringside seats are allocated from the front row ﬁrst unless you ask us otherwise.
+Where Ringside is
+Ringside wraps around most of the ring at ﬂoor level. The one break in the ring of seats
+is the raised ﬁghter entrance walkway, which runs between Sections 3 and 4. Those two
+sections are smaller and sit closest to the walkouts. Sections 5, 6 and 7 are larger and
+continue around the rest of the ring.
+Ringside holds about 192 guests. [Link: See Ringside on the Rajadamnern Stadium seat
+map]
+[Zone map: Ringside highlighted]
+The view from Ringside
+You are at ring level. Fighters are at eye height, close enough to see every detail of
+technique, and the ropes, corners and oﬃcials sit in the frame with them.
+
+What sets Ringside apart is what you hear. Strikes land with a sound you do not get
+further back. Corner instructions between rounds are audible. The cornermen, judges
+and production crew are working within a few metres of you.
+If you are in the front row, you may ﬁnd a judge, a member of the production team or a
+broadcast crew positioned nearby. That is part of a working ﬁght-night ﬂoor, not a ﬂaw
+in the seat.
+[Photo: view from Ringside front row]
+[Photo: view from Ringside row three or four]
+What Ringside feels like
+Ringside is a hive of activity. Team corners, oﬃcials, broadcast crews and production
+staff move around the ring throughout the evening, and you are part of that space rather
+than watching it from a distance. For ﬁght fans, that closeness to the working side of a
+Muay Thai event is the whole point.
+Food, soft drinks and beer are available throughout the night and can be served directly
+to your Ringside seat.
+Rows and seat allocation
+Ringside is a few rows deep and every seat is assigned. MuayTix allocates from the
+front backwards: front row ﬁrst, then the second row, third row and fourth row as
+availability ﬁlls.
+Front row is the closest and most immersive position. It is what most guests ask
+for, and we allocate it ﬁrst whenever it is available.
+Rows further back remain excellent. There are no bad views at Ringside or
+anywhere else in the stadium.
+If you prefer a speciﬁc row, tell us when you book. Where availability allows, we will
+place you there.
+Book Ringside tickets {#book}
+Copy above the widget
+Ringside is already selected. Choose your ﬁght night and continue. Your seat is
+assigned and allocated from the front row ﬁrst, and you can tell us a row preference at
+checkout.
+[WIDGET: date only, Ringside preselected]
+Copy below the widget
+Booking for a group? Ringside seats are assigned, so a group booking is placed
+together wherever availability allows.
+
+Sections 3 and 4, or Sections 5, 6 and 7?
+All ﬁve sections are Ringside and all sit on the same ﬂoor level. The difference is
+position around the ring.
+Sections 3 and 4 sit either side of the ﬁghter entrance walkway. They are the smallest,
+most intimate Ringside sections and the closest seats to ﬁghters as they walk out.
+Sections 5, 6 and 7 are larger and run around the remainder of the ring.
+After a bout, ﬁghters leave by different routes and some make a lap of the ring area or
+interact with guests. That varies by ﬁght and cannot be promised in advance.
+[Photo: ﬁghter entrance walkway between Sections 3 and 4]
+Who Ringside suits
+Fight fans who want maximum proximity to the action
+Guests who value sound, energy and closeness to the corners
+Anyone who wants the strongest chance of seeing ﬁghters up close on their
+walkout, especially in Sections 3 and 4
+Families and groups who want assigned seats together, close to the ring
+Photographers and video users who want close-range angles and understand that
+oﬃcials and production activity are part of the picture
+Good to know
+Personal photography and video are permitted. Use ﬂash between bouts only, never
+during a ﬁght. Commercial ﬁlming needs stadium permission in advance.
+There is no formal dress code. Dress sensibly for a sporting event in an air-
+conditioned arena.
+The stadium can feel cool. A light extra layer is a sensible idea.
+Drinks and food can be brought to your seat.
+If Ringside is not quite right
+If you want a wide, elevated view of the whole ring rather than a close one, Club Class in
+Sections 8 and 9 gives you a numbered seat above the ﬂoor with the entire canvas in
+view. It is the most popular choice with MuayTix guests and the easiest option with
+children. [Link: Club Class at Rajadamnern Stadium]
+If you want the local ﬁght-night atmosphere and the freedom to choose your own spot,
+the LEO Section in Section 10 faces the front of the ring and is where the broadcast
+cameras sit. [Link: The LEO Section at Rajadamnern Stadium]
+
+[Link: Compare all four Rajadamnern Stadium seat classes]
+Ringside questions
+Is the front row the best Ringside seat?
+It is the closest and most immersive position, and the one most guests request. Other
+rows remain excellent. MuayTix allocates front row ﬁrst when it is available unless you
+ask for something else.
+Will ﬁghters walk past me at Ringside?
+The entrance walkway runs between Sections 3 and 4, so those sections are closest to
+the formal walkout. What happens after a bout varies by ﬁght and corner, so interaction
+cannot be guaranteed.
+Are Ringside seats assigned?
+Yes. Your seat is assigned when you book, and MuayTix places you from the front row
+backwards unless you tell us otherwise.
+Can children sit Ringside?
+Yes. There is no age restriction. Ringside is a busy, close and loud environment, so Club
+Class is often the calmer choice with young children, but Ringside works well for
+families who want that closeness.
+What is the difference between Ringside and Club Class?
+Ringside is on the ﬂoor, a few metres from the ring, and is about proximity and sound.
+Club Class is on the elevated tier above, with a numbered seat and a view of the whole
+ring from above. [Link: Club Class at Rajadamnern Stadium]
+Ready for Ringside?
+[Button] Book Ringside Tickets →  #book
+E. Booking widget integration
+Item Detail
+Position Section 7, immediately after "Rows and seat allocation"
+Copy above
+"Ringside is already selected. Choose your ﬁght night and continue. Your
+seat is assigned and allocated from the front row ﬁrst, and you can tell
+us a row preference at checkout."
+Copy below "Booking for a group? Ringside seats are assigned, so a group booking is
+placed together wherever availability allows."
+
+Item Detail
+Mobile
+behaviour
+Date picker full width. Hero button and sticky button scroll to #book.
+Repeat? No
+Sticky CTA
+Yes on mobile, "Book Ringside Tickets", appears after the hero scrolls out
+of view
+Note: the phrase "tell us a row preference at checkout" assumes the checkout has a
+notes or preference ﬁeld. Conﬁrm (Part 15).
+F. Visual requirements
+Asset Placement Shows Ratio Filename Alt text
+Hero Section 1
+Ringside
+seats with
+the ring
+immediately
+behind, ﬁght
+in progress
+3:2 /
+4:5
+mobile
+rajadamnern-
+stadium-
+ringside-
+seats.jpg
+Ringside seats
+at
+Rajadamnern
+Stadium a few
+metres from
+the ring
+Zone
+map Section 3
+Ringside
+Sections 3
+to 7
+highlighted,
+walkway
+marked
+1:1
+rajadamnern-
+stadium-
+map-ringside-
+sections-3-
+7.png
+Rajadamnern
+Stadium map
+with Ringside
+Sections 3 to
+7 highlighted
+and the ﬁghter
+entrance
+walkway
+between
+Sections 3
+and 4
+View,
+front
+row
+Section 4
+Actual front-
+row view,
+ropes and
+corner
+visible
+4:3
+rajadamnern-
+ringside-
+front-row-
+view.jpg
+View of the
+ring from the
+Ringside front
+row at
+Rajadamnern
+Stadium
+View,
+back
+row
+Section 4 View from
+the rearmost
+Ringside row
+4:3 rajadamnern-
+ringside-view-
+row-four.jpg
+View of the
+ring from the
+fourth row of
+Ringside at
+
+Asset Placement Shows Ratio Filename Alt text
+Rajadamnern
+Stadium
+Corner
+activity Section 5
+Cornermen
+and oﬃcials
+working
+ringside
+3:2
+rajadamnern-
+ringside-
+corner-
+activity.jpg
+Cornermen
+and oﬃcials
+working
+beside the
+ring in front of
+Ringside seats
+at
+Rajadamnern
+Stadium
+Walkway Section 8
+The raised
+entrance
+walkway
+with
+Sections 3
+and 4 either
+side
+3:2
+rajadamnern-
+ﬁghter-
+entrance-
+walkway-
+sections-3-
+4.jpg
+Fighter
+entrance
+walkway
+running
+between
+Ringside
+Sections 3
+and 4 at
+Rajadamnern
+Stadium
+G. Internal links from this page
+Destination Anchor text Section User reason
+/rajadamnern-
+stadium-seat-map
+See Ringside on the
+Rajadamnern Stadium
+seat map
+Where
+Ringside is
+Orientation
+/club-class Club Class at
+Rajadamnern Stadium
+Alternatives
+and FAQ
+Elevated
+alternative
+/leo-section
+The LEO Section at
+Rajadamnern Stadium Alternatives
+Atmosphere
+alternative
+/rajadamnern-
+stadium-seats
+Compare all four
+Rajadamnern Stadium
+seat classes
+Alternatives Back to hub
+H. Structured data
+BreadcrumbList: Home →  Rajadamnern Stadium Seating →  Ringside.
+
+FAQPage for the ﬁve FAQs.
+Product schema is not recommended on this Tilda build. Ringside is sold per event,
+so a static Offer with a ﬁxed price and availability would be inaccurate on some
+dates. Future website opportunity: Event schema on the day-dated pages carrying
+Offers per seat class, which is where price and availability actually live.
+I. CRO notes
+The American high-season market arrives knowing what Ringside is and wanting
+front row. The trust strip and Section 6 answer "can I get front row" before they have
+to ask. The widget sits right after.
+The page sets honest expectations about oﬃcials and crews so a front-row guest is
+not surprised, without framing anything as an obstruction.
+Sections 3 and 4 give a concrete reason to choose, which is more persuasive than
+any adjective.
+Alternatives are written as "if you want X instead", so leaving the page still keeps the
+guest in the cluster.
+PART 8: /rajadamnern-stadium-seats/club-class
+A. Page strategy
+Item Detail
+URL /rajadamnern-stadium-seats/club-class (keep)
+Purpose Help a visitor understand Sections 8 and 9 and book Club Class
+Primary intent Commercial investigation
+Primary keyword rajadamnern stadium club class view
+Supporting
+themes
+club class, club class seats, section 8 or 9, Sections 8 and 9,
+numbered seat, elevated, family, view
+Target user state
+Often a ﬁrst-time visitor or a parent. Wants certainty: a numbered
+seat, an easy night, a good view.
+Conversion
+objective
+Date chosen, Club Class booked
+Primary CTA Book Club Class Tickets
+Secondary CTA Compare with LEO Section / see the seat map
+
+B. SERP package
+Element Copy Characters
+SEO title
+Rajadamnern Stadium Club Class Seats: Sections 8 and
+9 54
+Meta
+description
+Club Class is Sections 8 and 9 at Rajadamnern Stadium:
+elevated numbered seats with a full view of the ring. The
+view, the rows, who it suits, how to book.
+155
+H1 Club Class at Rajadamnern Stadium: Sections 8 and 9
+OG title
+Club Class at Rajadamnern Stadium: Numbered Seats
+Above the Ring
+OG
+description
+Sections 8 and 9. The most popular choice with MuayTix
+guests and the easiest option for families. See the view
+and book.
+URL change Not recommended
+C. Page architecture
+# Section User
+question Format SEO role Conversion
+role
+Onward
+action
+1 Hero What is Club
+Class?
+H1,
+deﬁnition,
+button
+Owns
+primary
+terms, states
+8 and 9
+Fast path #book
+2 Trust strip
+Who am I
+buying from? One line Entity Reassurance None
+3
+Where
+Sections 8
+and 9 are
+Where will I
+sit?
+Copy, zone
+map
+Owns
+"section 8 or
+9"
+Orientation
+Seat
+map link
+4
+The view
+from Club
+Class
+What will I
+see?
+Copy,
+photos
+Owns "club
+class view"
+Visual
+conﬁdence
+None
+5 The seats
+What am I
+sitting on?
+Short
+honest
+copy
+Long-tail
+Expectation
+setting None
+
+# Section User
+question
+Format SEO role Conversion
+role
+Onward
+action
+6
+Rows and
+viewing
+position
+Which row? Copy Differentiator Trust, leads
+to widget
+None
+7 Widget Book
+Widget
+with sell-
+out note
+above
+None Primary
+conversion
+Widget
+8
+What Club
+Class
+feels like
+Atmosphere? Copy Entity-rich Expectation None
+9
+Club Class
+with
+children
+Is it good for
+families?
+Copy,
+bullets
+Owns family
+intent
+Removes
+parental
+doubt
+None
+10
+Who Club
+Class
+suits
+Is it for me? Bullets Suitability Qualiﬁcation None
+11
+If you
+want
+something
+different
+Alternatives
+Two
+paragraphs Cross-link Retention
+Ringside,
+LEO
+12 FAQ Remaining
+questions Accordion FAQ schema Late
+objections None
+13 Final CTA Book Button None Return #book
+D. Full ﬁnal copy
+Club Class at Rajadamnern Stadium: Sections 8
+and 9
+Club Class covers Sections 8 and 9 at Rajadamnern Stadium. It is elevated, assigned
+seating on the main arena tier, with a numbered seat for every guest and a view down
+across the whole ring. Around 55 per cent of MuayTix guests choose it, and it is the
+most straightforward option for families and groups.
+[Button] Book Club Class Tickets →  #book
+
+Trust strip
+Booked through MuayTix, the international ticket partner for Rajadamnern Stadium. We
+recommend Row D and above and place you accordingly wherever availability allows.
+Where Sections 8 and 9 are
+Sections 8 and 9 sit on the elevated tier of the main arena, above Ringside and on the
+same tier as the LEO Section. Every seat is numbered and stadium staff can direct you
+to it. The traditional Muay Thai orchestra plays from the rear of Section 9, so on a busy
+night the music is part of the section.
+[Zone map: Sections 8 and 9 highlighted] [Link: See Club Class on the Rajadamnern
+Stadium seat map]
+The view from Club Class
+Club Class looks down on the ring from above. You can follow movement across the
+whole canvas, watch the ﬁghter walkouts, see both corners and take in the stadium
+around you. From Row D upwards the view is almost a bird's-eye one.
+The broadcast camera operators work in and around the main arena. They are part of a
+modern live ﬁght night, some of which are distributed globally, and they do not get in the
+way of the view from the recommended rows.
+[Photo: view from Club Class Row D]
+[Photo: view from Club Class upper rows]
+The seats
+Club Class seats are simple blue plastic seat bases ﬁxed to the tier, each with a
+number. They are not padded premium seats and are not sold as such. What you are
+buying is the numbered seat, the elevation, the full view and the ease of the section.
+[Photo: Club Class numbered seats]
+Rows and viewing position
+MuayTix recommends Row D and above in Club Class. That height lifts you fully above
+the eye line of people moving along the walkway in front of the section and gives you
+the elevated, whole-ring view Club Class is chosen for.
+Rows A, B and C are still good seats with a clear view. Row D and above is simply the
+position we would pick ourselves, so it is the one we place guests in wherever we can.
+Book Club Class tickets {#book}
+
+Copy above the widget
+Club Class is already selected. Choose your ﬁght night and continue. Your numbered
+seat is assigned, and MuayTix places you in Row D or above wherever availability
+allows.
+Club Class is the most popular section, and preferred rows go ﬁrst. On busy nights it
+can sell out around ten days before the event, and earlier in high season. Once you
+know your date, it is worth booking.
+[WIDGET: date only, Club Class preselected]
+Copy below the widget
+Groups are seated together in numbered seats wherever availability allows. Tell us the
+size of your party at checkout.
+What Club Class feels like
+On a full night Club Class is busy and atmospheric, with the orchestra behind Section 9
+and the whole arena in front of you. It is also the easiest section to move around in:
+toilets, food and drink are all close by. Rajadamnern runs to a high standard for air
+conditioning, cleanliness, food service and production, and Club Class is where most
+guests experience that.
+[Photo: Club Class on a full night]
+Club Class with children
+Club Class is the section MuayTix recommends most often for families, particularly
+with younger children.
+Every child has their own numbered seat next to yours
+The view from above is easy for children to follow
+Toilets and refreshments are a short walk away
+The section is lively but calmer than the LEO Section on traditional ﬁght nights
+Who Club Class suits
+First-time guests who want an elevated, assigned seat with nothing to think about
+on the night
+Families with children, especially younger ones
+Groups who want numbered seats together
+Guests who value easy access to facilities
+Anyone who is unsure which section to choose and wants the dependable all-round
+option
+
+If you want something different
+If being close is what matters, Ringside puts you on the ﬂoor a few metres from the
+ropes, with the sound and energy that comes with it. [Link: Ringside seats at
+Rajadamnern Stadium]
+If you would rather choose your own spot and want the local ﬁght-night atmosphere, the
+LEO Section sits on the same tier as Club Class, faces the front of the ring and is where
+the cameras are positioned. [Link: The LEO Section at Rajadamnern Stadium]
+[Link: Compare all four Rajadamnern Stadium seat classes]
+Club Class questions
+What is the difference between Section 8 and Section 9?
+Both are Club Class, on the same elevated tier, with the same numbered seats and the
+same MuayTix row guidance. The orchestra plays from the rear of Section 9.
+[Information gap: whether there is any other practical difference, such as position
+relative to the ﬁghter entrance, is not conﬁrmed. See Part 15.]
+Is Club Class the same as the LEO Section?
+No, but they sit next to each other on the same tier with the same elevation. Club Class
+has numbered plastic seats and is assigned. The LEO Section has concrete tier seating,
+is unassigned and faces the front of the ring.
+Are Club Class seats numbered?
+Yes. Every Club Class ticket has a numbered seat and stadium staff can show you to it.
+Which row is best in Club Class?
+MuayTix recommends Row D and above for the full elevated view. Lower rows are still
+good seats.
+How early does Club Class sell out?
+It varies by night and season. At busy times it can sell out around ten days before an
+event, and sooner as high season approaches. If you know your date, book it.
+Ready for Club Class?
+[Button] Book Club Class Tickets →  #book
+E. Booking widget integration
+Item Detail
+Position Section 7, directly after "Rows and viewing position"
+
+Item Detail
+Copy above The two paragraphs given above, including the sell-out note
+Copy below "Groups are seated together in numbered seats wherever availability
+allows. Tell us the size of your party at checkout."
+Mobile
+behaviour Full-width date picker. Hero and sticky buttons scroll to #book.
+Repeat? No
+Sticky CTA Yes on mobile, "Book Club Class Tickets"
+Note on the sell-out line: the Source of Truth ties the ten-day ﬁgure to RWS Club Class.
+The copy says "on busy nights" rather than naming RWS, because most guests do not
+know what RWS is. If MuayTix prefers, it can read "on RWS Saturdays".
+F. Visual requirements
+Asset Placement Shows Ratio Filename Alt text
+Hero Section 1
+Club Class
+seats with
+the ring
+below
+3:2 /
+4:5
+mobile
+rajadamnern-
+stadium-club-
+class-seats-
+sections-8-
+9.jpg
+Club Class
+seats in
+Sections 8 and
+9 at
+Rajadamnern
+Stadium looking
+down on the
+ring
+Zone
+map Section 3
+Sections 8
+and 9
+highlighted
+1:1
+rajadamnern-
+stadium-map-
+club-class-
+sections-8-
+9.png
+Rajadamnern
+Stadium map
+with Club Class
+Sections 8 and
+9 highlighted
+View
+Row
+D
+Section 4
+Actual view
+from Row D 4:3
+rajadamnern-
+club-class-
+view-row-d.jpg
+View of the ring
+from Club Class
+Row D at
+Rajadamnern
+Stadium
+View
+upper
+rows
+Section 4 View from a
+higher Club
+Class row
+4:3 rajadamnern-
+club-class-
+view-upper-
+rows.jpg
+Elevated view of
+the ring from
+the upper rows
+of Club Class at
+
+Asset Placement Shows Ratio Filename Alt text
+Rajadamnern
+Stadium
+Seats Section 5
+The blue
+numbered
+seat bases
+3:2
+rajadamnern-
+club-class-
+numbered-
+seats.jpg
+Numbered blue
+Club Class
+seats at
+Rajadamnern
+Stadium
+Full
+night Section 8
+Club Class
+full on a
+ﬁght night
+3:2
+rajadamnern-
+club-class-
+ﬁght-night.jpg
+Club Class
+Sections 8 and
+9 full on a ﬁght
+night at
+Rajadamnern
+Stadium
+G. Internal links from this page
+Destination Anchor text Section User reason
+/rajadamnern-
+stadium-seat-map
+See Club Class on the
+Rajadamnern Stadium seat
+map
+Section 3 Orientation
+/ringside
+Ringside seats at
+Rajadamnern Stadium Alternatives
+Closer
+alternative
+/leo-section The LEO Section at
+Rajadamnern Stadium
+Alternatives Atmosphere
+alternative
+/rajadamnern-
+stadium-seats
+Compare all four
+Rajadamnern Stadium seat
+classes
+Alternatives Back to hub
+H. Structured data
+BreadcrumbList.
+FAQPage for the ﬁve FAQs.
+No Product schema for the same reason as Ringside.
+I. CRO notes
+The page sells the thing people actually buy Club Class for: a numbered seat, a full
+view, an easy night. It does not oversell the seat itself, which prevents
+disappointment and refund conversations.
+
+Row D guidance is positioned as MuayTix expertise, with the sell-out note directly
+above the widget as a factual reason to act.
+The family section answers the parental question explicitly, which the keyword data
+cannot show but the 55 per cent share strongly implies.
+The LEO comparison FAQ handles the most common cross-shopping question
+without sending the guest away.
+PART 9: /rajadamnern-stadium-seats/leo-section
+A. Page strategy
+Item Detail
+URL /rajadamnern-stadium-seats/leo-section (keep)
+Purpose Explain what the LEO Section is, where Section 10 is, what it is like on
+different nights, and book it
+Primary intent Commercial investigation
+Primary
+keyword
+leo section rajadamnern stadium
+Supporting
+themes
+Section 10, leo section muay thai, atmosphere, unassigned seating,
+broadcast view, traditional ﬁght nights, betting crowd, Second Class
+(older name)
+Target user
+state
+Curious. Has seen the name on a stadium chart and does not know
+what it means. Or a ﬁght fan chasing atmosphere.
+Conversion
+objective Date chosen with eyes open about which night, LEO booked
+Primary CTA Book LEO Section Tickets
+Secondary
+CTA
+Compare with Club Class / see the seat map
+B. SERP package
+Element Copy Characters
+SEO title LEO Section Rajadamnern Stadium (Section 10): View,
+Booking
+59
+
+Element Copy Characters
+Meta
+description
+LEO Section is Section 10 at Rajadamnern Stadium:
+elevated, facing the front of the ring, choose your own
+seat. Atmosphere, view, ﬁght nights and booking.
+155
+H1 LEO Section at Rajadamnern Stadium (Section 10)
+OG title The LEO Section: Where the Rajadamnern Atmosphere
+Lives
+OG
+description
+Section 10 faces the front of the ring, the cameras sit
+here, and on traditional ﬁght nights so do the local fans.
+See it and book.
+URL change Not recommended
+C. Page architecture
+# Section
+User
+question Format SEO role
+Conversion
+role
+Onward
+action V
+1 Hero
+What is the
+LEO
+Section?
+H1,
+deﬁnition
+with
+"Section
+10" in
+sentence
+one,
+button
+Owns
+both
+names
+Fast path #book
+LE
+ph
+2 Trust strip
+Who am I
+buying
+from?
+One line Entity Reassurance None N
+3
+Where
+Section 10
+is
+Where will I
+sit?
+Copy,
+zone map
+Owns
+"section
+10"
+Orientation
+Seat
+map
+link
+Zo
+m
+4
+The view
+from the
+LEO
+Section
+What will I
+see?
+Copy,
+photos
+Owns
+"view"
+Visual
+conﬁdence
+None
+V
+ph
+x 
+5
+Choosing
+your own
+seat
+Will I get a
+seat? Copy
+Kills
+standing
+myth
+Removes
+main
+objection
+None Se
+ph
+
+# Section User
+question
+Format SEO role Conversion
+role
+Onward
+action
+V
+6
+Fight nights
+and
+atmosphere
+What is it
+like on my
+night?
+Copy with
+a three-
+night
+table
+Owns
+"leo
+section
+muay
+thai",
+betting
+Sets
+expectation,
+leads to
+widget
+None
+C
+ph
+7 Widget Book Widget None
+Primary
+conversion Widget N
+8
+LEO or Club
+Class?
+The
+obvious
+comparison
+Short
+copy
+Cross-
+link Retention
+Club
+Class
+link
+N
+9
+Children in
+the LEO
+Section
+Can we
+bring kids?
+Short
+copy
+Long-tail Removes
+doubt
+Club
+Class
+link
+N
+10
+Who the
+LEO
+Section
+suits
+Is it for me? Bullets Suitability Qualiﬁcation None N
+11 FAQ Remaining
+questions
+Accordion FAQ
+schema
+Late
+objections
+None N
+12 Final CTA Book Button None Return #book N
+D. Full ﬁnal copy
+LEO Section at Rajadamnern Stadium (Section 10)
+The LEO Section is Section 10 at Rajadamnern Stadium. It sits on the elevated tier of
+the main arena, directly facing the front of the ring, and seating is unassigned: you
+choose where to sit when you arrive, and every ticket guarantees a seat. This is the
+section the broadcast cameras use, and on the three traditional Muay Thai nights it is
+where the local ﬁght fans gather.
+[Button] Book LEO Section Tickets →  #book
+Trust strip
+Booked through MuayTix, the international ticket partner for Rajadamnern Stadium.
+Every LEO Section ticket guarantees a seat. Arriving early only widens your choice of
+where to sit.
+
+Where Section 10 is
+Section 10 is on the same elevated tier as Club Class, with effectively the same
+elevation and row layout, and it faces the front of the ring straight on. It was sometimes
+called Second Class in older descriptions of the stadium; today the section is the LEO
+Section.
+The principal broadcast cameras and the commentary team are positioned in the LEO
+Section. That is the simplest way to understand the view: it is the angle you see when
+you watch Rajadamnern on screen.
+[Zone map: Section 10 highlighted] [Link: See the LEO Section on the Rajadamnern
+Stadium seat map]
+The view from the LEO Section
+Front-facing and elevated. You watch the ﬁght square-on, can follow movement across
+the whole ring, and see both corners and the walkouts. MuayTix generally recommends
+around Row D and above for the best overall sightline. Rows below are good seats too;
+Row D and above simply clears the walkway in front of the section completely.
+[Photo: view from LEO Section, Row D or above]
+[Photo: view from the LEO Section front rows]
+Choosing your own seat
+LEO seating is unassigned. That means the choice of position is yours, not that seats
+are limited. There are no standing areas at Rajadamnern and every ticket in Section 10
+comes with a seat.
+Arriving earlier is never required. It only gives you more choice, including the front row
+of the section when it is free. If you want a speciﬁc row or a spot near the cameras,
+come a little earlier. If you just want to watch the ﬁghts, arrive when you like.
+The seating itself is concrete tiered seating rather than a plastic seat base. It is the
+same tier as Club Class, with the difference that you pick your spot.
+[Photo: LEO Section tiered seating]
+Fight nights and atmosphere
+What the LEO Section feels like depends on the night.
+
+Night Event What Section 10 is like
+Wednesday New Power
+Traditional Muay Thai night. Local ﬁght fans and
+the legal betting crowd gather in the LEO Section.
+Loud, animated, hand signals ﬂying.
+Thursday Petchyindee Traditional Muay Thai night, as above.
+Sunday Kiatpetch Traditional Muay Thai night, as above.
+Monday, Tuesday,
+Friday, Saturday
+Other
+events
+No legal betting in the LEO Section. The
+atmosphere comes from the crowd and the front-
+facing view rather than the betting ﬂoor.
+On Wednesday, Thursday and Sunday the LEO Section is the liveliest place in the
+stadium. Legal betting takes place here on those three nights only, run on hand signals
+between fans and bookmakers. You do not have to sit in the middle of it. The section is
+organised so that visitors can sit alongside the betting crowd, watch what is happening
+and enjoy the atmosphere without taking part.
+Betting is not a simple turn-up-and-place-a-bet process. It relies on a learning curve and
+established relationships with bookmakers, so MuayTix does not describe it as
+something visitors should expect to join in with.
+On the other four nights the LEO Section is quieter in that respect, and the reasons to
+choose it are the view, the freedom to choose your seat and the price.
+[Photo: LEO Section crowd on a traditional ﬁght night]
+Book LEO Section tickets {#book}
+Copy above the widget
+LEO Section is already selected. Choose your ﬁght night and continue. Every ticket
+guarantees a seat, and you choose your position when you arrive. If atmosphere is what
+you are after, Wednesday, Thursday and Sunday are the traditional Muay Thai nights.
+[WIDGET: date only, LEO Section preselected]
+Copy below the widget
+Groups can sit together: unassigned seating means you simply choose a row with
+enough space when you arrive.
+LEO Section or Club Class?
+They are neighbours on the same tier with the same elevation, so the view is
+comparable. The differences are practical.
+
+Seat: Club Class has a numbered plastic seat base. The LEO Section has concrete
+tiered seating and you choose your spot.
+Position: the LEO Section faces the front of the ring, where the cameras are.
+Atmosphere: on Wednesday, Thursday and Sunday the LEO Section is home to the
+local fans and the betting crowd. Club Class is calmer on those nights.
+Families: Club Class is normally the easier choice with young children. The LEO
+Section is ﬁne for children if the family prefers the atmosphere and the seating
+style.
+[Link: Club Class at Rajadamnern Stadium]
+Children in the LEO Section
+There is no age restriction. Children are welcome in Section 10. Club Class is usually
+the calmer and more straightforward option for families, but if you would rather have
+the LEO atmosphere and the freedom to pick your row, it works well.
+Who the LEO Section suits
+Guests who want the strongest sense of local ﬁght-night atmosphere, particularly
+on Wednesday, Thursday and Sunday
+Couples, solo travellers and groups who like choosing their own position
+Anyone who values the front-facing broadcast perspective
+Repeat visitors who have sat Ringside and want a different night
+Guests who want to sit where MuayTix staff often sit themselves on a regular ﬁght
+night
+LEO Section questions
+Is the LEO Section the same as Section 10?
+Yes. LEO Section and Section 10 are the same area of Rajadamnern Stadium.
+Do I need to arrive early for the LEO Section?
+No. Every ticket guarantees a seat. Arriving earlier only gives you more choice of where
+to sit.
+Is there betting in the LEO Section every night?
+No. Legal betting takes place in the LEO Section on Wednesday (New Power), Thursday
+(Petchyindee) and Sunday (Kiatpetch) only. On Monday, Tuesday, Friday and Saturday
+there is no legal betting in the section.
+Can I bet as a visitor?
+Possibly, but it is not a simple process. It involves a learning curve and established
+relationships with bookmakers. Most visitors watch rather than take part.
+
+Is the LEO Section on the second level?
+It is on the elevated tier of the main arena, the same tier as Club Class. Third Class, in
+the upper tier, is the level above.
+Can children sit in the LEO Section?
+Yes. There is no age restriction. Club Class is often the easier option with young
+children.
+Ready for the LEO Section?
+[Button] Book LEO Section Tickets →  #book
+E. Booking widget integration
+Item Detail
+Position Section 7, directly after "Fight nights and atmosphere"
+Copy above
+"LEO Section is already selected. Choose your ﬁght night and continue.
+Every ticket guarantees a seat, and you choose your position when you
+arrive. If atmosphere is what you are after, Wednesday, Thursday and
+Sunday are the traditional Muay Thai nights."
+Copy below
+"Groups can sit together: unassigned seating means you simply choose a
+row with enough space when you arrive."
+Mobile
+behaviour
+Full-width date picker. Hero and sticky buttons scroll to #book.
+Repeat? No
+Sticky CTA Yes on mobile, "Book LEO Section Tickets"
+High-value improvement: mark Wednesday, Thursday and Sunday in the LEO widget
+date picker with a small "traditional night" label so the atmosphere information carries
+into the choice.
+F. Visual requirements
+Asset Placement Shows Ratio Filename Alt text
+Hero Section 1 LEO Section
+with the ring
+straight
+ahead
+3:2 /
+4:5
+mobile
+rajadamnern-
+stadium-leo-
+section-10.jpg
+LEO Section,
+Section 10, at
+Rajadamnern
+Stadium
+facing the
+
+Asset Placement Shows Ratio Filename Alt text
+front of the
+ring
+Zone
+map Section 3
+Section 10
+highlighted,
+camera
+position
+marked
+1:1
+rajadamnern-
+stadium-map-
+leo-section-
+10.png
+Rajadamnern
+Stadium map
+with the LEO
+Section,
+Section 10,
+highlighted
+View
+Row D Section 4
+Front-facing
+view from
+around Row
+D
+4:3
+rajadamnern-
+leo-section-
+view-row-
+d.jpg
+Front-facing
+view of the
+ring from the
+LEO Section at
+Rajadamnern
+Stadium
+View
+front
+rows
+Section 4
+View from
+the LEO front
+row
+4:3
+rajadamnern-
+leo-section-
+front-row-
+view.jpg
+View of the
+ring from the
+front row of
+the LEO
+Section at
+Rajadamnern
+Stadium
+Seating Section 5
+The concrete
+tiered
+seating,
+empty or
+part-full
+3:2
+rajadamnern-
+leo-section-
+tiered-
+seating.jpg
+Concrete
+tiered seating
+in the LEO
+Section at
+Rajadamnern
+Stadium
+Crowd Section 6
+LEO Section
+on a
+Wednesday,
+Thursday or
+Sunday,
+crowd
+animated
+3:2
+rajadamnern-
+leo-section-
+traditional-
+ﬁght-night-
+crowd.jpg
+Local ﬁght
+fans in the LEO
+Section on a
+traditional
+Muay Thai
+night at
+Rajadamnern
+Stadium
+G. Internal links from this page
+
+Destination Anchor text Section User reason
+/rajadamnern-
+stadium-seat-
+map
+See the LEO Section
+on the Rajadamnern
+Stadium seat map
+Section 3 Orientation
+/club-class
+Club Class at
+Rajadamnern Stadium LEO or Club Class
+Neighbour
+comparison
+/rajadamnern-
+stadium-seats
+Compare all four
+Rajadamnern Stadium
+seat classes
+After FAQ (add one
+line: "Still deciding?
+Compare all four seat
+classes.")
+Back to hub
+/third-class Third Class in the
+upper tier
+FAQ "second level"
+answer, optional link
+Level
+clariﬁcation
+H. Structured data
+BreadcrumbList.
+FAQPage for the six FAQs. The "is LEO the same as Section 10" pair is the most
+valuable single answer in the cluster for AI systems.
+No Product schema.
+I. CRO notes
+Both names appear in the H1 and the ﬁrst sentence, so the guest who searched
+"section 10" and the guest who searched "leo section" both know they are in the
+right place within one line.
+The night-of-week table converts a vague "atmosphere" promise into something a
+guest can plan around, and it sits immediately above the widget where the date is
+chosen.
+The unassigned explanation is placed before the atmosphere section so that "will I
+get a seat" is settled before "what will it be like".
+Betting is described accurately and only for the three nights, which protects
+MuayTix from complaints on the other four.
+PART 10: /rajadamnern-stadium-seats/third-class
+A. Page strategy
+
+Item Detail
+URL /rajadamnern-stadium-seats/third-class (keep)
+Purpose Explain what Section 11 is, when it opens, what the view is like, and
+book it
+Primary intent Commercial investigation
+Primary
+keyword
+rajadamnern stadium section 11
+Supporting
+themes
+third class, 3rd class, section 11 view, upper tier, whole-arena view,
+unassigned seating, availability
+Target user
+state
+Two types: someone who saw "Section 11" and wants to know what it
+is, and a value-conscious guest or repeat visitor who wants to be in the
+building on a big night
+Conversion
+objective
+Understand availability, choose a date on which Third Class is on sale,
+book. If not on sale, move to LEO or Club Class without leaving the
+site.
+Primary CTA Book Third Class Tickets
+Secondary
+CTA
+Consider the LEO Section or Club Class
+B. SERP package
+Element Copy Characters
+SEO title Rajadamnern Stadium Section 11: Third Class Seats and
+View
+58
+Meta
+description
+Section 11 is Third Class at Rajadamnern Stadium: the
+upper tier with a view over the whole arena. When it
+opens, what you see, who it suits, how to book.
+154
+H1 Third Class at Rajadamnern Stadium: Section 11
+OG title Section 11 at Rajadamnern Stadium: The Whole Arena in
+One View
+OG
+description
+Third Class is the top of the stadium. It opens on the
+busiest nights and shows you everything at once. See
+when and how to book.
+
+Element Copy Characters
+URL change Not recommended
+C. Page architecture
+# Section
+User
+question Format SEO role
+Conversion
+role
+Onward
+action V
+1 Hero
+What is
+Section 11?
+H1,
+deﬁnition,
+button
+Owns
+both
+names
+Fast path #book
+U
+ti
+p
+2
+Trust
+strip
+Who am I
+buying from? One line Entity Reassurance None N
+3
+Where
+Section
+11 is
+Where will I
+sit?
+Copy,
+zone map
+Owns
+location Orientation
+Seat
+map
+link
+Z
+m
+4
+The view
+from
+Section
+11
+What will I
+see?
+Copy,
+photos
+Owns
+"section
+11 view"
+Visual
+conﬁdence
+None
+V
+p
+x 
+5
+Rows
+and the
+safety
+fence
+Which row? Copy Long-tail
+Honest
+expectation,
+trust
+None
+R
+p
+6
+When
+Third
+Class
+opens
+Can I even
+buy it? Copy
+Owns
+availability
+The deciding
+fact, leads to
+widget
+None N
+7 Widget Book
+Widget
+with
+availability
+copy
+None Primary
+conversion
+Widget
+or
+fallback
+N
+8
+What
+Third
+Class
+feels like
+Atmosphere? Copy Entity-rich Expectation None C
+p
+9 Choosing
+your own
+Will I get a
+seat?
+Short
+copy
+Kills
+standing
+Objection
+removal
+None N
+
+# Section User
+question
+Format SEO role Conversion
+role
+Onward
+action
+V
+seat myth
+10
+Who
+Third
+Class
+suits
+Is it for me? Bullets Suitability Qualiﬁcation None N
+11
+If Third
+Class is
+not on
+sale for
+your
+night
+Alternatives Copy Cross-link
+Retention
+(critical
+here)
+LEO,
+Club
+Class
+N
+12 FAQ Remaining
+questions
+Accordion FAQ
+schema
+Late
+objections
+None N
+13
+Final
+CTA Book Button None Return #book N
+D. Full ﬁnal copy
+Third Class at Rajadamnern Stadium: Section 11
+Third Class is Section 11 at Rajadamnern Stadium, the upper tier at the very top of the
+building. From here you see the whole arena in one picture: the ring, the walkout, the
+corners, the main arena and the crowd. Seating is unassigned with a seat guaranteed
+for every ticket. Third Class opens according to demand, so it is available on some
+nights and not others.
+[Button] Book Third Class Tickets →  #book
+Trust strip
+Booked through MuayTix, the international ticket partner for Rajadamnern Stadium. If
+Third Class is on sale for your date, you will see it in the booking widget below.
+Where Section 11 is
+Section 11 is the upper tier of Rajadamnern Stadium. It sits above the main arena,
+above Club Class and the LEO Section, and there is no seating level higher. The upper
+tier holds about 2,100 guests, more than the whole of the main arena combined.
+Facilities are a longer walk than from the main arena sections. The reward is the
+highest, widest view in the stadium.
+
+[Zone map: Section 11 highlighted] [Link: See Section 11 on the Rajadamnern Stadium
+seat map]
+The view from Section 11
+From Third Class the stadium becomes one scene. You watch the ﬁght and, around it,
+everything that makes a Rajadamnern night: the walkouts, the corners at work, the
+crowd in the main arena below, the orchestra, the whole amphitheatre. It is the view for
+guests who want to see the event rather than only the ring.
+There are no pillars and nothing structural in the way. The sightline from the
+recommended rows is clear across the whole arena.
+[Photo: view from Third Class, Row D or above]
+[Photo: view from Third Class showing the full arena]
+Rows and the safety fence
+Rows A to C at the front of Section 11 face a safety fence. It is a normal feature of an
+upper tier that holds 2,100 people, there to protect guests in the tier and those seated
+below.
+MuayTix recommends Row D and above. From there you are beyond the fence rows and
+get the clearest view over the arena. Because seating is unassigned, you choose your
+row when you arrive.
+[Photo: Third Class rows showing the safety fence and rows behind]
+When Third Class opens
+Third Class does not open every night. It opens according to demand and is highly
+seasonal.
+Busiest nights: Saturday nights are the most consistent example of Third Class
+opening at some point as the stadium ﬁlls.
+Low season: Third Class may open only for the biggest nights.
+High season: as overall attendance rises, Third Class can open much more often,
+potentially across most nights of the week.
+Availability is never permanent, so MuayTix does not promise it in advance. If Third
+Class is on sale for your date, it will show in the booking widget. If it is not, the LEO
+Section and Club Class are the closest alternatives, and both are covered further down
+this page.
+Book Third Class tickets {#book}
+
+Copy above the widget
+Third Class is already selected. Choose your ﬁght night and continue. Dates are shown
+when Third Class is on sale for that night. Every ticket guarantees a seat, and you
+choose your position in the section when you arrive.
+[WIDGET: date only, Third Class preselected, showing on-sale dates only]
+Copy below the widget
+No Third Class for your date? The LEO Section and Club Class are on the same elevated
+tier of the main arena, closer to the ring, and available on every ﬁght night. [Link: See the
+LEO Section] [Link: See Club Class]
+Fallback copy if the widget cannot yet ﬁlter to on-sale dates: "Third Class is not on sale
+for every night. If your date shows no Third Class availability, the LEO Section and Club
+Class are the closest alternatives."
+What Third Class feels like
+Third Class opens when the main arena is ﬁlling, which means it is at its best on the
+nights the whole stadium is alive. The upper tier becomes its own crowd, looking down
+on a full house. For a repeat visitor, or anyone who wants the feeling of being inside
+Rajadamnern on a major night, it is a different and complete view of the event.
+[Photo: Third Class on a full night]
+Choosing your own seat
+Seating in Section 11 is unassigned. You choose your position within the section when
+you arrive. This does not mean seating is limited and it does not mean standing. There
+are no standing areas at Rajadamnern, and every Third Class ticket guarantees a seat.
+Arriving earlier only gives you more choice of row.
+Who Third Class suits
+Guests who want to be inside Rajadamnern on a big night and see the whole event
+from above
+Visitors who prefer a wide view of the whole arena to maximum proximity
+Repeat visitors who know the stadium and want a new perspective
+Photographers looking for a high, wide angle
+Guests comfortable choosing their own row within the section
+Children are allowed in Third Class. Club Class or the LEO Section will usually be more
+engaging for younger children because they are closer to the ring, but Third Class
+remains a valid option when it is what is available.
+
+If Third Class is not on sale for your night
+The LEO Section, Section 10, sits on the elevated tier of the main arena, faces the front
+of the ring and also lets you choose your own seat. It is the closest experience to Third
+Class in terms of freedom, with a nearer view. [Link: The LEO Section at Rajadamnern
+Stadium]
+Club Class, Sections 8 and 9, is on the same elevated tier with a numbered seat and
+easy access to facilities. [Link: Club Class at Rajadamnern Stadium]
+[Link: Compare all four Rajadamnern Stadium seat classes]
+Section 11 questions
+Is Third Class the same as Section 11?
+Yes. Third Class, sometimes written 3rd Class, is Section 11, the upper tier of
+Rajadamnern Stadium.
+Is Section 11 open every night?
+No. It opens according to demand. Saturday nights are the most consistent, high
+season brings it open more often, and in low season it may open only for the biggest
+events. The booking widget shows the dates it is on sale.
+Is there standing in Third Class?
+No. Every Third Class ticket guarantees a seat. Seating is unassigned, which means you
+choose your position.
+What is the safety fence in Section 11?
+A fence in front of Rows A to C that protects guests in the upper tier and those seated
+below. MuayTix recommends Row D and above for the clearest view.
+Can children sit in Third Class?
+Yes. Club Class or the LEO Section are usually more engaging for younger children
+because they are closer to the action.
+How far is Section 11 from the ring?
+It is the highest tier in the stadium. Rajadamnern is compact and the view over the
+arena is clear, but this is the section for seeing the whole event rather than for being
+close to the ring. For proximity, look at Ringside. [Link: Ringside seats at Rajadamnern
+Stadium]
+Ready for Section 11?
+[Button] Book Third Class Tickets →  #book
+E. Booking widget integration
+
+Item Detail
+Position Section 7, directly after "When Third Class opens"
+Copy above
+"Third Class is already selected. Choose your ﬁght night and continue.
+Dates are shown when Third Class is on sale for that night. Every ticket
+guarantees a seat, and you choose your position in the section when you
+arrive."
+Copy below
+"No Third Class for your date? The LEO Section and Club Class are on the
+same elevated tier of the main arena, closer to the ring, and available on
+every ﬁght night." with links
+Mobile
+behaviour Full-width date picker. Hero and sticky buttons scroll to #book.
+Repeat? No
+Sticky CTA Yes on mobile, "Book Third Class Tickets"
+Must implement now: the widget must handle "not on sale" gracefully. Either show only
+on-sale dates, or show all dates with unavailable ones marked "Third Class not on sale"
+rather than a generic sold-out state, which would be misleading.
+F. Visual requirements
+Asset Placement Shows Ratio Filename Alt text
+Hero Section 1
+Upper tier
+looking
+down over
+the full
+arena
+3:2 /
+4:5
+mobile
+rajadamnern-
+stadium-third-
+class-section-
+11.jpg
+Third Class,
+Section 11, the
+upper tier of
+Rajadamnern
+Stadium looking
+down over the
+arena
+Zone
+map
+Section 3 Section 11
+highlighted
+1:1
+rajadamnern-
+stadium-map-
+third-class-
+section-
+11.png
+Rajadamnern
+Stadium map
+with Third Class
+Section 11
+highlighted in
+the upper tier
+View
+Row
+D
+Section 4 Actual view
+from Row D
+or above
+4:3 rajadamnern-
+section-11-
+view-row-d.jpg
+View of the ring
+and arena from
+Section 11 Row
+D at
+
+Asset Placement Shows Ratio Filename Alt text
+Rajadamnern
+Stadium
+Full
+arena
+view
+Section 4
+Wide shot
+showing
+ring, main
+arena and
+crowd
+16:9
+rajadamnern-
+third-class-
+whole-arena-
+view.jpg
+Wide view over
+the whole
+Rajadamnern
+Stadium arena
+from Third
+Class
+Rows
+and
+fence
+Section 5
+Front rows
+with the
+safety fence
+and rows
+behind
+3:2
+rajadamnern-
+section-11-
+rows-safety-
+fence.jpg
+Front rows of
+Section 11 at
+Rajadamnern
+Stadium
+showing the
+safety fence
+and rows behind
+it
+Full
+night Section 8 Upper tier
+full 3:2
+rajadamnern-
+third-class-full-
+night.jpg
+Third Class
+upper tier full on
+a busy ﬁght
+night at
+Rajadamnern
+Stadium
+G. Internal links from this page
+Destination Anchor text Section User reason
+/rajadamnern-
+stadium-seat-map
+See Section 11 on the
+Rajadamnern Stadium seat
+map
+Section 3 Orientation
+/leo-section
+See the LEO Section / The
+LEO Section at
+Rajadamnern Stadium
+Below widget,
+alternatives
+Closest
+alternative
+/club-class See Club Class / Club Class
+at Rajadamnern Stadium
+Below widget,
+alternatives
+Assigned
+alternative
+/ringside Ringside seats at
+Rajadamnern Stadium FAQ Proximity
+alternative
+
+Destination Anchor text Section User reason
+/rajadamnern-
+stadium-seats
+Compare all four
+Rajadamnern Stadium seat
+classes
+Alternatives Back to hub
+H. Structured data
+BreadcrumbList.
+FAQPage for the six FAQs.
+No Product schema. Availability here is the most variable of all four classes, so
+static Offer markup would be wrong more often than right.
+I. CRO notes
+The page leads with "Section 11" because that is what people search, and never
+with "cheapest" or "budget", which the Source of Truth rules out.
+Availability is stated plainly before the widget, so a guest never experiences the
+widget as broken.
+The alternatives block appears twice (under the widget and as a full section)
+because this is the one page where the product is often not for sale. Keeping the
+guest in the cluster is the main conversion job.
+The safety fence is explained as what it is, then immediately turned into a row
+recommendation.
+PART 11: Complete internal-link map
+Legend: Hub = /rajadamnern-stadium-seats, Map = /rajadamnern-stadium-seat-map, R
+= ringside, CC = club-class, LEO = leo-section, TC = third-class.
+From To Anchor text
+Section on source
+page
+Hub R See Ringside seats and view Card 1
+Hub CC See Club Class seats and view Card 2
+Hub LEO See the LEO Section and view Card 3
+Hub TC See Third Class seats and view Card 4
+Hub R Ringside seats at Rajadamnern Best for closeness
+
+From To Anchor text Section on source
+page
+Hub CC Club Class, Sections 8 and 9 Best for a numbered
+seat
+Hub LEO LEO Section, Section 10 Best for atmosphere
+Hub TC Third Class, Section 11 Best for whole
+stadium
+Hub LEO how unassigned seating works in the
+LEO Section
+Assigned and
+unassigned
+Hub Map
+See the full Rajadamnern Stadium seat
+map
+Where the sections
+are
+Map R What it is like to sit Ringside Sections explained
+Map CC What it is like to sit in Club Class Sections explained
+Map LEO What it is like to sit in the LEO Section Sections explained
+Map TC What it is like to sit in Third Class Sections explained
+Map Hub#rows How MuayTix places you by row Rows on the seating
+plan
+Map Hub Compare the four seat classes Decide where you
+want to sit
+Map Hub#book Book Tickets
+Decide where you
+want to sit
+R Map See Ringside on the Rajadamnern
+Stadium seat map
+Where Ringside is
+R CC Club Class at Rajadamnern Stadium Alternatives, FAQ
+R LEO
+The LEO Section at Rajadamnern
+Stadium Alternatives
+R Hub Compare all four Rajadamnern Stadium
+seat classes
+Alternatives
+CC Map
+See Club Class on the Rajadamnern
+Stadium seat map
+Where Sections 8
+and 9 are
+CC R Ringside seats at Rajadamnern Stadium Alternatives
+
+From To Anchor text Section on source
+page
+CC LEO The LEO Section at Rajadamnern
+Stadium Alternatives
+CC Hub
+Compare all four Rajadamnern Stadium
+seat classes Alternatives
+LEO Map See the LEO Section on the
+Rajadamnern Stadium seat map
+Where Section 10 is
+LEO CC Club Class at Rajadamnern Stadium LEO or Club Class
+LEO TC Third Class in the upper tier FAQ (optional)
+LEO Hub Compare all four seat classes After FAQ
+TC Map See Section 11 on the Rajadamnern
+Stadium seat map
+Where Section 11 is
+TC LEO
+See the LEO Section / The LEO Section
+at Rajadamnern Stadium
+Below widget,
+alternatives
+TC CC See Club Class / Club Class at
+Rajadamnern Stadium
+Below widget,
+alternatives
+TC R Ringside seats at Rajadamnern Stadium FAQ
+TC Hub
+Compare all four Rajadamnern Stadium
+seat classes Alternatives
+Every page reaches every other page within one click except Ringside to Third Class
+and Club Class to Third Class, which are deliberately omitted: a guest researching
+Ringside or Club Class is rarely served by a link to the section that opens least often.
+They reach it through the hub. Breadcrumbs on all ﬁve sub-pages also link to the hub.
+Site-level links to add (outside the cluster): main navigation "Seating" →  Hub; each day-
+dated event page's seat class list →  the relevant child page; homepage seat class cards
+→  child pages.
+PART 12: Visual asset requirements, ﬁlenames and alt text
+Assets used on more than one page (build once)
+
+Asset Used on Filename Alt text
+Full seat
+map
+Map (hero);
+Hub (small
+version)
+rajadamnern-stadium-
+seat-map.png (Hub uses
+rajadamnern-stadium-
+seating-zones-
+overview.png)
+Rajadamnern Stadium seat
+map showing Ringside
+Sections 3 to 7, Club Class
+Sections 8 and 9, LEO
+Section 10 and Third Class
+Section 11
+Zone
+map,
+Ringside
+Map, Hub
+card,
+Ringside
+page
+rajadamnern-stadium-
+map-ringside-sections-3-
+7.png
+Rajadamnern Stadium map
+with Ringside Sections 3 to 7
+highlighted
+Zone
+map, Club
+Class
+Map, Hub
+card, Club
+Class page
+rajadamnern-stadium-
+map-club-class-
+sections-8-9.png
+Rajadamnern Stadium map
+with Club Class Sections 8
+and 9 highlighted
+Zone
+map, LEO
+Map, Hub
+card, LEO
+page
+rajadamnern-stadium-
+map-leo-section-10.png
+Rajadamnern Stadium map
+with the LEO Section, Section
+10, highlighted
+Zone
+map,
+Third
+Class
+Map, Hub
+card, Third
+Class page
+rajadamnern-stadium-
+map-third-class-section-
+11.png
+Rajadamnern Stadium map
+with Third Class Section 11
+highlighted in the upper tier
+View from
+Ringside
+Hub,
+Ringside
+page
+view-from-ringside-
+rajadamnern-
+stadium.jpg
+View of the ring from
+Ringside at Rajadamnern
+Stadium
+View from
+Club
+Class
+Hub, Club
+Class page
+view-from-club-class-
+rajadamnern-
+stadium.jpg
+View of the ring from Club
+Class Row D at Rajadamnern
+Stadium
+View from
+LEO
+Hub, LEO
+page
+view-from-leo-section-
+rajadamnern-
+stadium.jpg
+Front-facing view of the ring
+from the LEO Section at
+Rajadamnern Stadium
+View from
+Third
+Class
+Hub, Third
+Class page
+view-from-third-class-
+rajadamnern-
+stadium.jpg
+View of the ring and arena
+from Third Class Section 11
+at Rajadamnern Stadium
+Page-speciﬁc assets
+Listed in full in each page's Section F. Priority order for the photography shoot, by
+conversion impact:
+
+1. Four view-from-section photos, taken from Row D or above (Club Class, LEO, Third
+Class) and front row plus fourth row (Ringside), same lens, ﬁght in progress, so
+guests can compare like for like.
+2. Full seat map redrawn in the four class colours with section numbers and the
+walkway marked, minimum 2000px wide.
+3. Club Class numbered seat close-up and LEO tiered seating close-up, side by side, so
+the "what am I sitting on" question is answered honestly.
+4. Third Class rows showing the safety fence with Row D visible behind it.
+5. Fighter entrance walkway between Sections 3 and 4.
+6. LEO Section crowd on a traditional night.
+Image rules
+All images compressed for mobile, WebP where Tilda supports it, with descriptive
+ﬁlenames as above.
+Alt text describes the seating fact in the image, not the event or the ﬁghters, and
+names the section number where relevant.
+No stock imagery. Every image should be Rajadamnern.
+Class colours on graphics: Ringside green, Club Class blue, LEO gold, Third Class
+orange, matching the existing MuayTix chart.
+PART 13: Technical SEO, schema and GEO
+recommendations
+On-page technical
+Item Recommendation
+Canonicals Self-referencing on all six. Conﬁrm the old seating page's URL: if it
+changes, 301 to the hub.
+Breadcrumbs
+Home →  Rajadamnern Stadium Seating →  [Class] on child pages.
+Home →  Rajadamnern Stadium Seat Map on the map page. Visible on
+page and in BreadcrumbList schema.
+Headings One H1 per page. H2s phrased as the guest's question where natural.
+No keyword-repeat H2s.
+Anchors
+#compare, #book and #rows on the hub; #book on each child. Used by
+hero buttons, sticky buttons and cross-page links.
+
+Item Recommendation
+Images Explicit width and height attributes to avoid layout shift on mobile. Lazy-
+load everything below the ﬁrst screen except the map hero.
+Accordions
+FAQ accordions must render the answer text in the HTML on load
+(Tilda's standard accordion does). Do not load FAQ answers by script.
+Sticky CTA
+Implement as a ﬁxed-position element that appears after the widget
+scrolls out of view. It must not cover the widget itself or the FAQ
+accordion controls.
+Page speed
+The map PNG is the heaviest asset. Serve a 1200px version by default
+with a tap-to-zoom full version.
+Old content
+Any existing seating copy on other pages that duplicates these sections
+should be trimmed to a summary plus a link, so the cluster is the only
+home for this content.
+Schema summary
+Page Types
+Hub BreadcrumbList, FAQPage
+Map BreadcrumbList, FAQPage, ImageObject (map),
+StadiumOrArena optional
+Ringside, Club Class,
+LEO, Third Class BreadcrumbList, FAQPage
+Not recommended now Product or Offer on any of the six. Prices and availability are
+per event and belong on event pages.
+Future website
+opportunity
+Event schema on day-dated pages with one Offer per seat
+class, each Offer linking to the relevant child page via the url
+property.
+Implementation in Tilda: JSON-LD in each page's head code ﬁeld via page settings.
+GEO (AI search) recommendations
+Every relationship is stated as a single plain sentence that can be lifted whole: "The
+LEO Section is Section 10 at Rajadamnern Stadium." "Third Class is Section 11."
+"Club Class covers Sections 8 and 9." "Ringside is Sections 3 to 7." These appear in
+the ﬁrst paragraph of each relevant page and again in FAQ answers.
+
+Each page's ﬁrst paragraph is a complete, self-contained deﬁnition of the section:
+what, where, seat type, one distinguishing fact. This is what answer engines quote.
+Capacity, levels, ﬁghter entrance, camera position and orchestra position are given
+as facts on the map page, which makes MuayTix the most complete single source
+for the stadium's layout.
+FAQ answers are two to four sentences, not one line, so they carry enough context
+to be cited without the question.
+The row guidance is unique to MuayTix and phrased as "MuayTix recommends",
+which associates the entity with the advice when it is quoted.
+No claims appear that contradict the Source of Truth, so nothing on these pages
+will be ﬂagged as inconsistent with other MuayTix content.
+PART 14: Tilda implementation priorities
+Must implement now
+Item Notes
+Build all six pages at the
+ﬁxed URLs with the copy in
+Parts 5 to 10
+Standard Tilda blocks: cover, text, image, cards or tiles,
+questions-and-answers accordion, buttons. Zero Block
+only for the four-card comparison if standard cards
+cannot hold six attributes cleanly.
+Seat-led widget on the hub,
+class-preset widgets on the
+four child pages
+Existing MuayTix widget embed approach (scoped
+fragments, namespaced CSS). Widget must accept a
+preset class.
+Third Class widget
+availability handling Only on-sale dates, or clearly labelled not-on-sale dates.
+Full seat map redrawn and
+placed as the map page hero
+Class colours, section numbers, walkway.
+Four view-from-section
+photos Without these, the "view" queries are not satisﬁed.
+Internal links exactly as Part
+11
+Including anchors.
+SERP titles, meta
+descriptions, H1s as
+speciﬁed
+Character counts veriﬁed.
+
+Item Notes
+BreadcrumbList and
+FAQPage JSON-LD on every
+page
+Head code per page.
+Mobile sticky "Book [Class]
+Tickets" button on hub and
+child pages
+Not on the map page.
+Remove or trim duplicate
+seating copy elsewhere on
+the site
+Prevents the new cluster competing with old pages.
+High-value improvement
+Item Notes
+Zone-highlight versions of the map (four
+images)
+Strongly improves the child pages and
+the hub cards.
+Annotated map with entrance, cameras,
+orchestra, corners
+Differentiates the map page from any
+other seat map online.
+"Traditional night" labels on Wednesday,
+Thursday and Sunday in the LEO widget
+Carries the atmosphere fact into the
+date choice.
+Row preference ﬁeld at checkout
+Lets Ringside and Club Class copy
+promise what the widget can deliver.
+Cross-section graphic of the three levels Answers "which areas are elevated"
+visually.
+ImageObject and StadiumOrArena schema
+on the map page Image search visibility.
+Link each day-dated event page's seat class
+list to the child pages
+Turns the cluster into the seat reference
+for every event page.
+Future website opportunity (Webﬂow)
+Item Notes
+Interactive map: tap a section to open
+that class's widget in a drawer
+Merges orientation and booking without a
+widget on the map page.
+
+Item Notes
+Event schema with per-class Offers on
+day-dated pages
+Makes price and availability machine-
+readable where they actually live.
+Dynamic sell-out messaging on child
+pages driven by live inventory
+Replaces the static "around ten days" line
+with real data.
+Seat ﬁnder quiz surfaced from the hub for
+guided-path visitors
+Already prototyped; belongs on the hub
+once the new site is live.
+Row-band diagrams per section Requires conﬁrmed row counts (Part 15).
+PART 15: Information still required from MuayTix
+Only gaps that change copy or conversion decisions.
+Gap Why it matters Where it is
+used
+Physical positions of Sections 8,
+9 and 10 relative to each other
+and to the ﬁghter entrance
+(which side of the ring each
+faces, whether 8 and 9 sit either
+side of 10 or together)
+The map page and the "Section 8 vs
+Section 9" FAQ currently describe
+elevation and neighbours only. A
+sentence such as "Section 8 is to the
+left of the walkout" would strengthen
+the map page and answer the "what
+about section 8" query properly.
+Part 6
+sections 1
+and 3, Part
+8 FAQ
+Number of rows in Ringside,
+Club Class, LEO and Third Class
+The Ringside copy says "a few rows
+deep" and names rows one to four
+from the allocation practice.
+Conﬁrmed counts allow row-band
+diagrams and ﬁrmer wording.
+Parts 7 to
+10, Part 14
+future item
+Whether Ringside rows are
+labelled by number or letter, and
+whether the elevated sections
+start at Row A
+Consistency of the row guidance
+across pages.
+Parts 5 to
+10
+Ticket delivery: how and when
+guests receive tickets, and what
+they show at the gate
+Every widget's below-copy could
+reassure on this. Nothing has been
+written because nothing was
+supplied.
+All widget
+sections
+
+Gap Why it matters Where it is
+used
+What happens after booking:
+conﬁrmation, support contact,
+hours
+Same. Trust
+strips
+Checkout capability: is there a
+row or seat preference ﬁeld, and
+a party size ﬁeld?
+The Ringside and Club Class copy
+promise "tell us at checkout".
+Parts 7
+and 8
+Widget capability: can it preset a
+class, and can it show on-sale
+dates only for Third Class?
+Determines whether fallback copy is
+used.
+Part 4, Part
+10
+Group seating limits: maximum
+party size that can be seated
+together in assigned sections
+The group reassurance lines are
+currently hedged with "wherever
+availability allows".
+Parts 7
+and 8
+Whether prices should display in
+THB only, or also in a converted
+currency
+Prices are shown in THB on the hub
+cards as supplied. Part 5
+Whether MuayTix wants the ten-
+day sell-out example tied to RWS
+by name
+Copy currently says "on busy nights". Part 8
+VIP and Presidential areas on
+the map: label as "VIP (not sold
+on this site)" or omit?
+The full map will show them. Guests
+will ask. Part 6
+Stadium address for
+StadiumOrArena schema, if
+MuayTix wants venue markup on
+a partner site
+Optional schema. Part 13
+Availability of archive
+photography with usage rights
+Optional history image on the map
+page. Part 6
+Content quality test: results
+Test Result
+Could the page be
+another stadium with
+the name swapped?
+No. Section numbers, the walkway between 3 and 4, the
+orchestra behind 9, cameras in 10, the fence in front of 11
+
+Test Result
+Rows A to C, and the three traditional nights are all
+Rajadamnern-speciﬁc.
+Does each page satisfy
+its search intent?
+Hub compares, map locates, each child evaluates one class.
+Excess overlap?
+The only shared passages are the one-sentence section
+deﬁnitions and the unassigned-seating explanation, which
+appear on the hub and are restated brieﬂy on LEO and Third
+Class because a direct arrival needs them.
+Does the user always
+know the next step?
+Every page has a widget or a route to one, and an alternative
+class.
+Does it genuinely help
+choose?
+Row guidance, view photos, night-of-week table, availability
+rules.
+Comfortable on a
+phone?
+Cards not tables, one widget, sticky button, accordion FAQ,
+short paragraphs.
+Forced keywords
+removed?
+"muay thai ﬁght seats", "boxing stadium seats", "seat map
+bangkok" and similar are not used in copy.
+Do child pages sound
+different?
+Ringside is about proximity and rows, Club Class about
+assigned seats and families, LEO about nights and
+atmosphere, Third Class about availability and the whole-
+arena view.
+Are class and section
+relationships explicit? Yes, in H1s, ﬁrst paragraphs and FAQs.
+Any invented facts? Every fact traces to the Source of Truth. Where a fact was
+missing it is ﬂagged in Part 15 rather than written.

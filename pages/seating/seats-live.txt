@@ -1,0 +1,573 @@
+<div class="mtx-ss">
+<style>.mtx-ss, .mtx-ss * { box-sizing: border-box; }
+.mtx-ss {
+  --ss-blue: #1f5bff;
+  --ss-blue-dark: #1545cf;
+  
+  --ss-blue-lift: #86a9ff;
+  --ss-ink: #0b0b0d;
+  --ss-paper: #f2f2f2;
+  --ss-line: #dcdce1;
+  --ss-muted: #6e6e75;
+
+  
+  --ss-ring:  #00A651;
+  --ss-club:  #27AAE1;
+  --ss-leo:   #FFF200;
+  --ss-third: #F7941E;
+
+  font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--ss-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.mtx-ss p, .mtx-ss h1, .mtx-ss h2, .mtx-ss h3, .mtx-ss ul, .mtx-ss ol { margin: 0; padding: 0; }
+.mtx-ss ul, .mtx-ss ol { list-style: none; }
+.mtx-ss img { max-width: 100%; display: block; }
+.mtx-ss__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
+
+.mtx-ss h1, .mtx-ss h2, .mtx-ss h3 {
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+}
+.mtx-ss h1 { font-size: clamp(34px, 5vw, 60px); line-height: .98; }
+.mtx-ss h2 { font-size: clamp(27px, 3.4vw, 42px); line-height: 1.04; margin-top: 8px; }
+.mtx-ss h3 { font-size: 21px; line-height: 1.15; }
+.mtx-ss__kicker {
+  display: block; color: var(--ss-blue); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 13px; letter-spacing: .13em; text-transform: uppercase;
+}
+
+.mtx-ss__crumbs { display: flex; flex-wrap: wrap; align-items: baseline; font-size: 13.5px; color: #b6b7bf; }
+.mtx-ss__crumbs a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.3); }
+.mtx-ss__crumbs a:hover { color: #fff; }
+.mtx-ss__crumbs li + li::before { content: "\203A"; margin: 0 9px; opacity: .6; }
+.mtx-ss__crumbs [aria-current] { color: #fff; }
+
+.mtx-ss__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 52px; padding: 0 26px; border: 2px solid transparent;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 16px; letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: all .2s ease;
+}
+.mtx-ss__btn--blue { background: var(--ss-blue); color: #fff; }
+.mtx-ss__btn--blue:hover { background: var(--ss-blue-dark); color: #fff; }
+.mtx-ss__btn--ghost { background: transparent; border-color: #fff; color: #fff; }
+.mtx-ss__btn--ghost:hover { background: #fff; color: var(--ss-ink); }
+.mtx-ss__btn--outline { background: #fff; border-color: var(--ss-ink); color: var(--ss-ink); }
+.mtx-ss__btn--outline:hover { border-color: var(--ss-blue); color: var(--ss-blue); }
+.mtx-ss__go {
+  display: inline-block; color: var(--ss-blue); text-decoration: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 15px; letter-spacing: .07em; text-transform: uppercase;
+  border-bottom: 2px solid currentColor; padding-bottom: 2px;
+}
+.mtx-ss__go:hover { color: var(--ss-blue-dark); }
+.mtx-ss__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+.mtx-ss__hero {
+  position: relative; color: #fff;
+  padding: clamp(40px, 5vw, 72px) 0 clamp(52px, 7vw, 92px);
+  background-color: var(--ss-ink);
+  background-image:
+    linear-gradient(100deg, rgba(11,11,13,.95) 0%, rgba(11,11,13,.88) 38%,
+                    rgba(11,11,13,.66) 72%, rgba(11,11,13,.52) 100%),
+    url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+  background-repeat: no-repeat; background-size: cover; background-position: center 38%;
+}
+@media (max-width: 760px) {
+  .mtx-ss__hero {
+    background-image:
+      linear-gradient(180deg, rgba(11,11,13,.86) 0%, rgba(11,11,13,.74) 30%,
+                      rgba(11,11,13,.88) 72%, rgba(11,11,13,.96) 100%),
+      url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+    background-position: center 30%;
+  }
+}
+.mtx-ss__hero h1 { margin-top: 18px; }
+.mtx-ss__lede { max-width: 62ch; margin-top: 18px !important; color: #d3d4da; font-size: 17px; }
+
+.mtx-ss__band { padding: clamp(40px, 5vw, 70px) 0; background: #fff; }
+.mtx-ss__band--paper { background: var(--ss-paper); }
+.mtx-ss__band--dark { background: #18181d; color: #fff; }
+.mtx-ss__band--dark .mtx-ss__kicker, .mtx-ss__booking .mtx-ss__kicker { color: var(--ss-blue-lift); }
+.mtx-ss__band p { max-width: 68ch; margin-top: 16px !important; font-size: 17px; }
+.mtx-ss__band--dark p { color: #d3d4da; }
+.mtx-ss__ctarow { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+.mtx-ss__trust { background: var(--ss-ink); color: #fff; padding: 16px 0; }
+.mtx-ss .mtx-ss__trust p {
+  max-width: none; margin-top: 0 !important; font-size: 15.5px; color: #d3d4da;
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+}
+.mtx-ss__trust b { color: #fff; font-weight: 700; }
+
+.mtx-ss__cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mtx-ss .mtx-ss__cards { margin-top: 30px; }
+.mtx-ss__card {
+  display: flex; flex-direction: column; position: relative;
+  background: #fff; border: 1px solid var(--ss-line); padding: 0 0 26px;
+  overflow: hidden;
+}
+.mtx-ss__card::before { content: ""; display: block; height: 7px; background: var(--ss-c, var(--ss-blue)); }
+.mtx-ss__card > * { margin-left: 24px; margin-right: 24px; }
+.mtx-ss__card h3 { margin-top: 22px; font-size: 25px; }
+
+.mtx-ss__where {
+  display: inline-flex; align-items: center; gap: 9px; align-self: flex-start;
+  margin-top: 10px; padding: 7px 12px; background: var(--ss-paper);
+  border-left: 4px solid var(--ss-c, var(--ss-blue));
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 13.5px; letter-spacing: .07em; text-transform: uppercase;
+}
+.mtx-ss .mtx-ss__seat { margin-top: 13px !important; font-size: 15.5px; font-weight: 600; }
+.mtx-ss .mtx-ss__card p { margin-top: 10px !important; font-size: 16px; color: var(--ss-muted); max-width: none; }
+.mtx-ss__card p b { color: var(--ss-ink); font-weight: 700; }
+.mtx-ss__price {
+  margin-top: 16px !important; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 26px; color: var(--ss-ink) !important; line-height: 1.1;
+}
+.mtx-ss__price small { display: block; font-family: "Barlow", sans-serif; font-weight: 400; font-size: 13.5px; color: var(--ss-muted); letter-spacing: 0; text-transform: none; }
+.mtx-ss__cardcta { margin-top: auto; padding-top: 20px; }
+.mtx-ss__cardcta .mtx-ss__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+.mtx-ss__booking { background: var(--ss-ink); color: #fff; padding: clamp(42px, 5.5vw, 74px) 0; scroll-margin-top: 16px; }
+.mtx-ss__booking h2 { color: #fff; }
+.mtx-ss .mtx-ss__booking p { color: #d3d4da; }
+
+.mtx-ss #mtx-booking h1, .mtx-ss #mtx-booking h2,
+.mtx-ss #mtx-booking h3, .mtx-ss #mtx-booking h4 { color: inherit; text-transform: none; }
+.mtx-ss__panel { margin-top: 26px; background: #fff; color: var(--ss-ink); padding: clamp(18px, 3vw, 30px); }
+.mtx-ss .mtx-ss__panel p { color: var(--ss-muted); }
+.muaytix-ticket-selector { min-height: 320px; }
+.mtx-ss__after { margin-top: 22px !important; }
+
+.mtx-ss__picks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 34px; }
+.mtx-ss .mtx-ss__picks { margin-top: 30px; }
+.mtx-ss__pick h3 { font-size: 19px; color: var(--ss-blue); }
+.mtx-ss .mtx-ss__pick p { margin-top: 8px !important; font-size: 16px; max-width: none; }
+
+.mtx-ss__views { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mtx-ss .mtx-ss__views { margin-top: 30px; }
+.mtx-ss__view { background: #fff; border: 1px solid var(--ss-line); }
+.mtx-ss__view img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #e6e6ea; }
+@supports not (aspect-ratio: 4 / 3) { .mtx-ss__view img { height: 260px; } }
+.mtx-ss__view div { padding: 20px 22px 24px; }
+.mtx-ss__view h3 { font-size: 20px; }
+.mtx-ss .mtx-ss__view p { margin-top: 9px !important; font-size: 16px; color: var(--ss-muted); max-width: none; }
+
+.mtx-ss__rows { border-top: 1px solid var(--ss-line); }
+.mtx-ss .mtx-ss__rows { margin-top: 26px; }
+.mtx-ss__rows li { display: grid; grid-template-columns: 150px 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--ss-line); }
+
+.mtx-ss__rows strong {
+  display: flex; align-items: baseline; gap: 10px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 18px; text-transform: uppercase; color: var(--ss-ink);
+}
+.mtx-ss__rows strong::before {
+  content: ""; flex: none; width: 5px; align-self: stretch;
+  background: var(--ss-c, var(--ss-blue)); box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
+}
+.mtx-ss__rows span { font-size: 16px; color: var(--ss-muted); }
+
+.mtx-ss__know { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 30px; }
+.mtx-ss .mtx-ss__know { margin-top: 26px; }
+.mtx-ss__know li { position: relative; padding-left: 22px; font-size: 16px; color: var(--ss-muted); }
+.mtx-ss__know li::before { content: ""; position: absolute; left: 0; top: 11px; width: 9px; height: 2px; background: var(--ss-blue); }
+
+.mtx-ss__maprow { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(22px, 4vw, 44px); align-items: center; }
+.mtx-ss .mtx-ss__maprow { margin-top: 30px; }
+.mtx-ss__mapfig { display: block; position: relative; text-decoration: none; }
+.mtx-ss__mapfig img { width: 100%; height: auto; }
+.mtx-ss__mapzoom {
+  position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center;
+  padding: 8px 13px; background: rgba(11,11,13,.78); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.14); transition: background .18s ease;
+}
+.mtx-ss__mapfig:hover .mtx-ss__mapzoom { background: var(--ss-blue); }
+.mtx-ss__key { margin-top: 20px; }
+.mtx-ss__key li { display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: center; padding: 8px 0; font-size: 15.5px; }
+.mtx-ss__sw { width: 20px; height: 20px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.35); }
+
+.mtx-ss__faq { margin-top: 30px; border-top: 1px solid var(--ss-line); }
+.mtx-ss__faq details { border-bottom: 1px solid var(--ss-line); }
+.mtx-ss__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 18px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 20px; line-height: 1.15; text-transform: uppercase;
+}
+.mtx-ss__faq summary::-webkit-details-marker { display: none; }
+.mtx-ss__faq summary::after {
+  content: "+"; flex: none; color: var(--ss-blue);
+  font-family: "Barlow", Helvetica, Arial, sans-serif; font-weight: 400; font-size: 26px; line-height: 1; margin-top: 2px;
+}
+.mtx-ss__faq details[open] summary::after { content: "\2013"; }
+.mtx-ss .mtx-ss__faq p { margin-top: 0 !important; margin-bottom: 22px !important; font-size: 16px; color: var(--ss-muted); }
+
+.mtx-ss__sticky {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+  background: rgba(11,11,13,.94); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transform: translateY(110%); transition: transform .22s ease; display: none;
+}
+.mtx-ss__sticky .mtx-ss__btn { width: 100%; }
+.mtx-ss[data-sticky="on"] .mtx-ss__sticky { transform: translateY(0); }
+
+@media (max-width: 900px) {
+  .mtx-ss__maprow { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .mtx-ss__cards, .mtx-ss__views, .mtx-ss__picks { grid-template-columns: 1fr; }
+  .mtx-ss__know { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .mtx-ss__shell { width: min(100% - 28px, 1180px); }
+  .mtx-ss__actions .mtx-ss__btn, .mtx-ss__ctarow .mtx-ss__btn { width: 100%; }
+  .mtx-ss__rows li { grid-template-columns: 1fr; gap: 4px; }
+  .mtx-ss__faq summary { font-size: 18px; }
+  .mtx-ss__sticky { display: block; }
+  .mtx-ss { padding-bottom: 76px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mtx-ss__sticky { transition: none; }
+}</style>
+
+  
+  <section class="mtx-ss__hero">
+    <div class="mtx-ss__shell">
+      <ol class="mtx-ss__crumbs">
+        <li><a href="/">Home</a></li>
+        <li><span aria-current="page">Rajadamnern Stadium Seating</span></li>
+      </ol>
+
+      <h1>Rajadamnern Stadium Seating: Choose the Right Seats for Your Fight Night</h1>
+      <p class="mtx-ss__lede">Rajadamnern Stadium has four public seat classes: Ringside, Club Class, LEO Section and Third Class. There are no bad views in the building. The choice is about how you want to experience the night: right beside the ring, elevated with a numbered seat, in the middle of the atmosphere, or looking over the whole arena.</p>
+
+      <div class="mtx-ss__actions">
+        <a class="mtx-ss__btn mtx-ss__btn--ghost" href="#compare">Compare the four seat classes</a>
+        <a class="mtx-ss__btn mtx-ss__btn--blue" href="#book">Book Tickets</a>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="mtx-ss__trust">
+    <div class="mtx-ss__shell">
+      <p><b>MuayTix is the international ticket partner for Rajadamnern Stadium.</b> Every booking comes with MuayTix seat and row guidance, so you sit where you meant to.</p>
+    </div>
+  </section>
+
+  
+  <section class="mtx-ss__band" id="compare">
+    <div class="mtx-ss__shell">
+      <span class="mtx-ss__kicker">At a glance</span>
+      <h2>The four seat classes</h2>
+
+      <div class="mtx-ss__cards">
+
+        <article class="mtx-ss__card" style="--ss-c: var(--ss-ring)">
+          <h3>Ringside</h3>
+          <span class="mtx-ss__where">Sections 3 to 7 &middot; Floor level, main arena</span>
+          <p class="mtx-ss__seat">Assigned seat, allocated from the front row backwards</p>
+          <p>The ring is a few metres away. You hear the strikes and the corner instructions.</p>
+          <p><b>Feels like:</b> a working fight-night floor. Corners, officials and broadcast crews are all around you.</p>
+          <p><b>Suits:</b> fight fans who want maximum proximity, groups who want to sit together close to the ring, photographers who want close-range angles</p>
+          <p class="mtx-ss__price">2,500 THB</p>
+          <p class="mtx-ss__cardcta"><a class="mtx-ss__btn mtx-ss__btn--outline" href="/rajadamnern-stadium-seats/ringside">See Ringside seats and view</a></p>
+        </article>
+
+        <article class="mtx-ss__card" style="--ss-c: var(--ss-club)">
+          <h3>Club Class</h3>
+          <span class="mtx-ss__where">Sections 8 and 9 &middot; Elevated tier, main arena</span>
+          <p class="mtx-ss__seat">Assigned, numbered seat. Staff can walk you to it.</p>
+          <p>Looks down across the whole ring, with the walkouts and corners in view.</p>
+          <p><b>Feels like:</b> busy and atmospheric on a full night, and the easiest section for families and groups. Toilets, food and drink are close by.</p>
+          <p><b>Suits:</b> first-time guests, families with children, anyone who wants a dependable all-round choice. Around 55 per cent of MuayTix guests choose Club Class.</p>
+          <p class="mtx-ss__price">1,800 THB</p>
+          <p class="mtx-ss__cardcta"><a class="mtx-ss__btn mtx-ss__btn--outline" href="/rajadamnern-stadium-seats/club-class">See Club Class seats and view</a></p>
+        </article>
+
+        <article class="mtx-ss__card" style="--ss-c: var(--ss-leo)">
+          <h3>LEO Section</h3>
+          <span class="mtx-ss__where">Section 10 &middot; Elevated tier, facing the front of the ring</span>
+          <p class="mtx-ss__seat">Unassigned seating, seat guaranteed. Choose where to sit when you arrive.</p>
+          <p>The broadcast cameras and commentary team sit here, which tells you how good the front-facing view is.</p>
+          <p><b>Feels like:</b> where the atmosphere lives. On Wednesday, Thursday and Sunday it is the home of local Thai fight fans and the betting crowd.</p>
+          <p><b>Suits:</b> couples, solo travellers and groups who like choosing their own spot, repeat visitors, anyone who wants the local fight-night feel</p>
+          <p class="mtx-ss__price">1,500 THB</p>
+          <p class="mtx-ss__cardcta"><a class="mtx-ss__btn mtx-ss__btn--outline" href="/rajadamnern-stadium-seats/leo-section">See the LEO Section and view</a></p>
+        </article>
+
+        <article class="mtx-ss__card" style="--ss-c: var(--ss-third)">
+          <h3>Third Class</h3>
+          <span class="mtx-ss__where">Section 11 &middot; Upper tier, the highest point in the stadium</span>
+          <p class="mtx-ss__seat">Unassigned seating, seat guaranteed</p>
+          <p>A wide view over the whole arena: ring, walkout, corners and crowd in one picture.</p>
+          <p><b>Feels like:</b> being inside Rajadamnern on a big night. Third Class opens as the stadium fills, so it is at its best when the building is full.</p>
+          <p><b>Suits:</b> guests who want the full-stadium perspective, repeat visitors after a different angle, photographers who want a high, wide shot</p>
+          <p class="mtx-ss__price">1,000 THB<small>Opens on selected nights only.</small></p>
+          <p class="mtx-ss__cardcta"><a class="mtx-ss__btn mtx-ss__btn--outline" href="/rajadamnern-stadium-seats/third-class">See Third Class seats and view</a></p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="mtx-ss__booking" id="book">
+    <div class="mtx-ss__shell">
+      <span class="mtx-ss__kicker">Book tickets</span>
+      <h2>Book your Rajadamnern Stadium tickets</h2>
+      <p>Choose your seat class first, then your date. Ringside and Club Class come with an assigned seat. LEO Section and Third Class are unassigned: you choose your position when you arrive, and every ticket guarantees a seat.</p>
+
+      <div class="mtx-ss__panel">
+        
+        <div class="muaytix-ticket-selector" data-start="seats"></div>
+      </div>
+
+      <p class="mtx-ss__after">Not sure yet? Keep reading. The rest of this page helps you pick, and each seat class has its own page with photos of the view.</p>
+    </div>
+  </section>
+
+  
+  <section class="mtx-ss__band mtx-ss__band--paper">
+    <div class="mtx-ss__shell">
+      <span class="mtx-ss__kicker">Best for you</span>
+      <h2>Which Rajadamnern seats are best? It depends what you want</h2>
+      <p>There is no single best seat at Rajadamnern. There is a best seat for the night you want.</p>
+
+      <div class="mtx-ss__picks">
+        <div class="mtx-ss__pick">
+          <h3>Best for being as close as possible</h3>
+          <p>Ringside. Sections 3 to 7 sit on the floor of the main arena, a few metres from the ropes. If you want to feel the impact of every strike, this is the section. Sections 3 and 4 sit either side of the fighter entrance walkway, so they are the closest seats to the walkouts. <a class="mtx-ss__go" href="/rajadamnern-stadium-seats/ringside">Ringside seats at Rajadamnern</a></p>
+        </div>
+        <div class="mtx-ss__pick">
+          <h3>Best for a numbered seat and an easy night</h3>
+          <p>Club Class. Sections 8 and 9 are elevated, every seat is numbered, and facilities are a short walk away. It is the most popular choice with MuayTix guests and the most straightforward option for families. <a class="mtx-ss__go" href="/rajadamnern-stadium-seats/club-class">Club Class, Sections 8 and 9</a></p>
+        </div>
+        <div class="mtx-ss__pick">
+          <h3>Best for atmosphere</h3>
+          <p>LEO Section. Section 10 faces the front of the ring and is where the local fight fans gather on the three traditional Muay Thai nights: Wednesday, Thursday and Sunday. It is also where the broadcast cameras sit, so the view straight down the ring is the one you see on television. <a class="mtx-ss__go" href="/rajadamnern-stadium-seats/leo-section">LEO Section, Section 10</a></p>
+        </div>
+        <div class="mtx-ss__pick">
+          <h3>Best for seeing the whole stadium</h3>
+          <p>Third Class. Section 11 is the top of the building and shows you the entire arena at once. It opens when demand fills the main arena, which is exactly when the atmosphere is at its strongest. <a class="mtx-ss__go" href="/rajadamnern-stadium-seats/third-class">Third Class, Section 11</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="mtx-ss__band">
+    <div class="mtx-ss__shell">
+      <span class="mtx-ss__kicker">The view</span>
+      <h2>The view from each seat class</h2>
+
+      <div class="mtx-ss__views">
+        <article class="mtx-ss__view">
+          <img src="https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg"
+               alt="View of the ring from Ringside at Rajadamnern Stadium"
+               width="1200" height="900" loading="lazy" decoding="async">
+          <div>
+            <h3>Ringside</h3>
+            <p>Ring-level and close. You see the fighters at eye height, with the ropes, corners and officials as part of the picture. Sound is as much of the experience as sight.</p>
+          </div>
+        </article>
+        <article class="mtx-ss__view">
+          <img src="https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg"
+               alt="View of the ring from Club Class at Rajadamnern Stadium"
+               width="1200" height="900" loading="lazy" decoding="async">
+          <div>
+            <h3>Club Class</h3>
+            <p>An elevated view that takes in the full canvas. From Row D and above you sit clearly above the people moving along the walkway and look down on the whole ring.</p>
+          </div>
+        </article>
+        <article class="mtx-ss__view">
+          <img src="https://static.tildacdn.com/tild3136-6363-4533-b935-633230626564/1000008294.jpg"
+               alt="View of the ring from the LEO Section at Rajadamnern Stadium"
+               width="1200" height="900" loading="lazy" decoding="async">
+          <div>
+            <h3>LEO Section</h3>
+            <p>Front-facing and elevated, on the same tier as Club Class. This is the broadcast angle. You watch the fight square-on and can follow movement across the ring easily.</p>
+          </div>
+        </article>
+        <article class="mtx-ss__view">
+          <img src="https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg"
+               alt="View of the ring from Third Class at Rajadamnern Stadium"
+               width="1200" height="900" loading="lazy" decoding="async">
+          <div>
+            <h3>Third Class</h3>
+            <p>High and wide. From Row D and above you see the ring, the walkout, the main arena and the crowd as one scene.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="mtx-ss__band mtx-ss__band--paper" id="rows">
+    <div class="mtx-ss__shell">
+      <span class="mtx-ss__kicker">Rows</span>
+      <h2>Rows: how MuayTix places you</h2>
+      <p>The section decides the experience. The row decides how well you see it. MuayTix places guests with that in mind.</p>
+
+      <ul class="mtx-ss__rows">
+        <li style="--ss-c: var(--ss-ring)"><strong>Ringside</strong><span>Allocated from the front row backwards. Front row is the closest and most immersive position and most guests ask for it, so we allocate it first unless you tell us otherwise.</span></li>
+        <li style="--ss-c: var(--ss-club)"><strong>Club Class</strong><span>We recommend Row D and above. It lifts you clearly above the walkway eye line for an elevated view of the whole ring.</span></li>
+        <li style="--ss-c: var(--ss-leo)"><strong>LEO Section</strong><span>Seating is unassigned, so you choose. We suggest around Row D and above for the best overall sightline. Arriving earlier simply gives you more choice of position, including the front row when it is free.</span></li>
+        <li style="--ss-c: var(--ss-third)"><strong>Third Class</strong><span>Rows A to C face a safety fence. Row D and above gives you the clearest view over the arena.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  
+  <section class="mtx-ss__band">
+    <div class="mtx-ss__shell">
+      <span class="mtx-ss__kicker">Seating explained</span>
+      <h2>Assigned and unassigned seating explained</h2>
+      <p>Ringside and Club Class are assigned. Your seat number is on your ticket.</p>
+      <p>LEO Section and Third Class are unassigned. That means you choose where to sit within the section when you arrive. It does not mean seating is limited and it does not mean anyone stands. There are no standing areas at Rajadamnern Stadium, and every ticket guarantees a seat. <a class="mtx-ss__go" href="/rajadamnern-stadium-seats/leo-section">How unassigned seating works in the LEO Section</a></p>
+    </div>
+  </section>
+
+  
+  <section class="mtx-ss__band mtx-ss__band--dark">
+    <div class="mtx-ss__shell">
+      <span class="mtx-ss__kicker">Orientation</span>
+      <h2>Where the sections are</h2>
+
+      <div class="mtx-ss__maprow">
+        
+        <a class="mtx-ss__mapfig"
+           href="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+           target="_blank" rel="noopener">
+          <img src="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+               alt="Overview of Rajadamnern Stadium seating zones: Ringside 3 to 7, Club Class 8 and 9, LEO Section 10, Third Class 11"
+               width="1242" height="1242" loading="lazy" decoding="async">
+          <span class="mtx-ss__mapzoom">Tap to enlarge</span>
+        </a>
+
+        <div>
+          <p>Ringside wraps around the ring at floor level. Club Class and LEO Section share the elevated tier of the main arena. Third Class is the upper tier above them.</p>
+          <ul class="mtx-ss__key">
+            <li><span class="mtx-ss__sw" style="background: var(--ss-ring)"></span>Ringside &middot; Sections 3 to 7</li>
+            <li><span class="mtx-ss__sw" style="background: var(--ss-club)"></span>Club Class &middot; Sections 8 and 9</li>
+            <li><span class="mtx-ss__sw" style="background: var(--ss-leo)"></span>LEO Section &middot; Section 10</li>
+            <li><span class="mtx-ss__sw" style="background: var(--ss-third)"></span>Third Class &middot; Section 11</li>
+          </ul>
+          <p class="mtx-ss__ctarow"><a class="mtx-ss__btn mtx-ss__btn--ghost" href="/rajadamnern-stadium-seat-map">See the full Rajadamnern Stadium seat map</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="mtx-ss__band">
+    <div class="mtx-ss__shell">
+      <span class="mtx-ss__kicker">Before you book</span>
+      <h2>Good to know before you book</h2>
+      <ul class="mtx-ss__know">
+        <li>The stadium is fully air-conditioned and can feel cool. A light extra layer is worth bringing.</li>
+        <li>There is no formal dress code. Dress sensibly for a sporting event indoors.</li>
+        <li>Personal photography and video are allowed. Flash between bouts only, not during a fight.</li>
+        <li>Food, soft drinks and beer are sold inside, and can be served directly to Ringside seats.</li>
+        <li>Children are welcome in every seat class. Club Class is usually the easiest choice with younger children.</li>
+        <li>Rajadamnern is compact. Photographs make the distances between sections and the ring look bigger than they feel in person.</li>
+      </ul>
+    </div>
+  </section>
+
+  
+  <section class="mtx-ss__band mtx-ss__band--paper">
+    <div class="mtx-ss__shell">
+      <span class="mtx-ss__kicker">Your questions</span>
+      <h2>Rajadamnern Stadium seating: your questions</h2>
+
+      <div class="mtx-ss__faq">
+        <details>
+          <summary>What are the seat classes at Rajadamnern Stadium?</summary>
+          <p>Four public classes: Ringside (Sections 3 to 7), Club Class (Sections 8 and 9), LEO Section (Section 10) and Third Class (Section 11). VIP areas exist but are not covered on this page.</p>
+        </details>
+        <details>
+          <summary>Which seats are best at Rajadamnern Stadium?</summary>
+          <p>It depends on the night you want. Ringside for proximity, Club Class for a numbered seat and an easy night, LEO Section for atmosphere and the broadcast view, Third Class for the whole-stadium picture. There are no bad views anywhere in the building.</p>
+        </details>
+        <details>
+          <summary>Is Club Class or LEO Section better?</summary>
+          <p>They share the same tier and a similar elevation. Club Class gives you a numbered plastic seat and is the calmer choice for families. LEO gives you concrete tier seating, the choice of where to sit, a front-facing view and, on Wednesday, Thursday and Sunday, the local betting crowd and the atmosphere that comes with it.</p>
+        </details>
+        <details>
+          <summary>Do I have to arrive early for LEO Section or Third Class?</summary>
+          <p>No. Every ticket guarantees a seat. Arriving earlier only increases your choice of position within the section.</p>
+        </details>
+        <details>
+          <summary>Can children sit in every section?</summary>
+          <p>Yes. There is no age restriction in any of the four classes. Club Class is normally the easiest with younger children because of the numbered seats and nearby facilities.</p>
+        </details>
+        <details>
+          <summary>How many people does Rajadamnern Stadium hold?</summary>
+          <p>About 3,078 spectators: roughly 192 at Ringside, about 1,000 across the main arena including Ringside, Club Class, LEO Section and VIP, and about 2,100 in the upper tier.</p>
+        </details>
+        <details>
+          <summary>Can I choose my exact seat when I book?</summary>
+          <p>Ringside and Club Class are assigned seats. Tell MuayTix your preference and we will allocate accordingly where availability allows. LEO Section and Third Class are unassigned, so you pick your position on the night.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="mtx-ss__band mtx-ss__band--dark">
+    <div class="mtx-ss__shell">
+      <h2>Ready to choose?</h2>
+      <p>Pick your seat class, pick your date, and you are done.</p>
+      <p class="mtx-ss__ctarow"><a class="mtx-ss__btn mtx-ss__btn--blue" href="#book">Book Tickets</a></p>
+    </div>
+  </section>
+
+  
+  <div class="mtx-ss__sticky" aria-hidden="true">
+    <a class="mtx-ss__btn mtx-ss__btn--blue" href="#book">Book Tickets</a>
+  </div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"BreadcrumbList","@id":"https://muaytix.com/rajadamnern-stadium-seats#breadcrumb","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Home","item":"https://muaytix.com/"},
+{"@type":"ListItem","position":2,"name":"Rajadamnern Stadium Seating","item":"https://muaytix.com/rajadamnern-stadium-seats"}
+]},
+{"@type":"FAQPage","@id":"https://muaytix.com/rajadamnern-stadium-seats#faq","mainEntity":[
+{"@type":"Question","name":"What are the seat classes at Rajadamnern Stadium?","acceptedAnswer":{"@type":"Answer","text":"Four public classes: Ringside (Sections 3 to 7), Club Class (Sections 8 and 9), LEO Section (Section 10) and Third Class (Section 11). VIP areas exist but are not covered on this page."}},
+{"@type":"Question","name":"Which seats are best at Rajadamnern Stadium?","acceptedAnswer":{"@type":"Answer","text":"It depends on the night you want. Ringside for proximity, Club Class for a numbered seat and an easy night, LEO Section for atmosphere and the broadcast view, Third Class for the whole-stadium picture. There are no bad views anywhere in the building."}},
+{"@type":"Question","name":"Is Club Class or LEO Section better?","acceptedAnswer":{"@type":"Answer","text":"They share the same tier and a similar elevation. Club Class gives you a numbered plastic seat and is the calmer choice for families. LEO gives you concrete tier seating, the choice of where to sit, a front-facing view and, on Wednesday, Thursday and Sunday, the local betting crowd and the atmosphere that comes with it."}},
+{"@type":"Question","name":"Do I have to arrive early for LEO Section or Third Class?","acceptedAnswer":{"@type":"Answer","text":"No. Every ticket guarantees a seat. Arriving earlier only increases your choice of position within the section."}},
+{"@type":"Question","name":"Can children sit in every section?","acceptedAnswer":{"@type":"Answer","text":"Yes. There is no age restriction in any of the four classes. Club Class is normally the easiest with younger children because of the numbered seats and nearby facilities."}},
+{"@type":"Question","name":"How many people does Rajadamnern Stadium hold?","acceptedAnswer":{"@type":"Answer","text":"About 3,078 spectators: roughly 192 at Ringside, about 1,000 across the main arena including Ringside, Club Class, LEO Section and VIP, and about 2,100 in the upper tier."}},
+{"@type":"Question","name":"Can I choose my exact seat when I book?","acceptedAnswer":{"@type":"Answer","text":"Ringside and Club Class are assigned seats. Tell MuayTix your preference and we will allocate accordingly where availability allows. LEO Section and Third Class are unassigned, so you pick your position on the night."}}
+]}
+]}
+</script>
+
+<script>
+
+(function () {
+  var root = document.querySelector(".mtx-ss");
+  var book = document.getElementById("book");
+  if (!root || !book) return;
+
+  if (!("IntersectionObserver" in window)) return;
+
+  new IntersectionObserver(function (entries) {
+    var e = entries[0];
+
+    var below = e.boundingClientRect.top < 0;
+    root.setAttribute("data-sticky", !e.isIntersecting && below ? "on" : "off");
+  }, { threshold: 0 }).observe(book);
+})();
+</script>
+</div>

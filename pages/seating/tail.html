@@ -1,0 +1,48 @@
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"BreadcrumbList","@id":"https://muaytix.com/rajadamnern-stadium-seats#breadcrumb","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Home","item":"https://muaytix.com/"},
+{"@type":"ListItem","position":2,"name":"Rajadamnern Stadium Seating","item":"https://muaytix.com/rajadamnern-stadium-seats"}
+]},
+{"@type":"FAQPage","@id":"https://muaytix.com/rajadamnern-stadium-seats#faq","mainEntity":[
+{"@type":"Question","name":"What are the seat classes at Rajadamnern Stadium?","acceptedAnswer":{"@type":"Answer","text":"Four public classes: Ringside (Sections 3 to 7), Club Class (Sections 8 and 9), LEO Section (Section 10) and Third Class (Section 11). VIP areas exist but are not covered on this page."}},
+{"@type":"Question","name":"Which seats are best at Rajadamnern Stadium?","acceptedAnswer":{"@type":"Answer","text":"It depends on the night you want. Ringside for proximity, Club Class for a numbered seat and an easy night, LEO Section for atmosphere and the broadcast view, Third Class for the whole-stadium picture. There are no bad views anywhere in the building."}},
+{"@type":"Question","name":"Is Club Class or LEO Section better?","acceptedAnswer":{"@type":"Answer","text":"They share the same tier and a similar elevation. Club Class gives you a numbered plastic seat and is the calmer choice for families. LEO gives you concrete tier seating, the choice of where to sit, a front-facing view and, on Wednesday, Thursday and Sunday, the local betting crowd and the atmosphere that comes with it."}},
+{"@type":"Question","name":"Do I have to arrive early for LEO Section or Third Class?","acceptedAnswer":{"@type":"Answer","text":"No. Every ticket guarantees a seat. Arriving earlier only increases your choice of position within the section."}},
+{"@type":"Question","name":"Can children sit in every section?","acceptedAnswer":{"@type":"Answer","text":"Yes. There is no age restriction in any of the four classes. Club Class is normally the easiest with younger children because of the numbered seats and nearby facilities."}},
+{"@type":"Question","name":"How many people does Rajadamnern Stadium hold?","acceptedAnswer":{"@type":"Answer","text":"About 3,078 spectators: roughly 192 at Ringside, about 1,000 across the main arena including Ringside, Club Class, LEO Section and VIP, and about 2,100 in the upper tier."}},
+{"@type":"Question","name":"Can I choose my exact seat when I book?","acceptedAnswer":{"@type":"Answer","text":"Ringside and Club Class are assigned seats. Tell MuayTix your preference and we will allocate accordingly where availability allows. LEO Section and Third Class are unassigned, so you pick your position on the night."}}
+]}
+]}
+</script>
+
+<script>
+/* The sticky Book Tickets button, phone only.
+ *
+ * It appears once the booking widget has scrolled out of sight and hides again
+ * the moment any part of the widget is back on screen. That is the rule the
+ * brief sets, and it is what stops the button covering the thing it points at.
+ *
+ * IntersectionObserver watches the widget rather than the scroll position, so
+ * it stays right however the page reflows: the widget grows as the selector
+ * loads, and a scroll-offset guess would go stale the moment it did.
+ */
+(function () {
+  var root = document.querySelector(".mtx-ss");
+  var book = document.getElementById("book");
+  if (!root || !book) return;
+
+  // No observer, no sticky button. The page has a Book Tickets button in the
+  // hero and another at the foot, so nothing is lost.
+  if (!("IntersectionObserver" in window)) return;
+
+  new IntersectionObserver(function (entries) {
+    var e = entries[0];
+    // Below the widget only. Above it, the hero button is still in reach.
+    var below = e.boundingClientRect.top < 0;
+    root.setAttribute("data-sticky", !e.isIntersecting && below ? "on" : "off");
+  }, { threshold: 0 }).observe(book);
+})();
+</script>
+</div>
