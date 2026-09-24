@@ -86,8 +86,15 @@ console.log('\nStep 2 — the calendar, for that seat');
 
   check('it says which seat is being booked',
         (await p.textContent('[data-seatnote] b'))==='Ringside');
-  check('and warns what dimmed means',
-        (await p.textContent('[data-seatnote]')).includes('still open them and choose another'));
+  // The note has to name the class and say what happens if you open a faded
+  // date. It used to say "dimmed nights are sold out for this seat", which
+  // described the widget to itself.
+  const noteText = await p.textContent('[data-seatnote]');
+  check('and says, in plain words, what a faded date means',
+        noteText.includes('Faded dates are nights when Ringside has sold out')
+        && noteText.includes('choose a different seat class'), noteText);
+  check('and it sells the class rather than describing the widget',
+        noteText.includes('Sections 3 to 7'), noteText);
   await ctx.close();
 }
 

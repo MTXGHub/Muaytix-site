@@ -1,8 +1,40 @@
 {
  "classes": [
-  {"code":"ringside","name":"Ringside","description":"Reserved seating just metres from the ring.","colour":"#2FA04A","ink":"#1E7A38","nightsOnSale":3},
-  {"code":"club_class","name":"Club Class","description":"Our most popular ticket.","colour":"#3A86D4","ink":"#2565AE","nightsOnSale":4},
-  {"code":"leo_section","name":"LEO Section","description":"Elevated seating in Section 10.","colour":"#FFD400","ink":"#8A6A00","nightsOnSale":2},
-  {"code":"third_class","name":"Third Class","description":"Guaranteed seating in the upper terraces.","colour":"#E8631A","ink":"#B84A0C","nightsOnSale":0}
+  {
+   "code": "ringside",
+   "name": "Ringside",
+   "description": "Sections 3 to 7, floor level, main arena. The ring is a few metres away. You hear the strikes and the corner instructions.",
+   "colour": "#2FA04A",
+   "ink": "#1E7A38",
+   "nightsOnSale": 3,
+   "tagline": "Closest to the ring"
+  },
+  {
+   "code": "club_class",
+   "name": "Club Class",
+   "description": "Sections 8 and 9, elevated tier, main arena. Looks down across the whole ring, with the walkouts and corners in view.",
+   "colour": "#3A86D4",
+   "ink": "#2565AE",
+   "nightsOnSale": 4,
+   "tagline": "Elevated and comfortable"
+  },
+  {
+   "code": "leo_section",
+   "name": "LEO Section",
+   "description": "Section 10, elevated tier, main arena, directly facing the front of the ring. The broadcast cameras and commentary team sit here, which tells you how good the front-facing view is.",
+   "colour": "#FFD400",
+   "ink": "#8A6A00",
+   "nightsOnSale": 2,
+   "tagline": "Where the atmosphere lives"
+  },
+  {
+   "code": "third_class",
+   "name": "Third Class",
+   "description": "Section 11, upper tier, the highest point in the stadium. A wide view over the whole arena: ring, walkout, corners and crowd in one picture.",
+   "colour": "#E8631A",
+   "ink": "#B84A0C",
+   "nightsOnSale": 0,
+   "tagline": "Traditional stadium viewing"
+  }
  ]
 }
