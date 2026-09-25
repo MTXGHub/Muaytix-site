@@ -145,7 +145,10 @@ The builders write to stdout. They must be redirected or nothing changes.
 ### Rules the widget already follows
 
 - It never prints the word "Limited". `available` and `limited` both render as
-  **Available** in green. Only at 5 seats or fewer does a number replace it.
+  **Available** in green.
+- **It never counts seats down in front of a guest.** `SAY_REMAINING_AT` in the
+  `availability` function is **0**, so no remaining count ever leaves the server
+  and every class on sale simply reads Available. Raise it only if he asks.
 - Seat tiles show Available or Not currently on sale. They do **not** count
   nights.
 - Class name, strapline and section line all come from `ticket_classes`, so

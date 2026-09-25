@@ -97,7 +97,6 @@ type Look = {
   limited?: number | null;
   sold_out?: number | null;
   booking_closed?: number | null;
-  not_released?: number | null;
   dead_end?: boolean;
   not_found?: boolean;
   statuses?: Record<string, string> | null;
@@ -349,14 +348,19 @@ Deno.serve(async (req: Request) => {
         byClass.set(p.event_ticket_class_id, list);
       }
 
-      // How many seats are left, but only once it is few enough to say out loud.
+      // How many seats are left, and whether to say it at all.
       //
-      // "Only 3 left" earns a booking. "23 left" hands a competitor our trading
-      // position: watch the page at nine and again at five and they know exactly
-      // what we sold that day. So the real figure never leaves this function --
-      // anything above the threshold is sent as null, not as a number the widget
+      // Set to 0, which is where it is now: the count never leaves this
+      // function and every class on sale simply reads AVAILABLE. Counting down
+      // in front of a guest is scarcity selling, and it went the same way the
+      // word "Limited" did.
+      //
+      // Whatever the threshold, the real figure never leaves here. "23 left"
+      // would hand a competitor our trading position: watch the page at nine
+      // and again at five and they know exactly what we sold that day. Anything
+      // above the threshold is sent as null rather than as a number the widget
       // is trusted to hide.
-      const SAY_REMAINING_AT = 5;
+      const SAY_REMAINING_AT = 0;
       const { data: stock, error: stockError } = await supabase
         .from("event_ticket_classes")
         .select("id,quantity_available")
@@ -396,10 +400,6 @@ Deno.serve(async (req: Request) => {
         limited: countOf("limited"),
         sold_out: countOf("fully_booked"),
         booking_closed: countOf("booking_closed"),
-        // Two different shut states, and they mean opposite things: "closed" is
-        // a class we have not released, "booking_closed" is the cutoff passing.
-        // 0023 counted only the second and left the first unaccounted for.
-        not_released: countOf("closed"),
         // Nothing on the night could be bought. The column this table exists for.
         dead_end: shown.length > 0 && buyable === 0,
         statuses,
