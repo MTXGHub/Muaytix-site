@@ -86,6 +86,13 @@
   border-radius: 12px; padding: 22px 20px;
 }
 .mtx-ok__lane--now { border-color: var(--ok-green); box-shadow: 0 0 0 1px var(--ok-green); }
+/* The answer to the heading. Doubled class because .mtx-ok p { margin: 0 } is
+   (0,1,1) and beats any single-class margin-top. */
+.mtx-ok .mtx-ok__answer {
+  margin-top: 18px; text-align: center; color: var(--ok-green);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: clamp(34px, 5vw, 52px); line-height: 1;
+}
 .mtx-ok__lanetag {
   display: block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
   font-weight: 800; font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
@@ -172,26 +179,11 @@
 
       <h2>When will your tickets arrive?</h2>
 
-      <!-- The date stamp. This is a dated operational notice, not a standing
-           promise, so the date and time it was issued sit directly under the
-           heading. A guest reading it can see for themselves how current it is. -->
-      <p class="mtx-ok__bandsub">Operational update, issued <span class="mtx-ok__nobr">7:00 PM Bangkok time</span>, <span class="mtx-ok__nobr">Friday 25 September 2026</span>.</p>
-
-      <!-- The one thing a guest still wants to know. Green, because it is the
-           answer to the heading. -->
-      <div class="mtx-ok__lane mtx-ok__lane--now">
-        <span class="mtx-ok__lanetag">Next ticket dispatch</span>
-        <h3>Saturday 26 September 2026</h3>
-        <p class="mtx-ok__big">6:00 AM Bangkok time</p>
-      </div>
-
-      <!-- Why. Stated plainly and in ink rather than green: green says "this is
-           the thing you came here for" and that belongs to the dispatch alone. -->
-      <div class="mtx-ok__lane">
-        <span class="mtx-ok__lanetag">Website upgrades</span>
-        <p class="mtx-ok__big mtx-ok__big--plain"><span class="mtx-ok__nobr">7:00 PM Friday</span> until <span class="mtx-ok__nobr">6:00 AM Saturday</span></p>
-        <p class="mtx-ok__lanep">We are running upgrades on our website during this window, Bangkok time. Your booking is complete and your seats are held.</p>
-      </div>
+      <!-- One question, one answer. No label above it: a line that repeats the
+           line above it is cut. No box around it either, because a white box
+           with a green border and centred green type reads as a button, and a
+           guest will try to click it. -->
+      <p class="mtx-ok__answer">Within the next 30 minutes</p>
 
     </div>
   </section>
@@ -235,7 +227,7 @@
   <section class="mtx-ok__help">
     <div class="mtx-ok__shell">
       <h3>Anything at all, just ask</h3>
-      <p>A real person in Bangkok reads this inbox, seven days a week. If your tickets have not arrived after the dispatch time above, email us and we will send them again straight away.</p>
+      <p>A real person in Bangkok reads this inbox, seven days a week. If your tickets have not arrived within 30 minutes, email us and we will send them again straight away.</p>
       <div class="mtx-ok__contacts">
         <a class="mtx-ok__mail" href="mailto:tickets@muaytix.com">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
