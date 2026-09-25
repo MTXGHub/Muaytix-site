@@ -5,6 +5,7 @@
   --ok-blue: #1f5bff;
   --ok-blue-dark: #1545cf;
   --ok-green: #00a550;
+  --ok-green-ink: #00803e;
   --ok-ink: #0b0b0d;
   --ok-muted: #5f6068;
   --ok-line: #e2e3e8;
@@ -43,8 +44,9 @@
 .mtx-ok__band h2 { margin-top: 16px; text-align: center; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.04; }
 .mtx-ok .mtx-ok__bandsub {
   margin-top: 12px; text-align: center; font-size: 16.5px; color: var(--ok-muted);
-  max-width: 54ch; margin-inline: auto;
+  max-width: 68ch; margin-inline: auto;
 }
+.mtx-ok__nobr { white-space: nowrap; }
 
 .mtx-ok__clocks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .mtx-ok .mtx-ok__clocks { margin-top: 28px; }
@@ -52,7 +54,6 @@
   background: #fff; border: 1px solid var(--ok-line); border-radius: 12px;
   padding: 20px 16px; text-align: center;
 }
-
 .mtx-ok__clock--home { border-color: var(--ok-blue); box-shadow: 0 0 0 1px var(--ok-blue); }
 .mtx-ok__city {
   display: block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
@@ -78,15 +79,15 @@
   font-weight: 800; font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
   color: var(--ok-muted);
 }
-.mtx-ok__lane--now .mtx-ok__lanetag { color: var(--ok-green); }
+.mtx-ok__lane--now .mtx-ok__lanetag { color: var(--ok-green-ink); }
 .mtx-ok__lane h3 { margin-top: 7px; font-size: 22px; line-height: 1.12; }
 .mtx-ok__big {
   margin-top: 10px !important;
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
   font-size: clamp(32px, 4.4vw, 44px); line-height: 1; color: var(--ok-green);
 }
-
 .mtx-ok__big--plain { color: var(--ok-ink) !important; margin-top: 12px !important; }
+.mtx-ok .mtx-ok__lanep { margin-top: 12px; font-size: 16.5px; color: var(--ok-muted); }
 
 .mtx-ok__vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
@@ -155,17 +156,18 @@
 
       <h2>When will your tickets arrive?</h2>
 
-      
+      <p class="mtx-ok__bandsub">Operational update, issued <span class="mtx-ok__nobr">7:00 PM Bangkok time</span>, <span class="mtx-ok__nobr">Friday 25 September 2026</span>.</p>
+
       <div class="mtx-ok__lane mtx-ok__lane--now">
-        <span class="mtx-ok__lanetag">If you booked for tonight</span>
-        <h3 data-ok-tonight>Petchyindee Traditional Muay Thai, Thursday 24 September 2026</h3>
-        <p class="mtx-ok__big">Within the next 30 minutes</p>
+        <span class="mtx-ok__lanetag">Next ticket dispatch</span>
+        <h3>Saturday 26 September 2026</h3>
+        <p class="mtx-ok__big">6:00 AM Bangkok time</p>
       </div>
 
-      
       <div class="mtx-ok__lane">
-        <span class="mtx-ok__lanetag">If you booked for tomorrow night or later</span>
-        <p class="mtx-ok__big mtx-ok__big--plain">Within the next 60 minutes</p>
+        <span class="mtx-ok__lanetag">Website upgrades</span>
+        <p class="mtx-ok__big mtx-ok__big--plain"><span class="mtx-ok__nobr">7:00 PM Friday</span> until <span class="mtx-ok__nobr">6:00 AM Saturday</span></p>
+        <p class="mtx-ok__lanep">We are running upgrades on our website during this window, Bangkok time. Your booking is complete and your seats are held.</p>
       </div>
 
     </div>
@@ -225,26 +227,3 @@
   </section>
 
 </div>
-<script>
-
-(function () {
-  var line = document.querySelector("[data-ok-tonight]");
-  if (!line) return;
-
-  var NIGHTS = {"2026-09-24": "Petchyindee Traditional Muay Thai","2026-09-25": "Rajadamnern Knockout","2026-09-26": "RWS Rajadamnern World Series","2026-09-27": "Kiatpetch Traditional Muay Thai","2026-09-28": "All Star Elite Fighter by Buakaw","2026-09-29": "Rajadamnern Knockout","2026-09-30": "New Power Traditional Muay Thai","2026-10-01": "Petchyindee Traditional Muay Thai","2026-10-02": "Rajadamnern Knockout","2026-10-03": "RWS Rajadamnern World Series","2026-10-04": "Kiatpetch Traditional Muay Thai","2026-10-05": "Rajadamnern Knockout","2026-10-06": "Rajadamnern Knockout","2026-10-07": "New Power Traditional Muay Thai","2026-10-08": "Petchyindee Traditional Muay Thai","2026-10-09": "Rajadamnern Knockout","2026-10-10": "RWS Rajadamnern World Series","2026-10-11": "Kiatpetch Traditional Muay Thai","2026-10-12": "Rajadamnern Knockout","2026-10-13": "Rajadamnern Knockout","2026-10-14": "New Power Traditional Muay Thai","2026-10-15": "Petchyindee Traditional Muay Thai","2026-10-16": "Rajadamnern Knockout","2026-10-17": "RWS Rajadamnern World Series","2026-10-18": "Kiatpetch Traditional Muay Thai","2026-10-19": "Rajadamnern Knockout","2026-10-20": "Rajadamnern Knockout","2026-10-21": "New Power Traditional Muay Thai","2026-10-22": "Petchyindee Traditional Muay Thai","2026-10-23": "Rajadamnern Knockout","2026-10-24": "RWS Rajadamnern World Series","2026-10-25": "Kiatpetch Traditional Muay Thai","2026-10-26": "All Star Elite Fighter by Buakaw","2026-10-27": "Rajadamnern Knockout","2026-10-28": "New Power Traditional Muay Thai","2026-10-29": "Petchyindee Traditional Muay Thai","2026-10-30": "Rajadamnern Knockout","2026-10-31": "RWS Rajadamnern World Series","2026-11-01": "Kiatpetch Traditional Muay Thai","2026-11-02": "Rajadamnern Knockout","2026-11-03": "Rajadamnern Knockout","2026-11-04": "New Power Traditional Muay Thai","2026-11-05": "Petchyindee Traditional Muay Thai","2026-11-06": "Rajadamnern Knockout","2026-11-07": "RWS Rajadamnern World Series","2026-11-08": "Kiatpetch Traditional Muay Thai","2026-11-09": "Rajadamnern Knockout","2026-11-10": "Rajadamnern Knockout","2026-11-11": "New Power Traditional Muay Thai","2026-11-12": "Petchyindee Traditional Muay Thai","2026-11-13": "Rajadamnern Knockout","2026-11-14": "RWS Rajadamnern World Series","2026-11-15": "Kiatpetch Traditional Muay Thai","2026-11-16": "Rajadamnern Knockout","2026-11-17": "Rajadamnern Knockout","2026-11-18": "New Power Traditional Muay Thai","2026-11-19": "Petchyindee Traditional Muay Thai","2026-11-20": "Rajadamnern Knockout","2026-11-21": "RWS Rajadamnern World Series","2026-11-22": "Kiatpetch Traditional Muay Thai","2026-11-23": "Rajadamnern Knockout","2026-11-24": "Rajadamnern Knockout","2026-11-25": "New Power Traditional Muay Thai","2026-11-26": "Petchyindee Traditional Muay Thai","2026-11-27": "Rajadamnern Knockout","2026-11-28": "RWS Rajadamnern World Series","2026-11-29": "Kiatpetch Traditional Muay Thai","2026-11-30": "All Star Elite Fighter by Buakaw"};
-
-  var now = new Date();
-  var bkk = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 7 * 3600000);
-  function two(n) { return (n < 10 ? "0" : "") + n; }
-  var today = bkk.getFullYear() + "-" + two(bkk.getMonth() + 1) + "-" + two(bkk.getDate());
-
-  var name = NIGHTS[today];
-  if (!name) return;                       // no fight tonight, or past the list
-
-  var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  var MONTHS = ["January","February","March","April","May","June",
-                "July","August","September","October","November","December"];
-  line.textContent = name + ", " + DAYS[bkk.getDay()] + " " + bkk.getDate() + " "
-                   + MONTHS[bkk.getMonth()] + " " + bkk.getFullYear();
-})();
-</script>

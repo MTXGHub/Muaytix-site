@@ -5,6 +5,9 @@
   --ok-blue: #1f5bff;
   --ok-blue-dark: #1545cf;
   --ok-green: #00a550;
+  /* The same green, darkened for small type. #00a550 measures 3.23:1 on white,
+     which is fine for a 44px line and fails for a 12px label. */
+  --ok-green-ink: #00803e;
   --ok-ink: #0b0b0d;
   --ok-muted: #5f6068;
   --ok-line: #e2e3e8;
@@ -48,8 +51,10 @@
 .mtx-ok__band h2 { margin-top: 16px; text-align: center; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.04; }
 .mtx-ok .mtx-ok__bandsub {
   margin-top: 12px; text-align: center; font-size: 16.5px; color: var(--ok-muted);
-  max-width: 54ch; margin-inline: auto;
+  max-width: 68ch; margin-inline: auto;
 }
+/* A date and a clock time are each one thing. Never let either wrap. */
+.mtx-ok__nobr { white-space: nowrap; }
 
 .mtx-ok__clocks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .mtx-ok .mtx-ok__clocks { margin-top: 28px; }
@@ -86,7 +91,7 @@
   font-weight: 800; font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
   color: var(--ok-muted);
 }
-.mtx-ok__lane--now .mtx-ok__lanetag { color: var(--ok-green); }
+.mtx-ok__lane--now .mtx-ok__lanetag { color: var(--ok-green-ink); }
 .mtx-ok__lane h3 { margin-top: 7px; font-size: 22px; line-height: 1.12; }
 .mtx-ok__big {
   margin-top: 10px !important;
@@ -96,6 +101,9 @@
 /* The advance line is the same size and weight, in ink rather than green.
    Green says "this is happening now" and that belongs to tonight alone. */
 .mtx-ok__big--plain { color: var(--ok-ink) !important; margin-top: 12px !important; }
+/* The plain line under a lane. The class is doubled because .mtx-ok p { margin: 0 }
+   is (0,1,1) and a single-class margin-top loses to it. */
+.mtx-ok .mtx-ok__lanep { margin-top: 12px; font-size: 16.5px; color: var(--ok-muted); }
 
 .mtx-ok__vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
@@ -167,20 +175,25 @@
 
       <h2>When will your tickets arrive?</h2>
 
-      <!-- Tonight. The event name and date are filled in by the script at the
-           foot of the page from the schedule it carries, so this does not need
-           editing every night. What ships here is tonight's, so the page is
-           right as pasted and right with no JavaScript. -->
+      <!-- The date stamp. This is a dated operational notice, not a standing
+           promise, so the date and time it was issued sit directly under the
+           heading. A guest reading it can see for themselves how current it is. -->
+      <p class="mtx-ok__bandsub">Operational update, issued <span class="mtx-ok__nobr">7:00 PM Bangkok time</span>, <span class="mtx-ok__nobr">Friday 25 September 2026</span>.</p>
+
+      <!-- The one thing a guest still wants to know. Green, because it is the
+           answer to the heading. -->
       <div class="mtx-ok__lane mtx-ok__lane--now">
-        <span class="mtx-ok__lanetag">If you booked for tonight</span>
-        <h3 data-ok-tonight>Petchyindee Traditional Muay Thai, Thursday 24 September 2026</h3>
-        <p class="mtx-ok__big">Within the next 30 minutes</p>
+        <span class="mtx-ok__lanetag">Next ticket dispatch</span>
+        <h3>Saturday 26 September 2026</h3>
+        <p class="mtx-ok__big">6:00 AM Bangkok time</p>
       </div>
 
-      <!-- Tomorrow night onwards. -->
+      <!-- Why. Stated plainly and in ink rather than green: green says "this is
+           the thing you came here for" and that belongs to the dispatch alone. -->
       <div class="mtx-ok__lane">
-        <span class="mtx-ok__lanetag">If you booked for tomorrow night or later</span>
-        <p class="mtx-ok__big mtx-ok__big--plain">Within the next 60 minutes</p>
+        <span class="mtx-ok__lanetag">Website upgrades</span>
+        <p class="mtx-ok__big mtx-ok__big--plain"><span class="mtx-ok__nobr">7:00 PM Friday</span> until <span class="mtx-ok__nobr">6:00 AM Saturday</span></p>
+        <p class="mtx-ok__lanep">We are running upgrades on our website during this window, Bangkok time. Your booking is complete and your seats are held.</p>
       </div>
 
     </div>
@@ -240,40 +253,3 @@
   </section>
 
 </div>
-<script>
-/* Which fight night is tonight, in Bangkok.
- *
- * The line naming tonight's event is the only thing on this page that changes
- * from one day to the next, so it is filled in here rather than typed. The
- * nights come from event_calendar and run to the end of November; regenerate
- * this block to carry it further.
- *
- * Bangkok is UTC+7 with no daylight saving, ever. That is why working out
- * which day it is there takes two lines rather than a timezone library.
- *
- * The page ships with tonight's line already in the markup, so it is right as
- * pasted and right for a reader with no JavaScript. This only keeps it right
- * tomorrow. If a date is ever missing from the list the line is left exactly
- * as it was rather than emptied.
- */
-(function () {
-  var line = document.querySelector("[data-ok-tonight]");
-  if (!line) return;
-
-  var NIGHTS = {"2026-09-24": "Petchyindee Traditional Muay Thai","2026-09-25": "Rajadamnern Knockout","2026-09-26": "RWS Rajadamnern World Series","2026-09-27": "Kiatpetch Traditional Muay Thai","2026-09-28": "All Star Elite Fighter by Buakaw","2026-09-29": "Rajadamnern Knockout","2026-09-30": "New Power Traditional Muay Thai","2026-10-01": "Petchyindee Traditional Muay Thai","2026-10-02": "Rajadamnern Knockout","2026-10-03": "RWS Rajadamnern World Series","2026-10-04": "Kiatpetch Traditional Muay Thai","2026-10-05": "Rajadamnern Knockout","2026-10-06": "Rajadamnern Knockout","2026-10-07": "New Power Traditional Muay Thai","2026-10-08": "Petchyindee Traditional Muay Thai","2026-10-09": "Rajadamnern Knockout","2026-10-10": "RWS Rajadamnern World Series","2026-10-11": "Kiatpetch Traditional Muay Thai","2026-10-12": "Rajadamnern Knockout","2026-10-13": "Rajadamnern Knockout","2026-10-14": "New Power Traditional Muay Thai","2026-10-15": "Petchyindee Traditional Muay Thai","2026-10-16": "Rajadamnern Knockout","2026-10-17": "RWS Rajadamnern World Series","2026-10-18": "Kiatpetch Traditional Muay Thai","2026-10-19": "Rajadamnern Knockout","2026-10-20": "Rajadamnern Knockout","2026-10-21": "New Power Traditional Muay Thai","2026-10-22": "Petchyindee Traditional Muay Thai","2026-10-23": "Rajadamnern Knockout","2026-10-24": "RWS Rajadamnern World Series","2026-10-25": "Kiatpetch Traditional Muay Thai","2026-10-26": "All Star Elite Fighter by Buakaw","2026-10-27": "Rajadamnern Knockout","2026-10-28": "New Power Traditional Muay Thai","2026-10-29": "Petchyindee Traditional Muay Thai","2026-10-30": "Rajadamnern Knockout","2026-10-31": "RWS Rajadamnern World Series","2026-11-01": "Kiatpetch Traditional Muay Thai","2026-11-02": "Rajadamnern Knockout","2026-11-03": "Rajadamnern Knockout","2026-11-04": "New Power Traditional Muay Thai","2026-11-05": "Petchyindee Traditional Muay Thai","2026-11-06": "Rajadamnern Knockout","2026-11-07": "RWS Rajadamnern World Series","2026-11-08": "Kiatpetch Traditional Muay Thai","2026-11-09": "Rajadamnern Knockout","2026-11-10": "Rajadamnern Knockout","2026-11-11": "New Power Traditional Muay Thai","2026-11-12": "Petchyindee Traditional Muay Thai","2026-11-13": "Rajadamnern Knockout","2026-11-14": "RWS Rajadamnern World Series","2026-11-15": "Kiatpetch Traditional Muay Thai","2026-11-16": "Rajadamnern Knockout","2026-11-17": "Rajadamnern Knockout","2026-11-18": "New Power Traditional Muay Thai","2026-11-19": "Petchyindee Traditional Muay Thai","2026-11-20": "Rajadamnern Knockout","2026-11-21": "RWS Rajadamnern World Series","2026-11-22": "Kiatpetch Traditional Muay Thai","2026-11-23": "Rajadamnern Knockout","2026-11-24": "Rajadamnern Knockout","2026-11-25": "New Power Traditional Muay Thai","2026-11-26": "Petchyindee Traditional Muay Thai","2026-11-27": "Rajadamnern Knockout","2026-11-28": "RWS Rajadamnern World Series","2026-11-29": "Kiatpetch Traditional Muay Thai","2026-11-30": "All Star Elite Fighter by Buakaw"};
-
-  var now = new Date();
-  var bkk = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 7 * 3600000);
-  function two(n) { return (n < 10 ? "0" : "") + n; }
-  var today = bkk.getFullYear() + "-" + two(bkk.getMonth() + 1) + "-" + two(bkk.getDate());
-
-  var name = NIGHTS[today];
-  if (!name) return;                       // no fight tonight, or past the list
-
-  var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  var MONTHS = ["January","February","March","April","May","June",
-                "July","August","September","October","November","December"];
-  line.textContent = name + ", " + DAYS[bkk.getDay()] + " " + bkk.getDate() + " "
-                   + MONTHS[bkk.getMonth()] + " " + bkk.getFullYear();
-})();
-</script>
