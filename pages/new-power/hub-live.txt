@@ -30,6 +30,9 @@
 .mtx-np h1 { font-size: clamp(38px, 6vw, 70px); line-height: .96; }
 .mtx-np h2 { font-size: clamp(29px, 3.6vw, 45px); line-height: 1.03; margin-top: 8px; }
 .mtx-np h3 { font-size: 21px; line-height: 1.15; }
+
+.mtx-np #mtx-booking h1, .mtx-np #mtx-booking h2,
+.mtx-np #mtx-booking h3, .mtx-np #mtx-booking h4 { color: inherit; text-transform: none; }
 .mtx-np__kicker {
   display: block; color: var(--np-blue); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
   font-weight: 800; font-size: 13px; letter-spacing: .13em; text-transform: uppercase;

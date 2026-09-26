@@ -33,6 +33,14 @@
 .mtx-pi h1 { font-size: clamp(38px, 6vw, 70px); line-height: .96; }
 .mtx-pi h2 { font-size: clamp(29px, 3.6vw, 45px); line-height: 1.03; margin-top: 8px; }
 .mtx-pi h3 { font-size: 21px; line-height: 1.15; }
+/* Hands the widget its own headings back. The widget mounts inside this block,
+   so the heading rules above match its headings directly, and a direct match
+   beats anything the widget only sets on an ancestor. Without this the fight
+   night's own name and the widget's step labels come out shouting in the
+   page's condensed capitals, and a colour set here once turned a fight
+   night's name white on a white panel. */
+.mtx-pi #mtx-booking h1, .mtx-pi #mtx-booking h2,
+.mtx-pi #mtx-booking h3, .mtx-pi #mtx-booking h4 { color: inherit; text-transform: none; }
 .mtx-pi__kicker {
   display: block; color: var(--pi-blue); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
   font-weight: 800; font-size: 13px; letter-spacing: .13em; text-transform: uppercase;
