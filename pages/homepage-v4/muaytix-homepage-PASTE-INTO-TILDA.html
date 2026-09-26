@@ -337,7 +337,17 @@
   text-transform: none; letter-spacing: 0;
 }
 
-.mtx-hp__cardbtn .mtx-hp__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }</style>
+.mtx-hp__cardbtn .mtx-hp__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+.mtx-hp__card--gfx { padding-top: 0; overflow: hidden; }
+.mtx-hp__seatgfx {
+  display: block; width: calc(100% + 48px); height: auto;
+  margin: 0 -24px 0; background: #e6e6ea;
+}
+.mtx-hp__card--gfx h3 { margin-top: 24px; }
+@media (max-width: 620px) {
+  .mtx-hp__seatgfx { width: calc(100% + 40px); margin-inline: -20px; }
+}</style>
 
   
   <header class="mtx-hp__hero">
@@ -561,7 +571,6 @@
       <p>Every seat class watches the same fights. What changes is how close you are to the ring, how high you sit, and the crowd around you.</p>
 
       <ul class="mtx-hp__grid">
-
         <li class="mtx-hp__card">
           <h3>Ringside</h3>
           <p class="mtx-hp__standfirst">Closest to the ring</p>
@@ -589,7 +598,6 @@
           <p>Section 11, the upper tier, and normally the lowest-priced seat on sale. Seating is open within the section. Third Class opens on selected nights only.</p>
           <p class="mtx-hp__cardbtn"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-stadium-seating#third-class">See Third Class seating</a></p>
         </li>
-
       </ul>
 
       <p class="mtx-hp__ctarow">

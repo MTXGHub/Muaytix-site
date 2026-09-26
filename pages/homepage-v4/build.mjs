@@ -40,7 +40,10 @@ const parts = [
 ];
 
 const heroTonight = readFileSync('hero-tonight.txt', 'utf8').trim();
-const source = parts.join('').replace('@@HERO_TONIGHT@@', heroTonight);
+const seatCards = readFileSync('seat-cards.html', 'utf8').trimEnd();
+const source = parts.join('')
+  .replace('@@HERO_TONIGHT@@', heroTonight)
+  .replace('@@SEAT_CARDS@@', seatCards);
 if (source.includes('@@')) { console.error('A build token was left unfilled.'); process.exit(1); }
 writeFileSync('homepage-source.html', source);
 

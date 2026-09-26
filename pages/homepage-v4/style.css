@@ -412,3 +412,21 @@
 /* The seat card button matches the night and event cards: full width, pinned
    to the foot, so all three card types read as one system. */
 .mtx-hp__cardbtn .mtx-hp__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+/* ---------- The seat class graphic ----------
+   Full bleed to the card edges, above the name. No aspect-ratio and no crop:
+   these graphics carry type, and object-fit: cover would slice the words off.
+   They take whatever shape they were drawn at.
+
+   height: auto is not optional. A width or height attribute on an <img>
+   arrives as a presentational hint and outranks a stylesheet rule, which is
+   how a photo on this site once rendered three times too tall. */
+.mtx-hp__card--gfx { padding-top: 0; overflow: hidden; }
+.mtx-hp__seatgfx {
+  display: block; width: calc(100% + 48px); height: auto;
+  margin: 0 -24px 0; background: #e6e6ea;
+}
+.mtx-hp__card--gfx h3 { margin-top: 24px; }
+@media (max-width: 620px) {
+  .mtx-hp__seatgfx { width: calc(100% + 40px); margin-inline: -20px; }
+}
