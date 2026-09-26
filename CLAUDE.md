@@ -193,6 +193,23 @@ Start of the event minus `booking_cutoff_minutes` (30). A 6:00 PM fight closes a
 5:30 PM Bangkok. Anything that shows tonight's event must respect this, not just
 the date, or it offers tickets nobody can buy.
 
+### Tickets he holds, and tickets he does not
+
+This is the fact behind most trading decisions, and it is not in the database.
+
+**Club Class and LEO Section are real tickets already bought and in hand.**
+They can be sold down to zero safely: the seats exist, so the last one sold is
+still a seat someone gets.
+
+**Ringside is not held.** It is sold against the stadium's own remaining stock,
+so a sale after the stadium sells out is an oversell and a problem. That is why
+Ringside gets closed early, by his call, rather than being left to run out on
+its own. Do not suggest letting it run down, and never treat a Ringside
+allocation as equivalent to a Club Class one.
+
+Third Class is opened by the stadium, usually only once the other classes are
+full or close to it.
+
 ### Routine trading jobs
 
 Close a class: set `manual_status = 'fully_booked'`. Set a real allocation: set
