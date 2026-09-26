@@ -57,4 +57,15 @@ const cards = rows.map(r => {
 });
 
 writeFileSync('week-cards.html', cards.join('\n') + '\n');
+
+/* The hero's Tonight button before any script runs, which is what a crawler
+   and a reader with no JavaScript get. It is the first night in the schedule,
+   so it is a real bookable night rather than a fixed date that goes stale.
+   The script at the foot of the page repoints it for everyone else. */
+const first = rows[0];
+const firstEvent = EVENT[first.series_slug];
+const heroHref = firstEvent.path ? `${firstEvent.path}/${first.local_date}` : CALENDAR;
+writeFileSync('hero-tonight.txt', heroHref);
+
 console.log(`${cards.length} night cards, ${rows[0].local_date} to ${rows.at(-1).local_date}`);
+console.log(`hero Tonight button -> ${heroHref}`);

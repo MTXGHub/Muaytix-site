@@ -39,7 +39,9 @@ const parts = [
   readFileSync('tail.html', 'utf8'),
 ];
 
-const source = parts.join('');
+const heroTonight = readFileSync('hero-tonight.txt', 'utf8').trim();
+const source = parts.join('').replace('@@HERO_TONIGHT@@', heroTonight);
+if (source.includes('@@')) { console.error('A build token was left unfilled.'); process.exit(1); }
 writeFileSync('homepage-source.html', source);
 
 /* Comments are for us, not for the page. */

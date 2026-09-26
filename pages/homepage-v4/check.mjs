@@ -102,7 +102,7 @@ bad.forEach(c => fail(`contrast ${c.ratio} (needs ${c.need}) at ${c.px}px: "${c.
 console.log('\n=== LINKS ===');
 const KNOWN = ['/rajadamnern-stadium-tickets','/rajadamnern-stadium-seating','/rajadamnern-stadium',
   '/rajadamnern-knockout','/new-power-muay-thai','/petchyindee-muay-thai','/kiatpetch-muay-thai',
-  '/rws/','/rws','/muay-thai-bangkok-tonight'];
+  '/rws/','/rws'];
 const links = await page.evaluate(() =>
   [...document.querySelectorAll('.mtx-hp a')].map(a => ({ href: a.getAttribute('href'), txt: a.textContent.trim() })));
 const seen = new Map();

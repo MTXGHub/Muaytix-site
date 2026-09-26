@@ -10,10 +10,11 @@
       <p class="mtx-hp__lede">There is live Muay Thai at Rajadamnern every night of the week. Choose your night, choose how close you sit, and book Muay Thai Bangkok tickets in your own currency. Your QR ticket goes to your phone.</p>
       <p class="mtx-hp__actions">
         <a class="mtx-hp__btn mtx-hp__btn--blue" href="/rajadamnern-stadium-tickets">Book Muay Thai Tickets</a>
-        <!-- The script at the foot repoints this at the next night still open
-             for booking, and renames it when tonight has closed. It ships
-             pointing at the calendar so it is never a dead button. -->
-        <a class="mtx-hp__btn mtx-hp__btn--ghost" href="/muay-thai-bangkok-tonight" data-mtx-tonight>Tonight</a>
+        <!-- The href is written by the build from the first night in the
+             schedule, so it is always a real bookable night. The script at the
+             foot then repoints it at the next night still open for booking and
+             renames it when tonight has closed. -->
+        <a class="mtx-hp__btn mtx-hp__btn--ghost" href="@@HERO_TONIGHT@@" data-mtx-tonight>Tonight</a>
       </p>
     </div>
   </header>
