@@ -163,6 +163,10 @@
 }
 .mtx-rws .mtx-rws__pending { margin-top: 28px; }
 
+.mtx-rws__posters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 30px; padding-left: 0; list-style: none; align-items: start; }
+.mtx-rws__posters li { margin: 0; }
+.mtx-rws .mtx-rws__posters img { display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid rgba(255,255,255,.14); }
+@media (max-width: 860px) { .mtx-rws__posters { grid-template-columns: 1fr; max-width: 460px; } }
 .mtx-rws__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
 .mtx-rws__card { position: relative; background: #fff; border: 1px solid var(--rws-line); padding: 0 24px 26px; overflow: hidden; }
 .mtx-rws__card p { margin-top: 10px !important; color: var(--rws-muted); font-size: 16px; }
@@ -443,11 +447,23 @@
     </div>
   </section>
 
-  <!-- The headline bout section is removed: no fight card has been supplied
-       for 3 October, and last week’s fighters are not this week’s. -->
+  <section class="mtx-rws__band">
+    <div class="mtx-rws__shell">
+      <span class="mtx-rws__kicker"><span class="mtx-rws-v-tonight">Tonight</span><span class="mtx-rws-v-default">This Saturday</span> &middot; Sat 3 Oct 2026</span>
+      <h2>Saturday's headline bouts</h2>
+
+      <ul class="mtx-rws__posters">
+        <li><img src="https://static.tildacdn.com/tild3165-3563-4139-a463-356132623134/1000034441.jpg" alt="RWS Muay Thai fight poster featuring Thananchai vs ThanuPetch in a middleweight bout at Rajadamnern Stadium, Bangkok, on Saturday 3 October 2026." width="985" height="1229" loading="lazy" decoding="async"></li>
+        <li><img src="https://static.tildacdn.com/tild6235-6437-4161-b663-336531643663/1000034440.jpg" alt="RWS Muay Thai fight poster featuring Singburi vs Amurlen Tuguurov in a 113 lb catchweight bout at Rajadamnern Stadium, Bangkok, on Saturday 3 October 2026." width="988" height="1229" loading="lazy" decoding="async"></li>
+        <li><img src="https://static.tildacdn.com/tild6634-6438-4130-a663-393938633465/1000034439.jpg" alt="RWS Muay Thai fight poster featuring Anastasia Tikhonova vs Taylor McClatchie in a female featherweight bout at Rajadamnern Stadium, Bangkok, on Saturday 3 October 2026." width="995" height="1226" loading="lazy" decoding="async"></li>
+      </ul>
+
+      <p class="mtx-rws__note">Fighters and running order are as announced by Rajadamnern Stadium and may be subject to late change.</p>
+    </div>
+  </section>
 
 
-  <section class="mtx-rws__band" id="seating">
+  <section class="mtx-rws__band mtx-rws__band--paper" id="seating">
     <div class="mtx-rws__shell">
       <span class="mtx-rws__kicker">Seating</span>
       <h2>Choose where you sit</h2>
