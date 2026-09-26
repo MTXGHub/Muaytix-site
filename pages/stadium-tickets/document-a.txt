@@ -1,0 +1,374 @@
+# RAJADAMNERN STADIUM TICKETS: LOCKED COPY.
+# Transcribed from the Master Copy Brief of 27 September 2026.
+# The only place prose for this page exists. gen.mjs throws on a missing key.
+#
+# THREE THINGS IN THE BRIEF ARE NOT TRANSCRIBED AS GUEST COPY. Each is
+# reported to the owner instead. See reports.txt.
+#   1. The VIP line under the price table. The brief marks it [VERIFY] and says
+#      not to print VIP prices unless confirmed. They are not confirmed.
+#   2. The nearest MRT station and walking time. The brief marks it [VERIFY]
+#      and says do not guess.
+#   3. "and 39 percent of MuayTix guests choose it" in the Club Class FAQ.
+#      The booking record says 57.4 per cent of tickets sold and 54.8 per cent
+#      of bookings are Club Class. The clause is left out rather than published
+#      wrong. The rest of that answer is verbatim.
+#
+# ONE FIGURE IS CORRECTED FROM THE LIVE SCHEDULE, as the brief instructs:
+#   Rajadamnern Knockout on Monday, Tuesday and Friday finishes around
+#   9:00 PM, not 9:30 PM. event_calendar has every Knockout night ending at
+#   21:00. The brief says "re-check against the current schedule at build
+#   time", so the live schedule is used.
+
+# ============================== METADATA ==============================
+
+[meta.title]
+Rajadamnern Stadium Tickets | Prices & Official Booking | MuayTix
+
+[meta.description]
+Official Rajadamnern Stadium tickets from 1,000 THB. Prices, fight nights and online booking.
+
+[meta.canonical]
+https://muaytix.com/rajadamnern-stadium-tickets
+
+# ============================== BLOCK 1: HERO ==============================
+
+[hero.h1]
+Rajadamnern Stadium Tickets
+
+[hero.body]
+Book official tickets for live Muay Thai at Rajadamnern Stadium in Bangkok, seven nights a week. Prices start at 1,000 THB. Pay in your own currency and show the QR code on your phone at the box office.
+
+[hero.detail]
+International booking partner of Rajadamnern Stadium. Bangkok team on WhatsApp seven days a week.
+
+[hero.cta_primary]
+Book Tickets
+
+[hero.cta_secondary]
+See Ticket Prices
+
+# ============================== BLOCK 2: PRICES ==============================
+
+[prices.h2]
+Rajadamnern Stadium Ticket Prices
+
+[prices.body]
+Ticket prices are set by seat class, not by fight night. Every seat class watches the same fights. The price buys proximity, comfort and the kind of crowd around you.
+
+[prices.th.class]
+Seat class
+
+[prices.th.sections]
+Sections
+
+[prices.th.price]
+Price from
+
+[prices.th.seating]
+Seating
+
+[prices.row.ringside.name]
+Ringside
+
+[prices.row.ringside.sections]
+3 to 7
+
+[prices.row.ringside.price]
+2,500 THB
+
+[prices.row.ringside.seating]
+Assigned padded seats at floor level
+
+[prices.row.club-class.name]
+Club Class
+
+[prices.row.club-class.sections]
+8 and 9
+
+[prices.row.club-class.price]
+1,800 THB
+
+[prices.row.club-class.seating]
+Assigned numbered seats, elevated at ring height
+
+[prices.row.leo-section.name]
+LEO Section
+
+[prices.row.leo-section.sections]
+10
+
+[prices.row.leo-section.price]
+1,500 THB
+
+[prices.row.leo-section.seating]
+Unassigned bench seating, same height as Club Class
+
+[prices.row.third-class.name]
+Third Class
+
+[prices.row.third-class.sections]
+11
+
+[prices.row.third-class.price]
+1,000 THB
+
+[prices.row.third-class.seating]
+Unassigned seating on the upper tier, full 360 degree view
+
+[prices.note]
+Third Class is released only when the other sections are close to full, so it is not always available through MuayTix. Select your fight night in the booking section to see the seat classes on sale for that date and the exact price in your currency.
+
+[prices.detail]
+Prices shown in Thai baht. GBP, USD, EUR, AUD, CNY and THB are available at checkout with no booking fee and no currency-conversion fee added.
+
+# ============================== BLOCK 3: WHICH NIGHT ==============================
+
+[nights.h2]
+Fight Nights at Rajadamnern Stadium
+
+[nights.body]
+A different promoter takes the ring each night, so the format changes with the day. Pick the night that fits your Bangkok plans, then book that date.
+
+[nights.th.night]
+Night
+
+[nights.th.event]
+Event
+
+[nights.th.doors]
+Doors
+
+[nights.th.first]
+First fight
+
+[nights.th.finish]
+Finishes around
+
+[nights.allstar]
+Once a month the All Star Fight by Buakaw replaces the Monday Knockout event.
+
+[nights.rws_link]
+RWS tickets
+
+[nights.detail]
+Event days and times can change. The booking calendar on this page always shows the live schedule.
+
+# ============================== BLOCK 4: BOOKING ==============================
+
+[book.h2]
+Book Rajadamnern Stadium Tickets
+
+[book.body]
+Choose your month and fight night, then the seat class you want. The seat classes shown for a date are the ones on sale for that date.
+
+[book.note]
+Book two or more tickets in one order and you sit together. The quantity you can select is the number of seats available side by side in that class on that date.
+
+# ============================== BLOCK 5: AT THE DOOR ==============================
+
+[door.h2]
+Can You Buy Tickets at Rajadamnern Stadium on the Day?
+
+[door.body]
+Sometimes, but the stadium does not hold back seats for walk-up guests. When Ringside, Club Class and LEO Section have sold out, Third Class is the only option left, and on RWS Saturdays that can sell out by midday.
+
+[door.sellout.1]
+Ringside usually sells out about 14 days before an RWS night.
+
+[door.sellout.2]
+Club Class about 10 days before.
+
+[door.sellout.3]
+LEO Section about 5 to 7 days before.
+
+[door.sellout.4]
+Third Class by around noon on the day.
+
+[door.detail]
+If you know the night you want, book it online. A confirmed booking is the only way to be certain of your seat class before you travel to the stadium.
+
+# ============================== BLOCK 6: SEAT MAP ==============================
+
+[map.h2]
+Where Each Seat Class Sits
+
+[map.body]
+The ring is at the centre. Ringside is on the floor in Sections 3 to 7, Club Class and LEO Section are elevated at ring height in Sections 8 to 10, and Third Class runs around the upper tier in Section 11.
+
+[map.alt]
+Seating map of Rajadamnern Stadium, Bangkok. The ring sits at the centre, Ringside in Sections 3 to 7, Club Class in Sections 8 and 9, LEO Section in Section 10 and Third Class in Section 11 on the upper tier.
+
+[map.link_compare]
+Compare every seat class
+
+[map.link_map]
+Open the seat map
+
+[map.detail]
+Rajadamnern Stadium holds about 3,078 guests and has no pillars and no restricted-view seats.
+
+# ============================== BLOCK 7: HOW BOOKING WORKS ==============================
+
+[how.h2]
+How Your Booking Works
+
+[how.1.h]
+Choose your fight night.
+
+[how.1.p]
+Select the month and date.
+
+[how.2.h]
+Choose your seat class.
+
+[how.2.p]
+Select the class and the number of tickets, then your currency.
+
+[how.3.h]
+Pay securely.
+
+[how.3.p]
+Review the total before you pay through Stripe Checkout.
+
+[how.4.h]
+Receive your ticket by email.
+
+[how.4.p]
+Show the QR code on your phone at a box-office window. No printing.
+
+[how.detail]
+During MuayTix hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes. Bookings made outside those hours are normally fulfilled by midday the following day.
+
+# ============================== BLOCK 8: WHO YOU BOOK WITH ==============================
+
+[who.h2]
+Booking With MuayTix
+
+[who.body]
+MuayTix is the international booking partner of Rajadamnern Stadium. Every ticket comes from the stadium's own allocation, with a Bangkok-based team on WhatsApp seven days a week.
+
+[who.1.h]
+Tickets from the stadium.
+
+[who.1.p]
+Nothing second-hand, nothing marked up by a middleman.
+
+[who.2.h]
+Seated together.
+
+[who.2.p]
+Two or more tickets in one order sit together.
+
+[who.3.h]
+Pay in your own currency.
+
+[who.3.p]
+See the exact total before you pay.
+
+[who.4.h]
+Same-day guarantee.
+
+[who.4.p]
+If we cannot provide the tickets you booked, you choose an alternative seat class or a full refund the same day.
+
+# ============================== BLOCK 9: PRACTICAL ==============================
+
+[go.h2]
+Getting to Rajadamnern Stadium
+
+[go.body]
+Rajadamnern Stadium is on Ratchadamnoen Nok Road in central Bangkok, near the Democracy Monument. Show a taxi driver "Rajadamnern Stadium" and they will know it.
+
+[go.detail]
+Doors open about an hour before the first fight. You can enter at any time after the first bell, so late arrival is fine.
+
+[go.link]
+About the stadium
+
+# ============================== BLOCK 10: FAQ ==============================
+
+[faq.h2]
+Rajadamnern Stadium Ticket Questions
+
+[faq.q1]
+How much do Rajadamnern Stadium tickets cost?
+
+[faq.a1]
+Ringside is 2,500 THB, Club Class 1,800 THB, LEO Section 1,500 THB and Third Class 1,000 THB. Prices are set by seat class, not by night. Select your date in the booking section to see the live price in your currency.
+
+[faq.q2]
+Is MuayTix an official seller of Rajadamnern Stadium tickets?
+
+[faq.a2]
+Yes. MuayTix is the international booking partner of Rajadamnern Stadium. Every ticket comes from the stadium's own allocation.
+
+[faq.q3]
+Can I buy tickets at Rajadamnern Stadium on the day?
+
+[faq.a3]
+Sometimes. The stadium does not hold back seats for walk-up guests, so on busy nights the only option left may be Third Class, which can sell out by midday on RWS Saturdays. Book online if you know the night you want.
+
+[faq.q4]
+What time does Muay Thai start at Rajadamnern Stadium?
+
+[faq.a4]
+The first fight is at 7:00 PM on Monday, Tuesday and Friday, 6:00 PM on Wednesday, Thursday and Sunday, and 7:10 PM on Saturday. Doors open about an hour earlier.
+
+[faq.q5]
+Which seat class should I choose for a first visit?
+
+[faq.a5]
+Club Class. Elevated, assigned seats at ring height give the clearest view in the stadium.
+
+[faq.q6]
+Will our seats be together?
+
+[faq.a6]
+Yes. Two or more tickets booked in one order are always seated together. The quantity you can select is the number of seats available side by side for that date and class.
+
+[faq.q7]
+Can I pick my exact seat or row?
+
+[faq.a7]
+Exact seat selection is not offered as standard. The MuayTix team is inside the stadium regularly and allocates the best available positions in your seat class at the time you book. In Club Class, LEO Section and Third Class the second to fourth rows usually give a better view than the front row.
+
+[faq.q8]
+How will I receive my ticket?
+
+[faq.a8]
+By email, as a QR code. Show it on your phone at a box-office window at the stadium. Check your junk folder if you cannot see it, or message MuayTix on WhatsApp.
+
+[faq.q9]
+Which currencies can I pay in?
+
+[faq.a9]
+GBP, USD, EUR, AUD, CNY or THB. Stripe Checkout shows the payment methods available for your country and device before you pay. MuayTix adds no booking fee and no currency-conversion fee.
+
+[faq.q10]
+Can you help with group bookings?
+
+[faq.a10]
+Yes. Contact the MuayTix team by email or WhatsApp and one person will handle your group from first enquiry to fight night.
+
+[faq.q11]
+What if my first-choice seat class is sold out?
+
+[faq.a11]
+Book the best class still available. Every seat class has a clear view of the ring, and the night is about the atmosphere, the crowd and the fights, not the seat label.
+
+[faq.q12]
+Is Rajadamnern Stadium suitable for families and first-time guests?
+
+[faq.a12]
+Yes. Children are welcome at every event, and you do not need to know the rules to enjoy the night. Club Class is the easiest section with young children because seats are assigned.
+
+# ============================== BLOCK 11: CLOSING ==============================
+
+[close.h2]
+Ready for Fight Night in Bangkok?
+
+[close.body]
+Pick your Rajadamnern Stadium fight night and book your seat class. Your QR ticket arrives by email.
+
+[close.cta]
+Book Tickets

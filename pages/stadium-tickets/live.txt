@@ -1,0 +1,474 @@
+<div class="mtx-rt">
+<style>
+.mtx-rt {
+  --rt-red: #FF1828;
+  --rt-red-dark: #C40E1F;
+  --rt-ink: #0A0A0A;
+  --rt-ink-2: #3A342D;
+  --rt-paper: #F3F3F1;
+  --rt-line: #DCDCE1;
+  --rt-muted: #6E6E75;
+  background: #fff; color: var(--rt-ink);
+  font-family: Barlow, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 17px; line-height: 1.62;
+}
+.mtx-rt *, .mtx-rt *::before, .mtx-rt *::after { box-sizing: border-box; }
+.mtx-rt p, .mtx-rt h1, .mtx-rt h2, .mtx-rt h3, .mtx-rt ul, .mtx-rt ol { margin: 0; padding: 0; }
+.mtx-rt ul, .mtx-rt ol { list-style: none; }
+.mtx-rt img { max-width: 100%; display: block; }
+.mtx-rt__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
+
+.mtx-rt h1, .mtx-rt h2, .mtx-rt h3 {
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+}
+.mtx-rt h1 { font-size: clamp(38px, 6vw, 68px); line-height: .98; }
+.mtx-rt h2 { font-size: clamp(27px, 3.4vw, 42px); line-height: 1.05; }
+.mtx-rt h3 { font-size: 20px; line-height: 1.18; }
+
+.mtx-rt #mtx-booking h1, .mtx-rt #mtx-booking h2,
+.mtx-rt #mtx-booking h3, .mtx-rt #mtx-booking h4 { color: inherit; text-transform: none; }
+
+.mtx-rt .mtx-rt__band p + p,
+.mtx-rt .mtx-rt__band h2 + p { margin-top: 16px !important; }
+
+.mtx-rt .mtx-rt__hero h1 + p { margin-top: 20px !important; }
+.mtx-rt .mtx-rt__lede { font-size: 19.5px; max-width: 68ch; }
+.mtx-rt .mtx-rt__detail { margin-top: 20px !important; color: var(--rt-muted); font-size: 16px; max-width: 72ch; }
+.mtx-rt .mtx-rt__note {
+  margin-top: 20px !important; padding-left: 15px; border-left: 3px solid var(--rt-red);
+  font-size: 16.5px; max-width: 72ch;
+}
+.mtx-rt .mtx-rt__band > .mtx-rt__shell > p { max-width: 72ch; }
+
+.mtx-rt__btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 52px; padding: 0 26px; border: 2px solid transparent;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 17px; letter-spacing: .06em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; text-align: center; transition: all .2s ease;
+}
+
+.mtx-rt__btn--red { background: var(--rt-red-dark); color: #fff; }
+.mtx-rt__btn--red:hover { background: #A60A19; color: #fff; }
+.mtx-rt__btn--ghost { border-color: #fff; color: #fff; }
+.mtx-rt__btn--ghost:hover { background: #fff; color: var(--rt-ink); }
+.mtx-rt__btn--outline { border-color: var(--rt-ink); color: var(--rt-ink); }
+.mtx-rt__btn--outline:hover { background: var(--rt-ink); color: #fff; }
+
+.mtx-rt .mtx-rt__ctarow {
+  margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px;
+  max-width: none !important;
+}
+
+.mtx-rt__tlink { color: var(--rt-red-dark); font-weight: 700; text-decoration: underline; }
+.mtx-rt__table .mtx-rt__tlink { display: inline-block; padding: 9px 0; }
+
+.mtx-rt__table .mtx-rt__tlink + .mtx-rt__tlink { display: block; padding-top: 0; font-size: 15.5px; }
+
+.mtx-rt__hero { background: var(--rt-ink); color: #fff; padding: clamp(44px, 5vw, 78px) 0; }
+.mtx-rt__hero .mtx-rt__lede { color: #E6E6EA; }
+.mtx-rt__hero .mtx-rt__detail { color: #B9BCC6; }
+.mtx-rt__band { padding: clamp(40px, 4.6vw, 70px) 0; }
+.mtx-rt__band--paper { background: var(--rt-paper); }
+.mtx-rt__close { background: var(--rt-ink); color: #fff; text-align: center; }
+.mtx-rt__close .mtx-rt__lede { color: #E6E6EA; margin-inline: auto; }
+.mtx-rt__close .mtx-rt__ctarow { justify-content: center; }
+
+.mtx-rt__tablewrap {
+  margin-top: 28px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  background:
+    linear-gradient(to right, var(--rt-paper) 30%, rgba(243,243,241,0)) left center,
+    linear-gradient(to left,  var(--rt-paper) 30%, rgba(243,243,241,0)) right center,
+    radial-gradient(farthest-side at 0 50%, rgba(10,10,10,.18), rgba(10,10,10,0)) left center,
+    radial-gradient(farthest-side at 100% 50%, rgba(10,10,10,.18), rgba(10,10,10,0)) right center;
+  background-repeat: no-repeat;
+  background-size: 44px 100%, 44px 100%, 15px 100%, 15px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+.mtx-rt__band:not(.mtx-rt__band--paper) .mtx-rt__tablewrap {
+  background:
+    linear-gradient(to right, #fff 30%, rgba(255,255,255,0)) left center,
+    linear-gradient(to left,  #fff 30%, rgba(255,255,255,0)) right center,
+    radial-gradient(farthest-side at 0 50%, rgba(10,10,10,.18), rgba(10,10,10,0)) left center,
+    radial-gradient(farthest-side at 100% 50%, rgba(10,10,10,.18), rgba(10,10,10,0)) right center;
+  background-repeat: no-repeat;
+  background-size: 44px 100%, 44px 100%, 15px 100%, 15px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+.mtx-rt__table { width: 100%; border-collapse: collapse; font-size: 16.5px; min-width: 620px; }
+.mtx-rt__table th, .mtx-rt__table td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--rt-line); vertical-align: top; }
+.mtx-rt__table thead th {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 14px; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--rt-muted); border-bottom: 2px solid var(--rt-ink); white-space: nowrap;
+}
+.mtx-rt__table tbody th { font-weight: 700; white-space: nowrap; }
+.mtx-rt__table tbody tr:last-child th, .mtx-rt__table tbody tr:last-child td { border-bottom: 0; }
+
+.mtx-rt .mtx-rt__bullets { margin-top: 20px; }
+.mtx-rt__bullets li { position: relative; padding-left: 20px; font-size: 16.5px; max-width: 72ch; }
+.mtx-rt__bullets li + li { margin-top: 7px; }
+.mtx-rt__bullets li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; background: var(--rt-red); }
+
+.mtx-rt .mtx-rt__maplayout { margin: 30px auto 0 !important; max-width: 680px !important; }
+.mtx-rt .mtx-rt__maplayout img { width: 100%; max-width: none; height: auto; border: 1px solid var(--rt-line); background: #fff; }
+
+.mtx-rt__steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.mtx-rt .mtx-rt__steps { margin-top: 30px; }
+.mtx-rt__steps li { background: #fff; border: 1px solid var(--rt-line); border-top: 3px solid var(--rt-red); padding: 22px 20px; }
+.mtx-rt__band--paper .mtx-rt__steps li { background: #fff; }
+.mtx-rt__stepno {
+  display: block; color: var(--rt-red); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 26px; line-height: 1;
+}
+
+.mtx-rt .mtx-rt__steps h3 { margin-top: 10px; font-size: 18px; min-height: 2.36em; }
+.mtx-rt .mtx-rt__steps p { margin-top: 8px !important; color: var(--rt-muted); font-size: 15.5px; }
+
+.mtx-rt__steps { counter-reset: none; }
+.mtx-rt__steps li::before { content: none; }
+
+.mtx-rt__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.mtx-rt .mtx-rt__grid { margin-top: 30px; }
+.mtx-rt__card { background: #fff; border: 1px solid var(--rt-line); padding: 22px 20px; }
+.mtx-rt .mtx-rt__card p { margin-top: 8px !important; color: var(--rt-muted); font-size: 15.5px; }
+
+.mtx-rt .mtx-rt__faq { margin-top: 26px; }
+.mtx-rt__faq details { border-top: 1px solid var(--rt-line); }
+.mtx-rt__faq details:last-child { border-bottom: 1px solid var(--rt-line); }
+.mtx-rt__faq summary {
+  list-style: none; cursor: pointer; padding: 19px 44px 19px 0; position: relative;
+}
+.mtx-rt__faq summary::-webkit-details-marker { display: none; }
+.mtx-rt__faq summary h3 { display: inline; font-size: 18px; }
+.mtx-rt__faq summary::after {
+  content: "+"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  color: var(--rt-red); font-size: 24px; line-height: 1; font-weight: 700;
+}
+.mtx-rt__faq details[open] summary::after { content: "\2212"; }
+.mtx-rt .mtx-rt__faq p { margin: 0 0 22px !important; color: var(--rt-ink-2); max-width: 72ch; }
+
+@media (max-width: 1000px) {
+  .mtx-rt__steps, .mtx-rt__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .mtx-rt__shell { width: min(100% - 28px, 1180px); }
+  .mtx-rt__steps, .mtx-rt__grid { grid-template-columns: 1fr; }
+  .mtx-rt .mtx-rt__ctarow .mtx-rt__btn { width: 100%; }
+}
+</style>
+
+  <header class="mtx-rt__hero">
+    <div class="mtx-rt__shell">
+      <h1>Rajadamnern Stadium Tickets</h1>
+      <p class="mtx-rt__lede">Book official tickets for live Muay Thai at Rajadamnern Stadium in Bangkok, seven nights a week. Prices start at 1,000 THB. Pay in your own currency and show the QR code on your phone at the box office.</p>
+      <p class="mtx-rt__detail">International booking partner of Rajadamnern Stadium. Bangkok team on WhatsApp seven days a week.</p>
+      <p class="mtx-rt__ctarow">
+        <a class="mtx-rt__btn mtx-rt__btn--red" href="#booking">Book Tickets</a>
+        <a class="mtx-rt__btn mtx-rt__btn--ghost" href="#prices">See Ticket Prices</a>
+      </p>
+    </div>
+  </header>
+
+  <section class="mtx-rt__band mtx-rt__band--paper" id="prices">
+    <div class="mtx-rt__shell">
+      <h2>Rajadamnern Stadium Ticket Prices</h2>
+      <p>Ticket prices are set by seat class, not by fight night. Every seat class watches the same fights. The price buys proximity, comfort and the kind of crowd around you.</p>
+      <div class="mtx-rt__tablewrap">
+        <table class="mtx-rt__table">
+          <thead><tr>
+            <th scope="col">Seat class</th>
+            <th scope="col">Sections</th>
+            <th scope="col">Price from</th>
+            <th scope="col">Seating</th>
+          </tr></thead>
+          <tbody>
+          <tr>
+            <th scope="row">Ringside</th>
+            <td>3 to 7</td>
+            <td>2,500 THB</td>
+            <td>Assigned padded seats at floor level</td>
+          </tr>
+          <tr>
+            <th scope="row">Club Class</th>
+            <td>8 and 9</td>
+            <td>1,800 THB</td>
+            <td>Assigned numbered seats, elevated at ring height</td>
+          </tr>
+          <tr>
+            <th scope="row">LEO Section</th>
+            <td>10</td>
+            <td>1,500 THB</td>
+            <td>Unassigned bench seating, same height as Club Class</td>
+          </tr>
+          <tr>
+            <th scope="row">Third Class</th>
+            <td>11</td>
+            <td>1,000 THB</td>
+            <td>Unassigned seating on the upper tier, full 360 degree view</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mtx-rt__note">Third Class is released only when the other sections are close to full, so it is not always available through MuayTix. Select your fight night in the booking section to see the seat classes on sale for that date and the exact price in your currency.</p>
+      <p class="mtx-rt__detail">Prices shown in Thai baht. GBP, USD, EUR, AUD, CNY and THB are available at checkout with no booking fee and no currency-conversion fee added.</p>
+    </div>
+  </section>
+
+  <section class="mtx-rt__band">
+    <div class="mtx-rt__shell">
+      <h2>Fight Nights at Rajadamnern Stadium</h2>
+      <p>A different promoter takes the ring each night, so the format changes with the day. Pick the night that fits your Bangkok plans, then book that date.</p>
+      <div class="mtx-rt__tablewrap">
+        <table class="mtx-rt__table">
+          <thead><tr>
+            <th scope="col">Night</th>
+            <th scope="col">Event</th>
+            <th scope="col">Doors</th>
+            <th scope="col">First fight</th>
+            <th scope="col">Finishes around</th>
+          </tr></thead>
+          <tbody>
+          <tr>
+            <th scope="row">Monday</th>
+            <td><a class="mtx-rt__tlink" href="/rajadamnern-knockout">Rajadamnern Knockout</a></td>
+            <td>6:00 PM</td>
+            <td>7:00 PM</td>
+            <td>9:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Tuesday</th>
+            <td><a class="mtx-rt__tlink" href="/rajadamnern-knockout">Rajadamnern Knockout</a></td>
+            <td>6:00 PM</td>
+            <td>7:00 PM</td>
+            <td>9:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Wednesday</th>
+            <td><a class="mtx-rt__tlink" href="/new-power-muay-thai">New Power Muay Thai</a></td>
+            <td>5:00 PM</td>
+            <td>6:00 PM</td>
+            <td>10:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Thursday</th>
+            <td><a class="mtx-rt__tlink" href="/rajadamnern/petchyindee">Petchyindee Muay Thai</a></td>
+            <td>5:00 PM</td>
+            <td>6:00 PM</td>
+            <td>10:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Friday</th>
+            <td><a class="mtx-rt__tlink" href="/rajadamnern-knockout">Rajadamnern Knockout</a></td>
+            <td>6:00 PM</td>
+            <td>7:00 PM</td>
+            <td>9:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Saturday</th>
+            <td><a class="mtx-rt__tlink" href="/rws">RWS Rajadamnern World Series</a> <a class="mtx-rt__tlink" href="/rws/tickets">RWS tickets</a></td>
+            <td>6:00 PM</td>
+            <td>7:10 PM</td>
+            <td>10:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Sunday</th>
+            <td><a class="mtx-rt__tlink" href="/kiatpetch-muay-thai">Kiatpetch Muay Thai</a></td>
+            <td>5:00 PM</td>
+            <td>6:00 PM</td>
+            <td>10:00 PM</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mtx-rt__note">Once a month the All Star Fight by Buakaw replaces the Monday Knockout event.</p>
+      <p class="mtx-rt__detail">Event days and times can change. The booking calendar on this page always shows the live schedule.</p>
+    </div>
+  </section>
+
+  <section class="mtx-rt__band mtx-rt__band--paper" id="booking">
+    <div class="mtx-rt__shell">
+      <h2>Book Rajadamnern Stadium Tickets</h2>
+      <p>Choose your month and fight night, then the seat class you want. The seat classes shown for a date are the ones on sale for that date.</p>
+      <div class="muaytix-ticket-selector"></div>
+      <p class="mtx-rt__detail">Book two or more tickets in one order and you sit together. The quantity you can select is the number of seats available side by side in that class on that date.</p>
+    </div>
+  </section>
+
+  <section class="mtx-rt__band">
+    <div class="mtx-rt__shell">
+      <h2>Can You Buy Tickets at Rajadamnern Stadium on the Day?</h2>
+      <p>Sometimes, but the stadium does not hold back seats for walk-up guests. When Ringside, Club Class and LEO Section have sold out, Third Class is the only option left, and on RWS Saturdays that can sell out by midday.</p>
+      <ul class="mtx-rt__bullets">
+        <li>Ringside usually sells out about 14 days before an RWS night.</li>
+        <li>Club Class about 10 days before.</li>
+        <li>LEO Section about 5 to 7 days before.</li>
+        <li>Third Class by around noon on the day.</li>
+      </ul>
+      <p class="mtx-rt__detail">If you know the night you want, book it online. A confirmed booking is the only way to be certain of your seat class before you travel to the stadium.</p>
+    </div>
+  </section>
+
+  <section class="mtx-rt__band mtx-rt__band--paper">
+    <div class="mtx-rt__shell">
+      <h2>Where Each Seat Class Sits</h2>
+      <p>The ring is at the centre. Ringside is on the floor in Sections 3 to 7, Club Class and LEO Section are elevated at ring height in Sections 8 to 10, and Third Class runs around the upper tier in Section 11.</p>
+      <figure class="mtx-rt__maplayout">
+        <img src="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg" alt="Seating map of Rajadamnern Stadium, Bangkok. The ring sits at the centre, Ringside in Sections 3 to 7, Club Class in Sections 8 and 9, LEO Section in Section 10 and Third Class in Section 11 on the upper tier." loading="lazy" decoding="async">
+      </figure>
+      <p class="mtx-rt__ctarow">
+        <a class="mtx-rt__btn mtx-rt__btn--outline" href="/rajadamnern-stadium-seating">Compare every seat class</a>
+        <a class="mtx-rt__btn mtx-rt__btn--outline" href="/rajadamnern-stadium-seating">Open the seat map</a>
+      </p>
+      <p class="mtx-rt__detail">Rajadamnern Stadium holds about 3,078 guests and has no pillars and no restricted-view seats.</p>
+    </div>
+  </section>
+
+  <section class="mtx-rt__band">
+    <div class="mtx-rt__shell">
+      <h2>How Your Booking Works</h2>
+      <ol class="mtx-rt__steps">
+        <li>
+          <span class="mtx-rt__stepno">1</span>
+          <h3>Choose your fight night.</h3>
+          <p>Select the month and date.</p>
+        </li>
+        <li>
+          <span class="mtx-rt__stepno">2</span>
+          <h3>Choose your seat class.</h3>
+          <p>Select the class and the number of tickets, then your currency.</p>
+        </li>
+        <li>
+          <span class="mtx-rt__stepno">3</span>
+          <h3>Pay securely.</h3>
+          <p>Review the total before you pay through Stripe Checkout.</p>
+        </li>
+        <li>
+          <span class="mtx-rt__stepno">4</span>
+          <h3>Receive your ticket by email.</h3>
+          <p>Show the QR code on your phone at a box-office window. No printing.</p>
+        </li>
+      </ol>
+      <p class="mtx-rt__detail">During MuayTix hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes. Bookings made outside those hours are normally fulfilled by midday the following day.</p>
+    </div>
+  </section>
+
+  <section class="mtx-rt__band mtx-rt__band--paper">
+    <div class="mtx-rt__shell">
+      <h2>Booking With MuayTix</h2>
+      <p>MuayTix is the international booking partner of Rajadamnern Stadium. Every ticket comes from the stadium's own allocation, with a Bangkok-based team on WhatsApp seven days a week.</p>
+      <ul class="mtx-rt__grid">
+        <li class="mtx-rt__card">
+          <h3>Tickets from the stadium.</h3>
+          <p>Nothing second-hand, nothing marked up by a middleman.</p>
+        </li>
+        <li class="mtx-rt__card">
+          <h3>Seated together.</h3>
+          <p>Two or more tickets in one order sit together.</p>
+        </li>
+        <li class="mtx-rt__card">
+          <h3>Pay in your own currency.</h3>
+          <p>See the exact total before you pay.</p>
+        </li>
+        <li class="mtx-rt__card">
+          <h3>Same-day guarantee.</h3>
+          <p>If we cannot provide the tickets you booked, you choose an alternative seat class or a full refund the same day.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mtx-rt__band">
+    <div class="mtx-rt__shell">
+      <h2>Getting to Rajadamnern Stadium</h2>
+      <p>Rajadamnern Stadium is on Ratchadamnoen Nok Road in central Bangkok, near the Democracy Monument. Show a taxi driver &quot;Rajadamnern Stadium&quot; and they will know it.</p>
+      <p class="mtx-rt__detail">Doors open about an hour before the first fight. You can enter at any time after the first bell, so late arrival is fine.</p>
+      <p class="mtx-rt__ctarow">
+        <a class="mtx-rt__btn mtx-rt__btn--outline" href="/rajadamnern-stadium">About the stadium</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="mtx-rt__band mtx-rt__band--paper">
+    <div class="mtx-rt__shell">
+      <h2>Rajadamnern Stadium Ticket Questions</h2>
+      <div class="mtx-rt__faq">
+        <details>
+          <summary><h3>How much do Rajadamnern Stadium tickets cost?</h3></summary>
+          <p>Ringside is 2,500 THB, Club Class 1,800 THB, LEO Section 1,500 THB and Third Class 1,000 THB. Prices are set by seat class, not by night. Select your date in the booking section to see the live price in your currency.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is MuayTix an official seller of Rajadamnern Stadium tickets?</h3></summary>
+          <p>Yes. MuayTix is the international booking partner of Rajadamnern Stadium. Every ticket comes from the stadium's own allocation.</p>
+        </details>
+
+        <details>
+          <summary><h3>Can I buy tickets at Rajadamnern Stadium on the day?</h3></summary>
+          <p>Sometimes. The stadium does not hold back seats for walk-up guests, so on busy nights the only option left may be Third Class, which can sell out by midday on RWS Saturdays. Book online if you know the night you want.</p>
+        </details>
+
+        <details>
+          <summary><h3>What time does Muay Thai start at Rajadamnern Stadium?</h3></summary>
+          <p>The first fight is at 7:00 PM on Monday, Tuesday and Friday, 6:00 PM on Wednesday, Thursday and Sunday, and 7:10 PM on Saturday. Doors open about an hour earlier.</p>
+        </details>
+
+        <details>
+          <summary><h3>Which seat class should I choose for a first visit?</h3></summary>
+          <p>Club Class. Elevated, assigned seats at ring height give the clearest view in the stadium.</p>
+        </details>
+
+        <details>
+          <summary><h3>Will our seats be together?</h3></summary>
+          <p>Yes. Two or more tickets booked in one order are always seated together. The quantity you can select is the number of seats available side by side for that date and class.</p>
+        </details>
+
+        <details>
+          <summary><h3>Can I pick my exact seat or row?</h3></summary>
+          <p>Exact seat selection is not offered as standard. The MuayTix team is inside the stadium regularly and allocates the best available positions in your seat class at the time you book. In Club Class, LEO Section and Third Class the second to fourth rows usually give a better view than the front row.</p>
+        </details>
+
+        <details>
+          <summary><h3>How will I receive my ticket?</h3></summary>
+          <p>By email, as a QR code. Show it on your phone at a box-office window at the stadium. Check your junk folder if you cannot see it, or message MuayTix on WhatsApp.</p>
+        </details>
+
+        <details>
+          <summary><h3>Which currencies can I pay in?</h3></summary>
+          <p>GBP, USD, EUR, AUD, CNY or THB. Stripe Checkout shows the payment methods available for your country and device before you pay. MuayTix adds no booking fee and no currency-conversion fee.</p>
+        </details>
+
+        <details>
+          <summary><h3>Can you help with group bookings?</h3></summary>
+          <p>Yes. Contact the MuayTix team by email or WhatsApp and one person will handle your group from first enquiry to fight night.</p>
+        </details>
+
+        <details>
+          <summary><h3>What if my first-choice seat class is sold out?</h3></summary>
+          <p>Book the best class still available. Every seat class has a clear view of the ring, and the night is about the atmosphere, the crowd and the fights, not the seat label.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is Rajadamnern Stadium suitable for families and first-time guests?</h3></summary>
+          <p>Yes. Children are welcome at every event, and you do not need to know the rules to enjoy the night. Club Class is the easiest section with young children because seats are assigned.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-rt__band mtx-rt__close">
+    <div class="mtx-rt__shell">
+      <h2>Ready for Fight Night in Bangkok?</h2>
+      <p class="mtx-rt__lede">Pick your Rajadamnern Stadium fight night and book your seat class. Your QR ticket arrives by email.</p>
+      <p class="mtx-rt__ctarow">
+        <a class="mtx-rt__btn mtx-rt__btn--red" href="#booking">Book Tickets</a>
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much do Rajadamnern Stadium tickets cost?","acceptedAnswer":{"@type":"Answer","text":"Ringside is 2,500 THB, Club Class 1,800 THB, LEO Section 1,500 THB and Third Class 1,000 THB. Prices are set by seat class, not by night. Select your date in the booking section to see the live price in your currency."}},{"@type":"Question","name":"Is MuayTix an official seller of Rajadamnern Stadium tickets?","acceptedAnswer":{"@type":"Answer","text":"Yes. MuayTix is the international booking partner of Rajadamnern Stadium. Every ticket comes from the stadium's own allocation."}},{"@type":"Question","name":"Can I buy tickets at Rajadamnern Stadium on the day?","acceptedAnswer":{"@type":"Answer","text":"Sometimes. The stadium does not hold back seats for walk-up guests, so on busy nights the only option left may be Third Class, which can sell out by midday on RWS Saturdays. Book online if you know the night you want."}},{"@type":"Question","name":"What time does Muay Thai start at Rajadamnern Stadium?","acceptedAnswer":{"@type":"Answer","text":"The first fight is at 7:00 PM on Monday, Tuesday and Friday, 6:00 PM on Wednesday, Thursday and Sunday, and 7:10 PM on Saturday. Doors open about an hour earlier."}},{"@type":"Question","name":"Which seat class should I choose for a first visit?","acceptedAnswer":{"@type":"Answer","text":"Club Class. Elevated, assigned seats at ring height give the clearest view in the stadium."}},{"@type":"Question","name":"Will our seats be together?","acceptedAnswer":{"@type":"Answer","text":"Yes. Two or more tickets booked in one order are always seated together. The quantity you can select is the number of seats available side by side for that date and class."}},{"@type":"Question","name":"Can I pick my exact seat or row?","acceptedAnswer":{"@type":"Answer","text":"Exact seat selection is not offered as standard. The MuayTix team is inside the stadium regularly and allocates the best available positions in your seat class at the time you book. In Club Class, LEO Section and Third Class the second to fourth rows usually give a better view than the front row."}},{"@type":"Question","name":"How will I receive my ticket?","acceptedAnswer":{"@type":"Answer","text":"By email, as a QR code. Show it on your phone at a box-office window at the stadium. Check your junk folder if you cannot see it, or message MuayTix on WhatsApp."}},{"@type":"Question","name":"Which currencies can I pay in?","acceptedAnswer":{"@type":"Answer","text":"GBP, USD, EUR, AUD, CNY or THB. Stripe Checkout shows the payment methods available for your country and device before you pay. MuayTix adds no booking fee and no currency-conversion fee."}},{"@type":"Question","name":"Can you help with group bookings?","acceptedAnswer":{"@type":"Answer","text":"Yes. Contact the MuayTix team by email or WhatsApp and one person will handle your group from first enquiry to fight night."}},{"@type":"Question","name":"What if my first-choice seat class is sold out?","acceptedAnswer":{"@type":"Answer","text":"Book the best class still available. Every seat class has a clear view of the ring, and the night is about the atmosphere, the crowd and the fights, not the seat label."}},{"@type":"Question","name":"Is Rajadamnern Stadium suitable for families and first-time guests?","acceptedAnswer":{"@type":"Answer","text":"Yes. Children are welcome at every event, and you do not need to know the rules to enjoy the night. Club Class is the easiest section with young children because seats are assigned."}}]}
+</script>

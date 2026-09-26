@@ -1,0 +1,41 @@
+JOBS FOR TILDA — brief sections 7 and 8
+
+None of these are in the HTML block. They are site settings and redirects, so
+they are yours to do in Tilda. Listed in the order I would do them.
+
+LINKING
+
+1. Footer link currently reading "All Muay Thai Tickets", pointing at
+   /rajadamnern-stadium-tickets.
+   Change the anchor text to:  Rajadamnern Stadium Tickets
+   Leave the destination alone. The brief's reasoning: the present wording is
+   the homepage's keyword cluster and is teaching Google this page is about
+   generic Muay Thai tickets.
+
+2. Header nav "Rajadamnern Stadium Tickets" is already correct. Leave it.
+
+3. Homepage "Book Tickets" and "See every date to the end of the year" already
+   point here. Leave them.
+
+4. Every promoter hub and every dated event page should carry one link in the
+   body copy with the anchor text:  Rajadamnern Stadium tickets
+   I cannot see the live pages from here, so I cannot tell you which are
+   missing it. Send me a list of the pages and I will tell you which of the
+   blocks I hold already have it.
+
+REDIRECTS
+
+5. /book-muay-thai-tickets returns 404 and is still indexed.
+   301 it to /rajadamnern-stadium-tickets
+
+6. /rajadamnern-stadium-tickets/november-2025
+   /rajadamnern-stadium-tickets/december-2025
+   Both still indexed. Confirm they 301 to /rajadamnern-stadium-tickets and
+   add the redirects if they do not.
+
+7. Spot-check three of the /rajadamnern-stadium-tickets/tproduct/... URLs and
+   three of the /rajadamnern-stadium-tickets/august-2026/tproduct/... URLs.
+   They should already 301 here from the September cleanup.
+
+I cannot reach muaytix.com from this environment, so I cannot check any of
+6 or 7 for you. Open each in a browser and watch the address bar.
