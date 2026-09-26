@@ -1,16 +1,18 @@
-/* /rajadamnern-stadium-tickets. Scoped under .mtx-rt so it cannot reach the
-   rest of the Tilda page. */
+/* /rajadamnern-stadium-tickets. Scoped under .mtx-rt.
+   MuayTix company theme, not the RWS event theme: blue is the primary, red is
+   an accent only, and the headings are Arial Black in title case. */
 .mtx-rt {
-  --rt-red: #FF1828;
-  --rt-red-dark: #C40E1F;
+  --rt-blue: #1F5BFF;
+  --rt-blue-dark: #1540C9;
+  --rt-red: #FF0000;
   --rt-ink: #0A0A0A;
-  --rt-ink-2: #3A342D;
-  --rt-paper: #F3F3F1;
-  --rt-line: #DCDCE1;
-  --rt-muted: #6E6E75;
+  --rt-ink-2: #3A3A40;
+  --rt-paper: #F2F2F2;
+  --rt-line: #D8D8DC;
+  --rt-muted: #5E5E66;
   background: #fff; color: var(--rt-ink);
-  font-family: Barlow, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 17px; line-height: 1.62;
+  font-family: Calibri, Arial, sans-serif;
+  font-size: 17.5px; line-height: 1.6;
 }
 .mtx-rt *, .mtx-rt *::before, .mtx-rt *::after { box-sizing: border-box; }
 .mtx-rt p, .mtx-rt h1, .mtx-rt h2, .mtx-rt h3, .mtx-rt ul, .mtx-rt ol { margin: 0; padding: 0; }
@@ -18,151 +20,137 @@
 .mtx-rt img { max-width: 100%; display: block; }
 .mtx-rt__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
 
+/* Title case as written. No text-transform anywhere. */
 .mtx-rt h1, .mtx-rt h2, .mtx-rt h3 {
-  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
-  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+  font-family: "Arial Black", "Arial Bold", Gadget, Arial, sans-serif;
+  font-weight: 900; letter-spacing: -.005em;
 }
-.mtx-rt h1 { font-size: clamp(38px, 6vw, 68px); line-height: .98; }
-.mtx-rt h2 { font-size: clamp(27px, 3.4vw, 42px); line-height: 1.05; }
-.mtx-rt h3 { font-size: 20px; line-height: 1.18; }
+.mtx-rt h1 { font-size: clamp(32px, 4.6vw, 54px); line-height: 1.06; }
+.mtx-rt h2 { font-size: clamp(24px, 2.9vw, 36px); line-height: 1.14; }
+.mtx-rt h3 { font-size: 19px; line-height: 1.25; }
 /* Hands the widget its own headings back. It mounts inside this block, so the
    rules above match its headings directly, and a direct match beats what the
-   widget only sets on an ancestor. Without this the fight night's own name and
-   the widget's step labels come out shouting in condensed capitals. */
+   widget only sets on an ancestor. */
 .mtx-rt #mtx-booking h1, .mtx-rt #mtx-booking h2,
 .mtx-rt #mtx-booking h3, .mtx-rt #mtx-booking h4 { color: inherit; text-transform: none; }
 
 .mtx-rt .mtx-rt__band p + p,
 .mtx-rt .mtx-rt__band h2 + p { margin-top: 16px !important; }
-/* The hero is not a __band, so it was missing the gap under the h1 and the
-   heading sat hard against the opening line. */
 .mtx-rt .mtx-rt__hero h1 + p { margin-top: 20px !important; }
-.mtx-rt .mtx-rt__lede { font-size: 19.5px; max-width: 68ch; }
-.mtx-rt .mtx-rt__detail { margin-top: 20px !important; color: var(--rt-muted); font-size: 16px; max-width: 72ch; }
+.mtx-rt .mtx-rt__lede { font-size: 20px; max-width: 66ch; }
+.mtx-rt .mtx-rt__detail { margin-top: 20px !important; color: var(--rt-muted); font-size: 16.5px; max-width: 72ch; }
 .mtx-rt .mtx-rt__note {
   margin-top: 20px !important; padding-left: 15px; border-left: 3px solid var(--rt-red);
-  font-size: 16.5px; max-width: 72ch;
+  font-size: 17px; max-width: 72ch;
 }
 .mtx-rt .mtx-rt__band > .mtx-rt__shell > p { max-width: 72ch; }
 
-/* Buttons. A wrapped label on a phone sat left-aligned inside a centred box. */
+/* Buttons. Blue is primary. Outline is black on light, white on dark. */
 .mtx-rt__btn {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: 52px; padding: 0 26px; border: 2px solid transparent;
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
-  font-size: 17px; letter-spacing: .06em; text-transform: uppercase;
+  min-height: 54px; padding: 0 28px; border: 2px solid transparent;
+  font-family: "Arial Black", "Arial Bold", Gadget, Arial, sans-serif;
+  font-weight: 900; font-size: 16.5px; letter-spacing: 0;
   text-decoration: none; cursor: pointer; text-align: center; transition: all .2s ease;
 }
-/* White on the bright red measures 3.88:1 and the bar for 17px text is 4.5:1.
-   The darker red carries the same brand colour and clears it. */
-.mtx-rt__btn--red { background: var(--rt-red-dark); color: #fff; }
-.mtx-rt__btn--red:hover { background: #A60A19; color: #fff; }
-.mtx-rt__btn--ghost { border-color: #fff; color: #fff; }
-.mtx-rt__btn--ghost:hover { background: #fff; color: var(--rt-ink); }
+.mtx-rt__btn--blue { background: var(--rt-blue); color: #fff; }
+.mtx-rt__btn--blue:hover { background: var(--rt-blue-dark); color: #fff; }
 .mtx-rt__btn--outline { border-color: var(--rt-ink); color: var(--rt-ink); }
 .mtx-rt__btn--outline:hover { background: var(--rt-ink); color: #fff; }
-/* A button row is not prose: the 68ch cap would stack the buttons. */
+.mtx-rt__btn--ondark { border-color: #fff; color: #fff; }
+.mtx-rt__btn--ondark:hover { background: #fff; color: var(--rt-ink); }
+/* A button row is not prose: the 72ch cap would stack the buttons. */
 .mtx-rt .mtx-rt__ctarow {
   margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px;
   max-width: none !important;
 }
-/* Inline in a table cell these were 26px tall to the thumb. The padding takes
-   them to 44px without changing the row height, which the cell padding sets. */
-.mtx-rt__tlink { color: var(--rt-red-dark); font-weight: 700; text-decoration: underline; }
-.mtx-rt__table .mtx-rt__tlink { display: inline-block; padding: 9px 0; }
-/* Saturday carries two links. Side by side with a space between them they read
-   as one run-on string, so the second one takes its own line. */
-.mtx-rt__table .mtx-rt__tlink + .mtx-rt__tlink { display: block; padding-top: 0; font-size: 15.5px; }
+.mtx-rt__tlink { color: var(--rt-blue-dark); font-weight: 700; text-decoration: underline; }
 
 /* Bands */
-.mtx-rt__hero { background: var(--rt-ink); color: #fff; padding: clamp(44px, 5vw, 78px) 0; }
-.mtx-rt__hero .mtx-rt__lede { color: #E6E6EA; }
-.mtx-rt__hero .mtx-rt__detail { color: #B9BCC6; }
+.mtx-rt__hero { background: var(--rt-ink); color: #fff; padding: clamp(46px, 5vw, 80px) 0; }
+.mtx-rt__hero .mtx-rt__lede { color: #EDEDF0; }
+.mtx-rt__hero .mtx-rt__detail { color: #B6B6BE; }
 .mtx-rt__band { padding: clamp(40px, 4.6vw, 70px) 0; }
 .mtx-rt__band--paper { background: var(--rt-paper); }
 .mtx-rt__close { background: var(--rt-ink); color: #fff; text-align: center; }
-.mtx-rt__close .mtx-rt__lede { color: #E6E6EA; margin-inline: auto; }
+.mtx-rt__close .mtx-rt__lede { color: #EDEDF0; margin-inline: auto; }
 .mtx-rt__close .mtx-rt__ctarow { justify-content: center; }
 
-/* Tables. These are the blocks search engines quote, so they are real table
-   markup. They scroll rather than squash on a narrow screen. */
-/* On a phone the five-column table scrolls sideways, and a table that scrolls
-   with no edge to it looks like a table that has been cut off. The fades are
-   painted on the scroll container and pinned to the viewport, so they show only
-   on the side there is more to see. */
+/* Tables. Real table markup, because these are the blocks that get quoted.
+   On a phone they scroll sideways, and the edge fades say so. */
 .mtx-rt__tablewrap {
   margin-top: 28px; overflow-x: auto; -webkit-overflow-scrolling: touch;
   background:
-    linear-gradient(to right, var(--rt-paper) 30%, rgba(243,243,241,0)) left center,
-    linear-gradient(to left,  var(--rt-paper) 30%, rgba(243,243,241,0)) right center,
-    radial-gradient(farthest-side at 0 50%, rgba(10,10,10,.18), rgba(10,10,10,0)) left center,
-    radial-gradient(farthest-side at 100% 50%, rgba(10,10,10,.18), rgba(10,10,10,0)) right center;
-  background-repeat: no-repeat;
-  background-size: 44px 100%, 44px 100%, 15px 100%, 15px 100%;
-  background-attachment: local, local, scroll, scroll;
-}
-.mtx-rt__band:not(.mtx-rt__band--paper) .mtx-rt__tablewrap {
-  background:
     linear-gradient(to right, #fff 30%, rgba(255,255,255,0)) left center,
     linear-gradient(to left,  #fff 30%, rgba(255,255,255,0)) right center,
-    radial-gradient(farthest-side at 0 50%, rgba(10,10,10,.18), rgba(10,10,10,0)) left center,
-    radial-gradient(farthest-side at 100% 50%, rgba(10,10,10,.18), rgba(10,10,10,0)) right center;
+    radial-gradient(farthest-side at 0 50%, rgba(10,10,10,.16), rgba(10,10,10,0)) left center,
+    radial-gradient(farthest-side at 100% 50%, rgba(10,10,10,.16), rgba(10,10,10,0)) right center;
   background-repeat: no-repeat;
   background-size: 44px 100%, 44px 100%, 15px 100%, 15px 100%;
   background-attachment: local, local, scroll, scroll;
 }
-.mtx-rt__table { width: 100%; border-collapse: collapse; font-size: 16.5px; min-width: 620px; }
+.mtx-rt__band--paper .mtx-rt__tablewrap {
+  background:
+    linear-gradient(to right, var(--rt-paper) 30%, rgba(242,242,242,0)) left center,
+    linear-gradient(to left,  var(--rt-paper) 30%, rgba(242,242,242,0)) right center,
+    radial-gradient(farthest-side at 0 50%, rgba(10,10,10,.16), rgba(10,10,10,0)) left center,
+    radial-gradient(farthest-side at 100% 50%, rgba(10,10,10,.16), rgba(10,10,10,0)) right center;
+  background-repeat: no-repeat;
+  background-size: 44px 100%, 44px 100%, 15px 100%, 15px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+.mtx-rt__table { width: 100%; border-collapse: collapse; font-size: 17px; min-width: 620px; }
 .mtx-rt__table th, .mtx-rt__table td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--rt-line); vertical-align: top; }
 .mtx-rt__table thead th {
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
-  font-size: 14px; letter-spacing: .09em; text-transform: uppercase;
-  color: var(--rt-muted); border-bottom: 2px solid var(--rt-ink); white-space: nowrap;
+  font-family: "Arial Black", "Arial Bold", Gadget, Arial, sans-serif; font-weight: 900;
+  font-size: 15px; color: var(--rt-ink); border-bottom: 2px solid var(--rt-ink); white-space: nowrap;
 }
 .mtx-rt__table tbody th { font-weight: 700; white-space: nowrap; }
 .mtx-rt__table tbody tr:last-child th, .mtx-rt__table tbody tr:last-child td { border-bottom: 0; }
+/* Inline in a table cell these were 26px tall to the thumb. */
+.mtx-rt__table .mtx-rt__tlink { display: inline-block; padding: 9px 0; }
+/* Saturday carries a second link. Side by side they read as one run-on string. */
+.mtx-rt__tlink--small { display: block; padding-top: 0 !important; font-size: 15.5px; }
 
 .mtx-rt .mtx-rt__bullets { margin-top: 20px; }
-.mtx-rt__bullets li { position: relative; padding-left: 20px; font-size: 16.5px; max-width: 72ch; }
-.mtx-rt__bullets li + li { margin-top: 7px; }
-.mtx-rt__bullets li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; background: var(--rt-red); }
+.mtx-rt__bullets li { position: relative; padding-left: 20px; max-width: 72ch; }
+.mtx-rt__bullets li + li { margin-top: 8px; }
+.mtx-rt__bullets li::before { content: ""; position: absolute; left: 0; top: .6em; width: 8px; height: 8px; background: var(--rt-red); }
 
 .mtx-rt .mtx-rt__maplayout { margin: 30px auto 0 !important; max-width: 680px !important; }
 .mtx-rt .mtx-rt__maplayout img { width: 100%; max-width: none; height: auto; border: 1px solid var(--rt-line); background: #fff; }
 
 .mtx-rt__steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 .mtx-rt .mtx-rt__steps { margin-top: 30px; }
-.mtx-rt__steps li { background: #fff; border: 1px solid var(--rt-line); border-top: 3px solid var(--rt-red); padding: 22px 20px; }
+.mtx-rt__steps li { background: var(--rt-paper); border: 1px solid var(--rt-line); padding: 22px 20px; }
 .mtx-rt__band--paper .mtx-rt__steps li { background: #fff; }
 .mtx-rt__stepno {
-  display: block; color: var(--rt-red); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
-  font-weight: 800; font-size: 26px; line-height: 1;
+  display: block; color: var(--rt-red);
+  font-family: "Arial Black", "Arial Bold", Gadget, Arial, sans-serif;
+  font-weight: 900; font-size: 26px; line-height: 1;
 }
-/* Two of the four step headings wrap to a second line and two do not, so the
-   body text started at four different heights across the row. */
-.mtx-rt .mtx-rt__steps h3 { margin-top: 10px; font-size: 18px; min-height: 2.36em; }
-.mtx-rt .mtx-rt__steps p { margin-top: 8px !important; color: var(--rt-muted); font-size: 15.5px; }
-/* The rescoped stylesheet numbers list items with a counter. These steps carry
-   their own numbers, so the counter is switched off rather than left to print
-   a second set above them. */
+/* Two of the four step headings wrap and two do not, which started the body
+   text at four different heights across the row. */
+.mtx-rt .mtx-rt__steps h3 { margin-top: 10px; min-height: 2.5em; }
+.mtx-rt .mtx-rt__steps p { margin-top: 8px !important; color: var(--rt-muted); font-size: 16px; }
 .mtx-rt__steps { counter-reset: none; }
 .mtx-rt__steps li::before { content: none; }
 
 .mtx-rt__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 .mtx-rt .mtx-rt__grid { margin-top: 30px; }
-.mtx-rt__card { background: #fff; border: 1px solid var(--rt-line); padding: 22px 20px; }
-.mtx-rt .mtx-rt__card p { margin-top: 8px !important; color: var(--rt-muted); font-size: 15.5px; }
+.mtx-rt__card { background: #fff; border: 1px solid var(--rt-line); border-top: 3px solid var(--rt-blue); padding: 22px 20px; }
+.mtx-rt .mtx-rt__card h3 { min-height: 2.5em; }
+.mtx-rt .mtx-rt__card p { margin-top: 8px !important; color: var(--rt-muted); font-size: 16px; }
 
 .mtx-rt .mtx-rt__faq { margin-top: 26px; }
 .mtx-rt__faq details { border-top: 1px solid var(--rt-line); }
 .mtx-rt__faq details:last-child { border-bottom: 1px solid var(--rt-line); }
-.mtx-rt__faq summary {
-  list-style: none; cursor: pointer; padding: 19px 44px 19px 0; position: relative;
-}
+.mtx-rt__faq summary { list-style: none; cursor: pointer; padding: 19px 44px 19px 0; position: relative; }
 .mtx-rt__faq summary::-webkit-details-marker { display: none; }
-.mtx-rt__faq summary h3 { display: inline; font-size: 18px; }
+.mtx-rt__faq summary h3 { display: inline; }
 .mtx-rt__faq summary::after {
   content: "+"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
-  color: var(--rt-red); font-size: 24px; line-height: 1; font-weight: 700;
+  color: var(--rt-blue); font-size: 26px; line-height: 1; font-weight: 700;
 }
 .mtx-rt__faq details[open] summary::after { content: "\2212"; }
 .mtx-rt .mtx-rt__faq p { margin: 0 0 22px !important; color: var(--rt-ink-2); max-width: 72ch; }
@@ -173,5 +161,6 @@
 @media (max-width: 620px) {
   .mtx-rt__shell { width: min(100% - 28px, 1180px); }
   .mtx-rt__steps, .mtx-rt__grid { grid-template-columns: 1fr; }
+  .mtx-rt .mtx-rt__steps h3, .mtx-rt .mtx-rt__card h3 { min-height: 0; }
   .mtx-rt .mtx-rt__ctarow .mtx-rt__btn { width: 100%; }
 }

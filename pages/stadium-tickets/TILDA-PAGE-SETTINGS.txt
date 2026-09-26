@@ -1,29 +1,29 @@
 TILDA PAGE SETTINGS — /rajadamnern-stadium-tickets
 
-Paste each into the matching field under Settings on the page. These are page
-settings, not part of the HTML block.
+Corrections brief, 27 September 2026. Paste each into the matching field under
+Settings on the page. These are page settings, not part of the HTML block.
 
-Character counts are the brief's and were checked by the build: title 65,
-description 93. The brief asks for og:title and og:description to be identical
-to the title and description, because they currently differ. They are below.
+Character counts checked by the build: title 56, description 97, both exactly
+as the brief specifies. og:title and og:description are identical to the title
+and description, as instructed.
 
 ---------------------------------------------------------------------------
-TITLE (65)
-Rajadamnern Stadium Tickets | Prices & Official Booking | MuayTix
+TITLE (56)
+Rajadamnern Stadium Tickets | Prices & Booking | MuayTix
 
-DESCRIPTION (93)
-Official Rajadamnern Stadium tickets from 1,000 THB. Prices, fight nights and online booking.
+DESCRIPTION (97)
+Rajadamnern Stadium tickets from 1,000 THB. Prices by seat class, every fight night, book online.
 
 OG TITLE
-Rajadamnern Stadium Tickets | Prices & Official Booking | MuayTix
+Rajadamnern Stadium Tickets | Prices & Booking | MuayTix
 
 OG DESCRIPTION
-Official Rajadamnern Stadium tickets from 1,000 THB. Prices, fight nights and online booking.
+Rajadamnern Stadium tickets from 1,000 THB. Prices by seat class, every fight night, book online.
 
 CANONICAL
 https://muaytix.com/rajadamnern-stadium-tickets
 ---------------------------------------------------------------------------
 
-The FAQPage schema is inside the HTML block, at the bottom. Do not add it again
-in page settings, and do not add Event schema to this page: the brief puts that
-on the dated pages only.
+The word "official" is gone from the title, the description and the page, per
+rule 5. The FAQPage schema sits inside the HTML block, at the bottom. Do not
+add it again here, and no Event schema on this page.

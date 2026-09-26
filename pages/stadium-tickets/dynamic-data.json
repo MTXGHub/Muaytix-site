@@ -1,31 +1,19 @@
 {
-  "_source": "Every value here was read out of the live database on 27 September 2026, or supplied by the owner in the Master Copy Brief of the same date. Nothing is remembered or assumed.",
-
-  "nights": [
-    { "day": "Monday",    "event": "Rajadamnern Knockout",        "href": "/rajadamnern-knockout",   "doors": "6:00 PM", "first": "7:00 PM", "finish": "9:00 to 9:30 PM" },
-    { "day": "Tuesday",   "event": "Rajadamnern Knockout",        "href": "/rajadamnern-knockout",   "doors": "6:00 PM", "first": "7:00 PM", "finish": "9:00 to 9:30 PM" },
-    { "day": "Wednesday", "event": "New Power Muay Thai",         "href": "/new-power-muay-thai",    "doors": "5:00 PM", "first": "6:00 PM", "finish": "10:00 PM" },
-    { "day": "Thursday",  "event": "Petchyindee Muay Thai",       "href": "/rajadamnern/petchyindee","doors": "5:00 PM", "first": "6:00 PM", "finish": "10:00 PM" },
-    { "day": "Friday",    "event": "Rajadamnern Knockout",        "href": "/rajadamnern-knockout",   "doors": "6:00 PM", "first": "7:00 PM", "finish": "9:00 to 9:30 PM" },
-    { "day": "Saturday",  "event": "RWS Rajadamnern World Series","href": "/rws",                    "doors": "6:00 PM", "first": "7:10 PM", "finish": "10:00 PM", "extra_href": "/rws/tickets" },
-    { "day": "Sunday",    "event": "Kiatpetch Muay Thai",         "href": "/kiatpetch-muay-thai",    "doors": "5:00 PM", "first": "6:00 PM", "finish": "10:00 PM" }
-  ],
-  "_nights_source": "event_calendar, read 27 September 2026. Start and end times are the live ones: Knockout 19:00 to 21:00 on Monday, Tuesday and Friday; New Power, Petchyindee and Kiatpetch 18:00 to 22:00; RWS 19:10 to 22:00. Doors are the brief's, one hour before the first fight on every night. Knockout finishes between 21:00 and 21:30, confirmed by the owner on 27 September, so those three nights read 9:00 to 9:30 PM. event_calendar holds 21:00 as the nominal end; the brief said 9:30 PM; the owner says the range.",
-  "_allstar_source": "event_calendar from 27 September 2026 onward holds 14 Mondays: 10 Rajadamnern Knockout and 4 All Star. So All Star does replace the Monday Knockout roughly once a month, as the brief says.",
-
-  "seat_map": {
-    "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+  "_note": "Section 4 of the Corrections brief gives every visible string, so the copy all lives in document-a.txt. This file holds only the links and the image, which are not visible text.",
+  "night_links": {
+    "r1": "/rajadamnern-knockout",
+    "r2": "/rajadamnern-knockout",
+    "r3": "/new-power-muay-thai",
+    "r4": "/rajadamnern/petchyindee",
+    "r5": "/rajadamnern-knockout",
+    "r6": "/rws",
+    "r6b": "/rws/tickets",
+    "r7": "/kiatpetch-muay-thai"
   },
-  "_seat_map_source": "The seat map already published on the Petchyindee and All Star pages.",
-
   "destinations": {
     "seating": "/rajadamnern-stadium-seating",
-    "seat_map": "/rajadamnern-stadium-seating",
-    "stadium": "/rajadamnern-stadium",
-    "rws_tickets": "/rws/tickets"
+    "stadium": "/rajadamnern-stadium"
   },
-  "_destinations_source": "Brief section 5, Block 6: use /rajadamnern-stadium-seating until the new seating-cluster URLs are live, then update.",
-
-  "prices_verified": "ticket_class_prices, read 27 September 2026: Ringside 2500, Club Class 1800, LEO Section 1500, Third Class 1000 THB. All four match the brief.",
-  "club_class_share": "Completed, unrefunded bookings as at 27 September 2026: Club Class is 57.4 per cent of tickets sold and 54.8 per cent of bookings. The brief's 39 per cent does not match, so the claim is left out of the page."
+  "seat_map_url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
+  "_seat_map_source": "The seat map already published on the Petchyindee and All Star pages."
 }

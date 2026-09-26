@@ -1,7 +1,6 @@
-- The VIP line and the nearest MRT station are both off the page, confirmed by the owner on 27 September. Nothing outstanding on either.
-- FAQ 5 reads "just over half of MuayTix guests choose it", the owner's wording of 27 September, in place of the brief's 39 per cent. The booking record supports it: 57.4 per cent of tickets and 54.8 per cent of bookings are Club Class.
-- Knockout on Monday, Tuesday and Friday reads "9:00 to 9:30 PM", the owner's range of 27 September. The brief said 9:30 PM flat and event_calendar holds a 21:00 end.
-- Four event names on the page are the brief's, and the database spells them differently: "All Star Fight by Buakaw" against "All Star Elite Fighter by Buakaw", and New Power, Petchyindee and Kiatpetch "Muay Thai" against "Traditional Muay Thai" in the database. The brief's names are published. Worth making the two agree so the widget and the page say the same thing.
-- Stadium capacity of about 3,078, no pillars and no restricted-view seats comes from your fact sheet. I have no way to check it from here and have published it as supplied.
-- The sell-out guide in Block 5 and the "can sell out by midday" line are published word for word from the brief. They are the scarcity-style claims I flagged on /rws/tickets and I still cannot verify them from the booking data. Your call, published as written.
-- Sections 7 and 8 of the brief, the footer anchor change and the redirects, are Tilda jobs. They are listed separately in tilda-jobs.txt because I cannot do them from here.
+- Rule 5 says British English. FAQ answer 5 reads "about 55 percent". British English is "per cent". Published exactly as you wrote it.
+- Rule 5 says no "choose your seats". The page says "Choose your fight night", "Choose your seat class" and "choose your seat class". None of them is the banned phrase, so all are published as written. Flagging only so you know I looked.
+- Your own house rule bans "assigned" and "unassigned" as guest copy. This brief uses both, in four table cells and two FAQ answers. The brief is newer and more specific, so they are published as written. This is the thing I failed to flag last time.
+- The Getting There section has no nearest station, as before. Nothing is invented.
+- No VIP row. The brief does not ask for one.
+- Sections 7 and 8 of the original brief, the footer anchor and the redirects, are still Tilda jobs. They are in tilda-jobs.txt and are unchanged.

@@ -1,6 +1,8 @@
 /* Renders /rajadamnern-stadium-tickets from document-a.txt.
  *   node gen.mjs
- * Master Copy Brief, 27 September 2026. No guest-facing prose in this file. */
+ * Corrections brief, 27 September 2026, rule 1: this file has no say in the
+ * copy. Every visible string comes from document-a.txt, which is section 4 of
+ * that brief transcribed. Nothing here rewrites, shortens or corrects a word. */
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const DOC = (() => {
@@ -22,48 +24,46 @@ function t(k) {
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const T = k => esc(t(k));
 const data = JSON.parse(readFileSync('dynamic-data.json', 'utf8'));
-const D = data.destinations;
+const D = data.destinations, L = data.night_links;
 const reports = [];
 
-/* The brief marks these [VERIFY] and says do not publish them unguessed. */
-reports.push('The VIP line and the nearest MRT station are both off the page, confirmed by the owner on 27 September. Nothing outstanding on either.');
-reports.push('FAQ 5 reads "just over half of MuayTix guests choose it", the owner\'s wording of 27 September, in place of the brief\'s 39 per cent. The booking record supports it: 57.4 per cent of tickets and 54.8 per cent of bookings are Club Class.');
-reports.push('Knockout on Monday, Tuesday and Friday reads "9:00 to 9:30 PM", the owner\'s range of 27 September. The brief said 9:30 PM flat and event_calendar holds a 21:00 end.');
-reports.push('Four event names on the page are the brief\'s, and the database spells them differently: "All Star Fight by Buakaw" against "All Star Elite Fighter by Buakaw", and New Power, Petchyindee and Kiatpetch "Muay Thai" against "Traditional Muay Thai" in the database. The brief\'s names are published. Worth making the two agree so the widget and the page say the same thing.');
-reports.push('Stadium capacity of about 3,078, no pillars and no restricted-view seats comes from your fact sheet. I have no way to check it from here and have published it as supplied.');
-reports.push('The sell-out guide in Block 5 and the "can sell out by midday" line are published word for word from the brief. They are the scarcity-style claims I flagged on /rws/tickets and I still cannot verify them from the booking data. Your call, published as written.');
-reports.push('Sections 7 and 8 of the brief, the footer anchor change and the redirects, are Tilda jobs. They are listed separately in tilda-jobs.txt because I cannot do them from here.');
+/* Rule 1 and rule 5: report, do not fix. */
+reports.push('Rule 5 says British English. FAQ answer 5 reads "about 55 percent". British English is "per cent". Published exactly as you wrote it.');
+reports.push('Rule 5 says no "choose your seats". The page says "Choose your fight night", "Choose your seat class" and "choose your seat class". None of them is the banned phrase, so all are published as written. Flagging only so you know I looked.');
+reports.push('Your own house rule bans "assigned" and "unassigned" as guest copy. This brief uses both, in four table cells and two FAQ answers. The brief is newer and more specific, so they are published as written. This is the thing I failed to flag last time.');
+reports.push('The Getting There section has no nearest station, as before. Nothing is invented.');
+reports.push('No VIP row. The brief does not ask for one.');
+reports.push('Sections 7 and 8 of the original brief, the footer anchor and the redirects, are still Tilda jobs. They are in tilda-jobs.txt and are unchanged.');
 
-const rows = data.nights.map(n => {
-  const ev = `<a class="mtx-rt__tlink" href="${esc(n.href)}">${esc(n.event)}</a>` +
-    (n.extra_href ? ` <a class="mtx-rt__tlink" href="${esc(n.extra_href)}">${T('nights.rws_link')}</a>` : '');
+const priceRows = [1,2,3,4].map(r => `          <tr>
+            <th scope="row">${T(`prices.r${r}.c1`)}</th>
+            <td>${T(`prices.r${r}.c2`)}</td>
+            <td>${T(`prices.r${r}.c3`)}</td>
+            <td>${T(`prices.r${r}.c4`)}</td>
+          </tr>`).join('\n');
+
+const nightRows = [1,2,3,4,5,6,7].map(r => {
+  let ev = `<a class="mtx-rt__tlink" href="${esc(L['r'+r])}">${T(`nights.r${r}.c2`)}</a>`;
+  if (DOC[`nights.r${r}.c2b`]) ev += `<a class="mtx-rt__tlink mtx-rt__tlink--small" href="${esc(L['r'+r+'b'])}">${T(`nights.r${r}.c2b`)}</a>`;
   return `          <tr>
-            <th scope="row">${esc(n.day)}</th>
+            <th scope="row">${T(`nights.r${r}.c1`)}</th>
             <td>${ev}</td>
-            <td>${esc(n.doors)}</td>
-            <td>${esc(n.first)}</td>
-            <td>${esc(n.finish)}</td>
+            <td>${T(`nights.r${r}.c3`)}</td>
+            <td>${T(`nights.r${r}.c4`)}</td>
+            <td>${T(`nights.r${r}.c5`)}</td>
           </tr>`;
 }).join('\n');
-
-const SEATS = ['ringside','club-class','leo-section','third-class'];
-const priceRows = SEATS.map(k => `          <tr>
-            <th scope="row">${T('prices.row.' + k + '.name')}</th>
-            <td>${T('prices.row.' + k + '.sections')}</td>
-            <td>${T('prices.row.' + k + '.price')}</td>
-            <td>${T('prices.row.' + k + '.seating')}</td>
-          </tr>`).join('\n');
 
 const FAQ = [1,2,3,4,5,6,7,8,9,10,11,12];
 
 const page = `  <header class="mtx-rt__hero">
     <div class="mtx-rt__shell">
       <h1>${T('hero.h1')}</h1>
-      <p class="mtx-rt__lede">${T('hero.body')}</p>
+      <p class="mtx-rt__lede">${T('hero.lede')}</p>
       <p class="mtx-rt__detail">${T('hero.detail')}</p>
       <p class="mtx-rt__ctarow">
-        <a class="mtx-rt__btn mtx-rt__btn--red" href="#booking">${T('hero.cta_primary')}</a>
-        <a class="mtx-rt__btn mtx-rt__btn--ghost" href="#prices">${T('hero.cta_secondary')}</a>
+        <a class="mtx-rt__btn mtx-rt__btn--blue" href="#booking">${T('hero.btn1')}</a>
+        <a class="mtx-rt__btn mtx-rt__btn--ondark" href="#prices">${T('hero.btn2')}</a>
       </p>
     </div>
   </header>
@@ -75,10 +75,10 @@ const page = `  <header class="mtx-rt__hero">
       <div class="mtx-rt__tablewrap">
         <table class="mtx-rt__table">
           <thead><tr>
-            <th scope="col">${T('prices.th.class')}</th>
-            <th scope="col">${T('prices.th.sections')}</th>
-            <th scope="col">${T('prices.th.price')}</th>
-            <th scope="col">${T('prices.th.seating')}</th>
+            <th scope="col">${T('prices.th.1')}</th>
+            <th scope="col">${T('prices.th.2')}</th>
+            <th scope="col">${T('prices.th.3')}</th>
+            <th scope="col">${T('prices.th.4')}</th>
           </tr></thead>
           <tbody>
 ${priceRows}
@@ -97,14 +97,14 @@ ${priceRows}
       <div class="mtx-rt__tablewrap">
         <table class="mtx-rt__table">
           <thead><tr>
-            <th scope="col">${T('nights.th.night')}</th>
-            <th scope="col">${T('nights.th.event')}</th>
-            <th scope="col">${T('nights.th.doors')}</th>
-            <th scope="col">${T('nights.th.first')}</th>
-            <th scope="col">${T('nights.th.finish')}</th>
+            <th scope="col">${T('nights.th.1')}</th>
+            <th scope="col">${T('nights.th.2')}</th>
+            <th scope="col">${T('nights.th.3')}</th>
+            <th scope="col">${T('nights.th.4')}</th>
+            <th scope="col">${T('nights.th.5')}</th>
           </tr></thead>
           <tbody>
-${rows}
+${nightRows}
           </tbody>
         </table>
       </div>
@@ -118,7 +118,7 @@ ${rows}
       <h2>${T('book.h2')}</h2>
       <p>${T('book.body')}</p>
       <div class="muaytix-ticket-selector"></div>
-      <p class="mtx-rt__detail">${T('book.note')}</p>
+      <p class="mtx-rt__detail">${T('book.detail')}</p>
     </div>
   </section>
 
@@ -127,7 +127,7 @@ ${rows}
       <h2>${T('door.h2')}</h2>
       <p>${T('door.body')}</p>
       <ul class="mtx-rt__bullets">
-${[1,2,3,4].map(n => `        <li>${T('door.sellout.' + n)}</li>`).join('\n')}
+${[1,2,3,4].map(n => `        <li>${T('door.b' + n)}</li>`).join('\n')}
       </ul>
       <p class="mtx-rt__detail">${T('door.detail')}</p>
     </div>
@@ -138,11 +138,10 @@ ${[1,2,3,4].map(n => `        <li>${T('door.sellout.' + n)}</li>`).join('\n')}
       <h2>${T('map.h2')}</h2>
       <p>${T('map.body')}</p>
       <figure class="mtx-rt__maplayout">
-        <img src="${esc(data.seat_map.url)}" alt="${T('map.alt')}" loading="lazy" decoding="async">
+        <img src="${esc(data.seat_map_url)}" alt="${T('map.alt')}" loading="lazy" decoding="async">
       </figure>
       <p class="mtx-rt__ctarow">
-        <a class="mtx-rt__btn mtx-rt__btn--outline" href="${esc(D.seating)}">${T('map.link_compare')}</a>
-        <a class="mtx-rt__btn mtx-rt__btn--outline" href="${esc(D.seat_map)}">${T('map.link_map')}</a>
+        <a class="mtx-rt__btn mtx-rt__btn--outline" href="${esc(D.seating)}">${T('map.btn')}</a>
       </p>
       <p class="mtx-rt__detail">${T('map.detail')}</p>
     </div>
@@ -181,7 +180,7 @@ ${[1,2,3,4].map(n => `        <li class="mtx-rt__card">
       <p>${T('go.body')}</p>
       <p class="mtx-rt__detail">${T('go.detail')}</p>
       <p class="mtx-rt__ctarow">
-        <a class="mtx-rt__btn mtx-rt__btn--outline" href="${esc(D.stadium)}">${T('go.link')}</a>
+        <a class="mtx-rt__btn mtx-rt__btn--outline" href="${esc(D.stadium)}">${T('go.btn')}</a>
       </p>
     </div>
   </section>
@@ -201,22 +200,19 @@ ${FAQ.map(n => `        <details>
   <section class="mtx-rt__band mtx-rt__close">
     <div class="mtx-rt__shell">
       <h2>${T('close.h2')}</h2>
-      <p class="mtx-rt__lede">${T('close.body')}</p>
+      <p class="mtx-rt__lede">${T('close.lede')}</p>
       <p class="mtx-rt__ctarow">
-        <a class="mtx-rt__btn mtx-rt__btn--red" href="#booking">${T('close.cta')}</a>
+        <a class="mtx-rt__btn mtx-rt__btn--blue" href="#booking">${T('close.btn')}</a>
       </p>
     </div>
   </section>
 `;
 writeFileSync('body.html', page);
 
-/* FAQPage schema: all twelve questions and answers, verbatim, as the brief
- * requires. No Event schema on this page: that belongs on the dated pages. */
 const schema = { '@context': 'https://schema.org', '@type': 'FAQPage',
   mainEntity: FAQ.map(n => ({ '@type': 'Question', name: t('faq.q' + n),
     acceptedAnswer: { '@type': 'Answer', text: t('faq.a' + n) } })) };
 writeFileSync('schema.json', JSON.stringify(schema));
 
 writeFileSync('reports.txt', reports.map(r => '- ' + r).join('\n') + '\n');
-console.log(`${Object.keys(DOC).length} locked blocks. 4 price rows, ${data.nights.length} night rows, ${FAQ.length} FAQs.`);
-reports.forEach(r => console.log('  - ' + r));
+console.log(`${Object.keys(DOC).length} locked blocks. 4 price rows, 7 night rows, ${FAQ.length} FAQs.`);

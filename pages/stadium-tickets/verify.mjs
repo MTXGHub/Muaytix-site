@@ -16,6 +16,7 @@ const fail = m => { bad++; console.log('   FAIL  ' + m); };
 
 /* Brief section 4: the standing copy rules, as regexes. */
 const BANNED = [
+  [/\bofficial\b/i, '"official", which rule 5 removes site-wide'],
   [/choose your seats|select your seats|pick your seats/i, 'seat-selection language'],
   [/instant (ticket|e-ticket) delivery/i, 'an instant-delivery claim'],
   [/\btourists?\b/i, '"tourists"'],
@@ -60,20 +61,31 @@ for (const [k,v] of Object.entries(DOC)) {
 console.log(`   ${verbatim} of ${verbatim+missing.length} locked blocks verbatim`);
 missing.forEach(k => fail(`[${k}] is not on the page word for word`));
 
-console.log('\n-- nothing on the page that is not in Document A or verified data --');
-const approved = Object.values(DOC).map(v=>v.replace(/\s+/g,' '));
-const dyn = [...data.nights.flatMap(n=>[n.day,n.event,n.doors,n.first,n.finish]), '1','2','3','4'];
-const nodes = await p.evaluate(() => [...document.querySelectorAll('.mtx-rt *')]
-  .filter(e => !['STYLE','SCRIPT'].includes(e.tagName))
-  .filter(e => e.textContent.trim() && ![...e.children].some(c => c.textContent.trim()))
-  .map(e => e.textContent.trim()));
-let stray = 0;
-for (const n of nodes) {
-  const s = n.replace(/\s+/g,' ');
-  if (approved.some(a => a.includes(s)) || dyn.includes(s)) continue;
-  stray++; fail(`text on the page that is in neither: "${s.slice(0,70)}"`);
+console.log('\n-- every text node on the page appears in section 4 --');
+/* The Corrections brief, rule 1: extract every text node, strip whitespace,
+ * and confirm each one is in section 4. Section 4 is document-a.txt. The list
+ * below must be empty. */
+const section4 = Object.values(DOC).map(v => v.replace(/\s+/g,' ').trim());
+const nodes = await p.evaluate(() => {
+  const out = [], w = document.createTreeWalker(document.querySelector('.mtx-rt'), NodeFilter.SHOW_TEXT);
+  for (let n = w.nextNode(); n; n = w.nextNode()) {
+    const tag = n.parentElement && n.parentElement.tagName;
+    if (tag === 'STYLE' || tag === 'SCRIPT') continue;
+    const t = n.textContent.replace(/\s+/g,' ').trim();
+    if (t) out.push(t);
+  }
+  return out;
+});
+const unmatched = nodes.filter(n => !section4.some(a => a === n || a.includes(n)));
+console.log(`   ${nodes.length} text nodes extracted, ${unmatched.length} not in section 4`);
+if (unmatched.length) {
+  console.log('   STRINGS NOT IN SECTION 4:');
+  [...new Set(unmatched)].forEach(u => { fail(`not in section 4: "${u}"`); });
+} else {
+  console.log('   list is empty');
 }
-console.log(`   ${nodes.length} text nodes, ${stray} untraceable`);
+const altsAll = await p.$$eval('.mtx-rt img', n => n.map(i => i.getAttribute('alt') || ''));
+altsAll.forEach(a => { if (!section4.includes(a.replace(/\s+/g,' ').trim())) fail(`alt text not in section 4: "${a}"`); });
 
 console.log('\n-- the brief\'s banned list --');
 let hits = 0;
@@ -81,7 +93,7 @@ for (const [re, why] of BANNED) { const m = visible.match(re); if (m) { hits++; 
 console.log(`   ${BANNED.length} rules checked, ${hits} broken`);
 
 console.log('\n-- metadata character counts --');
-for (const [k, max] of [['meta.title', 65], ['meta.description', 93]]) {
+for (const [k, max] of [['meta.title', 56], ['meta.description', 97]]) {
   const n = DOC[k].length;
   console.log(`   ${k.padEnd(17)} ${n} characters (brief says ${max})`);
   if (n !== max) fail(`${k} is ${n} characters, the brief says ${max}`);
@@ -106,8 +118,8 @@ if (tables[1] && tables[1].rows !== 7) fail(`schedule table has ${tables[1].rows
 
 console.log('\n-- links --');
 const links = await p.$$eval('.mtx-rt a[href]', as => as.map(a => a.getAttribute('href')));
-const allowed = new Set([...Object.values(data.destinations), ...data.nights.map(n=>n.href),
-  ...data.nights.filter(n=>n.extra_href).map(n=>n.extra_href), '#booking', '#prices']);
+const allowed = new Set([...Object.values(data.destinations), ...Object.values(data.night_links),
+  '#booking', '#prices']);
 const badLinks = [...new Set(links)].filter(h => !allowed.has(h));
 console.log(`   ${links.length} links, ${new Set(links).size} distinct`);
 badLinks.forEach(h => fail(`link not in the brief: ${h}`));
@@ -125,6 +137,50 @@ j.mainEntity.forEach((q,i) => {
   if (q.name !== DOC['faq.q'+(i+1)]) fail(`schema question ${i+1} is not the Document A wording`);
   if (q.acceptedAnswer.text !== DOC['faq.a'+(i+1)]) fail(`schema answer ${i+1} is not the Document A wording`);
 });
+
+console.log('\n-- theme --');
+const th = await p.evaluate(() => {
+  const seen = new Set(); const fonts = new Set(); const transforms = new Set();
+  document.querySelectorAll('.mtx-rt, .mtx-rt *').forEach(e => {
+    if (['STYLE','SCRIPT'].includes(e.tagName)) return;
+    const s = getComputedStyle(e);
+    /* A border colour only counts when the border is actually drawn. Browsers
+       report a default grey on table, thead, tbody and tr, whose border-style
+       is none, and counting it flagged a colour nobody can see. */
+    const paints = [s.color, s.backgroundColor];
+    for (const side of ['Top','Right','Bottom','Left']) {
+      if (s['border' + side + 'Style'] !== 'none' && parseFloat(s['border' + side + 'Width']) > 0)
+        paints.push(s['border' + side + 'Color']);
+    }
+    paints.forEach(c => {
+      const m = c && c.match(/^rgba?\((\d+), (\d+), (\d+)/);
+      if (m && !(c.includes('rgba') && c.endsWith(', 0)'))) seen.add(`${m[1]},${m[2]},${m[3]}`);
+    });
+    if (/^H[123]$/.test(e.tagName) || e.classList.contains('mtx-rt__btn') || (e.tagName==='TH' && e.closest('thead')))
+      fonts.add(s.fontFamily.split(',')[0].replace(/["']/g,''));
+    if (/^H[123]$/.test(e.tagName) || e.classList.contains('mtx-rt__btn'))
+      transforms.add(s.textTransform);
+  });
+  return { colours:[...seen], fonts:[...fonts], transforms:[...transforms] };
+});
+const ALLOWED = new Set(['31,91,255','21,64,201','255,0,0','10,10,10','242,242,242','255,255,255',
+  '58,58,64','94,94,102','216,216,220','237,237,240','182,182,190','0,0,0']);
+const strayColours = th.colours.filter(c => !ALLOWED.has(c));
+console.log(`   colours in use: ${th.colours.length}, outside the palette: ${strayColours.length}`);
+strayColours.forEach(c => fail(`colour outside the brief's palette: rgb(${c})`));
+const REDS = th.colours.filter(c => { const [r,g,bl]=c.split(',').map(Number); return r>150 && g<90 && bl<90; });
+console.log(`   reds in use: ${REDS.map(c=>'rgb('+c+')').join(', ') || 'none'}`);
+REDS.forEach(c => { if (c !== '255,0,0') fail(`a second red is on the page: rgb(${c}). The brief allows #FF0000 only.`); });
+console.log(`   heading and button font: ${th.fonts.join(', ')}`);
+th.fonts.forEach(f => { if (f !== 'Arial Black') fail(`headings or buttons are set in ${f}, not Arial Black`); });
+console.log(`   text-transform on headings and buttons: ${th.transforms.join(', ')}`);
+th.transforms.forEach(t => { if (t !== 'none') fail(`text-transform: ${t} is still on a heading or button`); });
+const bodyFont = await p.$eval('.mtx-rt p', e => getComputedStyle(e).fontFamily.split(',')[0].replace(/["']/g,''));
+console.log(`   body font: ${bodyFont}`);
+if (bodyFont !== 'Calibri') fail(`body copy is set in ${bodyFont}, not Calibri`);
+const mapBtns = await p.$$eval('.mtx-rt__maplayout ~ .mtx-rt__ctarow a', a => a.length);
+console.log(`   seat map buttons: ${mapBtns}`);
+if (mapBtns !== 1) fail(`${mapBtns} buttons under the seat map, the brief says one`);
 
 console.log('\n-- contrast --');
 const con = await p.evaluate(() => {
