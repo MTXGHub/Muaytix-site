@@ -1,0 +1,495 @@
+# NEW POWER MUAY THAI: LOCKED COPY, transcribed from Document A.
+# The only place prose for these two pages exists.
+
+# ============================ PAGE 1: EVERGREEN ============================
+
+[hub.meta.seo_title]
+New Power Muay Thai | Wednesday at Rajadamnern Stadium
+
+[hub.meta.description]
+Discover New Power Muay Thai at Rajadamnern Stadium in Bangkok. Traditional five-round Muay Thai every Wednesday, with tickets available online.
+
+[hub.meta.social_title]
+New Power Muay Thai | Wednesday at Rajadamnern Stadium
+
+[hub.meta.social_description]
+Traditional five-round Muay Thai every Wednesday at Rajadamnern Stadium, with eight or nine bouts, sarama music and a strong local following.
+
+[hub.h1]
+New Power Muay Thai: Wednesday at Rajadamnern Stadium
+
+[hub.hero.p1]
+New Power Muay Thai brings traditional five-round Muay Thai to Rajadamnern Stadium every Wednesday evening.
+
+[hub.hero.p2]
+Watch the tactical contest develop round by round, with sarama music, a knowledgeable local audience and eight or nine bouts forming a very different night from Rajadamnern’s three-round events.
+
+[hub.facts.1]
+Wednesday evenings
+
+[hub.facts.2]
+Doors open: 17:00
+
+[hub.facts.3]
+Event starts: 18:00
+
+[hub.facts.4]
+Traditional five-round Muay Thai
+
+[hub.facts.5]
+Usually eight or nine bouts
+
+[hub.facts.6]
+Rajadamnern Stadium, Bangkok
+
+[hub.hero.cta_primary]
+See Upcoming Wednesdays
+
+[hub.hero.cta_secondary]
+Choose Your Seats
+
+[hub.what.h2]
+What is New Power Muay Thai?
+
+[hub.what.p1]
+New Power Muay Thai is Rajadamnern Stadium’s Wednesday fight programme, built around traditional five-round Muay Thai.
+
+[hub.what.p2]
+Unlike a three-round format, the fighters have more time to establish distance, rhythm and intent before the tactical contest develops through the later rounds.
+
+[hub.what.p3]
+The crowd follows those changes closely. Reactions are shaped not only by individual punches, kicks or knockdowns, but by shifts in timing, control, scoring and momentum.
+
+[hub.what.p4]
+Traditional sarama music accompanies the fights and remains part of the rhythm of the evening.
+
+[hub.long.h2]
+Traditional five-round Muay Thai
+
+[hub.long.p1]
+New Power represents the long game of Muay Thai.
+
+[hub.long.p2]
+The opening rounds can establish distance and rhythm. Fighters and corners then respond to what is happening in the ring, while the tactical pressure develops across the five-round structure.
+
+[hub.long.p3]
+That gives the later stages meaning that cannot always be understood by looking only for constant attacks or knockdowns.
+
+[hub.long.p4]
+For someone watching traditional Muay Thai for the first time, the key is to notice how the fight changes from round to round.
+
+[hub.long.p5]
+A fighter who appears patient early may be establishing range, reading an opponent or waiting for the moment when the balance of the contest begins to shift.
+
+[hub.wed.h2]
+Wednesday night Muay Thai in Bangkok
+
+[hub.wed.p1]
+If you are looking for a Wednesday fight night in Bangkok, New Power is the regular Wednesday Muay Thai event at Rajadamnern Stadium.
+
+[hub.wed.p2]
+The audience includes a strong local following, with spectators reacting closely to changes in scoring and momentum.
+
+[hub.wed.p3]
+Legal betting activity is also part of the traditional stadium environment and can be particularly visible around the LEO seating area.
+
+[hub.wed.p4]
+It is part of the wider fight-night culture rather than the purpose of the event itself.
+
+[hub.wed.h3a]
+Is there anything on Wednesday at Rajadamnern Stadium?
+
+[hub.wed.a3a]
+Yes. New Power Muay Thai takes place on Wednesday evenings, with doors normally opening at 17:00 and the fights beginning at 18:00.
+
+[hub.wed.h3b]
+What is Wednesday night boxing at Rajadamnern?
+
+[hub.wed.a3b]
+Visitors searching for Wednesday night boxing in Bangkok are normally looking for Wednesday night Muay Thai. At Rajadamnern Stadium, the regular Wednesday programme is New Power Muay Thai.
+
+[hub.seats.h2]
+Choose your seats for New Power Muay Thai
+
+[hub.seats.name.ringside]
+Ringside
+
+[hub.seats.descriptor.ringside]
+Closest to the ring
+
+[hub.seats.copy.ringside]
+Assigned seating for guests who want the closest available public viewing position.
+
+[hub.seats.name.club-class]
+Club Class
+
+[hub.seats.descriptor.club-class]
+Elevated, assigned seating
+
+[hub.seats.copy.club-class]
+Assigned seats with a clear view across the ring.
+
+[hub.seats.name.leo-section]
+LEO Section
+
+[hub.seats.descriptor.leo-section]
+A more involved local atmosphere
+
+[hub.seats.copy.leo-section]
+Unassigned seating at the same general level as Club Class, with a strong local following.
+
+[hub.seats.copy2.leo-section]
+Legal betting activity around the stadium can be particularly visible from this area during traditional fight nights.
+
+[hub.seats.name.third-class]
+Third Class
+
+[hub.seats.descriptor.third-class]
+Elevated outer-tier viewing
+
+[hub.seats.copy.third-class]
+The lowest-priced public seating category when released for the selected event.
+
+[hub.seats.cta]
+Compare Rajadamnern seating
+
+[hub.dates.h2]
+Upcoming New Power Muay Thai dates
+
+[hub.dates.h3]
+Booking with MuayTix
+
+[hub.dates.p1]
+The live booking section shows the ticket categories currently available for the selected Wednesday.
+
+[hub.dates.p2]
+Your Stripe receipt confirms payment. Event tickets are then prepared and sent separately by MuayTix by email.
+
+[hub.dates.p3]
+During MuayTix operating hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes.
+
+[hub.dates.p4]
+Bookings received outside those hours are normally fulfilled by midday the following day.
+
+[hub.dates.p5]
+MuayTix provides WhatsApp support seven days a week for booking and ticket questions.
+
+[hub.dates.cta_primary]
+See Upcoming Wednesdays
+
+[hub.dates.cta_secondary]
+View All Rajadamnern Tickets
+
+[hub.faq.h2]
+New Power Muay Thai questions
+
+[hub.faq.q1]
+What day is New Power Muay Thai?
+
+[hub.faq.a1]
+New Power Muay Thai takes place on Wednesday evenings at Rajadamnern Stadium in Bangkok.
+
+[hub.faq.q2]
+What time does New Power Muay Thai start?
+
+[hub.faq.a2]
+The event normally starts at 18:00, with doors opening at 17:00.
+
+[hub.faq.q3]
+How many rounds are New Power Muay Thai fights?
+
+[hub.faq.a3]
+New Power uses the traditional five-round Muay Thai format.
+
+[hub.faq.q4]
+How many fights are normally on the programme?
+
+[hub.faq.a4]
+New Power normally features eight or nine bouts. The confirmed number can vary by event.
+
+[hub.faq.q5]
+Is New Power the same as Rajadamnern Knockout?
+
+[hub.faq.a5]
+No. New Power uses traditional five-round Muay Thai, while Rajadamnern Knockout uses a shorter three-round format.
+
+[hub.faq.q6]
+Is New Power suitable for someone watching Muay Thai for the first time?
+
+[hub.faq.a6]
+Yes. A first-time visitor does not need to understand every part of Muay Thai scoring. The five-round structure makes it possible to watch the rhythm and tactical contest develop as the fight progresses.
+
+[hub.faq.q7]
+What is sarama?
+
+[hub.faq.a7]
+Sarama is the traditional music performed during Muay Thai bouts. It follows the rhythm of the contest and is part of the traditional stadium environment.
+
+[hub.faq.q8]
+Can I arrive after the fights have started?
+
+[hub.faq.a8]
+Yes. The stadium gates remain open during the event, so guests may enter after the programme has begun.
+
+[hub.naming.note]
+Some searches also use the wording S New Power Muay Thai when referring to the Wednesday New Power event at Rajadamnern Stadium.
+
+# ========================== PAGE 2: 30 SEPTEMBER ==========================
+
+[dated.meta.seo_title]
+New Power Muay Thai Tickets, 30 September 2026 | MuayTix
+
+[dated.meta.description]
+Book New Power Muay Thai at Rajadamnern Stadium on Wednesday 30 September 2026. Traditional five-round Muay Thai starts at 18:00.
+
+[dated.meta.social_title]
+New Power Muay Thai | 30 September 2026
+
+[dated.meta.social_description]
+See event details and book seats for New Power Muay Thai at Rajadamnern Stadium on Wednesday 30 September 2026.
+
+[dated.h1]
+New Power Muay Thai, Wednesday 30 September 2026
+
+[dated.hero.body]
+Watch traditional five-round Muay Thai at Rajadamnern Stadium on Wednesday 30 September 2026, with the tactical contest developing round by round across a full evening of New Power Muay Thai.
+
+[dated.facts.label.date]
+Date
+
+[dated.facts.value.date]
+Wednesday 30 September 2026
+
+[dated.facts.label.venue]
+Venue
+
+[dated.facts.value.venue]
+Rajadamnern Stadium, Bangkok
+
+[dated.facts.label.doors]
+Doors open
+
+[dated.facts.value.doors]
+17:00
+
+[dated.facts.label.starts]
+Event starts
+
+[dated.facts.value.starts]
+18:00
+
+[dated.facts.label.format]
+Format
+
+[dated.facts.value.format]
+Traditional five-round Muay Thai
+
+[dated.facts.label.programme]
+Programme
+
+[dated.facts.value.programme]
+Normally eight or nine bouts
+
+[dated.hero.cta_primary]
+Book Tickets
+
+[dated.hero.cta_secondary]
+Choose Your Seats
+
+[dated.expect.h2]
+What to expect from New Power Muay Thai
+
+[dated.expect.p1]
+New Power is built around traditional five-round Muay Thai rather than the shorter three-round format used by some other Rajadamnern events.
+
+[dated.expect.p2]
+The opening rounds can establish distance, rhythm and intent before the tactical contest develops through the later stages.
+
+[dated.expect.p3]
+Fighters and corners respond between rounds, while scoring and momentum influence the way each contest develops.
+
+[dated.expect.p4]
+Traditional sarama music accompanies the fights throughout the evening.
+
+[dated.expect.p5]
+New Power normally features eight or nine bouts, although the confirmed number for an individual event can vary.
+
+[dated.atmos.h2]
+A traditional Wednesday night at Rajadamnern
+
+[dated.atmos.p1]
+A strong local audience is an important part of New Power.
+
+[dated.atmos.p2]
+Spectators follow changes in timing, control, scoring and momentum, so the reaction inside the stadium often tells a first-time visitor that something important in the fight has changed.
+
+[dated.atmos.p3]
+Legal betting activity is also part of the traditional stadium environment and can be particularly visible around the LEO seating area.
+
+[dated.atmos.p4]
+It is one part of the wider Wednesday fight night atmosphere rather than the reason to attend.
+
+[dated.card.h2]
+New Power fight card, 30 September 2026
+
+[dated.card.notice]
+Fight card information will be updated when confirmed.
+
+[dated.seats.h2]
+Choose your seats
+
+[dated.seats.name.ringside]
+Ringside
+
+[dated.seats.descriptor.ringside]
+Closest to the ring
+
+[dated.seats.copy.ringside]
+Assigned seating for guests who want the closest available public viewing position.
+
+[dated.seats.name.club-class]
+Club Class
+
+[dated.seats.descriptor.club-class]
+Elevated, assigned seating
+
+[dated.seats.copy.club-class]
+Assigned seats with a clear view across the ring.
+
+[dated.seats.name.leo-section]
+LEO Section
+
+[dated.seats.descriptor.leo-section]
+A more involved local atmosphere
+
+[dated.seats.copy.leo-section]
+Unassigned seating at the same general level as Club Class, with a strong local following.
+
+[dated.seats.copy2.leo-section]
+Legal betting activity around the stadium can be particularly visible from this area during traditional fight nights.
+
+[dated.seats.name.third-class]
+Third Class
+
+[dated.seats.descriptor.third-class]
+Elevated outer-tier viewing
+
+[dated.seats.copy.third-class]
+The lowest-priced public seating category when released for this event.
+
+[dated.seats.cta]
+Compare Rajadamnern seating
+
+[dated.source.intro]
+The live ticket inventory is the source of truth for:
+
+[dated.source.1]
+available ticket classes
+
+[dated.source.2]
+prices
+
+[dated.source.3]
+quantities
+
+[dated.source.4]
+sold-out state
+
+[dated.source.5]
+booking URLs
+
+[dated.plan.h2]
+Planning your visit on 30 September
+
+[dated.plan.p1]
+Rajadamnern Stadium opens its doors for New Power at 17:00.
+
+[dated.plan.p2]
+The event starts at 18:00 Bangkok time.
+
+[dated.plan.p3]
+The gates remain open during the evening, so guests may enter after the fights have started.
+
+[dated.plan.p4]
+Your Stripe receipt confirms payment. Your event tickets are prepared and sent separately by MuayTix by email.
+
+[dated.plan.p5]
+During operating hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes.
+
+[dated.plan.p6]
+Bookings received outside those hours are normally fulfilled by midday the following day.
+
+[dated.link.hub]
+What is New Power Muay Thai?
+
+[dated.link.seating]
+Choose your Rajadamnern seats
+
+[dated.link.stadium]
+Rajadamnern Stadium information
+
+[dated.link.tickets]
+All Rajadamnern Stadium tickets
+
+[dated.faq.h2]
+New Power Muay Thai, 30 September: booking questions
+
+[dated.faq.q1]
+What time does New Power Muay Thai start on 30 September 2026?
+
+[dated.faq.a1]
+The event starts at 18:00 Bangkok time. Doors open at 17:00.
+
+[dated.faq.q2]
+How many rounds are the fights?
+
+[dated.faq.a2]
+New Power follows the traditional five-round Muay Thai format.
+
+[dated.faq.q3]
+How many fights are scheduled?
+
+[dated.faq.a3]
+New Power normally features eight or nine bouts. The confirmed number for 30 September should be taken from the verified event information.
+
+[dated.faq.q4]
+Can I arrive after the event has started?
+
+[dated.faq.a4]
+Yes. The stadium gates remain open during the evening.
+
+[dated.faq.q5]
+Do I need to print my ticket?
+
+[dated.faq.a5]
+No. The QR ticket can be shown on your phone when entering the stadium.
+
+[dated.faq.q6]
+How will I receive my ticket?
+
+[dated.faq.a6]
+Your Stripe receipt confirms payment. Your New Power event tickets are then prepared and sent separately by MuayTix by email.
+
+[dated.faq.a6b]
+During operating hours of 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes. Outside those hours, fulfilment is normally by midday the following day.
+
+[dated.faq.q7]
+Is New Power a three-round event?
+
+[dated.faq.a7]
+No. New Power uses traditional five-round Muay Thai.
+
+[dated.faq.q8]
+Is New Power suitable for someone new to Muay Thai?
+
+[dated.faq.a8]
+Yes. The five-round format gives a first-time visitor time to see how rhythm, tactics and momentum develop as each fight progresses.
+
+[dated.final.h2]
+Book New Power Muay Thai for Wednesday 30 September
+
+[dated.final.copy]
+Choose from the ticket categories currently available for New Power Muay Thai at Rajadamnern Stadium.
+
+[dated.final.cta]
+Book Tickets

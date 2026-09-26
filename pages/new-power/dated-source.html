@@ -1,0 +1,822 @@
+<!--
+  NEW POWER MUAY THAI
+  Paste this whole thing into one HTML block (Tilda T123) on /new-power-muay-thai/2026-09-30
+
+  Meta title, meta description, Open Graph and canonical are NOT in here.
+  Tilda owns those; they go in the page's own settings. The approved text is
+  in TILDA-PAGE-SETTINGS-dated.txt beside this file.
+
+  All visible wording is generated from document-a.txt, the approved editorial
+  source. It is not typed into this file and must not be edited here.
+-->
+<div class="mtx-np">
+<style>
+/* All styles are scoped under .mtx-np so nothing here can affect the rest of
+   the site, and the site's own styles are less likely to affect this block.
+   The components, the colours and the type are the day-dated pages' own, so
+   a guest moving from here to a fight night page sees one site. */
+.mtx-np, .mtx-np * { box-sizing: border-box; }
+.mtx-np {
+  /* New Power identity. Document A supplies these three and no others. */
+  --np-blue: #01A453;
+  --np-blue-dark: #008F48;
+  --np-wash: #EAF7F0;
+  /* The same green, lifted for small type on black, where #01A453 is too dark. */
+  --np-blue-lite: #4ED88C;
+  --np-rws: #FF1828;
+  --np-rws-dark: #d40f1c;
+  --np-ink: #111111;
+  --np-paper: #EAF7F0;
+  --np-line: #dcdce1;
+  --np-muted: #6e6e75;
+  font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--np-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.mtx-np p, .mtx-np h1, .mtx-np h2, .mtx-np h3, .mtx-np ul, .mtx-np ol { margin: 0; padding: 0; }
+.mtx-np ul, .mtx-np ol { list-style: none; }
+.mtx-np img { max-width: 100%; display: block; }
+.mtx-np__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
+
+/* Headings */
+.mtx-np h1, .mtx-np h2, .mtx-np h3 {
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+}
+.mtx-np h1 { font-size: clamp(38px, 6vw, 70px); line-height: .96; }
+.mtx-np h2 { font-size: clamp(29px, 3.6vw, 45px); line-height: 1.03; margin-top: 8px; }
+.mtx-np h3 { font-size: 21px; line-height: 1.15; }
+.mtx-np__kicker {
+  display: block; color: var(--np-blue); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 13px; letter-spacing: .13em; text-transform: uppercase;
+}
+.mtx-np__hero .mtx-np__kicker,
+.mtx-np__band--dark .mtx-np__kicker { color: var(--np-blue-lite); }
+
+/* Buttons */
+.mtx-np__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 52px; padding: 0 26px; border: 2px solid transparent;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 16px; letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: all .2s ease;
+}
+.mtx-np__btn--blue { background: var(--np-blue); color: #fff; }
+.mtx-np__btn--blue:hover { background: var(--np-blue-dark); color: #fff; }
+.mtx-np__btn--ghost { background: transparent; border-color: #fff; color: #fff; }
+.mtx-np__btn--ghost:hover { background: #fff; color: var(--np-ink); }
+.mtx-np__btn--outline { background: #fff; border-color: var(--np-ink); color: var(--np-ink); }
+.mtx-np__btn--outline:hover { border-color: var(--np-blue); color: var(--np-blue); }
+.mtx-np__btn--red { background: var(--np-rws); color: #fff; }
+.mtx-np__btn--red:hover { background: var(--np-rws-dark); color: #fff; }
+.mtx-np__go {
+  display: inline-block; color: var(--np-blue); text-decoration: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 15px; letter-spacing: .07em; text-transform: uppercase;
+  border-bottom: 2px solid currentColor; padding-bottom: 2px;
+}
+.mtx-np__go:hover { color: var(--np-blue-dark); }
+
+/* Hero.
+   It carries no .mtx-np__band class. Both are single-class selectors, so the
+   band's `background: #fff` shorthand would win on source order alone and
+   wipe out both the photograph and the black behind it, leaving white type on
+   a white hero. The hero brings its own padding instead.
+
+   The photograph sits under a scrim rather than on its own: the dome is bright
+   teal and red and the headline is white, so without it the type would be
+   unreadable across the top third. The gradient is heavier on the left, where
+   all the words are, and thins to the right so the stadium still shows.
+
+   background-color stays as a fallback. If the image is slow, or blocked, or
+   the URL ever changes, the hero is simply black again and nothing breaks. */
+.mtx-np__hero {
+  position: relative; color: #fff;
+  padding: clamp(60px, 8vw, 116px) 0;
+  background-color: var(--np-ink);
+  background-image:
+    linear-gradient(100deg,
+      rgba(11,11,13,.95) 0%,
+      rgba(11,11,13,.88) 38%,
+      rgba(11,11,13,.66) 72%,
+      rgba(11,11,13,.52) 100%),
+    url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 38%;
+}
+/* On a narrow screen the hero is tall and the square crops to a column, so the
+   scrim runs top to bottom instead of left to right. */
+@media (max-width: 760px) {
+  .mtx-np__hero {
+    background-image:
+      linear-gradient(180deg,
+        rgba(11,11,13,.86) 0%,
+        rgba(11,11,13,.74) 30%,
+        rgba(11,11,13,.88) 72%,
+        rgba(11,11,13,.96) 100%),
+      url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+    background-position: center 30%;
+  }
+}
+/* Nothing sits between the H1 and this paragraph, in the markup or on screen.
+   It is the sentence an AI engine lifts when asked where to buy tickets. */
+.mtx-np__lede { max-width: 62ch; margin-top: 18px !important; color: #d3d4da; font-size: 17px; }
+.mtx-np .mtx-np__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+/* Bands */
+.mtx-np__band { padding: clamp(42px, 5.5vw, 74px) 0; background: #fff; }
+.mtx-np__band--paper { background: var(--np-paper); }
+.mtx-np__band--dark { background: #18181d; color: #fff; }
+.mtx-np__band p { max-width: 68ch; margin-top: 16px !important; font-size: 17px; }
+.mtx-np__band--dark p { color: #d3d4da; }
+.mtx-np .mtx-np__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- Block 2: tonight and this week ----------
+   Tonight is the first card and the only lifted one: a blue rule across the
+   top, a "Tonight" label and its own weight. Every other night is a plain
+   card, so the eye lands on the night the guest can still buy for. */
+.mtx-np__nights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-np .mtx-np__nights { margin-top: 30px; }
+/* Fourteen nights are in the markup; five are on screen. The script removes
+   nights whose booking has closed, and the next one moves up on its own. So
+   the block keeps itself right for a fortnight, and a reader with no
+   JavaScript still sees five real nights rather than fourteen. */
+.mtx-np__night:nth-child(n+6) { display: none; }
+.mtx-np__night {
+  display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--np-line); padding: 26px 22px 24px;
+}
+.mtx-np__night--now { border-color: var(--np-blue); box-shadow: inset 0 5px 0 0 var(--np-blue); padding-top: 30px; }
+.mtx-np__tag {
+  display: inline-block; align-self: flex-start; padding: 5px 10px;
+  background: var(--np-blue); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+}
+.mtx-np__night h3 { margin-top: 14px; }
+.mtx-np__night--now h3 { font-size: 26px; }
+.mtx-np .mtx-np__when {
+  margin-top: 9px !important; color: var(--np-muted); font-size: 15px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.mtx-np .mtx-np__times { margin-top: 4px !important; color: var(--np-muted); font-size: 15px; }
+.mtx-np .mtx-np__night .mtx-np__evbody { margin-top: 14px !important; font-size: 15.5px; }
+/* margin-top:auto pins the button to the foot of the card, so a short night
+   and a long one still line their buttons up across the row. */
+.mtx-np .mtx-np__nightcta { margin-top: auto !important; padding-top: 20px; }
+.mtx-np__nightcta .mtx-np__btn { width: 100%; }
+
+/* The same dates as plain HTML, for crawlers and AI engines that never run
+   the script above. Visually hidden, fully readable to a machine, and still
+   reachable by a screen reader. Not display:none, which they skip. */
+.mtx-np__plain {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+/* ---------- Block 3: trust cards ---------- */
+.mtx-np__trustgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-np .mtx-np__trustgrid { margin-top: 30px; }
+.mtx-np__trustcard { background: #fff; border: 1px solid var(--np-line); padding: 26px 22px 24px; }
+.mtx-np__trustcard svg { width: 30px; height: 30px; stroke: var(--np-blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mtx-np__trustcard h3 { margin-top: 18px; font-size: 19px; }
+.mtx-np__trustcard p { margin-top: 9px !important; color: var(--np-muted); font-size: 16px; }
+.mtx-np .mtx-np__guarantee {
+  max-width: 68ch; margin-top: 26px !important; padding-left: 15px;
+  border-left: 3px solid var(--np-blue); font-size: 17px;
+}
+.mtx-np .mtx-np__partlabel {
+  margin-top: 34px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px !important; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--np-muted) !important; padding-bottom: 12px; border-bottom: 1px solid var(--np-line);
+}
+.mtx-np .mtx-np__partners {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 0; margin-top: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 17px; letter-spacing: .05em; text-transform: uppercase;
+}
+.mtx-np__partners li + li::before { content: "\00b7"; color: var(--np-muted); margin: 0 14px; }
+
+/* ---------- Block 4: seat cards ---------- */
+.mtx-np__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mtx-np .mtx-np__grid { margin-top: 28px; }
+.mtx-np__card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--np-line); padding: 30px 24px 26px; }
+.mtx-np__card p { margin-top: 10px !important; color: var(--np-muted); font-size: 16px; }
+.mtx-np__standfirst {
+  margin-top: 7px !important; color: var(--np-blue) !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+}
+.mtx-np__bestfor { font-size: 15px !important; }
+.mtx-np__bestfor strong { color: var(--np-ink); }
+.mtx-np .mtx-np__cardbtn { width: 100%; margin-top: auto !important; padding-top: 22px; }
+
+/* Seat photo slider. Native scroll-snap: no library, nothing to load, and a
+   swipe works on a phone whether or not the script ever runs. The dots are
+   the only part that needs it, and they are decoration.
+   aspect-ratio plus object-fit means photos of different shapes still line up
+   in the grid, so nothing has to be cropped to an exact size before upload. */
+.mtx-np__card--shot { padding-top: 0; overflow: hidden; }
+.mtx-np__card--shot > :first-child { margin-top: 0; }
+.mtx-np__card--shot h3 { margin-top: 22px; }
+.mtx-np__shots { position: relative; margin: 0 -24px; }
+.mtx-np__shots-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.mtx-np__shots-track::-webkit-scrollbar { display: none; }
+.mtx-np__shots-track img {
+  flex: 0 0 100%; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  scroll-snap-align: center; background: #e6e6ea;
+}
+/* Older Safari ignores aspect-ratio; this keeps the shape rather than letting
+   the image collapse to nothing. */
+@supports not (aspect-ratio: 4 / 3) {
+  .mtx-np__shots-track img { height: 260px; }
+}
+.mtx-np__shots-dots {
+  position: absolute; left: 0; right: 0; bottom: 11px;
+  display: flex; justify-content: center; gap: 7px;
+}
+.mtx-np__shots-dots button {
+  width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(255,255,255,.55); cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.25); transition: background .18s ease;
+}
+.mtx-np__shots-dots button.is-on { background: #fff; }
+.mtx-np__shots-dots button:focus-visible { outline: 2px solid var(--np-blue); outline-offset: 2px; }
+/* Nothing to click through if the slider only ever holds one photo. */
+.mtx-np__shots-dots:empty { display: none; }
+
+/* Seat map. A plain link, not a script: opening the file itself lets the
+   phone's own pinch-to-zoom do the work, and there is no lightbox to go
+   wrong. It sits centred and capped, never beside the cards. */
+.mtx-np__maplayout { margin-top: 34px; max-width: 640px; margin-inline: auto; }
+.mtx-np__mapfig { display: block; position: relative; text-decoration: none; }
+.mtx-np__mapfig img { width: 100%; height: auto; }
+.mtx-np__mapzoom {
+  position: absolute; right: 12px; bottom: 12px;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 13px; background: rgba(11,11,13,.78); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.14); transition: background .18s ease;
+}
+.mtx-np__mapfig:hover .mtx-np__mapzoom { background: var(--np-blue); }
+.mtx-np__mapfig:focus-visible { outline: 2px solid var(--np-blue); outline-offset: 4px; }
+
+/* ---------- The event cards ----------
+   One section, six events, no flagship band sitting apart from "the rest of
+   the week". A guest's first job is choosing a night, and that is easier when
+   every night is in one place and comparable.
+
+   RWS keeps the red because it is the stadium's Saturday event and the guest
+   should be able to find it at a glance. The colour marks one card, not a
+   whole band. */
+/* Four real buttons, equal width, in one row. They wrap to two and then to
+   one, so no label is ever squeezed into two ragged lines. */
+.mtx-np__btnrow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.mtx-np .mtx-np__btnrow { margin-top: 28px; }
+.mtx-np__btnrow .mtx-np__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+.mtx-np .mtx-np__aftercta { margin-top: 20px !important; }
+
+/* ---------- Block 6: promoter cards ---------- */
+.mtx-np__evs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-np .mtx-np__evs { margin-top: 30px; }
+.mtx-np__ev {
+  position: relative; display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--np-line); padding: 30px 24px 26px;
+}
+.mtx-np__ev::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 7px;
+  background: var(--np-blue); transform: skewX(-25deg); transform-origin: left;
+}
+.mtx-np__ev--rws::before { background: var(--np-rws); }
+.mtx-np__ev--rws .mtx-np__btn--blue { background: var(--np-rws-dark); }
+.mtx-np__ev--rws .mtx-np__btn--blue:hover { background: #a80a15; }
+.mtx-np .mtx-np__hook {
+  margin-top: 8px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif; font-weight: 800;
+  font-size: clamp(23px, 2.5vw, 29px); line-height: 1.04; text-transform: uppercase;
+}
+.mtx-np .mtx-np__evbody { margin-top: 13px !important; color: var(--np-muted); font-size: 16px; }
+.mtx-np .mtx-np__evwhen {
+  margin-top: 16px !important; padding-top: 14px; border-top: 1px solid var(--np-line);
+  color: var(--np-muted); font-size: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+}
+.mtx-np .mtx-np__evcta { margin-top: auto !important; padding-top: 20px; }
+.mtx-np__evcta .mtx-np__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+/* ---------- Block 7: the questions ----------
+   <details> rather than a script: it opens without JavaScript, it is readable
+   to a crawler while closed, and the browser's own find-in-page can open it.
+   The brief requires the answers to be in the DOM, collapsed by CSS only. */
+.mtx-np__faq { margin-top: 30px; border-top: 1px solid var(--np-line); }
+.mtx-np__faq details { border-bottom: 1px solid var(--np-line); }
+.mtx-np__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 18px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 20px; line-height: 1.15; text-transform: uppercase;
+}
+.mtx-np__faq summary::-webkit-details-marker { display: none; }
+.mtx-np__faq summary::after {
+  content: "+"; flex: none; color: var(--np-blue);
+  font-family: "Barlow", Helvetica, Arial, sans-serif; font-weight: 400;
+  font-size: 26px; line-height: 1; margin-top: 2px;
+}
+.mtx-np__faq details[open] summary::after { content: "\2013"; }
+.mtx-np__faq summary:focus-visible { outline: 2px solid var(--np-blue); outline-offset: 3px; }
+.mtx-np__faq p { margin-top: 0 !important; margin-bottom: 22px !important; color: var(--np-muted); font-size: 16px; }
+
+/* ---------- Block 8: the venue ----------
+   Two columns on a wide screen, words left and the address block right, so
+   the band is not one short paragraph adrift in 1180px of white. */
+.mtx-np__venue { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.mtx-np .mtx-np__venue { margin-top: 30px; }
+.mtx-np__venue p { margin-top: 0 !important; }
+.mtx-np__where {
+  padding: 24px 22px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.16);
+}
+.mtx-np .mtx-np__wherelabel {
+  margin-top: 0 !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px !important; letter-spacing: .13em; text-transform: uppercase;
+  color: #9ca0ad !important;
+}
+.mtx-np .mtx-np__address {
+  margin-top: 8px !important; font-size: 19px !important; color: #fff !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  letter-spacing: .02em; text-transform: uppercase; line-height: 1.2;
+}
+
+/* ---------- Breakpoints ----------
+   Each one sits with the rules it changes rather than in a block of its own at
+   the foot of the file, so nothing further down can quietly outrank it. */
+@media (max-width: 1000px) {
+  .mtx-np__nights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-np__evs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-np__btnrow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-np__venue { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .mtx-np__grid { grid-template-columns: 1fr; }
+  .mtx-np__evs { grid-template-columns: 1fr; }
+  .mtx-np__trustgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .mtx-np__shell { width: min(100% - 28px, 1180px); }
+  .mtx-np__nights { grid-template-columns: 1fr; }
+  .mtx-np__btnrow { grid-template-columns: 1fr; }
+  .mtx-np__trustgrid { grid-template-columns: 1fr; }
+  .mtx-np__actions .mtx-np__btn, .mtx-np__ctarow .mtx-np__btn { width: 100%; }
+  .mtx-np__faq summary { font-size: 18px; }
+  /* A middot drawn with li + li::before lands at the START of a wrapped line,
+     so below the wrap point the separators go and the names stack instead. */
+  .mtx-np .mtx-np__partners { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 16px; }
+  .mtx-np__partners li + li::before { content: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mtx-np * { animation: none !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- How to buy: the five steps ----------
+   Numbered because the order matters and because a guest scanning on a phone
+   should be able to count the steps before reading any of them. */
+.mtx-np__steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; counter-reset: mtxstep; }
+.mtx-np .mtx-np__steps { margin-top: 30px; }
+.mtx-np__step { background: #fff; border: 1px solid var(--np-line); padding: 24px 20px 22px; }
+.mtx-np__step::before {
+  counter-increment: mtxstep; content: counter(mtxstep);
+  display: block; color: var(--np-blue);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 30px; line-height: 1;
+}
+.mtx-np .mtx-np__step p { margin-top: 12px !important; color: var(--np-ink); font-size: 15.5px; }
+
+/* The closing band. One question, one button, nothing else competing. */
+.mtx-np__close { text-align: center; }
+.mtx-np__close h2 { border: 0; }
+.mtx-np .mtx-np__close p { margin-inline: auto; }
+.mtx-np__close .mtx-np__ctarow { justify-content: center; }
+
+@media (max-width: 1000px) {
+  .mtx-np__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .mtx-np__steps { grid-template-columns: 1fr; }
+  .mtx-np__step { display: grid; grid-template-columns: 34px 1fr; column-gap: 14px; align-items: baseline; padding: 18px 16px; }
+  .mtx-np__step::before { font-size: 26px; }
+  .mtx-np .mtx-np__step p { margin-top: 0 !important; }
+}
+
+/* A sub-heading inside a band. Smaller than the H2 above it and not uppercase,
+   so it reads as a line of the page rather than a second section opening. */
+.mtx-np .mtx-np__subhead {
+  margin-top: 36px; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.15;
+  text-transform: none; letter-spacing: 0;
+}
+
+/* The seat card button matches the night and event cards: full width, pinned
+   to the foot, so all three card types read as one system. */
+.mtx-np__cardbtn .mtx-np__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+/* ---------- The seat class graphic ----------
+   Full bleed to the card edges, above the name. No aspect-ratio and no crop:
+   these graphics carry type, and object-fit: cover would slice the words off.
+   They take whatever shape they were drawn at.
+
+   height: auto is not optional. A width or height attribute on an <img>
+   arrives as a presentational hint and outranks a stylesheet rule, which is
+   how a photo on this site once rendered three times too tall. */
+.mtx-np__card--gfx { padding-top: 0; overflow: hidden; }
+/* The class is doubled. .mtx-np img { max-width: 100% } is (0,1,1) and beats
+   a single class, which clamped the graphic to the card's content box and left
+   it inset from both edges. Same family of fault as .mtx-np p { margin: 0 }. */
+.mtx-np .mtx-np__seatgfx {
+  display: block; width: calc(100% + 48px); max-width: none; height: auto;
+  margin: 0 -24px 0; background: #e6e6ea;
+}
+.mtx-np__card--gfx h3 { margin-top: 24px; }
+@media (max-width: 620px) {
+  .mtx-np .mtx-np__seatgfx { width: calc(100% + 40px); margin-inline: -20px; }
+}
+
+/* ---------- v5 components ----------
+   Added because Document A's approved copy needs somewhere to sit. No approved
+   wording was trimmed to fit an existing component. */
+
+/* The hero carries two approved paragraphs, not one. */
+.mtx-np .mtx-np__lede + .mtx-np__lede { margin-top: 12px !important; }
+
+/* The question is an H3 inside the summary, so the heading structure is real
+   rather than drawn with font sizes. The summary keeps the flex layout. */
+.mtx-np__faq summary h3 {
+  display: inline; font-size: inherit; line-height: inherit;
+  font-family: inherit; font-weight: inherit; text-transform: inherit;
+}
+
+/* The QR block is the only trust card with two approved paragraphs, so it
+   spans two columns rather than making all five cards as tall as the longest. */
+.mtx-np__trustcard--wide { grid-column: span 2; }
+.mtx-np__trustcard { display: flex; flex-direction: column; }
+.mtx-np__trustcard .mtx-np__cardbtn { margin-top: auto !important; padding-top: 20px; }
+.mtx-np .mtx-np__trustcard p + p { margin-top: 12px !important; }
+
+/* Three stadium CTAs stacked rather than in a row: at this width a row of
+   three long approved labels wraps raggedly. */
+.mtx-np .mtx-np__ctastack { margin-top: 0 !important; display: grid; gap: 10px; }
+.mtx-np__ctastack .mtx-np__btn { width: 100%; padding: 0 16px; letter-spacing: .04em; }
+
+/* The brand-query line. One size down and muted: it is reference, not a claim
+   competing with the CTA above it. */
+.mtx-np .mtx-np__brand {
+  margin-top: 26px !important; font-size: 14px !important; color: var(--np-muted);
+  max-width: 62ch; margin-inline: auto;
+}
+
+/* The booking guide's approved supporting paragraphs. */
+.mtx-np__band .mtx-np__shell > p + p { margin-top: 14px !important; }
+
+@media (max-width: 860px) {
+  .mtx-np__trustcard--wide { grid-column: span 2; }
+}
+@media (max-width: 620px) {
+  .mtx-np__trustcard--wide { grid-column: span 1; }
+}
+
+/* Three approved paragraphs in the stadium column need air between them.
+   .mtx-np__venue p sets margin-top: 0 !important, so this has to match it. */
+.mtx-np .mtx-np__venue p + p { margin-top: 14px !important; }
+
+/* ---------- All Star components ----------
+   Added so Document A's approved copy has somewhere to sit. Document B
+   section 1 and 28: the component adapts to the copy, never the reverse. */
+
+/* Several bands are long runs of approved paragraphs. */
+.mtx-np__band .mtx-np__shell > p + p { margin-top: 14px !important; }
+.mtx-np .mtx-np__lede + .mtx-np__facts { margin-top: 26px; }
+
+/* The facts block. A definition list because that is what it is: labels and
+   values, not prose. */
+.mtx-np__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--np-line); border: 1px solid var(--np-line); margin: 0; }
+.mtx-np .mtx-np__facts { margin-top: 28px; }
+.mtx-np__fact { background: #fff; padding: 18px 20px; }
+.mtx-np__fact dt {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px; letter-spacing: .13em; text-transform: uppercase; color: var(--np-muted);
+}
+.mtx-np__fact dd { margin: 6px 0 0; font-size: 16.5px; }
+/* In the hero the block sits on black, so it inverts. */
+.mtx-np__hero .mtx-np__fact { background: rgba(255,255,255,.06); }
+.mtx-np__hero .mtx-np__facts { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.16); }
+.mtx-np__hero .mtx-np__fact dt { color: #b9bcc6; }
+.mtx-np__hero .mtx-np__fact dd { color: #fff; }
+
+/* The supporting note and the fight-card waiting message. */
+.mtx-np .mtx-np__note {
+  margin-top: 20px !important; padding-left: 15px; border-left: 3px solid var(--np-blue);
+  font-size: 16.5px; max-width: 68ch;
+}
+
+/* Upcoming dates. */
+.mtx-np__dates { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.mtx-np .mtx-np__dates { margin-top: 28px; }
+.mtx-np__datecard { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--np-line); padding: 24px 20px; }
+.mtx-np__datecard h3 { font-size: 19px; }
+.mtx-np .mtx-np__datecard .mtx-np__times { margin-top: 9px !important; color: var(--np-muted); font-size: 15px; }
+.mtx-np .mtx-np__datecard .mtx-np__cardbtn { margin-top: auto !important; padding-top: 18px; }
+
+/* Seat cards here carry a graphic and no button: the section has one CTA.
+   The graphic rules themselves live in the shared block above and are not
+   repeated here: a second copy silently outranked the first and undid a fix. */
+
+.mtx-np__close { text-align: center; }
+.mtx-np .mtx-np__close p { margin-inline: auto; }
+.mtx-np__close .mtx-np__ctarow { justify-content: center; }
+
+@media (max-width: 1000px) { .mtx-np__dates { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 860px)  { .mtx-np__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) {
+  .mtx-np__dates { grid-template-columns: 1fr; }
+  .mtx-np__facts { grid-template-columns: 1fr; }
+}
+
+/* ---------- Knockout dated components ----------
+   Document B section 2: the component adapts to the copy, never the reverse. */
+
+/* The evening schedule. A numbered list would fight the approved time labels,
+   which are the real markers, so the time leads each step. */
+.mtx-np__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-np .mtx-np__steps { margin-top: 30px; }
+.mtx-np__step { background: #fff; border: 1px solid var(--np-line); padding: 22px 20px; }
+.mtx-np .mtx-np__step .mtx-np__steptime {
+  margin-top: 0 !important; color: var(--np-blue);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 17px; letter-spacing: .04em; text-transform: uppercase;
+}
+.mtx-np__step h3 { margin-top: 8px; font-size: 18px; }
+.mtx-np .mtx-np__step p + p, .mtx-np .mtx-np__step h3 + p { margin-top: 8px !important; color: var(--np-muted); font-size: 15.5px; }
+
+/* The live-inventory list. */
+.mtx-np .mtx-np__bullets { margin-top: 14px; padding-left: 0; }
+.mtx-np__bullets li { position: relative; padding-left: 20px; font-size: 16.5px; }
+.mtx-np__bullets li + li { margin-top: 6px; }
+.mtx-np__bullets li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; background: var(--np-blue); }
+
+/* The booking-with-MuayTix cards carry no icons here: Document A gives each a
+   heading, so the heading does the work. */
+.mtx-np__trustcard h3 { margin-top: 0; font-size: 19px; }
+
+@media (max-width: 860px) { .mtx-np__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .mtx-np__steps { grid-template-columns: 1fr; } }
+
+/* The rescoped stylesheet numbers .mtx-np__step with a CSS counter. Document A
+   marks this schedule with times, not numbers, so the counter is switched off
+   here rather than left to sit above each approved time label. */
+.mtx-np__steps { counter-reset: none; }
+.mtx-np__step::before { content: none; }
+
+/* ---------- New Power green: where it can and cannot carry text ----------
+   Document A supplies #01A453 and #008F48 and forbids any other green. It
+   also says "Maintain strong contrast and readability". Measured:
+
+     white on #01A453    3.26:1
+     white on #008F48    4.18:1
+     #01A453 on white    3.26:1
+     #01A453 on #EAF7F0  2.96:1
+
+   Nothing reaches 4.5:1, which is what small text needs. Large text needs
+   only 3.0:1, so the greens are used where the type is large, and the page
+   accent list in Document A is followed everywhere else: borders, separators,
+   icons, fact highlights and active states carry no text at all.
+
+   Small type therefore uses ink rather than a green Document A did not
+   supply. Reported to the owner, not decided silently. */
+
+/* Buttons: the label is raised to 19px so it qualifies as large text and
+   clears 3.0:1. The component changes, never the approved wording. */
+.mtx-np__btn { font-size: 19px; }
+
+/* The kicker and the seat descriptor are 12 to 13px. Green fails there. */
+.mtx-np__kicker { color: var(--np-ink); }
+.mtx-np .mtx-np__standfirst { color: var(--np-ink) !important; }
+.mtx-np .mtx-np__step .mtx-np__steptime { color: var(--np-ink); }
+
+/* Green does the work where it carries no text, or where the text is large. */
+.mtx-np__band--paper { background: var(--np-wash); }
+.mtx-np__card, .mtx-np__trustcard, .mtx-np__datecard { border-top: 3px solid var(--np-blue); }
+.mtx-np__note { border-left-color: var(--np-blue); }
+.mtx-np__bullets li::before { background: var(--np-blue); }
+.mtx-np__faq summary::after { color: var(--np-blue); }
+.mtx-np__fact dt { color: var(--np-ink); }
+.mtx-np__facts { border-color: var(--np-blue); }
+
+/* The seating map. A plain link so the phone's own pinch-to-zoom does the
+   work, centred and capped rather than stretched across the band. */
+/* Doubled class throughout. .mtx-np p { margin: 0 } is (0,1,1) and its
+   shorthand resets margin-inline, so a single-class auto margin never
+   centred the map; and .mtx-np__band p { max-width: 68ch } outranked the
+   680px cap. Same specificity family as the seat-graphic fault. */
+.mtx-np .mtx-np__maplayout { max-width: 680px !important; margin: 30px auto 0 !important; }
+.mtx-np__maplayout img { width: 100%; max-width: none; height: auto; display: block; border: 1px solid var(--np-line); background: #fff; }
+
+/* The evergreen hero's fact list. Document A supplies six short facts, not a
+   labelled table, so they sit as a plain list rather than being forced into
+   the dated page's definition list. */
+.mtx-np .mtx-np__factlist { margin-top: 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 20px; }
+.mtx-np__factlist li { position: relative; padding-left: 18px; font-size: 16.5px; color: #fff; }
+.mtx-np__factlist li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; background: var(--np-blue); }
+@media (max-width: 860px) { .mtx-np .mtx-np__factlist { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .mtx-np .mtx-np__factlist { grid-template-columns: 1fr; } }
+
+/* The two Wednesday questions are open by default: Document A places them as
+   body content in that section, not as a collapsed FAQ. */
+.mtx-np .mtx-np__faq { margin-top: 24px; }
+</style>
+
+  <header class="mtx-np__hero">
+    <div class="mtx-np__shell">
+      <h1>New Power Muay Thai, Wednesday 30 September 2026</h1>
+      <p class="mtx-np__lede">Watch traditional five-round Muay Thai at Rajadamnern Stadium on Wednesday 30 September 2026, with the tactical contest developing round by round across a full evening of New Power Muay Thai.</p>
+      <dl class="mtx-np__facts">
+        <div class="mtx-np__fact"><dt>Date</dt><dd>Wednesday 30 September 2026</dd></div>
+        <div class="mtx-np__fact"><dt>Venue</dt><dd>Rajadamnern Stadium, Bangkok</dd></div>
+        <div class="mtx-np__fact"><dt>Doors open</dt><dd>17:00</dd></div>
+        <div class="mtx-np__fact"><dt>Event starts</dt><dd>18:00</dd></div>
+        <div class="mtx-np__fact"><dt>Format</dt><dd>Traditional five-round Muay Thai</dd></div>
+        <div class="mtx-np__fact"><dt>Programme</dt><dd>Normally eight or nine bouts</dd></div>
+      </dl>
+      <p class="mtx-np__actions">
+        <a class="mtx-np__btn mtx-np__btn--blue" href="#book">Book Tickets</a>
+        <a class="mtx-np__btn mtx-np__btn--ghost" href="/rajadamnern-stadium-seating">Choose Your Seats</a>
+      </p>
+    </div>
+  </header>
+
+  <!-- Document B section 23: booking directly beneath the event facts. -->
+  <section class="mtx-np__band mtx-np__band--paper" id="book">
+    <div class="mtx-np__shell">
+      <div class="muaytix-ticket-selector" data-event-id="new_power_2026_09_30"></div>
+    </div>
+  </section>
+
+  <section class="mtx-np__band">
+    <div class="mtx-np__shell">
+      <h2>What to expect from New Power Muay Thai</h2>
+      <p>New Power is built around traditional five-round Muay Thai rather than the shorter three-round format used by some other Rajadamnern events.</p>
+      <p>The opening rounds can establish distance, rhythm and intent before the tactical contest develops through the later stages.</p>
+      <p>Fighters and corners respond between rounds, while scoring and momentum influence the way each contest develops.</p>
+      <p>Traditional sarama music accompanies the fights throughout the evening.</p>
+      <p>New Power normally features eight or nine bouts, although the confirmed number for an individual event can vary.</p>
+    </div>
+  </section>
+
+  <section class="mtx-np__band mtx-np__band--paper">
+    <div class="mtx-np__shell">
+      <h2>A traditional Wednesday night at Rajadamnern</h2>
+      <p>A strong local audience is an important part of New Power.</p>
+      <p>Spectators follow changes in timing, control, scoring and momentum, so the reaction inside the stadium often tells a first-time visitor that something important in the fight has changed.</p>
+      <p>Legal betting activity is also part of the traditional stadium environment and can be particularly visible around the LEO seating area.</p>
+      <p>It is one part of the wider Wednesday fight night atmosphere rather than the reason to attend.</p>
+    </div>
+  </section>
+
+  <!-- Document B section 10: no verified card, so the approved waiting
+       message only. No placeholder bouts and nothing from another date. -->
+  <section class="mtx-np__band">
+    <div class="mtx-np__shell">
+      <h2>New Power fight card, 30 September 2026</h2>
+      <p class="mtx-np__note">Fight card information will be updated when confirmed.</p>
+    </div>
+  </section>
+
+  <section class="mtx-np__band mtx-np__band--paper">
+    <div class="mtx-np__shell">
+      <h2>Choose your seats</h2>
+      <ul class="mtx-np__grid">
+        <li class="mtx-np__card mtx-np__card--gfx">
+          <img class="mtx-np__seatgfx" src="https://static.tildacdn.com/tild3830-6232-4832-b331-666465393139/1000033985.webp" alt="Ringside seating at Rajadamnern Stadium" loading="lazy" decoding="async">
+          <h3>Ringside</h3>
+          <p class="mtx-np__standfirst">Closest to the ring</p>
+          <p>Assigned seating for guests who want the closest available public viewing position.</p>
+        </li>
+
+        <li class="mtx-np__card mtx-np__card--gfx">
+          <img class="mtx-np__seatgfx" src="https://static.tildacdn.com/tild6633-3464-4335-b864-323737313634/1000033982.webp" alt="Club Class elevated seating at Rajadamnern Stadium" loading="lazy" decoding="async">
+          <h3>Club Class</h3>
+          <p class="mtx-np__standfirst">Elevated, assigned seating</p>
+          <p>Assigned seats with a clear view across the ring.</p>
+        </li>
+
+        <li class="mtx-np__card mtx-np__card--gfx">
+          <img class="mtx-np__seatgfx" src="https://static.tildacdn.com/tild3333-3339-4135-b436-326637666663/1000033984.webp" alt="LEO Section seating at Rajadamnern Stadium" loading="lazy" decoding="async">
+          <h3>LEO Section</h3>
+          <p class="mtx-np__standfirst">A more involved local atmosphere</p>
+          <p>Unassigned seating at the same general level as Club Class, with a strong local following.</p>
+          <p>Legal betting activity around the stadium can be particularly visible from this area during traditional fight nights.</p>
+        </li>
+      </ul>
+        <p class="mtx-np__maplayout">
+          <img src="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg" alt="Rajadamnern Stadium seating map" loading="lazy" decoding="async">
+        </p>
+      <p>The live ticket inventory is the source of truth for:</p>
+      <ul class="mtx-np__bullets">
+        <li>available ticket classes</li>
+        <li>prices</li>
+        <li>quantities</li>
+        <li>sold-out state</li>
+        <li>booking URLs</li>
+      </ul>
+      <p class="mtx-np__ctarow">
+        <a class="mtx-np__btn mtx-np__btn--outline" href="/rajadamnern-stadium-seating">Compare Rajadamnern seating</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="mtx-np__band">
+    <div class="mtx-np__shell">
+      <h2>Planning your visit on 30 September</h2>
+      <p>Rajadamnern Stadium opens its doors for New Power at 17:00.</p>
+      <p>The event starts at 18:00 Bangkok time.</p>
+      <p>The gates remain open during the evening, so guests may enter after the fights have started.</p>
+      <p>Your Stripe receipt confirms payment. Your event tickets are prepared and sent separately by MuayTix by email.</p>
+      <p>During operating hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes.</p>
+      <p>Bookings received outside those hours are normally fulfilled by midday the following day.</p>
+      <p class="mtx-np__ctarow">
+        <a class="mtx-np__btn mtx-np__btn--outline" href="/new-power-muay-thai">What is New Power Muay Thai?</a>
+        <a class="mtx-np__btn mtx-np__btn--outline" href="/rajadamnern-stadium-seating">Choose your Rajadamnern seats</a>
+        <a class="mtx-np__btn mtx-np__btn--outline" href="/rajadamnern-stadium">Rajadamnern Stadium information</a>
+        <a class="mtx-np__btn mtx-np__btn--outline" href="/rajadamnern-stadium-tickets">All Rajadamnern Stadium tickets</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="mtx-np__band mtx-np__band--paper">
+    <div class="mtx-np__shell">
+      <h2>New Power Muay Thai, 30 September: booking questions</h2>
+      <div class="mtx-np__faq">
+        <details>
+          <summary><h3>What time does New Power Muay Thai start on 30 September 2026?</h3></summary>
+          <p>The event starts at 18:00 Bangkok time. Doors open at 17:00.</p>
+        </details>
+
+        <details>
+          <summary><h3>How many rounds are the fights?</h3></summary>
+          <p>New Power follows the traditional five-round Muay Thai format.</p>
+        </details>
+
+        <details>
+          <summary><h3>How many fights are scheduled?</h3></summary>
+          <p>New Power normally features eight or nine bouts. The confirmed number for 30 September should be taken from the verified event information.</p>
+        </details>
+
+        <details>
+          <summary><h3>Can I arrive after the event has started?</h3></summary>
+          <p>Yes. The stadium gates remain open during the evening.</p>
+        </details>
+
+        <details>
+          <summary><h3>Do I need to print my ticket?</h3></summary>
+          <p>No. The QR ticket can be shown on your phone when entering the stadium.</p>
+        </details>
+
+        <details>
+          <summary><h3>How will I receive my ticket?</h3></summary>
+          <p>Your Stripe receipt confirms payment. Your New Power event tickets are then prepared and sent separately by MuayTix by email.</p>
+          <p>During operating hours of 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes. Outside those hours, fulfilment is normally by midday the following day.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is New Power a three-round event?</h3></summary>
+          <p>No. New Power uses traditional five-round Muay Thai.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is New Power suitable for someone new to Muay Thai?</h3></summary>
+          <p>Yes. The five-round format gives a first-time visitor time to see how rhythm, tactics and momentum develop as each fight progresses.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-np__band mtx-np__close">
+    <div class="mtx-np__shell">
+      <h2>Book New Power Muay Thai for Wednesday 30 September</h2>
+      <p>Choose from the ticket categories currently available for New Power Muay Thai at Rajadamnern Stadium.</p>
+      <p class="mtx-np__ctarow">
+        <a class="mtx-np__btn mtx-np__btn--blue" href="#book">Book Tickets</a>
+      </p>
+    </div>
+  </section>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"SportsEvent","@id":"https://muaytix.com/new-power-muay-thai/2026-09-30#event","name":"New Power Muay Thai, Wednesday 30 September 2026","startDate":"2026-09-30T18:00:00+07:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","description":"Watch traditional five-round Muay Thai at Rajadamnern Stadium on Wednesday 30 September 2026, with the tactical contest developing round by round across a full evening of New Power Muay Thai.","location":{"@type":"Place","name":"Rajadamnern Stadium","address":{"@type":"PostalAddress","streetAddress":"Ratchadamnoen Nok Road","addressLocality":"Bangkok","addressCountry":"TH"}},"image":"https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg","url":"https://muaytix.com/new-power-muay-thai/2026-09-30"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"MuayTix","item":"https://muaytix.com/"},{"@type":"ListItem","position":2,"name":"New Power Muay Thai: Wednesday at Rajadamnern Stadium","item":"https://muaytix.com/new-power-muay-thai"},{"@type":"ListItem","position":3,"name":"New Power Muay Thai, Wednesday 30 September 2026","item":"https://muaytix.com/new-power-muay-thai/2026-09-30"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What time does New Power Muay Thai start on 30 September 2026?","acceptedAnswer":{"@type":"Answer","text":"The event starts at 18:00 Bangkok time. Doors open at 17:00."}},{"@type":"Question","name":"How many rounds are the fights?","acceptedAnswer":{"@type":"Answer","text":"New Power follows the traditional five-round Muay Thai format."}},{"@type":"Question","name":"How many fights are scheduled?","acceptedAnswer":{"@type":"Answer","text":"New Power normally features eight or nine bouts. The confirmed number for 30 September should be taken from the verified event information."}},{"@type":"Question","name":"Can I arrive after the event has started?","acceptedAnswer":{"@type":"Answer","text":"Yes. The stadium gates remain open during the evening."}},{"@type":"Question","name":"Do I need to print my ticket?","acceptedAnswer":{"@type":"Answer","text":"No. The QR ticket can be shown on your phone when entering the stadium."}},{"@type":"Question","name":"How will I receive my ticket?","acceptedAnswer":{"@type":"Answer","text":"Your Stripe receipt confirms payment. Your New Power event tickets are then prepared and sent separately by MuayTix by email."}},{"@type":"Question","name":"Is New Power a three-round event?","acceptedAnswer":{"@type":"Answer","text":"No. New Power uses traditional five-round Muay Thai."}},{"@type":"Question","name":"Is New Power suitable for someone new to Muay Thai?","acceptedAnswer":{"@type":"Answer","text":"Yes. The five-round format gives a first-time visitor time to see how rhythm, tactics and momentum develop as each fight progresses."}}]}]}
+</script>
+</div>

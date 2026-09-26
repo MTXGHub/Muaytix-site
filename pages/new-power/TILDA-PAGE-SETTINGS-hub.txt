@@ -1,0 +1,22 @@
+NEW POWER MUAY THAI: Tilda page settings for /new-power-muay-thai
+========================================================
+Page settings, not part of the HTML block. Every line is Document A, word for
+word. Do not edit them here.
+
+SEO TITLE
+New Power Muay Thai | Wednesday at Rajadamnern Stadium
+
+META DESCRIPTION
+Discover New Power Muay Thai at Rajadamnern Stadium in Bangkok. Traditional five-round Muay Thai every Wednesday, with tickets available online.
+
+SOCIAL TITLE (Open Graph)
+New Power Muay Thai | Wednesday at Rajadamnern Stadium
+
+SOCIAL DESCRIPTION (Open Graph)
+Traditional five-round Muay Thai every Wednesday at Rajadamnern Stadium, with eight or nine bouts, sarama music and a strong local following.
+
+URL
+/new-power-muay-thai
+
+H1
+Already in the block, exactly one. Do not add another in Tilda.

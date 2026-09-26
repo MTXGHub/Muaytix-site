@@ -1,0 +1,67 @@
+{
+  "_rule": "Document B sections 5, 10, 11, 12, 17, 29. Every value verified, source named.",
+
+  "sources": {
+    "dates": "Supabase event_calendar, series_slug 'new-power', read 26 September 2026. Confirmed Wednesdays with an 18:00 start.",
+    "doors": "17:00, Document A core facts.",
+    "inventory": "event_ticket_classes through ticket_availability_status per event key, read 26 September 2026.",
+    "seat_images": "The four Tilda graphics supplied by the owner, class mapping confirmed by him.",
+    "seat_map": "The Rajadamnern seating map already published on MuayTix's own pages, with its published alt text.",
+    "logo": "MISSING. No New Power logo exists anywhere in this project. Document B section 12: stop and report, do not substitute.",
+    "fight_card": "NONE VERIFIED for 30 September. The approved waiting message is shown and no fighter is named.",
+    "prices": "NOT USED. Live inventory only. No price appears on either page."
+  },
+
+  "colours": {
+    "_note": "Document A visual identity and Document B section 3. These three and no other greens.",
+    "primary": "#01A453",
+    "dark": "#008F48",
+    "light": "#EAF7F0",
+    "text": "#111111",
+    "white": "#FFFFFF"
+  },
+
+  "dates": [
+    { "iso": "2026-09-30", "label": "Wednesday 30 September 2026", "path": "/new-power-muay-thai/2026-09-30",
+      "event_key": "new_power_2026_09_30", "cutoff_utc": "2026-09-30T10:30:00Z" },
+    { "iso": "2026-10-07", "label": "Wednesday 7 October 2026", "path": null,
+      "event_key": "new_power_2026_10_07", "cutoff_utc": "2026-10-07T10:30:00Z" },
+    { "iso": "2026-10-14", "label": "Wednesday 14 October 2026", "path": null,
+      "event_key": "new_power_2026_10_14", "cutoff_utc": "2026-10-14T10:30:00Z" }
+  ],
+
+  "dated": {
+    "url": "/new-power-muay-thai/2026-09-30",
+    "event_key": "new_power_2026_09_30",
+    "start_iso": "2026-09-30T18:00:00+07:00",
+    "seat_classes": { "ringside": "available", "club-class": "available", "leo-section": "available", "third-class": "closed" }
+  },
+
+  "seat_images": {
+    "ringside":    { "url": "https://static.tildacdn.com/tild3830-6232-4832-b331-666465393139/1000033985.webp",
+                     "alt": "Ringside seating at Rajadamnern Stadium" },
+    "club-class":  { "url": "https://static.tildacdn.com/tild6633-3464-4335-b864-323737313634/1000033982.webp",
+                     "alt": "Club Class elevated seating at Rajadamnern Stadium" },
+    "leo-section": { "url": "https://static.tildacdn.com/tild3333-3339-4135-b436-326637666663/1000033984.webp",
+                     "alt": "LEO Section seating at Rajadamnern Stadium" },
+    "third-class": { "url": "https://static.tildacdn.com/tild3864-6636-4461-a634-383639393261/1000033983.webp",
+                     "alt": "Third Class seating at Rajadamnern Stadium" }
+  },
+  "_alt_note": "Document B section 26 lists these exact strings as acceptable alt text. Used verbatim rather than composed.",
+
+  "seat_map": {
+    "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
+    "alt": "Rajadamnern Stadium seating map",
+    "source": "Already published on MuayTix's own seating and homepage blocks. Alt text is the wording Document B section 26 gives."
+  },
+
+  "logo": null,
+
+  "destinations": {
+    "hub": "/new-power-muay-thai",
+    "dated": "/new-power-muay-thai/2026-09-30",
+    "seating": "/rajadamnern-stadium-seating",
+    "stadium": "/rajadamnern-stadium",
+    "tickets": "/rajadamnern-stadium-tickets"
+  }
+}

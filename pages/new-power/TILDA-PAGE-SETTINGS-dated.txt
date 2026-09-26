@@ -1,0 +1,22 @@
+NEW POWER MUAY THAI: Tilda page settings for /new-power-muay-thai/2026-09-30
+========================================================
+Page settings, not part of the HTML block. Every line is Document A, word for
+word. Do not edit them here.
+
+SEO TITLE
+New Power Muay Thai Tickets, 30 September 2026 | MuayTix
+
+META DESCRIPTION
+Book New Power Muay Thai at Rajadamnern Stadium on Wednesday 30 September 2026. Traditional five-round Muay Thai starts at 18:00.
+
+SOCIAL TITLE (Open Graph)
+New Power Muay Thai | 30 September 2026
+
+SOCIAL DESCRIPTION (Open Graph)
+See event details and book seats for New Power Muay Thai at Rajadamnern Stadium on Wednesday 30 September 2026.
+
+URL
+/new-power-muay-thai/2026-09-30
+
+H1
+Already in the block, exactly one. Do not add another in Tilda.

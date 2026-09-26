@@ -1,0 +1,5 @@
+- No New Power logo exists anywhere in this project, so neither page shows one. Document B section 12: stop and report the missing asset, do not substitute other imagery.
+- No dated page exists yet for Wednesday 7 October 2026, so that card carries no link. Document B section 24: no invented URLs.
+- No dated page exists yet for Wednesday 14 October 2026, so that card carries no link. Document B section 24: no invented URLs.
+- /new-power-muay-thai/2026-09-30: Third Class is not released for this date, so its card is omitted. Document A block 4 and Document B section 11.
+- /new-power-muay-thai/2026-09-30: no verified fight card supplied, so the approved waiting message is shown and no fighter is named.
