@@ -403,6 +403,10 @@
 .mtx-pi__hero .mtx-pi__fact dt { color: #b9bcc6; }
 .mtx-pi__hero .mtx-pi__fact dd { color: #fff; }
 
+.mtx-pi .mtx-pi__logo { margin: 0 0 20px !important; overflow: hidden; }
+
+.mtx-pi .mtx-pi__logoimg { display: block; width: auto; max-width: none; mix-blend-mode: screen; }
+
 .mtx-pi .mtx-pi__note {
   margin-top: 20px !important; padding-left: 15px; border-left: 3px solid var(--pi-blue);
   font-size: 16.5px; max-width: 68ch;
@@ -465,6 +469,7 @@
 
   <header class="mtx-pi__hero">
     <div class="mtx-pi__shell">
+      <p class="mtx-pi__logo" style="height:84px;width:121.1px"><img class="mtx-pi__logoimg" src="https://static.tildacdn.com/tild3031-6434-4537-b433-373733626337/2edd0c01-d473-4a1c-b.png" alt="Petchyindee" width="1024" height="1024" loading="eager" decoding="async" style="height:193.7px;margin:-56.2px 0 0 -38px"></p>
       <h1>Petchyindee Muay Thai: Thursday at Rajadamnern Stadium</h1>
       <p class="mtx-pi__lede">Petchyindee Muay Thai brings technical competition, timing and ring intelligence to Rajadamnern Stadium every Thursday evening.</p>
       <p class="mtx-pi__lede">Watch fighters control distance, balance and momentum before the contest can open into powerful kicks, clinching exchanges and sudden attacks.</p>
@@ -481,6 +486,13 @@
       </p>
     </div>
   </header>
+
+  
+  <section class="mtx-pi__band mtx-pi__band--paper" id="book">
+    <div class="mtx-pi__shell">
+      <div class="muaytix-ticket-selector" data-series="petchyindee"></div>
+    </div>
+  </section>
 
   <section class="mtx-pi__band">
     <div class="mtx-pi__shell">
@@ -610,7 +622,7 @@
 
         <details>
           <summary><h3>What time does Petchyindee Muay Thai start?</h3></summary>
-          <p>The event normally begins at 18:00, with doors opening at 17:00.</p>
+          <p>The event starts at 18:00. Doors open at 17:00.</p>
         </details>
 
         <details>
@@ -620,12 +632,12 @@
 
         <details>
           <summary><h3>How many fights are on a Petchyindee card?</h3></summary>
-          <p>The number of bouts can vary. The confirmed programme should be taken from the event information for the specific Thursday you are attending.</p>
+          <p>There are between 9 and 11 bouts on a Petchyindee card, and it varies week by week.</p>
         </details>
 
         <details>
           <summary><h3>Are all Petchyindee fights five rounds?</h3></summary>
-          <p>Do not assume that every bout follows the same format. The confirmed format for a specific event should be taken from the verified fight information for that date.</p>
+          <p>Yes.</p>
         </details>
 
         <details>
@@ -635,13 +647,13 @@
 
         <details>
           <summary><h3>Can I arrive after the event has started?</h3></summary>
-          <p>Guests may enter after the event has begun where the stadium’s normal late-entry policy remains in operation.</p>
+          <p>Yes. Gates remain open all evening and guests can enter at their leisure.</p>
         </details>
       </div>
     </div>
   </section>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://muaytix.com/petchyindee-muay-thai#webpage","url":"https://muaytix.com/petchyindee-muay-thai","name":"Petchyindee Muay Thai | Thursday at Rajadamnern Stadium","description":"Discover Petchyindee Muay Thai at Rajadamnern Stadium in Bangkok. Explore Thursday fight nights, seating and upcoming ticket availability."},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"MuayTix","item":"https://muaytix.com/"},{"@type":"ListItem","position":2,"name":"Petchyindee Muay Thai: Thursday at Rajadamnern Stadium","item":"https://muaytix.com/petchyindee-muay-thai"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What day is Petchyindee Muay Thai?","acceptedAnswer":{"@type":"Answer","text":"Petchyindee Muay Thai takes place on Thursday evenings at Rajadamnern Stadium in Bangkok."}},{"@type":"Question","name":"What time does Petchyindee Muay Thai start?","acceptedAnswer":{"@type":"Answer","text":"The event normally begins at 18:00, with doors opening at 17:00."}},{"@type":"Question","name":"What type of Muay Thai will I see?","acceptedAnswer":{"@type":"Answer","text":"Petchyindee is built around technical competitive Muay Thai, with timing, balance, control, powerful kicks and clinching all forming part of the contests."}},{"@type":"Question","name":"How many fights are on a Petchyindee card?","acceptedAnswer":{"@type":"Answer","text":"The number of bouts can vary. The confirmed programme should be taken from the event information for the specific Thursday you are attending."}},{"@type":"Question","name":"Are all Petchyindee fights five rounds?","acceptedAnswer":{"@type":"Answer","text":"Do not assume that every bout follows the same format. The confirmed format for a specific event should be taken from the verified fight information for that date."}},{"@type":"Question","name":"Is Petchyindee suitable for someone watching Muay Thai for the first time?","acceptedAnswer":{"@type":"Answer","text":"Yes. A first-time visitor can follow the contest by watching how fighters use distance, balance and timing and how the pressure changes as each bout develops."}},{"@type":"Question","name":"Can I arrive after the event has started?","acceptedAnswer":{"@type":"Answer","text":"Guests may enter after the event has begun where the stadium’s normal late-entry policy remains in operation."}}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://muaytix.com/petchyindee-muay-thai#webpage","url":"https://muaytix.com/petchyindee-muay-thai","name":"Petchyindee Muay Thai | Thursday at Rajadamnern Stadium","description":"Discover Petchyindee Muay Thai at Rajadamnern Stadium in Bangkok. Explore Thursday fight nights, seating and upcoming ticket availability."},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"MuayTix","item":"https://muaytix.com/"},{"@type":"ListItem","position":2,"name":"Petchyindee Muay Thai: Thursday at Rajadamnern Stadium","item":"https://muaytix.com/petchyindee-muay-thai"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What day is Petchyindee Muay Thai?","acceptedAnswer":{"@type":"Answer","text":"Petchyindee Muay Thai takes place on Thursday evenings at Rajadamnern Stadium in Bangkok."}},{"@type":"Question","name":"What time does Petchyindee Muay Thai start?","acceptedAnswer":{"@type":"Answer","text":"The event starts at 18:00. Doors open at 17:00."}},{"@type":"Question","name":"What type of Muay Thai will I see?","acceptedAnswer":{"@type":"Answer","text":"Petchyindee is built around technical competitive Muay Thai, with timing, balance, control, powerful kicks and clinching all forming part of the contests."}},{"@type":"Question","name":"How many fights are on a Petchyindee card?","acceptedAnswer":{"@type":"Answer","text":"There are between 9 and 11 bouts on a Petchyindee card, and it varies week by week."}},{"@type":"Question","name":"Are all Petchyindee fights five rounds?","acceptedAnswer":{"@type":"Answer","text":"Yes."}},{"@type":"Question","name":"Is Petchyindee suitable for someone watching Muay Thai for the first time?","acceptedAnswer":{"@type":"Answer","text":"Yes. A first-time visitor can follow the contest by watching how fighters use distance, balance and timing and how the pressure changes as each bout develops."}},{"@type":"Question","name":"Can I arrive after the event has started?","acceptedAnswer":{"@type":"Answer","text":"Yes. Gates remain open all evening and guests can enter at their leisure."}}]}]}
 </script>
 </div>

@@ -15,6 +15,10 @@ for (const key of ['hub','dated']) {
     r.fulfill({ status: 200, contentType: 'image/svg+xml', body:
       `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><rect width="1200" height="800" fill="#111"/><rect y="735" width="1200" height="65" fill="${col}"/><text x="60" y="380" font-family="Arial" font-size="88" font-weight="bold" fill="#fff">${label}</text><text x="60" y="460" font-family="Arial" font-size="38" fill="#aaa">stand-in ${id}</text></svg>` });
   });
+  // Registered after the catch-all: Playwright matches handlers in reverse
+  // order, so the last one registered wins. The logo is the real file the owner supplied, so the hero renders truthfully.
+  await p.route('**/2edd0c01-d473-4a1c-b.png', r => r.fulfill({ status: 200, contentType: 'image/png',
+    body: readFileSync('/root/.claude/uploads/92c34b20-70db-5c31-9f25-d0116bc68d3c/2d1ea222-image.png') }));
   await p.setContent(doc, { waitUntil: 'load' });
   await p.waitForTimeout(300);
   const nodes = await p.$$('.mtx-pi > section, .mtx-pi > header');

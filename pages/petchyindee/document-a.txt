@@ -1,11 +1,23 @@
 # PETCHYINDEE MUAY THAI: LOCKED COPY, transcribed from Document A.
 # The only place prose for these two pages exists.
 #
-# One line of Document A is NOT transcribed as guest copy: the sentence
-# "Confirm the current event policy before publication." which follows the
-# evergreen late-entry answer. It addresses the implementer, not a guest, and
-# publishing it would put an internal note on a live page. It is reported to
-# the owner instead. See reports.txt.
+# CORRECTIONS SUPPLIED BY THE OWNER, 26 September 2026, by voice.
+# These replace the Document A text for the blocks named. Everything else is
+# still Document A as first supplied.
+#   hub.faq.a2   start time, "normally" removed
+#   hub.faq.a4   9 to 11 bouts, varies week by week
+#   hub.faq.a5   yes, all five rounds
+#   hub.faq.a7   late entry, gates open all evening
+#   dated.faq.a2 same bout count as the evergreen answer
+#   dated.faq.a3 yes
+# REMOVED on his instruction, 26 September 2026:
+#   dated.expect.p5  "The exact bout format and number of fights for 1 October
+#                     should be taken only from verified event information."
+#   dated.card.h2 and dated.card.notice, and the whole fight card section with
+#                     them. No mention of a fight card on either page.
+# The Document A line "Confirm the current event policy before publication."
+# is now answered and gone: the late-entry policy applies every night, all
+# year, and hub.faq.a7 says so.
 
 # ============================ PAGE 1: EVERGREEN ============================
 
@@ -199,7 +211,7 @@ Petchyindee Muay Thai takes place on Thursday evenings at Rajadamnern Stadium in
 What time does Petchyindee Muay Thai start?
 
 [hub.faq.a2]
-The event normally begins at 18:00, with doors opening at 17:00.
+The event starts at 18:00. Doors open at 17:00.
 
 [hub.faq.q3]
 What type of Muay Thai will I see?
@@ -211,13 +223,13 @@ Petchyindee is built around technical competitive Muay Thai, with timing, balanc
 How many fights are on a Petchyindee card?
 
 [hub.faq.a4]
-The number of bouts can vary. The confirmed programme should be taken from the event information for the specific Thursday you are attending.
+There are between 9 and 11 bouts on a Petchyindee card, and it varies week by week.
 
 [hub.faq.q5]
 Are all Petchyindee fights five rounds?
 
 [hub.faq.a5]
-Do not assume that every bout follows the same format. The confirmed format for a specific event should be taken from the verified fight information for that date.
+Yes.
 
 [hub.faq.q6]
 Is Petchyindee suitable for someone watching Muay Thai for the first time?
@@ -229,7 +241,7 @@ Yes. A first-time visitor can follow the contest by watching how fighters use di
 Can I arrive after the event has started?
 
 [hub.faq.a7]
-Guests may enter after the event has begun where the stadium’s normal late-entry policy remains in operation.
+Yes. Gates remain open all evening and guests can enter at their leisure.
 
 # =========================== PAGE 2: 1 OCTOBER ===========================
 
@@ -296,9 +308,6 @@ Some exchanges may begin carefully as each fighter studies distance and reaction
 [dated.expect.p4]
 As pressure builds, the contest can open quickly into stronger attacks and decisive tactical changes.
 
-[dated.expect.p5]
-The exact bout format and number of fights for 1 October should be taken only from verified event information.
-
 [dated.thu.h2]
 A Thursday night at Rajadamnern Stadium
 
@@ -313,12 +322,6 @@ Wai Kru and traditional Muay Thai music form part of the stadium environment aro
 
 [dated.thu.p4]
 For a first-time visitor, the night offers an opportunity to watch how timing, balance, pressure and technical decision-making shape live Muay Thai.
-
-[dated.card.h2]
-Petchyindee fight card, 1 October 2026
-
-[dated.card.notice]
-Fight card information will be updated when confirmed.
 
 [dated.seats.h2]
 Choose your seats
@@ -423,13 +426,13 @@ The event starts at 18:00 Bangkok time. Doors open at 17:00.
 How many fights are scheduled?
 
 [dated.faq.a2]
-The confirmed number of bouts should be taken from the verified event information for 1 October 2026.
+There are between 9 and 11 bouts on a Petchyindee card, and it varies week by week.
 
 [dated.faq.q3]
 Are the fights five rounds?
 
 [dated.faq.a3]
-Do not assume that every bout uses the same format. The confirmed bout format for 1 October should be taken from the verified fight card or event information.
+Yes.
 
 [dated.faq.q4]
 Do I need to print my ticket?

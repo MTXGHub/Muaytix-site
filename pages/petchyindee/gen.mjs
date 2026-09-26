@@ -20,13 +20,30 @@ const D = data.destinations;
 const reports = [];
 
 /* Document B section 12: a missing asset stops and is reported, never substituted. */
-if (!data.logo) reports.push('No Petchyindee logo exists anywhere in this project, so neither page shows one. Document B section 12: stop and report the missing asset, do not substitute other imagery.');
-/* Document A's late-entry answer is followed by "Confirm the current event
-   policy before publication." That sentence addresses the implementer, not a
-   guest, so it is not rendered. Reported instead. */
-reports.push('Document A\'s evergreen late-entry answer ends with "Confirm the current event policy before publication." That sentence addresses the implementer, not a guest, so only the first sentence is rendered. The late-entry policy still needs confirming before this page goes live.');
-reports.push('Three approved FAQ answers read as internal guidance rather than as an answer to a guest: the two beginning "Do not assume that every bout..." and "The confirmed number of bouts should be taken from the verified event information for 1 October 2026." All three are rendered word for word as supplied. Flagged, not altered.');
-reports.push('Document A\'s evergreen copy says "The live booking section shows the ticket categories currently available for the selected Thursday." The evergreen page carries no booking widget, because the widget\'s full calendar lists every promotion\'s fight nights, not only Petchyindee Thursdays. The All Star and New Power evergreen pages are built the same way. Say the word and the widget goes on the evergreen page.');
+if (!data.logo || !data.logo.url) throw new Error('No Petchyindee logo in dynamic-data.json. Document B section 12: STOP.');
+if (!data.logo.alt) throw new Error('The Petchyindee logo has no alt text.');
+reports.push('The logo alt text reads "' + data.logo.alt + '". It is the promotion name and nothing more, because no alt text was supplied for it. Change it and I will rebuild.');
+/* The evergreen booking widget, per the owner, 26 September 2026: the same
+   widget the page carried before, showing Petchyindee Thursdays. The widget
+   marks this promotion's nights out and opens on the month holding the next
+   one, but by its own design it never hides another promotion's night. */
+reports.push('The evergreen page carries the promotion mount data-series="petchyindee", which opens the calendar on the month holding the next Petchyindee Thursday and marks the Thursdays out. By design the widget never hides another promotion\'s night, so a guest can still book a different night from that calendar. Making Thursdays the only bookable dates would be a change to the widget itself, which is pasted once into the site head and affects every page.');
+
+/* The supplied logo is artwork centred in a square of solid black padding.
+ * Dropped in as-is it sits inset from the heading and shows a black box on the
+ * hero. The content box was measured off the file (see dynamic-data.json) and
+ * the mark is cropped back to it, so the logo's left edge lines up with the h1
+ * and the height below is the height of the mark itself, not of the padding.
+ * Replace the file and the numbers get re-measured, not guessed. */
+const LG = data.logo;
+const cw = LG.content_box.right - LG.content_box.left + 1;
+const ch = LG.content_box.bottom - LG.content_box.top + 1;
+const boxH = LG.mark_height_px * LG.natural.h / ch;                 // rendered image height
+const boxW = boxH * LG.natural.w / LG.natural.h;
+const r = n => Math.round(n * 10) / 10;
+const logoMark = `      <p class="mtx-pi__logo" style="height:${r(LG.mark_height_px)}px;width:${r(boxW * cw / LG.natural.w)}px">` +
+  `<img class="mtx-pi__logoimg" src="${esc(LG.url)}" alt="${esc(LG.alt)}" width="${LG.natural.w}" height="${LG.natural.h}" loading="eager" decoding="async" ` +
+  `style="height:${r(boxH)}px;margin:${r(-boxH * LG.content_box.top / LG.natural.h)}px 0 0 ${r(-boxW * LG.content_box.left / LG.natural.w)}px"></p>`;
 
 function seatCards(page, keys) {
   return keys.map(k => {
@@ -65,6 +82,7 @@ const dateCards = data.dates.map(d => {
 
 const hub = `  <header class="mtx-pi__hero">
     <div class="mtx-pi__shell">
+${logoMark}
       <h1>${H('h1')}</h1>
       <p class="mtx-pi__lede">${H('hero.p1')}</p>
       <p class="mtx-pi__lede">${H('hero.p2')}</p>
@@ -77,6 +95,15 @@ ${[1,2,3,4,5].map(n => `        <li>${H('facts.' + n)}</li>`).join('\n')}
       </p>
     </div>
   </header>
+
+  <!-- The evergreen booking widget, per the owner, 26 September 2026. The
+       promotion mount opens on the month holding the next Petchyindee
+       Thursday and marks this promotion's nights out. -->
+  <section class="mtx-pi__band mtx-pi__band--paper" id="book">
+    <div class="mtx-pi__shell">
+      <div class="muaytix-ticket-selector" data-series="${esc(data.series_slug)}"></div>
+    </div>
+  </section>
 
   <section class="mtx-pi__band">
     <div class="mtx-pi__shell">
@@ -159,10 +186,10 @@ const shown = Object.entries(dd.seat_classes).filter(([, v]) => v !== 'closed').
 for (const [k, v] of Object.entries(dd.seat_classes)) {
   if (v === 'closed') reports.push(`${dd.url}: ${t('dated', 'seats.name.' + k)} is not released for this date, so its card is omitted. Document A block 4 and Document B section 11.`);
 }
-reports.push(`${dd.url}: no verified fight card supplied, so the approved waiting message is shown and no fighter is named.`);
 
 const dated = `  <header class="mtx-pi__hero">
     <div class="mtx-pi__shell">
+${logoMark}
       <h1>${T('h1')}</h1>
       <p class="mtx-pi__lede">${T('hero.body')}</p>
       <dl class="mtx-pi__facts">
@@ -186,7 +213,7 @@ ${['date','venue','doors','starts'].map(k =>
   <section class="mtx-pi__band">
     <div class="mtx-pi__shell">
       <h2>${T('expect.h2')}</h2>
-${[1,2,3,4,5].map(n => `      <p>${T('expect.p' + n)}</p>`).join('\n')}
+${[1,2,3,4].map(n => `      <p>${T('expect.p' + n)}</p>`).join('\n')}
     </div>
   </section>
 
@@ -197,16 +224,12 @@ ${[1,2,3,4].map(n => `      <p>${T('thu.p' + n)}</p>`).join('\n')}
     </div>
   </section>
 
-  <!-- Document B section 10: no verified card, so the approved waiting
-       message only. No placeholder bouts and nothing from another date. -->
-  <section class="mtx-pi__band">
-    <div class="mtx-pi__shell">
-      <h2>${T('card.h2')}</h2>
-      <p class="mtx-pi__note">${T('card.notice')}</p>
-    </div>
-  </section>
+  <!-- Owner's instruction, 26 September 2026: no mention of a fight card on
+       either page. The section and its two copy blocks are removed. -->
 
-  <section class="mtx-pi__band mtx-pi__band--paper">
+  <!-- The bands alternate paper and plain. Removing the fight card section
+       flipped the rhythm from here down, so these four are re-alternated. -->
+  <section class="mtx-pi__band">
     <div class="mtx-pi__shell">
       <h2>${T('seats.h2')}</h2>
       <!-- Three released classes sit in three columns. In a two-column grid the
@@ -225,7 +248,7 @@ ${[1,2,3,4,5].map(n => `        <li>${T('source.' + n)}</li>`).join('\n')}
     </div>
   </section>
 
-  <section class="mtx-pi__band">
+  <section class="mtx-pi__band mtx-pi__band--paper">
     <div class="mtx-pi__shell">
       <h2>${T('plan.h2')}</h2>
 ${[1,2,3,4,5].map(n => `      <p>${T('plan.p' + n)}</p>`).join('\n')}
@@ -238,7 +261,7 @@ ${[1,2,3,4,5].map(n => `      <p>${T('plan.p' + n)}</p>`).join('\n')}
     </div>
   </section>
 
-  <section class="mtx-pi__band mtx-pi__band--paper">
+  <section class="mtx-pi__band">
     <div class="mtx-pi__shell">
       <h2>${T('faq.h2')}</h2>
       <div class="mtx-pi__faq">
@@ -253,7 +276,7 @@ ${[1,2,3,4,5,6].map(n => {
     </div>
   </section>
 
-  <section class="mtx-pi__band mtx-pi__close">
+  <section class="mtx-pi__band mtx-pi__band--paper mtx-pi__close">
     <div class="mtx-pi__shell">
       <h2>${T('final.h2')}</h2>
       <p>${T('final.copy')}</p>

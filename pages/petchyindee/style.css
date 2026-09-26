@@ -514,6 +514,18 @@
 .mtx-pi__hero .mtx-pi__fact dt { color: #b9bcc6; }
 .mtx-pi__hero .mtx-pi__fact dd { color: #fff; }
 
+/* The promotion logo above each h1. Doubled class throughout: .mtx-pi p
+   { margin: 0 } is (0,1,1) and .mtx-pi img { max-width: 100% } would fight
+   the explicit height, and the width/height attributes on the tag arrive as
+   presentational hints that beat anything weaker. */
+.mtx-pi .mtx-pi__logo { margin: 0 0 20px !important; overflow: hidden; }
+/* The supplied file is artwork on a solid black square. Dropped straight onto
+   the hero it reads as a black rectangle sitting on a near-black background.
+   Screen blending takes the black padding back to the hero colour and leaves
+   the green mark, so no cropping is guessed at and a replacement file of any
+   crop still works. */
+.mtx-pi .mtx-pi__logoimg { display: block; width: auto; max-width: none; mix-blend-mode: screen; }
+
 /* The supporting note and the fight-card waiting message. */
 .mtx-pi .mtx-pi__note {
   margin-top: 20px !important; padding-left: 15px; border-left: 3px solid var(--pi-blue);

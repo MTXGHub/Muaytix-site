@@ -40,6 +40,9 @@ const FORBIDDEN = [
   [/\$\s?\d+|฿\s?\d+|\b\d+ THB\b/i, 'a hard-coded price'],
   [/seat number(s)? (is|are) printed|printed on (your|the) ticket/i, 'ticket-printing claim'],
   [/before publication/i, 'an internal instruction left in guest copy'],
+  /* The owner's instruction, 26 September 2026: no mention of a fight card
+     on either page. */
+  [/fight card/i, 'a mention of the fight card'],
 ];
 
 const ALLOWED = ['/petchyindee-muay-thai','/petchyindee-muay-thai/2026-10-01','/rajadamnern-stadium-seating',
@@ -160,7 +163,15 @@ for (const P of [{ key: 'hub', prefix: 'hub', kw: [...CL031, ...CL035] },
   const imgs = await page.evaluate(() =>
     [...document.querySelectorAll('.mtx-pi img')].map(i => ({ src: i.getAttribute('src'), alt: i.getAttribute('alt'),
       card: i.closest('li')?.querySelector('h3')?.textContent.trim() })));
+  let logoSeen = 0;
   for (const i of imgs) {
+    if (i.src === data.logo.url) {
+      logoSeen++;
+      const ok = i.alt === data.logo.alt;
+      console.log(`   ${'Logo'.padEnd(13)} ${i.src.slice(-12)}  ${ok ? 'MATCH' : 'MISMATCH'}`);
+      if (!ok) fail(`logo alt text is "${i.alt}", expected "${data.logo.alt}"`);
+      continue;
+    }
     if (i.src === data.seat_map.url) {
       const ok = i.alt === data.seat_map.alt;
       console.log(`   ${'Seating map'.padEnd(13)} ${i.src.slice(-14)}  ${ok ? 'MATCH' : 'MISMATCH'}`);
@@ -175,7 +186,8 @@ for (const P of [{ key: 'hub', prefix: 'hub', kw: [...CL031, ...CL035] },
     if (!i.alt) fail(`image ${id} has no alt text`);
     if (entry && i.alt !== data.seat_images[entry[0]].alt) fail(`alt text for ${id} is not the approved string`);
   }
-  console.log(`   Petchyindee logo: NOT PRESENT (no such asset exists in the project)`);
+  console.log(`   Petchyindee logo: ${logoSeen} on the page`);
+  if (logoSeen !== 1) fail(`${P.key}: expected exactly one logo, found ${logoSeen}`);
 
   console.log('\n-- headings --');
   const hs = await page.evaluate(() => [...document.querySelectorAll('.mtx-pi h1,.mtx-pi h2,.mtx-pi h3')].map(h => h.tagName));

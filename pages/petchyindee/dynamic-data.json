@@ -40,7 +40,17 @@
     "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
     "alt": "Rajadamnern Stadium seating map"
   },
-  "logo": null,
+  "logo": {
+    "url": "https://static.tildacdn.com/tild3031-6434-4537-b433-373733626337/2edd0c01-d473-4a1c-b.png",
+    "alt": "Petchyindee",
+    "_source": "Supplied directly by the owner, 26 September 2026.",
+    "natural": { "w": 1024, "h": 1024 },
+    "content_box": { "left": 201, "top": 297, "right": 840, "bottom": 740 },
+    "_content_box_source": "Measured off the supplied file, 26 September 2026: the artwork sits inside a square of solid black padding, so the mark is cropped back to these pixels to line its left edge up with the heading. Re-measure if the file is replaced.",
+    "mark_height_px": 84
+  },
+  "series_slug": "petchyindee",
+  "_series_source": "event_calendar.series_slug, read 26 September 2026: 14 Petchyindee nights, 1 October to 31 December 2026.",
   "destinations": {
     "hub": "/petchyindee-muay-thai",
     "dated": "/petchyindee-muay-thai/2026-10-01",
