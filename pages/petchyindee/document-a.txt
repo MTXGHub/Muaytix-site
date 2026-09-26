@@ -1,0 +1,462 @@
+# PETCHYINDEE MUAY THAI: LOCKED COPY, transcribed from Document A.
+# The only place prose for these two pages exists.
+#
+# One line of Document A is NOT transcribed as guest copy: the sentence
+# "Confirm the current event policy before publication." which follows the
+# evergreen late-entry answer. It addresses the implementer, not a guest, and
+# publishing it would put an internal note on a live page. It is reported to
+# the owner instead. See reports.txt.
+
+# ============================ PAGE 1: EVERGREEN ============================
+
+[hub.meta.seo_title]
+Petchyindee Muay Thai | Thursday at Rajadamnern Stadium
+
+[hub.meta.description]
+Discover Petchyindee Muay Thai at Rajadamnern Stadium in Bangkok. Explore Thursday fight nights, seating and upcoming ticket availability.
+
+[hub.meta.social_title]
+Petchyindee Muay Thai | Thursday at Rajadamnern Stadium
+
+[hub.meta.social_description]
+Explore Petchyindee Muay Thai every Thursday at Rajadamnern Stadium, with technical competition, live Muay Thai traditions and online booking.
+
+[hub.h1]
+Petchyindee Muay Thai: Thursday at Rajadamnern Stadium
+
+[hub.hero.p1]
+Petchyindee Muay Thai brings technical competition, timing and ring intelligence to Rajadamnern Stadium every Thursday evening.
+
+[hub.hero.p2]
+Watch fighters control distance, balance and momentum before the contest can open into powerful kicks, clinching exchanges and sudden attacks.
+
+[hub.facts.1]
+Thursday evenings
+
+[hub.facts.2]
+Doors open: 17:00
+
+[hub.facts.3]
+Event starts: 18:00
+
+[hub.facts.4]
+Rajadamnern Stadium, Bangkok
+
+[hub.facts.5]
+Technical competitive Muay Thai
+
+[hub.hero.cta_primary]
+See Upcoming Thursdays
+
+[hub.hero.cta_secondary]
+Choose Your Seats
+
+[hub.what.h2]
+What is Petchyindee Muay Thai?
+
+[hub.what.p1]
+Petchyindee Muay Thai is Rajadamnern Stadium’s regular Thursday fight night.
+
+[hub.what.p2]
+The event is built around serious competition, with fighters using timing, balance, composure and ring intelligence rather than relying only on raw power.
+
+[hub.what.p3]
+A bout can begin with measured exchanges as each fighter studies distance and reaction.
+
+[hub.what.p4]
+As the contest develops, control can shift quickly through combinations, body kicks, clinching exchanges and changes in momentum.
+
+[hub.what.p5]
+This is Muay Thai where the tactical contest matters as much as individual moments of impact.
+
+[hub.exact.line]
+The Petchyindee Muay Thai event is Rajadamnern Stadium’s regular Thursday fight night.
+
+[hub.tech.h2]
+Technique. Timing. Then everything can change.
+
+[hub.tech.p1]
+Petchyindee shows how quickly a Muay Thai contest can move between patience and pressure.
+
+[hub.tech.p2]
+Fighters may spend part of a bout establishing distance, testing balance and reading their opponent before opening into more aggressive exchanges.
+
+[hub.tech.p3]
+A strong body kick, a successful clinch, a clean counter or a sudden combination can change the direction of the contest.
+
+[hub.tech.p4]
+The result is a fight night where control and composure matter, but where decisive moments can arrive without warning.
+
+[hub.tech.p5]
+For a first-time visitor, watching how fighters react to one another is often the easiest way to begin understanding the technical side of Muay Thai.
+
+[hub.thu.h2]
+Thursday night Muay Thai in Bangkok
+
+[hub.thu.p1]
+Petchyindee is the regular Thursday Muay Thai event at Rajadamnern Stadium.
+
+[hub.thu.p2]
+The atmosphere is shaped by live competition, the rituals surrounding the sport and an audience following changes in the fight as they happen.
+
+[hub.thu.p3]
+Wai Kru and traditional Muay Thai music form part of the stadium environment around the contests.
+
+[hub.thu.p4]
+The focus remains on the fighters and the sporting competition inside the ring.
+
+[hub.thu.h3a]
+Is there Muay Thai at Rajadamnern Stadium on Thursday?
+
+[hub.thu.a3a]
+Yes. Petchyindee Muay Thai is the regular Thursday fight night at Rajadamnern Stadium, with doors normally opening at 17:00 and the event beginning at 18:00.
+
+[hub.thu.h3b]
+What should I expect from Petchyindee Muay Thai?
+
+[hub.thu.a3b]
+Expect technical Muay Thai built around timing, balance, control and tactical changes, with moments of pressure, clinching and powerful striking developing through the fights.
+
+[hub.seats.h2]
+Choose your seats for Petchyindee Muay Thai
+
+[hub.seats.name.ringside]
+Ringside
+
+[hub.seats.descriptor.ringside]
+Closest to the ring
+
+[hub.seats.copy.ringside]
+Assigned seating for guests who want the closest available public viewing position.
+
+[hub.seats.name.club-class]
+Club Class
+
+[hub.seats.descriptor.club-class]
+Elevated, assigned seating
+
+[hub.seats.copy.club-class]
+Assigned seats with a clear view across the ring.
+
+[hub.seats.name.leo-section]
+LEO Section
+
+[hub.seats.descriptor.leo-section]
+A more involved local atmosphere
+
+[hub.seats.copy.leo-section]
+Unassigned seating at the same general level as Club Class, with a strong local following.
+
+[hub.seats.name.third-class]
+Third Class
+
+[hub.seats.descriptor.third-class]
+Elevated outer-tier viewing
+
+[hub.seats.copy.third-class]
+The lowest-priced public seating category when released for the selected event.
+
+[hub.seats.cta]
+Compare Rajadamnern seating
+
+[hub.dates.h2]
+Upcoming Petchyindee Muay Thai dates
+
+[hub.dates.h3]
+Booking with MuayTix
+
+[hub.dates.p1]
+The live booking section shows the ticket categories currently available for the selected Thursday.
+
+[hub.dates.p2]
+Your Stripe receipt confirms payment. Event tickets are prepared and sent separately by MuayTix by email.
+
+[hub.dates.p3]
+During MuayTix operating hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes.
+
+[hub.dates.p4]
+Bookings received outside those hours are normally fulfilled by midday the following day.
+
+[hub.dates.p5]
+MuayTix provides WhatsApp support seven days a week for booking and ticket questions.
+
+[hub.dates.cta_primary]
+See Upcoming Thursdays
+
+[hub.dates.cta_secondary]
+View All Rajadamnern Tickets
+
+[hub.faq.h2]
+Petchyindee Muay Thai questions
+
+[hub.faq.q1]
+What day is Petchyindee Muay Thai?
+
+[hub.faq.a1]
+Petchyindee Muay Thai takes place on Thursday evenings at Rajadamnern Stadium in Bangkok.
+
+[hub.faq.q2]
+What time does Petchyindee Muay Thai start?
+
+[hub.faq.a2]
+The event normally begins at 18:00, with doors opening at 17:00.
+
+[hub.faq.q3]
+What type of Muay Thai will I see?
+
+[hub.faq.a3]
+Petchyindee is built around technical competitive Muay Thai, with timing, balance, control, powerful kicks and clinching all forming part of the contests.
+
+[hub.faq.q4]
+How many fights are on a Petchyindee card?
+
+[hub.faq.a4]
+The number of bouts can vary. The confirmed programme should be taken from the event information for the specific Thursday you are attending.
+
+[hub.faq.q5]
+Are all Petchyindee fights five rounds?
+
+[hub.faq.a5]
+Do not assume that every bout follows the same format. The confirmed format for a specific event should be taken from the verified fight information for that date.
+
+[hub.faq.q6]
+Is Petchyindee suitable for someone watching Muay Thai for the first time?
+
+[hub.faq.a6]
+Yes. A first-time visitor can follow the contest by watching how fighters use distance, balance and timing and how the pressure changes as each bout develops.
+
+[hub.faq.q7]
+Can I arrive after the event has started?
+
+[hub.faq.a7]
+Guests may enter after the event has begun where the stadium’s normal late-entry policy remains in operation.
+
+# =========================== PAGE 2: 1 OCTOBER ===========================
+
+[dated.meta.seo_title]
+Petchyindee Muay Thai Tickets, 1 October 2026 | MuayTix
+
+[dated.meta.description]
+Book Petchyindee Muay Thai at Rajadamnern Stadium on Thursday 1 October 2026. Doors open at 17:00 and the event starts at 18:00.
+
+[dated.meta.social_title]
+Petchyindee Muay Thai | 1 October 2026
+
+[dated.meta.social_description]
+See event details and book seats for Petchyindee Muay Thai at Rajadamnern Stadium on Thursday 1 October 2026.
+
+[dated.h1]
+Petchyindee Muay Thai, Thursday 1 October 2026
+
+[dated.hero.body]
+Watch Petchyindee Muay Thai at Rajadamnern Stadium on Thursday 1 October 2026, with technical competition shaped by timing, balance, pressure and changes in momentum.
+
+[dated.facts.label.date]
+Date
+
+[dated.facts.value.date]
+Thursday 1 October 2026
+
+[dated.facts.label.venue]
+Venue
+
+[dated.facts.value.venue]
+Rajadamnern Stadium, Bangkok
+
+[dated.facts.label.doors]
+Doors open
+
+[dated.facts.value.doors]
+17:00
+
+[dated.facts.label.starts]
+Event starts
+
+[dated.facts.value.starts]
+18:00
+
+[dated.hero.cta_primary]
+Book Tickets
+
+[dated.hero.cta_secondary]
+Choose Your Seats
+
+[dated.expect.h2]
+What to expect from Petchyindee Muay Thai
+
+[dated.expect.p1]
+Petchyindee is built around technical competitive Muay Thai.
+
+[dated.expect.p2]
+Fighters use timing, balance and ring intelligence to establish control, while combinations, body kicks and clinching can change the direction of a contest.
+
+[dated.expect.p3]
+Some exchanges may begin carefully as each fighter studies distance and reaction.
+
+[dated.expect.p4]
+As pressure builds, the contest can open quickly into stronger attacks and decisive tactical changes.
+
+[dated.expect.p5]
+The exact bout format and number of fights for 1 October should be taken only from verified event information.
+
+[dated.thu.h2]
+A Thursday night at Rajadamnern Stadium
+
+[dated.thu.p1]
+Petchyindee gives Thursday night at Rajadamnern its own sporting identity.
+
+[dated.thu.p2]
+The focus is on the contest inside the ring, with the crowd responding to changes in control and momentum as the fights develop.
+
+[dated.thu.p3]
+Wai Kru and traditional Muay Thai music form part of the stadium environment around the bouts.
+
+[dated.thu.p4]
+For a first-time visitor, the night offers an opportunity to watch how timing, balance, pressure and technical decision-making shape live Muay Thai.
+
+[dated.card.h2]
+Petchyindee fight card, 1 October 2026
+
+[dated.card.notice]
+Fight card information will be updated when confirmed.
+
+[dated.seats.h2]
+Choose your seats
+
+[dated.seats.name.ringside]
+Ringside
+
+[dated.seats.descriptor.ringside]
+Closest to the ring
+
+[dated.seats.copy.ringside]
+Assigned seating for guests who want the closest available public viewing position.
+
+[dated.seats.name.club-class]
+Club Class
+
+[dated.seats.descriptor.club-class]
+Elevated, assigned seating
+
+[dated.seats.copy.club-class]
+Assigned seats with a clear view across the ring.
+
+[dated.seats.name.leo-section]
+LEO Section
+
+[dated.seats.descriptor.leo-section]
+A more involved local atmosphere
+
+[dated.seats.copy.leo-section]
+Unassigned seating at the same general level as Club Class, with a strong local following.
+
+[dated.seats.name.third-class]
+Third Class
+
+[dated.seats.descriptor.third-class]
+Elevated outer-tier viewing
+
+[dated.seats.copy.third-class]
+The lowest-priced public seating category when released for this event.
+
+[dated.seats.cta]
+Compare Rajadamnern seating
+
+[dated.source.intro]
+The live ticket inventory is the source of truth for:
+
+[dated.source.1]
+available ticket classes
+
+[dated.source.2]
+prices
+
+[dated.source.3]
+quantities
+
+[dated.source.4]
+sold-out status
+
+[dated.source.5]
+booking URLs
+
+[dated.plan.h2]
+Planning your visit on 1 October
+
+[dated.plan.p1]
+Doors open at Rajadamnern Stadium at 17:00.
+
+[dated.plan.p2]
+The event starts at 18:00 Bangkok time.
+
+[dated.plan.p3]
+Your Stripe receipt confirms payment. Your Petchyindee event tickets are prepared and sent separately by MuayTix by email.
+
+[dated.plan.p4]
+During operating hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes.
+
+[dated.plan.p5]
+Bookings received outside those hours are normally fulfilled by midday the following day.
+
+[dated.link.hub]
+What is Petchyindee Muay Thai?
+
+[dated.link.seating]
+Choose your Rajadamnern seats
+
+[dated.link.stadium]
+Rajadamnern Stadium information
+
+[dated.link.tickets]
+All Rajadamnern Stadium tickets
+
+[dated.faq.h2]
+Petchyindee Muay Thai, 1 October: booking questions
+
+[dated.faq.q1]
+What time does Petchyindee Muay Thai start on 1 October 2026?
+
+[dated.faq.a1]
+The event starts at 18:00 Bangkok time. Doors open at 17:00.
+
+[dated.faq.q2]
+How many fights are scheduled?
+
+[dated.faq.a2]
+The confirmed number of bouts should be taken from the verified event information for 1 October 2026.
+
+[dated.faq.q3]
+Are the fights five rounds?
+
+[dated.faq.a3]
+Do not assume that every bout uses the same format. The confirmed bout format for 1 October should be taken from the verified fight card or event information.
+
+[dated.faq.q4]
+Do I need to print my ticket?
+
+[dated.faq.a4]
+No. The QR ticket can be shown on your phone when entering the stadium.
+
+[dated.faq.q5]
+How will I receive my ticket?
+
+[dated.faq.a5]
+Your Stripe receipt confirms payment. Your Petchyindee event tickets are then prepared and sent separately by MuayTix by email.
+
+[dated.faq.a5b]
+During operating hours of 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes. Outside those hours, fulfilment is normally by midday the following day.
+
+[dated.faq.q6]
+Is Petchyindee suitable for someone new to Muay Thai?
+
+[dated.faq.a6]
+Yes. A first-time visitor can begin by watching how fighters use distance, timing, balance and control and how the contest changes as pressure builds.
+
+[dated.final.h2]
+Book Petchyindee Muay Thai for Thursday 1 October
+
+[dated.final.copy]
+Choose from the ticket categories currently available for Petchyindee Muay Thai at Rajadamnern Stadium.
+
+[dated.final.cta]
+Book Tickets

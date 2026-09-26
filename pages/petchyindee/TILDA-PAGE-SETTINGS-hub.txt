@@ -1,0 +1,22 @@
+PETCHYINDEE MUAY THAI: Tilda page settings for /petchyindee-muay-thai
+========================================================
+Page settings, not part of the HTML block. Every line is Document A, word for
+word. Do not edit them here.
+
+SEO TITLE
+Petchyindee Muay Thai | Thursday at Rajadamnern Stadium
+
+META DESCRIPTION
+Discover Petchyindee Muay Thai at Rajadamnern Stadium in Bangkok. Explore Thursday fight nights, seating and upcoming ticket availability.
+
+SOCIAL TITLE (Open Graph)
+Petchyindee Muay Thai | Thursday at Rajadamnern Stadium
+
+SOCIAL DESCRIPTION (Open Graph)
+Explore Petchyindee Muay Thai every Thursday at Rajadamnern Stadium, with technical competition, live Muay Thai traditions and online booking.
+
+URL
+/petchyindee-muay-thai
+
+H1
+Already in the block, exactly one. Do not add another in Tilda.

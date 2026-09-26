@@ -43,6 +43,8 @@
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
   font-size: 16px; letter-spacing: .07em; text-transform: uppercase;
   text-decoration: none; cursor: pointer; transition: all .2s ease;
+  
+  text-align: center;
 }
 .mtx-np__btn--blue { background: var(--np-blue); color: #fff; }
 .mtx-np__btn--blue:hover { background: var(--np-blue-dark); color: #fff; }
@@ -97,7 +99,8 @@
 .mtx-np__band--dark { background: #18181d; color: #fff; }
 .mtx-np__band p { max-width: 68ch; margin-top: 16px !important; font-size: 17px; }
 .mtx-np__band--dark p { color: #d3d4da; }
-.mtx-np .mtx-np__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; }
+
+.mtx-np .mtx-np__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; max-width: none !important; }
 
 .mtx-np__nights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .mtx-np .mtx-np__nights { margin-top: 30px; }

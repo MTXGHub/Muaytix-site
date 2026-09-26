@@ -1,0 +1,630 @@
+<div class="mtx-pi">
+<style>.mtx-pi, .mtx-pi * { box-sizing: border-box; }
+.mtx-pi {
+  --pi-blue: #1f5bff;
+  --pi-blue-dark: #1545cf;
+  
+  --pi-blue-lite: #5f8cff;
+  --pi-rws: #FF1828;
+  --pi-rws-dark: #d40f1c;
+  --pi-ink: #0b0b0d;
+  --pi-paper: #f2f2f2;
+  --pi-line: #dcdce1;
+  --pi-muted: #6e6e75;
+  font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--pi-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.mtx-pi p, .mtx-pi h1, .mtx-pi h2, .mtx-pi h3, .mtx-pi ul, .mtx-pi ol { margin: 0; padding: 0; }
+.mtx-pi ul, .mtx-pi ol { list-style: none; }
+.mtx-pi img { max-width: 100%; display: block; }
+.mtx-pi__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
+
+.mtx-pi h1, .mtx-pi h2, .mtx-pi h3 {
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+}
+.mtx-pi h1 { font-size: clamp(38px, 6vw, 70px); line-height: .96; }
+.mtx-pi h2 { font-size: clamp(29px, 3.6vw, 45px); line-height: 1.03; margin-top: 8px; }
+.mtx-pi h3 { font-size: 21px; line-height: 1.15; }
+.mtx-pi__kicker {
+  display: block; color: var(--pi-blue); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 13px; letter-spacing: .13em; text-transform: uppercase;
+}
+.mtx-pi__hero .mtx-pi__kicker,
+.mtx-pi__band--dark .mtx-pi__kicker { color: var(--pi-blue-lite); }
+
+.mtx-pi__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 52px; padding: 0 26px; border: 2px solid transparent;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 16px; letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: all .2s ease;
+  
+  text-align: center;
+}
+.mtx-pi__btn--blue { background: var(--pi-blue); color: #fff; }
+.mtx-pi__btn--blue:hover { background: var(--pi-blue-dark); color: #fff; }
+.mtx-pi__btn--ghost { background: transparent; border-color: #fff; color: #fff; }
+.mtx-pi__btn--ghost:hover { background: #fff; color: var(--pi-ink); }
+.mtx-pi__btn--outline { background: #fff; border-color: var(--pi-ink); color: var(--pi-ink); }
+.mtx-pi__btn--outline:hover { border-color: var(--pi-blue); color: var(--pi-blue); }
+.mtx-pi__btn--red { background: var(--pi-rws); color: #fff; }
+.mtx-pi__btn--red:hover { background: var(--pi-rws-dark); color: #fff; }
+.mtx-pi__go {
+  display: inline-block; color: var(--pi-blue); text-decoration: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 15px; letter-spacing: .07em; text-transform: uppercase;
+  border-bottom: 2px solid currentColor; padding-bottom: 2px;
+}
+.mtx-pi__go:hover { color: var(--pi-blue-dark); }
+
+.mtx-pi__hero {
+  position: relative; color: #fff;
+  padding: clamp(60px, 8vw, 116px) 0;
+  background-color: var(--pi-ink);
+  background-image:
+    linear-gradient(100deg,
+      rgba(11,11,13,.95) 0%,
+      rgba(11,11,13,.88) 38%,
+      rgba(11,11,13,.66) 72%,
+      rgba(11,11,13,.52) 100%),
+    url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 38%;
+}
+
+@media (max-width: 760px) {
+  .mtx-pi__hero {
+    background-image:
+      linear-gradient(180deg,
+        rgba(11,11,13,.86) 0%,
+        rgba(11,11,13,.74) 30%,
+        rgba(11,11,13,.88) 72%,
+        rgba(11,11,13,.96) 100%),
+      url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+    background-position: center 30%;
+  }
+}
+
+.mtx-pi__lede { max-width: 62ch; margin-top: 18px !important; color: #d3d4da; font-size: 17px; }
+.mtx-pi .mtx-pi__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+.mtx-pi__band { padding: clamp(42px, 5.5vw, 74px) 0; background: #fff; }
+.mtx-pi__band--paper { background: var(--pi-paper); }
+.mtx-pi__band--dark { background: #18181d; color: #fff; }
+.mtx-pi__band p { max-width: 68ch; margin-top: 16px !important; font-size: 17px; }
+.mtx-pi__band--dark p { color: #d3d4da; }
+
+.mtx-pi .mtx-pi__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; max-width: none !important; }
+
+.mtx-pi__nights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-pi .mtx-pi__nights { margin-top: 30px; }
+
+.mtx-pi__night:nth-child(n+6) { display: none; }
+.mtx-pi__night {
+  display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--pi-line); padding: 26px 22px 24px;
+}
+.mtx-pi__night--now { border-color: var(--pi-blue); box-shadow: inset 0 5px 0 0 var(--pi-blue); padding-top: 30px; }
+.mtx-pi__tag {
+  display: inline-block; align-self: flex-start; padding: 5px 10px;
+  background: var(--pi-blue); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+}
+.mtx-pi__night h3 { margin-top: 14px; }
+.mtx-pi__night--now h3 { font-size: 26px; }
+.mtx-pi .mtx-pi__when {
+  margin-top: 9px !important; color: var(--pi-muted); font-size: 15px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.mtx-pi .mtx-pi__times { margin-top: 4px !important; color: var(--pi-muted); font-size: 15px; }
+.mtx-pi .mtx-pi__night .mtx-pi__evbody { margin-top: 14px !important; font-size: 15.5px; }
+
+.mtx-pi .mtx-pi__nightcta { margin-top: auto !important; padding-top: 20px; }
+.mtx-pi__nightcta .mtx-pi__btn { width: 100%; }
+
+.mtx-pi__plain {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+.mtx-pi__trustgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-pi .mtx-pi__trustgrid { margin-top: 30px; }
+.mtx-pi__trustcard { background: #fff; border: 1px solid var(--pi-line); padding: 26px 22px 24px; }
+.mtx-pi__trustcard svg { width: 30px; height: 30px; stroke: var(--pi-blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mtx-pi__trustcard h3 { margin-top: 18px; font-size: 19px; }
+.mtx-pi__trustcard p { margin-top: 9px !important; color: var(--pi-muted); font-size: 16px; }
+.mtx-pi .mtx-pi__guarantee {
+  max-width: 68ch; margin-top: 26px !important; padding-left: 15px;
+  border-left: 3px solid var(--pi-blue); font-size: 17px;
+}
+.mtx-pi .mtx-pi__partlabel {
+  margin-top: 34px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px !important; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--pi-muted) !important; padding-bottom: 12px; border-bottom: 1px solid var(--pi-line);
+}
+.mtx-pi .mtx-pi__partners {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 0; margin-top: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 17px; letter-spacing: .05em; text-transform: uppercase;
+}
+.mtx-pi__partners li + li::before { content: "\00b7"; color: var(--pi-muted); margin: 0 14px; }
+
+.mtx-pi__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mtx-pi__grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1000px) { .mtx-pi__grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.mtx-pi .mtx-pi__grid { margin-top: 28px; }
+.mtx-pi__card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--pi-line); padding: 30px 24px 26px; }
+.mtx-pi__card p { margin-top: 10px !important; color: var(--pi-muted); font-size: 16px; }
+.mtx-pi__standfirst {
+  margin-top: 7px !important; color: var(--pi-blue) !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+}
+.mtx-pi__bestfor { font-size: 15px !important; }
+.mtx-pi__bestfor strong { color: var(--pi-ink); }
+.mtx-pi .mtx-pi__cardbtn { width: 100%; margin-top: auto !important; padding-top: 22px; }
+
+.mtx-pi__card--shot { padding-top: 0; overflow: hidden; }
+.mtx-pi__card--shot > :first-child { margin-top: 0; }
+.mtx-pi__card--shot h3 { margin-top: 22px; }
+.mtx-pi__shots { position: relative; margin: 0 -24px; }
+.mtx-pi__shots-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.mtx-pi__shots-track::-webkit-scrollbar { display: none; }
+.mtx-pi__shots-track img {
+  flex: 0 0 100%; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  scroll-snap-align: center; background: #e6e6ea;
+}
+
+@supports not (aspect-ratio: 4 / 3) {
+  .mtx-pi__shots-track img { height: 260px; }
+}
+.mtx-pi__shots-dots {
+  position: absolute; left: 0; right: 0; bottom: 11px;
+  display: flex; justify-content: center; gap: 7px;
+}
+.mtx-pi__shots-dots button {
+  width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(255,255,255,.55); cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.25); transition: background .18s ease;
+}
+.mtx-pi__shots-dots button.is-on { background: #fff; }
+.mtx-pi__shots-dots button:focus-visible { outline: 2px solid var(--pi-blue); outline-offset: 2px; }
+
+.mtx-pi__shots-dots:empty { display: none; }
+
+.mtx-pi__maplayout { margin-top: 34px; max-width: 640px; margin-inline: auto; }
+.mtx-pi__mapfig { display: block; position: relative; text-decoration: none; }
+.mtx-pi__mapfig img { width: 100%; height: auto; }
+.mtx-pi__mapzoom {
+  position: absolute; right: 12px; bottom: 12px;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 13px; background: rgba(11,11,13,.78); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.14); transition: background .18s ease;
+}
+.mtx-pi__mapfig:hover .mtx-pi__mapzoom { background: var(--pi-blue); }
+.mtx-pi__mapfig:focus-visible { outline: 2px solid var(--pi-blue); outline-offset: 4px; }
+
+.mtx-pi__btnrow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.mtx-pi .mtx-pi__btnrow { margin-top: 28px; }
+.mtx-pi__btnrow .mtx-pi__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+.mtx-pi .mtx-pi__aftercta { margin-top: 20px !important; }
+
+.mtx-pi__evs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-pi .mtx-pi__evs { margin-top: 30px; }
+.mtx-pi__ev {
+  position: relative; display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--pi-line); padding: 30px 24px 26px;
+}
+.mtx-pi__ev::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 7px;
+  background: var(--pi-blue); transform: skewX(-25deg); transform-origin: left;
+}
+.mtx-pi__ev--rws::before { background: var(--pi-rws); }
+.mtx-pi__ev--rws .mtx-pi__btn--blue { background: var(--pi-rws-dark); }
+.mtx-pi__ev--rws .mtx-pi__btn--blue:hover { background: #a80a15; }
+.mtx-pi .mtx-pi__hook {
+  margin-top: 8px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif; font-weight: 800;
+  font-size: clamp(23px, 2.5vw, 29px); line-height: 1.04; text-transform: uppercase;
+}
+.mtx-pi .mtx-pi__evbody { margin-top: 13px !important; color: var(--pi-muted); font-size: 16px; }
+.mtx-pi .mtx-pi__evwhen {
+  margin-top: 16px !important; padding-top: 14px; border-top: 1px solid var(--pi-line);
+  color: var(--pi-muted); font-size: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+}
+.mtx-pi .mtx-pi__evcta { margin-top: auto !important; padding-top: 20px; }
+.mtx-pi__evcta .mtx-pi__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+.mtx-pi__faq { margin-top: 30px; border-top: 1px solid var(--pi-line); }
+.mtx-pi__faq details { border-bottom: 1px solid var(--pi-line); }
+.mtx-pi__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 18px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 20px; line-height: 1.15; text-transform: uppercase;
+}
+.mtx-pi__faq summary::-webkit-details-marker { display: none; }
+.mtx-pi__faq summary::after {
+  content: "+"; flex: none; color: var(--pi-blue);
+  font-family: "Barlow", Helvetica, Arial, sans-serif; font-weight: 400;
+  font-size: 26px; line-height: 1; margin-top: 2px;
+}
+.mtx-pi__faq details[open] summary::after { content: "\2013"; }
+.mtx-pi__faq summary:focus-visible { outline: 2px solid var(--pi-blue); outline-offset: 3px; }
+.mtx-pi__faq p { margin-top: 0 !important; margin-bottom: 22px !important; color: var(--pi-muted); font-size: 16px; }
+
+.mtx-pi__venue { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.mtx-pi .mtx-pi__venue { margin-top: 30px; }
+.mtx-pi__venue p { margin-top: 0 !important; }
+.mtx-pi__where {
+  padding: 24px 22px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.16);
+}
+.mtx-pi .mtx-pi__wherelabel {
+  margin-top: 0 !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px !important; letter-spacing: .13em; text-transform: uppercase;
+  color: #9ca0ad !important;
+}
+.mtx-pi .mtx-pi__address {
+  margin-top: 8px !important; font-size: 19px !important; color: #fff !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  letter-spacing: .02em; text-transform: uppercase; line-height: 1.2;
+}
+
+@media (max-width: 1000px) {
+  .mtx-pi__nights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-pi__evs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-pi__btnrow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-pi__venue { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .mtx-pi__grid { grid-template-columns: 1fr; }
+  .mtx-pi__evs { grid-template-columns: 1fr; }
+  .mtx-pi__trustgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .mtx-pi__shell { width: min(100% - 28px, 1180px); }
+  .mtx-pi__nights { grid-template-columns: 1fr; }
+  .mtx-pi__btnrow { grid-template-columns: 1fr; }
+  .mtx-pi__trustgrid { grid-template-columns: 1fr; }
+  .mtx-pi__actions .mtx-pi__btn, .mtx-pi__ctarow .mtx-pi__btn { width: 100%; }
+  .mtx-pi__faq summary { font-size: 18px; }
+  
+  .mtx-pi .mtx-pi__partners { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 16px; }
+  .mtx-pi__partners li + li::before { content: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mtx-pi * { animation: none !important; scroll-behavior: auto !important; }
+}
+
+.mtx-pi__steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; counter-reset: mtxstep; }
+.mtx-pi .mtx-pi__steps { margin-top: 30px; }
+.mtx-pi__step { background: #fff; border: 1px solid var(--pi-line); padding: 24px 20px 22px; }
+.mtx-pi__step::before {
+  counter-increment: mtxstep; content: counter(mtxstep);
+  display: block; color: var(--pi-blue);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 30px; line-height: 1;
+}
+.mtx-pi .mtx-pi__step p { margin-top: 12px !important; color: var(--pi-ink); font-size: 15.5px; }
+
+.mtx-pi__close { text-align: center; }
+.mtx-pi__close h2 { border: 0; }
+.mtx-pi .mtx-pi__close p { margin-inline: auto; }
+.mtx-pi__close .mtx-pi__ctarow { justify-content: center; }
+
+@media (max-width: 1000px) {
+  .mtx-pi__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .mtx-pi__steps { grid-template-columns: 1fr; }
+  .mtx-pi__step { display: grid; grid-template-columns: 34px 1fr; column-gap: 14px; align-items: baseline; padding: 18px 16px; }
+  .mtx-pi__step::before { font-size: 26px; }
+  .mtx-pi .mtx-pi__step p { margin-top: 0 !important; }
+}
+
+.mtx-pi .mtx-pi__subhead {
+  margin-top: 36px; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.15;
+  text-transform: none; letter-spacing: 0;
+}
+
+.mtx-pi__cardbtn .mtx-pi__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+.mtx-pi__card--gfx { padding-top: 0; overflow: hidden; }
+
+.mtx-pi .mtx-pi__seatgfx {
+  display: block; width: calc(100% + 48px); max-width: none; height: auto;
+  margin: 0 -24px 0; background: #e6e6ea;
+}
+.mtx-pi__card--gfx h3 { margin-top: 24px; }
+@media (max-width: 620px) {
+  .mtx-pi .mtx-pi__seatgfx { width: calc(100% + 40px); margin-inline: -20px; }
+}
+
+.mtx-pi .mtx-pi__lede + .mtx-pi__lede { margin-top: 12px !important; }
+
+.mtx-pi__faq summary h3 {
+  display: inline; font-size: inherit; line-height: inherit;
+  font-family: inherit; font-weight: inherit; text-transform: inherit;
+}
+
+.mtx-pi__trustcard--wide { grid-column: span 2; }
+.mtx-pi__trustcard { display: flex; flex-direction: column; }
+.mtx-pi__trustcard .mtx-pi__cardbtn { margin-top: auto !important; padding-top: 20px; }
+.mtx-pi .mtx-pi__trustcard p + p { margin-top: 12px !important; }
+
+.mtx-pi .mtx-pi__ctastack { margin-top: 0 !important; display: grid; gap: 10px; }
+.mtx-pi__ctastack .mtx-pi__btn { width: 100%; padding: 0 16px; letter-spacing: .04em; }
+
+.mtx-pi .mtx-pi__brand {
+  margin-top: 26px !important; font-size: 14px !important; color: var(--pi-muted);
+  max-width: 62ch; margin-inline: auto;
+}
+
+.mtx-pi__band .mtx-pi__shell > p + p { margin-top: 14px !important; }
+
+@media (max-width: 860px) {
+  .mtx-pi__trustcard--wide { grid-column: span 2; }
+}
+@media (max-width: 620px) {
+  .mtx-pi__trustcard--wide { grid-column: span 1; }
+}
+
+.mtx-pi .mtx-pi__venue p + p { margin-top: 14px !important; }
+
+.mtx-pi__band .mtx-pi__shell > p + p { margin-top: 14px !important; }
+.mtx-pi .mtx-pi__lede + .mtx-pi__facts { margin-top: 26px; }
+
+.mtx-pi__facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--pi-line); border: 1px solid var(--pi-line); margin: 0; }
+.mtx-pi .mtx-pi__facts { margin-top: 28px; }
+.mtx-pi__fact { background: #fff; padding: 18px 20px; }
+.mtx-pi__fact dt {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px; letter-spacing: .13em; text-transform: uppercase; color: var(--pi-muted);
+}
+.mtx-pi__fact dd { margin: 6px 0 0; font-size: 16.5px; }
+
+.mtx-pi__hero .mtx-pi__fact { background: rgba(255,255,255,.06); }
+.mtx-pi__hero .mtx-pi__facts { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.16); }
+.mtx-pi__hero .mtx-pi__fact dt { color: #b9bcc6; }
+.mtx-pi__hero .mtx-pi__fact dd { color: #fff; }
+
+.mtx-pi .mtx-pi__note {
+  margin-top: 20px !important; padding-left: 15px; border-left: 3px solid var(--pi-blue);
+  font-size: 16.5px; max-width: 68ch;
+}
+
+@media (max-width: 1000px) { .mtx-pi__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px)  { .mtx-pi__facts { grid-template-columns: 1fr; } }
+
+.mtx-pi__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-pi .mtx-pi__steps { margin-top: 30px; }
+.mtx-pi__step { background: #fff; border: 1px solid var(--pi-line); padding: 22px 20px; }
+.mtx-pi .mtx-pi__step .mtx-pi__steptime {
+  margin-top: 0 !important; color: var(--pi-blue);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 17px; letter-spacing: .04em; text-transform: uppercase;
+}
+.mtx-pi__step h3 { margin-top: 8px; font-size: 18px; }
+.mtx-pi .mtx-pi__step p + p, .mtx-pi .mtx-pi__step h3 + p { margin-top: 8px !important; color: var(--pi-muted); font-size: 15.5px; }
+
+.mtx-pi .mtx-pi__bullets { margin-top: 14px; padding-left: 0; }
+.mtx-pi__bullets li { position: relative; padding-left: 20px; font-size: 16.5px; }
+.mtx-pi__bullets li + li { margin-top: 6px; }
+.mtx-pi__bullets li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; background: var(--pi-blue); }
+
+.mtx-pi__trustcard h3 { margin-top: 0; font-size: 19px; }
+
+@media (max-width: 860px) { .mtx-pi__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .mtx-pi__steps { grid-template-columns: 1fr; } }
+
+.mtx-pi__steps { counter-reset: none; }
+.mtx-pi__step::before { content: none; }
+
+.mtx-pi .mtx-pi__factlist { margin-top: 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 20px; }
+.mtx-pi__factlist li { position: relative; padding-left: 18px; font-size: 16.5px; color: #fff; }
+.mtx-pi__factlist li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; background: var(--pi-blue); }
+@media (max-width: 860px) { .mtx-pi .mtx-pi__factlist { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .mtx-pi .mtx-pi__factlist { grid-template-columns: 1fr; } }
+
+.mtx-pi .mtx-pi__faq { margin-top: 24px; }
+.mtx-pi__card--gfx { padding-top: 0; overflow: hidden; }
+
+.mtx-pi .mtx-pi__seatgfx { display: block; width: calc(100% + 48px); max-width: none; height: auto; margin: 0 -24px; background: #e6e6ea; }
+.mtx-pi__card--gfx h3 { margin-top: 24px; }
+.mtx-pi__dates { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-pi .mtx-pi__dates { margin-top: 28px; }
+.mtx-pi__datecard { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--pi-line); border-top: 3px solid var(--pi-blue); padding: 24px 20px; }
+.mtx-pi__datecard h3 { font-size: 19px; }
+.mtx-pi .mtx-pi__datecard .mtx-pi__times { margin-top: 9px !important; color: var(--pi-muted); font-size: 15px; }
+.mtx-pi .mtx-pi__datecard .mtx-pi__cardbtn { margin-top: auto !important; padding-top: 18px; }
+
+.mtx-pi .mtx-pi__dates + h3 { margin-top: 44px !important; }
+
+.mtx-pi .mtx-pi__maplayout { max-width: 680px !important; margin: 30px auto 0 !important; }
+.mtx-pi .mtx-pi__maplayout img { width: 100%; max-width: none; height: auto; display: block; border: 1px solid var(--pi-line); background: #fff; }
+.mtx-pi__close { text-align: center; }
+.mtx-pi .mtx-pi__close p { margin-inline: auto; }
+.mtx-pi__close .mtx-pi__ctarow { justify-content: center; }
+@media (max-width: 1000px) { .mtx-pi__dates { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .mtx-pi__dates { grid-template-columns: 1fr; } .mtx-pi .mtx-pi__seatgfx { width: calc(100% + 40px); margin-inline: -20px; } }</style>
+
+  <header class="mtx-pi__hero">
+    <div class="mtx-pi__shell">
+      <h1>Petchyindee Muay Thai, Thursday 1 October 2026</h1>
+      <p class="mtx-pi__lede">Watch Petchyindee Muay Thai at Rajadamnern Stadium on Thursday 1 October 2026, with technical competition shaped by timing, balance, pressure and changes in momentum.</p>
+      <dl class="mtx-pi__facts">
+        <div class="mtx-pi__fact"><dt>Date</dt><dd>Thursday 1 October 2026</dd></div>
+        <div class="mtx-pi__fact"><dt>Venue</dt><dd>Rajadamnern Stadium, Bangkok</dd></div>
+        <div class="mtx-pi__fact"><dt>Doors open</dt><dd>17:00</dd></div>
+        <div class="mtx-pi__fact"><dt>Event starts</dt><dd>18:00</dd></div>
+      </dl>
+      <p class="mtx-pi__actions">
+        <a class="mtx-pi__btn mtx-pi__btn--blue" href="#book">Book Tickets</a>
+        <a class="mtx-pi__btn mtx-pi__btn--ghost" href="/rajadamnern-stadium-seating">Choose Your Seats</a>
+      </p>
+    </div>
+  </header>
+
+  
+  <section class="mtx-pi__band mtx-pi__band--paper" id="book">
+    <div class="mtx-pi__shell">
+      <div class="muaytix-ticket-selector" data-event-id="petchyindee_2026_10_01"></div>
+    </div>
+  </section>
+
+  <section class="mtx-pi__band">
+    <div class="mtx-pi__shell">
+      <h2>What to expect from Petchyindee Muay Thai</h2>
+      <p>Petchyindee is built around technical competitive Muay Thai.</p>
+      <p>Fighters use timing, balance and ring intelligence to establish control, while combinations, body kicks and clinching can change the direction of a contest.</p>
+      <p>Some exchanges may begin carefully as each fighter studies distance and reaction.</p>
+      <p>As pressure builds, the contest can open quickly into stronger attacks and decisive tactical changes.</p>
+      <p>The exact bout format and number of fights for 1 October should be taken only from verified event information.</p>
+    </div>
+  </section>
+
+  <section class="mtx-pi__band mtx-pi__band--paper">
+    <div class="mtx-pi__shell">
+      <h2>A Thursday night at Rajadamnern Stadium</h2>
+      <p>Petchyindee gives Thursday night at Rajadamnern its own sporting identity.</p>
+      <p>The focus is on the contest inside the ring, with the crowd responding to changes in control and momentum as the fights develop.</p>
+      <p>Wai Kru and traditional Muay Thai music form part of the stadium environment around the bouts.</p>
+      <p>For a first-time visitor, the night offers an opportunity to watch how timing, balance, pressure and technical decision-making shape live Muay Thai.</p>
+    </div>
+  </section>
+
+  
+  <section class="mtx-pi__band">
+    <div class="mtx-pi__shell">
+      <h2>Petchyindee fight card, 1 October 2026</h2>
+      <p class="mtx-pi__note">Fight card information will be updated when confirmed.</p>
+    </div>
+  </section>
+
+  <section class="mtx-pi__band mtx-pi__band--paper">
+    <div class="mtx-pi__shell">
+      <h2>Choose your seats</h2>
+      
+      <ul class="mtx-pi__grid mtx-pi__grid--3">
+        <li class="mtx-pi__card mtx-pi__card--gfx">
+          <img class="mtx-pi__seatgfx" src="https://static.tildacdn.com/tild3830-6232-4832-b331-666465393139/1000033985.webp" alt="Ringside seating at Rajadamnern Stadium" loading="lazy" decoding="async">
+          <h3>Ringside</h3>
+          <p class="mtx-pi__standfirst">Closest to the ring</p>
+          <p>Assigned seating for guests who want the closest available public viewing position.</p>
+        </li>
+
+        <li class="mtx-pi__card mtx-pi__card--gfx">
+          <img class="mtx-pi__seatgfx" src="https://static.tildacdn.com/tild6633-3464-4335-b864-323737313634/1000033982.webp" alt="Club Class elevated seating at Rajadamnern Stadium" loading="lazy" decoding="async">
+          <h3>Club Class</h3>
+          <p class="mtx-pi__standfirst">Elevated, assigned seating</p>
+          <p>Assigned seats with a clear view across the ring.</p>
+        </li>
+
+        <li class="mtx-pi__card mtx-pi__card--gfx">
+          <img class="mtx-pi__seatgfx" src="https://static.tildacdn.com/tild3333-3339-4135-b436-326637666663/1000033984.webp" alt="LEO Section seating at Rajadamnern Stadium" loading="lazy" decoding="async">
+          <h3>LEO Section</h3>
+          <p class="mtx-pi__standfirst">A more involved local atmosphere</p>
+          <p>Unassigned seating at the same general level as Club Class, with a strong local following.</p>
+        </li>
+      </ul>
+        <p class="mtx-pi__maplayout">
+          <img src="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg" alt="Rajadamnern Stadium seating map" loading="lazy" decoding="async">
+        </p>
+      <p>The live ticket inventory is the source of truth for:</p>
+      <ul class="mtx-pi__bullets">
+        <li>available ticket classes</li>
+        <li>prices</li>
+        <li>quantities</li>
+        <li>sold-out status</li>
+        <li>booking URLs</li>
+      </ul>
+      <p class="mtx-pi__ctarow">
+        <a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium-seating">Compare Rajadamnern seating</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="mtx-pi__band">
+    <div class="mtx-pi__shell">
+      <h2>Planning your visit on 1 October</h2>
+      <p>Doors open at Rajadamnern Stadium at 17:00.</p>
+      <p>The event starts at 18:00 Bangkok time.</p>
+      <p>Your Stripe receipt confirms payment. Your Petchyindee event tickets are prepared and sent separately by MuayTix by email.</p>
+      <p>During operating hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes.</p>
+      <p>Bookings received outside those hours are normally fulfilled by midday the following day.</p>
+      <p class="mtx-pi__ctarow">
+        <a class="mtx-pi__btn mtx-pi__btn--outline" href="/petchyindee-muay-thai">What is Petchyindee Muay Thai?</a>
+        <a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium-seating">Choose your Rajadamnern seats</a>
+        <a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium">Rajadamnern Stadium information</a>
+        <a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium-tickets">All Rajadamnern Stadium tickets</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="mtx-pi__band mtx-pi__band--paper">
+    <div class="mtx-pi__shell">
+      <h2>Petchyindee Muay Thai, 1 October: booking questions</h2>
+      <div class="mtx-pi__faq">
+        <details>
+          <summary><h3>What time does Petchyindee Muay Thai start on 1 October 2026?</h3></summary>
+          <p>The event starts at 18:00 Bangkok time. Doors open at 17:00.</p>
+        </details>
+
+        <details>
+          <summary><h3>How many fights are scheduled?</h3></summary>
+          <p>The confirmed number of bouts should be taken from the verified event information for 1 October 2026.</p>
+        </details>
+
+        <details>
+          <summary><h3>Are the fights five rounds?</h3></summary>
+          <p>Do not assume that every bout uses the same format. The confirmed bout format for 1 October should be taken from the verified fight card or event information.</p>
+        </details>
+
+        <details>
+          <summary><h3>Do I need to print my ticket?</h3></summary>
+          <p>No. The QR ticket can be shown on your phone when entering the stadium.</p>
+        </details>
+
+        <details>
+          <summary><h3>How will I receive my ticket?</h3></summary>
+          <p>Your Stripe receipt confirms payment. Your Petchyindee event tickets are then prepared and sent separately by MuayTix by email.</p>
+          <p>During operating hours of 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes. Outside those hours, fulfilment is normally by midday the following day.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is Petchyindee suitable for someone new to Muay Thai?</h3></summary>
+          <p>Yes. A first-time visitor can begin by watching how fighters use distance, timing, balance and control and how the contest changes as pressure builds.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-pi__band mtx-pi__close">
+    <div class="mtx-pi__shell">
+      <h2>Book Petchyindee Muay Thai for Thursday 1 October</h2>
+      <p>Choose from the ticket categories currently available for Petchyindee Muay Thai at Rajadamnern Stadium.</p>
+      <p class="mtx-pi__ctarow">
+        <a class="mtx-pi__btn mtx-pi__btn--blue" href="#book">Book Tickets</a>
+      </p>
+    </div>
+  </section>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"SportsEvent","@id":"https://muaytix.com/petchyindee-muay-thai/2026-10-01#event","name":"Petchyindee Muay Thai, Thursday 1 October 2026","startDate":"2026-10-01T18:00:00+07:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","description":"Watch Petchyindee Muay Thai at Rajadamnern Stadium on Thursday 1 October 2026, with technical competition shaped by timing, balance, pressure and changes in momentum.","location":{"@type":"Place","name":"Rajadamnern Stadium","address":{"@type":"PostalAddress","streetAddress":"Ratchadamnoen Nok Road","addressLocality":"Bangkok","addressCountry":"TH"}},"image":"https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg","url":"https://muaytix.com/petchyindee-muay-thai/2026-10-01"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"MuayTix","item":"https://muaytix.com/"},{"@type":"ListItem","position":2,"name":"Petchyindee Muay Thai: Thursday at Rajadamnern Stadium","item":"https://muaytix.com/petchyindee-muay-thai"},{"@type":"ListItem","position":3,"name":"Petchyindee Muay Thai, Thursday 1 October 2026","item":"https://muaytix.com/petchyindee-muay-thai/2026-10-01"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What time does Petchyindee Muay Thai start on 1 October 2026?","acceptedAnswer":{"@type":"Answer","text":"The event starts at 18:00 Bangkok time. Doors open at 17:00."}},{"@type":"Question","name":"How many fights are scheduled?","acceptedAnswer":{"@type":"Answer","text":"The confirmed number of bouts should be taken from the verified event information for 1 October 2026."}},{"@type":"Question","name":"Are the fights five rounds?","acceptedAnswer":{"@type":"Answer","text":"Do not assume that every bout uses the same format. The confirmed bout format for 1 October should be taken from the verified fight card or event information."}},{"@type":"Question","name":"Do I need to print my ticket?","acceptedAnswer":{"@type":"Answer","text":"No. The QR ticket can be shown on your phone when entering the stadium."}},{"@type":"Question","name":"How will I receive my ticket?","acceptedAnswer":{"@type":"Answer","text":"Your Stripe receipt confirms payment. Your Petchyindee event tickets are then prepared and sent separately by MuayTix by email."}},{"@type":"Question","name":"Is Petchyindee suitable for someone new to Muay Thai?","acceptedAnswer":{"@type":"Answer","text":"Yes. A first-time visitor can begin by watching how fighters use distance, timing, balance and control and how the contest changes as pressure builds."}}]}]}
+</script>
+</div>

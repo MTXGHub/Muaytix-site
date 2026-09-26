@@ -1,0 +1,8 @@
+- No Petchyindee logo exists anywhere in this project, so neither page shows one. Document B section 12: stop and report the missing asset, do not substitute other imagery.
+- Document A's evergreen late-entry answer ends with "Confirm the current event policy before publication." That sentence addresses the implementer, not a guest, so only the first sentence is rendered. The late-entry policy still needs confirming before this page goes live.
+- Three approved FAQ answers read as internal guidance rather than as an answer to a guest: the two beginning "Do not assume that every bout..." and "The confirmed number of bouts should be taken from the verified event information for 1 October 2026." All three are rendered word for word as supplied. Flagged, not altered.
+- Document A's evergreen copy says "The live booking section shows the ticket categories currently available for the selected Thursday." The evergreen page carries no booking widget, because the widget's full calendar lists every promotion's fight nights, not only Petchyindee Thursdays. The All Star and New Power evergreen pages are built the same way. Say the word and the widget goes on the evergreen page.
+- No dated page exists yet for Thursday 8 October 2026, so that card carries no link. Document B section 24: no invented URLs.
+- No dated page exists yet for Thursday 15 October 2026, so that card carries no link. Document B section 24: no invented URLs.
+- /petchyindee-muay-thai/2026-10-01: Third Class is not released for this date, so its card is omitted. Document A block 4 and Document B section 11.
+- /petchyindee-muay-thai/2026-10-01: no verified fight card supplied, so the approved waiting message is shown and no fighter is named.

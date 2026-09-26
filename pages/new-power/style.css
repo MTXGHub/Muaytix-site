@@ -48,6 +48,9 @@
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
   font-size: 16px; letter-spacing: .07em; text-transform: uppercase;
   text-decoration: none; cursor: pointer; transition: all .2s ease;
+  /* A label that wraps to two lines on a phone sat left-aligned inside a
+     centred button. */
+  text-align: center;
 }
 .mtx-np__btn--blue { background: var(--np-blue); color: #fff; }
 .mtx-np__btn--blue:hover { background: var(--np-blue-dark); color: #fff; }
@@ -118,7 +121,9 @@
 .mtx-np__band--dark { background: #18181d; color: #fff; }
 .mtx-np__band p { max-width: 68ch; margin-top: 16px !important; font-size: 17px; }
 .mtx-np__band--dark p { color: #d3d4da; }
-.mtx-np .mtx-np__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; }
+/* A button row is not prose. .mtx-np__band p { max-width: 68ch } was capping
+   it at 643px and stacking the buttons one per line down the page. */
+.mtx-np .mtx-np__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; max-width: none !important; }
 
 /* ---------- Block 2: tonight and this week ----------
    Tonight is the first card and the only lifted one: a blue rule across the
