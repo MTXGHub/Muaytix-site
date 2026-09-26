@@ -8,16 +8,15 @@
 #      not to print VIP prices unless confirmed. They are not confirmed.
 #   2. The nearest MRT station and walking time. The brief marks it [VERIFY]
 #      and says do not guess.
-#   3. "and 39 percent of MuayTix guests choose it" in the Club Class FAQ.
-#      The booking record says 57.4 per cent of tickets sold and 54.8 per cent
-#      of bookings are Club Class. The clause is left out rather than published
-#      wrong. The rest of that answer is verbatim.
+#   3. The Club Class share. The brief said 39 per cent. The booking record
+#      says 57.4 per cent of tickets and 54.8 per cent of bookings. The owner
+#      settled it on 27 September: "just over half of our guests book club
+#      class", and that is what the answer says.
 #
-# ONE FIGURE IS CORRECTED FROM THE LIVE SCHEDULE, as the brief instructs:
-#   Rajadamnern Knockout on Monday, Tuesday and Friday finishes around
-#   9:00 PM, not 9:30 PM. event_calendar has every Knockout night ending at
-#   21:00. The brief says "re-check against the current schedule at build
-#   time", so the live schedule is used.
+# ONE FIGURE COMES FROM THE OWNER, not the brief:
+#   Rajadamnern Knockout on Monday, Tuesday and Friday finishes between 21:00
+#   and 21:30, so the table reads 9:00 to 9:30 PM. The brief said 9:30 PM flat
+#   and event_calendar holds 21:00. He settled it on 27 September.
 
 # ============================== METADATA ==============================
 
@@ -318,7 +317,7 @@ The first fight is at 7:00 PM on Monday, Tuesday and Friday, 6:00 PM on Wednesda
 Which seat class should I choose for a first visit?
 
 [faq.a5]
-Club Class. Elevated, assigned seats at ring height give the clearest view in the stadium.
+Club Class. Elevated, assigned seats at ring height give the clearest view in the stadium, and just over half of MuayTix guests choose it.
 
 [faq.q6]
 Will our seats be together?

@@ -2,15 +2,15 @@
   "_source": "Every value here was read out of the live database on 27 September 2026, or supplied by the owner in the Master Copy Brief of the same date. Nothing is remembered or assumed.",
 
   "nights": [
-    { "day": "Monday",    "event": "Rajadamnern Knockout",        "href": "/rajadamnern-knockout",   "doors": "6:00 PM", "first": "7:00 PM", "finish": "9:00 PM" },
-    { "day": "Tuesday",   "event": "Rajadamnern Knockout",        "href": "/rajadamnern-knockout",   "doors": "6:00 PM", "first": "7:00 PM", "finish": "9:00 PM" },
+    { "day": "Monday",    "event": "Rajadamnern Knockout",        "href": "/rajadamnern-knockout",   "doors": "6:00 PM", "first": "7:00 PM", "finish": "9:00 to 9:30 PM" },
+    { "day": "Tuesday",   "event": "Rajadamnern Knockout",        "href": "/rajadamnern-knockout",   "doors": "6:00 PM", "first": "7:00 PM", "finish": "9:00 to 9:30 PM" },
     { "day": "Wednesday", "event": "New Power Muay Thai",         "href": "/new-power-muay-thai",    "doors": "5:00 PM", "first": "6:00 PM", "finish": "10:00 PM" },
     { "day": "Thursday",  "event": "Petchyindee Muay Thai",       "href": "/rajadamnern/petchyindee","doors": "5:00 PM", "first": "6:00 PM", "finish": "10:00 PM" },
-    { "day": "Friday",    "event": "Rajadamnern Knockout",        "href": "/rajadamnern-knockout",   "doors": "6:00 PM", "first": "7:00 PM", "finish": "9:00 PM" },
+    { "day": "Friday",    "event": "Rajadamnern Knockout",        "href": "/rajadamnern-knockout",   "doors": "6:00 PM", "first": "7:00 PM", "finish": "9:00 to 9:30 PM" },
     { "day": "Saturday",  "event": "RWS Rajadamnern World Series","href": "/rws",                    "doors": "6:00 PM", "first": "7:10 PM", "finish": "10:00 PM", "extra_href": "/rws/tickets" },
     { "day": "Sunday",    "event": "Kiatpetch Muay Thai",         "href": "/kiatpetch-muay-thai",    "doors": "5:00 PM", "first": "6:00 PM", "finish": "10:00 PM" }
   ],
-  "_nights_source": "event_calendar, read 27 September 2026. Start and end times are the live ones: Knockout 19:00 to 21:00 on Monday, Tuesday and Friday; New Power, Petchyindee and Kiatpetch 18:00 to 22:00; RWS 19:10 to 22:00. Doors are the brief's, one hour before the first fight on every night. The brief's 9:30 PM finish for the three Knockout nights does not match the schedule and is corrected to 9:00 PM, as the brief instructs.",
+  "_nights_source": "event_calendar, read 27 September 2026. Start and end times are the live ones: Knockout 19:00 to 21:00 on Monday, Tuesday and Friday; New Power, Petchyindee and Kiatpetch 18:00 to 22:00; RWS 19:10 to 22:00. Doors are the brief's, one hour before the first fight on every night. Knockout finishes between 21:00 and 21:30, confirmed by the owner on 27 September, so those three nights read 9:00 to 9:30 PM. event_calendar holds 21:00 as the nominal end; the brief said 9:30 PM; the owner says the range.",
   "_allstar_source": "event_calendar from 27 September 2026 onward holds 14 Mondays: 10 Rajadamnern Knockout and 4 All Star. So All Star does replace the Monday Knockout roughly once a month, as the brief says.",
 
   "seat_map": {

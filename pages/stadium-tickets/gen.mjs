@@ -26,10 +26,9 @@ const D = data.destinations;
 const reports = [];
 
 /* The brief marks these [VERIFY] and says do not publish them unguessed. */
-reports.push('The VIP line under the price table is not on the page. The brief marks it [VERIFY] and says not to print VIP prices unless confirmed. The Presidential Box at 3,500 THB and the VIP Couple Suite at 9,000 THB are in neither the seating fact sheet nor the database. Confirm them and I will add the enquiry line.');
-reports.push('The nearest MRT station and walking time are not on the page. The brief marks it [VERIFY] and says do not guess.');
-reports.push('FAQ 5 drops the clause "and 39 percent of MuayTix guests choose it". The booking record says Club Class is 57.4 per cent of tickets sold and 54.8 per cent of bookings. Rather than publish a figure the data contradicts, the claim is left out. Tell me to use 57 per cent, or to leave it out, and I will do either.');
-reports.push('The Knockout finish time is published as 9:00 PM, not the brief\'s 9:30 PM. Every Rajadamnern Knockout night in event_calendar runs 19:00 to 21:00. The brief says to re-check against the live schedule at build time, so the live schedule wins. Monday, Tuesday and Friday are affected.');
+reports.push('The VIP line and the nearest MRT station are both off the page, confirmed by the owner on 27 September. Nothing outstanding on either.');
+reports.push('FAQ 5 reads "just over half of MuayTix guests choose it", the owner\'s wording of 27 September, in place of the brief\'s 39 per cent. The booking record supports it: 57.4 per cent of tickets and 54.8 per cent of bookings are Club Class.');
+reports.push('Knockout on Monday, Tuesday and Friday reads "9:00 to 9:30 PM", the owner\'s range of 27 September. The brief said 9:30 PM flat and event_calendar holds a 21:00 end.');
 reports.push('Four event names on the page are the brief\'s, and the database spells them differently: "All Star Fight by Buakaw" against "All Star Elite Fighter by Buakaw", and New Power, Petchyindee and Kiatpetch "Muay Thai" against "Traditional Muay Thai" in the database. The brief\'s names are published. Worth making the two agree so the widget and the page say the same thing.');
 reports.push('Stadium capacity of about 3,078, no pillars and no restricted-view seats comes from your fact sheet. I have no way to check it from here and have published it as supplied.');
 reports.push('The sell-out guide in Block 5 and the "can sell out by midday" line are published word for word from the brief. They are the scarcity-style claims I flagged on /rws/tickets and I still cannot verify them from the booking data. Your call, published as written.');
