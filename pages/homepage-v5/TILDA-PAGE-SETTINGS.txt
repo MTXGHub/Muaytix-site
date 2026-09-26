@@ -1,0 +1,28 @@
+MUAYTIX HOMEPAGE: what to paste into Tilda's page settings
+==========================================================
+These are page settings, not part of the HTML block. Page settings for "/".
+Every line below is Document A, word for word. Do not edit them here.
+
+
+SEO TITLE
+Muay Thai Tickets Bangkok | Rajadamnern Stadium | MuayTix
+
+
+META DESCRIPTION
+Book Muay Thai tickets in Bangkok for Rajadamnern Stadium. Compare fight nights, seat classes and live availability, then receive official QR tickets by email.
+
+
+SOCIAL TITLE (Open Graph)
+Muay Thai Tickets Bangkok | MuayTix
+
+
+SOCIAL DESCRIPTION (Open Graph)
+See what is on at Rajadamnern Stadium, compare fight nights and seat classes, and book official Muay Thai tickets online with MuayTix.
+
+
+CANONICAL
+Keep the existing homepage URL. Do not create a new homepage slug.
+
+
+H1
+Already in the block, and there is exactly one. Do not add another in Tilda.

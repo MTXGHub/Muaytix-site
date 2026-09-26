@@ -1,0 +1,362 @@
+# MUAYTIX HOMEPAGE: LOCKED COPY, transcribed from Document A.
+# This file is the only place homepage prose exists. gen.mjs renders from it
+# and verify.mjs reads the built page back and diffs it against this file.
+# Nothing here may be edited without the owner's explicit authorisation.
+# Lines starting with # are comments. Blank lines inside a block are kept.
+
+[meta.seo_title]
+Muay Thai Tickets Bangkok | Rajadamnern Stadium | MuayTix
+
+[meta.description]
+Book Muay Thai tickets in Bangkok for Rajadamnern Stadium. Compare fight nights, seat classes and live availability, then receive official QR tickets by email.
+
+[meta.social_title]
+Muay Thai Tickets Bangkok | MuayTix
+
+[meta.social_description]
+See what is on at Rajadamnern Stadium, compare fight nights and seat classes, and book official Muay Thai tickets online with MuayTix.
+
+[hero.h1]
+Muay Thai Tickets Bangkok: Rajadamnern Stadium
+
+[hero.body1]
+Book Muay Thai tickets for live fights at Rajadamnern Stadium, with events running seven nights a week.
+
+[hero.body2]
+MuayTix provides Muay Thai Bangkok tickets with live date availability, clear seat choices, secure multi-currency payment and official QR tickets sent by email.
+
+[hero.cta_primary]
+Book Muay Thai Tickets
+
+[hero.cta_secondary]
+See Tonight’s Fight
+
+[week.eyebrow]
+This week
+
+[week.h2]
+Muay Thai tonight and this week
+
+[week.intro]
+There is live Muay Thai at Rajadamnern Stadium every night of the week, but the event changes from one evening to the next.
+
+[week.desc.rws]
+Rajadamnern’s flagship Saturday event combines three-round Muay Thai, Thai and international fighters, open scoring and major-event production.
+
+[week.cta.rws]
+Book RWS Tickets
+
+[week.desc.kiatpetch]
+Traditional five-round Muay Thai meets faster three-round contests, accompanied by live traditional music and a knowledgeable local crowd.
+
+[week.cta.kiatpetch]
+Book Kiatpetch Tickets
+
+[week.desc.all-star-buakaw]
+Buakaw’s monthly Rajadamnern event replaces the regular Monday Knockout programme.
+
+[week.cta.all-star-buakaw]
+View Event Details
+
+[week.desc.rajadamnern-knockout]
+Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.
+
+[week.cta.rajadamnern-knockout]
+Book Knockout Tickets
+
+[week.desc.new-power]
+Traditional five-round fights develop through timing, scoring and tactical pressure, accompanied by live sarama music.
+
+[week.cta.new-power]
+Book New Power Tickets
+
+[week.desc.petchyindee]
+Technical Muay Thai built around balance, timing, ring intelligence and the contrast between controlled exchanges and sudden attacks.
+
+[week.cta.petchyindee]
+Book Petchyindee Tickets
+
+[week.section_cta]
+See all upcoming Rajadamnern dates
+
+[nights.h2]
+Choose your Rajadamnern fight night
+
+[nights.intro]
+The right event depends on the kind of Muay Thai you want to watch.
+
+[nights.hook.rajadamnern-knockout]
+7 fights. 3 rounds. 80% knockout rate.
+
+[nights.copy.rajadamnern-knockout]
+Modern three-round Muay Thai inside Rajadamnern Stadium. Thai and international challengers, Wai Kru, live traditional music and a compressed format built around decisive action.
+
+[nights.schedule.rajadamnern-knockout]
+Monday, Tuesday and Friday · Fights from 7:00 PM
+
+[nights.cta.rajadamnern-knockout]
+View Rajadamnern Knockout
+
+[nights.hook.new-power]
+The long game of Muay Thai.
+
+[nights.copy.new-power]
+Traditional five-round fights where timing, scoring and momentum develop round by round. Live sarama music and a knowledgeable local crowd give Wednesday its traditional stadium rhythm.
+
+[nights.schedule.new-power]
+Wednesday · Fights from 6:00 PM
+
+[nights.cta.new-power]
+View New Power Muay Thai
+
+[nights.hook.petchyindee]
+Technique. Timing. Then everything can change.
+
+[nights.copy.petchyindee]
+Watch fighters use balance, control and ring intelligence before pressure develops into powerful kicks, clinching exchanges and sharper attacks.
+
+[nights.schedule.petchyindee]
+Thursday · Fights from 6:00 PM
+
+[nights.cta.petchyindee]
+View Petchyindee Muay Thai
+
+[nights.hook.rws]
+Rajadamnern’s flagship Saturday night.
+
+[nights.copy.rws]
+Thai and international fighters compete in predominantly three-round contests with open scoring and major-event production, while Wai Kru and traditional Muay Thai remain part of the night.
+
+[nights.schedule.rws]
+Saturday · Doors from 6:00 PM
+
+[nights.cta.rws]
+Explore RWS Rajadamnern World Series
+
+[nights.hook.kiatpetch]
+A real Sunday night at Rajadamnern.
+
+[nights.copy.kiatpetch]
+Traditional five-round Muay Thai sits alongside faster three-round contests, with skilled Thai fighters, traditional music and a local crowd following every shift in momentum.
+
+[nights.schedule.kiatpetch]
+Sunday · Fights from 6:00 PM
+
+[nights.cta.kiatpetch]
+View Kiatpetch Muay Thai
+
+[seats.h2]
+Choose your seats at Rajadamnern Stadium
+
+[seats.intro]
+All four public seat classes watch the same fights. What changes is your distance from the ring, viewing height and the crowd around you.
+
+[seats.name.ringside]
+Ringside
+
+[seats.descriptor.ringside]
+Closest to the ring
+
+[seats.copy.ringside]
+Assigned seating beside the action for guests who want proximity above everything else.
+
+[seats.cta.ringside]
+See Ringside seating
+
+[seats.name.club-class]
+Club Class
+
+[seats.descriptor.club-class]
+Elevated, assigned seating
+
+[seats.copy.club-class]
+A clear view across the ring with assigned seats, making Club Class an easy choice for many first-time visitors and groups.
+
+[seats.cta.club-class]
+See Club Class seating
+
+[seats.name.leo-section]
+LEO Section
+
+[seats.descriptor.leo-section]
+Where the local atmosphere is strongest
+
+[seats.copy.leo-section]
+Unassigned seating at the same general level as Club Class, with a strong local following and a more involved stadium atmosphere.
+
+[seats.cta.leo-section]
+See the LEO Section
+
+[seats.name.third-class]
+Third Class
+
+[seats.descriptor.third-class]
+The lowest-priced public seat class
+
+[seats.copy.third-class]
+An elevated full-ring perspective from the outer tier when Third Class is available for the selected event.
+
+[seats.cta.third-class]
+See Third Class seating
+
+[seats.section_cta]
+Compare every Rajadamnern seat class
+
+[trust.h2]
+Why book with MuayTix?
+
+[trust.name.official]
+Official tickets
+
+[trust.copy.official]
+MuayTix supplies official Rajadamnern Stadium tickets from authorised inventory.
+
+[trust.name.groups]
+Groups sit together
+
+[trust.copy.groups]
+When two or more assigned seats are booked in the same order, they are seated together.
+
+[trust.name.currency]
+Pay in your preferred currency
+
+[trust.copy.currency]
+Multi-currency checkout lets you see the total before payment, with secure processing through Stripe.
+
+[trust.name.qr]
+QR tickets by email
+
+[trust.copy.qr]
+Your Stripe receipt confirms payment. Your official event tickets are then prepared and sent separately by MuayTix by email.
+
+[trust.copy.qr2]
+During MuayTix operating hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes. Bookings outside those hours are normally fulfilled by midday the following day.
+
+[trust.name.support]
+Support
+
+[trust.copy.support]
+MuayTix provides WhatsApp support seven days a week for booking and ticket questions.
+
+[trust.cta.support]
+Contact MuayTix on WhatsApp
+
+[guide.h2]
+How to buy Muay Thai fight tickets
+
+[guide.intro]
+If you are wondering how to buy tickets for Muay Thai fights, the process is straightforward.
+
+[guide.step1]
+Choose your event date.
+
+[guide.step2]
+Compare the available seat classes.
+
+[guide.step3]
+Select your tickets and pay securely online.
+
+[guide.step4]
+Receive your official QR tickets by email.
+
+[guide.step5]
+Show the QR code from your phone at the stadium.
+
+[guide.support1]
+Whether you are looking for a single Muay Thai ticket, several Muay Thai fight tickets or fight night tickets for a group, the live inventory shows what is available for that date.
+
+[guide.support2]
+People searching for Bangkok Muay Thai tickets, Muay Thai ticket Bangkok or Muay Thai tickets Bangkok are usually making the same decision: which night to attend and where to sit.
+
+[guide.support3]
+If you use “Thai boxing” rather than “Muay Thai”, searches such as Thai boxing tickets, Thai boxing Bangkok tickets, Thai boxing tickets Bangkok and Bangkok Thai boxing tickets refer to the same sport.
+
+[guide.support4]
+For event-specific searches, Muay Thai fight Bangkok tickets, Muay Thai fight tickets Bangkok and Bangkok Muay Thai fight tickets generally refer to tickets for a particular live fight night.
+
+[guide.support5]
+Visitors looking specifically for Muay Thai stadium tickets, Muay Thai boxing stadium tickets or Bangkok Muay Thai stadium tickets can compare Rajadamnern dates and seat classes through MuayTix.
+
+[guide.support6]
+Search phrasing also varies. Queries such as tickets Muay Thai Bangkok, Muay Thai boxing Bangkok tickets, Muay Thai stadium Bangkok tickets, ticket Muay Thai Bangkok and the broader tickets Bangkok can all lead visitors looking for live ticket options.
+
+[guide.support7]
+If your search is book Muay Thai Bangkok or buy Muay Thai tickets Bangkok, start with the live Rajadamnern calendar and choose the event before selecting your seats.
+
+[guide.cta]
+See all Muay Thai ticket dates
+
+[faq.h2]
+Muay Thai ticket prices and booking questions
+
+[faq.q1]
+What is the Muay Thai Bangkok tickets price?
+
+[faq.a1]
+Prices depend on the event and seat class. Check the live inventory for the exact price available for your chosen date.
+
+[faq.q2]
+Are cheap Muay Thai tickets Bangkok available?
+
+[faq.a2]
+The lowest-priced option varies by event and availability. Third Class is normally the lowest-priced public seating category when it is open for sale.
+
+[faq.q3]
+Do I need to print my ticket?
+
+[faq.a3]
+No. Official QR tickets can be shown on your phone at the stadium entrance.
+
+[faq.q4]
+Can I arrive after the first fight?
+
+[faq.a4]
+Event gates normally remain open during the programme, so guests can arrive after the first bout has started.
+
+[faq.q5]
+How early should I arrive?
+
+[faq.a5]
+The exact door and fight times are shown on each dated event page. Arriving before the first bout gives you time to enter and find your section without missing the opening action.
+
+[faq.q6]
+How long does a Muay Thai event last?
+
+[faq.a6]
+Running times vary by event. Check the dated event page for the most accurate schedule rather than assuming every Rajadamnern night finishes at the same time.
+
+[stadium.h2]
+Rajadamnern Stadium, Bangkok
+
+[stadium.copy1]
+Rajadamnern Stadium opened in 1945 and remains one of Bangkok’s historic homes of professional Muay Thai.
+
+[stadium.copy2]
+The stadium is on Ratchadamnoen Nok Road in central Bangkok and hosts different Muay Thai events throughout the week.
+
+[stadium.copy3]
+If you are comparing Bangkok Muay Thai stadium tickets, use the weekly event programme first, then compare the seating options for your chosen night.
+
+[stadium.cta1]
+Learn about Rajadamnern Stadium
+
+[stadium.cta2]
+Compare Rajadamnern Stadium seating
+
+[stadium.cta3]
+Get directions to Rajadamnern Stadium
+
+[final.h2]
+Book Muay Thai tickets in Bangkok
+
+[final.copy1]
+Choose tonight’s event, another date this week or plan your visit in advance.
+
+[final.copy2]
+MuayTix brings the weekly Rajadamnern programme together in one place so you can compare events, choose seats and book official tickets online.
+
+[final.cta]
+Book Muay Thai Tickets
+
+[brand.line]
+MuayTix is the official brand name. Some visitors search for Muay Tix or MuayTix official website when looking for the site.

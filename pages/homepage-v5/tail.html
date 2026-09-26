@@ -1,0 +1,71 @@
+
+<!-- Document B section 17: only schema that can be populated accurately.
+     No Event schema on the homepage, because that would mean asserting
+     offers, prices and availability the homepage does not hold. No
+     performers, no organiser, no start or end times invented to fill a slot.
+     The FAQPage entries below are the six questions visible on the page and
+     their approved answers, word for word. The logo and sameAs fields are
+     left out because no verified URLs were supplied for them. -->
+<script type="application/ld+json">
+@@SCHEMA@@
+</script>
+
+<script>
+/* Which nights can still be booked?
+ *
+ * A night comes off this list when its booking closes, not at midnight. The
+ * cutoff on each card is the real one: the first bout minus
+ * events.booking_cutoff_minutes, written as an absolute UTC instant.
+ *
+ * Bangkok is UTC+7 with no daylight saving, ever, which is why the "is it
+ * tonight" test is three lines and not a timezone library. The cutoff test
+ * needs no timezone at all: both sides are absolute instants.
+ *
+ * This never decides whether a seat class is sold out. The ticket selector
+ * reads that from the database and is the only thing allowed to answer it.
+ */
+(function () {
+  var list = document.querySelector('[data-mtx-week]');
+  if (!list) return;
+
+  var SHOW = 5;
+  var now = new Date();
+  var bkk = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + 7 * 3600000);
+  function two(n) { return (n < 10 ? '0' : '') + n; }
+  var today = bkk.getFullYear() + '-' + two(bkk.getMonth() + 1) + '-' + two(bkk.getDate());
+
+  var live = [];
+  var cards = [].slice.call(list.querySelectorAll('[data-mtx-cutoff]'));
+  for (var i = 0; i < cards.length; i++) {
+    var shuts = new Date(cards[i].getAttribute('data-mtx-cutoff'));
+    if (!isNaN(shuts) && now >= shuts) { cards[i].parentNode.removeChild(cards[i]); continue; }
+    live.push(cards[i]);
+  }
+  if (!live.length) return;
+
+  for (var j = 0; j < live.length; j++) {
+    var card = live[j];
+    card.style.display = j < SHOW ? '' : 'none';
+    var isNow = j === 0 && card.getAttribute('data-mtx-date') === today;
+    card.className = 'mtx-hp__night' + (isNow ? ' mtx-hp__night--now' : '');
+    var tag = card.querySelector('.mtx-hp__tag');
+    if (isNow && !tag) {
+      tag = document.createElement('span');
+      tag.className = 'mtx-hp__tag';
+      tag.textContent = 'Tonight';
+      card.insertBefore(tag, card.firstChild);
+    } else if (!isNow && tag) {
+      tag.parentNode.removeChild(tag);
+    }
+    var btn = card.querySelector('.mtx-hp__nightcta .mtx-hp__btn');
+    if (btn) btn.className = 'mtx-hp__btn ' + (isNow ? 'mtx-hp__btn--blue' : 'mtx-hp__btn--outline');
+  }
+
+  /* The hero's second door. Document A: a verified current dated-event page.
+     The label is approved copy and is never rewritten here, only repointed. */
+  var heroBtn = document.querySelector('[data-mtx-tonight]');
+  var a = live[0] && live[0].querySelector('.mtx-hp__nightcta a');
+  if (heroBtn && a) heroBtn.setAttribute('href', a.getAttribute('href'));
+})();
+</script>
+</div>

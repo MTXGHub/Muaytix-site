@@ -1,0 +1,6 @@
+- Doors time for All Star Fight by Buakaw (2026-09-28) is not published anywhere. The card shows the first bout only.
+- No destination exists for All Star Fight by Buakaw (2026-09-28). Document A gives the CTA "View Event Details" but no URL, so the card renders without a button.
+- Seat graphic for Ringside has no hosted URL yet, so that card renders without an image.
+- Seat graphic for Club Class has no hosted URL yet, so that card renders without an image.
+- Seat graphic for LEO Section has no hosted URL yet, so that card renders without an image.
+- Seat graphic for Third Class has no hosted URL yet, so that card renders without an image.

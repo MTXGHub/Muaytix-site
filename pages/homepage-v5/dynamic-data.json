@@ -1,0 +1,38 @@
+{
+  "_rule": "Document B section 6. Every value here comes from a verified source, named below. Nothing is inferred and nothing is guessed. A missing value is reported, never filled in.",
+
+  "sources": {
+    "schedule": "Supabase event_calendar joined to events, project jlwopomkqeawrxlapwpc, read 26 September 2026. Supplies event, day, date and first-bout time.",
+    "cutoff": "events.booking_cutoff_minutes, same read. First bout minus the cutoff, written onto each card as an absolute UTC instant.",
+    "doors": "MuayTix's own published day-dated pages in this repository, which carry an explicit doors attribute. Not derived and not offset from the first bout.",
+    "destinations": "Document A. Dated URL patterns are the ones already in use across the published day-dated pages."
+  },
+
+  "doors": {
+    "rws":                  { "time": "6:00 PM", "source": "pages/rws (doors=\"18:00\")" },
+    "rajadamnern-knockout": { "time": "6:00 PM", "source": "pages/nights/rajadamnern_knockout_2026_09_25.html (doors=\"18:00\")" },
+    "kiatpetch":            { "time": "5:00 PM", "source": "pages/nights/kiatpetch_2026_09_27.html (doors=\"17:00\")" },
+    "new-power":            { "time": "5:00 PM", "source": "pages/nights/new_power_2026_09_23.html (doors=\"17:00\")" },
+    "petchyindee":          { "time": "5:00 PM", "source": "pages/nights/petchyindee_2026_09_24.html (doors=\"17:00\")" },
+    "all-star-buakaw":      { "time": null,      "source": "NOT PUBLISHED ANYWHERE. Reported, not guessed. Document B section 6 and section 7." }
+  },
+
+  "events": {
+    "rws":                  { "name": "RWS Rajadamnern World Series", "path": "/rws" },
+    "kiatpetch":            { "name": "Kiatpetch Muay Thai",          "path": "/kiatpetch-muay-thai" },
+    "all-star-buakaw":      { "name": "All Star Fight by Buakaw",     "path": null },
+    "rajadamnern-knockout": { "name": "Rajadamnern Knockout",         "path": "/rajadamnern-knockout" },
+    "new-power":            { "name": "New Power Muay Thai",          "path": "/new-power-muay-thai" },
+    "petchyindee":          { "name": "Petchyindee Muay Thai",        "path": "/petchyindee-muay-thai" }
+  },
+
+  "destinations": {
+    "tickets":  "/rajadamnern-stadium-tickets",
+    "seating":  "/rajadamnern-stadium-seating",
+    "stadium":  "/rajadamnern-stadium",
+    "whatsapp": "https://wa.me/66922706095",
+    "maps":     "https://www.google.com/maps/search/?api=1&query=Rajadamnern+Stadium"
+  },
+
+  "_verified_destinations_note": "whatsapp and maps are the existing destinations already published across this repository's pages, as Document A instructs. Neither was composed here."
+}
