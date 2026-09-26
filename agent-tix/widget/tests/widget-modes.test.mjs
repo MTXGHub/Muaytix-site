@@ -80,21 +80,32 @@ console.log('\nMode 4 — a page built around one promotion (data-series)');
   const {p,ctx}=await page('<div class="muaytix-ticket-selector" data-series="rws"></div>');
   await p.waitForSelector('[data-grid] [data-date]',{timeout:8000});
   const dates = await p.$$eval('[data-grid] [data-date]', b=>b.map(x=>x.dataset.date));
-  check('every fight night is still bookable',
-        JSON.stringify(dates)==='["2026-09-01","2026-09-02","2026-09-05"]', JSON.stringify(dates));
-  // The blunder this guards against: the other promotions' nights came out
-  // struck through and labelled "No fight" on nights that had fights on them,
-  // so a guest reading the calendar concluded there was nothing to buy.
-  const struck = await p.$$eval('[data-grid] .mtx-shut',
-    b=>b.map(x=>x.dataset.date||x.querySelector('.mtx-n').textContent));
+  check('only this promotion can be booked here',
+        JSON.stringify(dates)==='["2026-09-05"]', JSON.stringify(dates));
+  // Every other night is scored through and cannot be clicked: a month of 31
+  // dates with five of them ours is 26 chances to buy the wrong ticket.
+  const others = await p.$$eval('[data-grid] .mtx-elsewhere',
+    b=>b.map(x=>x.querySelector('.mtx-n').textContent+':'+x.querySelector('.mtx-tag').textContent));
+  check('the other promotions are scored out, not bookable',
+        others.join(',')==='1:Knockout,2:New Power', others.join(','));
+  check('and every one of them is disabled',
+        (await p.$$eval('[data-grid] .mtx-elsewhere', b=>b.every(x=>x.disabled))));
+  // The blunder this guards against: those nights came out labelled "No
+  // fight" on nights that had fights on them, so a guest reading the calendar
+  // concluded there was nothing to buy anywhere.
+  const noFight = await p.$$eval('[data-grid] .mtx-shut',
+    b=>b.filter(x=>x.querySelector('.mtx-tag').textContent.trim()==='No fight')
+        .map(x=>x.querySelector('.mtx-n').textContent));
   check('"No fight" only ever lands on a night with no fight',
-        struck.join(',')==='3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30',
-        struck.join(','));
+        noFight.join(',')==='3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30',
+        noFight.join(','));
   const lit = await p.$$eval('[data-grid] .mtx-hi', b=>b.map(x=>x.dataset.date));
   check('this promotion is the one marked out', JSON.stringify(lit)==='["2026-09-05"]', JSON.stringify(lit));
+  check('and carries the green that means available',
+        (await p.$$('[data-grid] .mtx-hi.mtx-go')).length===1);
   const months = await p.$$eval('[data-months] button', b=>b.map(x=>x.textContent.trim()));
-  check('every month with fights in it is still offered',
-        JSON.stringify(months)==='["Sep 2026","Oct 2026"]', JSON.stringify(months));
+  check('only months this promotion is in are offered',
+        JSON.stringify(months)==='["Sep 2026"]', JSON.stringify(months));
   check('the calendar is still a calendar', await p.isVisible('[data-grid]'));
   await p.click('[data-date="2026-09-05"]');
   await p.waitForSelector('.mtx-pick',{timeout:8000});
@@ -114,7 +125,7 @@ console.log('\nA promotion page opens on its own next night');
   await ctx.close();
 }
 
-console.log('\nA promotion with nothing of its own still sells every other night');
+console.log('\nA promotion with nothing of its own says so, and sends them on');
 {
   const ctx=await b.newContext({viewport:{width:1180,height:900}});
   const p=await ctx.newPage();
@@ -124,13 +135,13 @@ console.log('\nA promotion with nothing of its own still sells every other night
   await p.setContent(`<!doctype html><html><head><meta charset="utf-8"><title>t</title></head>
     <body><div class="muaytix-ticket-selector" data-series="kiatpetch"></div><script>${widget}<\/script></body></html>`,
     {waitUntil:'domcontentloaded'});
-  await p.waitForSelector('[data-grid] [data-date]',{timeout:8000});
-  const dates = await p.$$eval('[data-grid] [data-date]', b=>b.map(x=>x.dataset.date));
-  check('the calendar still sells what is on',
-        JSON.stringify(dates)==='["2026-09-01","2026-09-02","2026-09-05"]', JSON.stringify(dates));
-  check('nothing is marked out, because none of it is this promotion',
-        (await p.$$('[data-grid] .mtx-hi')).length===0);
-  check('and it does not claim there is nothing on sale', (await p.$('.mtx-state'))===null);
+  await p.waitForSelector('.mtx-state',{timeout:8000});
+  check('it says so, in its own words',
+        (await p.textContent('.mtx-state h3'))==='No dates on sale for this event',
+        await p.textContent('.mtx-state h3'));
+  check('and no date is offered', (await p.$$('[data-grid] [data-date]')).length===0);
+  check('and it points at every ticket we do sell',
+        (await p.textContent('.mtx-state p')).includes('all-tickets page'));
   await ctx.close();
 }
 

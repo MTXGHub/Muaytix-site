@@ -97,11 +97,17 @@ ${[1,2,3,4,5].map(n => `        <li>${H('facts.' + n)}</li>`).join('\n')}
   </header>
 
   <!-- The evergreen booking widget, per the owner, 26 September 2026. The
-       promotion mount opens on the month holding the next Petchyindee
-       Thursday and marks this promotion's nights out. -->
+       promotion mount sells Petchyindee Thursdays and nothing else: every
+       other night is scored through and cannot be clicked, and months with no
+       Petchyindee night in them are not offered. The link below is the way
+       out for a guest who wants a different night, and it carries Document A's
+       own label rather than a new sentence. -->
   <section class="mtx-pi__band mtx-pi__band--paper" id="book">
     <div class="mtx-pi__shell">
       <div class="muaytix-ticket-selector" data-series="${esc(data.series_slug)}"></div>
+      <p class="mtx-pi__ctarow">
+        <a class="mtx-pi__btn mtx-pi__btn--outline" href="${esc(D.tickets)}">${H('dates.cta_secondary')}</a>
+      </p>
     </div>
   </section>
 
