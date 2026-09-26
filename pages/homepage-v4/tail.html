@@ -1,0 +1,114 @@
+
+<!-- The logo URL and the Facebook and Instagram sameAs links are still not to
+     hand. A guessed URL in schema is worse than no URL, so those fields are
+     left out rather than filled with something that looks right.
+
+     The contactPoint is left out too. The only support route on this page is
+     email, and the WhatsApp number was taken off the site today, so publishing
+     it in schema would contradict the page a guest actually reads.
+
+     The FAQ entries below are the ones on the page and nothing else. The old
+     answers about children, dress code and finishing times are gone: the audit
+     lists all three as needing confirmation before publication. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://muaytix.com/#organisation","name":"MuayTix","url":"https://muaytix.com","description":"MuayTix is the international ticket partner for Rajadamnern Stadium in Bangkok, selling tickets for Muay Thai seven nights a week. Book online, pay in your own currency and show the QR code on your phone at the gate.","areaServed":{"@type":"Country","name":"Thailand"}},
+{"@type":"WebSite","@id":"https://muaytix.com/#website","name":"MuayTix","url":"https://muaytix.com","publisher":{"@id":"https://muaytix.com/#organisation"}},
+{"@type":"FAQPage","@id":"https://muaytix.com/#faq","mainEntity":[
+{"@type":"Question","name":"What is the Muay Thai Bangkok tickets price?","acceptedAnswer":{"@type":"Answer","text":"Prices depend on the event and the seat class. The live calendar shows the exact price for the date you choose, in your own currency, before you pay."}},
+{"@type":"Question","name":"Are cheap Muay Thai tickets Bangkok available?","acceptedAnswer":{"@type":"Answer","text":"The lowest-priced option varies by event and availability. Third Class is normally the lowest-priced seat class when it is open for sale."}},
+{"@type":"Question","name":"Are Thai boxing tickets the same as Muay Thai tickets?","acceptedAnswer":{"@type":"Answer","text":"Yes. Thai boxing is simply the English name for Muay Thai, so Thai boxing Bangkok tickets, Thai boxing tickets Bangkok and Bangkok Thai boxing tickets all mean the same thing: a seat at a Rajadamnern fight night."}},
+{"@type":"Question","name":"Do Muay Thai stadium tickets work at any stadium in Bangkok?","acceptedAnswer":{"@type":"Answer","text":"No. Muay Thai stadium Bangkok tickets are sold for one stadium and one night. Bangkok Muay Thai stadium tickets bought here are for Rajadamnern on the date you choose."}},
+{"@type":"Question","name":"Are Muay Thai fight tickets Bangkok sold for one night only?","acceptedAnswer":{"@type":"Answer","text":"Yes. Bangkok Muay Thai fight tickets admit you to one named fight night. Muay Thai fight Bangkok tickets are never a general pass, so choose your date first."}},
+{"@type":"Question","name":"Do I need to print my ticket?","acceptedAnswer":{"@type":"Answer","text":"No. Your QR ticket can be shown on your phone at the stadium entrance."}},
+{"@type":"Question","name":"Can I arrive after the first fight?","acceptedAnswer":{"@type":"Answer","text":"Yes. The gates normally stay open through the programme, so you can arrive after the first bout has started."}},
+{"@type":"Question","name":"How early should I arrive?","acceptedAnswer":{"@type":"Answer","text":"The exact doors and first bout times are shown on each dated event page. Arriving before the first bout gives you time to get in and find your section without missing the opening action."}},
+{"@type":"Question","name":"How long does a Muay Thai event last?","acceptedAnswer":{"@type":"Answer","text":"Running times vary by event. Check the dated event page for that night's schedule rather than assuming every Rajadamnern night finishes at the same time."}}
+]}
+]}
+</script>
+
+<script>
+/* Which nights can still be booked?
+ *
+ * A night comes off this list when its booking closes, not at midnight. The
+ * cutoff on each card is the real one from the database: the first bout minus
+ * events.booking_cutoff_minutes. RWS on 26 September starts at 7:10 PM Bangkok
+ * and shuts at 6:40 PM, so from 6:40 PM it is gone from the homepage rather
+ * than sitting there as "Tonight" offering a ticket nobody can buy.
+ *
+ * Bangkok is UTC+7 with no daylight saving, ever, which is why the "is it
+ * tonight" test is three lines and not a timezone library. The cutoff test
+ * needs no timezone at all: both sides are absolute instants.
+ *
+ * This never decides whether a seat class is sold out. The ticket selector
+ * reads that from the database and is the only thing allowed to answer it.
+ * This only decides whether to show the night at all.
+ */
+(function () {
+  var list = document.querySelector('[data-mtx-week]');
+  if (!list) return;
+
+  var SHOW = 5;
+  var now = new Date();
+
+  var bkk = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + 7 * 3600000);
+  function two(n) { return (n < 10 ? '0' : '') + n; }
+  var today = bkk.getFullYear() + '-' + two(bkk.getMonth() + 1) + '-' + two(bkk.getDate());
+
+  var live = [];
+  var cards = [].slice.call(list.querySelectorAll('[data-mtx-cutoff]'));
+  for (var i = 0; i < cards.length; i++) {
+    var shuts = new Date(cards[i].getAttribute('data-mtx-cutoff'));
+    // An unparseable date must not silently delete a real night.
+    if (!isNaN(shuts) && now >= shuts) {
+      cards[i].parentNode.removeChild(cards[i]);
+      continue;
+    }
+    live.push(cards[i]);
+  }
+  if (!live.length) return;
+
+  for (var j = 0; j < live.length; j++) {
+    var card = live[j];
+    // nth-child counts what is left, so the five on screen are the five
+    // soonest nights still open. This only has to clear any inline state.
+    card.style.display = j < SHOW ? '' : 'none';
+
+    var isNow = j === 0 && card.getAttribute('data-mtx-date') === today;
+    card.className = 'mtx-hp__night' + (isNow ? ' mtx-hp__night--now' : '');
+
+    var tag = card.querySelector('.mtx-hp__tag');
+    if (isNow && !tag) {
+      tag = document.createElement('span');
+      tag.className = 'mtx-hp__tag';
+      tag.textContent = 'Tonight';
+      card.insertBefore(tag, card.firstChild);
+    } else if (!isNow && tag) {
+      tag.parentNode.removeChild(tag);
+    }
+
+    // The lifted card carries the solid button; the rest carry the outline.
+    var btn = card.querySelector('.mtx-hp__nightcta .mtx-hp__btn');
+    if (btn) {
+      btn.className = 'mtx-hp__btn ' + (isNow ? 'mtx-hp__btn--blue' : 'mtx-hp__btn--outline');
+    }
+  }
+
+  function hrefOf(card) {
+    var a = card && card.querySelector('.mtx-hp__nightcta a');
+    return a && a.getAttribute('href');
+  }
+
+  // The hero's second door. It says Tonight only when tonight is still open
+  // for booking; otherwise it points at the next night that is, and says so.
+  var next = live[0];
+  var heroBtn = document.querySelector('[data-mtx-tonight]');
+  if (heroBtn && hrefOf(next)) {
+    heroBtn.setAttribute('href', hrefOf(next));
+    heroBtn.textContent =
+      next.getAttribute('data-mtx-date') === today ? 'Tonight' : 'Next fight night';
+  }
+})();
+</script>
+</div>

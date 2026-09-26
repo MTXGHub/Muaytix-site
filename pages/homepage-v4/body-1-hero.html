@@ -1,0 +1,163 @@
+  <!-- ===== 1. HERO =====
+       Nothing sits between the H1 and the paragraph under it, in the markup or
+       on screen. That paragraph is the sentence an answer engine lifts when
+       someone asks where to buy Muay Thai tickets in Bangkok, so it has to
+       stand up on its own, away from the page. -->
+  <header class="mtx-hp__hero">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">Rajadamnern Stadium &middot; Bangkok</span>
+      <h1>Muay Thai Tickets Bangkok: Rajadamnern Stadium</h1>
+      <p class="mtx-hp__lede">There is live Muay Thai at Rajadamnern every night of the week. Choose your night, choose how close you sit, and book Muay Thai Bangkok tickets in your own currency. Your QR ticket goes to your phone.</p>
+      <p class="mtx-hp__actions">
+        <a class="mtx-hp__btn mtx-hp__btn--blue" href="/rajadamnern-stadium-tickets">Book Muay Thai Tickets</a>
+        <!-- The script at the foot repoints this at the next night still open
+             for booking, and renames it when tonight has closed. It ships
+             pointing at the calendar so it is never a dead button. -->
+        <a class="mtx-hp__btn mtx-hp__btn--ghost" href="/muay-thai-bangkok-tonight" data-mtx-tonight>Tonight</a>
+      </p>
+    </div>
+  </header>
+
+  <!-- ===== 2. TONIGHT AND THIS WEEK =====
+       Twenty-one nights are in the markup and five are on screen. The script
+       removes any night whose booking has closed and the next one moves up on
+       its own, so the block stays right for three weeks without being touched.
+       A reader with no JavaScript sees five real nights, not twenty-one. -->
+  <section class="mtx-hp__band mtx-hp__band--paper">
+    <div class="mtx-hp__shell">
+      <span class="mtx-hp__kicker">On sale now</span>
+      <h2>Muay Thai tonight and this week</h2>
+      <p>Rajadamnern runs a fight night every night of the week, but the promoter changes from one evening to the next. So does the style of Muay Thai you will watch.</p>
+      <ul class="mtx-hp__nights" data-mtx-week>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-26" data-mtx-cutoff="2026-09-26T11:40:00Z">
+          <h3>RWS Rajadamnern World Series</h3>
+          <p class="mtx-hp__when">Saturday 26 September</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/2026-09-26">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-27" data-mtx-cutoff="2026-09-27T10:30:00Z">
+          <h3>Kiatpetch Muay Thai</h3>
+          <p class="mtx-hp__when">Sunday 27 September</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/kiatpetch-muay-thai/2026-09-27">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-28" data-mtx-cutoff="2026-09-28T11:30:00Z">
+          <h3>All Star Fight by Buakaw</h3>
+          <p class="mtx-hp__when">Monday 28 September</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-stadium-tickets">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-29" data-mtx-cutoff="2026-09-29T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Tuesday 29 September</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-09-29">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-09-30" data-mtx-cutoff="2026-09-30T10:30:00Z">
+          <h3>New Power Muay Thai</h3>
+          <p class="mtx-hp__when">Wednesday 30 September</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/new-power-muay-thai/2026-09-30">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-01" data-mtx-cutoff="2026-10-01T10:30:00Z">
+          <h3>Petchyindee Muay Thai</h3>
+          <p class="mtx-hp__when">Thursday 1 October</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/petchyindee-muay-thai/2026-10-01">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-02" data-mtx-cutoff="2026-10-02T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Friday 2 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-02">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-03" data-mtx-cutoff="2026-10-03T11:40:00Z">
+          <h3>RWS Rajadamnern World Series</h3>
+          <p class="mtx-hp__when">Saturday 3 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/2026-10-03">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-04" data-mtx-cutoff="2026-10-04T10:30:00Z">
+          <h3>Kiatpetch Muay Thai</h3>
+          <p class="mtx-hp__when">Sunday 4 October</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/kiatpetch-muay-thai/2026-10-04">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-05" data-mtx-cutoff="2026-10-05T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Monday 5 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-05">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-06" data-mtx-cutoff="2026-10-06T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Tuesday 6 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-06">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-07" data-mtx-cutoff="2026-10-07T10:30:00Z">
+          <h3>New Power Muay Thai</h3>
+          <p class="mtx-hp__when">Wednesday 7 October</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/new-power-muay-thai/2026-10-07">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-08" data-mtx-cutoff="2026-10-08T10:30:00Z">
+          <h3>Petchyindee Muay Thai</h3>
+          <p class="mtx-hp__when">Thursday 8 October</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/petchyindee-muay-thai/2026-10-08">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-09" data-mtx-cutoff="2026-10-09T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Friday 9 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-09">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-10" data-mtx-cutoff="2026-10-10T11:40:00Z">
+          <h3>RWS Rajadamnern World Series</h3>
+          <p class="mtx-hp__when">Saturday 10 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/2026-10-10">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-11" data-mtx-cutoff="2026-10-11T10:30:00Z">
+          <h3>Kiatpetch Muay Thai</h3>
+          <p class="mtx-hp__when">Sunday 11 October</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/kiatpetch-muay-thai/2026-10-11">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-12" data-mtx-cutoff="2026-10-12T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Monday 12 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-12">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-13" data-mtx-cutoff="2026-10-13T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Tuesday 13 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-13">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-14" data-mtx-cutoff="2026-10-14T10:30:00Z">
+          <h3>New Power Muay Thai</h3>
+          <p class="mtx-hp__when">Wednesday 14 October</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/new-power-muay-thai/2026-10-14">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-15" data-mtx-cutoff="2026-10-15T10:30:00Z">
+          <h3>Petchyindee Muay Thai</h3>
+          <p class="mtx-hp__when">Thursday 15 October</p>
+          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/petchyindee-muay-thai/2026-10-15">Book Tickets</a></p>
+        </li>
+        <li class="mtx-hp__night" data-mtx-date="2026-10-16" data-mtx-cutoff="2026-10-16T11:30:00Z">
+          <h3>Rajadamnern Knockout</h3>
+          <p class="mtx-hp__when">Friday 16 October</p>
+          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-16">Book Tickets</a></p>
+        </li>
+      </ul>
+      <p class="mtx-hp__ctarow">
+        <a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-stadium-tickets">See all Muay Thai ticket dates</a>
+      </p>
+    </div>
+  </section>
