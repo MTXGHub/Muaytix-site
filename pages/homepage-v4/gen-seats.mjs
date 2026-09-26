@@ -35,6 +35,25 @@ const CLASSES = [
 
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+/* Alt text is checked here rather than in build.mjs. build.mjs checks the page
+   it writes, and alt text only reaches that page once a url is filled in, so
+   a banned word could sit in this file unnoticed for as long as the urls stay
+   empty and then go live with the images. */
+const BANNED = [
+  [/\bofficial/i,                     '"official" is banned, including in alt text'],
+  [/\bLimited\b/,                     '"Limited" is not a guest-facing status'],
+  [/\u2014/,                          'em dash'],
+  [/\b(un)?assigned seat(ing|s)?\b/i, 'trade words, not guest words'],
+  [/selling fast|% booked|hurry/i,    'scarcity copy'],
+];
+for (const [key, entry] of Object.entries(img)) {
+  if (typeof entry !== 'object' || entry === null) continue;
+  if (!entry.alt || !entry.alt.trim()) throw new Error(`"${key}" has no alt text`);
+  for (const [re, why] of BANNED) {
+    if (re.test(entry.alt)) throw new Error(`"${key}" alt text: ${why} ("${entry.alt.match(re)[0]}")`);
+  }
+}
+
 const cards = CLASSES.map(c => {
   const gfx = img[c.key];
   if (!gfx) throw new Error(`seat-images.json has no entry for "${c.key}"`);
