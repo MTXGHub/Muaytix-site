@@ -93,7 +93,15 @@ const nightCards = NIGHT_ORDER.map(k => {
 const SEATS = ['ringside', 'club-class', 'leo-section', 'third-class'];
 const img = JSON.parse(readFileSync('seat-images.json', 'utf8'));
 const seatCards = SEATS.map(k => {
-  const gfx = img[k] || {};
+  /* A key that does not match must stop the build. The previous version fell
+     back to an empty object, so a mistyped key rendered a card with no image
+     and reported it as "waiting on a URL" rather than as the fault it was. */
+  const gfx = img[k];
+  if (gfx === undefined) throw new Error(`seat-images.json has no entry for "${k}"`);
+  if (gfx.url && !gfx.alt) throw new Error(`seat-images.json: "${k}" has a url but no alt text`);
+  if (gfx.url && !/^https:\/\/static\.tildacdn\.com\//.test(gfx.url)) {
+    throw new Error(`seat-images.json: "${k}" url is not on static.tildacdn.com (${gfx.url})`);
+  }
   /* Document B section 16: alt text describes the image and introduces no
      claim. It is supplied, not composed here. */
   const figure = gfx.url
