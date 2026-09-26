@@ -1,0 +1,30 @@
+TILDA PAGE SETTINGS — RWS, Saturday 3 October 2026
+Page address:  /rws/2026-10-03
+
+These are Tilda page settings, not part of the HTML block. Paste each one into
+the matching field under Settings on the page.
+
+Every line below is the 26 September page's own wording with the date changed.
+The one edit beyond the date is the removal of the bout count, which was not
+supplied for 3 October. I cannot read the live page from here, so if the meta
+title or description on the 26 September page differs from what its own schema
+says, send me the real ones and I will match them exactly.
+
+---------------------------------------------------------------------------
+TITLE
+Rajadamnern World Series, Saturday 3 October 2026
+
+DESCRIPTION
+Rajadamnern World Series at Rajadamnern Stadium, Bangkok. Doors 6:00 PM,
+first bout 7:10 PM. Scores shown after every round.
+
+OG TITLE
+Rajadamnern World Series, Saturday 3 October 2026
+
+OG DESCRIPTION
+Rajadamnern World Series at Rajadamnern Stadium, Bangkok. Doors 6:00 PM,
+first bout 7:10 PM. Scores shown after every round.
+
+CANONICAL
+https://muaytix.com/rws/2026-10-03
+---------------------------------------------------------------------------
