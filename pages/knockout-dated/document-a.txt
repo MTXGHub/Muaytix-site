@@ -1,0 +1,362 @@
+# RAJADAMNERN KNOCKOUT DATED PAGES: LOCKED COPY, transcribed from Document A.
+# The only place prose for these two pages exists.
+#
+# Document A gives both pages the same wording everywhere except the blocks
+# that carry a date. Those shared blocks are transcribed once, under common.*,
+# so the two pages cannot drift apart through a transcription slip. The
+# date-bearing blocks are transcribed separately and in full, under sep29.*
+# and oct02.*, exactly as Document A writes them.
+
+# ---------------------------- SHARED ----------------------------
+
+[common.explain.h2]
+Three-round Muay Thai at Rajadamnern Stadium
+
+[common.explain.p1]
+Rajadamnern Knockout uses a three-round format that gives fighters less time to establish control and more reason to make each round count.
+
+[common.explain.p2]
+Seven bouts bring Thai and international fighters into the ring, while Wai Kru and live traditional Muay Thai music remain part of the evening.
+
+[common.explain.p3]
+Rajadamnern promotes the event with an advertised 80% knockout rate, giving the night a clear focus on decisive action without removing the traditions that identify the sport as Muay Thai.
+
+[common.facts.label.date]
+Date
+
+[common.facts.label.venue]
+Venue
+
+[common.facts.value.venue]
+Rajadamnern Stadium, Bangkok
+
+[common.facts.label.doors]
+Doors open
+
+[common.facts.value.doors]
+18:00
+
+[common.facts.label.first]
+First fight
+
+[common.facts.value.first]
+19:00
+
+[common.facts.label.bouts]
+Bouts
+
+[common.facts.value.bouts]
+Seven
+
+[common.facts.label.rounds]
+Rounds
+
+[common.facts.value.rounds]
+Three rounds per bout
+
+[common.facts.label.finish]
+Expected finish
+
+[common.facts.value.finish]
+Approximately 21:00 to 21:30
+
+[common.hero.cta_primary]
+Book Tickets
+
+[common.hero.cta_secondary]
+See Evening Schedule
+
+[common.sched.time1]
+18:00
+
+[common.sched.title1]
+Doors open
+
+[common.sched.body1]
+Gates open at Rajadamnern Stadium.
+
+[common.sched.time2]
+19:00
+
+[common.sched.title2]
+First fight
+
+[common.sched.body2]
+The opening three-round bout begins.
+
+[common.sched.time3]
+Approximately 20:00
+
+[common.sched.title3]
+Interval
+
+[common.sched.body3]
+Approximate break between sections of the programme.
+
+[common.sched.time4]
+Approximately 20:10
+
+[common.sched.title4]
+Immersive Dome Experience
+
+[common.sched.body4]
+Rajadamnern’s stadium dome presentation.
+
+[common.sched.time5]
+Through the evening
+
+[common.sched.title5]
+Seven three-round bouts
+
+[common.sched.body5]
+The fight programme continues after the interval.
+
+[common.sched.time6]
+Approximately 21:00 to 21:30
+
+[common.sched.title6]
+Expected finish
+
+[common.sched.body6]
+The final timing can vary according to the fights on the night.
+
+[common.sched.note]
+Timings may be subject to minor change during the event. Guests may enter after the first fight has started, as the gates remain open throughout the evening.
+
+[common.card.notice]
+Fight card information will be updated when confirmed.
+
+[common.seats.h2]
+Choose your seats at Rajadamnern Stadium
+
+[common.seats.name.ringside]
+Ringside
+
+[common.seats.descriptor.ringside]
+Closest to the ring
+
+[common.seats.copy.ringside]
+Assigned seating for guests who want the closest available public viewing position.
+
+[common.seats.name.club-class]
+Club Class
+
+[common.seats.descriptor.club-class]
+Elevated, assigned seating
+
+[common.seats.copy.club-class]
+Assigned seats with a clear view across the ring.
+
+[common.seats.name.leo-section]
+LEO Section
+
+[common.seats.descriptor.leo-section]
+A more involved local atmosphere
+
+[common.seats.copy.leo-section]
+Unassigned seating at the same general level as Club Class, with a strong local following.
+
+[common.seats.name.third-class]
+Third Class
+
+[common.seats.descriptor.third-class]
+Elevated outer-tier viewing
+
+[common.seats.copy.third-class]
+The lowest-priced public seating category when released for the selected event.
+
+[common.seats.cta]
+Compare Rajadamnern seating
+
+[common.booking.source_intro]
+The live booking inventory is the source of truth for:
+
+[common.booking.source1]
+seat classes
+
+[common.booking.source2]
+availability
+
+[common.booking.source3]
+ticket quantities
+
+[common.booking.source4]
+prices
+
+[common.booking.source5]
+sold-out status
+
+[common.booking.cta]
+Book Tickets
+
+[common.mtx.h2]
+Booking with MuayTix
+
+[common.mtx.h3.together]
+Sit together
+
+[common.mtx.copy.together]
+When two or more assigned seats are booked in the same order, they are seated together.
+
+[common.mtx.h3.live]
+Live availability
+
+[common.mtx.copy.live]
+The booking section shows the ticket categories currently available for this event.
+
+[common.mtx.h3.payment]
+Multi-currency payment
+
+[common.mtx.copy.payment]
+The checkout shows the total before payment and uses Stripe for payment processing.
+
+[common.mtx.h3.qr]
+QR tickets by email
+
+[common.mtx.copy.qr1]
+Your Stripe receipt confirms payment. Your event tickets are prepared and sent separately by MuayTix by email.
+
+[common.mtx.copy.qr2]
+During MuayTix operating hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes.
+
+[common.mtx.copy.qr3]
+Bookings received outside those hours are normally fulfilled by midday the following day.
+
+[common.mtx.h3.whatsapp]
+WhatsApp support
+
+[common.mtx.copy.whatsapp]
+MuayTix provides WhatsApp support seven days a week for booking and ticket questions.
+
+[common.mtx.cta]
+Contact MuayTix on WhatsApp
+
+[common.faq.h2]
+Rajadamnern Knockout booking questions
+
+[common.faq.a1]
+Doors open at 18:00 and the first fight begins at 19:00 Bangkok time.
+
+[common.faq.q2]
+How many fights are scheduled?
+
+[common.faq.a2]
+Rajadamnern Knockout is scheduled as seven three-round bouts.
+
+[common.faq.q3]
+What time will the event finish?
+
+[common.faq.a3]
+The event normally finishes at approximately 21:00 to 21:30. The exact finishing time can vary according to the fights on the night.
+
+[common.faq.q4]
+Can I arrive after the first fight?
+
+[common.faq.a4]
+Yes. The gates remain open during the evening, so guests may enter after the event has started.
+
+[common.faq.q5]
+Do I need to print my ticket?
+
+[common.faq.a5]
+No. The QR ticket can be shown on your phone when entering the stadium.
+
+[common.faq.q6]
+Will our seats be together?
+
+[common.faq.a6]
+Bookings of two or more assigned seats in one order are seated together. Unassigned seating categories do not have reserved individual seat positions.
+
+[common.faq.q7]
+Is Rajadamnern Knockout suitable if I have never watched Muay Thai?
+
+[common.faq.a7]
+The three-round format is straightforward to follow for a first live Muay Thai event. Wai Kru, traditional music and full Muay Thai rules remain part of the evening, while the shorter fight format keeps each contest compact.
+
+[common.final.copy]
+Choose your available seating category for seven three-round bouts at Rajadamnern Stadium.
+
+[common.final.cta]
+Book Tickets
+
+# ------------------------ TUESDAY 29 SEPTEMBER ------------------------
+
+[sep29.meta.seo_title]
+Rajadamnern Knockout Tickets, 29 September 2026 | MuayTix
+
+[sep29.meta.description]
+Book Rajadamnern Knockout at Rajadamnern Stadium on Tuesday 29 September 2026. Seven three-round Muay Thai bouts, starting at 19:00.
+
+[sep29.meta.social_title]
+Rajadamnern Knockout | 29 September 2026
+
+[sep29.meta.social_description]
+See event details and book seats for Rajadamnern Knockout at Rajadamnern Stadium on Tuesday 29 September 2026.
+
+[sep29.h1]
+Rajadamnern Knockout, Tuesday 29 September 2026
+
+[sep29.hero.body]
+Seven three-round Muay Thai bouts bring Thai and international fighters to Rajadamnern Stadium on Tuesday 29 September 2026, with an action-focused format and Rajadamnern’s advertised 80% knockout rate.
+
+[sep29.facts.value.date]
+Tuesday 29 September 2026
+
+[sep29.sched.h2]
+Tuesday 29 September: evening schedule
+
+[sep29.card.h2]
+Rajadamnern Knockout fight card, 29 September 2026
+
+[sep29.booking.h2]
+Book Rajadamnern Knockout tickets for 29 September
+
+[sep29.booking.copy]
+Choose from the seating categories currently available for Tuesday 29 September 2026.
+
+[sep29.faq.q1]
+What time does Rajadamnern Knockout start on 29 September 2026?
+
+[sep29.final.h2]
+Book Rajadamnern Knockout for Tuesday 29 September
+
+# -------------------------- FRIDAY 2 OCTOBER --------------------------
+
+[oct02.meta.seo_title]
+Rajadamnern Knockout Tickets, 2 October 2026 | MuayTix
+
+[oct02.meta.description]
+Book Rajadamnern Knockout at Rajadamnern Stadium on Friday 2 October 2026. Seven three-round Muay Thai bouts, starting at 19:00.
+
+[oct02.meta.social_title]
+Rajadamnern Knockout | 2 October 2026
+
+[oct02.meta.social_description]
+See event details and book seats for Rajadamnern Knockout at Rajadamnern Stadium on Friday 2 October 2026.
+
+[oct02.h1]
+Rajadamnern Knockout, Friday 2 October 2026
+
+[oct02.hero.body]
+Seven three-round Muay Thai bouts bring Thai and international fighters to Rajadamnern Stadium on Friday 2 October 2026, with an action-focused format and Rajadamnern’s advertised 80% knockout rate.
+
+[oct02.facts.value.date]
+Friday 2 October 2026
+
+[oct02.sched.h2]
+Friday 2 October: evening schedule
+
+[oct02.card.h2]
+Rajadamnern Knockout fight card, 2 October 2026
+
+[oct02.booking.h2]
+Book Rajadamnern Knockout tickets for 2 October
+
+[oct02.booking.copy]
+Choose from the seating categories currently available for Friday 2 October 2026.
+
+[oct02.faq.q1]
+What time does Rajadamnern Knockout start on 2 October 2026?
+
+[oct02.final.h2]
+Book Rajadamnern Knockout for Friday 2 October

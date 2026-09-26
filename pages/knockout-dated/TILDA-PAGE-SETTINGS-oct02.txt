@@ -1,0 +1,22 @@
+RAJADAMNERN KNOCKOUT: Tilda page settings for /rajadamnern-knockout/2026-10-02
+========================================================
+Page settings, not part of the HTML block. Every line is Document A, word for
+word. Do not edit them here.
+
+SEO TITLE
+Rajadamnern Knockout Tickets, 2 October 2026 | MuayTix
+
+META DESCRIPTION
+Book Rajadamnern Knockout at Rajadamnern Stadium on Friday 2 October 2026. Seven three-round Muay Thai bouts, starting at 19:00.
+
+SOCIAL TITLE (Open Graph)
+Rajadamnern Knockout | 2 October 2026
+
+SOCIAL DESCRIPTION (Open Graph)
+See event details and book seats for Rajadamnern Knockout at Rajadamnern Stadium on Friday 2 October 2026.
+
+URL
+/rajadamnern-knockout/2026-10-02
+
+H1
+Already in the block, exactly one. Do not add another in Tilda.

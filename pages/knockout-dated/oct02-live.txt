@@ -1,0 +1,678 @@
+<div class="mtx-kd">
+<style>.mtx-kd, .mtx-kd * { box-sizing: border-box; }
+.mtx-kd {
+  --kd-blue: #1f5bff;
+  --kd-blue-dark: #1545cf;
+  
+  --kd-blue-lite: #5f8cff;
+  --kd-rws: #FF1828;
+  --kd-rws-dark: #d40f1c;
+  --kd-ink: #0b0b0d;
+  --kd-paper: #f2f2f2;
+  --kd-line: #dcdce1;
+  --kd-muted: #6e6e75;
+  font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--kd-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.mtx-kd p, .mtx-kd h1, .mtx-kd h2, .mtx-kd h3, .mtx-kd ul, .mtx-kd ol { margin: 0; padding: 0; }
+.mtx-kd ul, .mtx-kd ol { list-style: none; }
+.mtx-kd img { max-width: 100%; display: block; }
+.mtx-kd__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
+
+.mtx-kd h1, .mtx-kd h2, .mtx-kd h3 {
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+}
+.mtx-kd h1 { font-size: clamp(38px, 6vw, 70px); line-height: .96; }
+.mtx-kd h2 { font-size: clamp(29px, 3.6vw, 45px); line-height: 1.03; margin-top: 8px; }
+.mtx-kd h3 { font-size: 21px; line-height: 1.15; }
+.mtx-kd__kicker {
+  display: block; color: var(--kd-blue); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 13px; letter-spacing: .13em; text-transform: uppercase;
+}
+.mtx-kd__hero .mtx-kd__kicker,
+.mtx-kd__band--dark .mtx-kd__kicker { color: var(--kd-blue-lite); }
+
+.mtx-kd__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 52px; padding: 0 26px; border: 2px solid transparent;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 16px; letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: all .2s ease;
+}
+.mtx-kd__btn--blue { background: var(--kd-blue); color: #fff; }
+.mtx-kd__btn--blue:hover { background: var(--kd-blue-dark); color: #fff; }
+.mtx-kd__btn--ghost { background: transparent; border-color: #fff; color: #fff; }
+.mtx-kd__btn--ghost:hover { background: #fff; color: var(--kd-ink); }
+.mtx-kd__btn--outline { background: #fff; border-color: var(--kd-ink); color: var(--kd-ink); }
+.mtx-kd__btn--outline:hover { border-color: var(--kd-blue); color: var(--kd-blue); }
+.mtx-kd__btn--red { background: var(--kd-rws); color: #fff; }
+.mtx-kd__btn--red:hover { background: var(--kd-rws-dark); color: #fff; }
+.mtx-kd__go {
+  display: inline-block; color: var(--kd-blue); text-decoration: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 15px; letter-spacing: .07em; text-transform: uppercase;
+  border-bottom: 2px solid currentColor; padding-bottom: 2px;
+}
+.mtx-kd__go:hover { color: var(--kd-blue-dark); }
+
+.mtx-kd__hero {
+  position: relative; color: #fff;
+  padding: clamp(60px, 8vw, 116px) 0;
+  background-color: var(--kd-ink);
+  background-image:
+    linear-gradient(100deg,
+      rgba(11,11,13,.95) 0%,
+      rgba(11,11,13,.88) 38%,
+      rgba(11,11,13,.66) 72%,
+      rgba(11,11,13,.52) 100%),
+    url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 38%;
+}
+
+@media (max-width: 760px) {
+  .mtx-kd__hero {
+    background-image:
+      linear-gradient(180deg,
+        rgba(11,11,13,.86) 0%,
+        rgba(11,11,13,.74) 30%,
+        rgba(11,11,13,.88) 72%,
+        rgba(11,11,13,.96) 100%),
+      url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+    background-position: center 30%;
+  }
+}
+
+.mtx-kd__lede { max-width: 62ch; margin-top: 18px !important; color: #d3d4da; font-size: 17px; }
+.mtx-kd .mtx-kd__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+.mtx-kd__band { padding: clamp(42px, 5.5vw, 74px) 0; background: #fff; }
+.mtx-kd__band--paper { background: var(--kd-paper); }
+.mtx-kd__band--dark { background: #18181d; color: #fff; }
+.mtx-kd__band p { max-width: 68ch; margin-top: 16px !important; font-size: 17px; }
+.mtx-kd__band--dark p { color: #d3d4da; }
+.mtx-kd .mtx-kd__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; }
+
+.mtx-kd__nights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-kd .mtx-kd__nights { margin-top: 30px; }
+
+.mtx-kd__night:nth-child(n+6) { display: none; }
+.mtx-kd__night {
+  display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--kd-line); padding: 26px 22px 24px;
+}
+.mtx-kd__night--now { border-color: var(--kd-blue); box-shadow: inset 0 5px 0 0 var(--kd-blue); padding-top: 30px; }
+.mtx-kd__tag {
+  display: inline-block; align-self: flex-start; padding: 5px 10px;
+  background: var(--kd-blue); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+}
+.mtx-kd__night h3 { margin-top: 14px; }
+.mtx-kd__night--now h3 { font-size: 26px; }
+.mtx-kd .mtx-kd__when {
+  margin-top: 9px !important; color: var(--kd-muted); font-size: 15px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.mtx-kd .mtx-kd__times { margin-top: 4px !important; color: var(--kd-muted); font-size: 15px; }
+.mtx-kd .mtx-kd__night .mtx-kd__evbody { margin-top: 14px !important; font-size: 15.5px; }
+
+.mtx-kd .mtx-kd__nightcta { margin-top: auto !important; padding-top: 20px; }
+.mtx-kd__nightcta .mtx-kd__btn { width: 100%; }
+
+.mtx-kd__plain {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+.mtx-kd__trustgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-kd .mtx-kd__trustgrid { margin-top: 30px; }
+.mtx-kd__trustcard { background: #fff; border: 1px solid var(--kd-line); padding: 26px 22px 24px; }
+.mtx-kd__trustcard svg { width: 30px; height: 30px; stroke: var(--kd-blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mtx-kd__trustcard h3 { margin-top: 18px; font-size: 19px; }
+.mtx-kd__trustcard p { margin-top: 9px !important; color: var(--kd-muted); font-size: 16px; }
+.mtx-kd .mtx-kd__guarantee {
+  max-width: 68ch; margin-top: 26px !important; padding-left: 15px;
+  border-left: 3px solid var(--kd-blue); font-size: 17px;
+}
+.mtx-kd .mtx-kd__partlabel {
+  margin-top: 34px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px !important; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--kd-muted) !important; padding-bottom: 12px; border-bottom: 1px solid var(--kd-line);
+}
+.mtx-kd .mtx-kd__partners {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 0; margin-top: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 17px; letter-spacing: .05em; text-transform: uppercase;
+}
+.mtx-kd__partners li + li::before { content: "\00b7"; color: var(--kd-muted); margin: 0 14px; }
+
+.mtx-kd__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mtx-kd .mtx-kd__grid { margin-top: 28px; }
+.mtx-kd__card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--kd-line); padding: 30px 24px 26px; }
+.mtx-kd__card p { margin-top: 10px !important; color: var(--kd-muted); font-size: 16px; }
+.mtx-kd__standfirst {
+  margin-top: 7px !important; color: var(--kd-blue) !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+}
+.mtx-kd__bestfor { font-size: 15px !important; }
+.mtx-kd__bestfor strong { color: var(--kd-ink); }
+.mtx-kd .mtx-kd__cardbtn { width: 100%; margin-top: auto !important; padding-top: 22px; }
+
+.mtx-kd__card--shot { padding-top: 0; overflow: hidden; }
+.mtx-kd__card--shot > :first-child { margin-top: 0; }
+.mtx-kd__card--shot h3 { margin-top: 22px; }
+.mtx-kd__shots { position: relative; margin: 0 -24px; }
+.mtx-kd__shots-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.mtx-kd__shots-track::-webkit-scrollbar { display: none; }
+.mtx-kd__shots-track img {
+  flex: 0 0 100%; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  scroll-snap-align: center; background: #e6e6ea;
+}
+
+@supports not (aspect-ratio: 4 / 3) {
+  .mtx-kd__shots-track img { height: 260px; }
+}
+.mtx-kd__shots-dots {
+  position: absolute; left: 0; right: 0; bottom: 11px;
+  display: flex; justify-content: center; gap: 7px;
+}
+.mtx-kd__shots-dots button {
+  width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(255,255,255,.55); cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.25); transition: background .18s ease;
+}
+.mtx-kd__shots-dots button.is-on { background: #fff; }
+.mtx-kd__shots-dots button:focus-visible { outline: 2px solid var(--kd-blue); outline-offset: 2px; }
+
+.mtx-kd__shots-dots:empty { display: none; }
+
+.mtx-kd__maplayout { margin-top: 34px; max-width: 640px; margin-inline: auto; }
+.mtx-kd__mapfig { display: block; position: relative; text-decoration: none; }
+.mtx-kd__mapfig img { width: 100%; height: auto; }
+.mtx-kd__mapzoom {
+  position: absolute; right: 12px; bottom: 12px;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 13px; background: rgba(11,11,13,.78); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.14); transition: background .18s ease;
+}
+.mtx-kd__mapfig:hover .mtx-kd__mapzoom { background: var(--kd-blue); }
+.mtx-kd__mapfig:focus-visible { outline: 2px solid var(--kd-blue); outline-offset: 4px; }
+
+.mtx-kd__btnrow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.mtx-kd .mtx-kd__btnrow { margin-top: 28px; }
+.mtx-kd__btnrow .mtx-kd__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+.mtx-kd .mtx-kd__aftercta { margin-top: 20px !important; }
+
+.mtx-kd__evs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-kd .mtx-kd__evs { margin-top: 30px; }
+.mtx-kd__ev {
+  position: relative; display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--kd-line); padding: 30px 24px 26px;
+}
+.mtx-kd__ev::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 7px;
+  background: var(--kd-blue); transform: skewX(-25deg); transform-origin: left;
+}
+.mtx-kd__ev--rws::before { background: var(--kd-rws); }
+.mtx-kd__ev--rws .mtx-kd__btn--blue { background: var(--kd-rws-dark); }
+.mtx-kd__ev--rws .mtx-kd__btn--blue:hover { background: #a80a15; }
+.mtx-kd .mtx-kd__hook {
+  margin-top: 8px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif; font-weight: 800;
+  font-size: clamp(23px, 2.5vw, 29px); line-height: 1.04; text-transform: uppercase;
+}
+.mtx-kd .mtx-kd__evbody { margin-top: 13px !important; color: var(--kd-muted); font-size: 16px; }
+.mtx-kd .mtx-kd__evwhen {
+  margin-top: 16px !important; padding-top: 14px; border-top: 1px solid var(--kd-line);
+  color: var(--kd-muted); font-size: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+}
+.mtx-kd .mtx-kd__evcta { margin-top: auto !important; padding-top: 20px; }
+.mtx-kd__evcta .mtx-kd__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+.mtx-kd__faq { margin-top: 30px; border-top: 1px solid var(--kd-line); }
+.mtx-kd__faq details { border-bottom: 1px solid var(--kd-line); }
+.mtx-kd__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 18px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 20px; line-height: 1.15; text-transform: uppercase;
+}
+.mtx-kd__faq summary::-webkit-details-marker { display: none; }
+.mtx-kd__faq summary::after {
+  content: "+"; flex: none; color: var(--kd-blue);
+  font-family: "Barlow", Helvetica, Arial, sans-serif; font-weight: 400;
+  font-size: 26px; line-height: 1; margin-top: 2px;
+}
+.mtx-kd__faq details[open] summary::after { content: "\2013"; }
+.mtx-kd__faq summary:focus-visible { outline: 2px solid var(--kd-blue); outline-offset: 3px; }
+.mtx-kd__faq p { margin-top: 0 !important; margin-bottom: 22px !important; color: var(--kd-muted); font-size: 16px; }
+
+.mtx-kd__venue { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.mtx-kd .mtx-kd__venue { margin-top: 30px; }
+.mtx-kd__venue p { margin-top: 0 !important; }
+.mtx-kd__where {
+  padding: 24px 22px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.16);
+}
+.mtx-kd .mtx-kd__wherelabel {
+  margin-top: 0 !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px !important; letter-spacing: .13em; text-transform: uppercase;
+  color: #9ca0ad !important;
+}
+.mtx-kd .mtx-kd__address {
+  margin-top: 8px !important; font-size: 19px !important; color: #fff !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  letter-spacing: .02em; text-transform: uppercase; line-height: 1.2;
+}
+
+@media (max-width: 1000px) {
+  .mtx-kd__nights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-kd__evs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-kd__btnrow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-kd__venue { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .mtx-kd__grid { grid-template-columns: 1fr; }
+  .mtx-kd__evs { grid-template-columns: 1fr; }
+  .mtx-kd__trustgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .mtx-kd__shell { width: min(100% - 28px, 1180px); }
+  .mtx-kd__nights { grid-template-columns: 1fr; }
+  .mtx-kd__btnrow { grid-template-columns: 1fr; }
+  .mtx-kd__trustgrid { grid-template-columns: 1fr; }
+  .mtx-kd__actions .mtx-kd__btn, .mtx-kd__ctarow .mtx-kd__btn { width: 100%; }
+  .mtx-kd__faq summary { font-size: 18px; }
+  
+  .mtx-kd .mtx-kd__partners { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 16px; }
+  .mtx-kd__partners li + li::before { content: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mtx-kd * { animation: none !important; scroll-behavior: auto !important; }
+}
+
+.mtx-kd__steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; counter-reset: mtxstep; }
+.mtx-kd .mtx-kd__steps { margin-top: 30px; }
+.mtx-kd__step { background: #fff; border: 1px solid var(--kd-line); padding: 24px 20px 22px; }
+.mtx-kd__step::before {
+  counter-increment: mtxstep; content: counter(mtxstep);
+  display: block; color: var(--kd-blue);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 30px; line-height: 1;
+}
+.mtx-kd .mtx-kd__step p { margin-top: 12px !important; color: var(--kd-ink); font-size: 15.5px; }
+
+.mtx-kd__close { text-align: center; }
+.mtx-kd__close h2 { border: 0; }
+.mtx-kd .mtx-kd__close p { margin-inline: auto; }
+.mtx-kd__close .mtx-kd__ctarow { justify-content: center; }
+
+@media (max-width: 1000px) {
+  .mtx-kd__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .mtx-kd__steps { grid-template-columns: 1fr; }
+  .mtx-kd__step { display: grid; grid-template-columns: 34px 1fr; column-gap: 14px; align-items: baseline; padding: 18px 16px; }
+  .mtx-kd__step::before { font-size: 26px; }
+  .mtx-kd .mtx-kd__step p { margin-top: 0 !important; }
+}
+
+.mtx-kd .mtx-kd__subhead {
+  margin-top: 36px; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.15;
+  text-transform: none; letter-spacing: 0;
+}
+
+.mtx-kd__cardbtn .mtx-kd__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+.mtx-kd__card--gfx { padding-top: 0; overflow: hidden; }
+
+.mtx-kd .mtx-kd__seatgfx {
+  display: block; width: calc(100% + 48px); max-width: none; height: auto;
+  margin: 0 -24px 0; background: #e6e6ea;
+}
+.mtx-kd__card--gfx h3 { margin-top: 24px; }
+@media (max-width: 620px) {
+  .mtx-kd .mtx-kd__seatgfx { width: calc(100% + 40px); margin-inline: -20px; }
+}
+
+.mtx-kd .mtx-kd__lede + .mtx-kd__lede { margin-top: 12px !important; }
+
+.mtx-kd__faq summary h3 {
+  display: inline; font-size: inherit; line-height: inherit;
+  font-family: inherit; font-weight: inherit; text-transform: inherit;
+}
+
+.mtx-kd__trustcard--wide { grid-column: span 2; }
+.mtx-kd__trustcard { display: flex; flex-direction: column; }
+.mtx-kd__trustcard .mtx-kd__cardbtn { margin-top: auto !important; padding-top: 20px; }
+.mtx-kd .mtx-kd__trustcard p + p { margin-top: 12px !important; }
+
+.mtx-kd .mtx-kd__ctastack { margin-top: 0 !important; display: grid; gap: 10px; }
+.mtx-kd__ctastack .mtx-kd__btn { width: 100%; padding: 0 16px; letter-spacing: .04em; }
+
+.mtx-kd .mtx-kd__brand {
+  margin-top: 26px !important; font-size: 14px !important; color: var(--kd-muted);
+  max-width: 62ch; margin-inline: auto;
+}
+
+.mtx-kd__band .mtx-kd__shell > p + p { margin-top: 14px !important; }
+
+@media (max-width: 860px) {
+  .mtx-kd__trustcard--wide { grid-column: span 2; }
+}
+@media (max-width: 620px) {
+  .mtx-kd__trustcard--wide { grid-column: span 1; }
+}
+
+.mtx-kd .mtx-kd__venue p + p { margin-top: 14px !important; }
+
+.mtx-kd__band .mtx-kd__shell > p + p { margin-top: 14px !important; }
+.mtx-kd .mtx-kd__lede + .mtx-kd__facts { margin-top: 26px; }
+
+.mtx-kd__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--kd-line); border: 1px solid var(--kd-line); margin: 0; }
+.mtx-kd .mtx-kd__facts { margin-top: 28px; }
+.mtx-kd__fact { background: #fff; padding: 18px 20px; }
+.mtx-kd__fact dt {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px; letter-spacing: .13em; text-transform: uppercase; color: var(--kd-muted);
+}
+.mtx-kd__fact dd { margin: 6px 0 0; font-size: 16.5px; }
+
+.mtx-kd__hero .mtx-kd__fact { background: rgba(255,255,255,.06); }
+.mtx-kd__hero .mtx-kd__facts { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.16); }
+.mtx-kd__hero .mtx-kd__fact dt { color: #b9bcc6; }
+.mtx-kd__hero .mtx-kd__fact dd { color: #fff; }
+
+.mtx-kd .mtx-kd__note {
+  margin-top: 20px !important; padding-left: 15px; border-left: 3px solid var(--kd-blue);
+  font-size: 16.5px; max-width: 68ch;
+}
+
+.mtx-kd__dates { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.mtx-kd .mtx-kd__dates { margin-top: 28px; }
+.mtx-kd__datecard { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--kd-line); padding: 24px 20px; }
+.mtx-kd__datecard h3 { font-size: 19px; }
+.mtx-kd .mtx-kd__datecard .mtx-kd__times { margin-top: 9px !important; color: var(--kd-muted); font-size: 15px; }
+.mtx-kd .mtx-kd__datecard .mtx-kd__cardbtn { margin-top: auto !important; padding-top: 18px; }
+
+.mtx-kd__close { text-align: center; }
+.mtx-kd .mtx-kd__close p { margin-inline: auto; }
+.mtx-kd__close .mtx-kd__ctarow { justify-content: center; }
+
+@media (max-width: 1000px) { .mtx-kd__dates { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 860px)  { .mtx-kd__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) {
+  .mtx-kd__dates { grid-template-columns: 1fr; }
+  .mtx-kd__facts { grid-template-columns: 1fr; }
+}
+
+.mtx-kd__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-kd .mtx-kd__steps { margin-top: 30px; }
+.mtx-kd__step { background: #fff; border: 1px solid var(--kd-line); padding: 22px 20px; }
+.mtx-kd .mtx-kd__step .mtx-kd__steptime {
+  margin-top: 0 !important; color: var(--kd-blue);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 17px; letter-spacing: .04em; text-transform: uppercase;
+}
+.mtx-kd__step h3 { margin-top: 8px; font-size: 18px; }
+.mtx-kd .mtx-kd__step p + p, .mtx-kd .mtx-kd__step h3 + p { margin-top: 8px !important; color: var(--kd-muted); font-size: 15.5px; }
+
+.mtx-kd .mtx-kd__bullets { margin-top: 14px; padding-left: 0; }
+.mtx-kd__bullets li { position: relative; padding-left: 20px; font-size: 16.5px; }
+.mtx-kd__bullets li + li { margin-top: 6px; }
+.mtx-kd__bullets li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; background: var(--kd-blue); }
+
+.mtx-kd__trustcard h3 { margin-top: 0; font-size: 19px; }
+
+@media (max-width: 860px) { .mtx-kd__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .mtx-kd__steps { grid-template-columns: 1fr; } }
+
+.mtx-kd__steps { counter-reset: none; }
+.mtx-kd__step::before { content: none; }</style>
+
+  <header class="mtx-kd__hero">
+    <div class="mtx-kd__shell">
+      <h1>Rajadamnern Knockout, Friday 2 October 2026</h1>
+      <p class="mtx-kd__lede">Seven three-round Muay Thai bouts bring Thai and international fighters to Rajadamnern Stadium on Friday 2 October 2026, with an action-focused format and Rajadamnern’s advertised 80% knockout rate.</p>
+      <dl class="mtx-kd__facts">
+          <div class="mtx-kd__fact"><dt>Date</dt><dd>Friday 2 October 2026</dd></div>
+          <div class="mtx-kd__fact"><dt>Venue</dt><dd>Rajadamnern Stadium, Bangkok</dd></div>
+          <div class="mtx-kd__fact"><dt>Doors open</dt><dd>18:00</dd></div>
+          <div class="mtx-kd__fact"><dt>First fight</dt><dd>19:00</dd></div>
+          <div class="mtx-kd__fact"><dt>Bouts</dt><dd>Seven</dd></div>
+          <div class="mtx-kd__fact"><dt>Rounds</dt><dd>Three rounds per bout</dd></div>
+          <div class="mtx-kd__fact"><dt>Expected finish</dt><dd>Approximately 21:00 to 21:30</dd></div>
+      </dl>
+      <p class="mtx-kd__actions">
+        <a class="mtx-kd__btn mtx-kd__btn--blue" href="#book">Book Tickets</a>
+        <a class="mtx-kd__btn mtx-kd__btn--ghost" href="#schedule">See Evening Schedule</a>
+      </p>
+    </div>
+  </header>
+
+  
+  <section class="mtx-kd__band mtx-kd__band--paper" id="book">
+    <div class="mtx-kd__shell">
+      <div class="muaytix-ticket-selector" data-event-id="rajadamnern_knockout_2026_10_02"></div>
+    </div>
+  </section>
+
+  <section class="mtx-kd__band">
+    <div class="mtx-kd__shell">
+      <h2>Three-round Muay Thai at Rajadamnern Stadium</h2>
+      <p>Rajadamnern Knockout uses a three-round format that gives fighters less time to establish control and more reason to make each round count.</p>
+      <p>Seven bouts bring Thai and international fighters into the ring, while Wai Kru and live traditional Muay Thai music remain part of the evening.</p>
+      <p>Rajadamnern promotes the event with an advertised 80% knockout rate, giving the night a clear focus on decisive action without removing the traditions that identify the sport as Muay Thai.</p>
+    </div>
+  </section>
+
+  <section class="mtx-kd__band mtx-kd__band--paper" id="schedule">
+    <div class="mtx-kd__shell">
+      <h2>Friday 2 October: evening schedule</h2>
+      <ol class="mtx-kd__steps">
+        <li class="mtx-kd__step">
+          <p class="mtx-kd__steptime">18:00</p>
+          <h3>Doors open</h3>
+          <p>Gates open at Rajadamnern Stadium.</p>
+        </li>
+
+        <li class="mtx-kd__step">
+          <p class="mtx-kd__steptime">19:00</p>
+          <h3>First fight</h3>
+          <p>The opening three-round bout begins.</p>
+        </li>
+
+        <li class="mtx-kd__step">
+          <p class="mtx-kd__steptime">Approximately 20:00</p>
+          <h3>Interval</h3>
+          <p>Approximate break between sections of the programme.</p>
+        </li>
+
+        <li class="mtx-kd__step">
+          <p class="mtx-kd__steptime">Approximately 20:10</p>
+          <h3>Immersive Dome Experience</h3>
+          <p>Rajadamnern’s stadium dome presentation.</p>
+        </li>
+
+        <li class="mtx-kd__step">
+          <p class="mtx-kd__steptime">Through the evening</p>
+          <h3>Seven three-round bouts</h3>
+          <p>The fight programme continues after the interval.</p>
+        </li>
+
+        <li class="mtx-kd__step">
+          <p class="mtx-kd__steptime">Approximately 21:00 to 21:30</p>
+          <h3>Expected finish</h3>
+          <p>The final timing can vary according to the fights on the night.</p>
+        </li>
+      </ol>
+      <p class="mtx-kd__note">Timings may be subject to minor change during the event. Guests may enter after the first fight has started, as the gates remain open throughout the evening.</p>
+    </div>
+  </section>
+
+  
+  <section class="mtx-kd__band">
+    <div class="mtx-kd__shell">
+      <h2>Rajadamnern Knockout fight card, 2 October 2026</h2>
+      <p class="mtx-kd__note">Fight card information will be updated when confirmed.</p>
+    </div>
+  </section>
+
+  <section class="mtx-kd__band mtx-kd__band--paper">
+    <div class="mtx-kd__shell">
+      <h2>Choose your seats at Rajadamnern Stadium</h2>
+      <ul class="mtx-kd__grid">
+        <li class="mtx-kd__card mtx-kd__card--gfx">
+          <img class="mtx-kd__seatgfx" src="https://static.tildacdn.com/tild3830-6232-4832-b331-666465393139/1000033985.webp" alt="Ringside seating beside the ring at Rajadamnern Stadium" loading="lazy" decoding="async">
+          <h3>Ringside</h3>
+          <p class="mtx-kd__standfirst">Closest to the ring</p>
+          <p>Assigned seating for guests who want the closest available public viewing position.</p>
+        </li>
+
+        <li class="mtx-kd__card mtx-kd__card--gfx">
+          <img class="mtx-kd__seatgfx" src="https://static.tildacdn.com/tild6633-3464-4335-b864-323737313634/1000033982.webp" alt="Club Class elevated seating at Rajadamnern Stadium" loading="lazy" decoding="async">
+          <h3>Club Class</h3>
+          <p class="mtx-kd__standfirst">Elevated, assigned seating</p>
+          <p>Assigned seats with a clear view across the ring.</p>
+        </li>
+
+        <li class="mtx-kd__card mtx-kd__card--gfx">
+          <img class="mtx-kd__seatgfx" src="https://static.tildacdn.com/tild3333-3339-4135-b436-326637666663/1000033984.webp" alt="LEO Section seating at Rajadamnern Stadium" loading="lazy" decoding="async">
+          <h3>LEO Section</h3>
+          <p class="mtx-kd__standfirst">A more involved local atmosphere</p>
+          <p>Unassigned seating at the same general level as Club Class, with a strong local following.</p>
+        </li>
+      </ul>
+      <p class="mtx-kd__ctarow">
+        <a class="mtx-kd__btn mtx-kd__btn--outline" href="/rajadamnern-stadium-seating">Compare Rajadamnern seating</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="mtx-kd__band">
+    <div class="mtx-kd__shell">
+      <h2>Book Rajadamnern Knockout tickets for 2 October</h2>
+      <p>Choose from the seating categories currently available for Friday 2 October 2026.</p>
+      <p>The live booking inventory is the source of truth for:</p>
+      <ul class="mtx-kd__bullets">
+          <li>seat classes</li>
+          <li>availability</li>
+          <li>ticket quantities</li>
+          <li>prices</li>
+          <li>sold-out status</li>
+      </ul>
+      <p class="mtx-kd__ctarow">
+        <a class="mtx-kd__btn mtx-kd__btn--blue" href="#book">Book Tickets</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="mtx-kd__band mtx-kd__band--paper">
+    <div class="mtx-kd__shell">
+      <h2>Booking with MuayTix</h2>
+      <ul class="mtx-kd__trustgrid">
+        <li class="mtx-kd__trustcard">
+          <h3>Sit together</h3>
+          <p>When two or more assigned seats are booked in the same order, they are seated together.</p>
+        </li>
+
+        <li class="mtx-kd__trustcard">
+          <h3>Live availability</h3>
+          <p>The booking section shows the ticket categories currently available for this event.</p>
+        </li>
+
+        <li class="mtx-kd__trustcard">
+          <h3>Multi-currency payment</h3>
+          <p>The checkout shows the total before payment and uses Stripe for payment processing.</p>
+        </li>
+
+        <li class="mtx-kd__trustcard mtx-kd__trustcard--wide">
+          <h3>QR tickets by email</h3>
+          <p>Your Stripe receipt confirms payment. Your event tickets are prepared and sent separately by MuayTix by email.</p>
+          <p>During MuayTix operating hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes.</p>
+          <p>Bookings received outside those hours are normally fulfilled by midday the following day.</p>
+        </li>
+
+        <li class="mtx-kd__trustcard">
+          <h3>WhatsApp support</h3>
+          <p>MuayTix provides WhatsApp support seven days a week for booking and ticket questions.</p>
+          <p class="mtx-kd__cardbtn"><a class="mtx-kd__btn mtx-kd__btn--outline" href="https://wa.me/66922706095" rel="noopener">Contact MuayTix on WhatsApp</a></p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mtx-kd__band">
+    <div class="mtx-kd__shell">
+      <h2>Rajadamnern Knockout booking questions</h2>
+      <div class="mtx-kd__faq">
+        <details>
+          <summary><h3>What time does Rajadamnern Knockout start on 2 October 2026?</h3></summary>
+          <p>Doors open at 18:00 and the first fight begins at 19:00 Bangkok time.</p>
+        </details>
+
+        <details>
+          <summary><h3>How many fights are scheduled?</h3></summary>
+          <p>Rajadamnern Knockout is scheduled as seven three-round bouts.</p>
+        </details>
+
+        <details>
+          <summary><h3>What time will the event finish?</h3></summary>
+          <p>The event normally finishes at approximately 21:00 to 21:30. The exact finishing time can vary according to the fights on the night.</p>
+        </details>
+
+        <details>
+          <summary><h3>Can I arrive after the first fight?</h3></summary>
+          <p>Yes. The gates remain open during the evening, so guests may enter after the event has started.</p>
+        </details>
+
+        <details>
+          <summary><h3>Do I need to print my ticket?</h3></summary>
+          <p>No. The QR ticket can be shown on your phone when entering the stadium.</p>
+        </details>
+
+        <details>
+          <summary><h3>Will our seats be together?</h3></summary>
+          <p>Bookings of two or more assigned seats in one order are seated together. Unassigned seating categories do not have reserved individual seat positions.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is Rajadamnern Knockout suitable if I have never watched Muay Thai?</h3></summary>
+          <p>The three-round format is straightforward to follow for a first live Muay Thai event. Wai Kru, traditional music and full Muay Thai rules remain part of the evening, while the shorter fight format keeps each contest compact.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-kd__band mtx-kd__band--paper mtx-kd__close">
+    <div class="mtx-kd__shell">
+      <h2>Book Rajadamnern Knockout for Friday 2 October</h2>
+      <p>Choose your available seating category for seven three-round bouts at Rajadamnern Stadium.</p>
+      <p class="mtx-kd__ctarow">
+        <a class="mtx-kd__btn mtx-kd__btn--blue" href="#book">Book Tickets</a>
+      </p>
+      <p class="mtx-kd__ctarow">
+        <a class="mtx-kd__btn mtx-kd__btn--outline" href="/rajadamnern-knockout">Rajadamnern Knockout</a>
+      </p>
+    </div>
+  </section>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"SportsEvent","@id":"https://muaytix.com/rajadamnern-knockout/2026-10-02#event","name":"Rajadamnern Knockout, Friday 2 October 2026","startDate":"2026-10-02T19:00:00+07:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","description":"Seven three-round Muay Thai bouts bring Thai and international fighters to Rajadamnern Stadium on Friday 2 October 2026, with an action-focused format and Rajadamnern’s advertised 80% knockout rate.","location":{"@type":"Place","name":"Rajadamnern Stadium","address":{"@type":"PostalAddress","streetAddress":"Ratchadamnoen Nok Road","addressLocality":"Bangkok","addressCountry":"TH"}},"image":"https://static.tildacdn.com/tild3830-6232-4832-b331-666465393139/1000033985.webp","url":"https://muaytix.com/rajadamnern-knockout/2026-10-02"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"MuayTix","item":"https://muaytix.com/"},{"@type":"ListItem","position":2,"name":"Rajadamnern Knockout","item":"https://muaytix.com/rajadamnern-knockout"},{"@type":"ListItem","position":3,"name":"Rajadamnern Knockout, Friday 2 October 2026","item":"https://muaytix.com/rajadamnern-knockout/2026-10-02"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What time does Rajadamnern Knockout start on 2 October 2026?","acceptedAnswer":{"@type":"Answer","text":"Doors open at 18:00 and the first fight begins at 19:00 Bangkok time."}},{"@type":"Question","name":"How many fights are scheduled?","acceptedAnswer":{"@type":"Answer","text":"Rajadamnern Knockout is scheduled as seven three-round bouts."}},{"@type":"Question","name":"What time will the event finish?","acceptedAnswer":{"@type":"Answer","text":"The event normally finishes at approximately 21:00 to 21:30. The exact finishing time can vary according to the fights on the night."}},{"@type":"Question","name":"Can I arrive after the first fight?","acceptedAnswer":{"@type":"Answer","text":"Yes. The gates remain open during the evening, so guests may enter after the event has started."}},{"@type":"Question","name":"Do I need to print my ticket?","acceptedAnswer":{"@type":"Answer","text":"No. The QR ticket can be shown on your phone when entering the stadium."}},{"@type":"Question","name":"Will our seats be together?","acceptedAnswer":{"@type":"Answer","text":"Bookings of two or more assigned seats in one order are seated together. Unassigned seating categories do not have reserved individual seat positions."}},{"@type":"Question","name":"Is Rajadamnern Knockout suitable if I have never watched Muay Thai?","acceptedAnswer":{"@type":"Answer","text":"The three-round format is straightforward to follow for a first live Muay Thai event. Wai Kru, traditional music and full Muay Thai rules remain part of the evening, while the shorter fight format keeps each contest compact."}}]}]}
+</script>
+</div>
