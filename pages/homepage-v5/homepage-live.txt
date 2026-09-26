@@ -340,13 +340,14 @@
 .mtx-hp__cardbtn .mtx-hp__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
 
 .mtx-hp__card--gfx { padding-top: 0; overflow: hidden; }
-.mtx-hp__seatgfx {
-  display: block; width: calc(100% + 48px); height: auto;
+
+.mtx-hp .mtx-hp__seatgfx {
+  display: block; width: calc(100% + 48px); max-width: none; height: auto;
   margin: 0 -24px 0; background: #e6e6ea;
 }
 .mtx-hp__card--gfx h3 { margin-top: 24px; }
 @media (max-width: 620px) {
-  .mtx-hp__seatgfx { width: calc(100% + 40px); margin-inline: -20px; }
+  .mtx-hp .mtx-hp__seatgfx { width: calc(100% + 40px); margin-inline: -20px; }
 }
 
 .mtx-hp .mtx-hp__lede + .mtx-hp__lede { margin-top: 12px !important; }

@@ -1,0 +1,22 @@
+ALL STAR FIGHT: Tilda page settings for /all-star-fight-by-buakaw/2026-09-28
+==================================================
+Page settings, not part of the HTML block. Every line is Document A, word for
+word. Do not edit them here.
+
+SEO TITLE
+All Star Fight by Buakaw, 28 September 2026
+
+META DESCRIPTION
+Book All Star Fight by Buakaw at Rajadamnern Stadium on 28 September 2026. Seven three-round bouts, with doors opening at 18:00.
+
+SOCIAL TITLE (Open Graph)
+All Star Fight by Buakaw | 28 September 2026
+
+SOCIAL DESCRIPTION (Open Graph)
+See event details and book seats for All Star Fight by Buakaw at Rajadamnern Stadium on Monday 28 September 2026.
+
+URL
+/all-star-fight-by-buakaw/2026-09-28
+
+H1
+Already in the block, exactly one. Do not add another in Tilda.

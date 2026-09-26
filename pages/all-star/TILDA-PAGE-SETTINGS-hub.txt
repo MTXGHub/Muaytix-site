@@ -1,0 +1,22 @@
+ALL STAR FIGHT: Tilda page settings for /all-star-fight-by-buakaw
+==================================================
+Page settings, not part of the HTML block. Every line is Document A, word for
+word. Do not edit them here.
+
+SEO TITLE
+All Star Fight by Buakaw | Rajadamnern Stadium
+
+META DESCRIPTION
+Discover All Star Fight by Buakaw at Rajadamnern Stadium, Bangkok. Explore the monthly seven-bout Muay Thai event and book your seats.
+
+SOCIAL TITLE (Open Graph)
+All Star Fight by Buakaw | Rajadamnern Stadium
+
+SOCIAL DESCRIPTION (Open Graph)
+Explore Buakaw’s monthly Muay Thai promotion at Rajadamnern Stadium, with seven three-round bouts and Thai and international fighters.
+
+URL
+/all-star-fight-by-buakaw
+
+H1
+Already in the block, exactly one. Do not add another in Tilda.

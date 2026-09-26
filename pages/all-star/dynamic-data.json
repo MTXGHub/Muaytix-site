@@ -1,0 +1,67 @@
+{
+  "_rule": "Document B sections 10, 11 and 26. Every value is verified and its source is named. Nothing inferred, nothing guessed, nothing extrapolated.",
+
+  "sources": {
+    "dates": "Supabase event_calendar, series_slug 'all-star-buakaw', read 26 September 2026. All four dates in Document A are confirmed there, all Mondays, all 19:00.",
+    "doors": "18:00, supplied directly by the owner on 26 September 2026 and matching Document A.",
+    "inventory": "event_ticket_classes joined through ticket_availability_status for all_star_buakaw_2026_09_28, read 26 September 2026.",
+    "seat_images": "The four Tilda-hosted graphics supplied by the owner on 26 September 2026, with the class-to-file mapping confirmed by him.",
+    "alt_text": "The owner's own alt text, supplied 26 September 2026. Reused rather than composed here, so no customer-facing text is authored."
+  },
+
+  "event_key": "all_star_buakaw_2026_09_28",
+
+  "dates": [
+    { "iso": "2026-09-28", "label": "Monday 28 September 2026", "doors": "18:00", "starts": "19:00",
+      "cutoff_utc": "2026-09-28T11:30:00Z", "path": "/all-star-fight-by-buakaw/2026-09-28" },
+    { "iso": "2026-10-26", "label": "Monday 26 October 2026", "doors": "18:00", "starts": "19:00",
+      "cutoff_utc": "2026-10-26T11:30:00Z", "path": null },
+    { "iso": "2026-11-30", "label": "Monday 30 November 2026", "doors": "18:00", "starts": "19:00",
+      "cutoff_utc": "2026-11-30T11:30:00Z", "path": null },
+    { "iso": "2026-12-28", "label": "Monday 28 December 2026", "doors": "18:00", "starts": "19:00",
+      "cutoff_utc": "2026-12-28T11:30:00Z", "path": null }
+  ],
+
+  "dated_seat_classes": {
+    "_note": "Document B section 10 and Document A section 6: show only classes genuinely available for 28 September. Third Class is release_status 'not_released' and resolves to closed, so it is omitted from the dated page rather than shown as misleading static copy.",
+    "ringside": "available",
+    "club-class": "available",
+    "leo-section": "available",
+    "third-class": "closed"
+  },
+
+  "seat_images": {
+    "ringside": {
+      "url": "https://static.tildacdn.com/tild3830-6232-4832-b331-666465393139/1000033985.webp",
+      "alt": "MuayTix Ringside seating at Rajadamnern Stadium in Bangkok, positioned closest to the Muay Thai ring and live fight action"
+    },
+    "club-class": {
+      "url": "https://static.tildacdn.com/tild6633-3464-4335-b864-323737313634/1000033982.webp",
+      "alt": "MuayTix Club Class seating at Rajadamnern Stadium in Bangkok, offering an elevated view across the Muay Thai ring"
+    },
+    "leo-section": {
+      "url": "https://static.tildacdn.com/tild3333-3339-4135-b436-326637666663/1000033984.webp",
+      "alt": "MuayTix LEO Section seating at Rajadamnern Stadium in Bangkok, known for its energetic atmosphere and strong view of the Muay Thai ring"
+    },
+    "third-class": {
+      "url": "https://static.tildacdn.com/tild3864-6636-4461-a634-383639393261/1000033983.webp",
+      "alt": "MuayTix Third Class seating at Rajadamnern Stadium in Bangkok, offering a 360-degree elevated view of the Muay Thai action"
+    }
+  },
+
+  "destinations": {
+    "hub": "/all-star-fight-by-buakaw",
+    "dated": "/all-star-fight-by-buakaw/2026-09-28",
+    "seating": "/rajadamnern-stadium-seating",
+    "tickets": "/rajadamnern-stadium-tickets",
+    "stadium": "/rajadamnern-stadium",
+    "knockout": "/rajadamnern-knockout",
+    "maps": "https://www.google.com/maps/search/?api=1&query=Rajadamnern+Stadium"
+  },
+
+  "document_b_anchors": {
+    "_note": "Document B section 12 names these anchors as approved. They are not in Document A, so they are recorded here with that provenance rather than being composed.",
+    "tickets": "Rajadamnern Stadium tickets",
+    "knockout": "Rajadamnern Knockout"
+  }
+}

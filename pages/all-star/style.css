@@ -1,0 +1,535 @@
+/* All styles are scoped under .mtx-as so nothing here can affect the rest of
+   the site, and the site's own styles are less likely to affect this block.
+   The components, the colours and the type are the day-dated pages' own, so
+   a guest moving from here to a fight night page sees one site. */
+.mtx-as, .mtx-as * { box-sizing: border-box; }
+.mtx-as {
+  --as-blue: #1f5bff;
+  --as-blue-dark: #1545cf;
+  /* The same blue, lifted for small type on black. #1f5bff measures 3.74:1
+     on the hero, which fails at 13px. */
+  --as-blue-lite: #5f8cff;
+  --as-rws: #FF1828;
+  --as-rws-dark: #d40f1c;
+  --as-ink: #0b0b0d;
+  --as-paper: #f2f2f2;
+  --as-line: #dcdce1;
+  --as-muted: #6e6e75;
+  font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--as-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.mtx-as p, .mtx-as h1, .mtx-as h2, .mtx-as h3, .mtx-as ul, .mtx-as ol { margin: 0; padding: 0; }
+.mtx-as ul, .mtx-as ol { list-style: none; }
+.mtx-as img { max-width: 100%; display: block; }
+.mtx-as__shell { width: min(100% - 40px, 1180px); margin: 0 auto; }
+
+/* Headings */
+.mtx-as h1, .mtx-as h2, .mtx-as h3 {
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+}
+.mtx-as h1 { font-size: clamp(38px, 6vw, 70px); line-height: .96; }
+.mtx-as h2 { font-size: clamp(29px, 3.6vw, 45px); line-height: 1.03; margin-top: 8px; }
+.mtx-as h3 { font-size: 21px; line-height: 1.15; }
+.mtx-as__kicker {
+  display: block; color: var(--as-blue); font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800; font-size: 13px; letter-spacing: .13em; text-transform: uppercase;
+}
+.mtx-as__hero .mtx-as__kicker,
+.mtx-as__band--dark .mtx-as__kicker { color: var(--as-blue-lite); }
+
+/* Buttons */
+.mtx-as__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 52px; padding: 0 26px; border: 2px solid transparent;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 16px; letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: all .2s ease;
+}
+.mtx-as__btn--blue { background: var(--as-blue); color: #fff; }
+.mtx-as__btn--blue:hover { background: var(--as-blue-dark); color: #fff; }
+.mtx-as__btn--ghost { background: transparent; border-color: #fff; color: #fff; }
+.mtx-as__btn--ghost:hover { background: #fff; color: var(--as-ink); }
+.mtx-as__btn--outline { background: #fff; border-color: var(--as-ink); color: var(--as-ink); }
+.mtx-as__btn--outline:hover { border-color: var(--as-blue); color: var(--as-blue); }
+.mtx-as__btn--red { background: var(--as-rws); color: #fff; }
+.mtx-as__btn--red:hover { background: var(--as-rws-dark); color: #fff; }
+.mtx-as__go {
+  display: inline-block; color: var(--as-blue); text-decoration: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 15px; letter-spacing: .07em; text-transform: uppercase;
+  border-bottom: 2px solid currentColor; padding-bottom: 2px;
+}
+.mtx-as__go:hover { color: var(--as-blue-dark); }
+
+/* Hero.
+   It carries no .mtx-as__band class. Both are single-class selectors, so the
+   band's `background: #fff` shorthand would win on source order alone and
+   wipe out both the photograph and the black behind it, leaving white type on
+   a white hero. The hero brings its own padding instead.
+
+   The photograph sits under a scrim rather than on its own: the dome is bright
+   teal and red and the headline is white, so without it the type would be
+   unreadable across the top third. The gradient is heavier on the left, where
+   all the words are, and thins to the right so the stadium still shows.
+
+   background-color stays as a fallback. If the image is slow, or blocked, or
+   the URL ever changes, the hero is simply black again and nothing breaks. */
+.mtx-as__hero {
+  position: relative; color: #fff;
+  padding: clamp(60px, 8vw, 116px) 0;
+  background-color: var(--as-ink);
+  background-image:
+    linear-gradient(100deg,
+      rgba(11,11,13,.95) 0%,
+      rgba(11,11,13,.88) 38%,
+      rgba(11,11,13,.66) 72%,
+      rgba(11,11,13,.52) 100%),
+    url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 38%;
+}
+/* On a narrow screen the hero is tall and the square crops to a column, so the
+   scrim runs top to bottom instead of left to right. */
+@media (max-width: 760px) {
+  .mtx-as__hero {
+    background-image:
+      linear-gradient(180deg,
+        rgba(11,11,13,.86) 0%,
+        rgba(11,11,13,.74) 30%,
+        rgba(11,11,13,.88) 72%,
+        rgba(11,11,13,.96) 100%),
+      url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+    background-position: center 30%;
+  }
+}
+/* Nothing sits between the H1 and this paragraph, in the markup or on screen.
+   It is the sentence an AI engine lifts when asked where to buy tickets. */
+.mtx-as__lede { max-width: 62ch; margin-top: 18px !important; color: #d3d4da; font-size: 17px; }
+.mtx-as .mtx-as__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+/* Bands */
+.mtx-as__band { padding: clamp(42px, 5.5vw, 74px) 0; background: #fff; }
+.mtx-as__band--paper { background: var(--as-paper); }
+.mtx-as__band--dark { background: #18181d; color: #fff; }
+.mtx-as__band p { max-width: 68ch; margin-top: 16px !important; font-size: 17px; }
+.mtx-as__band--dark p { color: #d3d4da; }
+.mtx-as .mtx-as__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- Block 2: tonight and this week ----------
+   Tonight is the first card and the only lifted one: a blue rule across the
+   top, a "Tonight" label and its own weight. Every other night is a plain
+   card, so the eye lands on the night the guest can still buy for. */
+.mtx-as__nights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-as .mtx-as__nights { margin-top: 30px; }
+/* Fourteen nights are in the markup; five are on screen. The script removes
+   nights whose booking has closed, and the next one moves up on its own. So
+   the block keeps itself right for a fortnight, and a reader with no
+   JavaScript still sees five real nights rather than fourteen. */
+.mtx-as__night:nth-child(n+6) { display: none; }
+.mtx-as__night {
+  display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--as-line); padding: 26px 22px 24px;
+}
+.mtx-as__night--now { border-color: var(--as-blue); box-shadow: inset 0 5px 0 0 var(--as-blue); padding-top: 30px; }
+.mtx-as__tag {
+  display: inline-block; align-self: flex-start; padding: 5px 10px;
+  background: var(--as-blue); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+}
+.mtx-as__night h3 { margin-top: 14px; }
+.mtx-as__night--now h3 { font-size: 26px; }
+.mtx-as .mtx-as__when {
+  margin-top: 9px !important; color: var(--as-muted); font-size: 15px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.mtx-as .mtx-as__times { margin-top: 4px !important; color: var(--as-muted); font-size: 15px; }
+.mtx-as .mtx-as__night .mtx-as__evbody { margin-top: 14px !important; font-size: 15.5px; }
+/* margin-top:auto pins the button to the foot of the card, so a short night
+   and a long one still line their buttons up across the row. */
+.mtx-as .mtx-as__nightcta { margin-top: auto !important; padding-top: 20px; }
+.mtx-as__nightcta .mtx-as__btn { width: 100%; }
+
+/* The same dates as plain HTML, for crawlers and AI engines that never run
+   the script above. Visually hidden, fully readable to a machine, and still
+   reachable by a screen reader. Not display:none, which they skip. */
+.mtx-as__plain {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+/* ---------- Block 3: trust cards ---------- */
+.mtx-as__trustgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-as .mtx-as__trustgrid { margin-top: 30px; }
+.mtx-as__trustcard { background: #fff; border: 1px solid var(--as-line); padding: 26px 22px 24px; }
+.mtx-as__trustcard svg { width: 30px; height: 30px; stroke: var(--as-blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mtx-as__trustcard h3 { margin-top: 18px; font-size: 19px; }
+.mtx-as__trustcard p { margin-top: 9px !important; color: var(--as-muted); font-size: 16px; }
+.mtx-as .mtx-as__guarantee {
+  max-width: 68ch; margin-top: 26px !important; padding-left: 15px;
+  border-left: 3px solid var(--as-blue); font-size: 17px;
+}
+.mtx-as .mtx-as__partlabel {
+  margin-top: 34px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px !important; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--as-muted) !important; padding-bottom: 12px; border-bottom: 1px solid var(--as-line);
+}
+.mtx-as .mtx-as__partners {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 0; margin-top: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 17px; letter-spacing: .05em; text-transform: uppercase;
+}
+.mtx-as__partners li + li::before { content: "\00b7"; color: var(--as-muted); margin: 0 14px; }
+
+/* ---------- Block 4: seat cards ---------- */
+.mtx-as__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mtx-as .mtx-as__grid { margin-top: 28px; }
+.mtx-as__card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--as-line); padding: 30px 24px 26px; }
+.mtx-as__card p { margin-top: 10px !important; color: var(--as-muted); font-size: 16px; }
+.mtx-as__standfirst {
+  margin-top: 7px !important; color: var(--as-blue) !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+}
+.mtx-as__bestfor { font-size: 15px !important; }
+.mtx-as__bestfor strong { color: var(--as-ink); }
+.mtx-as .mtx-as__cardbtn { width: 100%; margin-top: auto !important; padding-top: 22px; }
+
+/* Seat photo slider. Native scroll-snap: no library, nothing to load, and a
+   swipe works on a phone whether or not the script ever runs. The dots are
+   the only part that needs it, and they are decoration.
+   aspect-ratio plus object-fit means photos of different shapes still line up
+   in the grid, so nothing has to be cropped to an exact size before upload. */
+.mtx-as__card--shot { padding-top: 0; overflow: hidden; }
+.mtx-as__card--shot > :first-child { margin-top: 0; }
+.mtx-as__card--shot h3 { margin-top: 22px; }
+.mtx-as__shots { position: relative; margin: 0 -24px; }
+.mtx-as__shots-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.mtx-as__shots-track::-webkit-scrollbar { display: none; }
+.mtx-as__shots-track img {
+  flex: 0 0 100%; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  scroll-snap-align: center; background: #e6e6ea;
+}
+/* Older Safari ignores aspect-ratio; this keeps the shape rather than letting
+   the image collapse to nothing. */
+@supports not (aspect-ratio: 4 / 3) {
+  .mtx-as__shots-track img { height: 260px; }
+}
+.mtx-as__shots-dots {
+  position: absolute; left: 0; right: 0; bottom: 11px;
+  display: flex; justify-content: center; gap: 7px;
+}
+.mtx-as__shots-dots button {
+  width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(255,255,255,.55); cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.25); transition: background .18s ease;
+}
+.mtx-as__shots-dots button.is-on { background: #fff; }
+.mtx-as__shots-dots button:focus-visible { outline: 2px solid var(--as-blue); outline-offset: 2px; }
+/* Nothing to click through if the slider only ever holds one photo. */
+.mtx-as__shots-dots:empty { display: none; }
+
+/* Seat map. A plain link, not a script: opening the file itself lets the
+   phone's own pinch-to-zoom do the work, and there is no lightbox to go
+   wrong. It sits centred and capped, never beside the cards. */
+.mtx-as__maplayout { margin-top: 34px; max-width: 640px; margin-inline: auto; }
+.mtx-as__mapfig { display: block; position: relative; text-decoration: none; }
+.mtx-as__mapfig img { width: 100%; height: auto; }
+.mtx-as__mapzoom {
+  position: absolute; right: 12px; bottom: 12px;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 13px; background: rgba(11,11,13,.78); color: #fff;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.14); transition: background .18s ease;
+}
+.mtx-as__mapfig:hover .mtx-as__mapzoom { background: var(--as-blue); }
+.mtx-as__mapfig:focus-visible { outline: 2px solid var(--as-blue); outline-offset: 4px; }
+
+/* ---------- The event cards ----------
+   One section, six events, no flagship band sitting apart from "the rest of
+   the week". A guest's first job is choosing a night, and that is easier when
+   every night is in one place and comparable.
+
+   RWS keeps the red because it is the stadium's Saturday event and the guest
+   should be able to find it at a glance. The colour marks one card, not a
+   whole band. */
+/* Four real buttons, equal width, in one row. They wrap to two and then to
+   one, so no label is ever squeezed into two ragged lines. */
+.mtx-as__btnrow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.mtx-as .mtx-as__btnrow { margin-top: 28px; }
+.mtx-as__btnrow .mtx-as__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+.mtx-as .mtx-as__aftercta { margin-top: 20px !important; }
+
+/* ---------- Block 6: promoter cards ---------- */
+.mtx-as__evs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-as .mtx-as__evs { margin-top: 30px; }
+.mtx-as__ev {
+  position: relative; display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--as-line); padding: 30px 24px 26px;
+}
+.mtx-as__ev::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 7px;
+  background: var(--as-blue); transform: skewX(-25deg); transform-origin: left;
+}
+.mtx-as__ev--rws::before { background: var(--as-rws); }
+.mtx-as__ev--rws .mtx-as__btn--blue { background: var(--as-rws-dark); }
+.mtx-as__ev--rws .mtx-as__btn--blue:hover { background: #a80a15; }
+.mtx-as .mtx-as__hook {
+  margin-top: 8px !important;
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif; font-weight: 800;
+  font-size: clamp(23px, 2.5vw, 29px); line-height: 1.04; text-transform: uppercase;
+}
+.mtx-as .mtx-as__evbody { margin-top: 13px !important; color: var(--as-muted); font-size: 16px; }
+.mtx-as .mtx-as__evwhen {
+  margin-top: 16px !important; padding-top: 14px; border-top: 1px solid var(--as-line);
+  color: var(--as-muted); font-size: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+}
+.mtx-as .mtx-as__evcta { margin-top: auto !important; padding-top: 20px; }
+.mtx-as__evcta .mtx-as__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+/* ---------- Block 7: the questions ----------
+   <details> rather than a script: it opens without JavaScript, it is readable
+   to a crawler while closed, and the browser's own find-in-page can open it.
+   The brief requires the answers to be in the DOM, collapsed by CSS only. */
+.mtx-as__faq { margin-top: 30px; border-top: 1px solid var(--as-line); }
+.mtx-as__faq details { border-bottom: 1px solid var(--as-line); }
+.mtx-as__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 18px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 20px; line-height: 1.15; text-transform: uppercase;
+}
+.mtx-as__faq summary::-webkit-details-marker { display: none; }
+.mtx-as__faq summary::after {
+  content: "+"; flex: none; color: var(--as-blue);
+  font-family: "Barlow", Helvetica, Arial, sans-serif; font-weight: 400;
+  font-size: 26px; line-height: 1; margin-top: 2px;
+}
+.mtx-as__faq details[open] summary::after { content: "\2013"; }
+.mtx-as__faq summary:focus-visible { outline: 2px solid var(--as-blue); outline-offset: 3px; }
+.mtx-as__faq p { margin-top: 0 !important; margin-bottom: 22px !important; color: var(--as-muted); font-size: 16px; }
+
+/* ---------- Block 8: the venue ----------
+   Two columns on a wide screen, words left and the address block right, so
+   the band is not one short paragraph adrift in 1180px of white. */
+.mtx-as__venue { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.mtx-as .mtx-as__venue { margin-top: 30px; }
+.mtx-as__venue p { margin-top: 0 !important; }
+.mtx-as__where {
+  padding: 24px 22px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.16);
+}
+.mtx-as .mtx-as__wherelabel {
+  margin-top: 0 !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px !important; letter-spacing: .13em; text-transform: uppercase;
+  color: #9ca0ad !important;
+}
+.mtx-as .mtx-as__address {
+  margin-top: 8px !important; font-size: 19px !important; color: #fff !important;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  letter-spacing: .02em; text-transform: uppercase; line-height: 1.2;
+}
+
+/* ---------- Breakpoints ----------
+   Each one sits with the rules it changes rather than in a block of its own at
+   the foot of the file, so nothing further down can quietly outrank it. */
+@media (max-width: 1000px) {
+  .mtx-as__nights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-as__evs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-as__btnrow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-as__venue { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .mtx-as__grid { grid-template-columns: 1fr; }
+  .mtx-as__evs { grid-template-columns: 1fr; }
+  .mtx-as__trustgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .mtx-as__shell { width: min(100% - 28px, 1180px); }
+  .mtx-as__nights { grid-template-columns: 1fr; }
+  .mtx-as__btnrow { grid-template-columns: 1fr; }
+  .mtx-as__trustgrid { grid-template-columns: 1fr; }
+  .mtx-as__actions .mtx-as__btn, .mtx-as__ctarow .mtx-as__btn { width: 100%; }
+  .mtx-as__faq summary { font-size: 18px; }
+  /* A middot drawn with li + li::before lands at the START of a wrapped line,
+     so below the wrap point the separators go and the names stack instead. */
+  .mtx-as .mtx-as__partners { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 16px; }
+  .mtx-as__partners li + li::before { content: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mtx-as * { animation: none !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- How to buy: the five steps ----------
+   Numbered because the order matters and because a guest scanning on a phone
+   should be able to count the steps before reading any of them. */
+.mtx-as__steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; counter-reset: mtxstep; }
+.mtx-as .mtx-as__steps { margin-top: 30px; }
+.mtx-as__step { background: #fff; border: 1px solid var(--as-line); padding: 24px 20px 22px; }
+.mtx-as__step::before {
+  counter-increment: mtxstep; content: counter(mtxstep);
+  display: block; color: var(--as-blue);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 30px; line-height: 1;
+}
+.mtx-as .mtx-as__step p { margin-top: 12px !important; color: var(--as-ink); font-size: 15.5px; }
+
+/* The closing band. One question, one button, nothing else competing. */
+.mtx-as__close { text-align: center; }
+.mtx-as__close h2 { border: 0; }
+.mtx-as .mtx-as__close p { margin-inline: auto; }
+.mtx-as__close .mtx-as__ctarow { justify-content: center; }
+
+@media (max-width: 1000px) {
+  .mtx-as__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .mtx-as__steps { grid-template-columns: 1fr; }
+  .mtx-as__step { display: grid; grid-template-columns: 34px 1fr; column-gap: 14px; align-items: baseline; padding: 18px 16px; }
+  .mtx-as__step::before { font-size: 26px; }
+  .mtx-as .mtx-as__step p { margin-top: 0 !important; }
+}
+
+/* A sub-heading inside a band. Smaller than the H2 above it and not uppercase,
+   so it reads as a line of the page rather than a second section opening. */
+.mtx-as .mtx-as__subhead {
+  margin-top: 36px; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.15;
+  text-transform: none; letter-spacing: 0;
+}
+
+/* The seat card button matches the night and event cards: full width, pinned
+   to the foot, so all three card types read as one system. */
+.mtx-as__cardbtn .mtx-as__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+
+/* ---------- The seat class graphic ----------
+   Full bleed to the card edges, above the name. No aspect-ratio and no crop:
+   these graphics carry type, and object-fit: cover would slice the words off.
+   They take whatever shape they were drawn at.
+
+   height: auto is not optional. A width or height attribute on an <img>
+   arrives as a presentational hint and outranks a stylesheet rule, which is
+   how a photo on this site once rendered three times too tall. */
+.mtx-as__card--gfx { padding-top: 0; overflow: hidden; }
+/* The class is doubled. .mtx-as img { max-width: 100% } is (0,1,1) and beats
+   a single class, which clamped the graphic to the card's content box and left
+   it inset from both edges. Same family of fault as .mtx-as p { margin: 0 }. */
+.mtx-as .mtx-as__seatgfx {
+  display: block; width: calc(100% + 48px); max-width: none; height: auto;
+  margin: 0 -24px 0; background: #e6e6ea;
+}
+.mtx-as__card--gfx h3 { margin-top: 24px; }
+@media (max-width: 620px) {
+  .mtx-as .mtx-as__seatgfx { width: calc(100% + 40px); margin-inline: -20px; }
+}
+
+/* ---------- v5 components ----------
+   Added because Document A's approved copy needs somewhere to sit. No approved
+   wording was trimmed to fit an existing component. */
+
+/* The hero carries two approved paragraphs, not one. */
+.mtx-as .mtx-as__lede + .mtx-as__lede { margin-top: 12px !important; }
+
+/* The question is an H3 inside the summary, so the heading structure is real
+   rather than drawn with font sizes. The summary keeps the flex layout. */
+.mtx-as__faq summary h3 {
+  display: inline; font-size: inherit; line-height: inherit;
+  font-family: inherit; font-weight: inherit; text-transform: inherit;
+}
+
+/* The QR block is the only trust card with two approved paragraphs, so it
+   spans two columns rather than making all five cards as tall as the longest. */
+.mtx-as__trustcard--wide { grid-column: span 2; }
+.mtx-as__trustcard { display: flex; flex-direction: column; }
+.mtx-as__trustcard .mtx-as__cardbtn { margin-top: auto !important; padding-top: 20px; }
+.mtx-as .mtx-as__trustcard p + p { margin-top: 12px !important; }
+
+/* Three stadium CTAs stacked rather than in a row: at this width a row of
+   three long approved labels wraps raggedly. */
+.mtx-as .mtx-as__ctastack { margin-top: 0 !important; display: grid; gap: 10px; }
+.mtx-as__ctastack .mtx-as__btn { width: 100%; padding: 0 16px; letter-spacing: .04em; }
+
+/* The brand-query line. One size down and muted: it is reference, not a claim
+   competing with the CTA above it. */
+.mtx-as .mtx-as__brand {
+  margin-top: 26px !important; font-size: 14px !important; color: var(--as-muted);
+  max-width: 62ch; margin-inline: auto;
+}
+
+/* The booking guide's approved supporting paragraphs. */
+.mtx-as__band .mtx-as__shell > p + p { margin-top: 14px !important; }
+
+@media (max-width: 860px) {
+  .mtx-as__trustcard--wide { grid-column: span 2; }
+}
+@media (max-width: 620px) {
+  .mtx-as__trustcard--wide { grid-column: span 1; }
+}
+
+/* Three approved paragraphs in the stadium column need air between them.
+   .mtx-as__venue p sets margin-top: 0 !important, so this has to match it. */
+.mtx-as .mtx-as__venue p + p { margin-top: 14px !important; }
+
+/* ---------- All Star components ----------
+   Added so Document A's approved copy has somewhere to sit. Document B
+   section 1 and 28: the component adapts to the copy, never the reverse. */
+
+/* Several bands are long runs of approved paragraphs. */
+.mtx-as__band .mtx-as__shell > p + p { margin-top: 14px !important; }
+.mtx-as .mtx-as__lede + .mtx-as__facts { margin-top: 26px; }
+
+/* The facts block. A definition list because that is what it is: labels and
+   values, not prose. */
+.mtx-as__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--as-line); border: 1px solid var(--as-line); margin: 0; }
+.mtx-as .mtx-as__facts { margin-top: 28px; }
+.mtx-as__fact { background: #fff; padding: 18px 20px; }
+.mtx-as__fact dt {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: 12px; letter-spacing: .13em; text-transform: uppercase; color: var(--as-muted);
+}
+.mtx-as__fact dd { margin: 6px 0 0; font-size: 16.5px; }
+/* In the hero the block sits on black, so it inverts. */
+.mtx-as__hero .mtx-as__fact { background: rgba(255,255,255,.06); }
+.mtx-as__hero .mtx-as__facts { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.16); }
+.mtx-as__hero .mtx-as__fact dt { color: #b9bcc6; }
+.mtx-as__hero .mtx-as__fact dd { color: #fff; }
+
+/* The supporting note and the fight-card waiting message. */
+.mtx-as .mtx-as__note {
+  margin-top: 20px !important; padding-left: 15px; border-left: 3px solid var(--as-blue);
+  font-size: 16.5px; max-width: 68ch;
+}
+
+/* Upcoming dates. */
+.mtx-as__dates { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.mtx-as .mtx-as__dates { margin-top: 28px; }
+.mtx-as__datecard { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--as-line); padding: 24px 20px; }
+.mtx-as__datecard h3 { font-size: 19px; }
+.mtx-as .mtx-as__datecard .mtx-as__times { margin-top: 9px !important; color: var(--as-muted); font-size: 15px; }
+.mtx-as .mtx-as__datecard .mtx-as__cardbtn { margin-top: auto !important; padding-top: 18px; }
+
+/* Seat cards here carry a graphic and no button: the section has one CTA.
+   The graphic rules themselves live in the shared block above and are not
+   repeated here: a second copy silently outranked the first and undid a fix. */
+
+.mtx-as__close { text-align: center; }
+.mtx-as .mtx-as__close p { margin-inline: auto; }
+.mtx-as__close .mtx-as__ctarow { justify-content: center; }
+
+@media (max-width: 1000px) { .mtx-as__dates { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 860px)  { .mtx-as__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) {
+  .mtx-as__dates { grid-template-columns: 1fr; }
+  .mtx-as__facts { grid-template-columns: 1fr; }
+}

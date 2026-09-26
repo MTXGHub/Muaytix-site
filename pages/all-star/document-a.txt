@@ -1,0 +1,512 @@
+# ALL STAR FIGHT BY BUAKAW: LOCKED COPY, transcribed from Document A.
+# The only place customer-facing prose for these two pages exists. gen.mjs
+# renders from it; verify.mjs reads the built pages back and diffs against it.
+# Nothing here may be edited without the owner's explicit authorisation.
+
+# ============================== PAGE 1: EVERGREEN HUB ==============================
+
+[hub.meta.seo_title]
+All Star Fight by Buakaw | Rajadamnern Stadium
+
+[hub.meta.description]
+Discover All Star Fight by Buakaw at Rajadamnern Stadium, Bangkok. Explore the monthly seven-bout Muay Thai event and book your seats.
+
+[hub.meta.social_title]
+All Star Fight by Buakaw | Rajadamnern Stadium
+
+[hub.meta.social_description]
+Explore Buakaw’s monthly Muay Thai promotion at Rajadamnern Stadium, with seven three-round bouts and Thai and international fighters.
+
+[hub.h1]
+All Star Fight by Buakaw at Rajadamnern Stadium
+
+[hub.hero.body]
+Buakaw’s monthly Muay Thai event brings seven three-round bouts to Rajadamnern Stadium, with Thai fighters facing international opponents from across the global fight scene.
+
+[hub.hero.cta_primary]
+See Upcoming Dates
+
+[hub.hero.cta_secondary]
+Choose Your Seats
+
+[hub.facts.h2]
+All Star Fight at a glance
+
+[hub.facts.label.event]
+Event
+
+[hub.facts.value.event]
+All Star Fight by Buakaw
+
+[hub.facts.label.venue]
+Venue
+
+[hub.facts.value.venue]
+Rajadamnern Stadium, Bangkok
+
+[hub.facts.label.schedule]
+Schedule
+
+[hub.facts.value.schedule]
+Monthly special event, normally on the last Monday of the month
+
+[hub.facts.label.format]
+Format
+
+[hub.facts.value.format]
+Seven professional bouts
+
+[hub.facts.label.rounds]
+Rounds
+
+[hub.facts.value.rounds]
+Three rounds per bout
+
+[hub.facts.label.doors]
+Doors
+
+[hub.facts.value.doors]
+Normally from 18:00
+
+[hub.facts.note]
+Event dates, start times and fight cards should always be checked against the confirmed dated event before travelling.
+
+[hub.what.h2]
+What is All Star Fight by Buakaw?
+
+[hub.what.p1]
+All Star Fight by Buakaw is a monthly Muay Thai promotion presented by Buakaw Banchamek at Rajadamnern Stadium in Bangkok.
+
+[hub.what.p2]
+The event has its own identity within the weekly Rajadamnern programme, combining seven three-round contests with international matchmaking and a more globally focused presentation.
+
+[hub.what.p3]
+Buakaw is the promoter behind the event. He is not advertised as a fighter on the monthly Rajadamnern card.
+
+[hub.what.p4]
+The fighters change from month to month, so the confirmed card should always be checked on the relevant dated event page.
+
+[hub.what.p5]
+All Star Fight Rajadamnern searches generally refer to Buakaw Banchamek’s monthly promotion at Rajadamnern Stadium in Bangkok.
+
+[hub.diff.h2]
+A monthly showcase of modern Muay Thai
+
+[hub.diff.p1]
+All Star Fight is not simply another Monday programme.
+
+[hub.diff.p2]
+The event is built around seven three-round contests, giving each fight a compact structure and encouraging fighters to establish themselves quickly.
+
+[hub.diff.p3]
+Thai fighters regularly share the card with international opponents, giving the event a broader international character while retaining the rituals and fighting traditions of Muay Thai.
+
+[hub.diff.p4]
+Wai Kru, traditional music and full Muay Thai rules remain part of the night, while the lighting and stadium presentation give the event a contemporary setting.
+
+[hub.diff.p5]
+Because it normally appears only once each month, All Star Fight also has a different sense of occasion from Rajadamnern’s regular weekly programmes.
+
+[hub.intl.h2]
+Thai and international fighters on one card
+
+[hub.intl.p1]
+International matchmaking is an important part of All Star Fight.
+
+[hub.intl.p2]
+Thai fighters regularly share the bill with opponents from other parts of Asia, Europe, the Middle East and the Americas.
+
+[hub.intl.p3]
+Previous cards have included fighters representing countries including Thailand, Belarus, Morocco, Spain, France, Italy, Iran, Mexico, Germany, Russia, China and the United States.
+
+[hub.intl.p4]
+The confirmed line-up changes for each event, so individual fighter names should only appear when the relevant fight card has been verified.
+
+[hub.format.h2]
+Seven fights, three rounds each
+
+[hub.format.p1]
+All Star Fight normally features seven professional Muay Thai bouts, with each contest scheduled for three rounds.
+
+[hub.format.p2]
+The shorter format keeps the programme moving and gives fighters less time to settle into the contest.
+
+[hub.format.p3]
+Decisions, knockouts and technical knockouts can all occur, but no individual result or knockout should ever be promised in advance.
+
+[hub.role.h2]
+Buakaw is the promoter, not one of the fighters
+
+[hub.role.p1]
+Buakaw Banchamek is one of the most recognisable figures in modern Muay Thai and kickboxing.
+
+[hub.role.p2]
+For All Star Fight, his role is as promoter and event creator, helping shape a monthly Rajadamnern event that connects Thai Muay Thai with an international audience.
+
+[hub.role.p3]
+If you are searching for Buakaw fight 2026, Buakaw next fight, Buakaw next fight 2026 or Buakaw Banchamek next fight 2026, All Star Fight should not be confused with a confirmed Buakaw bout.
+
+[hub.role.p4]
+Buakaw is the promoter behind All Star Fight Buakaw, while the fighters competing at each event are listed on the relevant dated page once confirmed.
+
+[hub.versus.h2]
+All Star Fight and Rajadamnern Knockout are different events
+
+[hub.versus.p1]
+Both programmes use seven three-round contests, but they are separate event identities.
+
+[hub.versus.p2]
+All Star Fight by Buakaw is a monthly special promotion presented by Buakaw Banchamek and normally appears on the last Monday of the month.
+
+[hub.versus.p3]
+Rajadamnern Knockout is part of the stadium’s regular weekly programme and runs on selected Mondays, Tuesdays and Fridays.
+
+[hub.versus.p4]
+On an All Star Fight Monday, the monthly event replaces the normal Monday Rajadamnern Knockout programme.
+
+[hub.versus.p5]
+The phrase Rajadamnern Knockout x All Star Fight by Buakaw may appear in search or ticketing contexts, but guests should use the dated event page to confirm exactly which programme is running.
+
+[hub.versus.cta]
+Explore Rajadamnern Knockout
+
+[hub.seats.h2]
+Choose your seats at Rajadamnern Stadium
+
+[hub.seats.name.ringside]
+Ringside
+
+[hub.seats.descriptor.ringside]
+Closest to the ring
+
+[hub.seats.copy.ringside]
+Assigned seating for guests who want the closest available public viewing position.
+
+[hub.seats.name.club-class]
+Club Class
+
+[hub.seats.descriptor.club-class]
+Elevated, assigned seating
+
+[hub.seats.copy.club-class]
+Assigned seats with a clear view across the ring.
+
+[hub.seats.name.leo-section]
+LEO Section
+
+[hub.seats.descriptor.leo-section]
+A more involved local atmosphere
+
+[hub.seats.copy.leo-section]
+Unassigned seating at the same general level as Club Class, with a strong local following.
+
+[hub.seats.name.third-class]
+Third Class
+
+[hub.seats.descriptor.third-class]
+Elevated outer-tier viewing
+
+[hub.seats.copy.third-class]
+The lowest-priced public seating category when released for the selected event.
+
+[hub.seats.cta]
+Compare Rajadamnern seating
+
+[hub.dates.h2]
+Upcoming All Star Fight dates
+
+[hub.dates.cta]
+View event details
+
+[hub.faq.h2]
+All Star Fight by Buakaw questions
+
+[hub.faq.q1]
+What is All Star Fight by Buakaw?
+
+[hub.faq.a1]
+All Star Fight by Buakaw is a monthly Muay Thai promotion presented by Buakaw Banchamek at Rajadamnern Stadium in Bangkok. It normally features seven professional three-round bouts involving Thai and international fighters.
+
+[hub.faq.q2]
+Is Buakaw fighting at All Star Fight?
+
+[hub.faq.a2]
+No. Buakaw is the promoter behind the event. The fighters change from month to month and are listed on the individual dated event page once confirmed.
+
+[hub.faq.q3]
+Is All Star Fight held every month?
+
+[hub.faq.a3]
+It is scheduled as a monthly special event, normally on the last Monday of the month. Dates can change, so check the current booking calendar.
+
+[hub.faq.q4]
+How many fights are on the card?
+
+[hub.faq.a4]
+The standard format is seven bouts, with each bout scheduled for three rounds.
+
+[hub.faq.q5]
+Is All Star Fight the same as Rajadamnern Knockout?
+
+[hub.faq.a5]
+No. They use a similar three-round format, but All Star Fight is Buakaw’s branded monthly promotion and can replace the usual Monday Knockout programme.
+
+[hub.faq.q6]
+Is All Star Fight suitable for someone new to Muay Thai?
+
+[hub.faq.a6]
+The three-round format is straightforward to follow, while Wai Kru, traditional music and the stadium setting give first-time visitors an introduction to several important elements of Muay Thai.
+
+[hub.faq.q7]
+Where is All Star Fight held?
+
+[hub.faq.a7]
+All Star Fight is held at Rajadamnern Stadium on Ratchadamnoen Nok Road in Bangkok.
+
+[hub.final.h2]
+Choose your All Star Fight date
+
+[hub.final.copy]
+See the next confirmed All Star Fight by Buakaw event and choose your seating section.
+
+[hub.final.cta]
+See Upcoming All Star Fight Dates
+
+# ============================== PAGE 2: DATED EVENT ==============================
+
+[dated.meta.seo_title]
+All Star Fight by Buakaw, 28 September 2026
+
+[dated.meta.description]
+Book All Star Fight by Buakaw at Rajadamnern Stadium on 28 September 2026. Seven three-round bouts, with doors opening at 18:00.
+
+[dated.meta.social_title]
+All Star Fight by Buakaw | 28 September 2026
+
+[dated.meta.social_description]
+See event details and book seats for All Star Fight by Buakaw at Rajadamnern Stadium on Monday 28 September 2026.
+
+[dated.h1]
+All Star Fight by Buakaw, Monday 28 September 2026
+
+[dated.hero.body]
+Book tickets for Buakaw’s monthly Muay Thai promotion at Rajadamnern Stadium, featuring seven three-round bouts.
+
+[dated.facts.label.date]
+Date
+
+[dated.facts.value.date]
+Monday 28 September 2026
+
+[dated.facts.label.venue]
+Venue
+
+[dated.facts.value.venue]
+Rajadamnern Stadium, Bangkok
+
+[dated.facts.label.doors]
+Doors open
+
+[dated.facts.value.doors]
+18:00
+
+[dated.facts.label.starts]
+Event starts
+
+[dated.facts.value.starts]
+19:00
+
+[dated.facts.label.bouts]
+Bouts
+
+[dated.facts.value.bouts]
+Seven
+
+[dated.facts.label.rounds]
+Rounds
+
+[dated.facts.value.rounds]
+Three rounds per bout
+
+[dated.hero.cta]
+Book Tickets
+
+[dated.explain.h2]
+All Star Fight at Rajadamnern on 28 September
+
+[dated.explain.p1]
+All Star Fight Elite Fighter is Buakaw Banchamek’s monthly fight promotion at Rajadamnern Stadium.
+
+[dated.explain.p2]
+Buakaw is the promoter, not one of the fighters on this card.
+
+[dated.explain.p3]
+The event brings Thai and international fighters together for seven professional three-round bouts.
+
+[dated.explain.link_intro]
+For more background on the promotion, see
+
+[dated.explain.link_anchor]
+what is All Star Fight by Buakaw?
+
+[dated.explain.p4]
+All Star Fight Rajadamnern searches generally refer to Buakaw Banchamek’s monthly promotion at Rajadamnern Stadium in Bangkok.
+
+[dated.expect.h2]
+What to expect on 28 September 2026
+
+[dated.expect.p1]
+The scheduled format is seven professional Muay Thai bouts, each contested over three rounds.
+
+[dated.expect.p2]
+The night combines Thai and international competition with Wai Kru, traditional music and Rajadamnern’s modern stadium presentation.
+
+[dated.expect.p3]
+The confirmed fight card can change before the event, so individual fighter names should only be shown when verified by an approved event source.
+
+[dated.card.h2]
+All Star Fight fight card, 28 September 2026
+
+[dated.card.notice]
+Fight card information will be updated when confirmed.
+
+[dated.why.h2]
+Why choose All Star Fight on 28 September?
+
+[dated.why.p1]
+Buakaw’s monthly promotion gives Monday night at Rajadamnern a different identity from the regular Knockout programme.
+
+[dated.why.p2]
+Seven three-round contests keep the card compact, while international matchmaking brings Thai and overseas fighters onto the same programme.
+
+[dated.why.p3]
+Wai Kru and traditional music remain part of the event, inside a stadium presentation designed for a modern live audience.
+
+[dated.why.cta]
+Book All Star Fight Tickets
+
+[dated.seats.h2]
+Choose your seats
+
+[dated.seats.name.ringside]
+Ringside
+
+[dated.seats.descriptor.ringside]
+Closest to the ring
+
+[dated.seats.copy.ringside]
+Assigned seating for guests who want the closest available public viewing position.
+
+[dated.seats.name.club-class]
+Club Class
+
+[dated.seats.descriptor.club-class]
+Elevated, assigned seating
+
+[dated.seats.copy.club-class]
+Assigned seats with a clear view across the ring.
+
+[dated.seats.name.leo-section]
+LEO Section
+
+[dated.seats.descriptor.leo-section]
+A more involved local atmosphere
+
+[dated.seats.copy.leo-section]
+Unassigned seating at the same general level as Club Class, with a strong local following.
+
+[dated.seats.name.third-class]
+Third Class
+
+[dated.seats.descriptor.third-class]
+Elevated outer-tier viewing
+
+[dated.seats.copy.third-class]
+The lowest-priced public seating category when available.
+
+[dated.seats.cta]
+Choose your Rajadamnern seats
+
+[dated.arrival.h2]
+Planning your arrival
+
+[dated.arrival.p1]
+Doors open at 18:00 and the event starts at 19:00 Bangkok time.
+
+[dated.arrival.p2]
+Guests planning to arrive before the first bout should allow enough time to enter the stadium and find their seating section.
+
+[dated.arrival.p3]
+Bring the QR ticket supplied for the booking on your phone.
+
+[dated.arrival.p4]
+Rajadamnern Stadium is on Ratchadamnoen Nok Road in Bangkok.
+
+[dated.arrival.cta]
+Get directions to Rajadamnern Stadium
+
+[dated.faq.h2]
+All Star Fight, 28 September 2026: booking questions
+
+[dated.faq.q1]
+What time does All Star Fight start on 28 September 2026?
+
+[dated.faq.a1]
+Doors open at 18:00 and the event is scheduled to begin at 19:00 Bangkok time.
+
+[dated.faq.q2]
+How many bouts are scheduled?
+
+[dated.faq.a2]
+The scheduled format is seven three-round bouts.
+
+[dated.faq.q3]
+Is Buakaw fighting on 28 September 2026?
+
+[dated.faq.a3]
+No. Buakaw is the promoter behind All Star Fight, not a fighter on the 28 September card.
+
+[dated.faq.a3b]
+Visitors searching for Buakaw fight 2026, Buakaw next fight, Buakaw next fight 2026 or Buakaw Banchamek next fight 2026 should check confirmed fight announcements separately rather than assuming this event is a Buakaw bout.
+
+[dated.faq.a3c]
+This is All Star Fight Buakaw, a promotion presented by Buakaw Banchamek at Rajadamnern Stadium.
+
+[dated.faq.q4]
+Is this Rajadamnern Knockout?
+
+[dated.faq.a4]
+No. On 28 September 2026, All Star Fight by Buakaw replaces the normal Monday Rajadamnern Knockout programme.
+
+[dated.faq.a4b]
+The phrase Rajadamnern Knockout x All Star Fight by Buakaw may appear in search or ticketing contexts for this date, but the event running on 28 September is All Star Fight by Buakaw.
+
+[dated.faq.q5]
+Where is the event held?
+
+[dated.faq.a5]
+The event is held at Rajadamnern Stadium on Ratchadamnoen Nok Road in Bangkok.
+
+[dated.faq.q6]
+Should I book in advance?
+
+[dated.faq.a6]
+Booking in advance allows you to choose from the seating categories still available for the event.
+
+[dated.search.h2]
+Muay Thai at Rajadamnern on 28 September 2026
+
+[dated.search.p1]
+For visitors searching for Rajadamnern Muay Thai 28 September 2026 or Muay Thai Bangkok 28 September 2026, the event scheduled at Rajadamnern Stadium that evening is All Star Fight by Buakaw.
+
+[dated.search.p2]
+All Star Fight Elite Fighter 28 September 2026 refers to Buakaw Banchamek’s monthly promotion at Rajadamnern Stadium, with seven scheduled three-round bouts.
+
+[dated.final.h2]
+Book All Star Fight by Buakaw tickets
+
+[dated.final.copy]
+Choose your available seating section for All Star Fight at Rajadamnern Stadium on Monday 28 September 2026.
+
+[dated.final.cta]
+Book Tickets
