@@ -195,10 +195,10 @@ const eventRows = EVENT_ORDER.map(k => {
      An event with no logo keeps the accent field it had before rather than
      leaving a hole. Kiatpetch is in that position: see blockers.txt. */
   const mark = ev.logo
-    ? `        <div class="mtx-hp__event-logo">
+    ? `        <div class="mtx-hp__event-logo" style="--tile:${esc(ev.logo_tile)}">
           <img src="${esc(ev.logo)}" alt="" aria-hidden="true" loading="lazy" decoding="async">
         </div>`
-    : `        <div class="mtx-hp__event-mark" aria-hidden="true"><span>${esc(ev.short_name)}</span></div>`;
+    : `        <div class="mtx-hp__event-mark" style="--tile:${esc(ev.logo_tile)}" aria-hidden="true"><span>${esc(ev.short_name)}</span></div>`;
 
   if (!ev.logo) blockers.push(`No logo has been supplied for ${ev.name}. ${ev.logo_note || ''}`.trim());
 
@@ -224,19 +224,34 @@ ${eventRows}
     </div>
   </section>`;
 
+/* ============================================================= GALLERY === */
+
+const GALLERY = ['night_crowd', 'night_ringside', 'night_club'];
+const gallery = `  <section class="mtx-hp__strip" aria-label="${esc(t('stadium.h2'))}">
+${GALLERY.map(k => {
+  const pic = PIC[k];
+  if (!pic) throw new Error(`dynamic-data.json has no photograph "${k}"`);
+  return `    <img src="${esc(pic.url)}" alt="${esc(pic.alt)}" loading="lazy" decoding="async">`;
+}).join('\n')}
+  </section>`;
+
 /* =============================================================== SEATS === */
 
 /* The owner's seat class artwork, at size. v5 cropped these into a card
    header about two hundred pixels tall. Here the graphic is the object. */
 const SEATS = ['ringside', 'club-class', 'leo-section', 'third-class'];
-blockers.push('None of the six event logos can be opened from this environment, because static.tildacdn.com is '
-  + 'blocked by the network policy. They sit on a white tile, fitted inside it without cropping. If any one of them '
-  + 'is white or very light it will disappear on that tile, and that logo needs a dark tile instead.');
+blockers.push('Four of the six event logos have still not been seen. static.tildacdn.com is blocked by the network '
+  + 'policy, so only two are known: the owner sent a screen capture of the All Star logo (gold and white on solid '
+  + 'black) and the Petchyindee logo is knocked out with mix-blend-mode: screen on its own page here, which is done '
+  + 'to a black background. Every tile is therefore black. A logo drawn in dark artwork on transparency would be '
+  + 'invisible on it and needs its own tile switched to white.');
 
-blockers.push('event_calendar.accent_colour disagrees with the theme colours the owner gave on 27 September 2026 for '
-  + 'four of the six events: Knockout is stored red and he says blue, RWS is stored blue and he says red, Petchyindee '
-  + 'is stored purple and he says green, Kiatpetch is stored gold and he says red. The stored value is served live to '
-  + 'the booking widget by the availability function. It has NOT been changed. His colours are used on this page only.');
+blockers.push('event_calendar.accent_colour disagrees with the owner on five of the six events: Knockout is stored '
+  + 'burgundy and he says blue, RWS is stored blue and he says red, Petchyindee is stored purple and he says green, '
+  + 'Kiatpetch is stored brown and he says red, All Star is stored red and its own logo is gold. That column is '
+  + 'served live to the booking widget by the availability function, so those colours are on the live booking '
+  + 'calendar now. He was asked on 27 September 2026 and did not choose, so it has NOT been changed. His colours are '
+  + 'used on this page only.');
 
 blockers.push('The natural width and height of the four seat class graphics cannot be read from this '
   + 'environment, because static.tildacdn.com is blocked by the network policy. They are laid out inside a '
@@ -379,7 +394,7 @@ const close = `  <section class="mtx-hp__band mtx-hp__band--blue mtx-hp__close">
     </div>
   </section>`;
 
-writeFileSync('body.html', [hero, programme, events, seats, trust, guide, faq, stadium, close].join('\n\n') + '\n\n');
+writeFileSync('body.html', [hero, programme, events, gallery, seats, trust, guide, faq, stadium, close].join('\n\n') + '\n\n');
 
 /* The hero's second CTA before any script runs.
  *

@@ -299,16 +299,22 @@
    object-fit is contain and the tile is padded, so no logo is cropped and a
    tall one and a wide one still sit on the same square.
 
-   The tile is white because these files cannot be opened from here and most
-   of them are transparent PNG, SVG or WEBP. A logo drawn in white would
-   vanish on it: that one would need a dark tile, and there is no way to tell
-   from this environment which, if any, they are. */
+   The tile is black on evidence, not preference. The All Star logo's own
+   background reads #000000 in the owner's screen capture of 27 September
+   2026, and the Petchyindee logo is knocked out with mix-blend-mode: screen
+   on its own page in this repository, which is what is done to a black
+   background. A black tile makes that baked-in background disappear into the
+   tile, instead of sitting on the page as a black square inside a white one.
+
+   The other four logos have not been seen from here. One drawn in dark
+   artwork on transparency would be invisible on black, and needs --tile
+   switched to white for that event alone. */
 .mtx-hp__event-logo {
   align-self: start;
   aspect-ratio: 1 / 1;
   display: grid; place-items: center;
   padding: clamp(9px, 1.1vw, 16px);
-  background: var(--white);
+  background: var(--tile, var(--white));
   border-bottom: 5px solid var(--accent);
 }
 @supports not (aspect-ratio: 1 / 1) { .mtx-hp__event-logo { height: 150px; } }
@@ -333,7 +339,8 @@
   aspect-ratio: 1 / 1;
   display: grid; place-items: center;
   padding: 12px;
-  background: var(--white);
+  background: var(--tile, var(--white));
+  color: var(--white);
   border-bottom: 5px solid var(--accent);
 }
 @supports not (aspect-ratio: 1 / 1) { .mtx-hp__event-mark { height: 150px; } }
@@ -362,6 +369,23 @@
   color: var(--ink);
 }
 .mtx-hp .mtx-hp__event-go { margin-top: 22px !important; }
+
+/* ------------------------------------------------------------ gallery --- */
+
+/* Three of the owner's own fight-night photographs, edge to edge, carrying no
+   copy at all. His verdict was that there is nothing on the page to look at,
+   and he has thirteen photographs already published across his own pages
+   while this one was using two. It is the only section here with no words. */
+.mtx-hp__strip {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; background: var(--ink);
+}
+.mtx-hp__strip img {
+  width: 100%; height: auto;
+  aspect-ratio: 4 / 3; object-fit: cover;
+  background: #202027;
+}
+@supports not (aspect-ratio: 4 / 3) { .mtx-hp__strip img { height: 300px; } }
 
 /* -------------------------------------------------------------- seats --- */
 
@@ -578,6 +602,11 @@
 }
 
 @media (max-width: 760px) {
+  /* One wide photograph over two square ones, rather than three thin slivers
+     or three full-height pictures to scroll past. */
+  .mtx-hp__strip { grid-template-columns: repeat(2, 1fr); }
+  .mtx-hp__strip img { aspect-ratio: 1 / 1; }
+  .mtx-hp__strip img:first-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
   .mtx-hp .mtx-hp__seats { grid-template-columns: 1fr; }
   .mtx-hp__support { columns: 1; }
   .mtx-hp .mtx-hp__trust { grid-template-columns: 1fr; }
