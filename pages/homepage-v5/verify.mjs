@@ -41,6 +41,7 @@ const BRAND = ['muaytix', 'muay tix', 'muaytix official website'];
 /* Document A's approved destinations, and nothing else. */
 const ALLOWED = ['/rajadamnern-stadium-tickets','/rajadamnern-stadium-seating','/rajadamnern-stadium',
  '/rajadamnern-knockout','/new-power-muay-thai','/petchyindee-muay-thai','/kiatpetch-muay-thai','/rws',
+ '/all-star-fight-by-buakaw',
  'https://wa.me/66922706095','https://www.google.com/maps/search/?api=1&query=Rajadamnern+Stadium'];
 
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
@@ -50,7 +51,11 @@ const fail = m => { fails++; console.log('   FAIL  ' + m); };
    implementation failure. It is reported as blocked, it still stops the page
    being declared complete, and it is never quietly passed. */
 const block = m => { blocked++; console.log('   BLOCKED  ' + m); };
-const BLOCKED_KEYS = new Set(['week.cta.all-star-buakaw']);
+/* Nothing is blocked. week.cta.all-star-buakaw was, from 26 September, because
+   no All Star destination had been recorded. The page existed the whole time,
+   so the Buakaw card shipped with no button at all and the owner found it on
+   the 27th. A blocked key is a thing to go and resolve, not a resting state. */
+const BLOCKED_KEYS = new Set();
 const norm = s => s.replace(/\s+/g, ' ').replace(/ /g, ' ').trim();
 
 /* ---- Layout, at every width ---- */

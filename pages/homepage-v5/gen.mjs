@@ -67,7 +67,13 @@ const weekCards = week.map(r => {
     blockers.push(`No destination exists for ${ev.name} (${r.local_date}). Document A gives the CTA "${t('week.cta.' + r.series_slug)}" but no URL, so the card renders without a button.`);
   }
 
-  return `        <li class="mtx-hp__night" data-mtx-date="${esc(r.local_date)}" data-mtx-cutoff="${esc(r.cutoff_utc)}">
+  /* The card's destination also lives on the <li>, so the hero's "tonight"
+     button can read it without depending on a button being rendered inside
+     the card. That dependency is why a card with no CTA silently left the
+     hero pointing at whatever was hard-coded in the markup. */
+  const href = ev.path ? ` data-mtx-href="${esc(ev.path)}/${esc(r.local_date)}"` : '';
+
+  return `        <li class="mtx-hp__night" data-mtx-date="${esc(r.local_date)}" data-mtx-cutoff="${esc(r.cutoff_utc)}"${href}>
           <h3>${esc(ev.name)}</h3>
           <p class="mtx-hp__when">${esc(r.weekday)} ${esc(r.day_label)}</p>
 ${times}          <p class="mtx-hp__evbody">${T('week.desc.' + r.series_slug)}</p>
@@ -264,15 +270,19 @@ ${faq}
 
 writeFileSync('body.html', body);
 
-/* The hero's second CTA before any script runs. Document A: a verified current
-   dated-event page, never a hard-coded expired URL. It is the first night in
-   the verified schedule, written at build time. */
-const first = week[0];
-const firstPath = data.events[first.series_slug].path;
-if (!firstPath) {
-  blockers.push(`The soonest night (${first.local_date}) has no destination, so the hero's secondary CTA cannot be pointed at it.`);
-}
-writeFileSync('tonight.txt', firstPath ? `${firstPath}/${first.local_date}` : D.tickets);
+/* The hero's second CTA before any script runs.
+ *
+ * This used to be baked in as the soonest night's dated page. That was the
+ * bug the owner hit on 27 September: the block was built on the 26th, so the
+ * button still read "See Tonight's Fight" and still went to Saturday's RWS
+ * page, a night that had already happened. A Tilda block is static HTML, so
+ * any date written in here is right for one day only.
+ *
+ * The static href is therefore the all-dates calendar, which cannot go stale.
+ * The script at the foot of the block repoints it at tonight's own page only
+ * while tonight's event is genuinely still bookable, and leaves it on the
+ * calendar the rest of the time. No date is ever hard-coded again. */
+writeFileSync('tonight.txt', D.tickets);
 
 /* ---------- schema ----------
    Built from the same locked copy, so the FAQ answers a machine reads and the

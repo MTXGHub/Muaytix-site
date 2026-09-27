@@ -1,1 +1,0 @@
-- No destination exists for All Star Fight by Buakaw (2026-09-28). Document A gives the CTA "View Event Details" but no URL, so the card renders without a button.

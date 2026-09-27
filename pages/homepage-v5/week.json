@@ -1,5 +1,4 @@
 [
-{"series_slug":"rws","local_date":"2026-09-26","weekday":"Saturday","day_label":"26 September","bell":"7:10 PM","cutoff_utc":"2026-09-26T11:40:00Z"},
 {"series_slug":"kiatpetch","local_date":"2026-09-27","weekday":"Sunday","day_label":"27 September","bell":"6:00 PM","cutoff_utc":"2026-09-27T10:30:00Z"},
 {"series_slug":"all-star-buakaw","local_date":"2026-09-28","weekday":"Monday","day_label":"28 September","bell":"7:00 PM","cutoff_utc":"2026-09-28T11:30:00Z"},
 {"series_slug":"rajadamnern-knockout","local_date":"2026-09-29","weekday":"Tuesday","day_label":"29 September","bell":"7:00 PM","cutoff_utc":"2026-09-29T11:30:00Z"},
@@ -19,5 +18,6 @@
 {"series_slug":"rajadamnern-knockout","local_date":"2026-10-13","weekday":"Tuesday","day_label":"13 October","bell":"7:00 PM","cutoff_utc":"2026-10-13T11:30:00Z"},
 {"series_slug":"new-power","local_date":"2026-10-14","weekday":"Wednesday","day_label":"14 October","bell":"6:00 PM","cutoff_utc":"2026-10-14T10:30:00Z"},
 {"series_slug":"petchyindee","local_date":"2026-10-15","weekday":"Thursday","day_label":"15 October","bell":"6:00 PM","cutoff_utc":"2026-10-15T10:30:00Z"},
-{"series_slug":"rajadamnern-knockout","local_date":"2026-10-16","weekday":"Friday","day_label":"16 October","bell":"7:00 PM","cutoff_utc":"2026-10-16T11:30:00Z"}
+{"series_slug":"rajadamnern-knockout","local_date":"2026-10-16","weekday":"Friday","day_label":"16 October","bell":"7:00 PM","cutoff_utc":"2026-10-16T11:30:00Z"},
+{"series_slug":"rws","local_date":"2026-10-17","weekday":"Saturday","day_label":"17 October","bell":"7:10 PM","cutoff_utc":"2026-10-17T11:40:00Z"}
 ]

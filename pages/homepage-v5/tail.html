@@ -61,11 +61,29 @@
     if (btn) btn.className = 'mtx-hp__btn ' + (isNow ? 'mtx-hp__btn--blue' : 'mtx-hp__btn--outline');
   }
 
-  /* The hero's second door. Document A: a verified current dated-event page.
-     The label is approved copy and is never rewritten here, only repointed. */
+  /* The hero's second door, labelled "See Tonight's Fight".
+   *
+   * It ships pointing at the all-dates calendar, because a date written into
+   * a static Tilda block is only right on the day it was built. On 27
+   * September the button still went to Saturday 26 September's RWS page, a
+   * night already over, because that URL had been baked in at build time.
+   *
+   * So: repoint it at a dated page only when that night is today AND still
+   * bookable. Otherwise it stays on the calendar. A button that says tonight
+   * never sends a guest to another night, and it can never send them to a
+   * night that has been and gone.
+   *
+   * The destination is read from the card's own data-mtx-href, not from a
+   * button inside the card. A card without a CTA used to leave the hero on
+   * whatever was hard-coded in the markup. */
   var heroBtn = document.querySelector('[data-mtx-tonight]');
-  var a = live[0] && live[0].querySelector('.mtx-hp__nightcta a');
-  if (heroBtn && a) heroBtn.setAttribute('href', a.getAttribute('href'));
+  if (heroBtn) {
+    var firstLive = live[0];
+    var tonightHref = firstLive
+      && firstLive.getAttribute('data-mtx-date') === today
+      && firstLive.getAttribute('data-mtx-href');
+    if (tonightHref) heroBtn.setAttribute('href', tonightHref);
+  }
 })();
 </script>
 </div>

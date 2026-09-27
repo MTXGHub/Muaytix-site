@@ -20,7 +20,7 @@
   "events": {
     "rws":                  { "name": "RWS Rajadamnern World Series", "path": "/rws" },
     "kiatpetch":            { "name": "Kiatpetch Muay Thai",          "path": "/kiatpetch-muay-thai" },
-    "all-star-buakaw":      { "name": "All Star Fight by Buakaw",     "path": null },
+    "all-star-buakaw":      { "name": "All Star Fight by Buakaw",     "path": "/all-star-fight-by-buakaw" },
     "rajadamnern-knockout": { "name": "Rajadamnern Knockout",         "path": "/rajadamnern-knockout" },
     "new-power":            { "name": "New Power Muay Thai",          "path": "/new-power-muay-thai" },
     "petchyindee":          { "name": "Petchyindee Muay Thai",        "path": "/petchyindee-muay-thai" }

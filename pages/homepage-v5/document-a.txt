@@ -3,6 +3,19 @@
 # and verify.mjs reads the built page back and diffs it against this file.
 # Nothing here may be edited without the owner's explicit authorisation.
 # Lines starting with # are comments. Blank lines inside a block are kept.
+#
+# 27 September 2026, the owner, on the live homepage:
+#   "we've got a tonight button that goes to RWS. We've got a blank button on
+#    Buckow, which is on tonight."
+# Two destination corrections were authorised by that instruction. No prose
+# changed.
+#   1. The All Star Fight by Buakaw card links to /all-star-fight-by-buakaw
+#      and its dated pages. Its approved CTA, "View Event Details", had been
+#      rendering with no button because no destination had been recorded here.
+#   2. The hero's "See Tonight's Fight" button ships pointing at
+#      /rajadamnern-stadium-tickets and is repointed at a dated page only
+#      while that night is today and still bookable. It previously had a date
+#      written into it at build time, which expired the next morning.
 
 [meta.seo_title]
 Muay Thai Tickets Bangkok | Rajadamnern Stadium | MuayTix
