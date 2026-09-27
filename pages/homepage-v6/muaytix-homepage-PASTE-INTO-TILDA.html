@@ -222,25 +222,41 @@
 
 .mtx-hp__event {
   display: grid;
-  grid-template-columns: clamp(90px, 12vw, 168px) minmax(0, 1fr);
-  column-gap: clamp(24px, 3.4vw, 52px);
-  padding: clamp(34px, 3.6vw, 54px) 0;
+  grid-template-columns: clamp(96px, 16vw, 240px) minmax(0, 1fr);
+  column-gap: clamp(18px, 3vw, 46px);
+  padding: clamp(30px, 3.4vw, 48px) 0;
   border-top: 1px solid var(--rule);
+}
+
+.mtx-hp__event-logo {
+  align-self: start;
+  aspect-ratio: 1 / 1;
+  display: grid; place-items: center;
+  padding: clamp(9px, 1.1vw, 16px);
+  background: var(--white);
+  border-bottom: 5px solid var(--accent);
+}
+@supports not (aspect-ratio: 1 / 1) { .mtx-hp__event-logo { height: 150px; } }
+.mtx-hp__event-logo img {
+  width: 100%; height: 100%;
+  object-fit: contain; object-position: center;
 }
 .mtx-hp__event:last-child { border-bottom: 1px solid var(--rule); }
 
 .mtx-hp__event-mark {
-  align-self: stretch;
-  display: flex; align-items: flex-end; justify-content: center;
-  min-height: 190px; padding: 18px 0;
-  background: var(--accent);
-  color: var(--accent-on-accent);
+  align-self: start;
+  aspect-ratio: 1 / 1;
+  display: grid; place-items: center;
+  padding: 12px;
+  background: var(--white);
+  border-bottom: 5px solid var(--accent);
 }
+@supports not (aspect-ratio: 1 / 1) { .mtx-hp__event-mark { height: 150px; } }
 .mtx-hp__event-mark span {
-  writing-mode: vertical-rl; transform: rotate(180deg);
   font-family: var(--display); font-weight: 800;
-  font-size: clamp(19px, 1.9vw, 27px); letter-spacing: .12em;
-  text-transform: uppercase; white-space: nowrap;
+  font-size: clamp(14px, 1.4vw, 21px); line-height: 1.05; letter-spacing: .06em;
+  text-transform: uppercase; text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .mtx-hp .mtx-hp__hook {
@@ -433,9 +449,7 @@
   .mtx-hp .mtx-hp__night-date { margin-top: 0 !important; }
   .mtx-hp .mtx-hp__night-go { justify-self: start; padding-top: 6px; }
   .mtx-hp__night-go .mtx-hp__btn { width: 100%; }
-  .mtx-hp__events { }
-  .mtx-hp__event { grid-template-columns: 74px minmax(0, 1fr); column-gap: 22px; }
-  .mtx-hp__event-mark { aspect-ratio: 1 / 2; }
+  .mtx-hp__event { grid-template-columns: 112px minmax(0, 1fr); column-gap: 20px; }
 }
 
 @media (max-width: 760px) {
@@ -456,7 +470,18 @@
   .mtx-hp .mtx-hp__step p { margin-top: 0 !important; }
   .mtx-hp__actions .mtx-hp__btn { width: 100%; }
   .mtx-hp__venue-ctas .mtx-hp__btn { width: 100%; }
-  .mtx-hp__event { grid-template-columns: 54px minmax(0, 1fr); column-gap: 18px; }
+  
+  .mtx-hp__event { display: block; }
+  .mtx-hp__event-logo, .mtx-hp__event-mark {
+    float: left; width: 96px; margin: 4px 16px 10px 0;
+  }
+  .mtx-hp__event-body { overflow: hidden; }
+  .mtx-hp .mtx-hp__hook { font-size: clamp(23px, 7.4vw, 32px); max-width: none; }
+  .mtx-hp .mtx-hp__event-copy { font-size: 16px; }
+  .mtx-hp .mtx-hp__event-when { clear: left; }
+  
+  .mtx-hp__event-mark { padding: 8px; }
+  .mtx-hp__event-mark span { font-size: 11px; letter-spacing: .03em; }
   .mtx-hp__hero h1 { max-width: none; }
 }
 
@@ -485,7 +510,7 @@
       <h2 class="mtx-hp__h2">Muay Thai tonight and this week</h2>
       <p class="mtx-hp__intro">There is live Muay Thai at Rajadamnern Stadium every night of the week, but the event changes from one evening to the next.</p>
       <ol class="mtx-hp__prog" data-mtx-week>
-      <li class="mtx-hp__night mtx-hp__night--lede" style="--accent:#C08A2E;--accent-on-accent:#0B0B0D" data-mtx-date="2026-09-27" data-mtx-cutoff="2026-09-27T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-09-27">
+      <li class="mtx-hp__night mtx-hp__night--lede" style="--accent:#FF1828;--accent-on-accent:#0B0B0D" data-mtx-date="2026-09-27" data-mtx-cutoff="2026-09-27T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-09-27">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Sunday</p>
@@ -511,7 +536,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/all-star-fight-by-buakaw/2026-09-28">View Event Details</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#B0342E;--accent-on-accent:#FFFFFF" data-mtx-date="2026-09-29" data-mtx-cutoff="2026-09-29T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-09-29">
+      <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-09-29" data-mtx-cutoff="2026-09-29T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-09-29">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Tuesday</p>
@@ -524,7 +549,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/rajadamnern-knockout/2026-09-29">Book Knockout Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#4A7A3F;--accent-on-accent:#FFFFFF" data-mtx-date="2026-09-30" data-mtx-cutoff="2026-09-30T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-09-30">
+      <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0B0B0D" data-mtx-date="2026-09-30" data-mtx-cutoff="2026-09-30T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-09-30">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Wednesday</p>
@@ -537,7 +562,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/new-power-muay-thai/2026-09-30">Book New Power Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#8A5A9E;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-01" data-mtx-cutoff="2026-10-01T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-01">
+      <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-01" data-mtx-cutoff="2026-10-01T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-01">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Thursday</p>
@@ -550,7 +575,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/petchyindee-muay-thai/2026-10-01">Book Petchyindee Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#B0342E;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-02" data-mtx-cutoff="2026-10-02T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-02">
+      <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-02" data-mtx-cutoff="2026-10-02T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-02">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Friday</p>
@@ -562,7 +587,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/rajadamnern-knockout/2026-10-02">Book Knockout Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#2F6FC4;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-03" data-mtx-cutoff="2026-10-03T11:40:00Z" data-mtx-href="/rws/2026-10-03">
+      <li class="mtx-hp__night" style="--accent:#FF1828;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-03" data-mtx-cutoff="2026-10-03T11:40:00Z" data-mtx-href="/rws/2026-10-03">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Saturday</p>
@@ -575,7 +600,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/rws/2026-10-03">Book RWS Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#C08A2E;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-04" data-mtx-cutoff="2026-10-04T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-10-04">
+      <li class="mtx-hp__night" style="--accent:#FF1828;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-04" data-mtx-cutoff="2026-10-04T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-10-04">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Sunday</p>
@@ -587,7 +612,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/kiatpetch-muay-thai/2026-10-04">Book Kiatpetch Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#B0342E;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-05" data-mtx-cutoff="2026-10-05T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-05">
+      <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-05" data-mtx-cutoff="2026-10-05T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-05">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Monday</p>
@@ -599,7 +624,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/rajadamnern-knockout/2026-10-05">Book Knockout Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#B0342E;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-06" data-mtx-cutoff="2026-10-06T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-06">
+      <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-06" data-mtx-cutoff="2026-10-06T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-06">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Tuesday</p>
@@ -611,7 +636,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/rajadamnern-knockout/2026-10-06">Book Knockout Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#4A7A3F;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-07" data-mtx-cutoff="2026-10-07T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-10-07">
+      <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-07" data-mtx-cutoff="2026-10-07T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-10-07">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Wednesday</p>
@@ -623,7 +648,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/new-power-muay-thai/2026-10-07">Book New Power Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#8A5A9E;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-08" data-mtx-cutoff="2026-10-08T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-08">
+      <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-08" data-mtx-cutoff="2026-10-08T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-08">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Thursday</p>
@@ -635,7 +660,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/petchyindee-muay-thai/2026-10-08">Book Petchyindee Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#B0342E;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-09" data-mtx-cutoff="2026-10-09T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-09">
+      <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-09" data-mtx-cutoff="2026-10-09T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-09">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Friday</p>
@@ -647,7 +672,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/rajadamnern-knockout/2026-10-09">Book Knockout Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#2F6FC4;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-10" data-mtx-cutoff="2026-10-10T11:40:00Z" data-mtx-href="/rws/2026-10-10">
+      <li class="mtx-hp__night" style="--accent:#FF1828;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-10" data-mtx-cutoff="2026-10-10T11:40:00Z" data-mtx-href="/rws/2026-10-10">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Saturday</p>
@@ -659,7 +684,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/rws/2026-10-10">Book RWS Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#C08A2E;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-11" data-mtx-cutoff="2026-10-11T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-10-11">
+      <li class="mtx-hp__night" style="--accent:#FF1828;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-11" data-mtx-cutoff="2026-10-11T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-10-11">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Sunday</p>
@@ -671,7 +696,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/kiatpetch-muay-thai/2026-10-11">Book Kiatpetch Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#B0342E;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-12" data-mtx-cutoff="2026-10-12T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-12">
+      <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-12" data-mtx-cutoff="2026-10-12T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-12">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Monday</p>
@@ -683,7 +708,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/rajadamnern-knockout/2026-10-12">Book Knockout Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#B0342E;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-13" data-mtx-cutoff="2026-10-13T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-13">
+      <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-13" data-mtx-cutoff="2026-10-13T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-13">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Tuesday</p>
@@ -695,7 +720,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/rajadamnern-knockout/2026-10-13">Book Knockout Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#4A7A3F;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-14" data-mtx-cutoff="2026-10-14T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-10-14">
+      <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-14" data-mtx-cutoff="2026-10-14T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-10-14">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Wednesday</p>
@@ -707,7 +732,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/new-power-muay-thai/2026-10-14">Book New Power Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#8A5A9E;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-15" data-mtx-cutoff="2026-10-15T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-15">
+      <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-15" data-mtx-cutoff="2026-10-15T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-15">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Thursday</p>
@@ -719,7 +744,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/petchyindee-muay-thai/2026-10-15">Book Petchyindee Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#B0342E;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-16" data-mtx-cutoff="2026-10-16T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-16">
+      <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-16" data-mtx-cutoff="2026-10-16T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-16">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Friday</p>
@@ -731,7 +756,7 @@
         </div>
         <p class="mtx-hp__night-go"><a class="mtx-hp__go" href="/rajadamnern-knockout/2026-10-16">Book Knockout Tickets</a></p>
       </li>
-      <li class="mtx-hp__night" style="--accent:#2F6FC4;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-17" data-mtx-cutoff="2026-10-17T11:40:00Z" data-mtx-href="/rws/2026-10-17">
+      <li class="mtx-hp__night" style="--accent:#FF1828;--accent-on-accent:#0B0B0D" data-mtx-date="2026-10-17" data-mtx-cutoff="2026-10-17T11:40:00Z" data-mtx-href="/rws/2026-10-17">
         <span class="mtx-hp__night-bar" aria-hidden="true"></span>
         <div class="mtx-hp__night-when">
           <p class="mtx-hp__night-day">Saturday</p>
@@ -753,8 +778,10 @@
       <h2>Choose your Rajadamnern fight night</h2>
       <p class="mtx-hp__intro">The right event depends on the kind of Muay Thai you want to watch.</p>
       <div class="mtx-hp__events">
-      <article class="mtx-hp__event" style="--accent:#B0342E;--accent-on-accent:#FFFFFF">
-        <div class="mtx-hp__event-mark" aria-hidden="true"><span>Knockout</span></div>
+      <article class="mtx-hp__event" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF">
+        <div class="mtx-hp__event-logo">
+          <img src="https://static.tildacdn.com/tild6532-3165-4665-a139-323436353633/1000029307.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        </div>
         <div class="mtx-hp__event-body">
           <h3>Rajadamnern Knockout</h3>
           <p class="mtx-hp__hook">7 fights. 3 rounds. 80% knockout rate.</p>
@@ -764,8 +791,10 @@
         </div>
       </article>
 
-      <article class="mtx-hp__event" style="--accent:#4A7A3F;--accent-on-accent:#FFFFFF">
-        <div class="mtx-hp__event-mark" aria-hidden="true"><span>New Power</span></div>
+      <article class="mtx-hp__event" style="--accent:#01A453;--accent-on-accent:#0B0B0D">
+        <div class="mtx-hp__event-logo">
+          <img src="https://static.tildacdn.com/tild6661-6535-4461-b132-393634613066/2edd0c01-d473-4a1c-b.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        </div>
         <div class="mtx-hp__event-body">
           <h3>New Power Muay Thai</h3>
           <p class="mtx-hp__hook">The long game of Muay Thai.</p>
@@ -775,8 +804,10 @@
         </div>
       </article>
 
-      <article class="mtx-hp__event" style="--accent:#8A5A9E;--accent-on-accent:#FFFFFF">
-        <div class="mtx-hp__event-mark" aria-hidden="true"><span>Petchyindee</span></div>
+      <article class="mtx-hp__event" style="--accent:#01A453;--accent-on-accent:#0B0B0D">
+        <div class="mtx-hp__event-logo">
+          <img src="https://static.tildacdn.com/tild3031-6434-4537-b433-373733626337/2edd0c01-d473-4a1c-b.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        </div>
         <div class="mtx-hp__event-body">
           <h3>Petchyindee Muay Thai</h3>
           <p class="mtx-hp__hook">Technique. Timing. Then everything can change.</p>
@@ -786,8 +817,10 @@
         </div>
       </article>
 
-      <article class="mtx-hp__event" style="--accent:#2F6FC4;--accent-on-accent:#FFFFFF">
-        <div class="mtx-hp__event-mark" aria-hidden="true"><span>RWS</span></div>
+      <article class="mtx-hp__event" style="--accent:#FF1828;--accent-on-accent:#0B0B0D">
+        <div class="mtx-hp__event-logo">
+          <img src="https://static.tildacdn.com/tild3264-3232-4735-b030-396436626134/1000029288.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        </div>
         <div class="mtx-hp__event-body">
           <h3>RWS Rajadamnern World Series</h3>
           <p class="mtx-hp__hook">Rajadamnern’s flagship Saturday night.</p>
@@ -797,7 +830,7 @@
         </div>
       </article>
 
-      <article class="mtx-hp__event" style="--accent:#C08A2E;--accent-on-accent:#0B0B0D">
+      <article class="mtx-hp__event" style="--accent:#FF1828;--accent-on-accent:#0B0B0D">
         <div class="mtx-hp__event-mark" aria-hidden="true"><span>Kiatpetch</span></div>
         <div class="mtx-hp__event-body">
           <h3>Kiatpetch Muay Thai</h3>

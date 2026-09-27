@@ -186,8 +186,24 @@ ${progRows}
 const EVENT_ORDER = ['rajadamnern-knockout', 'new-power', 'petchyindee', 'rws', 'kiatpetch'];
 const eventRows = EVENT_ORDER.map(k => {
   const ev = data.events[k];
+
+  /* The event's own logo on a light tile, with its theme colour as the bar
+     under it. The logo is marked decorative: the event's name is set in the
+     heading immediately beside it, so announcing the image as well would read
+     a screen reader the same name twice.
+
+     An event with no logo keeps the accent field it had before rather than
+     leaving a hole. Kiatpetch is in that position: see blockers.txt. */
+  const mark = ev.logo
+    ? `        <div class="mtx-hp__event-logo">
+          <img src="${esc(ev.logo)}" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        </div>`
+    : `        <div class="mtx-hp__event-mark" aria-hidden="true"><span>${esc(ev.short_name)}</span></div>`;
+
+  if (!ev.logo) blockers.push(`No logo has been supplied for ${ev.name}. ${ev.logo_note || ''}`.trim());
+
   return `      <article class="mtx-hp__event" style="--accent:${esc(ev.accent)};--accent-on-accent:${esc(foregroundOn(ev.accent))}">
-        <div class="mtx-hp__event-mark" aria-hidden="true"><span>${esc(ev.short_name)}</span></div>
+${mark}
         <div class="mtx-hp__event-body">
           <h3>${esc(ev.name)}</h3>
           <p class="mtx-hp__hook">${T('nights.hook.' + k)}</p>
@@ -213,6 +229,15 @@ ${eventRows}
 /* The owner's seat class artwork, at size. v5 cropped these into a card
    header about two hundred pixels tall. Here the graphic is the object. */
 const SEATS = ['ringside', 'club-class', 'leo-section', 'third-class'];
+blockers.push('None of the six event logos can be opened from this environment, because static.tildacdn.com is '
+  + 'blocked by the network policy. They sit on a white tile, fitted inside it without cropping. If any one of them '
+  + 'is white or very light it will disappear on that tile, and that logo needs a dark tile instead.');
+
+blockers.push('event_calendar.accent_colour disagrees with the theme colours the owner gave on 27 September 2026 for '
+  + 'four of the six events: Knockout is stored red and he says blue, RWS is stored blue and he says red, Petchyindee '
+  + 'is stored purple and he says green, Kiatpetch is stored gold and he says red. The stored value is served live to '
+  + 'the booking widget by the availability function. It has NOT been changed. His colours are used on this page only.');
+
 blockers.push('The natural width and height of the four seat class graphics cannot be read from this '
   + 'environment, because static.tildacdn.com is blocked by the network policy. They are laid out inside a '
   + '4:3 container with object-fit: contain, so nothing is cropped, but the container is not a measurement. '

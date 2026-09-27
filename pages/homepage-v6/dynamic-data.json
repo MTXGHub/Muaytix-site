@@ -5,10 +5,11 @@
     "cutoff": "events.booking_cutoff_minutes, same read. First bout minus the cutoff, written onto each card as an absolute UTC instant.",
     "doors": "MuayTix's own published day-dated pages in this repository, which carry an explicit doors attribute. Not derived and not offset from the first bout.",
     "destinations": "Document A. Dated URL patterns are the ones already in use across the published day-dated pages.",
-    "accents": "event_calendar.accent_colour, project jlwopomkqeawrxlapwpc, read 27 September 2026. One colour per event, already held against the event in the owner's own database. Not sampled, not chosen here.",
+    "accents": "The owner's spoken instruction of 27 September 2026, resolved to hex values already published on his own event pages in this repository. NOTE: event_calendar.accent_colour disagrees with him for four of the six events and is served live to the booking widget. It has NOT been changed from here.",
     "photographs": "MuayTix's own Tilda CDN, already published across this repository's seating and event pages. Every alt line below is the owner's wording, copied from the page it already appears on. No photograph is described here.",
     "seat_colours": "Seat class colours sampled from the owner's own seat map artwork and recorded in CLAUDE.md. Used as bars and swatches only. None of them is legible as type and none is ever set as type.",
-    "short_names": "event_calendar.short_name, project jlwopomkqeawrxlapwpc, read 27 September 2026. The owner's own short name for each event. Set as the label inside the accent field. Not abbreviated here."
+    "short_names": "event_calendar.short_name, project jlwopomkqeawrxlapwpc, read 27 September 2026. The owner's own short name for each event. Set as the label inside the accent field. Not abbreviated here.",
+    "logos": "Supplied directly by the owner, 27 September 2026. The files themselves cannot be opened from this environment, because static.tildacdn.com is blocked by the network policy, so nothing about how they look has been verified here."
   },
   "doors": {
     "rws": {
@@ -40,38 +41,51 @@
     "rws": {
       "name": "RWS Rajadamnern World Series",
       "path": "/rws",
-      "accent": "#2F6FC4",
-      "short_name": "RWS"
+      "accent": "#FF1828",
+      "short_name": "RWS",
+      "accent_source": "pages/rws/rws-2026-09-26.html (--rws-red)",
+      "logo": "https://static.tildacdn.com/tild3264-3232-4735-b030-396436626134/1000029288.webp"
     },
     "kiatpetch": {
       "name": "Kiatpetch Muay Thai",
       "path": "/kiatpetch-muay-thai",
-      "accent": "#C08A2E",
-      "short_name": "Kiatpetch"
+      "accent": "#FF1828",
+      "short_name": "Kiatpetch",
+      "accent_source": "Owner, 27 September 2026: red, the same as RWS. No Kiatpetch hex is published anywhere in this repository.",
+      "logo": null,
+      "logo_note": "Not supplied. The URL given for Kiatpetch on 27 September 2026 was character for character the one given for New Power on the same line, so one of the two is a slip. Nothing is guessed: Kiatpetch keeps the colour field until its own URL arrives."
     },
     "all-star-buakaw": {
       "name": "All Star Fight by Buakaw",
       "path": "/all-star-fight-by-buakaw",
       "accent": "#C4122F",
-      "short_name": "All Star"
+      "short_name": "All Star",
+      "accent_source": "event_calendar.accent_colour. The owner named no theme colour for All Star, so the stored value stands.",
+      "logo": "https://static.tildacdn.com/tild6334-3461-4332-a362-383432666132/1000012081.png"
     },
     "rajadamnern-knockout": {
       "name": "Rajadamnern Knockout",
       "path": "/rajadamnern-knockout",
-      "accent": "#B0342E",
-      "short_name": "Knockout"
+      "accent": "#1F5BFF",
+      "short_name": "Knockout",
+      "accent_source": "pages/knockout-dated/style.css (--kd-blue)",
+      "logo": "https://static.tildacdn.com/tild6532-3165-4665-a139-323436353633/1000029307.svg"
     },
     "new-power": {
       "name": "New Power Muay Thai",
       "path": "/new-power-muay-thai",
-      "accent": "#4A7A3F",
-      "short_name": "New Power"
+      "accent": "#01A453",
+      "short_name": "New Power",
+      "accent_source": "pages/new-power/style.css (--np-blue, green despite the variable name)",
+      "logo": "https://static.tildacdn.com/tild6661-6535-4461-b132-393634613066/2edd0c01-d473-4a1c-b.png"
     },
     "petchyindee": {
       "name": "Petchyindee Muay Thai",
       "path": "/petchyindee-muay-thai",
-      "accent": "#8A5A9E",
-      "short_name": "Petchyindee"
+      "accent": "#01A453",
+      "short_name": "Petchyindee",
+      "accent_source": "Owner, 27 September 2026: green, the same as New Power. No Petchyindee hex is published anywhere in this repository.",
+      "logo": "https://static.tildacdn.com/tild3031-6434-4537-b433-373733626337/2edd0c01-d473-4a1c-b.png"
     }
   },
   "destinations": {
