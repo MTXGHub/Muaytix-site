@@ -1,0 +1,21 @@
+{
+  "_note": "Tilda-hosted seat class graphics. URLs supplied by the owner on 26 September 2026, and the class each one belongs to was confirmed by him: 982 Club Class, 985 Ringside, 984 LEO Section, 983 Third Class. Tilda renames uploads to numbers, so the mapping cannot be read off the filenames and was not guessed.",
+  "_alt": "Alt text supplied by the owner. His wording, used word for word.",
+
+  "ringside": {
+    "url": "https://static.tildacdn.com/tild3830-6232-4832-b331-666465393139/1000033985.webp",
+    "alt": "MuayTix Ringside seating at Rajadamnern Stadium in Bangkok, positioned closest to the Muay Thai ring and live fight action"
+  },
+  "club-class": {
+    "url": "https://static.tildacdn.com/tild6633-3464-4335-b864-323737313634/1000033982.webp",
+    "alt": "MuayTix Club Class seating at Rajadamnern Stadium in Bangkok, offering an elevated view across the Muay Thai ring"
+  },
+  "leo-section": {
+    "url": "https://static.tildacdn.com/tild3333-3339-4135-b436-326637666663/1000033984.webp",
+    "alt": "MuayTix LEO Section seating at Rajadamnern Stadium in Bangkok, known for its energetic atmosphere and strong view of the Muay Thai ring"
+  },
+  "third-class": {
+    "url": "https://static.tildacdn.com/tild3864-6636-4461-a634-383639393261/1000033983.webp",
+    "alt": "MuayTix Third Class seating at Rajadamnern Stadium in Bangkok, offering a 360-degree elevated view of the Muay Thai action"
+  }
+}

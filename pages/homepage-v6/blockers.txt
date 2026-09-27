@@ -1,0 +1,1 @@
+- The natural width and height of the four seat class graphics cannot be read from this environment, because static.tildacdn.com is blocked by the network policy. They are laid out inside a 4:3 container with object-fit: contain, so nothing is cropped, but the container is not a measurement. Given their real dimensions the box can be sized to them exactly.

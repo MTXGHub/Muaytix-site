@@ -1,0 +1,104 @@
+<!-- Document B section 17: only schema that can be populated accurately.
+     No Event schema on the homepage, because that would mean asserting
+     offers, prices and availability the homepage does not hold. No
+     performers, no organiser, no start or end times invented to fill a slot.
+     The FAQPage entries below are the six questions visible on the page and
+     their approved answers, word for word. The logo and sameAs fields are
+     left out because no verified URLs were supplied for them. -->
+<script type="application/ld+json">
+@@SCHEMA@@
+</script>
+
+<script>
+/* The programme board: which nights can still be booked, and which one is
+ * tonight.
+ *
+ * A night comes off the board when its booking closes, not at midnight. The
+ * cutoff on each row is the real one: the first bout minus
+ * events.booking_cutoff_minutes, written as an absolute UTC instant.
+ *
+ * Bangkok is UTC+7 with no daylight saving, ever, which is why the "is it
+ * tonight" test is three lines and not a timezone library. The cutoff test
+ * needs no timezone at all: both sides are absolute instants.
+ *
+ * This never decides whether a seat class is sold out. The ticket selector
+ * reads that from the database and is the only thing allowed to answer it.
+ */
+(function () {
+  var list = document.querySelector('[data-mtx-week]');
+  if (!list) return;
+
+  var SHOW = 6;
+  var now = new Date();
+  var bkk = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + 7 * 3600000);
+  function two(n) { return (n < 10 ? '0' : '') + n; }
+  var today = bkk.getFullYear() + '-' + two(bkk.getMonth() + 1) + '-' + two(bkk.getDate());
+
+  var live = [];
+  var rows = [].slice.call(list.querySelectorAll('[data-mtx-cutoff]'));
+  for (var i = 0; i < rows.length; i++) {
+    var shuts = new Date(rows[i].getAttribute('data-mtx-cutoff'));
+    if (!isNaN(shuts) && now >= shuts) { rows[i].parentNode.removeChild(rows[i]); continue; }
+    live.push(rows[i]);
+  }
+  if (!live.length) return;
+
+  for (var j = 0; j < live.length; j++) {
+    var row = live[j];
+    row.style.display = j < SHOW ? '' : 'none';
+
+    var isNow = j === 0 && row.getAttribute('data-mtx-date') === today;
+    /* --lede is what shows a description, and it belongs to whatever row is
+       now on top, not to the row that was on top when the block was built. */
+    var isLede = j === 0 && !!row.querySelector('.mtx-hp__night-desc');
+    row.className = 'mtx-hp__night'
+      + (isNow ? ' mtx-hp__night--now' : '')
+      + (isLede ? ' mtx-hp__night--lede' : '');
+
+    /* The Tonight flag. It is built here rather than shipped in the markup
+       because which night is tonight is not knowable when the block is
+       pasted, and a flag written into static HTML would be wrong by morning. */
+    var what = row.querySelector('.mtx-hp__night-what');
+    var flag = row.querySelector('.mtx-hp__flag');
+    if (isNow && !flag && what) {
+      flag = document.createElement('span');
+      flag.className = 'mtx-hp__flag';
+      flag.textContent = 'Tonight';
+      what.insertBefore(flag, what.firstChild);
+    } else if (!isNow && flag) {
+      flag.parentNode.removeChild(flag);
+    }
+
+    /* Tonight is the only row on the board carrying a solid button. Every
+       other night is a quiet underlined link, so the board reads as one
+       schedule with one thing to do on it, not six competing buttons. */
+    var go = row.querySelector('.mtx-hp__night-go a');
+    if (go) go.className = isNow ? 'mtx-hp__btn mtx-hp__btn--white' : 'mtx-hp__go';
+  }
+
+  /* The hero's second door, labelled "See Tonight's Fight".
+   *
+   * It ships pointing at the all-dates calendar, because a date written into
+   * a static Tilda block is only right on the day it was built. On 27
+   * September the button still went to Saturday 26 September's RWS page, a
+   * night already over, because that URL had been baked in at build time.
+   *
+   * So: repoint it at a dated page only when that night is today AND still
+   * bookable. Otherwise it stays on the calendar. A button that says tonight
+   * never sends a guest to another night, and it can never send them to a
+   * night that has been and gone.
+   *
+   * The destination is read from the row's own data-mtx-href, not from a
+   * button inside the row. A row without a CTA used to leave the hero on
+   * whatever was hard-coded in the markup. */
+  var heroBtn = document.querySelector('[data-mtx-tonight]');
+  if (heroBtn) {
+    var firstLive = live[0];
+    var tonightHref = firstLive
+      && firstLive.getAttribute('data-mtx-date') === today
+      && firstLive.getAttribute('data-mtx-href');
+    if (tonightHref) heroBtn.setAttribute('href', tonightHref);
+  }
+})();
+</script>
+</div>

@@ -1,0 +1,581 @@
+/* MUAYTIX HOMEPAGE
+ * ----------------------------------------------------------------------
+ * Everything is scoped under .mtx-hp so the block cannot reach the rest of
+ * the Tilda site, and so Tilda's own nav and footer cannot reach into it.
+ *
+ * What this rebuild is reacting to. The previous homepage built all eight of
+ * its sections the same way: a band, a condensed uppercase heading, one grey
+ * paragraph, then a grid of white boxes with a 1px grey border. Forty of
+ * those boxes. A seat class, a reason to trust us, a fight night and a step
+ * in the booking process all got the identical container, so nothing on the
+ * page had any weight relative to anything else.
+ *
+ * So there is not one bordered white card in here. Separation is done with
+ * full-bleed colour, hairline rules, photography at size and a real jump in
+ * type scale. The owner's own artwork is the largest thing on the page.
+ *
+ * Colour comes from the database, not from taste. Each event carries an
+ * accent_colour against it in event_calendar, so the five fight nights look
+ * like five different events instead of one. gen.mjs picks black or white
+ * type on each accent by measured contrast, never by eye.
+ *
+ * Seat class colours are used as bars and fields only. LEO's yellow measures
+ * 1.04:1 on a pale background. None of the four is ever set as type.
+ */
+
+.mtx-hp, .mtx-hp * { box-sizing: border-box; }
+
+.mtx-hp {
+  /* Neutrals. The paper is warm rather than the old cold #f2f2f2, so the
+     photography sits on it instead of floating over it. */
+  --ink:        #0B0B0D;
+  --ink-raised: #17171C;
+  --paper:      #F4F3F0;
+  --white:      #FFFFFF;
+  --muted:      #56565F;
+  --muted-dark: #A9AAB3;
+  --rule:       rgba(11, 11, 13, .15);
+  --rule-dark:  rgba(255, 255, 255, .17);
+
+  --blue:       #1F5BFF;
+  --blue-dark:  #1540C9;
+  --blue-lite:  #6D95FF;
+
+  --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --body:    "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* One scale, used everywhere. The old page topped out at 70px and sat in
+     the midrange the whole way down, which is what made it feel flat. */
+  --t-mega: clamp(42px, 7.4vw, 104px);
+  --t-xl:   clamp(33px, 5vw, 68px);
+  --t-lg:   clamp(26px, 3.2vw, 44px);
+  --t-md:   clamp(21px, 2.1vw, 28px);
+
+  font-family: var(--body);
+  color: var(--ink);
+  line-height: 1.6;
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.mtx-hp p, .mtx-hp h1, .mtx-hp h2, .mtx-hp h3, .mtx-hp h4,
+.mtx-hp ul, .mtx-hp ol, .mtx-hp li, .mtx-hp figure, .mtx-hp blockquote { margin: 0; padding: 0; }
+.mtx-hp ul, .mtx-hp ol { list-style: none; }
+.mtx-hp img { display: block; max-width: 100%; }
+
+.mtx-hp__shell { width: min(100% - 48px, 1240px); margin-inline: auto; }
+
+/* A pale band inside the dark run, used once, to stop the page reading as one
+   long dark slab. */
+.mtx-hp__band { padding: clamp(56px, 7vw, 108px) 0; }
+.mtx-hp__band--paper { background: var(--paper); }
+.mtx-hp__band--white { background: var(--white); }
+.mtx-hp__band--ink   { background: var(--ink); color: var(--white); }
+.mtx-hp__band--blue  { background: var(--blue); color: var(--white); }
+
+/* ---------------------------------------------------------------- type --- */
+
+.mtx-hp h1, .mtx-hp h2, .mtx-hp h3 {
+  font-family: var(--display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -.005em;
+  line-height: .92;
+}
+.mtx-hp h1 { font-size: var(--t-mega); letter-spacing: -.015em; }
+.mtx-hp h2 { font-size: var(--t-xl); }
+.mtx-hp h3 { font-size: var(--t-md); }
+
+/* The small all-caps label. One style, used for every eyebrow, every date
+   line and every schedule line on the page, so those all read as one voice. */
+.mtx-hp__eyebrow {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.mtx-hp__band--ink .mtx-hp__eyebrow,
+.mtx-hp__hero .mtx-hp__eyebrow { color: var(--blue-lite); }
+.mtx-hp__band--blue .mtx-hp__eyebrow { color: rgba(255, 255, 255, .78); }
+
+.mtx-hp .mtx-hp__h2 { margin-top: 14px !important; }
+
+.mtx-hp .mtx-hp__intro {
+  margin-top: 20px !important;
+  max-width: 62ch;
+  font-size: clamp(17px, 1.5vw, 20px);
+  color: var(--muted);
+}
+.mtx-hp__band--ink .mtx-hp__intro { color: var(--muted-dark); }
+.mtx-hp__band--blue .mtx-hp__intro { color: rgba(255, 255, 255, .88); }
+
+/* ------------------------------------------------------------- buttons --- */
+
+.mtx-hp__btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 54px; padding: 0 26px;
+  border: 2px solid transparent;
+  font-family: var(--display); font-weight: 800;
+  font-size: 16px; letter-spacing: .08em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.mtx-hp__btn--blue    { background: var(--blue); color: var(--white); }
+.mtx-hp__btn--blue:hover   { background: var(--blue-dark); color: var(--white); }
+.mtx-hp__btn--ink     { background: var(--ink); color: var(--white); }
+.mtx-hp__btn--ink:hover    { background: var(--blue); color: var(--white); }
+.mtx-hp__btn--white   { background: var(--white); color: var(--ink); }
+.mtx-hp__btn--white:hover  { background: var(--ink); color: var(--white); }
+.mtx-hp__btn--ghost   { background: transparent; border-color: rgba(255, 255, 255, .55); color: var(--white); }
+.mtx-hp__btn--ghost:hover  { background: var(--white); border-color: var(--white); color: var(--ink); }
+.mtx-hp__btn--line    { background: transparent; border-color: var(--ink); color: var(--ink); }
+.mtx-hp__btn--line:hover   { background: var(--ink); color: var(--white); }
+.mtx-hp__btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+/* The quieter link style: no box, just a rule under the words. Used wherever
+   a full button would have made a third competing object in one view. */
+.mtx-hp__go {
+  display: inline-block; text-decoration: none;
+  font-family: var(--display); font-weight: 800;
+  font-size: 15px; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--ink);
+  padding-bottom: 3px;
+  border-bottom: 2px solid currentColor;
+  transition: color .18s ease;
+}
+.mtx-hp__go:hover { color: var(--blue); }
+.mtx-hp__band--ink .mtx-hp__go { color: var(--white); }
+.mtx-hp__band--ink .mtx-hp__go:hover { color: var(--blue-lite); }
+.mtx-hp__go:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+
+.mtx-hp .mtx-hp__actions {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-top: 34px !important;
+  max-width: none !important;   /* a max-width set on p would cap this row */
+}
+
+/* ---------------------------------------------------------------- hero --- */
+
+.mtx-hp__hero {
+  position: relative;
+  padding: clamp(62px, 8vw, 116px) 0 clamp(52px, 6vw, 88px);
+  background-color: var(--ink);
+  color: var(--white);
+  overflow: hidden;
+}
+.mtx-hp__hero-media {
+  position: absolute; inset: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 34%;
+}
+/* Two layers rather than one: a hard vertical floor so the type always has a
+   dark ground under it, and a softer left-to-right wash so the photograph is
+   still visible on the right at desktop widths. */
+.mtx-hp__hero-media::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, rgba(11,11,13,.97) 0%, rgba(11,11,13,.72) 34%, rgba(11,11,13,.30) 72%, rgba(11,11,13,.34) 100%),
+    linear-gradient(100deg, rgba(11,11,13,.94) 0%, rgba(11,11,13,.78) 40%, rgba(11,11,13,.30) 78%, rgba(11,11,13,.16) 100%);
+}
+.mtx-hp__hero-in { position: relative; }
+.mtx-hp__hero h1 { max-width: 17ch; }
+.mtx-hp .mtx-hp__lede {
+  margin-top: 22px !important;
+  max-width: 52ch;
+  font-size: clamp(17px, 1.6vw, 20px);
+  color: rgba(255, 255, 255, .88);
+}
+.mtx-hp .mtx-hp__lede + .mtx-hp__lede { margin-top: 14px !important; }
+
+/* A hairline of the brand blue across the very top of the page. Small, but it
+   is the first thing that says this is a MuayTix page and not a template. */
+.mtx-hp__hero::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  background: var(--blue); z-index: 2;
+}
+
+/* ----------------------------------------------------------- programme --- */
+
+.mtx-hp .mtx-hp__prog { margin-top: clamp(36px, 4vw, 56px); border-top: 1px solid var(--rule-dark); }
+
+/* The rows carry no padding of their own. The padding sits on the cells, so
+   the accent bar fills the row edge to edge and the six bars stack into one
+   continuous coloured spine down the left of the board, changing colour with
+   the night. With padding on the row the bars broke into floating slivers. */
+/* Six nights on screen. The markup ships twenty-one so the script can promote
+   the next one as each cutoff passes, but with the script switched off the
+   board must still be a week and not three weeks: the rule below is what
+   holds the count. The script removes an expired night from the DOM outright
+   rather than hiding it, so nth-child keeps counting from the next bookable
+   night and this stays in step with it. */
+.mtx-hp .mtx-hp__night:nth-child(n+7) { display: none; }
+
+.mtx-hp__night {
+  display: grid;
+  grid-template-columns: 10px minmax(118px, 156px) minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: clamp(16px, 2.2vw, 30px);
+  border-bottom: 1px solid var(--rule-dark);
+}
+.mtx-hp__night > * { padding-block: 22px; }
+/* Every cell is placed explicitly. Left to auto-placement, the folded
+   layout below dropped the event name into the 6px accent column and pushed
+   the whole page sideways. */
+.mtx-hp__night-bar  { grid-column: 1; grid-row: 1 / -1; align-self: stretch; padding-block: 0 !important; background: var(--accent); }
+.mtx-hp__night-when { grid-column: 2; }
+.mtx-hp__night-what { grid-column: 3; }
+/* Centred in the row, not top-aligned: left at start the links floated up
+   against the row rule, well above the event name they belong to. */
+.mtx-hp .mtx-hp__night-go { grid-column: 4; align-self: center; justify-self: end; }
+
+.mtx-hp .mtx-hp__night-day {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(19px, 1.8vw, 24px); line-height: 1.05;
+  text-transform: uppercase; letter-spacing: .02em;
+  color: var(--white);
+}
+.mtx-hp .mtx-hp__night-date {
+  margin-top: 3px !important;
+  font-family: var(--display); font-weight: 700;
+  font-size: 14px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted-dark);
+}
+.mtx-hp .mtx-hp__night-name {
+  font-size: clamp(21px, 2.1vw, 28px); line-height: 1.02;
+  color: var(--white);
+}
+.mtx-hp .mtx-hp__night-times {
+  margin-top: 7px !important;
+  font-size: 15px; color: var(--muted-dark);
+}
+/* One description on the board, on the top row only. Only six exist in the
+   markup, one per event, so no paragraph on this page is written twice. The
+   script moves --lede to whichever row is on top once the closed nights have
+   gone; a top row with no description of its own shows none. */
+.mtx-hp .mtx-hp__night-desc { display: none; }
+.mtx-hp .mtx-hp__night--lede .mtx-hp__night-desc {
+  display: block;
+  margin-top: 11px !important;
+  max-width: 56ch; font-size: 16px; color: rgba(255, 255, 255, .8);
+}
+
+
+/* Tonight. The one row on the page that is allowed to shout: the accent bar
+   runs the full height, the event name jumps a whole step in the scale, and
+   it is the only row carrying a solid button. */
+/* Tonight. The one row allowed to shout. */
+.mtx-hp__night--now { background: linear-gradient(90deg, rgba(255,255,255,.09), rgba(255,255,255,0) 70%); }
+.mtx-hp__night--now > * { padding-block: 30px 34px; }
+.mtx-hp .mtx-hp__night--now .mtx-hp__night-name { font-size: clamp(30px, 3.6vw, 50px); }
+.mtx-hp .mtx-hp__night--now .mtx-hp__night-day { font-size: clamp(21px, 2vw, 27px); }
+
+.mtx-hp__flag {
+  display: inline-block; margin-bottom: 12px;
+  padding: 5px 11px 4px;
+  background: var(--accent); color: var(--accent-on-accent);
+  font-family: var(--display); font-weight: 800;
+  font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+}
+
+.mtx-hp .mtx-hp__prog-cta { margin-top: 34px !important; }
+
+/* ------------------------------------------------------------- events --- */
+
+.mtx-hp__events { margin-top: clamp(34px, 4vw, 52px); }
+
+.mtx-hp__event {
+  display: grid;
+  grid-template-columns: clamp(90px, 12vw, 168px) minmax(0, 1fr);
+  column-gap: clamp(24px, 3.4vw, 52px);
+  padding: clamp(34px, 3.6vw, 54px) 0;
+  border-top: 1px solid var(--rule);
+}
+.mtx-hp__event:last-child { border-bottom: 1px solid var(--rule); }
+
+/* The accent field. This is the whole identity system: five events, five
+   colours already held in the database, each one a solid block you read
+   before you read a word. */
+/* The accent field. This is the whole identity system: five events, five
+   colours already held in the database, each one a solid block you read
+   before you read a word. The owner's own short name for the event is set
+   into it, reading upward, so the block is a label and not a swatch. */
+.mtx-hp__event-mark {
+  align-self: stretch;
+  display: flex; align-items: flex-end; justify-content: center;
+  min-height: 190px; padding: 18px 0;
+  background: var(--accent);
+  color: var(--accent-on-accent);
+}
+.mtx-hp__event-mark span {
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(19px, 1.9vw, 27px); letter-spacing: .12em;
+  text-transform: uppercase; white-space: nowrap;
+}
+
+.mtx-hp .mtx-hp__hook {
+  margin-top: 12px !important;
+  max-width: 20ch;
+  font-family: var(--display); font-weight: 800;
+  font-size: var(--t-lg); line-height: .96;
+  text-transform: uppercase; letter-spacing: -.01em;
+}
+.mtx-hp .mtx-hp__event-copy {
+  margin-top: 18px !important; max-width: 62ch;
+  font-size: 17px; color: var(--muted);
+}
+.mtx-hp .mtx-hp__event-when {
+  margin-top: 18px !important;
+  font-family: var(--display); font-weight: 700;
+  font-size: 14px; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--ink);
+}
+.mtx-hp .mtx-hp__event-go { margin-top: 22px !important; }
+
+/* -------------------------------------------------------------- seats --- */
+
+/* His artwork, at the size it deserves. On the old page these were cropped
+   into a card header about 200px tall. Here the graphic is the object and
+   the words sit underneath it. */
+.mtx-hp .mtx-hp__seats {
+  margin-top: clamp(34px, 4vw, 52px);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 3.4vw, 52px);
+}
+.mtx-hp__seat { display: flex; flex-direction: column; }
+/* The owner's own seat class graphics. object-fit is CONTAIN, never cover: a
+   cover crop would cut his artwork to fit my grid. The box is there so the
+   four sit on a common baseline and so a graphic that fails to load cannot
+   push the page sideways, which is what happened when they were left
+   unconstrained. The natural shape of these files is not readable from this
+   environment, so the ratio below is a container, not a claim about them.
+   Given their real dimensions the box can be made to fit exactly. */
+.mtx-hp__seatgfx {
+  width: 100%; height: auto;
+  aspect-ratio: 4 / 3; object-fit: contain; object-position: center bottom;
+  overflow: hidden;
+}
+@supports not (aspect-ratio: 4 / 3) { .mtx-hp__seatgfx { height: 240px; } }
+
+/* The class colour, as a bar. Never as type: LEO's yellow measures 1.04:1 on
+   a pale ground and none of the four is legible. */
+.mtx-hp__seat-bar { height: 7px; background: var(--seat); }
+
+.mtx-hp .mtx-hp__seat-name { margin-top: 20px; font-size: clamp(23px, 2.2vw, 30px); }
+.mtx-hp .mtx-hp__seat-descriptor {
+  margin-top: 6px !important;
+  font-family: var(--display); font-weight: 700;
+  font-size: 14px; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--blue);
+}
+.mtx-hp .mtx-hp__seat-copy { margin-top: 13px !important; font-size: 16.5px; color: var(--muted); }
+.mtx-hp .mtx-hp__seat-go { margin-top: auto !important; padding-top: 20px; }
+
+.mtx-hp .mtx-hp__seats-cta { margin-top: clamp(30px, 3.4vw, 44px) !important; }
+
+/* -------------------------------------------------------------- trust --- */
+
+.mtx-hp .mtx-hp__trust {
+  margin-top: clamp(34px, 4vw, 52px);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--rule-dark);
+}
+.mtx-hp__trustitem {
+  display: flex; flex-direction: column;
+  padding: 30px clamp(20px, 2.4vw, 34px) 32px 0;
+  border-bottom: 1px solid var(--rule-dark);
+}
+.mtx-hp__trustitem { padding-right: clamp(26px, 3vw, 46px); }
+/* The QR item spans two columns, so its two paragraphs sit side by side in
+   them rather than leaving half the span empty. */
+.mtx-hp__trustitem--wide {
+  grid-column: span 2;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(26px, 3vw, 46px); align-content: start;
+}
+.mtx-hp__trustitem--wide .mtx-hp__trust-name { grid-column: 1 / -1; }
+.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy { max-width: none; }
+.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy + .mtx-hp__trust-copy { margin-top: 12px !important; }
+.mtx-hp .mtx-hp__trust-name { font-size: clamp(20px, 1.9vw, 25px); color: var(--white); }
+.mtx-hp .mtx-hp__trust-copy { margin-top: 12px !important; font-size: 16.5px; color: var(--muted-dark); max-width: 54ch; }
+.mtx-hp .mtx-hp__trust-copy + .mtx-hp__trust-copy { margin-top: 12px !important; }
+.mtx-hp .mtx-hp__trust-go { margin-top: auto !important; padding-top: 22px; }
+
+/* -------------------------------------------------------------- steps --- */
+
+.mtx-hp .mtx-hp__steps {
+  margin-top: clamp(34px, 4vw, 52px);
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 30px);
+  counter-reset: mtxstep;
+}
+.mtx-hp__step { border-top: 3px solid var(--ink); padding-top: 16px; }
+.mtx-hp__step::before {
+  counter-increment: mtxstep; content: counter(mtxstep);
+  display: block;
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(40px, 4.4vw, 62px); line-height: .85;
+  color: var(--blue);
+}
+.mtx-hp .mtx-hp__step p { margin-top: 12px !important; font-size: 16.5px; }
+
+/* The keyword paragraphs. They are approved copy and they stay, but they are
+   reference text, not a selling point, so they are set as reference text:
+   smaller, two columns, under a rule, plainly secondary to everything above. */
+.mtx-hp__support {
+  margin-top: clamp(40px, 4.6vw, 64px);
+  padding-top: clamp(26px, 3vw, 38px);
+  border-top: 1px solid var(--rule);
+  columns: 2; column-gap: clamp(30px, 4vw, 64px);
+}
+.mtx-hp .mtx-hp__support p {
+  margin: 0 0 14px !important;
+  font-size: 15px; line-height: 1.62; color: var(--muted);
+  break-inside: avoid;
+}
+.mtx-hp .mtx-hp__guide-cta { margin-top: clamp(30px, 3.4vw, 44px) !important; }
+
+/* ---------------------------------------------------------------- faq --- */
+
+.mtx-hp__faq { margin-top: clamp(30px, 3.6vw, 48px); border-top: 1px solid var(--rule); }
+.mtx-hp__faq details { border-bottom: 1px solid var(--rule); }
+.mtx-hp__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 22px;
+  padding: 24px 0; cursor: pointer; list-style: none;
+}
+.mtx-hp__faq summary::-webkit-details-marker { display: none; }
+.mtx-hp__faq summary h3 { font-size: clamp(19px, 1.9vw, 25px); line-height: 1.1; }
+.mtx-hp__faq summary::after {
+  content: ""; flex: none; width: 15px; height: 15px; margin-top: 7px;
+  border-right: 2px solid var(--blue); border-bottom: 2px solid var(--blue);
+  transform: rotate(45deg); transition: transform .2s ease;
+}
+.mtx-hp__faq details[open] summary::after { transform: rotate(-135deg); margin-top: 12px; }
+.mtx-hp__faq summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.mtx-hp .mtx-hp__faq p { margin: 0 0 26px !important; max-width: 68ch; font-size: 16.5px; color: var(--muted); }
+
+/* ------------------------------------------------------------ stadium --- */
+
+.mtx-hp__venue {
+  margin-top: clamp(34px, 4vw, 52px);
+  display: grid; grid-template-columns: 1.05fr 1fr;
+  gap: clamp(30px, 4vw, 64px); align-items: center;
+}
+.mtx-hp__venue img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: #202027; }
+@supports not (aspect-ratio: 4 / 3) { .mtx-hp__venue img { height: 320px; } }
+.mtx-hp .mtx-hp__venue-copy { font-size: 17px; color: rgba(255, 255, 255, .86); max-width: 56ch; }
+.mtx-hp .mtx-hp__venue-copy + .mtx-hp__venue-copy { margin-top: 15px !important; }
+.mtx-hp .mtx-hp__venue-ctas {
+  margin-top: 30px !important; display: grid; gap: 10px;
+  max-width: none !important; justify-items: start;
+}
+.mtx-hp__venue-ctas .mtx-hp__btn { width: 100%; padding: 0 18px; }
+
+/* -------------------------------------------------------------- close --- */
+
+.mtx-hp__close { text-align: center; }
+.mtx-hp__close h2 { max-width: 20ch; margin-inline: auto; }
+.mtx-hp .mtx-hp__close-copy {
+  margin-top: 20px !important; margin-inline: auto; max-width: 56ch;
+  font-size: clamp(17px, 1.5vw, 20px); color: rgba(255, 255, 255, .9);
+}
+.mtx-hp .mtx-hp__close-copy + .mtx-hp__close-copy { margin-top: 12px !important; }
+.mtx-hp .mtx-hp__close .mtx-hp__actions { justify-content: center; margin-top: 34px !important; }
+.mtx-hp .mtx-hp__brand {
+  margin-top: 36px !important; margin-inline: auto; max-width: 62ch;
+  font-size: 14px; color: rgba(255, 255, 255, .7);
+}
+
+/* ------------------------------------------------------- screen reader --- */
+
+.mtx-hp__plain {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap; border: 0;
+}
+
+/* --------------------------------------------------------------- guard --- */
+
+/* If the booking widget is ever mounted on this page, a direct match on a
+   heading inside it beats inheritance and has previously turned a fight
+   night's own name white on white. This keeps the widget's headings its own.
+   CLAUDE.md section 8. */
+.mtx-hp #mtx-booking h1, .mtx-hp #mtx-booking h2,
+.mtx-hp #mtx-booking h3, .mtx-hp #mtx-booking h4 { color: inherit; text-transform: none; }
+
+/* ----------------------------------------------------------- narrower --- */
+
+@media (max-width: 1080px) {
+  .mtx-hp .mtx-hp__trust { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* The QR item spans two columns, so its two paragraphs sit side by side in
+   them rather than leaving half the span empty. */
+.mtx-hp__trustitem--wide {
+  grid-column: span 2;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(26px, 3vw, 46px); align-content: start;
+}
+.mtx-hp__trustitem--wide .mtx-hp__trust-name { grid-column: 1 / -1; }
+.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy { max-width: none; }
+.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy + .mtx-hp__trust-copy { margin-top: 12px !important; }
+  .mtx-hp .mtx-hp__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mtx-hp__venue { grid-template-columns: 1fr; }
+  .mtx-hp__venue img { aspect-ratio: 16 / 9; }
+}
+
+@media (max-width: 900px) {
+  /* The schedule row folds: day and date above, the event and its times
+     below, the link full width. It stays a schedule, it does not become a
+     stack of boxes. */
+  .mtx-hp__night { grid-template-columns: 6px minmax(0, 1fr); }
+  .mtx-hp__night-bar  { grid-column: 1; grid-row: 1 / -1; }
+  .mtx-hp__night-when { grid-column: 2; grid-row: 1; }
+  .mtx-hp__night-what { grid-column: 2; grid-row: 2; }
+  .mtx-hp .mtx-hp__night-go { grid-column: 2; grid-row: 3; }
+  .mtx-hp__night > * { padding-block: 0; }
+  .mtx-hp__night-when { padding-block: 20px 0 !important; }
+  .mtx-hp .mtx-hp__night-go { padding-block: 14px 22px !important; }
+  .mtx-hp__night-what { padding-block: 6px 0 !important; }
+  .mtx-hp__night--now > * { padding-block: 0; }
+  .mtx-hp__night--now .mtx-hp__night-when { padding-block: 26px 0 !important; }
+  .mtx-hp__night--now .mtx-hp__night-go { padding-block: 16px 28px !important; }
+  .mtx-hp .mtx-hp__night-when { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+  .mtx-hp .mtx-hp__night-date { margin-top: 0 !important; }
+  .mtx-hp .mtx-hp__night-go { justify-self: start; padding-top: 6px; }
+  .mtx-hp__night-go .mtx-hp__btn { width: 100%; }
+  .mtx-hp__events { }
+  .mtx-hp__event { grid-template-columns: 74px minmax(0, 1fr); column-gap: 22px; }
+  .mtx-hp__event-mark { aspect-ratio: 1 / 2; }
+}
+
+@media (max-width: 760px) {
+  .mtx-hp .mtx-hp__seats { grid-template-columns: 1fr; }
+  .mtx-hp__support { columns: 1; }
+  .mtx-hp .mtx-hp__trust { grid-template-columns: 1fr; }
+  .mtx-hp__trustitem, .mtx-hp__trustitem + .mtx-hp__trustitem {
+    border-left: 0; padding-left: 0; padding-right: 0;
+  }
+  .mtx-hp__trustitem--wide { grid-column: span 1; grid-template-columns: minmax(0, 1fr); }
+  .mtx-hp .mtx-hp__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .mtx-hp__shell { width: min(100% - 32px, 1240px); }
+  .mtx-hp .mtx-hp__steps { grid-template-columns: 1fr; }
+  .mtx-hp__step { display: grid; grid-template-columns: 54px minmax(0, 1fr); column-gap: 16px; align-items: baseline; }
+  .mtx-hp .mtx-hp__step p { margin-top: 0 !important; }
+  .mtx-hp__actions .mtx-hp__btn { width: 100%; }
+  .mtx-hp__venue-ctas .mtx-hp__btn { width: 100%; }
+  .mtx-hp__event { grid-template-columns: 54px minmax(0, 1fr); column-gap: 18px; }
+  .mtx-hp__hero h1 { max-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtx-hp *, .mtx-hp *::before, .mtx-hp *::after {
+    animation: none !important; transition: none !important; scroll-behavior: auto !important;
+  }
+}

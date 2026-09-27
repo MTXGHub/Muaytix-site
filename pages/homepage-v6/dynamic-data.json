@@ -1,0 +1,118 @@
+{
+  "_rule": "Document B section 6. Every value here comes from a verified source, named below. Nothing is inferred and nothing is guessed. A missing value is reported, never filled in.",
+  "sources": {
+    "schedule": "Supabase event_calendar joined to events, project jlwopomkqeawrxlapwpc, read 26 September 2026. Supplies event, day, date and first-bout time.",
+    "cutoff": "events.booking_cutoff_minutes, same read. First bout minus the cutoff, written onto each card as an absolute UTC instant.",
+    "doors": "MuayTix's own published day-dated pages in this repository, which carry an explicit doors attribute. Not derived and not offset from the first bout.",
+    "destinations": "Document A. Dated URL patterns are the ones already in use across the published day-dated pages.",
+    "accents": "event_calendar.accent_colour, project jlwopomkqeawrxlapwpc, read 27 September 2026. One colour per event, already held against the event in the owner's own database. Not sampled, not chosen here.",
+    "photographs": "MuayTix's own Tilda CDN, already published across this repository's seating and event pages. Every alt line below is the owner's wording, copied from the page it already appears on. No photograph is described here.",
+    "seat_colours": "Seat class colours sampled from the owner's own seat map artwork and recorded in CLAUDE.md. Used as bars and swatches only. None of them is legible as type and none is ever set as type.",
+    "short_names": "event_calendar.short_name, project jlwopomkqeawrxlapwpc, read 27 September 2026. The owner's own short name for each event. Set as the label inside the accent field. Not abbreviated here."
+  },
+  "doors": {
+    "rws": {
+      "time": "6:00 PM",
+      "source": "pages/rws (doors=\"18:00\")"
+    },
+    "rajadamnern-knockout": {
+      "time": "6:00 PM",
+      "source": "pages/nights/rajadamnern_knockout_2026_09_25.html (doors=\"18:00\")"
+    },
+    "kiatpetch": {
+      "time": "5:00 PM",
+      "source": "pages/nights/kiatpetch_2026_09_27.html (doors=\"17:00\")"
+    },
+    "new-power": {
+      "time": "5:00 PM",
+      "source": "pages/nights/new_power_2026_09_23.html (doors=\"17:00\")"
+    },
+    "petchyindee": {
+      "time": "5:00 PM",
+      "source": "pages/nights/petchyindee_2026_09_24.html (doors=\"17:00\")"
+    },
+    "all-star-buakaw": {
+      "time": "6:00 PM",
+      "source": "Supplied directly by the owner, 26 September 2026."
+    }
+  },
+  "events": {
+    "rws": {
+      "name": "RWS Rajadamnern World Series",
+      "path": "/rws",
+      "accent": "#2F6FC4",
+      "short_name": "RWS"
+    },
+    "kiatpetch": {
+      "name": "Kiatpetch Muay Thai",
+      "path": "/kiatpetch-muay-thai",
+      "accent": "#C08A2E",
+      "short_name": "Kiatpetch"
+    },
+    "all-star-buakaw": {
+      "name": "All Star Fight by Buakaw",
+      "path": "/all-star-fight-by-buakaw",
+      "accent": "#C4122F",
+      "short_name": "All Star"
+    },
+    "rajadamnern-knockout": {
+      "name": "Rajadamnern Knockout",
+      "path": "/rajadamnern-knockout",
+      "accent": "#B0342E",
+      "short_name": "Knockout"
+    },
+    "new-power": {
+      "name": "New Power Muay Thai",
+      "path": "/new-power-muay-thai",
+      "accent": "#4A7A3F",
+      "short_name": "New Power"
+    },
+    "petchyindee": {
+      "name": "Petchyindee Muay Thai",
+      "path": "/petchyindee-muay-thai",
+      "accent": "#8A5A9E",
+      "short_name": "Petchyindee"
+    }
+  },
+  "destinations": {
+    "tickets": "/rajadamnern-stadium-tickets",
+    "seating": "/rajadamnern-stadium-seating",
+    "stadium": "/rajadamnern-stadium",
+    "whatsapp": "https://wa.me/66922706095",
+    "maps": "https://www.google.com/maps/search/?api=1&query=Rajadamnern+Stadium"
+  },
+  "_verified_destinations_note": "whatsapp and maps are the existing destinations already published across this repository's pages, as Document A instructs. Neither was composed here.",
+  "seat_colours": {
+    "ringside": "#00A651",
+    "club-class": "#27AAE1",
+    "leo-section": "#FFF200",
+    "third-class": "#F7941E"
+  },
+  "photographs": {
+    "hero": {
+      "url": "https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg",
+      "alt": "",
+      "note": "Background photograph, already in use as the homepage hero. Decorative: it carries no alt because no alt was ever supplied for it and none is invented here."
+    },
+    "stadium": {
+      "url": "https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg",
+      "alt": "Ringside seating at Rajadamnern Stadium, Bangkok"
+    },
+    "ring": {
+      "url": "https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg",
+      "alt": "Close-up view of the ring from Ringside"
+    },
+    "crowd": {
+      "url": "https://static.tildacdn.com/tild6530-3266-4262-b265-633965366163/1000008588.jpg",
+      "alt": "Crowd and atmosphere in the LEO Section on a fight night"
+    },
+    "club_view": {
+      "url": "https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg",
+      "alt": "The view towards the ring from Club Class"
+    },
+    "map": {
+      "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
+      "alt": "Rajadamnern Stadium seating map"
+    }
+  }
+}
