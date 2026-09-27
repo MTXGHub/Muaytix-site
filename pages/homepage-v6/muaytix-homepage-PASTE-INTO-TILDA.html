@@ -1,4 +1,4 @@
-<div class="mtx-hp">
+<div class="mtx-hp" id="mtx-hp">
 <style>.mtx-hp, .mtx-hp * { box-sizing: border-box; }
 
 .mtx-hp {
@@ -104,7 +104,7 @@
 .mtx-hp__go {
   display: inline-block; text-decoration: none;
   font-family: var(--display); font-weight: 800;
-  font-size: 15px; letter-spacing: .09em; text-transform: uppercase;
+  font-size: 15px; line-height: 1.35; letter-spacing: .075em; text-transform: uppercase;
   color: var(--ink);
   padding-bottom: 3px;
   border-bottom: 2px solid currentColor;
@@ -222,11 +222,12 @@
 
 .mtx-hp__event {
   display: grid;
-  grid-template-columns: clamp(96px, 16vw, 240px) minmax(0, 1fr);
-  column-gap: clamp(18px, 3vw, 46px);
+  grid-template-columns: clamp(96px, 16vw, 240px) minmax(0, 1fr) minmax(215px, 290px);
+  column-gap: clamp(18px, 2.8vw, 44px);
   padding: clamp(30px, 3.4vw, 48px) 0;
   border-top: 1px solid var(--rule);
 }
+.mtx-hp__event-side { align-self: center; }
 
 .mtx-hp__event-logo {
   align-self: start;
@@ -272,12 +273,12 @@
   font-size: 17px; color: var(--muted);
 }
 .mtx-hp .mtx-hp__event-when {
-  margin-top: 18px !important;
+  margin-top: 0 !important;
   font-family: var(--display); font-weight: 700;
-  font-size: 14px; letter-spacing: .13em; text-transform: uppercase;
+  font-size: 14.5px; line-height: 1.45; letter-spacing: .075em; text-transform: uppercase;
   color: var(--ink);
 }
-.mtx-hp .mtx-hp__event-go { margin-top: 22px !important; }
+.mtx-hp .mtx-hp__event-go { margin-top: 18px !important; }
 
 .mtx-hp__strip {
   display: grid; grid-template-columns: repeat(3, 1fr);
@@ -320,25 +321,18 @@
 
 .mtx-hp .mtx-hp__trust {
   margin-top: clamp(34px, 4vw, 52px);
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 0;
   border-top: 1px solid var(--rule-dark);
 }
+.mtx-hp__trustitem { grid-column: span 2; }
+.mtx-hp__trustitem:nth-child(4), .mtx-hp__trustitem:nth-child(5) { grid-column: span 3; }
 .mtx-hp__trustitem {
   display: flex; flex-direction: column;
   padding: 30px clamp(20px, 2.4vw, 34px) 32px 0;
   border-bottom: 1px solid var(--rule-dark);
 }
 .mtx-hp__trustitem { padding-right: clamp(26px, 3vw, 46px); }
-
-.mtx-hp__trustitem--wide {
-  grid-column: span 2;
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: clamp(26px, 3vw, 46px); align-content: start;
-}
-.mtx-hp__trustitem--wide .mtx-hp__trust-name { grid-column: 1 / -1; }
-.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy { max-width: none; }
-.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy + .mtx-hp__trust-copy { margin-top: 12px !important; }
 .mtx-hp .mtx-hp__trust-name { font-size: clamp(20px, 1.9vw, 25px); color: var(--white); }
 .mtx-hp .mtx-hp__trust-copy { margin-top: 12px !important; font-size: 16.5px; color: var(--muted-dark); max-width: 54ch; }
 .mtx-hp .mtx-hp__trust-copy + .mtx-hp__trust-copy { margin-top: 12px !important; }
@@ -424,21 +418,40 @@
   white-space: nowrap; border: 0;
 }
 
+#mtx-hp.mtx-hp,
+#mtx-hp.mtx-hp * { text-align: left; }
+
+#mtx-hp.mtx-hp .mtx-hp__close,
+#mtx-hp.mtx-hp .mtx-hp__close *,
+#mtx-hp.mtx-hp .mtx-hp__btn,
+#mtx-hp.mtx-hp .mtx-hp__event-mark span { text-align: center; }
+
+#mtx-hp.mtx-hp a.mtx-hp__btn--blue  { background: var(--blue); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ink   { background: var(--ink); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ink:hover   { background: var(--blue); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--white { background: var(--white); color: var(--ink); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--white:hover { background: var(--ink); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--line:hover  { background: var(--ink); color: var(--white); }
+
+#mtx-hp.mtx-hp a.mtx-hp__go { color: var(--ink); }
+#mtx-hp.mtx-hp a.mtx-hp__go:hover { color: var(--blue); }
+#mtx-hp.mtx-hp .mtx-hp__band--ink a.mtx-hp__go { color: var(--white); }
+#mtx-hp.mtx-hp .mtx-hp__band--ink a.mtx-hp__go:hover { color: var(--blue-lite); }
+
 .mtx-hp #mtx-booking h1, .mtx-hp #mtx-booking h2,
 .mtx-hp #mtx-booking h3, .mtx-hp #mtx-booking h4 { color: inherit; text-transform: none; }
 
 @media (max-width: 1080px) {
   .mtx-hp .mtx-hp__trust { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  
-.mtx-hp__trustitem--wide {
-  grid-column: span 2;
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: clamp(26px, 3vw, 46px); align-content: start;
-}
-.mtx-hp__trustitem--wide .mtx-hp__trust-name { grid-column: 1 / -1; }
-.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy { max-width: none; }
-.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy + .mtx-hp__trust-copy { margin-top: 12px !important; }
-  .mtx-hp .mtx-hp__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mtx-hp__trustitem,
+  .mtx-hp__trustitem:nth-child(4), .mtx-hp__trustitem:nth-child(5) { grid-column: span 1; }
+  .mtx-hp__event { grid-template-columns: clamp(96px, 16vw, 200px) minmax(0, 1fr); }
+  .mtx-hp__event-side { grid-column: 2; align-self: start; padding-top: 18px; }
+    .mtx-hp .mtx-hp__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .mtx-hp__venue { grid-template-columns: 1fr; }
   .mtx-hp__venue img { aspect-ratio: 16 / 9; }
 }
@@ -475,7 +488,6 @@
   .mtx-hp__trustitem, .mtx-hp__trustitem + .mtx-hp__trustitem {
     border-left: 0; padding-left: 0; padding-right: 0;
   }
-  .mtx-hp__trustitem--wide { grid-column: span 1; grid-template-columns: minmax(0, 1fr); }
   .mtx-hp .mtx-hp__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -495,6 +507,7 @@
   .mtx-hp .mtx-hp__hook { font-size: clamp(23px, 7.4vw, 32px); max-width: none; }
   .mtx-hp .mtx-hp__event-copy { font-size: 16px; }
   .mtx-hp .mtx-hp__event-when { clear: left; }
+  .mtx-hp__event-side { padding-top: 14px; }
   
   .mtx-hp__event-mark { padding: 8px; }
   .mtx-hp__event-mark span { font-size: 11px; letter-spacing: .03em; }
@@ -802,6 +815,8 @@
           <h3>Rajadamnern Knockout</h3>
           <p class="mtx-hp__hook">7 fights. 3 rounds. 80% knockout rate.</p>
           <p class="mtx-hp__event-copy">Modern three-round Muay Thai inside Rajadamnern Stadium. Thai and international challengers, Wai Kru, live traditional music and a compressed format built around decisive action.</p>
+        </div>
+        <div class="mtx-hp__event-side">
           <p class="mtx-hp__event-when">Monday, Tuesday and Friday · Fights from 7:00 PM</p>
           <p class="mtx-hp__event-go"><a class="mtx-hp__go" href="/rajadamnern-knockout">View Rajadamnern Knockout</a></p>
         </div>
@@ -815,6 +830,8 @@
           <h3>New Power Muay Thai</h3>
           <p class="mtx-hp__hook">The long game of Muay Thai.</p>
           <p class="mtx-hp__event-copy">Traditional five-round fights where timing, scoring and momentum develop round by round. Live sarama music and a knowledgeable local crowd give Wednesday its traditional stadium rhythm.</p>
+        </div>
+        <div class="mtx-hp__event-side">
           <p class="mtx-hp__event-when">Wednesday · Fights from 6:00 PM</p>
           <p class="mtx-hp__event-go"><a class="mtx-hp__go" href="/new-power-muay-thai">View New Power Muay Thai</a></p>
         </div>
@@ -828,6 +845,8 @@
           <h3>Petchyindee Muay Thai</h3>
           <p class="mtx-hp__hook">Technique. Timing. Then everything can change.</p>
           <p class="mtx-hp__event-copy">Watch fighters use balance, control and ring intelligence before pressure develops into powerful kicks, clinching exchanges and sharper attacks.</p>
+        </div>
+        <div class="mtx-hp__event-side">
           <p class="mtx-hp__event-when">Thursday · Fights from 6:00 PM</p>
           <p class="mtx-hp__event-go"><a class="mtx-hp__go" href="/petchyindee-muay-thai">View Petchyindee Muay Thai</a></p>
         </div>
@@ -841,6 +860,8 @@
           <h3>RWS Rajadamnern World Series</h3>
           <p class="mtx-hp__hook">Rajadamnern’s flagship Saturday night.</p>
           <p class="mtx-hp__event-copy">Thai and international fighters compete in predominantly three-round contests with open scoring and major-event production, while Wai Kru and traditional Muay Thai remain part of the night.</p>
+        </div>
+        <div class="mtx-hp__event-side">
           <p class="mtx-hp__event-when">Saturday · Doors from 6:00 PM</p>
           <p class="mtx-hp__event-go"><a class="mtx-hp__go" href="/rws">Explore RWS Rajadamnern World Series</a></p>
         </div>
@@ -852,6 +873,8 @@
           <h3>Kiatpetch Muay Thai</h3>
           <p class="mtx-hp__hook">A real Sunday night at Rajadamnern.</p>
           <p class="mtx-hp__event-copy">Traditional five-round Muay Thai sits alongside faster three-round contests, with skilled Thai fighters, traditional music and a local crowd following every shift in momentum.</p>
+        </div>
+        <div class="mtx-hp__event-side">
           <p class="mtx-hp__event-when">Sunday · Fights from 6:00 PM</p>
           <p class="mtx-hp__event-go"><a class="mtx-hp__go" href="/kiatpetch-muay-thai">View Kiatpetch Muay Thai</a></p>
         </div>

@@ -208,6 +208,8 @@ ${mark}
           <h3>${esc(ev.name)}</h3>
           <p class="mtx-hp__hook">${T('nights.hook.' + k)}</p>
           <p class="mtx-hp__event-copy">${T('nights.copy.' + k)}</p>
+        </div>
+        <div class="mtx-hp__event-side">
           <p class="mtx-hp__event-when">${T('nights.schedule.' + k)}</p>
           <p class="mtx-hp__event-go"><a class="mtx-hp__go" href="${esc(ev.path)}">${T('nights.cta.' + k)}</a></p>
         </div>

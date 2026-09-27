@@ -140,7 +140,7 @@
 .mtx-hp__go {
   display: inline-block; text-decoration: none;
   font-family: var(--display); font-weight: 800;
-  font-size: 15px; letter-spacing: .09em; text-transform: uppercase;
+  font-size: 15px; line-height: 1.35; letter-spacing: .075em; text-transform: uppercase;
   color: var(--ink);
   padding-bottom: 3px;
   border-bottom: 2px solid currentColor;
@@ -287,13 +287,18 @@
 
 .mtx-hp__events { margin-top: clamp(34px, 4vw, 52px); }
 
+/* Three columns on a desktop screen: the logo, the event, and when it is on
+   with the way through to it. Two columns left the right third of a 1280px
+   screen empty, because the copy is capped at a readable measure and nothing
+   was using the rest of the row. */
 .mtx-hp__event {
   display: grid;
-  grid-template-columns: clamp(96px, 16vw, 240px) minmax(0, 1fr);
-  column-gap: clamp(18px, 3vw, 46px);
+  grid-template-columns: clamp(96px, 16vw, 240px) minmax(0, 1fr) minmax(215px, 290px);
+  column-gap: clamp(18px, 2.8vw, 44px);
   padding: clamp(30px, 3.4vw, 48px) 0;
   border-top: 1px solid var(--rule);
 }
+.mtx-hp__event-side { align-self: center; }
 
 /* The event's own logo, as a square thumbnail with its theme colour under it.
    object-fit is contain and the tile is padded, so no logo is cropped and a
@@ -363,12 +368,12 @@
   font-size: 17px; color: var(--muted);
 }
 .mtx-hp .mtx-hp__event-when {
-  margin-top: 18px !important;
+  margin-top: 0 !important;
   font-family: var(--display); font-weight: 700;
-  font-size: 14px; letter-spacing: .13em; text-transform: uppercase;
+  font-size: 14.5px; line-height: 1.45; letter-spacing: .075em; text-transform: uppercase;
   color: var(--ink);
 }
-.mtx-hp .mtx-hp__event-go { margin-top: 22px !important; }
+.mtx-hp .mtx-hp__event-go { margin-top: 18px !important; }
 
 /* ------------------------------------------------------------ gallery --- */
 
@@ -430,28 +435,23 @@
 
 /* -------------------------------------------------------------- trust --- */
 
+/* Five items over a six-column grid: three across, then two. A three-column
+   grid with one item spanning two left the second row lopsided and the wide
+   item half empty. */
 .mtx-hp .mtx-hp__trust {
   margin-top: clamp(34px, 4vw, 52px);
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 0;
   border-top: 1px solid var(--rule-dark);
 }
+.mtx-hp__trustitem { grid-column: span 2; }
+.mtx-hp__trustitem:nth-child(4), .mtx-hp__trustitem:nth-child(5) { grid-column: span 3; }
 .mtx-hp__trustitem {
   display: flex; flex-direction: column;
   padding: 30px clamp(20px, 2.4vw, 34px) 32px 0;
   border-bottom: 1px solid var(--rule-dark);
 }
 .mtx-hp__trustitem { padding-right: clamp(26px, 3vw, 46px); }
-/* The QR item spans two columns, so its two paragraphs sit side by side in
-   them rather than leaving half the span empty. */
-.mtx-hp__trustitem--wide {
-  grid-column: span 2;
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: clamp(26px, 3vw, 46px); align-content: start;
-}
-.mtx-hp__trustitem--wide .mtx-hp__trust-name { grid-column: 1 / -1; }
-.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy { max-width: none; }
-.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy + .mtx-hp__trust-copy { margin-top: 12px !important; }
 .mtx-hp .mtx-hp__trust-name { font-size: clamp(20px, 1.9vw, 25px); color: var(--white); }
 .mtx-hp .mtx-hp__trust-copy { margin-top: 12px !important; font-size: 16.5px; color: var(--muted-dark); max-width: 54ch; }
 .mtx-hp .mtx-hp__trust-copy + .mtx-hp__trust-copy { margin-top: 12px !important; }
@@ -550,6 +550,55 @@
   white-space: nowrap; border: 0;
 }
 
+/* ----------------------------------------------------------- alignment --- */
+
+/* Stated, not inherited.
+ *
+ * Tilda applies its own rules inside a zero block, and it centres text by
+ * matching every element directly: a rule shaped like `#allrecords * {
+ * text-align: center }`. A direct match beats an inherited value however
+ * specific the ancestor rule is, so setting text-align once on .mtx-hp does
+ * nothing. On the live page every lede, every event name, every paragraph,
+ * every step and every FAQ question came out centred.
+ *
+ * widget.js has carried this fix and this note since it was written. The page
+ * blocks never got either, because every render of them was done on a blank
+ * page where nothing was competing. verify.mjs now renders inside a stand-in
+ * for the Tilda host and fails if anything comes back centred.
+ *
+ * #mtx-hp.mtx-hp * is (1,1,1) and beats (1,0,1) outright, so this does not
+ * depend on which stylesheet the browser happens to read last. */
+#mtx-hp.mtx-hp,
+#mtx-hp.mtx-hp * { text-align: left; }
+
+/* And the handful that genuinely centre are told again, one level higher. */
+#mtx-hp.mtx-hp .mtx-hp__close,
+#mtx-hp.mtx-hp .mtx-hp__close *,
+#mtx-hp.mtx-hp .mtx-hp__btn,
+#mtx-hp.mtx-hp .mtx-hp__event-mark span { text-align: center; }
+
+/* Colour, stated the same way and for the same reason.
+ *
+ * A host rule shaped like `#allrecords a { color: inherit }` is (1,0,1) and
+ * beats every single-class button rule above, which turned the white buttons
+ * white-on-white and dropped two others below 4.5:1. Found by the hostile
+ * host in verify.mjs, not on the live site. */
+#mtx-hp.mtx-hp a.mtx-hp__btn--blue  { background: var(--blue); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ink   { background: var(--ink); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ink:hover   { background: var(--blue); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--white { background: var(--white); color: var(--ink); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--white:hover { background: var(--ink); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--line:hover  { background: var(--ink); color: var(--white); }
+
+#mtx-hp.mtx-hp a.mtx-hp__go { color: var(--ink); }
+#mtx-hp.mtx-hp a.mtx-hp__go:hover { color: var(--blue); }
+#mtx-hp.mtx-hp .mtx-hp__band--ink a.mtx-hp__go { color: var(--white); }
+#mtx-hp.mtx-hp .mtx-hp__band--ink a.mtx-hp__go:hover { color: var(--blue-lite); }
+
 /* --------------------------------------------------------------- guard --- */
 
 /* If the booking widget is ever mounted on this page, a direct match on a
@@ -563,17 +612,11 @@
 
 @media (max-width: 1080px) {
   .mtx-hp .mtx-hp__trust { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  /* The QR item spans two columns, so its two paragraphs sit side by side in
-   them rather than leaving half the span empty. */
-.mtx-hp__trustitem--wide {
-  grid-column: span 2;
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: clamp(26px, 3vw, 46px); align-content: start;
-}
-.mtx-hp__trustitem--wide .mtx-hp__trust-name { grid-column: 1 / -1; }
-.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy { max-width: none; }
-.mtx-hp .mtx-hp__trustitem--wide .mtx-hp__trust-copy + .mtx-hp__trust-copy { margin-top: 12px !important; }
-  .mtx-hp .mtx-hp__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mtx-hp__trustitem,
+  .mtx-hp__trustitem:nth-child(4), .mtx-hp__trustitem:nth-child(5) { grid-column: span 1; }
+  .mtx-hp__event { grid-template-columns: clamp(96px, 16vw, 200px) minmax(0, 1fr); }
+  .mtx-hp__event-side { grid-column: 2; align-self: start; padding-top: 18px; }
+    .mtx-hp .mtx-hp__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .mtx-hp__venue { grid-template-columns: 1fr; }
   .mtx-hp__venue img { aspect-ratio: 16 / 9; }
 }
@@ -613,7 +656,6 @@
   .mtx-hp__trustitem, .mtx-hp__trustitem + .mtx-hp__trustitem {
     border-left: 0; padding-left: 0; padding-right: 0;
   }
-  .mtx-hp__trustitem--wide { grid-column: span 1; grid-template-columns: minmax(0, 1fr); }
   .mtx-hp .mtx-hp__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -637,6 +679,7 @@
   .mtx-hp .mtx-hp__hook { font-size: clamp(23px, 7.4vw, 32px); max-width: none; }
   .mtx-hp .mtx-hp__event-copy { font-size: 16px; }
   .mtx-hp .mtx-hp__event-when { clear: left; }
+  .mtx-hp__event-side { padding-top: 14px; }
   /* Small enough that the event's short name sits on one line inside the
      stand-in tile instead of breaking mid-word. */
   .mtx-hp__event-mark { padding: 8px; }

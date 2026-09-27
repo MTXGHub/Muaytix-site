@@ -2,7 +2,13 @@ import pw from '/opt/node22/lib/node_modules/playwright/index.js';
 const { chromium } = pw;
 import { readFileSync } from 'node:fs';
 const block = readFileSync('homepage-live.txt', 'utf8');
-const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0">${block}</body></html>`;
+/* Rendered inside the same hostile stand-in for Tilda that verify.mjs uses.
+   A render on a blank page is not what the guest sees. */
+const TILDA = `#allrecords{font-family:Arial,Helvetica,sans-serif}#allrecords *{text-align:center}
+#allrecords a{text-decoration:none;color:inherit}#allrecords img{max-width:100%}
+#allrecords p,#allrecords h1,#allrecords h2,#allrecords h3{margin:0 0 15px}
+#allrecords ul,#allrecords ol{list-style:none;padding:0}`;
+const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0}${TILDA}</style></head><body><div id="allrecords">${block}</div></body></html>`;
 const stand = (l) => `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="1200" height="800" fill="#6f6f78"/><g fill="#c9c9d2" font-family="sans-serif" font-size="34" text-anchor="middle"><text x="600" y="390">${l}</text><text x="600" y="440" font-size="24" fill="#a6a6b0">(photograph, not loadable here)</text></g></svg>`;
 const logoStand = t => `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#000000"/><g fill="#FFAE27" font-family="sans-serif" font-weight="bold" text-anchor="middle"><text x="200" y="196" font-size="34">${t}</text><text x="200" y="236" font-size="19" fill="#9a9aa4">logo</text></g></svg>`;
 const W = Number(process.argv[2] || 1280);

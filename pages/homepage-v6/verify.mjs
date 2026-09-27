@@ -10,9 +10,34 @@ const { chromium } = pw;
 import { readFileSync, existsSync } from 'node:fs';
 
 const frag = readFileSync('homepage-live.txt', 'utf8');
+
+/* THE BLOCK IS NEVER TESTED ON A BLANK PAGE AGAIN.
+ *
+ * Every check below renders inside a stand-in for the Tilda host, because
+ * Tilda is not a blank page. It applies its own rules to everything inside a
+ * zero block, and it centres text by matching each element directly rather
+ * than by inheritance, which beats any ancestor rule however specific.
+ *
+ * On 28 September the owner opened the built page on his own site and every
+ * lede, event name, paragraph, step and FAQ question came out centred. It had
+ * passed every check here, because here it had been rendered on a page where
+ * nothing was competing with it. widget.js had carried the fix and the
+ * warning since it was written; the page blocks had neither.
+ *
+ * This is deliberately hostile. If the block cannot hold its own shape
+ * against it, it is not finished. */
+const TILDA_HOST = `
+  #allrecords { font-family: Arial, Helvetica, sans-serif; }
+  #allrecords * { text-align: center; }
+  #allrecords a { text-decoration: none; color: inherit; }
+  #allrecords img { max-width: 100%; }
+  #allrecords p, #allrecords h1, #allrecords h2, #allrecords h3 { margin: 0 0 15px; }
+  #allrecords ul, #allrecords ol { list-style: none; padding: 0; }
+`;
 const doc = `<!doctype html><html lang="en-GB"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0">${frag}</body></html>`;
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{margin:0}${TILDA_HOST}</style></head>
+<body><div id="allrecords">${frag}</div></body></html>`;
 
 /* The locked copy, parsed from the same file the page is generated from. */
 const DOC = (() => {
@@ -133,6 +158,30 @@ const dataShaped = s =>
 const unapproved = onPage.filter(s => !approved.some(a => a === s || a.includes(s)) && !dataShaped(s));
 console.log(`   ${onPage.length} visible text nodes; ${unapproved.length} not traceable to Document A or to verified data`);
 unapproved.forEach(s => fail(`unapproved text on page: "${s.slice(0, 90)}"`));
+
+/* ---- Alignment, inside the host ---- */
+console.log('\n=== 3b. ALIGNMENT INSIDE THE TILDA HOST ===');
+const ALIGN = [
+  ['.mtx-hp__hero h1', 'left'], ['.mtx-hp__lede', 'left'],
+  ['.mtx-hp__night-day', 'left'], ['.mtx-hp__night-name', 'left'],
+  ['.mtx-hp__night-times', 'left'], ['.mtx-hp__night-desc', 'left'],
+  ['.mtx-hp__hook', 'left'], ['.mtx-hp__event-copy', 'left'],
+  ['.mtx-hp__event-when', 'left'], ['.mtx-hp__seat-copy', 'left'],
+  ['.mtx-hp__trust-copy', 'left'], ['.mtx-hp__step p', 'left'],
+  ['.mtx-hp__support p', 'left'], ['.mtx-hp__faq summary h3', 'left'],
+  ['.mtx-hp__faq p', 'left'], ['.mtx-hp__venue-copy', 'left'],
+  ['.mtx-hp__close h2', 'center'], ['.mtx-hp__close-copy', 'center'],
+];
+const aligned = await page.evaluate(sel => sel.map(([s, want]) => {
+  const e = document.querySelector(s);
+  return { s, want, got: e ? getComputedStyle(e).textAlign : null };
+}), ALIGN);
+let amiss = 0;
+for (const a of aligned) {
+  if (a.got === null) { fail(`alignment check found nothing matching ${a.s}`); amiss++; continue; }
+  if (a.got !== a.want) { fail(`${a.s} is ${a.got} inside the Tilda host, should be ${a.want}`); amiss++; }
+}
+console.log(`   ${ALIGN.length} elements checked; ${amiss} aligned the wrong way`);
 
 /* ---- Section 24: keyword compliance ---- */
 console.log('\n=== 4. KEYWORD COMPLIANCE ===');
