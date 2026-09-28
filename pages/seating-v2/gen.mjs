@@ -231,18 +231,34 @@ const includes = `  <section class="mtx-ss__band mtx-ss__band--ink">
 
 /* ============================================================ BOOKING === */
 
-/* Document A section 8 allows the booking widget or a booking entry point,
-   and section 4 asks the primary CTA to open the seat-led journey with seat
-   class before event date. The widget does that with data-start="seats". No
-   URL exists that does, and none was invented, so the widget is mounted here
-   and every booking CTA on the page anchors to it. */
+/* The universal booking widget, mounted exactly as it is on
+   /rajadamnern-stadium-tickets: a bare mount, no attributes, so the guest
+   chooses the month, then the night, then the seat class.
+   
+   This page was first built seat-first, because Document A section 4 asks the
+   primary CTA to open the seat-led journey with seat class before event date,
+   and the widget supports that with data-start="seats". The owner reviewed it
+   live on 28 September and withdrew that instruction: "there is a case for
+   designing a seat-first widget at some point, but it's not now and it's not
+   here."
+   
+   He was right, and the seat-first step was worse than a preference. It
+   renders the class name, its tagline and a pill reading Available: no price,
+   no photograph, no sections, no seat type, and its badges do not even sit on
+   a common baseline because that step uses a different element from the
+   date-first one. It also asks the guest to choose a seat class a second
+   time, in a poorer interface than the four cards higher up this page, and a
+   class that is gone on a given night dims that night to 42 per cent, which
+   reads as "nothing on" to a guest set on one class.
+   
+   Every booking CTA on the page still anchors here. */
 const booking = `  <section class="mtx-ss__band mtx-ss__band--paper" id="mtx-ss-booking">
     <div class="mtx-ss__shell">
       <h2>${T('booking.h2')}</h2>
       <p class="mtx-ss__booking-copy">${T('booking.p1')}</p>
       <p class="mtx-ss__booking-copy">${T('booking.p2')}</p>
       <p class="mtx-ss__booking-copy">${T('booking.p3')}</p>
-      <div class="mtx-ss__widget"><div class="muaytix-ticket-selector" data-start="seats"></div></div>
+      <div class="mtx-ss__widget"><div class="muaytix-ticket-selector"></div></div>
       <p class="mtx-ss__actions">
         <a class="mtx-ss__btn mtx-ss__btn--blue" href="${esc(D.tickets)}">${T('booking.cta')}</a>
       </p>
@@ -281,9 +297,11 @@ blockers.push('Document A section 8 requires a link to /rajadamnern-stadium but 
   + 'seat-map sentence, so no new words appear on the page. /rajadamnern-stadium-tickets is linked from the approved '
   + 'CTA "Book Your Rajadamnern Tickets". Supply anchor text for either and it will be used instead.');
 
-blockers.push('Document A gives no destination for the four card booking buttons. They anchor to the seat-led booking '
-  + 'section on this page rather than to an invented URL. Say the word and they will point at '
-  + '/rajadamnern-stadium-tickets instead.');
+blockers.push('Document A gives no destination for the four card booking buttons. They anchor to the booking section '
+  + 'on this page rather than to an invented URL. Since the widget is now date-first, a button reading "Book Ringside '
+  + 'Tickets" lands on the calendar rather than on Ringside: the guest picks the night first and then the class, which '
+  + 'is one extra tap and no dead ends. Carrying the class through would need a per-class deep link, which the widget '
+  + 'does not have today.');
 
 blockers.push('Document A section 2 permits the line "There are no bad views at Rajadamnern Stadium, only different '
   + 'experiences" to appear once. It is not in the approved copy of section 4, so placing it would mean authoring a '

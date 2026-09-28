@@ -1,6 +1,5 @@
 {
   "_rule": "Document B sections 4 and 6. Every value here comes from a verified source, named below. Nothing is inferred and nothing is guessed. A missing value is reported, never filled in.",
-
   "sources": {
     "prices": "ticket_class_prices joined to ticket_classes, Supabase project jlwopomkqeawrxlapwpc, read 28 September 2026. The four THB prices written into Document A were checked against live inventory before publication, as Document A section 5 requires. All four match.",
     "seating_type": "ticket_classes.assigned_seating, same read. Ringside and Club Class true, LEO Section and Third Class false. Matches Document A.",
@@ -8,45 +7,75 @@
     "alt_text": "Document A section 7, the approved alt-text list, used word for word.",
     "destinations": "Document A section 8. No URL here was composed."
   },
-
   "prices_checked": {
     "_read": "28 September 2026",
-    "ringside":    { "document_a": "2,500 THB", "live_minor": 250000, "currency": "thb", "match": true },
-    "club-class":  { "document_a": "1,800 THB", "live_minor": 180000, "currency": "thb", "match": true },
-    "leo-section": { "document_a": "1,500 THB", "live_minor": 150000, "currency": "thb", "match": true },
-    "third-class": { "document_a": "1,000 THB", "live_minor": 100000, "currency": "thb", "match": true }
+    "ringside": {
+      "document_a": "2,500 THB",
+      "live_minor": 250000,
+      "currency": "thb",
+      "match": true
+    },
+    "club-class": {
+      "document_a": "1,800 THB",
+      "live_minor": 180000,
+      "currency": "thb",
+      "match": true
+    },
+    "leo-section": {
+      "document_a": "1,500 THB",
+      "live_minor": 150000,
+      "currency": "thb",
+      "match": true
+    },
+    "third-class": {
+      "document_a": "1,000 THB",
+      "live_minor": 100000,
+      "currency": "thb",
+      "match": true
+    }
   },
-
   "images": {
-    "hero":        { "url": "https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg",
-                     "source": "Supplied by the owner, 28 September 2026, as the hero for this page." },
-    "ringside":    { "url": "https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg",
-                     "source": "Already published by MuayTix. Its own alt text there reads \"Close-up view of the ring from Ringside\"." },
-    "club-class":  { "url": "https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg",
-                     "source": "Already published by MuayTix. Its own alt text there reads \"The view towards the ring from Club Class\"." },
-    "leo-section": { "url": "https://static.tildacdn.com/tild3136-6363-4533-b935-633230626564/1000008294.jpg",
-                     "source": "Already published by MuayTix. Its own alt text there reads \"The view towards the ring from the LEO Section\"." },
-    "third-class": { "url": "https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg",
-                     "source": "Nominated by the owner, 28 September 2026, as the view from Third Class. NOTE: the same file is published elsewhere on the site with the alt text \"Third Class seating at Rajadamnern Stadium, Bangkok\", which describes a different subject. The owner can see the file and this page follows him. Reported, not changed." },
-    "map":         { "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
-                     "source": "Already published by MuayTix as the Rajadamnern Stadium seating map." }
+    "hero": {
+      "url": "https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg",
+      "source": "Supplied by the owner, 28 September 2026, as the hero for this page."
+    },
+    "ringside": {
+      "url": "https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg",
+      "source": "Already published by MuayTix. Its own alt text there reads \"Close-up view of the ring from Ringside\"."
+    },
+    "club-class": {
+      "url": "https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg",
+      "source": "Already published by MuayTix. Its own alt text there reads \"The view towards the ring from Club Class\"."
+    },
+    "leo-section": {
+      "url": "https://static.tildacdn.com/tild3136-6363-4533-b935-633230626564/1000008294.jpg",
+      "source": "Already published by MuayTix. Its own alt text there reads \"The view towards the ring from the LEO Section\"."
+    },
+    "third-class": {
+      "url": "https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg",
+      "source": "Nominated by the owner, 28 September 2026, as the view from Third Class. NOTE: the same file is published elsewhere on the site with the alt text \"Third Class seating at Rajadamnern Stadium, Bangkok\", which describes a different subject. The owner can see the file and this page follows him. Reported, not changed."
+    },
+    "map": {
+      "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
+      "source": "Already published by MuayTix as the Rajadamnern Stadium seating map."
+    }
   },
-
   "destinations": {
-    "seat_map":    "/rajadamnern-stadium-seat-map",
-    "ringside":    "/rajadamnern-stadium-seating/ringside",
-    "club-class":  "/rajadamnern-stadium-seating/club-class",
+    "seat_map": "/rajadamnern-stadium-seat-map",
+    "ringside": "/rajadamnern-stadium-seating/ringside",
+    "club-class": "/rajadamnern-stadium-seating/club-class",
     "leo-section": "/rajadamnern-stadium-seating/leo-section",
     "third-class": "/rajadamnern-stadium-seating/third-class",
-    "stadium":     "/rajadamnern-stadium",
-    "tickets":     "/rajadamnern-stadium-tickets",
+    "stadium": "/rajadamnern-stadium",
+    "tickets": "/rajadamnern-stadium-tickets",
     "booking_anchor": "#mtx-ss-booking"
   },
-
   "seat_colours": {
     "_source": "Sampled from the owner's own seat map artwork and recorded in CLAUDE.md. Used as bars and swatches only. None of the four is legible as type and none is ever set as type.",
-    "ringside": "#00A651", "club-class": "#27AAE1", "leo-section": "#FFF200", "third-class": "#F7941E"
+    "ringside": "#00A651",
+    "club-class": "#27AAE1",
+    "leo-section": "#FFF200",
+    "third-class": "#F7941E"
   },
-
-  "_booking_note": "Document A section 8 allows either the booking widget or a booking entry point, and Document A section 1 asks the primary CTA to open the seat-led journey with seat class before event date. The widget supports that with data-start=\"seats\"; no URL exists that does, and none was invented. The widget is therefore mounted in the booking section and every booking CTA anchors to it."
+  "_booking_note": "The universal booking widget, mounted exactly as on /rajadamnern-stadium-tickets: a bare <div class=\"muaytix-ticket-selector\"></div>, date first. Built seat-first at first, per Document A section 4; the owner reviewed it live on 28 September and withdrew that instruction. Every booking CTA anchors to it."
 }
