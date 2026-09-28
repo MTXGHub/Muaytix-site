@@ -15,6 +15,12 @@
   --hp-paper: #f2f2f2;
   --hp-line: #dcdce1;
   --hp-muted: #6e6e75;
+  /* Rule and muted text as they read on the dark band. Block 2 moved onto it
+     28 September 2026 so the six event colours have somewhere to actually
+     show against, rather than sitting on white where a bar and a tinted
+     background both wash out. */
+  --hp-rule-dark: rgba(255, 255, 255, .17);
+  --hp-muted-dark: #a9aab3;
   font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: var(--hp-ink);
   line-height: 1.6;
@@ -120,40 +126,92 @@
 .mtx-hp .mtx-hp__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* ---------- Block 2: tonight and this week ----------
-   Tonight is the first card and the only lifted one: a blue rule across the
-   top, a "Tonight" label and its own weight. Every other night is a plain
-   card, so the eye lands on the night the guest can still buy for. */
-.mtx-hp__nights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.mtx-hp .mtx-hp__nights { margin-top: 30px; }
+ *
+ * Rebuilt 28 September 2026. Five identical white cards, one black outline
+ * button repeated five times, and the same event's own paragraph printed
+ * twice over in the same five cards whenever it fell twice in the coming
+ * week -- Jason, looking at the live page: "these all look the same to me...
+ * nothing about this block makes me want to press a button."
+ *
+ * Now a schedule, not a grid of boxes: one row a night, a colour bar down the
+ * left carrying that night's own event colour the full height of its row, so
+ * six nights read as six different things before a single word is read. The
+ * button on every row is filled with that same colour rather than a black
+ * outline repeated five times, because a press-me button in the fighter's own
+ * colour is the button that actually wants pressing.
+ *
+ * A row's own description is printed once, on its first appearance in the
+ * week, never twice -- see gen.mjs for why. Rows carry no border or box of
+ * their own; the rule between them is what used to be a card edge.
+ */
+.mtx-hp .mtx-hp__prog { margin-top: 30px; border-top: 1px solid var(--hp-rule-dark); }
 /* Fourteen nights are in the markup; five are on screen. The script removes
    nights whose booking has closed, and the next one moves up on its own. So
    the block keeps itself right for a fortnight, and a reader with no
    JavaScript still sees five real nights rather than fourteen. */
-.mtx-hp__night:nth-child(n+6) { display: none; }
+.mtx-hp .mtx-hp__night:nth-child(n+6) { display: none; }
+
+/* No padding on the row itself: the padding lives on the cells, so the
+   accent bar can run the full row edge to edge. Padding on the row broke the
+   bar into a floating sliver short of both the top and bottom rule. */
 .mtx-hp__night {
-  display: flex; flex-direction: column;
-  background: #fff; border: 1px solid var(--hp-line); padding: 26px 22px 24px;
+  display: grid;
+  grid-template-columns: 8px minmax(112px, 148px) minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: clamp(14px, 2vw, 26px);
+  border-bottom: 1px solid var(--hp-rule-dark);
 }
-.mtx-hp__night--now { border-color: var(--hp-blue); box-shadow: inset 0 5px 0 0 var(--hp-blue); padding-top: 30px; }
+.mtx-hp__night > * { padding-block: 22px; }
+/* Every cell is placed explicitly. Auto-placement has put a cell into the
+   8px accent column and pushed the whole row sideways before now. */
+.mtx-hp__night-bar  { grid-column: 1; grid-row: 1 / -1; align-self: stretch; padding-block: 0 !important; background: var(--accent); }
+.mtx-hp__night-when { grid-column: 2; }
+.mtx-hp__night-what { grid-column: 3; }
+.mtx-hp .mtx-hp__night-go { grid-column: 4; align-self: center; justify-self: end; padding-block: 0 !important; }
+
+/* Weekday and date in one line, one element -- "Sunday 27 September", not
+   split across two. Splitting it broke verify.mjs's own check for what
+   counts as verified data rather than authored prose; see gen.mjs. */
+.mtx-hp .mtx-hp__night-date {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 14px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--hp-muted-dark);
+}
+.mtx-hp .mtx-hp__night-name { font-size: clamp(20px, 2vw, 26px); line-height: 1.04; color: #fff; }
+.mtx-hp .mtx-hp__night-times { margin-top: 6px !important; color: var(--hp-muted-dark); font-size: 15px; }
+/* Hidden by default. Only the top row of the board carries --lede, applied
+   by the script once the closed nights have dropped off; a row with no
+   description of its own (a repeat of an event already described higher up
+   the week) simply shows none. Its full paragraph is never lost -- it is in
+   Section 5, further down the page, under that event's own card. */
+.mtx-hp .mtx-hp__night-desc { display: none; }
+.mtx-hp .mtx-hp__night--lede .mtx-hp__night-desc {
+  display: block; margin-top: 10px !important; max-width: 54ch;
+  font-size: 15.5px; color: rgba(255, 255, 255, .82);
+}
+
+/* Tonight. The one row allowed to shout: a soft wash in its own accent
+   colour, not a fixed blue regardless of which event is on, and the event
+   name steps up a size. */
+.mtx-hp__night--now { background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 16%, transparent), transparent 75%); }
+.mtx-hp .mtx-hp__night--now .mtx-hp__night-name { font-size: clamp(26px, 3vw, 38px); }
+
 .mtx-hp__tag {
-  display: inline-block; align-self: flex-start; padding: 5px 10px;
-  background: var(--hp-blue); color: #fff;
+  display: inline-block; margin-bottom: 10px; padding: 5px 10px;
+  background: var(--accent); color: var(--accent-on-accent);
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
   font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
 }
-.mtx-hp__night h3 { margin-top: 14px; }
-.mtx-hp__night--now h3 { font-size: 26px; }
-.mtx-hp .mtx-hp__when {
-  margin-top: 9px !important; color: var(--hp-muted); font-size: 15px;
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
-  letter-spacing: .06em; text-transform: uppercase;
-}
-.mtx-hp .mtx-hp__times { margin-top: 4px !important; color: var(--hp-muted); font-size: 15px; }
-.mtx-hp .mtx-hp__night .mtx-hp__evbody { margin-top: 14px !important; font-size: 15.5px; }
-/* margin-top:auto pins the button to the foot of the card, so a short night
-   and a long one still line their buttons up across the row. */
-.mtx-hp .mtx-hp__nightcta { margin-top: auto !important; padding-top: 20px; }
-.mtx-hp__nightcta .mtx-hp__btn { width: 100%; }
+
+/* Every row's own button, filled with that row's own colour. Not a variant
+   of .mtx-hp__btn --blue/--outline/--ghost: it takes its colour from the
+   --accent custom property set on the <li>, so one rule serves all six
+   events and a seventh needs no new class. brightness() darkens it on hover
+   without a second colour having to be sourced and verified for each one. */
+.mtx-hp__night .mtx-hp__btn { background: var(--accent); color: var(--accent-on-accent); }
+.mtx-hp__night .mtx-hp__btn:hover { filter: brightness(.87); color: var(--accent-on-accent); }
+
+.mtx-hp .mtx-hp__prog-cta { margin-top: 34px !important; }
 
 /* The same dates as plain HTML, for crawlers and AI engines that never run
    the script above. Visually hidden, fully readable to a machine, and still
@@ -346,10 +404,24 @@
    Each one sits with the rules it changes rather than in a block of its own at
    the foot of the file, so nothing further down can quietly outrank it. */
 @media (max-width: 1000px) {
-  .mtx-hp__nights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mtx-hp__evs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mtx-hp__btnrow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mtx-hp__venue { grid-template-columns: 1fr; }
+}
+@media (max-width: 900px) {
+  /* The schedule row folds: day and date above, the event and its button
+     below, full width. It stays a schedule -- it does not become a stack of
+     boxes, which is the thing this block was rebuilt to stop being. */
+  .mtx-hp__night { grid-template-columns: 5px minmax(0, 1fr); }
+  .mtx-hp__night-bar  { grid-column: 1; grid-row: 1 / -1; }
+  .mtx-hp__night-when { grid-column: 2; grid-row: 1; }
+  .mtx-hp__night-what { grid-column: 2; grid-row: 2; }
+  .mtx-hp .mtx-hp__night-go { grid-column: 2; grid-row: 3; justify-self: start; }
+  .mtx-hp__night > * { padding-block: 0; }
+  .mtx-hp__night-when { padding-block: 20px 0 !important; }
+  .mtx-hp__night-what { padding-block: 6px 0 !important; }
+  .mtx-hp .mtx-hp__night-go { padding-block: 14px 22px !important; }
+  .mtx-hp__night .mtx-hp__btn { width: 100%; }
 }
 @media (max-width: 860px) {
   .mtx-hp__grid { grid-template-columns: 1fr; }
@@ -358,7 +430,6 @@
 }
 @media (max-width: 620px) {
   .mtx-hp__shell { width: min(100% - 28px, 1180px); }
-  .mtx-hp__nights { grid-template-columns: 1fr; }
   .mtx-hp__btnrow { grid-template-columns: 1fr; }
   .mtx-hp__trustgrid { grid-template-columns: 1fr; }
   .mtx-hp__actions .mtx-hp__btn, .mtx-hp__ctarow .mtx-hp__btn { width: 100%; }

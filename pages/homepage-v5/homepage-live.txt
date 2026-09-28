@@ -11,6 +11,9 @@
   --hp-paper: #f2f2f2;
   --hp-line: #dcdce1;
   --hp-muted: #6e6e75;
+  
+  --hp-rule-dark: rgba(255, 255, 255, .17);
+  --hp-muted-dark: #a9aab3;
   font-family: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: var(--hp-ink);
   line-height: 1.6;
@@ -97,33 +100,52 @@
 .mtx-hp__band--dark p { color: #d3d4da; }
 .mtx-hp .mtx-hp__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; }
 
-.mtx-hp__nights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.mtx-hp .mtx-hp__nights { margin-top: 30px; }
+.mtx-hp .mtx-hp__prog { margin-top: 30px; border-top: 1px solid var(--hp-rule-dark); }
 
-.mtx-hp__night:nth-child(n+6) { display: none; }
+.mtx-hp .mtx-hp__night:nth-child(n+6) { display: none; }
+
 .mtx-hp__night {
-  display: flex; flex-direction: column;
-  background: #fff; border: 1px solid var(--hp-line); padding: 26px 22px 24px;
+  display: grid;
+  grid-template-columns: 8px minmax(112px, 148px) minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: clamp(14px, 2vw, 26px);
+  border-bottom: 1px solid var(--hp-rule-dark);
 }
-.mtx-hp__night--now { border-color: var(--hp-blue); box-shadow: inset 0 5px 0 0 var(--hp-blue); padding-top: 30px; }
+.mtx-hp__night > * { padding-block: 22px; }
+
+.mtx-hp__night-bar  { grid-column: 1; grid-row: 1 / -1; align-self: stretch; padding-block: 0 !important; background: var(--accent); }
+.mtx-hp__night-when { grid-column: 2; }
+.mtx-hp__night-what { grid-column: 3; }
+.mtx-hp .mtx-hp__night-go { grid-column: 4; align-self: center; justify-self: end; padding-block: 0 !important; }
+
+.mtx-hp .mtx-hp__night-date {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 14px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--hp-muted-dark);
+}
+.mtx-hp .mtx-hp__night-name { font-size: clamp(20px, 2vw, 26px); line-height: 1.04; color: #fff; }
+.mtx-hp .mtx-hp__night-times { margin-top: 6px !important; color: var(--hp-muted-dark); font-size: 15px; }
+
+.mtx-hp .mtx-hp__night-desc { display: none; }
+.mtx-hp .mtx-hp__night--lede .mtx-hp__night-desc {
+  display: block; margin-top: 10px !important; max-width: 54ch;
+  font-size: 15.5px; color: rgba(255, 255, 255, .82);
+}
+
+.mtx-hp__night--now { background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 16%, transparent), transparent 75%); }
+.mtx-hp .mtx-hp__night--now .mtx-hp__night-name { font-size: clamp(26px, 3vw, 38px); }
+
 .mtx-hp__tag {
-  display: inline-block; align-self: flex-start; padding: 5px 10px;
-  background: var(--hp-blue); color: #fff;
+  display: inline-block; margin-bottom: 10px; padding: 5px 10px;
+  background: var(--accent); color: var(--accent-on-accent);
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
   font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
 }
-.mtx-hp__night h3 { margin-top: 14px; }
-.mtx-hp__night--now h3 { font-size: 26px; }
-.mtx-hp .mtx-hp__when {
-  margin-top: 9px !important; color: var(--hp-muted); font-size: 15px;
-  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
-  letter-spacing: .06em; text-transform: uppercase;
-}
-.mtx-hp .mtx-hp__times { margin-top: 4px !important; color: var(--hp-muted); font-size: 15px; }
-.mtx-hp .mtx-hp__night .mtx-hp__evbody { margin-top: 14px !important; font-size: 15.5px; }
 
-.mtx-hp .mtx-hp__nightcta { margin-top: auto !important; padding-top: 20px; }
-.mtx-hp__nightcta .mtx-hp__btn { width: 100%; }
+.mtx-hp__night .mtx-hp__btn { background: var(--accent); color: var(--accent-on-accent); }
+.mtx-hp__night .mtx-hp__btn:hover { filter: brightness(.87); color: var(--accent-on-accent); }
+
+.mtx-hp .mtx-hp__prog-cta { margin-top: 34px !important; }
 
 .mtx-hp__plain {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -281,10 +303,22 @@
 }
 
 @media (max-width: 1000px) {
-  .mtx-hp__nights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mtx-hp__evs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mtx-hp__btnrow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mtx-hp__venue { grid-template-columns: 1fr; }
+}
+@media (max-width: 900px) {
+  
+  .mtx-hp__night { grid-template-columns: 5px minmax(0, 1fr); }
+  .mtx-hp__night-bar  { grid-column: 1; grid-row: 1 / -1; }
+  .mtx-hp__night-when { grid-column: 2; grid-row: 1; }
+  .mtx-hp__night-what { grid-column: 2; grid-row: 2; }
+  .mtx-hp .mtx-hp__night-go { grid-column: 2; grid-row: 3; justify-self: start; }
+  .mtx-hp__night > * { padding-block: 0; }
+  .mtx-hp__night-when { padding-block: 20px 0 !important; }
+  .mtx-hp__night-what { padding-block: 6px 0 !important; }
+  .mtx-hp .mtx-hp__night-go { padding-block: 14px 22px !important; }
+  .mtx-hp__night .mtx-hp__btn { width: 100%; }
 }
 @media (max-width: 860px) {
   .mtx-hp__grid { grid-template-columns: 1fr; }
@@ -293,7 +327,6 @@
 }
 @media (max-width: 620px) {
   .mtx-hp__shell { width: min(100% - 28px, 1180px); }
-  .mtx-hp__nights { grid-template-columns: 1fr; }
   .mtx-hp__btnrow { grid-template-columns: 1fr; }
   .mtx-hp__trustgrid { grid-template-columns: 1fr; }
   .mtx-hp__actions .mtx-hp__btn, .mtx-hp__ctarow .mtx-hp__btn { width: 100%; }
@@ -393,162 +426,288 @@
     </div>
   </header>
 
-  <section class="mtx-hp__band mtx-hp__band--paper">
+  <section class="mtx-hp__band mtx-hp__band--dark">
     <div class="mtx-hp__shell">
       <span class="mtx-hp__kicker">This week</span>
       <h2>Muay Thai tonight and this week</h2>
       <p>There is live Muay Thai at Rajadamnern Stadium every night of the week, but the event changes from one evening to the next.</p>
-      <ul class="mtx-hp__nights" data-mtx-week>
-        <li class="mtx-hp__night" data-mtx-date="2026-09-27" data-mtx-cutoff="2026-09-27T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-09-27">
-          <h3>Kiatpetch Muay Thai</h3>
-          <p class="mtx-hp__when">Sunday 27 September</p>
-          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
-          <p class="mtx-hp__evbody">Traditional five-round Muay Thai meets faster three-round contests, accompanied by live traditional music and a knowledgeable local crowd.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/kiatpetch-muay-thai/2026-09-27">Book Kiatpetch Tickets</a></p>
+      <ol class="mtx-hp__prog" data-mtx-week>
+        <li class="mtx-hp__night" style="--accent:#FF1828;--accent-on-accent:#0b0b0d" data-mtx-date="2026-09-27" data-mtx-cutoff="2026-09-27T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-09-27">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Sunday 27 September</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Kiatpetch Muay Thai</h3>
+          <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__night-desc">Traditional five-round Muay Thai meets faster three-round contests, accompanied by live traditional music and a knowledgeable local crowd.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/kiatpetch-muay-thai/2026-09-27">Book Kiatpetch Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-09-28" data-mtx-cutoff="2026-09-28T11:30:00Z" data-mtx-href="/all-star-fight-by-buakaw/2026-09-28">
-          <h3>All Star Fight by Buakaw</h3>
-          <p class="mtx-hp__when">Monday 28 September</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
-          <p class="mtx-hp__evbody">Buakaw’s monthly Rajadamnern event replaces the regular Monday Knockout programme.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/all-star-fight-by-buakaw/2026-09-28">View Event Details</a></p>
+        <li class="mtx-hp__night" style="--accent:#FFAE27;--accent-on-accent:#0b0b0d" data-mtx-date="2026-09-28" data-mtx-cutoff="2026-09-28T11:30:00Z" data-mtx-href="/all-star-fight-by-buakaw/2026-09-28">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Monday 28 September</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">All Star Fight by Buakaw</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__night-desc">Buakaw’s monthly Rajadamnern event replaces the regular Monday Knockout programme.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/all-star-fight-by-buakaw/2026-09-28">View Event Details</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-09-29" data-mtx-cutoff="2026-09-29T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-09-29">
-          <h3>Rajadamnern Knockout</h3>
-          <p class="mtx-hp__when">Tuesday 29 September</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
-          <p class="mtx-hp__evbody">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-09-29">Book Knockout Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-09-29" data-mtx-cutoff="2026-09-29T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-09-29">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Tuesday 29 September</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Rajadamnern Knockout</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__night-desc">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/rajadamnern-knockout/2026-09-29">Book Knockout Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-09-30" data-mtx-cutoff="2026-09-30T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-09-30">
-          <h3>New Power Muay Thai</h3>
-          <p class="mtx-hp__when">Wednesday 30 September</p>
-          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
-          <p class="mtx-hp__evbody">Traditional five-round fights develop through timing, scoring and tactical pressure, accompanied by live sarama music.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/new-power-muay-thai/2026-09-30">Book New Power Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0b0b0d" data-mtx-date="2026-09-30" data-mtx-cutoff="2026-09-30T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-09-30">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Wednesday 30 September</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">New Power Muay Thai</h3>
+          <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__night-desc">Traditional five-round fights develop through timing, scoring and tactical pressure, accompanied by live sarama music.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/new-power-muay-thai/2026-09-30">Book New Power Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-01" data-mtx-cutoff="2026-10-01T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-01">
-          <h3>Petchyindee Muay Thai</h3>
-          <p class="mtx-hp__when">Thursday 1 October</p>
-          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
-          <p class="mtx-hp__evbody">Technical Muay Thai built around balance, timing, ring intelligence and the contrast between controlled exchanges and sudden attacks.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/petchyindee-muay-thai/2026-10-01">Book Petchyindee Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0b0b0d" data-mtx-date="2026-10-01" data-mtx-cutoff="2026-10-01T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-01">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Thursday 1 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Petchyindee Muay Thai</h3>
+          <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__night-desc">Technical Muay Thai built around balance, timing, ring intelligence and the contrast between controlled exchanges and sudden attacks.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/petchyindee-muay-thai/2026-10-01">Book Petchyindee Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-02" data-mtx-cutoff="2026-10-02T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-02">
-          <h3>Rajadamnern Knockout</h3>
-          <p class="mtx-hp__when">Friday 2 October</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
-          <p class="mtx-hp__evbody">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-02">Book Knockout Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-02" data-mtx-cutoff="2026-10-02T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-02">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Friday 2 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Rajadamnern Knockout</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__night-desc">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/rajadamnern-knockout/2026-10-02">Book Knockout Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-03" data-mtx-cutoff="2026-10-03T11:40:00Z" data-mtx-href="/rws/2026-10-03">
-          <h3>RWS Rajadamnern World Series</h3>
-          <p class="mtx-hp__when">Saturday 3 October</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
-          <p class="mtx-hp__evbody">Rajadamnern’s flagship Saturday event combines three-round Muay Thai, Thai and international fighters, open scoring and major-event production.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/2026-10-03">Book RWS Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#FF1828;--accent-on-accent:#0b0b0d" data-mtx-date="2026-10-03" data-mtx-cutoff="2026-10-03T11:40:00Z" data-mtx-href="/rws/2026-10-03">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Saturday 3 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">RWS Rajadamnern World Series</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
+          <p class="mtx-hp__night-desc">Rajadamnern’s flagship Saturday event combines three-round Muay Thai, Thai and international fighters, open scoring and major-event production.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/rws/2026-10-03">Book RWS Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-04" data-mtx-cutoff="2026-10-04T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-10-04">
-          <h3>Kiatpetch Muay Thai</h3>
-          <p class="mtx-hp__when">Sunday 4 October</p>
-          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
-          <p class="mtx-hp__evbody">Traditional five-round Muay Thai meets faster three-round contests, accompanied by live traditional music and a knowledgeable local crowd.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/kiatpetch-muay-thai/2026-10-04">Book Kiatpetch Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#FF1828;--accent-on-accent:#0b0b0d" data-mtx-date="2026-10-04" data-mtx-cutoff="2026-10-04T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-10-04">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Sunday 4 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Kiatpetch Muay Thai</h3>
+          <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__night-desc">Traditional five-round Muay Thai meets faster three-round contests, accompanied by live traditional music and a knowledgeable local crowd.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/kiatpetch-muay-thai/2026-10-04">Book Kiatpetch Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-05" data-mtx-cutoff="2026-10-05T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-05">
-          <h3>Rajadamnern Knockout</h3>
-          <p class="mtx-hp__when">Monday 5 October</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
-          <p class="mtx-hp__evbody">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-05">Book Knockout Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-05" data-mtx-cutoff="2026-10-05T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-05">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Monday 5 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Rajadamnern Knockout</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__night-desc">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/rajadamnern-knockout/2026-10-05">Book Knockout Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-06" data-mtx-cutoff="2026-10-06T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-06">
-          <h3>Rajadamnern Knockout</h3>
-          <p class="mtx-hp__when">Tuesday 6 October</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
-          <p class="mtx-hp__evbody">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-06">Book Knockout Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-06" data-mtx-cutoff="2026-10-06T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-06">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Tuesday 6 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Rajadamnern Knockout</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__night-desc">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/rajadamnern-knockout/2026-10-06">Book Knockout Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-07" data-mtx-cutoff="2026-10-07T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-10-07">
-          <h3>New Power Muay Thai</h3>
-          <p class="mtx-hp__when">Wednesday 7 October</p>
-          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
-          <p class="mtx-hp__evbody">Traditional five-round fights develop through timing, scoring and tactical pressure, accompanied by live sarama music.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/new-power-muay-thai/2026-10-07">Book New Power Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0b0b0d" data-mtx-date="2026-10-07" data-mtx-cutoff="2026-10-07T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-10-07">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Wednesday 7 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">New Power Muay Thai</h3>
+          <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__night-desc">Traditional five-round fights develop through timing, scoring and tactical pressure, accompanied by live sarama music.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/new-power-muay-thai/2026-10-07">Book New Power Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-08" data-mtx-cutoff="2026-10-08T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-08">
-          <h3>Petchyindee Muay Thai</h3>
-          <p class="mtx-hp__when">Thursday 8 October</p>
-          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
-          <p class="mtx-hp__evbody">Technical Muay Thai built around balance, timing, ring intelligence and the contrast between controlled exchanges and sudden attacks.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/petchyindee-muay-thai/2026-10-08">Book Petchyindee Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0b0b0d" data-mtx-date="2026-10-08" data-mtx-cutoff="2026-10-08T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-08">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Thursday 8 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Petchyindee Muay Thai</h3>
+          <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__night-desc">Technical Muay Thai built around balance, timing, ring intelligence and the contrast between controlled exchanges and sudden attacks.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/petchyindee-muay-thai/2026-10-08">Book Petchyindee Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-09" data-mtx-cutoff="2026-10-09T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-09">
-          <h3>Rajadamnern Knockout</h3>
-          <p class="mtx-hp__when">Friday 9 October</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
-          <p class="mtx-hp__evbody">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-09">Book Knockout Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-09" data-mtx-cutoff="2026-10-09T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-09">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Friday 9 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Rajadamnern Knockout</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__night-desc">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/rajadamnern-knockout/2026-10-09">Book Knockout Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-10" data-mtx-cutoff="2026-10-10T11:40:00Z" data-mtx-href="/rws/2026-10-10">
-          <h3>RWS Rajadamnern World Series</h3>
-          <p class="mtx-hp__when">Saturday 10 October</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
-          <p class="mtx-hp__evbody">Rajadamnern’s flagship Saturday event combines three-round Muay Thai, Thai and international fighters, open scoring and major-event production.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/2026-10-10">Book RWS Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#FF1828;--accent-on-accent:#0b0b0d" data-mtx-date="2026-10-10" data-mtx-cutoff="2026-10-10T11:40:00Z" data-mtx-href="/rws/2026-10-10">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Saturday 10 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">RWS Rajadamnern World Series</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
+          <p class="mtx-hp__night-desc">Rajadamnern’s flagship Saturday event combines three-round Muay Thai, Thai and international fighters, open scoring and major-event production.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/rws/2026-10-10">Book RWS Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-11" data-mtx-cutoff="2026-10-11T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-10-11">
-          <h3>Kiatpetch Muay Thai</h3>
-          <p class="mtx-hp__when">Sunday 11 October</p>
-          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
-          <p class="mtx-hp__evbody">Traditional five-round Muay Thai meets faster three-round contests, accompanied by live traditional music and a knowledgeable local crowd.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/kiatpetch-muay-thai/2026-10-11">Book Kiatpetch Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#FF1828;--accent-on-accent:#0b0b0d" data-mtx-date="2026-10-11" data-mtx-cutoff="2026-10-11T10:30:00Z" data-mtx-href="/kiatpetch-muay-thai/2026-10-11">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Sunday 11 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Kiatpetch Muay Thai</h3>
+          <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__night-desc">Traditional five-round Muay Thai meets faster three-round contests, accompanied by live traditional music and a knowledgeable local crowd.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/kiatpetch-muay-thai/2026-10-11">Book Kiatpetch Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-12" data-mtx-cutoff="2026-10-12T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-12">
-          <h3>Rajadamnern Knockout</h3>
-          <p class="mtx-hp__when">Monday 12 October</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
-          <p class="mtx-hp__evbody">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-12">Book Knockout Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-12" data-mtx-cutoff="2026-10-12T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-12">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Monday 12 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Rajadamnern Knockout</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__night-desc">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/rajadamnern-knockout/2026-10-12">Book Knockout Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-13" data-mtx-cutoff="2026-10-13T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-13">
-          <h3>Rajadamnern Knockout</h3>
-          <p class="mtx-hp__when">Tuesday 13 October</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
-          <p class="mtx-hp__evbody">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-13">Book Knockout Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-13" data-mtx-cutoff="2026-10-13T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-13">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Tuesday 13 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Rajadamnern Knockout</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__night-desc">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/rajadamnern-knockout/2026-10-13">Book Knockout Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-14" data-mtx-cutoff="2026-10-14T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-10-14">
-          <h3>New Power Muay Thai</h3>
-          <p class="mtx-hp__when">Wednesday 14 October</p>
-          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
-          <p class="mtx-hp__evbody">Traditional five-round fights develop through timing, scoring and tactical pressure, accompanied by live sarama music.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/new-power-muay-thai/2026-10-14">Book New Power Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0b0b0d" data-mtx-date="2026-10-14" data-mtx-cutoff="2026-10-14T10:30:00Z" data-mtx-href="/new-power-muay-thai/2026-10-14">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Wednesday 14 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">New Power Muay Thai</h3>
+          <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__night-desc">Traditional five-round fights develop through timing, scoring and tactical pressure, accompanied by live sarama music.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/new-power-muay-thai/2026-10-14">Book New Power Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-15" data-mtx-cutoff="2026-10-15T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-15">
-          <h3>Petchyindee Muay Thai</h3>
-          <p class="mtx-hp__when">Thursday 15 October</p>
-          <p class="mtx-hp__times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
-          <p class="mtx-hp__evbody">Technical Muay Thai built around balance, timing, ring intelligence and the contrast between controlled exchanges and sudden attacks.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/petchyindee-muay-thai/2026-10-15">Book Petchyindee Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#01A453;--accent-on-accent:#0b0b0d" data-mtx-date="2026-10-15" data-mtx-cutoff="2026-10-15T10:30:00Z" data-mtx-href="/petchyindee-muay-thai/2026-10-15">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Thursday 15 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Petchyindee Muay Thai</h3>
+          <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
+          <p class="mtx-hp__night-desc">Technical Muay Thai built around balance, timing, ring intelligence and the contrast between controlled exchanges and sudden attacks.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/petchyindee-muay-thai/2026-10-15">Book Petchyindee Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-16" data-mtx-cutoff="2026-10-16T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-16">
-          <h3>Rajadamnern Knockout</h3>
-          <p class="mtx-hp__when">Friday 16 October</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
-          <p class="mtx-hp__evbody">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout/2026-10-16">Book Knockout Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF" data-mtx-date="2026-10-16" data-mtx-cutoff="2026-10-16T11:30:00Z" data-mtx-href="/rajadamnern-knockout/2026-10-16">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Friday 16 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">Rajadamnern Knockout</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:00 PM</p>
+          <p class="mtx-hp__night-desc">Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/rajadamnern-knockout/2026-10-16">Book Knockout Tickets</a></p>
         </li>
-        <li class="mtx-hp__night" data-mtx-date="2026-10-17" data-mtx-cutoff="2026-10-17T11:40:00Z" data-mtx-href="/rws/2026-10-17">
-          <h3>RWS Rajadamnern World Series</h3>
-          <p class="mtx-hp__when">Saturday 17 October</p>
-          <p class="mtx-hp__times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
-          <p class="mtx-hp__evbody">Rajadamnern’s flagship Saturday event combines three-round Muay Thai, Thai and international fighters, open scoring and major-event production.</p>
-          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rws/2026-10-17">Book RWS Tickets</a></p>
+        <li class="mtx-hp__night" style="--accent:#FF1828;--accent-on-accent:#0b0b0d" data-mtx-date="2026-10-17" data-mtx-cutoff="2026-10-17T11:40:00Z" data-mtx-href="/rws/2026-10-17">
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            
+            <p class="mtx-hp__night-date">Saturday 17 October</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">RWS Rajadamnern World Series</h3>
+          <p class="mtx-hp__night-times">Doors 6:00 PM &middot; First bout 7:10 PM</p>
+          <p class="mtx-hp__night-desc">Rajadamnern’s flagship Saturday event combines three-round Muay Thai, Thai and international fighters, open scoring and major-event production.</p>
+          </div>
+          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="/rws/2026-10-17">Book RWS Tickets</a></p>
         </li>
-      </ul>
+      </ol>
       <p class="mtx-hp__ctarow">
-        <a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-stadium-tickets">See all upcoming Rajadamnern dates</a>
+        <a class="mtx-hp__btn mtx-hp__btn--blue" href="/rajadamnern-stadium-tickets">See all upcoming Rajadamnern dates</a>
       </p>
     </div>
   </section>
@@ -805,18 +964,24 @@
     var card = live[j];
     card.style.display = j < SHOW ? '' : 'none';
     var isNow = j === 0 && card.getAttribute('data-mtx-date') === today;
-    card.className = 'mtx-hp__night' + (isNow ? ' mtx-hp__night--now' : '');
+    
+    var isLede = j === 0 && !!card.querySelector('.mtx-hp__night-desc');
+    card.className = 'mtx-hp__night'
+      + (isNow ? ' mtx-hp__night--now' : '')
+      + (isLede ? ' mtx-hp__night--lede' : '');
+
+    
+    var what = card.querySelector('.mtx-hp__night-what');
     var tag = card.querySelector('.mtx-hp__tag');
-    if (isNow && !tag) {
+    if (isNow && !tag && what) {
       tag = document.createElement('span');
       tag.className = 'mtx-hp__tag';
       tag.textContent = 'Tonight';
-      card.insertBefore(tag, card.firstChild);
+      what.insertBefore(tag, what.firstChild);
     } else if (!isNow && tag) {
       tag.parentNode.removeChild(tag);
     }
-    var btn = card.querySelector('.mtx-hp__nightcta .mtx-hp__btn');
-    if (btn) btn.className = 'mtx-hp__btn ' + (isNow ? 'mtx-hp__btn--blue' : 'mtx-hp__btn--outline');
+    
   }
 
   

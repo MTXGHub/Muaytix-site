@@ -47,18 +47,32 @@
     var card = live[j];
     card.style.display = j < SHOW ? '' : 'none';
     var isNow = j === 0 && card.getAttribute('data-mtx-date') === today;
-    card.className = 'mtx-hp__night' + (isNow ? ' mtx-hp__night--now' : '');
+    /* --lede is what shows a row's description, and it belongs to whatever
+       row is now on top, not to the row that was on top when the block was
+       built. A row with none of its own (a repeat of an event already
+       described higher up the week) simply shows none. */
+    var isLede = j === 0 && !!card.querySelector('.mtx-hp__night-desc');
+    card.className = 'mtx-hp__night'
+      + (isNow ? ' mtx-hp__night--now' : '')
+      + (isLede ? ' mtx-hp__night--lede' : '');
+
+    /* The Tonight flag. Built here rather than shipped in the markup, because
+       which night is tonight is not knowable when the block is pasted, and a
+       flag written into static HTML would be wrong by morning. It goes inside
+       the "what" cell, not the row itself, so it never lands in the accent
+       column and skews the grid. */
+    var what = card.querySelector('.mtx-hp__night-what');
     var tag = card.querySelector('.mtx-hp__tag');
-    if (isNow && !tag) {
+    if (isNow && !tag && what) {
       tag = document.createElement('span');
       tag.className = 'mtx-hp__tag';
       tag.textContent = 'Tonight';
-      card.insertBefore(tag, card.firstChild);
+      what.insertBefore(tag, what.firstChild);
     } else if (!isNow && tag) {
       tag.parentNode.removeChild(tag);
     }
-    var btn = card.querySelector('.mtx-hp__nightcta .mtx-hp__btn');
-    if (btn) btn.className = 'mtx-hp__btn ' + (isNow ? 'mtx-hp__btn--blue' : 'mtx-hp__btn--outline');
+    /* Every row's button already carries its own event colour from CSS; it
+       needs no class swap between rows. */
   }
 
   /* The hero's second door, labelled "See Tonight's Fight".

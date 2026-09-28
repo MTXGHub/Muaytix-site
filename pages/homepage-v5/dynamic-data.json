@@ -1,38 +1,88 @@
 {
   "_rule": "Document B section 6. Every value here comes from a verified source, named below. Nothing is inferred and nothing is guessed. A missing value is reported, never filled in.",
-
   "sources": {
     "schedule": "Supabase event_calendar joined to events, project jlwopomkqeawrxlapwpc, read 26 September 2026. Supplies event, day, date and first-bout time.",
     "cutoff": "events.booking_cutoff_minutes, same read. First bout minus the cutoff, written onto each card as an absolute UTC instant.",
     "doors": "MuayTix's own published day-dated pages in this repository, which carry an explicit doors attribute. Not derived and not offset from the first bout.",
-    "destinations": "Document A. Dated URL patterns are the ones already in use across the published day-dated pages."
+    "destinations": "Document A. Dated URL patterns are the ones already in use across the published day-dated pages.",
+    "week_accent": "Same six colours already verified and sourced for pages/homepage-v6/dynamic-data.json on 27 September 2026. Reused rather than re-sourced. Used here as a solid colour bar and button fill per event on the This Week schedule, replacing five identical white cards."
   },
-
   "doors": {
-    "rws":                  { "time": "6:00 PM", "source": "pages/rws (doors=\"18:00\")" },
-    "rajadamnern-knockout": { "time": "6:00 PM", "source": "pages/nights/rajadamnern_knockout_2026_09_25.html (doors=\"18:00\")" },
-    "kiatpetch":            { "time": "5:00 PM", "source": "pages/nights/kiatpetch_2026_09_27.html (doors=\"17:00\")" },
-    "new-power":            { "time": "5:00 PM", "source": "pages/nights/new_power_2026_09_23.html (doors=\"17:00\")" },
-    "petchyindee":          { "time": "5:00 PM", "source": "pages/nights/petchyindee_2026_09_24.html (doors=\"17:00\")" },
-    "all-star-buakaw":      { "time": "6:00 PM", "source": "Supplied directly by the owner, 26 September 2026." }
+    "rws": {
+      "time": "6:00 PM",
+      "source": "pages/rws (doors=\"18:00\")"
+    },
+    "rajadamnern-knockout": {
+      "time": "6:00 PM",
+      "source": "pages/nights/rajadamnern_knockout_2026_09_25.html (doors=\"18:00\")"
+    },
+    "kiatpetch": {
+      "time": "5:00 PM",
+      "source": "pages/nights/kiatpetch_2026_09_27.html (doors=\"17:00\")"
+    },
+    "new-power": {
+      "time": "5:00 PM",
+      "source": "pages/nights/new_power_2026_09_23.html (doors=\"17:00\")"
+    },
+    "petchyindee": {
+      "time": "5:00 PM",
+      "source": "pages/nights/petchyindee_2026_09_24.html (doors=\"17:00\")"
+    },
+    "all-star-buakaw": {
+      "time": "6:00 PM",
+      "source": "Supplied directly by the owner, 26 September 2026."
+    }
   },
-
   "events": {
-    "rws":                  { "name": "RWS Rajadamnern World Series", "path": "/rws" },
-    "kiatpetch":            { "name": "Kiatpetch Muay Thai",          "path": "/kiatpetch-muay-thai" },
-    "all-star-buakaw":      { "name": "All Star Fight by Buakaw",     "path": "/all-star-fight-by-buakaw" },
-    "rajadamnern-knockout": { "name": "Rajadamnern Knockout",         "path": "/rajadamnern-knockout" },
-    "new-power":            { "name": "New Power Muay Thai",          "path": "/new-power-muay-thai" },
-    "petchyindee":          { "name": "Petchyindee Muay Thai",        "path": "/petchyindee-muay-thai" }
+    "rws": {
+      "name": "RWS Rajadamnern World Series",
+      "path": "/rws",
+      "accent": "#FF1828",
+      "short_name": "RWS",
+      "accent_source": "pages/rws/rws-2026-09-26.html (--rws-red)"
+    },
+    "kiatpetch": {
+      "name": "Kiatpetch Muay Thai",
+      "path": "/kiatpetch-muay-thai",
+      "accent": "#FF1828",
+      "short_name": "Kiatpetch",
+      "accent_source": "Owner, 27 September 2026: red, the same as RWS. No Kiatpetch hex is published anywhere in this repository."
+    },
+    "all-star-buakaw": {
+      "name": "All Star Fight by Buakaw",
+      "path": "/all-star-fight-by-buakaw",
+      "accent": "#FFAE27",
+      "short_name": "All Star",
+      "accent_source": "Sampled from the owner's own All Star Fight logo file, 27 September 2026. He said the predominant colour is gold and sent a screen capture of 1000012081.png; #FFAE27 is the modal bright gold across the mark."
+    },
+    "rajadamnern-knockout": {
+      "name": "Rajadamnern Knockout",
+      "path": "/rajadamnern-knockout",
+      "accent": "#1F5BFF",
+      "short_name": "Knockout",
+      "accent_source": "pages/knockout-dated/style.css (--kd-blue)"
+    },
+    "new-power": {
+      "name": "New Power Muay Thai",
+      "path": "/new-power-muay-thai",
+      "accent": "#01A453",
+      "short_name": "New Power",
+      "accent_source": "pages/new-power/style.css (--np-blue, green despite the variable name)"
+    },
+    "petchyindee": {
+      "name": "Petchyindee Muay Thai",
+      "path": "/petchyindee-muay-thai",
+      "accent": "#01A453",
+      "short_name": "Petchyindee",
+      "accent_source": "Owner, 27 September 2026: green, the same as New Power. No Petchyindee hex is published anywhere in this repository."
+    }
   },
-
   "destinations": {
-    "tickets":  "/rajadamnern-stadium-tickets",
-    "seating":  "/rajadamnern-stadium-seating",
-    "stadium":  "/rajadamnern-stadium",
+    "tickets": "/rajadamnern-stadium-tickets",
+    "seating": "/rajadamnern-stadium-seating",
+    "stadium": "/rajadamnern-stadium",
     "whatsapp": "https://wa.me/66922706095",
-    "maps":     "https://www.google.com/maps/search/?api=1&query=Rajadamnern+Stadium"
+    "maps": "https://www.google.com/maps/search/?api=1&query=Rajadamnern+Stadium"
   },
-
   "_verified_destinations_note": "whatsapp and maps are the existing destinations already published across this repository's pages, as Document A instructs. Neither was composed here."
 }

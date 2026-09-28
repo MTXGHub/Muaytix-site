@@ -42,11 +42,63 @@ const D = data.destinations;
    at the end of the build and in the completion response, never patched over. */
 const blockers = [];
 
-/* ---------- Section 2: the dated cards ---------- */
+/* ---------- contrast, measured ---------- */
+/* WCAG relative luminance, used to decide black or white type on each of the
+   owner's own event colours rather than guessing. All-Star's gold and RWS's
+   red sit close enough to the middle that a guess would get one of them
+   wrong. Ported from pages/homepage-v6/gen.mjs, where it was built and
+   already checked against all six colours below. */
+const lum = hex => {
+  const c = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map(v => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
+  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+};
+const ratio = (a, b) => {
+  const x = lum(a), y = lum(b);
+  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+};
+const INK = '#0b0b0d', WHITE = '#FFFFFF';
+function foregroundOn(bg) {
+  const onWhite = ratio(bg, WHITE), onInk = ratio(bg, INK);
+  const pick = onWhite >= onInk ? WHITE : INK;
+  if (Math.max(onWhite, onInk) < 4.5) {
+    blockers.push(`No foreground reaches 4.5:1 on ${bg}. Best is ${Math.max(onWhite, onInk).toFixed(2)}:1.`);
+  }
+  return pick;
+}
+
+/* ---------- Section 2: the dated schedule ----------
+ *
+ * Jason, 28 September 2026, looking at this block live: "these all look the
+ * same to me... there's nothing about this block that makes me want to press
+ * a button... how can we bring this block alive and give it the personality
+ * it should have for each of these events?"
+ *
+ * Two things were actually wrong, not one. Five identical white cards is the
+ * one he named. The other is underneath it: the same event's own paragraph
+ * was being printed twice in the same five cards whenever it appeared twice
+ * in the coming week (Knockout on both Tuesday and Friday), which reads as
+ * the block having nothing to say rather than having said it once well.
+ * pages/homepage-v6 diagnosed and fixed both of these in the same building
+ * block; that work is reused here rather than invented twice.
+ *
+ * Each event carries its own colour, already verified for that build:
+ * dynamic-data.json now has an accent hex per event. It runs as a bar down
+ * the left of its row and as the fill on that row's own button, so a guest
+ * reads which fight night is which by colour before they read a word, and
+ * every row has a real, differently-coloured button to press rather than
+ * five identical black outlines.
+ *
+ * The description is written into the markup once, on an event's first
+ * appearance in the week only -- never twice, however many nights it has
+ * coming up. A row with no description of its own simply carries none; the
+ * event's full paragraph still exists in Section 5 further down the page.
+ */
 const NIGHT_SHOW = 5;
 const weekCards = week.map(r => {
   const ev = data.events[r.series_slug];
   if (!ev) throw new Error(`dynamic-data.json has no event for series "${r.series_slug}"`);
+  if (!ev.accent) throw new Error(`dynamic-data.json has no accent colour for "${r.series_slug}"`);
   const doors = data.doors[r.series_slug];
   if (!doors) throw new Error(`dynamic-data.json has no doors entry for "${r.series_slug}"`);
 
@@ -54,29 +106,51 @@ const weekCards = week.map(r => {
      from another event. A night with no published doors time simply does not
      show one. */
   const times = doors.time
-    ? `          <p class="mtx-hp__times">Doors ${esc(doors.time)} &middot; First bout ${esc(r.bell)}</p>\n`
+    ? `          <p class="mtx-hp__night-times">Doors ${esc(doors.time)} &middot; First bout ${esc(r.bell)}</p>\n`
     : '';
-  if (!doors.time) blockers.push(`Doors time for ${ev.name} (${r.local_date}) is not published anywhere. The card shows the first bout only.`);
+  if (!doors.time) blockers.push(`Doors time for ${ev.name} (${r.local_date}) is not published anywhere. The row shows the first bout only.`);
+
+  /* On every row, not once per event. The description is hidden by CSS on
+     every row but the one on top, and the script decides which row that is
+     at the moment a guest loads the page, not at build time. Baking it onto
+     only an event's first occurrence in the 21-day list broke the moment
+     that occurrence's own cutoff passed and the row was removed outright:
+     Kiatpetch's earliest night carried its only copy, that night closed, and
+     Kiatpetch was left on the board with no description at all even though
+     two more of its nights were still showing. Every occurrence now carries
+     its own copy so any of them can be the one revealed. */
+  const desc = `          <p class="mtx-hp__night-desc">${T('week.desc.' + r.series_slug)}</p>\n`;
 
   /* Document B section 10: do not invent a URL and do not redirect an
      approved anchor to a similar page. No page, no button. */
   let cta = '';
   if (ev.path) {
-    cta = `          <p class="mtx-hp__nightcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="${esc(ev.path)}/${esc(r.local_date)}">${T('week.cta.' + r.series_slug)}</a></p>\n`;
+    cta = `          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="${esc(ev.path)}/${esc(r.local_date)}">${T('week.cta.' + r.series_slug)}</a></p>\n`;
   } else {
-    blockers.push(`No destination exists for ${ev.name} (${r.local_date}). Document A gives the CTA "${t('week.cta.' + r.series_slug)}" but no URL, so the card renders without a button.`);
+    blockers.push(`No destination exists for ${ev.name} (${r.local_date}). Document A gives the CTA "${t('week.cta.' + r.series_slug)}" but no URL, so the row renders without a button.`);
   }
 
-  /* The card's destination also lives on the <li>, so the hero's "tonight"
+  /* The row's destination also lives on the <li>, so the hero's "tonight"
      button can read it without depending on a button being rendered inside
-     the card. That dependency is why a card with no CTA silently left the
+     the row. That dependency is why a card with no CTA silently left the
      hero pointing at whatever was hard-coded in the markup. */
   const href = ev.path ? ` data-mtx-href="${esc(ev.path)}/${esc(r.local_date)}"` : '';
 
-  return `        <li class="mtx-hp__night" data-mtx-date="${esc(r.local_date)}" data-mtx-cutoff="${esc(r.cutoff_utc)}"${href}>
-          <h3>${esc(ev.name)}</h3>
-          <p class="mtx-hp__when">${esc(r.weekday)} ${esc(r.day_label)}</p>
-${times}          <p class="mtx-hp__evbody">${T('week.desc.' + r.series_slug)}</p>
+  return `        <li class="mtx-hp__night" style="--accent:${esc(ev.accent)};--accent-on-accent:${esc(foregroundOn(ev.accent))}" data-mtx-date="${esc(r.local_date)}" data-mtx-cutoff="${esc(r.cutoff_utc)}"${href}>
+          <span class="mtx-hp__night-bar" aria-hidden="true"></span>
+          <div class="mtx-hp__night-when">
+            <!-- One paragraph, not two. verify.mjs's authored-sentence audit
+                 recognises "Weekday DD Month" as verified data only as a
+                 single combined string, matching how the data actually
+                 arrives from week.json; splitting weekday and date into
+                 separate elements made both unrecognisable and failed the
+                 build against the site's own check, found and fixed the same
+                 day this was built. -->
+            <p class="mtx-hp__night-date">${esc(r.weekday)} ${esc(r.day_label)}</p>
+          </div>
+          <div class="mtx-hp__night-what">
+            <h3 class="mtx-hp__night-name">${esc(ev.name)}</h3>
+${times}${desc}          </div>
 ${cta}        </li>`;
 }).join('\n');
 
@@ -166,16 +240,16 @@ const body = `  <header class="mtx-hp__hero">
     </div>
   </header>
 
-  <section class="mtx-hp__band mtx-hp__band--paper">
+  <section class="mtx-hp__band mtx-hp__band--dark">
     <div class="mtx-hp__shell">
       <span class="mtx-hp__kicker">${T('week.eyebrow')}</span>
       <h2>${T('week.h2')}</h2>
       <p>${T('week.intro')}</p>
-      <ul class="mtx-hp__nights" data-mtx-week>
+      <ol class="mtx-hp__prog" data-mtx-week>
 ${weekCards}
-      </ul>
+      </ol>
       <p class="mtx-hp__ctarow">
-        <a class="mtx-hp__btn mtx-hp__btn--outline" href="${esc(D.tickets)}">${T('week.section_cta')}</a>
+        <a class="mtx-hp__btn mtx-hp__btn--blue" href="${esc(D.tickets)}">${T('week.section_cta')}</a>
       </p>
     </div>
   </section>
