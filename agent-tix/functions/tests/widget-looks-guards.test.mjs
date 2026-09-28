@@ -96,8 +96,12 @@ console.log('\nThe booking path is untouched');
 
 check('the origin check still runs first',
   src.indexOf('This website is not authorised') < src.indexOf('recordLook({'));
+// This asserted 5 until 28 September 2026, which is the exact value that put
+// "Only 5 left" in front of a guest on the 25th and had to be corrected. The
+// number that must never reappear plain is 5 itself, so the threshold below
+// it is 4.
 check('seats left is still withheld above the threshold',
-  /const SAY_REMAINING_AT = 5;/.test(src) &&
+  /const SAY_REMAINING_AT = 4;/.test(src) &&
   /left > 0 && left <= SAY_REMAINING_AT \? left : null/.test(src));
 check('sold out classes are still returned rather than hidden',
   /Hiding them is what sends a guest to a competitor/.test(src));

@@ -350,18 +350,25 @@ Deno.serve(async (req: Request) => {
 
       // How many seats are left, and whether to say it at all.
       //
-      // Jason, 28 September 2026: below 5 remaining, show the number, and it
-      // must still read AVAILABLE, not LIMITED. The widget already did this
-      // correctly on its side (statusMeta renders "Only N left" in the same
-      // green as AVAILABLE, never the amber "limited" pill) -- it was this
-      // threshold holding every count back as null. Raised from 0 to 5.
+      // 25 September 2026 (05e049f): Ringside hit exactly 5 and the widget
+      // switched from AVAILABLE to "Only 5 left". Jason asked for it to keep
+      // saying Available AT that level, so the threshold was set to 0 and
+      // every class on sale read Available regardless of count.
+      //
+      // Jason, 28 September 2026: once a class goes BELOW 5, show the number,
+      // and it must still read Available, not Limited (the widget's own
+      // statusMeta already renders the count in the same green pill as
+      // Available, never the amber Limited one -- nothing to change there).
+      // "Below 5" means 5 itself still reads plain Available, exactly as
+      // fixed on the 25th; only 4 and under gets a number. So the threshold
+      // is 4, not 5.
       //
       // Whatever the threshold, the real figure never leaves here above it.
       // "23 left" would hand a competitor our trading position: watch the
       // page at nine and again at five and they know exactly what we sold
       // that day. Anything above the threshold is sent as null rather than
       // as a number the widget is trusted to hide.
-      const SAY_REMAINING_AT = 5;
+      const SAY_REMAINING_AT = 4;
       const { data: stock, error: stockError } = await supabase
         .from("event_ticket_classes")
         .select("id,quantity_available")
