@@ -1,0 +1,11 @@
+- Document A section 7 asks for an approved Third Class photograph and says that if it is not available, do not substitute an unapproved image. None was supplied, so that section carries its copy and no picture. The owner also parked Third Class in the same message.
+
+- Document A section 7 gives a destination for Explore Third Class and then says the page is not currently being built and the link may be added once it is approved and published. No link is rendered, so the page has no link to a page that does not exist yet.
+
+- Document B section 6 audits the map for a labelled ring, the words LEO and Third Class, a fighter entrance walkway and a legend. The supplied map carries section numbers and colour coding but none of those four. The page's own copy supplies all of them in words. Reported, and the map was not redrawn.
+
+- Document A section 3 wants the seating map large and readable in the hero, and section 3 wants it large and readable in its own block two screens later. It is placed once, in the hero, rather than twice within a screen and a half. The full-size link is in the map block where Document A puts it.
+
+- The annotated stadium view is used as the hero backdrop only, with an empty alt and aria-hidden. Document A section 4 supplies no approved alt text for that file and Document B section 3 forbids writing one. One approved line would let it carry proper alt text.
+
+- None of the images can be opened from this environment, because static.tildacdn.com is blocked by the network policy.

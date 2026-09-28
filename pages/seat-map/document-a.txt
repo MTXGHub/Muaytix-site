@@ -1,0 +1,342 @@
+# RAJADAMNERN STADIUM SEAT MAP: LOCKED COPY, transcribed from Document A.
+#
+# Supplied by the owner, 28 September 2026, marked LOCKED COPY.
+# This file is the only place this page's prose exists. gen.mjs renders it by
+# key and verify.mjs reads the built page back and diffs it against this file.
+#
+# Document B section 2: reproduced exactly. Document B section 3: zero
+# independently authored customer-facing sentences.
+
+[meta.seo_title]
+Rajadamnern Stadium Seat Map | Seating Plan and Sections
+
+[meta.description]
+View the Rajadamnern Stadium seat map, seating plan and section locations. See where Ringside, Club Class, LEO Section and Third Class sit around the ring.
+
+[meta.social_title]
+Rajadamnern Stadium Seat Map
+
+[meta.social_description]
+See the Rajadamnern Stadium seating plan, section locations and relationship between Ringside, Club Class, LEO Section and Third Class.
+
+[hero.h1]
+Rajadamnern Stadium Seat Map
+
+[hero.p1]
+See where each public seating section sits around the ring at Rajadamnern Stadium.
+
+[hero.p2]
+The seating plan is arranged in four main public classes: Ringside on the floor, Club Class and LEO in the elevated main arena, and Third Class at the highest point of the stadium.
+
+[hero.p3]
+Use the map to understand the layout, then choose the seat class that matches the way you want to experience the fight night.
+
+[hero.cta_primary]
+Choose Your Seats
+
+[hero.cta_secondary]
+Book Rajadamnern Tickets
+
+[answer.h2]
+How is Rajadamnern Stadium arranged?
+
+[answer.p1]
+Rajadamnern Stadium is built around the central Muay Thai ring.
+
+[answer.list.1]
+Ringside: Sections 3 to 7, on the floor around the ring
+
+[answer.list.2]
+Club Class: Sections 8 and 9, on the elevated main-arena tier
+
+[answer.list.3]
+LEO Section: Section 10, facing the front of the ring
+
+[answer.list.4]
+Third Class: Section 11, at the highest point of the stadium
+
+[answer.p2]
+The main arena is compact, so the different seating areas are closer to the ring than photographs often suggest.
+
+[map.h2]
+Rajadamnern Stadium seating plan
+
+[map.p1]
+The seating map shows the position of each public seat class around the ring.
+
+[map.p2]
+Use it as a guide to understand the stadium layout before choosing your tickets.
+
+[map.p3]
+The map shows section locations. It does not guarantee a specific row or seat number.
+
+[map.link]
+View the full-size seating map
+
+[ringside.h2]
+Ringside Sections 3 to 7
+
+[ringside.p1]
+Ringside seats are located on the floor around the ring in Sections 3 to 7.
+
+[ringside.p2]
+The ring is only a few metres from the audience.
+
+[ringside.p3]
+The raised fighter entrance walkway runs between and through Sections 3 and 4. These sections are closest to the formal fighter entrance route and have a smaller, more intimate layout than Sections 5, 6 and 7.
+
+[ringside.p4]
+Ringside is assigned seating.
+
+[ringside.link]
+Explore Ringside Seats
+
+[clubclass.h2]
+Club Class Sections 8 and 9
+
+[clubclass.p1]
+Club Class is located on the elevated main-arena tier in Sections 8 and 9.
+
+[clubclass.p2]
+The elevated position gives guests a broad view down across the ring.
+
+[clubclass.p3]
+Club Class is assigned seating, and every guest receives a numbered seat.
+
+[clubclass.p4]
+It is particularly suitable for families, groups and first-time visitors who want a straightforward seating arrangement.
+
+[clubclass.link]
+Explore Club Class Seats
+
+[leo.h2]
+LEO Section 10
+
+[leo.p1]
+LEO is Section 10, located on the elevated main-arena tier and facing the front of the ring.
+
+[leo.p2]
+Its tier, elevation and row configuration are effectively the same as Club Class next door.
+
+[leo.p3]
+LEO has unassigned seating, but every ticket guarantees a seat.
+
+[leo.p4]
+On Wednesday New Power, Thursday Petchyindee and Sunday Kiatpetch, the local betting crowd gathers in this section.
+
+[leo.link]
+Explore the LEO Section
+
+[third.h2]
+Third Class Section 11
+
+[third.p1]
+Third Class is Section 11, located at the highest point of Rajadamnern Stadium.
+
+[third.p2]
+It gives guests a wide view across the ring, entrance walkway, crowd and arena.
+
+[third.p3]
+Third Class has unassigned seating, but every ticket guarantees a seat.
+
+[third.p4]
+Rows A to C face a safety fence. MuayTix generally recommends Row D and above for the clearest overall perspective.
+
+[third.p5]
+Third Class opens according to demand and is highly seasonal.
+
+[guide.h2]
+What does each section offer?
+
+[guide.q1]
+Closest to the ring
+
+[guide.w1]
+Ringside, Sections 3 to 7
+
+[guide.a1]
+Floor-level seating only a few metres from the ring.
+
+[guide.q2]
+Elevated and assigned
+
+[guide.w2]
+Club Class, Sections 8 and 9
+
+[guide.a2]
+An elevated view with a numbered seat.
+
+[guide.q3]
+Front-facing and atmospheric
+
+[guide.w3]
+LEO Section, Section 10
+
+[guide.a3]
+A front-facing view with flexible seating and local fight-night atmosphere on traditional nights.
+
+[guide.q4]
+Highest and widest
+
+[guide.w4]
+Third Class, Section 11
+
+[guide.a4]
+A broad view across the whole arena from the highest point of the stadium.
+
+[guide.cta]
+Compare all Rajadamnern Stadium seat classes
+
+[capacity.h2]
+Rajadamnern Stadium seating capacity
+
+[capacity.p1]
+Rajadamnern Stadium holds approximately 3,078 spectators.
+
+[capacity.p2]
+The approximate seating areas are:
+
+[capacity.list.1]
+Ringside: approximately 192 guests
+
+[capacity.list.2]
+Main arena, including Ringside, Club Class, LEO and VIP areas: approximately 1,000 guests
+
+[capacity.list.3]
+Third Class upper tier: approximately 2,100 guests
+
+[capacity.p3]
+These figures are approximate and describe the stadium's broad seating areas rather than live ticket availability for a particular event.
+
+[seating.h2]
+Assigned and unassigned seating
+
+[seating.1]
+Assigned seating means you receive a numbered seat.
+
+[seating.2]
+Club Class and Ringside are assigned seating.
+
+[seating.3]
+Unassigned seating means you choose your position within the ticketed section.
+
+[seating.4]
+LEO and Third Class are unassigned, but every ticket guarantees a seat.
+
+[seating.5]
+There are no standing areas anywhere in Rajadamnern Stadium.
+
+[booking.h2]
+Choose your section, then book your fight night
+
+[booking.p1]
+Use the map to decide where you want to sit, then choose the seat class and event date that suit your plans.
+
+[booking.p2]
+Current prices, availability and ticket quantities are shown through the live booking system.
+
+[booking.cta]
+Choose Your Seats
+
+[faq.h2]
+Rajadamnern Stadium seat map questions
+
+[faq.q1]
+Where are the Ringside seats?
+
+[faq.a1]
+Ringside seats are on the floor around the ring in Sections 3 to 7.
+
+[faq.q2]
+Which sections are closest to the fighter entrance?
+
+[faq.a2]
+Sections 3 and 4 are closest to the raised fighter entrance walkway, which runs between and through those sections.
+
+[faq.q3]
+Where is Club Class?
+
+[faq.a3]
+Club Class is in Sections 8 and 9 on the elevated main-arena tier.
+
+[faq.q4]
+Where is the LEO Section?
+
+[faq.a4]
+LEO is Section 10 on the elevated main-arena tier, facing the front of the ring.
+
+[faq.q5]
+Where is Third Class?
+
+[faq.a5]
+Third Class is Section 11 at the highest point of Rajadamnern Stadium.
+
+[faq.q6]
+Which section is closest to the ring?
+
+[faq.a6]
+Ringside is the closest public seating to the ring.
+
+[faq.q7]
+Which section has the widest view?
+
+[faq.a7]
+Third Class gives you the widest view across the stadium because it is at the highest point of the building.
+
+[faq.q8]
+Are all sections seated?
+
+[faq.a8]
+Yes. Every ticket guarantees a seat. There are no standing areas at Rajadamnern Stadium.
+
+[faq.q9]
+What is the difference between assigned and unassigned seating?
+
+[faq.a9]
+Assigned seating gives you a numbered position.
+
+Unassigned seating means you choose your position within the ticketed section, while still having a seat guaranteed.
+
+[faq.q10]
+Does the seating map show exact seat numbers?
+
+[faq.a10]
+The seating map shows section locations. It does not guarantee a specific row or seat number.
+
+[faq.q11]
+Which seat class should I choose?
+
+[faq.a11]
+That depends on the experience you want. Use the seating comparison page to compare Ringside, Club Class, LEO Section and Third Class.
+
+[faq.q12]
+Is the stadium larger than it looks on the map?
+
+[faq.a12]
+The main arena is compact, so the different seating areas are closer to the ring than photographs often suggest.
+
+[final.h2]
+Find your place around the ring
+
+[final.p1]
+See where each Rajadamnern Stadium seat class sits, choose the view and atmosphere that suit you, then book your tickets for a night of Muay Thai in Bangkok.
+
+[final.cta]
+Book Your Tickets
+
+# Document A section 4: the approved alt text and the supporting image alt text.
+
+[alt.map]
+Rajadamnern Stadium seating map showing Ringside Sections 3 to 7, Club Class Sections 8 and 9, LEO Section 10 and Third Class Section 11 around the Muay Thai ring
+
+[alt.ringside]
+Ringside Sections 3 to 7 around the ring at Rajadamnern Stadium
+
+[alt.clubclass]
+Elevated Club Class Sections 8 and 9 at Rajadamnern Stadium
+
+[alt.leo]
+Front-facing LEO Section 10 at Rajadamnern Stadium
+
+[alt.third]
+Third Class Section 11 at the highest point of Rajadamnern Stadium

@@ -1,0 +1,82 @@
+{
+  "_rule": "Document B section 4, zero inference. Every value is supplied by the owner or read out of the repository. No capacity figure, section number or map label is written here: they all come from document-a.txt.",
+
+  "sources": {
+    "copy": "Document A, supplied 28 September 2026, marked LOCKED COPY.",
+    "assets": "Five files supplied by the owner, 28 September 2026: three class map crops, the seating map and the annotated stadium view.",
+    "third_class": "Owner, 28 September 2026: 'We are going to park third class for now because its closed 6 days a week currently'. Document A section 7 says the Third Class page is not currently being built and the link may be added once it is approved and published, so no link is rendered."
+  },
+
+  "images": {
+    "backdrop": {
+      "url": "https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg",
+      "alt": "",
+      "decorative": true,
+      "shape": "wide",
+      "why": "The annotated stadium view, used as the hero backdrop only. Document A section 4 supplies approved alt text for the seating map and for four supporting images, and none of them describes this file. Document B section 3 forbids writing a new one, so it carries an empty alt and aria-hidden, which is what a decorative background should carry: the same information is on the labelled map beside it, which has full alt text.",
+      "flag": "The labels printed inside this file read LEO SCECTION, not LEO SECTION. That is inside the artwork and cannot be fixed from here."
+    },
+    "map": {
+      "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
+      "alt_key": "alt.map",
+      "shape": "square",
+      "why": "The approved seating map, Document A's principal asset. Shown once, large, in the hero, so it is visible immediately on desktop and mobile as Document A section 3 requires, and linked to the full-size file."
+    },
+    "ringside": {
+      "url": "https://static.tildacdn.com/tild3661-3134-4532-a565-393666656631/1000034589.png",
+      "alt_key": "alt.ringside",
+      "shape": "square",
+      "why": "Document A section 4 asks for a map crop beside the copy. This is the map with Sections 3 to 7 picked out."
+    },
+    "clubclass": {
+      "url": "https://static.tildacdn.com/tild6463-3233-4131-a461-323038383465/1000034590.png",
+      "alt_key": "alt.clubclass",
+      "shape": "square",
+      "why": "Document A section 5, the map with Sections 8 and 9 picked out."
+    },
+    "leo": {
+      "url": "https://static.tildacdn.com/tild3461-3766-4631-b038-636230363530/1000034591.png",
+      "alt_key": "alt.leo",
+      "shape": "square",
+      "why": "Document A section 6, the map with Section 10 picked out."
+    }
+  },
+
+  "destinations": {
+    "seating": "/rajadamnern-stadium-seating",
+    "tickets": "/rajadamnern-stadium-tickets",
+    "ringside": "/rajadamnern-stadium-seating/ringside",
+    "clubclass": "/rajadamnern-stadium-seating/club-class",
+    "leo": "/rajadamnern-stadium-seating/leo-section",
+    "map_full": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg"
+  },
+
+  "seat_colour": {
+    "ringside": "#00A651",
+    "club_class": "#27AAE1",
+    "leo_section": "#FFF200",
+    "third_class": "#F7941E",
+    "note": "Sampled from the seat map artwork, so the swatches on this page match the colours on the map itself. Used as swatches and bars only. None of them is set as type anywhere on this page. The LEO yellow in particular measures about 1.04:1 on a pale background, so the section that carries the four swatches is a dark band."
+  },
+
+  "map_audit": {
+    "note": "Document B section 6 asks what the approved map does and does not show. Read off the supplied file, not assumed. The map cannot be opened from this environment, so this is read from the copy the owner supplied with it and from the version he pasted into the conversation.",
+    "ring": "shown at the centre, carrying the MuayTix mark. Not labelled with the word ring.",
+    "sections_3_to_7": "labelled, as numbers, and picked out in the Ringside colour",
+    "sections_8_and_9": "labelled, as numbers, and picked out in the Club Class colour",
+    "section_10": "labelled as the number 10 and picked out in the LEO colour. The word LEO does not appear on the map.",
+    "section_11": "labelled as the number 11 and picked out in the Third Class colour. The words Third Class do not appear on the map.",
+    "walkway": "not labelled on the map. The gap between Sections 3 and 4 is visible, but nothing names it as the fighter entrance walkway.",
+    "legend": "no legend on the map itself. The colour coding is only decoded by this page's own copy.",
+    "other": "Sections 1 and 2 and a VIP LOUNGE are labelled on the map. Document A does not describe them and Document A section 7 forbids inventing VIP locations, so this page says nothing about them."
+  },
+
+  "blockers": [
+    "Document A section 7 asks for an approved Third Class photograph and says that if it is not available, do not substitute an unapproved image. None was supplied, so that section carries its copy and no picture. The owner also parked Third Class in the same message.",
+    "Document A section 7 gives a destination for Explore Third Class and then says the page is not currently being built and the link may be added once it is approved and published. No link is rendered, so the page has no link to a page that does not exist yet.",
+    "Document B section 6 audits the map for a labelled ring, the words LEO and Third Class, a fighter entrance walkway and a legend. The supplied map carries section numbers and colour coding but none of those four. The page's own copy supplies all of them in words. Reported, and the map was not redrawn.",
+    "Document A section 3 wants the seating map large and readable in the hero, and section 3 wants it large and readable in its own block two screens later. It is placed once, in the hero, rather than twice within a screen and a half. The full-size link is in the map block where Document A puts it.",
+    "The annotated stadium view is used as the hero backdrop only, with an empty alt and aria-hidden. Document A section 4 supplies no approved alt text for that file and Document B section 3 forbids writing one. One approved line would let it carry proper alt text.",
+    "None of the images can be opened from this environment, because static.tildacdn.com is blocked by the network policy."
+  ]
+}

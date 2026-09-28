@@ -1,0 +1,24 @@
+RAJADAMNERN STADIUM SEAT MAP
+Tilda page settings. These are NOT in the HTML block. Paste them into the
+page's own settings in Tilda.
+
+URL
+  /rajadamnern-stadium-seat-map
+
+TITLE
+  Rajadamnern Stadium Seat Map | Seating Plan and Sections
+
+DESCRIPTION
+  View the Rajadamnern Stadium seat map, seating plan and section locations. See where Ringside, Club Class, LEO Section and Third Class sit around the ring.
+
+SOCIAL TITLE (Open Graph)
+  Rajadamnern Stadium Seat Map
+
+SOCIAL DESCRIPTION (Open Graph)
+  See the Rajadamnern Stadium seating plan, section locations and relationship between Ringside, Club Class, LEO Section and Third Class.
+
+SOCIAL IMAGE
+  https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg
+
+CANONICAL
+  https://muaytix.com/rajadamnern-stadium-seat-map
