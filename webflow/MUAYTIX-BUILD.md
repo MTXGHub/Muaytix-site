@@ -1557,3 +1557,61 @@ at `webflow/assets/seating-map/rajadamnern-stadium-seating-map-src.jpg`. Its
 legend reads "SINGHA RINGSIDE", which is an alcohol brand name baked into the
 graphic and directly against the brief's own hard rule. Jason has said he'll
 come back to this, so it is not placed anywhere on the site yet.
+
+## Logo strip: five real logos placed, two need a clean re-export
+
+Rather than wait, tried automatic background removal on all nine files, since
+it was the fallback option already put to Jason. Used a corner-flood-fill: walk
+in from the four edges and make transparent only the pixels connected to the
+background colour, which cannot eat an "island" of the same colour sitting
+inside the logo artwork itself. Safer than a global colour key for this case.
+
+**Seven of nine keyed cleanly.** Viewed each one after keying:
+
+| Logo | Result |
+|---|---|
+| RWS | clean |
+| New Power Muay Thai | clean |
+| Petchyindee (green) | clean |
+| Petchyindee (silver) | clean, not used, see below |
+| Kiatpetch | clean, faint edge ringing, usable |
+| All Star Elite Fighter | clean, faint edge ringing, usable |
+| MuayTix (own logo) | clean, not needed for this strip |
+
+**Two, Rajadamnern Knockout and Rajadamnern Stadium, are not fixable by
+background removal.** Viewed at full size: the pixel content itself is
+corrupted, blocks of rainbow noise sitting where the logo and text should be.
+This is baked into the source raster inside the file Jason sent, not something
+introduced on this end: a from-scratch decode straight off the Drive download
+matched the file's own reported byte count exactly before any processing. Both
+happen to be the two lowest-resolution files in the batch (187x187 and
+150x150) and the two that came back from Drive too small to auto-save to a
+file, which may be linked to how they were originally exported or compressed.
+
+**Chose Petchyindee green over silver.** Both keyed cleanly, but silver is a
+pale metallic grey and would wash out against the strip's light background.
+Green gives real contrast. Easy to swap if Jason prefers the original silver.
+
+### What went live
+
+Five logos resized to the spec's 120px height, saved as transparent WebP, and
+placed into five of the seven strip slots, each asset set on both loop copies
+so the marquee still scrolls seamlessly: RWS, New Power Muay Thai, Petchyindee
+(green), Kiatpetch, All Star Elite Fighter.
+
+**The remaining two slots are hidden, not left showing old template names.**
+They previously carried leftover Avoora agency clients. Rather than leave
+wrong copy up while waiting on clean files, hid both wrapper elements (in both
+loop copies, four elements total). The strip now runs five real partner logos
+instead of seven slots with two stale ones. Swapping in Knockout and Stadium
+once fixed is a small job: unhide the two wrappers, upload, set the asset.
+
+**Needed from Jason: clean re-exports of Rajadamnern Knockout and Rajadamnern
+Stadium.** Ideally as proper transparent PNG or true vector SVG rather than
+routed through whatever converter produced the "SVG" wrapper trick, since that
+is what likely introduced or preserved the corruption.
+
+**Source and working files kept at `webflow/assets/promoters/`**: the nine
+original files, the nine PNGs extracted from inside them, the seven
+successfully keyed transparent PNGs, and the five final resized WebP files
+used on the site.
