@@ -1,0 +1,1203 @@
+<!--
+  RAJADAMNERN STADIUM LEO SECTION SEATS
+  Paste this whole thing into one HTML block (Tilda T123) on
+  /rajadamnern-stadium-seating/leo-section, replacing the block that is there now.
+
+  Meta title, meta description, Open Graph and the URL are NOT in here.
+  Tilda owns those; they go in the page's own settings. The exact approved
+  text is in TILDA-PAGE-SETTINGS.txt beside this file.
+
+  All visible wording is generated from document-a.txt, the approved
+  editorial source. It is not typed into this file and must not be edited
+  here.
+
+  The booking widget is mounted in the booking section with
+  . It needs the MuayTix header block already pasted into
+  Tilda Site Settings, More, HTML code for the HEAD. That is already live.
+-->
+<div class="mtx-leo" id="mtx-leo">
+<style>
+/* RAJADAMNERN STADIUM LEO SECTION SEATS
+ * ----------------------------------------------------------------------
+ * Scoped under .mtx-leo. Same system as the parent seating page, so the two
+ * read as one site: same neutrals, same type scale, same buttons.
+ *
+ * The alignment and colour blocks at the foot are not optional. Tilda applies
+ * its own rules inside a zero block and matches every element directly, which
+ * beats anything inherited. They are written in from the start, not bolted on.
+ *
+ * The LEO Section class colour is used as a bar only, never as type.
+ */
+
+
+.mtx-leo, .mtx-leo * { box-sizing: border-box; }
+
+.mtx-leo {
+  --ink:        #0B0B0D;
+  --paper:      #F4F3F0;
+  --white:      #FFFFFF;
+  --muted:      #56565F;
+  --muted-dark: #A9AAB3;
+  --rule:       rgba(11, 11, 13, .15);
+  --rule-dark:  rgba(255, 255, 255, .17);
+  --blue:       #1F5BFF;
+  --blue-dark:  #1540C9;
+  --blue-lite:  #6D95FF;
+  /* The LEO Section class colour, from the owner's seat map artwork. A bar only. */
+  /* The LEO yellow, sampled from the seat map artwork. CLAUDE.md: it measures
+     about 1.04:1 on a pale background, so it is never set as type, and a bar
+     in it on a light band is invisible. So there are two: the yellow for the
+     dark bands, and a dark LEO ink for the light ones. --leo-accent is
+     redefined per band and inherits down, so no rule has to know which band
+     it is in. */
+  --leo: #FFF200;
+  --leo-accent: #6B5E00;
+
+  --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --body:    "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --t-mega: clamp(40px, 6.6vw, 92px);
+  --t-xl:   clamp(30px, 4.2vw, 58px);
+  --t-lg:   clamp(24px, 2.8vw, 38px);
+
+  font-family: var(--body);
+  color: var(--ink);
+  line-height: 1.6;
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+.mtx-leo p, .mtx-leo h1, .mtx-leo h2, .mtx-leo h3,
+.mtx-leo ul, .mtx-leo ol, .mtx-leo li, .mtx-leo figure, .mtx-leo table { margin: 0; padding: 0; }
+.mtx-leo ul, .mtx-leo ol { list-style: none; }
+.mtx-leo img { display: block; max-width: 100%; }
+
+.mtx-leo__shell { width: min(100% - 48px, 1240px); margin-inline: auto; }
+
+.mtx-leo__band { padding: clamp(52px, 6.4vw, 100px) 0; }
+.mtx-leo__band--paper { background: var(--paper); }
+.mtx-leo__band--white { background: var(--white); }
+.mtx-leo__band--ink   { background: var(--ink); color: var(--white); }
+
+/* ---------------------------------------------------------------- type --- */
+
+.mtx-leo h1, .mtx-leo h2, .mtx-leo h3 {
+  font-family: var(--display); font-weight: 800;
+  text-transform: uppercase; letter-spacing: -.005em; line-height: .94;
+}
+.mtx-leo h1 { font-size: var(--t-mega); letter-spacing: -.015em; }
+.mtx-leo h2 { font-size: var(--t-xl); }
+.mtx-leo h3 { font-size: clamp(20px, 2vw, 27px); }
+
+/* ------------------------------------------------------------- buttons --- */
+
+.mtx-leo__btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 54px; padding: 0 26px; border: 2px solid transparent;
+  font-family: var(--display); font-weight: 800;
+  font-size: 16px; letter-spacing: .08em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.mtx-leo__btn--blue  { background: var(--blue); color: var(--white); }
+.mtx-leo__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
+.mtx-leo__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
+.mtx-leo__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+.mtx-leo__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
+.mtx-leo__btn--line:hover  { background: var(--ink); color: var(--white); }
+.mtx-leo__btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+.mtx-leo__go {
+  display: inline-block; text-decoration: none;
+  font-family: var(--display); font-weight: 800;
+  font-size: 15px; line-height: 1.35; letter-spacing: .075em; text-transform: uppercase;
+  color: var(--ink); padding-bottom: 3px; border-bottom: 2px solid currentColor;
+  transition: color .18s ease;
+}
+.mtx-leo__go:hover { color: var(--blue); }
+.mtx-leo__band--ink .mtx-leo__go { color: var(--white); }
+.mtx-leo__band--ink .mtx-leo__go:hover { color: var(--blue-lite); }
+.mtx-leo__go:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+
+.mtx-leo .mtx-leo__actions {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-top: 32px !important; max-width: none !important;
+}
+
+/* ---------------------------------------------------------------- hero --- */
+
+/* Document A section 4: the H1 and opening copy must be immediately visible
+   on desktop and mobile, and the booking CTA must be reachable within the
+   first major mobile view. The hero is deliberately shallow for that reason:
+   it is not a full-screen photograph with the words pushed below it. */
+.mtx-leo__hero {
+  position: relative; overflow: hidden;
+  padding: clamp(56px, 7vw, 104px) 0 clamp(48px, 5.6vw, 84px);
+  background: var(--ink); color: var(--white);
+}
+/* The hero photograph is the 1690 x 900 one, which is what it is for. A hero
+   band is as tall as the words in it, so the band is given a floor close to
+   the picture's own 1.88:1 and the picture fills it: at that shape almost
+   nothing is lost off the top or the bottom. */
+.mtx-leo__hero { min-height: min(54vw, 640px); display: flex; align-items: center; }
+.mtx-leo__hero-media {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+}
+/* The hero picture is the annotated stadium view, and its labels are large
+   printed type. At the Ringside page's wash strength they came through as
+   half-legible words behind the headline, which reads as a fault rather than
+   as a backdrop. The wash is stronger here so the picture reads as the room
+   it is, and the labels do their real job at full size further down. */
+.mtx-leo__hero-wash {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, rgba(11,11,13,.97) 0%, rgba(11,11,13,.86) 38%, rgba(11,11,13,.70) 78%, rgba(11,11,13,.74) 100%),
+    linear-gradient(100deg, rgba(11,11,13,.95) 0%, rgba(11,11,13,.88) 42%, rgba(11,11,13,.62) 80%, rgba(11,11,13,.50) 100%);
+}
+.mtx-leo__hero::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  background: var(--blue); z-index: 2;
+}
+.mtx-leo__hero-in { position: relative; }
+.mtx-leo__hero h1 { max-width: 16ch; }
+
+/* The LEO Section seat class graphic, asked for in the hero and asked to be seen
+   clearly. Two things follow from "clearly". It is not the backdrop: it sits
+   in its own column beside the words, so no headline is ever set over it. And
+   it is a 1024 square, so it is sized by WIDTH and never cropped: the whole
+   frame, both lines of type and the muaytix mark are always on screen.
+   .mtx-leo figure { margin: 0 } is (0,1,1), so the class is doubled here. */
+.mtx-leo .mtx-leo__hero-in {
+  display: grid; align-items: center;
+  grid-template-columns: minmax(0, 1fr) min(32%, 360px);
+  gap: clamp(28px, 3.4vw, 60px);
+}
+/* Every cell is placed by hand. Grid auto-placement squashed a cell to 6px
+   on the homepage and is not trusted here. The facts and the buttons run the
+   full width underneath, so the four facts keep one line each instead of
+   being crushed into the narrower column beside the graphic. */
+.mtx-leo .mtx-leo__hero-copy { grid-column: 1; grid-row: 1; }
+.mtx-leo .mtx-leo__hero-mark { grid-column: 2; grid-row: 1; margin: 0; }
+.mtx-leo .mtx-leo__hero-base { grid-column: 1 / -1; grid-row: 2; }
+.mtx-leo .mtx-leo__hero-mark img {
+  display: block; width: 100%; height: auto;
+}
+.mtx-leo .mtx-leo__lede {
+  margin-top: 18px !important; max-width: 60ch;
+  font-size: clamp(16.5px, 1.45vw, 19px); color: rgba(255,255,255,.88);
+}
+
+/* -------------------------------------------------------------- answer --- */
+
+/* Document A section 4: a short text block with no image, placed immediately
+   below the hero, that answers the question quickly. */
+.mtx-leo__answer { max-width: 1000px; }
+.mtx-leo .mtx-leo__answer-lead {
+  margin-top: 20px !important; max-width: 62ch;
+  font-size: clamp(17px, 1.5vw, 20px); color: var(--muted);
+}
+.mtx-leo .mtx-leo__answer-list { margin-top: 26px; display: grid; gap: 0; }
+.mtx-leo__answer-list li {
+  display: grid; grid-template-columns: 6px minmax(0, 1fr);
+  column-gap: 20px; padding: 16px 0; border-top: 1px solid var(--rule);
+}
+.mtx-leo__answer-list li::before { content: ""; background: var(--seat); }
+.mtx-leo .mtx-leo__answer-list p { font-size: 17px; max-width: 70ch; }
+/* Document A section 2's middle paragraphs. They had no rule of their own and
+   sat flush against each other: a whole class of fault this page must not
+   depend on the host to fix. The id is doubled in so nothing the host sets on
+   #allrecords p can zero it. */
+#mtx-leo.mtx-leo .mtx-leo__answer-copy {
+  margin-top: 16px; max-width: 70ch;
+  font-size: clamp(16px, 1.35vw, 18px);
+}
+
+.mtx-leo .mtx-leo__answer-close {
+  margin-top: 26px !important; max-width: 62ch;
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(20px, 2vw, 27px); line-height: 1.12; text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------- cards --- */
+
+/* Document A section 4: two by two on desktop, a single stack on mobile. */
+.mtx-leo .mtx-leo__cards {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 3.4vw, 54px);
+}
+.mtx-leo__card { display: flex; flex-direction: column; }
+.mtx-leo__card-fig { position: relative; }
+.mtx-leo__shot {
+  width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover;
+  background: #E4E3DF;
+}
+@supports not (aspect-ratio: 3 / 2) { .mtx-leo__shot { height: 260px; } }
+/* The class colour, as a bar under its photograph. Never as type. */
+.mtx-leo__card-fig::after {
+  content: ""; display: block; height: 7px; background: var(--seat);
+}
+.mtx-leo__card-body { display: flex; flex-direction: column; flex: 1; }
+.mtx-leo .mtx-leo__card-name { margin-top: 22px; font-size: clamp(24px, 2.4vw, 33px); }
+
+.mtx-leo .mtx-leo__facts {
+  margin-top: 12px !important; display: flex; flex-wrap: wrap; gap: 8px 10px;
+}
+.mtx-leo__fact {
+  display: inline-block; padding: 6px 11px 5px;
+  background: #ECEAE5;
+  font-family: var(--display); font-weight: 700;
+  font-size: 13px; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--ink);
+}
+.mtx-leo__fact--price { background: var(--ink); color: var(--white); }
+
+.mtx-leo .mtx-leo__card-copy { margin-top: 15px !important; font-size: 16.5px; color: var(--muted); }
+.mtx-leo .mtx-leo__best {
+  margin-top: 16px !important; padding-left: 14px;
+  border-left: 3px solid var(--seat);
+  font-size: 16px; font-weight: 600; color: var(--ink);
+}
+.mtx-leo .mtx-leo__card-go { margin-top: auto !important; padding-top: 20px; }
+.mtx-leo .mtx-leo__card-cta { margin-top: 16px !important; }
+.mtx-leo__card-cta .mtx-leo__btn { width: 100%; padding: 0 14px; letter-spacing: .05em; }
+
+/* ------------------------------------------------------------- compare --- */
+
+.mtx-leo__tablewrap { margin-top: clamp(30px, 3.6vw, 46px); }
+.mtx-leo__table { width: 100%; border-collapse: collapse; }
+.mtx-leo__table th, .mtx-leo__table td {
+  padding: 15px 16px 15px 0; border-bottom: 1px solid var(--rule-dark);
+  vertical-align: top; font-size: 16px;
+}
+.mtx-leo__table thead th {
+  font-family: var(--display); font-weight: 800;
+  font-size: 13px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--muted-dark); border-bottom-color: rgba(255,255,255,.3);
+}
+.mtx-leo__table tbody th {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(18px, 1.7vw, 22px); text-transform: uppercase;
+  color: var(--white); white-space: nowrap;
+}
+.mtx-leo__table tbody td { color: var(--muted-dark); }
+.mtx-leo__swatch {
+  display: inline-block; width: 12px; height: 12px; margin-right: 10px;
+  background: var(--seat); vertical-align: baseline;
+}
+.mtx-leo .mtx-leo__table-note {
+  margin-top: 26px !important; max-width: 70ch; font-size: 17px; color: var(--muted-dark);
+}
+
+/* --------------------------------------------------------------- guide --- */
+
+/* Document A section 5: a photograph beside each block on desktop, the image
+   stacked above the text on mobile. */
+.mtx-leo__guide { margin-top: clamp(30px, 3.6vw, 46px); }
+.mtx-leo__choice {
+  display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 3.2vw, 52px); align-items: center;
+  padding: clamp(28px, 3.2vw, 46px) 0; border-top: 1px solid var(--rule);
+}
+.mtx-leo__choice:last-child { border-bottom: 1px solid var(--rule); }
+.mtx-leo__choice:nth-child(even) .mtx-leo__choice-fig { order: 2; }
+.mtx-leo__choice-fig::after { content: ""; display: block; height: 7px; background: var(--seat); }
+.mtx-leo .mtx-leo__choice-body h3 { max-width: 22ch; }
+.mtx-leo .mtx-leo__choice-body p {
+  margin-top: 15px !important; max-width: 62ch; font-size: 16.5px; color: var(--muted);
+}
+
+/* ----------------------------------------------------------------- map --- */
+
+.mtx-leo .mtx-leo__map {
+  margin-top: clamp(30px, 3.6vw, 46px);
+  display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: clamp(28px, 3.6vw, 56px); align-items: start;
+}
+
+.mtx-leo .mtx-leo__map-body p { max-width: 58ch; font-size: 17px; color: var(--muted); }
+.mtx-leo .mtx-leo__map-body p + p { margin-top: 15px !important; }
+.mtx-leo .mtx-leo__map-list { margin: 22px 0; }
+.mtx-leo__map-list li {
+  display: grid; grid-template-columns: 12px minmax(0, 1fr); column-gap: 14px;
+  align-items: start; padding: 11px 0; border-top: 1px solid var(--rule);
+  font-size: 16.5px;
+}
+.mtx-leo__map-list li::before { content: ""; height: 12px; margin-top: 7px; background: var(--seat); }
+.mtx-leo .mtx-leo__map-go { margin-top: 24px !important; }
+
+/* ------------------------------------------------------------ includes --- */
+
+/* Document A section 7: four simple icon points, not a large text-heavy box. */
+.mtx-leo .mtx-leo__includes {
+  margin-top: clamp(30px, 3.6vw, 46px);
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0;
+  border-top: 1px solid var(--rule-dark);
+}
+.mtx-leo__includes li { padding: 26px clamp(20px, 2.4vw, 34px) 28px 0; }
+.mtx-leo__includes svg {
+  width: 30px; height: 30px; stroke: var(--blue-lite); fill: none;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+.mtx-leo .mtx-leo__includes p { margin-top: 16px !important; font-size: 16px; color: var(--muted-dark); }
+
+/* ------------------------------------------------------------- booking --- */
+
+.mtx-leo .mtx-leo__booking-copy {
+  margin-top: 16px !important; max-width: 64ch; font-size: 17px; color: var(--muted);
+}
+.mtx-leo__widget { margin-top: clamp(30px, 3.4vw, 44px); }
+
+/* ----------------------------------------------------------------- faq --- */
+
+.mtx-leo__faq { margin-top: clamp(26px, 3.2vw, 42px); border-top: 1px solid var(--rule); }
+.mtx-leo__faq details { border-bottom: 1px solid var(--rule); }
+.mtx-leo__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 22px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+}
+.mtx-leo__faq summary::-webkit-details-marker { display: none; }
+.mtx-leo__faq summary h3 { font-size: clamp(18px, 1.8vw, 24px); line-height: 1.12; }
+.mtx-leo__faq summary::after {
+  content: ""; flex: none; width: 14px; height: 14px; margin-top: 7px;
+  border-right: 2px solid var(--blue); border-bottom: 2px solid var(--blue);
+  transform: rotate(45deg); transition: transform .2s ease;
+}
+.mtx-leo__faq details[open] summary::after { transform: rotate(-135deg); margin-top: 12px; }
+.mtx-leo__faq summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.mtx-leo .mtx-leo__faq p { margin: 0 0 24px !important; max-width: 72ch; font-size: 16.5px; color: var(--muted); }
+
+/* --------------------------------------------------------------- close --- */
+
+.mtx-leo .mtx-leo__close-copy {
+  margin-top: 20px !important; max-width: 62ch;
+  font-size: clamp(17px, 1.5vw, 20px); color: rgba(255,255,255,.9);
+}
+.mtx-leo .mtx-leo__elsewhere {
+  margin-top: 34px !important; padding-top: 24px;
+  border-top: 1px solid var(--rule-dark);
+  display: flex; flex-wrap: wrap; gap: 14px 30px;
+}
+
+.mtx-leo__inline { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+.mtx-leo__inline:hover { color: var(--blue-dark); }
+
+/* ---------------------------------------------------------- quick facts --- */
+
+/* Document B section 5: the first major mobile view has to establish the
+   name, the distance, Sections 3 to 7, assigned seating and the first booking
+   action. The facts sit in the hero for that reason, above the buttons. */
+.mtx-leo .mtx-leo__facts {
+  margin-top: 28px; display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px; background: rgba(255, 255, 255, .22);
+  border: 1px solid rgba(255, 255, 255, .22);
+}
+.mtx-leo__fact { padding: 15px 16px 16px; background: rgba(11, 11, 13, .74); }
+.mtx-leo .mtx-leo__fact dt {
+  font-family: var(--display); font-weight: 800;
+  font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--muted-dark);
+}
+.mtx-leo .mtx-leo__fact dd {
+  margin: 5px 0 0; font-family: var(--display); font-weight: 800;
+  font-size: clamp(19px, 1.9vw, 25px); line-height: 1.1;
+  text-transform: uppercase; color: var(--white);
+}
+
+/* ------------------------------------------------------- two-column copy --- */
+
+.mtx-leo__two {
+  margin-top: clamp(28px, 3.4vw, 44px);
+  display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(26px, 3.4vw, 54px); align-items: start;
+}
+.mtx-leo .mtx-leo__two p { max-width: 58ch; font-size: 17px; color: rgba(255, 255, 255, .86); }
+.mtx-leo .mtx-leo__two p + p { margin-top: 15px !important; }
+
+/* A 1024 square stays a 1024 square. No aspect-ratio box to fit into and no
+   object-fit to cut it with: it renders at its own shape.
+   
+   The only control over it is WIDTH, because for a square the width is the
+   height. Left to fill its column, a square goes full width on a narrow
+   screen and becomes 183 per cent of a short one. min(100%, 56vh) makes it
+   smaller on those screens and never takes a pixel off it. */
+.mtx-leo__square, .mtx-leo__split-fig, .mtx-leo__map-fig { width: fit-content; max-width: 100%; }
+.mtx-leo__square img,
+.mtx-leo__split-fig img,
+.mtx-leo__map-fig img {
+  display: block; height: auto;
+  width: min(100%, 56vh);
+}
+.mtx-leo__square::after { content: ""; display: block; height: 7px; background: var(--leo-accent); }
+
+/* ------------------------------------------------------------- split --- */
+
+.mtx-leo__split {
+  margin-top: clamp(28px, 3.4vw, 44px);
+  display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(26px, 3.4vw, 54px); align-items: start;
+}
+
+.mtx-leo__split-fig::after { content: ""; display: block; height: 7px; background: var(--leo-accent); }
+.mtx-leo .mtx-leo__split-body p { max-width: 60ch; font-size: 17px; color: var(--muted); }
+.mtx-leo .mtx-leo__split-body p + p { margin-top: 15px !important; }
+/* Document A section 5 ends on the plain statement that front row is not
+   guaranteed. It is set as the strongest line in the section, not the
+   quietest, because Document A section 7 forbids implying otherwise. */
+.mtx-leo .mtx-leo__caveat {
+  margin-top: 20px !important; padding-left: 15px;
+  border-left: 3px solid var(--ink);
+  font-weight: 600; color: var(--ink) !important;
+}
+
+/* --------------------------------------------------------------- who --- */
+
+/* Same fault as the answer paragraphs: the gap under each heading was coming
+   from the host, not from this page. Stated here, with the id doubled in so
+   it cannot be zeroed by anything the host sets on #allrecords p. */
+#mtx-leo.mtx-leo .mtx-leo__faq p { margin-top: 14px; }
+#mtx-leo.mtx-leo .mtx-leo__faq p + p { margin-top: 14px; }
+#mtx-leo.mtx-leo .mtx-leo__split-body p + p { margin-top: 16px; }
+#mtx-leo.mtx-leo .mtx-leo__cols p { margin-bottom: 18px; }
+
+
+.mtx-leo .mtx-leo__who {
+  margin-top: clamp(28px, 3.4vw, 44px);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0; border-top: 1px solid var(--rule);
+}
+.mtx-leo__who li { padding: 26px clamp(22px, 2.6vw, 40px) 28px 0; border-bottom: 1px solid var(--rule); }
+.mtx-leo__who li::before { content: ""; display: block; width: 34px; height: 5px; margin-bottom: 16px; background: var(--leo-accent); }
+.mtx-leo .mtx-leo__who p { margin-top: 16px !important; max-width: 46ch; font-size: 16.5px; color: var(--muted); }
+
+/* ----------------------------------------------------------- compare --- */
+
+.mtx-leo .mtx-leo__compare {
+  margin-top: clamp(28px, 3.4vw, 44px);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0; border-top: 1px solid var(--rule-dark);
+}
+.mtx-leo__compare li {
+  display: grid; grid-template-columns: 6px minmax(0, 1fr); column-gap: 18px;
+  padding: 20px clamp(22px, 2.6vw, 40px) 22px 0; border-bottom: 1px solid var(--rule-dark);
+}
+.mtx-leo__compare li::before { content: ""; background: rgba(255, 255, 255, .22); }
+.mtx-leo__compare--this::before { background: var(--leo-accent) !important; }
+.mtx-leo .mtx-leo__compare p { font-size: 16.5px; color: var(--muted-dark); max-width: 50ch; }
+.mtx-leo .mtx-leo__compare--this p { color: var(--white); }
+.mtx-leo .mtx-leo__compare-go { margin-top: 30px !important; }
+
+/* --------------------------------------------------------- practical --- */
+
+.mtx-leo .mtx-leo__practical {
+  margin-top: clamp(26px, 3.2vw, 42px);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(26px, 3.4vw, 54px);
+}
+.mtx-leo__practical li {
+  display: grid; grid-template-columns: 8px minmax(0, 1fr); column-gap: 16px;
+  padding: 14px 0; border-bottom: 1px solid var(--rule);
+}
+.mtx-leo__practical li::before { content: ""; height: 8px; margin-top: 9px; background: var(--leo-accent); }
+.mtx-leo .mtx-leo__practical p { font-size: 16.5px; max-width: 54ch; }
+
+/* ------------------------------------------------------- wide picture --- */
+
+/* Doubled class. `.mtx-leo figure { margin: 0 }` in the reset is (0,1,1) and
+   beats a single-class margin-top, so this sat flush against its own heading
+   on the live page. CLAUDE.md section 8, and the third time it has bitten. */
+.mtx-leo .mtx-leo__wide { margin-top: clamp(28px, 3.4vw, 44px); }
+
+/* A wide picture, not a wall.
+   
+   21:9 alone is a ratio with no ceiling: on a short landscape screen it grew
+   to about three quarters of the visible height and pushed every word of the
+   section below the fold. The cap is what stops that, and it is in vh because
+   the fault is a relationship between the image and the SCREEN, not between
+   the image and the column. object-fit keeps the crop centred as it tightens. */
+/* The overview is the only wide picture left in the flow of the page, and it
+   keeps its own shape: no aspect-ratio and no object-fit, so the two maximums
+   only ever scale it. The height cap is in vh because the thing it prevents
+   is a picture owning a short screen. The figure hugs the picture so the bar
+   under it matches its width. */
+.mtx-leo .mtx-leo__wide { width: fit-content; max-width: 100%; }
+.mtx-leo .mtx-leo__wide img {
+  display: block;
+  width: auto; height: auto;
+  max-width: 100%;
+  max-height: min(52vh, 540px);
+}
+.mtx-leo__wide::after { content: ""; display: block; height: 7px; background: var(--leo-accent); }
+
+/* --------------------------------------------------------------- strip --- */
+
+/* Three photographs edge to edge. Three across on a desktop screen, and on a
+   phone the same three become a swipeable slider one at a time, so the strip
+   never collapses into three thin slivers or three full-height pictures to
+   scroll past. */
+.mtx-leo__strip { position: relative; background: var(--ink); }
+/* Three squares in a flush row. Same rule as every other square on the page:
+   a square is held by its width, because its width is its height. Three of
+   them across a short screen came to 64 per cent of it, so the track itself
+   is capped at three times the single-square cap and centred. The row stays
+   flush and full-bleed on anything but a short screen. */
+.mtx-leo__strip-track {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  width: min(100%, 168vh); margin-inline: auto;
+}
+/* Three squares across. They are the same shape as each other, so they land
+   on the same height without being cut to a box. */
+.mtx-leo__strip-track img { display: block; width: 100%; height: auto; background: #202027; }
+/* One per screen on a phone, so the same width cap applies and the square is
+   centred in its slide rather than filling a short screen. */
+@media (max-width: 760px) {
+  .mtx-leo__strip-track img { width: min(100%, 56vh); margin-inline: auto; }
+}
+.mtx-leo__strip-dots { display: none; }
+
+@media (max-width: 760px) {
+  .mtx-leo__strip-track {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .mtx-leo__strip-track::-webkit-scrollbar { display: none; }
+  .mtx-leo__strip-track img { flex: 0 0 100%; scroll-snap-align: center; }
+  .mtx-leo__strip-dots {
+    position: absolute; left: 0; right: 0; bottom: 12px;
+    display: flex; justify-content: center; gap: 8px;
+  }
+  .mtx-leo__strip-dots button {
+    width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+    background: rgba(255, 255, 255, .5); cursor: pointer;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .3); transition: background .18s ease;
+  }
+  .mtx-leo__strip-dots button.is-on { background: #fff; }
+  .mtx-leo__strip-dots button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+}
+/* An empty dot row must never draw itself. */
+.mtx-leo__strip-dots:empty { display: none; }
+
+/* ----------------------------------------------------------- alignment --- */
+
+/* Stated, not inherited. Tilda centres text by matching every element
+   directly, with a rule shaped like `#allrecords * { text-align: center }`,
+   and a direct match beats an inherited value however specific the ancestor
+   rule is. #mtx-leo.mtx-leo * is (1,1,1) and beats (1,0,1) outright. */
+#mtx-leo.mtx-leo,
+#mtx-leo.mtx-leo * { text-align: left; }
+#mtx-leo.mtx-leo .mtx-leo__btn { text-align: center; }
+
+/* Colour, for the same reason: a host rule shaped like `#allrecords a {
+   color: inherit }` beats every single-class button rule. */
+#mtx-leo.mtx-leo a.mtx-leo__btn--blue  { background: var(--blue); color: var(--white); }
+#mtx-leo.mtx-leo a.mtx-leo__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
+#mtx-leo.mtx-leo a.mtx-leo__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
+#mtx-leo.mtx-leo a.mtx-leo__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+#mtx-leo.mtx-leo a.mtx-leo__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
+#mtx-leo.mtx-leo a.mtx-leo__btn--line:hover  { background: var(--ink); color: var(--white); }
+#mtx-leo.mtx-leo a.mtx-leo__inline { color: var(--blue); }
+#mtx-leo.mtx-leo a.mtx-leo__inline:hover { color: var(--blue-dark); }
+#mtx-leo.mtx-leo a.mtx-leo__go { color: var(--ink); }
+#mtx-leo.mtx-leo a.mtx-leo__go:hover { color: var(--blue); }
+#mtx-leo.mtx-leo .mtx-leo__band--ink a.mtx-leo__go { color: var(--white); }
+#mtx-leo.mtx-leo .mtx-leo__band--ink a.mtx-leo__go:hover { color: var(--blue-lite); }
+
+/* --------------------------------------------------------------- guard --- */
+
+/* A direct match on a heading inside the widget beats inheritance and has
+   previously turned a fight night's own name white on white. CLAUDE.md
+   section 8. This page mounts the widget, so this is not optional. */
+.mtx-leo #mtx-booking h1, .mtx-leo #mtx-booking h2,
+.mtx-leo #mtx-booking h3, .mtx-leo #mtx-booking h4 { color: inherit; text-transform: none; }
+
+/* The Row D caveat sits on the ink band on this page, not on paper, so it
+   needs its own colour. Left at the paper-band value it measured 1.00:1,
+   dark grey on near-black, which is invisible rather than merely poor. */
+/* The base rule sets the colour with !important, so the override has to carry
+   it too or the line stays black on black. */
+.mtx-leo .mtx-leo__band--ink .mtx-leo__caveat { color: var(--white) !important; border-left-color: var(--leo-accent); }
+
+/* On the dark bands the brand yellow is the accent. */
+.mtx-leo .mtx-leo__band--ink, .mtx-leo .mtx-leo__hero { --leo-accent: var(--leo); }
+
+/* ------------------------------------------------------------- view --- */
+
+/* Document A section 3 asks for a wide view photograph. All four supplied
+   photographs are squares, so two are placed side by side instead of one
+   being cropped into a wide box. Same rule as every square on this page:
+   held by width, because for a square the width is the height. */
+.mtx-leo .mtx-leo__pair {
+  margin-top: clamp(26px, 3vw, 40px);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 26px);
+  align-items: start;
+}
+/* The figure carries the accent bar, so the figure must be exactly as wide as
+   the picture inside it or the bar overhangs. Cap the figure, not the image. */
+.mtx-leo .mtx-leo__pair .mtx-leo__square { width: min(100%, 56vh); }
+.mtx-leo .mtx-leo__pair .mtx-leo__square img { width: 100%; }
+
+/* Five approved paragraphs in one column is a wall of text at 1440.
+   Document B section 10 forbids that, and Document B section 2 forbids
+   cutting the copy, so the component changes instead of the words. */
+.mtx-leo .mtx-leo__cols {
+  margin-top: clamp(26px, 3vw, 40px);
+  columns: 2; column-gap: clamp(32px, 3.4vw, 64px);
+}
+.mtx-leo .mtx-leo__cols > * { break-inside: avoid; }
+.mtx-leo .mtx-leo__cols > p { margin-top: 0; margin-bottom: 18px; }
+
+/* Document A section 5 places the image and the copy the other way round in
+   one of the two split sections, so the two do not read as the same block
+   twice. */
+.mtx-leo .mtx-leo__split--flip .mtx-leo__split-fig { order: 2; }
+
+/* ----------------------------------------------------------- narrower --- */
+
+@media (max-width: 1080px) {
+  .mtx-leo .mtx-leo__includes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-leo .mtx-leo__map { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 860px) {
+  .mtx-leo .mtx-leo__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* One column. The copy, the facts and the booking button come first, as
+     Document B section 5 requires, and the graphic sits under them, full
+     width of the shell, still inside the hero. */
+  .mtx-leo .mtx-leo__cols { columns: 1; }
+  .mtx-leo .mtx-leo__hero-in { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .mtx-leo .mtx-leo__hero-copy { grid-column: 1; grid-row: 1; }
+  .mtx-leo .mtx-leo__hero-base { grid-column: 1; grid-row: 2; }
+  .mtx-leo .mtx-leo__hero-mark { grid-column: 1; grid-row: 3; margin-top: clamp(28px, 6vw, 44px); }
+  .mtx-leo .mtx-leo__hero-mark img { width: min(100%, 52vh); }
+  .mtx-leo__two { grid-template-columns: 1fr; gap: 24px; }
+  .mtx-leo__split { grid-template-columns: 1fr; }
+  .mtx-leo .mtx-leo__who { grid-template-columns: 1fr; }
+  .mtx-leo__who li { padding-right: 0; }
+  .mtx-leo .mtx-leo__compare { grid-template-columns: 1fr; }
+  .mtx-leo__compare li { padding-right: 0; }
+  .mtx-leo .mtx-leo__practical { grid-template-columns: 1fr; }
+  .mtx-leo .mtx-leo__cards { grid-template-columns: 1fr; }
+  /* Document A section 5: on mobile the image stacks above its text. */
+  .mtx-leo__choice { grid-template-columns: 1fr; gap: 20px; align-items: start; }
+  .mtx-leo__choice:nth-child(even) .mtx-leo__choice-fig { order: 0; }
+
+  /* Document A section 4: the comparison table becomes stacked cards. */
+  .mtx-leo__table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+  .mtx-leo__table, .mtx-leo__table tbody, .mtx-leo__table tr, .mtx-leo__table th, .mtx-leo__table td { display: block; }
+  .mtx-leo__table tr { padding: 20px 0 22px; border-top: 1px solid var(--rule-dark); }
+  .mtx-leo__table tr:last-child { border-bottom: 1px solid var(--rule-dark); }
+  .mtx-leo__table th, .mtx-leo__table td { border-bottom: 0; padding: 0; }
+  .mtx-leo__table tbody th { margin-bottom: 10px; white-space: normal; }
+  .mtx-leo__table td { position: relative; padding: 5px 0 5px 128px; }
+  .mtx-leo__table td::before {
+    content: attr(data-label); position: absolute; left: 0; top: 5px; width: 118px;
+    font-family: var(--display); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .13em; text-transform: uppercase; color: var(--muted-dark);
+  }
+}
+
+@media (max-width: 620px) {
+  .mtx-leo .mtx-leo__wide img { max-height: none; }
+
+  .mtx-leo__shell { width: min(100% - 32px, 1240px); }
+  .mtx-leo .mtx-leo__includes { grid-template-columns: 1fr; }
+  .mtx-leo__includes li { padding-right: 0; border-bottom: 1px solid var(--rule-dark); }
+  .mtx-leo__actions .mtx-leo__btn { width: 100%; }
+  .mtx-leo__table td { padding-left: 112px; }
+  .mtx-leo__table td::before { width: 104px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtx-leo *, .mtx-leo *::before, .mtx-leo *::after {
+    animation: none !important; transition: none !important; scroll-behavior: auto !important;
+  }
+}
+</style>
+
+  <header class="mtx-leo__hero">
+    <img class="mtx-leo__hero-media" src="https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg" alt="Rajadamnern Stadium Section 10 LEO seating" loading="eager" decoding="async">
+    <div class="mtx-leo__hero-wash" aria-hidden="true"></div>
+    <div class="mtx-leo__shell mtx-leo__hero-in">
+      <div class="mtx-leo__hero-copy">
+        <h1>LEO Section at Rajadamnern Stadium</h1>
+        <p class="mtx-leo__lede">The LEO Section faces the front of the ring and brings a distinctive local fight-night atmosphere to Rajadamnern Stadium.</p>
+        <p class="mtx-leo__lede">It is Section 10, with the same general tier and elevation as Club Class, but with unassigned seating that lets you choose your position within the section.</p>
+        <p class="mtx-leo__lede">On Wednesday, Thursday and Sunday traditional Muay Thai nights, this is where the local betting crowd gathers.</p>
+      </div>
+      <figure class="mtx-leo__hero-mark">
+        <img src="https://static.tildacdn.com/tild3333-3339-4135-b436-326637666663/1000033984.webp" alt="LEO Section. Where the atmosphere lives." width="1024" height="1024" loading="eager" decoding="async">
+      </figure>
+      <div class="mtx-leo__hero-base">
+        <dl class="mtx-leo__facts">
+          <div class="mtx-leo__fact">
+            <dt>Section</dt>
+            <dd>10</dd>
+          </div>
+          <div class="mtx-leo__fact">
+            <dt>Price</dt>
+            <dd>1,500 THB</dd>
+          </div>
+          <div class="mtx-leo__fact">
+            <dt>Seating</dt>
+            <dd>Unassigned, seat guaranteed</dd>
+          </div>
+          <div class="mtx-leo__fact">
+            <dt>View</dt>
+            <dd>Front-facing view of the ring</dd>
+          </div>
+        </dl>
+        <p class="mtx-leo__actions">
+          <a class="mtx-leo__btn mtx-leo__btn--blue" href="#mtx-leo-booking">Book LEO Tickets</a>
+          <a class="mtx-leo__btn mtx-leo__btn--ghost" href="/rajadamnern-stadium-seat-map">View the Rajadamnern Seat Map</a>
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <section class="mtx-leo__band mtx-leo__band--paper">
+    <div class="mtx-leo__shell mtx-leo__answer">
+      <h2>What is the LEO Section at Rajadamnern Stadium?</h2>
+      <p class="mtx-leo__answer-lead">The LEO Section is Section 10, an elevated section facing the front of the ring.</p>
+      <p class="mtx-leo__answer-copy">It has unassigned seating, but every ticket guarantees a seat. You choose your position within the section when you arrive.</p>
+      <p class="mtx-leo__answer-copy">The section is where the broadcast cameras and commentary team are positioned, helping create a strong view across the entire ring.</p>
+      <p class="mtx-leo__answer-close">On Wednesday New Power, Thursday Petchyindee and Sunday Kiatpetch, LEO is also where the local betting crowd gathers.</p>
+    </div>
+  </section>
+
+  <section class="mtx-leo__band mtx-leo__band--ink">
+    <div class="mtx-leo__shell">
+      <h2>A front-facing view of the whole ring</h2>
+      <div class="mtx-leo__pair">
+        <figure class="mtx-leo__square"><img src="https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg" alt="The view from the front row of Leo section" loading="lazy" decoding="async"></figure>
+        <figure class="mtx-leo__square"><img src="https://static.tildacdn.com/tild6530-3266-4262-b265-633965366163/1000008588.jpg" alt="View taken from the back row in Leo section in row g" loading="lazy" decoding="async"></figure>
+      </div>
+      <div class="mtx-leo__cols">
+        <p>LEO looks directly towards the front of the ring.</p>
+        <p>Its tier, elevation and row configuration are effectively the same as Club Class next door, giving you a clear elevated view across the canvas.</p>
+        <p>The principal broadcast cameras and commentary team are positioned in LEO. This is one reason the section offers such a strong front-facing perspective.</p>
+        <p>You can follow the movement across the ring, watch the corners between rounds and see the fighters enter before the bout begins.</p>
+        <p class="mtx-leo__caveat">MuayTix generally recommends around Row D and above for the optimal overall sightline. This is a viewing preference, not a warning that the lower rows are poor seats.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-leo__band mtx-leo__band--white">
+    <div class="mtx-leo__shell">
+      <h2>The section where the atmosphere lives</h2>
+      <div class="mtx-leo__cols">
+        <p>On Wednesday, Thursday and Sunday traditional Muay Thai nights, LEO is where local Thai fight fans and the legal betting crowd gather.</p>
+        <p>Betting uses hand signals and creates a distinctive high-energy atmosphere as the crowd responds to changes in the fight.</p>
+        <p>The area is organised so visitors can sit alongside the activity, watch what is happening and experience the atmosphere without actively participating.</p>
+      </div>
+      <p class="mtx-leo__caveat">You do not have to take part in betting.</p>
+      <p class="mtx-leo__caveat">The betting atmosphere applies to these three traditional fight nights only. It should not be applied to every night of the week.</p>
+    </div>
+  </section>
+
+  <section class="mtx-leo__band mtx-leo__band--paper">
+    <div class="mtx-leo__shell">
+      <h2>Flexible seating, with a seat guaranteed</h2>
+      <div class="mtx-leo__split mtx-leo__split--flip">
+        <figure class="mtx-leo__split-fig"><img src="https://static.tildacdn.com/tild3136-6363-4533-b935-633230626564/1000008294.jpg" alt="Leo section bench style seating" loading="lazy" decoding="async"></figure>
+        <div class="mtx-leo__split-body">
+          <p>LEO is unassigned seating, which means you choose where to sit within Section 10.</p>
+          <p>Every ticket guarantees a seat. Unassigned does not mean standing, and it does not mean that you risk being left without a place.</p>
+          <p>Arriving early is not required to secure a seat. It simply gives you more choice of position, including the possibility of choosing the front row when it is available.</p>
+          <p>MuayTix generally recommends around Row D and above for the clearest overall sightline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-leo__band mtx-leo__band--white">
+    <div class="mtx-leo__shell">
+      <h2>Who should choose the LEO Section?</h2>
+      <ul class="mtx-leo__who">
+        <li>
+          <h3>Choose LEO if atmosphere matters as much as the view</h3>
+          <p>You want to experience the crowd as well as the action in the ring, particularly on Wednesday, Thursday or Sunday.</p>
+        </li>
+        <li>
+          <h3>Choose LEO if you want a front-facing view</h3>
+          <p>You prefer looking directly towards the ring rather than sitting on the floor around it.</p>
+        </li>
+        <li>
+          <h3>Choose LEO if you want to choose your position</h3>
+          <p>You are comfortable with unassigned seating and like the flexibility of selecting your position within the section.</p>
+        </li>
+        <li>
+          <h3>Choose LEO if you want something different from a standard assigned seat</h3>
+          <p>You want to experience the traditional fight-night environment while still having a clear view and a guaranteed seat.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mtx-leo__band mtx-leo__band--ink">
+    <div class="mtx-leo__shell">
+      <h2>LEO Section or another Rajadamnern seat class?</h2>
+      <div class="mtx-leo__map">
+        <figure class="mtx-leo__map-fig"><img src="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg" alt="Rajadamnern Stadium Section 10 LEO seating" loading="lazy" decoding="async"></figure>
+        <div class="mtx-leo__map-body">
+          <ul class="mtx-leo__compare">
+            <li class="mtx-leo__compare--this">Choose LEO for a front-facing view, flexible seating and the strongest local atmosphere on Wednesday, Thursday and Sunday traditional fight nights.</li>
+            <li>Choose Club Class for an elevated view, a numbered seat and a more straightforward option for families and groups.</li>
+            <li>Choose Ringside if you want to be only a few metres from the ring and close to the activity around it.</li>
+            <li>Choose Third Class if you want a wide view across the whole stadium from the highest point.</li>
+          </ul>
+          <p class="mtx-leo__map-go"><a class="mtx-leo__go" href="/rajadamnern-stadium-seating">Compare all Rajadamnern Stadium seat classes</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-leo__band mtx-leo__band--paper">
+    <div class="mtx-leo__shell">
+      <h2>Practical LEO Section information</h2>
+      <ul class="mtx-leo__practical">
+        <li>LEO uses concrete tier seating rather than the plastic seat bases used in Club Class.</li>
+        <li>Guests choose their position within the section, but every ticket guarantees a seat.</li>
+        <li>The principal broadcast cameras and commentary team are positioned in LEO.</li>
+        <li>There is no age restriction preventing children from sitting in LEO. Club Class is normally the calmer and more straightforward family choice, but LEO can suit families who prefer the atmosphere and seating style.</li>
+        <li>There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena.</li>
+        <li>The stadium can feel cool, so a light extra layer may be useful.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mtx-leo__band mtx-leo__band--white" id="mtx-leo-booking">
+    <div class="mtx-leo__shell">
+      <h2>Book the LEO Section</h2>
+      <p class="mtx-leo__booking-copy">Choose LEO if you want a front-facing view of the ring, the freedom to choose your position and the traditional fight-night atmosphere on Wednesday, Thursday or Sunday.</p>
+      <p class="mtx-leo__booking-copy">Your ticket guarantees a seat within Section 10.</p>
+      <p class="mtx-leo__booking-copy">Select your event date, choose LEO and complete your booking securely online.</p>
+      <p class="mtx-leo__booking-copy">Current availability and pricing are shown through the live booking system.</p>
+      <div class="mtx-leo__widget"><div class="muaytix-ticket-selector"></div></div>
+      <p class="mtx-leo__actions">
+        <a class="mtx-leo__btn mtx-leo__btn--blue" href="/rajadamnern-stadium-tickets">Book LEO Tickets</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="mtx-leo__band mtx-leo__band--paper">
+    <div class="mtx-leo__shell">
+      <h2>LEO Section seating questions</h2>
+      <div class="mtx-leo__faq">
+        <details>
+          <summary><h3>What is the LEO Section at Rajadamnern Stadium?</h3></summary>
+          <p>The LEO Section is Section 10, an elevated section facing the front of the ring at Rajadamnern Stadium.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is LEO Section the same as Section 10?</h3></summary>
+          <p>Yes. LEO Section is Section 10 at Rajadamnern Stadium.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is LEO assigned seating?</h3></summary>
+          <p>No. LEO seating is unassigned, which means guests choose their position within the section.</p>
+          <p>Every ticket guarantees a seat.</p>
+        </details>
+
+        <details>
+          <summary><h3>Do I have to stand in LEO?</h3></summary>
+          <p>No. There are no standing areas at Rajadamnern Stadium. Every LEO ticket guarantees a seat.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is LEO the betting section?</h3></summary>
+          <p>LEO is where the local betting crowd gathers on Wednesday New Power, Thursday Petchyindee and Sunday Kiatpetch.</p>
+          <p>This atmosphere does not apply to every night of the week.</p>
+        </details>
+
+        <details>
+          <summary><h3>Do I have to take part in betting?</h3></summary>
+          <p>No. Guests do not have to take part in betting. You can sit alongside the activity, watch what is happening and experience the atmosphere around it.</p>
+        </details>
+
+        <details>
+          <summary><h3>Can visitors bet in LEO?</h3></summary>
+          <p>Visitors may be able to bet, but it should not be described as a simple turn-up-and-bet process. There is a learning curve and established relationships with bookmakers involved.</p>
+        </details>
+
+        <details>
+          <summary><h3>What view do you get from LEO?</h3></summary>
+          <p>LEO directly faces the front of the ring and provides a strong view across the whole canvas.</p>
+        </details>
+
+        <details>
+          <summary><h3>Which rows are best in LEO?</h3></summary>
+          <p>MuayTix generally recommends around Row D and above for the clearest overall sightline.</p>
+          <p>Arriving early gives you more choice of position, but it is not required to secure a seat.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is LEO suitable for children?</h3></summary>
+          <p>Yes. There is no age restriction preventing children from sitting in LEO.</p>
+          <p>Club Class is normally the calmer and more straightforward family choice, but LEO can suit families who prefer the atmosphere and seating style.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is LEO the same level as Club Class?</h3></summary>
+          <p>LEO has effectively the same tier, elevation and row configuration as Club Class next door.</p>
+          <p>The main differences are the concrete tier seating and the unassigned seating arrangement.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is LEO suitable for families?</h3></summary>
+          <p>It can be. Families who prefer a numbered seat and simpler arrival may find Club Class more straightforward. Families who want the LEO atmosphere can choose LEO.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is there a dress code for LEO?</h3></summary>
+          <p>There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-leo__band mtx-leo__band--ink mtx-leo__close">
+    <div class="mtx-leo__shell">
+      <h2>Experience the LEO Section at Rajadamnern Stadium</h2>
+      <p class="mtx-leo__close-copy">Choose LEO for a front-facing view of the ring, flexible seating and the traditional fight-night atmosphere that gathers in Section 10.</p>
+      <p class="mtx-leo__actions">
+        <a class="mtx-leo__btn mtx-leo__btn--blue" href="#mtx-leo-booking">Book LEO Tickets</a>
+      </p>
+      <p class="mtx-leo__elsewhere">
+        <a class="mtx-leo__go" href="/rajadamnern-stadium">Rajadamnern Stadium information</a>
+        <a class="mtx-leo__go" href="/rajadamnern-stadium-tickets">All Rajadamnern Stadium tickets</a>
+        <a class="mtx-leo__go" href="/rajadamnern-stadium-seat-map">See the Rajadamnern Stadium seat map</a>
+        <a class="mtx-leo__go" href="/rajadamnern-stadium-seating">Compare Rajadamnern Stadium seat classes</a>
+      </p>
+    </div>
+  </section>
+
+<!-- Document A section 10. WebPage, BreadcrumbList, FAQPage for the thirteen
+     questions visible on the page, and Organization. No Event schema: this is
+     an evergreen Ringside page, not an event page. No prices, availability or
+     seat numbers in schema, because live inventory owns those. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://muaytix.com#org",
+      "name": "MuayTix",
+      "url": "https://muaytix.com"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://muaytix.com/rajadamnern-stadium-seating/leo-section",
+      "url": "https://muaytix.com/rajadamnern-stadium-seating/leo-section",
+      "name": "LEO Section at Rajadamnern Stadium",
+      "description": "Discover the LEO Section at Rajadamnern Stadium. See Section 10, the front-facing ring view, seating style, betting nights and booking information.",
+      "isPartOf": {
+        "@id": "https://muaytix.com#org"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg",
+        "caption": "Rajadamnern Stadium Section 10 LEO seating"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://muaytix.com/rajadamnern-stadium-seating/leo-section#crumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Rajadamnern Stadium",
+          "item": "https://muaytix.com/rajadamnern-stadium"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Seating",
+          "item": "https://muaytix.com/rajadamnern-stadium-seating"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "LEO Section at Rajadamnern Stadium",
+          "item": "https://muaytix.com/rajadamnern-stadium-seating/leo-section"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://muaytix.com/rajadamnern-stadium-seating/leo-section#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the LEO Section at Rajadamnern Stadium?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The LEO Section is Section 10, an elevated section facing the front of the ring at Rajadamnern Stadium."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is LEO Section the same as Section 10?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. LEO Section is Section 10 at Rajadamnern Stadium."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is LEO assigned seating?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. LEO seating is unassigned, which means guests choose their position within the section.\n\nEvery ticket guarantees a seat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I have to stand in LEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. There are no standing areas at Rajadamnern Stadium. Every LEO ticket guarantees a seat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is LEO the betting section?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LEO is where the local betting crowd gathers on Wednesday New Power, Thursday Petchyindee and Sunday Kiatpetch.\n\nThis atmosphere does not apply to every night of the week."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I have to take part in betting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Guests do not have to take part in betting. You can sit alongside the activity, watch what is happening and experience the atmosphere around it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can visitors bet in LEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Visitors may be able to bet, but it should not be described as a simple turn-up-and-bet process. There is a learning curve and established relationships with bookmakers involved."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What view do you get from LEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LEO directly faces the front of the ring and provides a strong view across the whole canvas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which rows are best in LEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MuayTix generally recommends around Row D and above for the clearest overall sightline.\n\nArriving early gives you more choice of position, but it is not required to secure a seat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is LEO suitable for children?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. There is no age restriction preventing children from sitting in LEO.\n\nClub Class is normally the calmer and more straightforward family choice, but LEO can suit families who prefer the atmosphere and seating style."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is LEO the same level as Club Class?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LEO has effectively the same tier, elevation and row configuration as Club Class next door.\n\nThe main differences are the concrete tier seating and the unassigned seating arrangement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is LEO suitable for families?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It can be. Families who prefer a numbered seat and simpler arrival may find Club Class more straightforward. Families who want the LEO atmosphere can choose LEO."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a dress code for LEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+/* The photograph strip.
+ *
+ * Three across on a desktop screen and a swipeable slider on a phone, which
+ * CSS does on its own. The only thing the script adds is the row of dots, and
+ * it adds them ONLY where the track can actually scroll. A desktop screen must
+ * never show controls for something that is not a carousel, and a browser with
+ * the script switched off still gets the pictures, just without the dots.
+ */
+(function () {
+  var track = document.querySelector('[data-mtx-strip]');
+  var dots = document.querySelector('[data-mtx-strip-dots]');
+  if (!track || !dots) return;
+
+  var shots = [].slice.call(track.querySelectorAll('img'));
+  if (shots.length < 2) return;
+
+  function scrollable() { return track.scrollWidth > track.clientWidth + 4; }
+
+  function build() {
+    dots.innerHTML = '';
+    if (!scrollable()) return;
+    shots.forEach(function (img, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      /* The photograph's own alt text names the position it was taken from,
+         so it is the honest label for the control that goes to it. */
+      b.setAttribute('aria-label', img.getAttribute('alt') || '');
+      b.addEventListener('click', function () {
+        track.scrollTo({ left: img.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      });
+      dots.appendChild(b);
+    });
+    mark();
+  }
+
+  function mark() {
+    var buttons = [].slice.call(dots.children);
+    if (!buttons.length) return;
+    var mid = track.scrollLeft + track.clientWidth / 2;
+    var best = 0, gap = Infinity;
+    shots.forEach(function (img, i) {
+      var centre = img.offsetLeft - track.offsetLeft + img.clientWidth / 2;
+      var d = Math.abs(centre - mid);
+      if (d < gap) { gap = d; best = i; }
+    });
+    buttons.forEach(function (b, i) { b.className = i === best ? 'is-on' : ''; });
+  }
+
+  var waiting;
+  track.addEventListener('scroll', function () {
+    if (waiting) return;
+    waiting = true;
+    requestAnimationFrame(function () { waiting = false; mark(); });
+  });
+  window.addEventListener('resize', build);
+  build();
+})();
+</script>
+</div>

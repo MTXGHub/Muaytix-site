@@ -1,0 +1,91 @@
+{
+  "_rule": "Document B section 4, zero inference. Every value here is supplied by the owner, read back from live inventory, or read out of the repository.",
+
+  "sources": {
+    "copy": "Document A, supplied 28 September 2026, marked LOCKED COPY.",
+    "price": "ticket_classes joined to ticket_class_prices in Supabase jlwopomkqeawrxlapwpc, read 28 September 2026: leo_section, unit_amount 150000 thb, which is 1,500 THB. Document A section 5 says live inventory takes precedence; it agrees.",
+    "url": "Document A section 3 asks for a conflict check. pages/seating-v2/body.html line 88 already links to /rajadamnern-stadium-seating/leo-section. No conflict.",
+    "photographs": "Three LEO photographs supplied by the owner, 28 September 2026, each with his own description. He also said, in the same message, 'Less images for leo section yes'.",
+    "graphic": "Owner: 'Leo graphic image for hero section 1024 x 1024'.",
+    "stadium": "Owner: 'Full view of the stadium with all sections highlighted', 1690 x 900. The same annotated file used on the Club Class page.",
+    "map": "The Rajadamnern seating map already approved and live on the Ringside and Club Class pages."
+  },
+
+  "price_checked": {
+    "document_a": "1,500 THB",
+    "live_minor": 150000,
+    "live_currency": "thb",
+    "match": true,
+    "read": "2026-09-28"
+  },
+
+  "photographs_supplied": [
+    { "id": "1000033687", "url": "https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg",
+      "owner_note": "The view from the front row of Leo section" },
+    { "id": "1000008294", "url": "https://static.tildacdn.com/tild3136-6363-4533-b935-633230626564/1000008294.jpg",
+      "owner_note": "Leo section bench style seating" },
+    { "id": "1000008588", "url": "https://static.tildacdn.com/tild6530-3266-4262-b265-633965366163/1000008588.jpg",
+      "owner_note": "View taken from the back row in Leo section in row g" }
+  ],
+
+  "images": {
+    "mark": {
+      "url": "https://static.tildacdn.com/tild3333-3339-4135-b436-326637666663/1000033984.webp",
+      "alt": "LEO Section. Where the atmosphere lives.",
+      "shape": "square",
+      "why": "The LEO seat class graphic, asked for in the hero. Beside the words, whole, nothing over it.",
+      "alt_source": "The two lines printed on the graphic. The strapline is the one held in ticket_classes.tagline for leo_section."
+    },
+    "hero": {
+      "url": "https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg",
+      "alt": "Rajadamnern Stadium Section 10 LEO seating",
+      "shape": "wide",
+      "why": "1690 x 900, hero size. The annotated stadium view, whose labels name LEO SCECTION twice. Its alt is Document A section 8's approved example line for this page.",
+      "flag": "The labels printed on this file read LEO SCECTION, not LEO SECTION. That is a spelling mistake inside the artwork itself and cannot be fixed from here. Reported, not worked around."
+    },
+    "view_front": {
+      "url": "https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg",
+      "alt": "The view from the front row of Leo section",
+      "shape": "square",
+      "why": "Document A section 3, the front-facing view."
+    },
+    "view_back": {
+      "url": "https://static.tildacdn.com/tild6530-3266-4262-b265-633965366163/1000008588.jpg",
+      "alt": "View taken from the back row in Leo section in row g",
+      "shape": "square",
+      "why": "Document A section 3. Placed beside the front-row frame so the section reads from both ends, which one picture cannot show."
+    },
+    "seating": {
+      "url": "https://static.tildacdn.com/tild3136-6363-4533-b935-633230626564/1000008294.jpg",
+      "alt": "Leo section bench style seating",
+      "shape": "square",
+      "why": "Document A section 5 asks for a visual showing the LEO tier or seating position. This is the concrete tier itself, which is the difference Document A section 6 locks."
+    },
+    "map": {
+      "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
+      "alt": null,
+      "shape": "square",
+      "why": "The full Rajadamnern seating map. Its alt is Document A section 8's approved example line."
+    }
+  },
+
+  "destinations": {
+    "seating": "/rajadamnern-stadium-seating",
+    "seat_map": "/rajadamnern-stadium-seat-map",
+    "stadium": "/rajadamnern-stadium",
+    "tickets": "/rajadamnern-stadium-tickets",
+    "booking_anchor": "#mtx-leo-booking"
+  },
+
+  "seat_colour": {
+    "leo_section": "#FFF200",
+    "ink": "#6B5E00",
+    "note": "The LEO yellow is sampled from the seat map artwork. It measures about 1.04:1 on a pale background, so it is never set as type and never used as a bar on a light band. On the dark bands it is the accent; on the light bands a dark LEO ink is used instead so the bar is actually visible."
+  },
+
+  "blockers": [
+    "Document A section 4 asks for an atmosphere image showing the LEO Section or the wider stadium crowd, and Document B section 6 audits it. No such photograph was supplied. Document A section 4 also says not to use a generic photograph of gamblers, and Document A section 8 says to report a missing asset rather than substitute one, so that section is built without a photograph and is reported here. The owner said in the same message: 'Less images for leo section yes'.",
+    "The section labels printed inside the annotated stadium view read LEO SCECTION, not LEO SECTION. The mistake is baked into the image and cannot be corrected from here. The page's own alt text and copy spell it correctly.",
+    "None of the images can be opened from this environment, because static.tildacdn.com is blocked by the network policy. Each is placed on the owner's own description, not on inspection."
+  ]
+}
