@@ -1503,3 +1503,57 @@ guidance: "Only opens when the rest of the stadium is near full") and "From
 template ("Content Strategy") but both its front block and BG overlay are
 already set to `visibility: false`. Not shown, not a live fault, no action
 needed.
+
+## Promoter logos received, not yet placed: backgrounds are not transparent
+
+Jason sent nine files into a "Promoter logos svg" Drive folder: the six fight
+promotions (RWS, Rajadamnern Knockout, New Power Muay Thai, Petchyindee in two
+colourways, Kiatpetch, All Star Elite Fighter), plus the Rajadamnern Stadium
+logo and MuayTix's own logo in SVG.
+
+**They are not real vector SVGs.** Each file is a flattened PNG photo wrapped
+in an SVG mask trick (the output of an image-to-SVG converter, not a proper
+export). Confirmed by extracting the raster data straight out of each file:
+
+| File | Raster size | Background |
+|---|---|---|
+| RWS | 534×309 | solid black |
+| Rajadamnern Knockout | 187×187 | solid black |
+| New Power Muay Thai | 500×500 | solid black |
+| Petchyindee (silver) | 450×450 | solid black |
+| Petchyindee (green) | 447×447 | solid white |
+| Kiatpetch | 250×250 | solid black |
+| All Star Elite Fighter | 615×615 | solid black |
+| Rajadamnern Stadium | 150×150 | solid black |
+| MuayTix (own logo) | 600×600 | solid white |
+
+None carry an alpha channel. Every one has a hard black or white square baked
+in behind the logo. The logo strip spec calls for transparent backgrounds,
+because the strip sits on a light background, so these would show as ugly
+boxes if placed as-is.
+
+**Two files (Rajadamnern Knockout, Rajadamnern Stadium) needed manual repair.**
+They came back from Drive as inline text rather than to a file, forcing a
+hand-copy of a ~30 to 100KB base64 blob through the Write tool. Both then
+failed a strict PNG CRC check on decode. Diagnosed and fixed: stripped any
+character outside the base64 alphabet from the copied string, then re-padded
+to a multiple of four before decoding. This produced pixel-correct files
+(verified against the byte length Drive itself reported for the source SVG).
+**Lesson: when a download comes back inline instead of auto-saved to a file,
+treat the hand-copy as a real risk of transcription error, not just tedium.**
+
+**Files kept at `webflow/assets/promoters/`**: the nine original `.svg`
+wrappers, and the nine raster PNGs extracted from inside them
+(`*_extracted.png`). Not yet uploaded to Webflow or placed on the site.
+
+**Blocked on a decision from Jason: use as-is with the background boxes, ask
+for true transparent re-exports, or let me attempt automatic background
+removal and check the result from his own screenshot** (this sandbox's image
+viewer is failing on these particular files for reasons unrelated to their
+content, so I cannot eyeball the result myself before publishing).
+
+**Also received, parked:** the Rajadamnern Stadium seating map graphic, kept
+at `webflow/assets/seating-map/rajadamnern-stadium-seating-map-src.jpg`. Its
+legend reads "SINGHA RINGSIDE", which is an alcohol brand name baked into the
+graphic and directly against the brief's own hard rule. Jason has said he'll
+come back to this, so it is not placed anywhere on the site yet.
