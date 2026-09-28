@@ -149,6 +149,28 @@
 }
 .mtx-rs__hero-in { position: relative; }
 .mtx-rs__hero h1 { max-width: 16ch; }
+
+/* The Ringside seat class graphic, asked for in the hero and asked to be seen
+   clearly. Two things follow from "clearly". It is not the backdrop: it sits
+   in its own column beside the words, so no headline is ever set over it. And
+   it is a 1024 square, so it is sized by WIDTH and never cropped: the whole
+   frame, both lines of type and the muaytix mark are always on screen.
+   .mtx-rs figure { margin: 0 } is (0,1,1), so the class is doubled here. */
+.mtx-rs .mtx-rs__hero-in {
+  display: grid; align-items: center;
+  grid-template-columns: minmax(0, 1fr) min(32%, 360px);
+  gap: clamp(28px, 3.4vw, 60px);
+}
+/* Every cell is placed by hand. Grid auto-placement squashed a cell to 6px
+   on the homepage and is not trusted here. The facts and the buttons run the
+   full width underneath, so the four facts keep one line each instead of
+   being crushed into the narrower column beside the graphic. */
+.mtx-rs .mtx-rs__hero-copy { grid-column: 1; grid-row: 1; }
+.mtx-rs .mtx-rs__hero-mark { grid-column: 2; grid-row: 1; margin: 0; }
+.mtx-rs .mtx-rs__hero-base { grid-column: 1 / -1; grid-row: 2; }
+.mtx-rs .mtx-rs__hero-mark img {
+  display: block; width: 100%; height: auto;
+}
 .mtx-rs .mtx-rs__lede {
   margin-top: 18px !important; max-width: 60ch;
   font-size: clamp(16.5px, 1.45vw, 19px); color: rgba(255,255,255,.88);
@@ -485,7 +507,15 @@
    never collapses into three thin slivers or three full-height pictures to
    scroll past. */
 .mtx-rs__strip { position: relative; background: var(--ink); }
-.mtx-rs__strip-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+/* Three squares in a flush row. Same rule as every other square on the page:
+   a square is held by its width, because its width is its height. Three of
+   them across a short screen came to 64 per cent of it, so the track itself
+   is capped at three times the single-square cap and centred. The row stays
+   flush and full-bleed on anything but a short screen. */
+.mtx-rs__strip-track {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  width: min(100%, 168vh); margin-inline: auto;
+}
 /* Three squares across. They are the same shape as each other, so they land
    on the same height without being cut to a box. */
 .mtx-rs__strip-track img { display: block; width: 100%; height: auto; background: #202027; }
@@ -560,6 +590,14 @@
 
 @media (max-width: 860px) {
   .mtx-rs .mtx-rs__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* One column. The copy, the facts and the booking button come first, as
+     Document B section 5 requires, and the graphic sits under them, full
+     width of the shell, still inside the hero. */
+  .mtx-rs .mtx-rs__hero-in { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .mtx-rs .mtx-rs__hero-copy { grid-column: 1; grid-row: 1; }
+  .mtx-rs .mtx-rs__hero-base { grid-column: 1; grid-row: 2; }
+  .mtx-rs .mtx-rs__hero-mark { grid-column: 1; grid-row: 3; margin-top: clamp(28px, 6vw, 44px); }
+  .mtx-rs .mtx-rs__hero-mark img { width: min(100%, 52vh); }
   .mtx-rs__two { grid-template-columns: 1fr; gap: 24px; }
   .mtx-rs__split { grid-template-columns: 1fr; }
   .mtx-rs .mtx-rs__who { grid-template-columns: 1fr; }
@@ -609,10 +647,16 @@
     <img class="mtx-rs__hero-media" src="https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg" alt="View from the corner of section 4, this corner is a fighter corner during fight nights, I is also next to section 5 of Ringside and also has the fighter walkway to the left which splits sections 4 &amp; 3" loading="eager" decoding="async">
     <div class="mtx-rs__hero-wash" aria-hidden="true"></div>
     <div class="mtx-rs__shell mtx-rs__hero-in">
+      <div class="mtx-rs__hero-copy">
       <h1>Rajadamnern Stadium Ringside Seats</h1>
       <p class="mtx-rs__lede">Ringside is the closest public seating to the ring at Rajadamnern Stadium.</p>
       <p class="mtx-rs__lede">From only a few metres away, you are close to the fighters, corners, officials and production team working around the ring throughout the evening.</p>
       <p class="mtx-rs__lede">This is the seat class for guests who want to feel close to the movement, sound and energy of a live Muay Thai fight night.</p>
+      </div>
+      <figure class="mtx-rs__hero-mark">
+        <img src="https://static.tildacdn.com/tild3830-6232-4832-b331-666465393139/1000033985.webp" alt="Ringside. Closest to the ring." width="1024" height="1024" loading="eager" decoding="async">
+      </figure>
+      <div class="mtx-rs__hero-base">
       <dl class="mtx-rs__facts">
         <div class="mtx-rs__fact">
           <dt>Sections</dt>
@@ -635,6 +679,7 @@
         <a class="mtx-rs__btn mtx-rs__btn--blue" href="#mtx-rs-booking">Book Ringside Tickets</a>
         <a class="mtx-rs__btn mtx-rs__btn--ghost" href="/rajadamnern-stadium-seat-map">View the Rajadamnern Seat Map</a>
       </p>
+      </div>
     </div>
   </header>
 

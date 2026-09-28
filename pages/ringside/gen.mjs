@@ -52,10 +52,16 @@ const hero = `  <header class="mtx-rs__hero">
     <img class="mtx-rs__hero-media" src="${esc(IMG.hero.url)}" alt="${esc(IMG.hero.alt)}" loading="eager" decoding="async">
     <div class="mtx-rs__hero-wash" aria-hidden="true"></div>
     <div class="mtx-rs__shell mtx-rs__hero-in">
+      <div class="mtx-rs__hero-copy">
       <h1>${T('hero.h1')}</h1>
       <p class="mtx-rs__lede">${T('hero.p1')}</p>
       <p class="mtx-rs__lede">${T('hero.p2')}</p>
       <p class="mtx-rs__lede">${T('hero.p3')}</p>
+      </div>
+      <figure class="mtx-rs__hero-mark">
+        <img src="${esc(IMG.mark.url)}" alt="${esc(IMG.mark.alt)}" width="1024" height="1024" loading="eager" decoding="async">
+      </figure>
+      <div class="mtx-rs__hero-base">
       <dl class="mtx-rs__facts">
 ${FACTS.map(k => `        <div class="mtx-rs__fact">
           <dt>${T('facts.label.' + k)}</dt>
@@ -66,6 +72,7 @@ ${FACTS.map(k => `        <div class="mtx-rs__fact">
         <a class="mtx-rs__btn mtx-rs__btn--blue" href="${esc(D.booking_anchor)}">${T('hero.cta_primary')}</a>
         <a class="mtx-rs__btn mtx-rs__btn--ghost" href="${esc(D.seat_map)}">${T('hero.cta_secondary')}</a>
       </p>
+      </div>
     </div>
   </header>`;
 

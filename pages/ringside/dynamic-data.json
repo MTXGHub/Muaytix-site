@@ -7,7 +7,8 @@
     "photographs": "Supplied by the owner on 28 September 2026, each with the position it was taken from, in his own words. None of the files can be opened from this environment: static.tildacdn.com is blocked by the network policy.",
     "alt_text": "Document A section 8 supplies three approved alt lines. The owner instructed on 28 September 2026 that all six photographs go on the page, which needs six accurate descriptions. His own note on each photograph, in his words, is used verbatim as its alt text. Nothing here was written by this build. The note on 1000033703 contains the typo \"I is also next to\" and is left exactly as he wrote it.",
     "destinations": "Document A section 9. No URL was composed.",
-    "shapes": "The owner, 28 September 2026: 1000033703 is 1690 x 900 and is a hero-size image for a reason; everything else he supplies is generally 1024 x 1024 and stays square. The overview 1000034569 is wide, measured off his own screen capture at roughly 1.95:1. None of the files can be opened from here."
+    "shapes": "The owner, 28 September 2026: 1000033703 is 1690 x 900 and is a hero-size image for a reason; everything else he supplies is generally 1024 x 1024 and stays square. The overview 1000034569 is wide, measured off his own screen capture at roughly 1.95:1. None of the files can be opened from here.",
+    "mark": "Owner, 28 September 2026: 'I want this image used in the hero section please and I want people to be able to see it clearly also', with the URL. Placed beside the headline at its own 1:1 shape, above the wash, at full opacity."
   },
   "price_checked": {
     "_read": "28 September 2026",
@@ -55,6 +56,13 @@
     }
   ],
   "images": {
+    "mark": {
+      "url": "https://static.tildacdn.com/tild3830-6232-4832-b331-666465393139/1000033985.webp",
+      "alt": "Ringside. Closest to the ring.",
+      "shape": "square",
+      "why": "The Ringside seat class graphic, supplied 28 September and asked for in the hero, seen clearly. A 1024 square, shown whole at full strength above the hero wash. It is never cropped and nothing is set over it.",
+      "alt_source": "The two lines printed on the graphic itself. The strapline is the one held in ticket_classes.tagline for Ringside, so the page, the widget and the artwork all say the same thing."
+    },
     "hero": {
       "url": "https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg",
       "alt": "View from the corner of section 4, this corner is a fighter corner during fight nights, I is also next to section 5 of Ringside and also has the fighter walkway to the left which splits sections 4 & 3",

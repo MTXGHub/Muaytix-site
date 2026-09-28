@@ -57,10 +57,11 @@ const STAND = (w, h) => ({ status: 200, contentType: 'image/svg+xml',
 async function servePictures(target) {
   await target.route('**static.tildacdn.com/**', r => {
     const u = r.request().url();
-    if (/1000034569/.test(u)) return r.fulfill(STAND(1600, 700));   // the overview, wide
-    if (/1000033717/.test(u)) return r.fulfill(STAND(900, 900));    // the seat map, square
-    if (/1000033703/.test(u)) return r.fulfill(STAND(1600, 700));   // the wide picture
-    r.fulfill(STAND(1200, 900));
+    /* The stand-ins must be the real shapes. They were not, and a 1024 square
+       was being measured as a 1200 x 900, which is shorter: the picture-scale
+       check was passing on pictures the page will never actually be sent. */
+    if (/1000033703|1000034569/.test(u)) return r.fulfill(STAND(1690, 900));  // the two hero-size images
+    r.fulfill(STAND(1024, 1024));                                             // everything else is a 1024 square
   });
 }
 
@@ -127,11 +128,45 @@ for (const [w, h] of [[1440, 900], [1280, 800], [1000, 520], [390, 844]]) {
       const share = b.height / window.innerHeight;
       return share > 0.62 && b.height > 0 ? { src: i.getAttribute('src').split('/').pop(), pct: Math.round(share * 100) } : null;
     }).filter(Boolean);
-    return { tight, runOn, huge };
+    /* "I want people to be able to see it clearly." Three things are measured
+       rather than trusted: the graphic is square, so no part of the frame or
+       either line of type is cut off; it is inside the hero; and the point at
+       its centre belongs to the graphic itself, so no headline, wash or
+       button is painted over it. */
+    const markEl = document.querySelector('.mtx-rs__hero-mark img');
+    let mark = null;
+    if (markEl) {
+      /* elementFromPoint only answers for points inside the viewport, so the
+         graphic is scrolled into view before the hit test. Without this the
+         check reported "something is painted over it" on a phone, where the
+         graphic simply sits below the fold. */
+      markEl.scrollIntoView({ block: 'center' });
+      const b = markEl.getBoundingClientRect();
+      const top = document.elementFromPoint(
+        Math.round(b.left + b.width / 2), Math.round(b.top + b.height / 2));
+      window.scrollTo(0, 0);
+      mark = {
+        w: Math.round(b.width), h: Math.round(b.height),
+        ratio: +(b.width / b.height).toFixed(3),
+        inHero: !!markEl.closest('.mtx-rs__hero'),
+        onTop: top === markEl || markEl.contains(top),
+        clipped: b.left < -1 || b.right > window.innerWidth + 1,
+      };
+    }
+    return { tight, runOn, huge, mark };
   });
   r.tight.forEach(t => fail(`${w}x${h}: "${t.text}" sits ${t.gap}px above the next element`));
   r.runOn.forEach(t => fail(`${w}x${h}: "${t.text}" runs into the paragraph above it, ${t.gap}px gap`));
   r.huge.forEach(x => fail(`${w}x${h}: ${x.src} is ${x.pct}% of the screen height`));
+  if (!r.mark) fail(`${w}x${h}: the Ringside graphic is not in the hero`);
+  else {
+    if (Math.abs(r.mark.ratio - 1) > 0.02) fail(`${w}x${h}: the Ringside graphic is ${r.mark.ratio}:1, not square`);
+    if (!r.mark.inHero) fail(`${w}x${h}: the Ringside graphic is outside the hero`);
+    if (!r.mark.onTop) fail(`${w}x${h}: something is painted over the Ringside graphic`);
+    if (r.mark.clipped) fail(`${w}x${h}: the Ringside graphic runs off the screen`);
+    if (r.mark.w < 240) fail(`${w}x${h}: the Ringside graphic is only ${r.mark.w}px wide`);
+    console.log(`   ${String(w) + 'x' + h}  Ringside graphic ${r.mark.w}x${r.mark.h} in the hero, nothing over it`);
+  }
   console.log(`   ${String(w) + 'x' + h}  headings flush: ${r.tight.length}   paragraphs run together: ${r.runOn.length}   pictures over 62% of the screen: ${r.huge.length}`);
   await p.close();
 }
@@ -294,7 +329,19 @@ for (const o of ovImgs) if (norm(o.alt) !== norm(DOC['alt.overview']))
   fail('the overview alt is not the owner\'s approved line for that file');
 console.log(`   overview     | ${data.images.overview.url.split('/').pop().padEnd(13)} | his approved line for this file`);
 
-const approvedUrls = new Set([...SUPPLIED.keys(), data.images.map.url, data.images.overview.url]);
+/* The Ringside seat class graphic, asked for in the hero and asked to be seen
+   clearly. Its alt is the two lines printed on the graphic itself, which is
+   also the strapline held in ticket_classes.tagline, so nothing here is
+   written by this build. "Clearly" is checked, not assumed: it must be inside
+   the hero, square to within a pixel or two so it is never cropped, and no
+   text may be painted over it. */
+const markImgs = imgs.filter(i => i.src === data.images.mark.url);
+if (!markImgs.length) fail('the Ringside graphic is not on the page');
+for (const m of markImgs) if (norm(m.alt) !== norm(data.images.mark.alt))
+  fail('the Ringside graphic alt is not the wording printed on the graphic');
+console.log(`   mark         | ${data.images.mark.url.split('/').pop().padEnd(13)} | the two lines on the graphic`);
+
+const approvedUrls = new Set([...SUPPLIED.keys(), data.images.map.url, data.images.overview.url, data.images.mark.url]);
 const unknown = imgs.filter(i => !approvedUrls.has(i.src));
 unknown.forEach(i => fail(`unapproved image on page: ${i.src}`));
 /* Document A section 8: no image may be described as front row. */
