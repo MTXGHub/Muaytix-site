@@ -6,7 +6,8 @@
     "url": "No conflict. /rajadamnern-stadium-seating/ringside is the only Ringside child URL anywhere in this repository, and the parent seating page already links to it with the approved anchor Explore Ringside. Checked 28 September 2026.",
     "photographs": "Supplied by the owner on 28 September 2026, each with the position it was taken from, in his own words. None of the files can be opened from this environment: static.tildacdn.com is blocked by the network policy.",
     "alt_text": "Document A section 8 supplies three approved alt lines. The owner instructed on 28 September 2026 that all six photographs go on the page, which needs six accurate descriptions. His own note on each photograph, in his words, is used verbatim as its alt text. Nothing here was written by this build. The note on 1000033703 contains the typo \"I is also next to\" and is left exactly as he wrote it.",
-    "destinations": "Document A section 9. No URL was composed."
+    "destinations": "Document A section 9. No URL was composed.",
+    "shapes": "The owner, 28 September 2026: 1000033703 is 1690 x 900 and is a hero-size image for a reason; everything else he supplies is generally 1024 x 1024 and stays square. The overview 1000034569 is wide, measured off his own screen capture at roughly 1.95:1. None of the files can be opened from here."
   },
   "price_checked": {
     "_read": "28 September 2026",
@@ -55,30 +56,35 @@
   ],
   "images": {
     "hero": {
-      "url": "https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg",
-      "alt": "Taken from the 3rd row in Section 5 of Ringside with section 9 of Club class directly behind",
-      "why": "Document A section 1: a Ringside photograph showing the ring from the audience position. The owner places it in the 3rd row of Section 5."
-    },
-    "experience": {
       "url": "https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg",
       "alt": "View from the corner of section 4, this corner is a fighter corner during fight nights, I is also next to section 5 of Ringside and also has the fighter walkway to the left which splits sections 4 & 3",
-      "why": "Document A section 3 asks for a wide image showing the atmosphere around the ring. This is the Section 4 corner, a fighter corner, with the walkway that splits Sections 3 and 4."
+      "shape": "wide",
+      "why": "1690 x 900. A hero-size image, used as the hero."
+    },
+    "experience": {
+      "url": "https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg",
+      "alt": "Taken from the 3rd row in Section 5 of Ringside with section 9 of Club class directly behind",
+      "shape": "square",
+      "why": "1024 square. Document A section 3 allows a wide image OR a two-column section, so it sits square beside the copy rather than being cut into a wide box."
     },
     "seats": {
       "url": "https://static.tildacdn.com/tild3062-6533-4031-b764-353666613966/1000033702.jpg",
       "alt": "View of the actual seats used in Ringside, these are in section 6 with Leo section directly behind",
-      "why": "Document A section 5: a close Ringside image, not labelled front row. The actual Ringside seats, Section 6."
+      "shape": "square",
+      "why": "1024 square. Document A section 5: a close Ringside image, not labelled front row."
     },
     "map": {
       "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
       "alt": null,
-      "why": "Document A section 4 permits the seating map or a cropped detail. Alt is Document A's own approved line."
+      "shape": "square",
+      "why": "1024 square seating map. Contained, never cropped."
     },
     "overview": {
       "url": "https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg",
       "alt": null,
-      "why": "Supplied by the owner 28 September 2026 as the overview showing where Ringside sits against the other seat classes. Placed under the heading of \"Where are the Ringside sections?\", above the seat map.",
-      "flag": "This is character for character the URL he gave for the HERO of /rajadamnern-stadium-seating. Either that page's hero is this annotated overview, which would be a good hero for a comparison page, or one of the two is a slip. It cannot be opened from here to tell. Reported, not guessed."
+      "shape": "wide",
+      "why": "The overview showing where Ringside sits against the other classes. Wide, about 1.95:1 off his screen capture.",
+      "flag": "This URL is character for character the one he gave for the HERO of /rajadamnern-stadium-seating. Reported, not guessed."
     }
   },
   "destinations": {
@@ -95,15 +101,18 @@
   "strip": [
     {
       "url": "https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg",
-      "alt": "Taken from the 4th row in Section 6"
+      "alt": "Taken from the 4th row in Section 6",
+      "shape": "square"
     },
     {
       "url": "https://static.tildacdn.com/tild3431-3465-4161-a238-373562636630/1000013053.jpg",
-      "alt": "Taken from the edge of section 6, and next to section 5 of Ringside"
+      "alt": "Taken from the edge of section 6, and next to section 5 of Ringside",
+      "shape": "square"
     },
     {
       "url": "https://static.tildacdn.com/tild6430-3330-4239-b435-353230396463/1000013051.jpg",
-      "alt": "Taken on the corner between section 5 & 6"
+      "alt": "Taken on the corner between section 5 & 6",
+      "shape": "square"
     }
   ],
   "_strip_note": "Three photographs edge to edge, three across on a desktop screen in the format the owner pointed at on the homepage, and a swipeable slider on a phone. His instruction of 28 September: \"either put them on a slider for mobile view or put them in this format that looks quite good on desktop\". Both.",

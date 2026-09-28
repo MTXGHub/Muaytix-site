@@ -87,9 +87,11 @@
   padding: clamp(56px, 7vw, 104px) 0 clamp(48px, 5.6vw, 84px);
   background: var(--ink); color: var(--white);
 }
+
+.mtx-rs__hero { min-height: min(54vw, 640px); display: flex; align-items: center; }
 .mtx-rs__hero-media {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: center 42%;
+  object-fit: cover; object-position: center;
 }
 .mtx-rs__hero-wash {
   position: absolute; inset: 0;
@@ -211,11 +213,6 @@
   gap: clamp(28px, 3.6vw, 56px); align-items: start;
 }
 
-.mtx-rs__map-fig img {
-  width: 100%; height: auto;
-  max-height: min(48vh, 430px);
-  object-fit: contain; object-position: left top;
-}
 .mtx-rs .mtx-rs__map-body p { max-width: 58ch; font-size: 17px; color: var(--muted); }
 .mtx-rs .mtx-rs__map-body p + p { margin-top: 15px !important; }
 .mtx-rs .mtx-rs__map-list { margin: 22px 0; }
@@ -294,11 +291,20 @@
 
 .mtx-rs__two {
   margin-top: clamp(28px, 3.4vw, 44px);
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(26px, 3.4vw, 54px);
+  display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(26px, 3.4vw, 54px); align-items: start;
 }
-.mtx-rs .mtx-rs__two p { max-width: 54ch; font-size: 17px; color: rgba(255, 255, 255, .86); }
+.mtx-rs .mtx-rs__two p { max-width: 58ch; font-size: 17px; color: rgba(255, 255, 255, .86); }
 .mtx-rs .mtx-rs__two p + p { margin-top: 15px !important; }
+
+.mtx-rs__square, .mtx-rs__split-fig, .mtx-rs__map-fig { width: fit-content; max-width: 100%; }
+.mtx-rs__square img,
+.mtx-rs__split-fig img,
+.mtx-rs__map-fig img {
+  display: block; height: auto;
+  width: min(100%, 56vh);
+}
+.mtx-rs__square::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
 
 .mtx-rs__split {
   margin-top: clamp(28px, 3.4vw, 44px);
@@ -306,11 +312,6 @@
   gap: clamp(26px, 3.4vw, 54px); align-items: start;
 }
 
-.mtx-rs__split-fig img {
-  width: 100%; height: auto;
-  max-height: min(46vh, 470px);
-  object-fit: cover; object-position: center;
-}
 .mtx-rs__split-fig::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
 .mtx-rs .mtx-rs__split-body p { max-width: 60ch; font-size: 17px; color: var(--muted); }
 .mtx-rs .mtx-rs__split-body p + p { margin-top: 15px !important; }
@@ -359,23 +360,23 @@
 
 .mtx-rs .mtx-rs__wide { margin-top: clamp(28px, 3.4vw, 44px); }
 
+.mtx-rs .mtx-rs__wide { width: fit-content; max-width: 100%; }
 .mtx-rs .mtx-rs__wide img {
-  width: 100%; height: auto;
-  aspect-ratio: 21 / 9;
-  max-height: min(48vh, 500px);
-  object-fit: cover; object-position: center;
-  background: #202027;
+  display: block;
+  width: auto; height: auto;
+  max-width: 100%;
+  max-height: min(52vh, 540px);
 }
-@supports not (aspect-ratio: 21 / 9) { .mtx-rs .mtx-rs__wide img { height: min(48vh, 500px); } }
 .mtx-rs__wide::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
 
 .mtx-rs__strip { position: relative; background: var(--ink); }
 .mtx-rs__strip-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
-.mtx-rs__strip-track img {
-  width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;
-  background: #202027;
+
+.mtx-rs__strip-track img { display: block; width: 100%; height: auto; background: #202027; }
+
+@media (max-width: 760px) {
+  .mtx-rs__strip-track img { width: min(100%, 56vh); margin-inline: auto; }
 }
-@supports not (aspect-ratio: 4 / 3) { .mtx-rs__strip-track img { height: 300px; } }
 .mtx-rs__strip-dots { display: none; }
 
 @media (max-width: 760px) {
@@ -384,8 +385,7 @@
     -webkit-overflow-scrolling: touch; scrollbar-width: none;
   }
   .mtx-rs__strip-track::-webkit-scrollbar { display: none; }
-  .mtx-rs__strip-track img { flex: 0 0 100%; scroll-snap-align: center; aspect-ratio: 5 / 4; }
-  @supports not (aspect-ratio: 5 / 4) { .mtx-rs__strip-track img { height: 290px; } }
+  .mtx-rs__strip-track img { flex: 0 0 100%; scroll-snap-align: center; }
   .mtx-rs__strip-dots {
     position: absolute; left: 0; right: 0; bottom: 12px;
     display: flex; justify-content: center; gap: 8px;
@@ -428,8 +428,7 @@
 
 @media (max-width: 860px) {
   .mtx-rs .mtx-rs__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mtx-rs__two { grid-template-columns: 1fr; gap: 0; }
-  .mtx-rs .mtx-rs__two > div + div p:first-child { margin-top: 15px !important; }
+  .mtx-rs__two { grid-template-columns: 1fr; gap: 24px; }
   .mtx-rs__split { grid-template-columns: 1fr; }
   .mtx-rs .mtx-rs__who { grid-template-columns: 1fr; }
   .mtx-rs__who li { padding-right: 0; }
@@ -457,8 +456,7 @@
 }
 
 @media (max-width: 620px) {
-  
-  .mtx-rs .mtx-rs__wide img { aspect-ratio: 3 / 2; max-height: 42vh; }
+  .mtx-rs .mtx-rs__wide img { max-height: none; }
 
   .mtx-rs__shell { width: min(100% - 32px, 1240px); }
   .mtx-rs .mtx-rs__includes { grid-template-columns: 1fr; }
@@ -475,7 +473,7 @@
 }</style>
 
   <header class="mtx-rs__hero">
-    <img class="mtx-rs__hero-media" src="https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg" alt="Taken from the 3rd row in Section 5 of Ringside with section 9 of Club class directly behind" loading="eager" decoding="async">
+    <img class="mtx-rs__hero-media" src="https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg" alt="View from the corner of section 4, this corner is a fighter corner during fight nights, I is also next to section 5 of Ringside and also has the fighter walkway to the left which splits sections 4 &amp; 3" loading="eager" decoding="async">
     <div class="mtx-rs__hero-wash" aria-hidden="true"></div>
     <div class="mtx-rs__shell mtx-rs__hero-in">
       <h1>Rajadamnern Stadium Ringside Seats</h1>
@@ -520,15 +518,13 @@
   <section class="mtx-rs__band mtx-rs__band--ink">
     <div class="mtx-rs__shell">
       <h2>Close enough to be part of the fight night</h2>
-      <figure class="mtx-rs__wide">
-        <img src="https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg" alt="View from the corner of section 4, this corner is a fighter corner during fight nights, I is also next to section 5 of Ringside and also has the fighter walkway to the left which splits sections 4 &amp; 3" loading="lazy" decoding="async">
-      </figure>
       <div class="mtx-rs__two">
-        <div>
+        <figure class="mtx-rs__square">
+          <img src="https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg" alt="Taken from the 3rd row in Section 5 of Ringside with section 9 of Club class directly behind" loading="lazy" decoding="async">
+        </figure>
+        <div class="mtx-rs__two-copy">
           <p>From Ringside, the ring is only a few metres away.</p>
           <p>You see the fighters enter, watch the corners prepare between rounds and follow the officials and production team as they work around the ring.</p>
-        </div>
-        <div>
           <p>You can hear the corner instructions at close range and see the concentration change as each bout develops.</p>
           <p>The view is close, but Ringside is not separated from the rest of the event. The ropes, cameras, officials, team corners and movement around the ring all form part of what you are there to experience.</p>
         </div>

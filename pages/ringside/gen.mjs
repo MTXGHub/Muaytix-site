@@ -83,21 +83,20 @@ const answer = `  <section class="mtx-rs__band mtx-rs__band--paper">
 
 /* ========================================================== EXPERIENCE === */
 
-/* Document A section 3: a wide image showing the atmosphere around the ring,
-   not a fighter close-up. The owner's Section 4 corner shot, which carries
-   the fighter walkway that splits Sections 3 and 4. */
+/* Document A section 3 offers a wide image OR a two-column section. The
+   photograph that belongs here is 1024 square, so it is the two-column
+   section with the square beside the copy, rather than a square cut down to
+   fit a wide box. */
 const experience = `  <section class="mtx-rs__band mtx-rs__band--ink">
     <div class="mtx-rs__shell">
       <h2>${T('experience.h2')}</h2>
-      <figure class="mtx-rs__wide">
-        <img src="${esc(IMG.experience.url)}" alt="${esc(IMG.experience.alt)}" loading="lazy" decoding="async">
-      </figure>
       <div class="mtx-rs__two">
-        <div>
+        <figure class="mtx-rs__square">
+          <img src="${esc(IMG.experience.url)}" alt="${esc(IMG.experience.alt)}" loading="lazy" decoding="async">
+        </figure>
+        <div class="mtx-rs__two-copy">
           <p>${T('experience.p1')}</p>
           <p>${T('experience.p2')}</p>
-        </div>
-        <div>
           <p>${T('experience.p3')}</p>
           <p>${T('experience.p4')}</p>
         </div>
