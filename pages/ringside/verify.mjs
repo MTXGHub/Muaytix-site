@@ -184,22 +184,47 @@ console.log(`   Ringside price ${pc.document_a} checked against live inventory: 
 console.log('\n=== 5. IMAGE AUDIT ===');
 const imgs = await page.evaluate(() =>
   [...document.querySelectorAll('.mtx-rs img')].map(i => ({ src: i.getAttribute('src'), alt: i.getAttribute('alt') })));
-const WANT = [['hero', 'alt.hero'], ['seats', 'alt.seats'], ['map', 'alt.map']];
-console.log('   Asset                      | Image | Alt is Document A approved');
-for (const [key, altKey] of WANT) {
-  const url = data.images[key].url;
-  const found = imgs.filter(i => i.src === url);
-  if (!found.length) { fail(`no <img> on the page uses the ${key} asset`); continue; }
-  const bad = found.filter(i => norm(i.alt) !== norm(DOC[altKey]));
-  if (bad.length) fail(`${key} alt text is not one of Document A section 8's approved lines`);
-  console.log(`   ${key.padEnd(26)} | ${String(found.length).padStart(2)}x   | ${bad.length ? 'NO' : 'yes'}`);
+/* The approved set is the six photographs the owner supplied, plus the seating
+   map. Each photograph's alt text must be his own note on that file, word for
+   word; the map's must be Document A section 8's approved line. */
+const SUPPLIED = new Map(data.photographs_supplied.map(p => [p.url, p]));
+const placed = [
+  ['hero',       data.images.hero],
+  ['experience', data.images.experience],
+  ['seats',      data.images.seats],
+  ...data.strip.map((s, i) => [`strip ${i + 1}`, s]),
+];
+console.log('   Slot         | File          | Alt is the owner\'s own note');
+for (const [slot, img] of placed) {
+  const found = imgs.filter(i => i.src === img.url);
+  if (!found.length) { fail(`no <img> on the page uses the ${slot} photograph`); continue; }
+  const owner = SUPPLIED.get(img.url);
+  if (!owner) { fail(`${slot} uses a file the owner did not supply: ${img.url}`); continue; }
+  const bad = found.filter(i => norm(i.alt) !== norm(owner.owner_note));
+  if (bad.length) fail(`${slot} alt text is not the owner's own note for that file`);
+  console.log(`   ${slot.padEnd(12)} | ${img.url.split('/').pop().padEnd(13)} | ${bad.length ? 'NO' : 'yes'}`);
 }
-console.log(`   Sections 3 to 7 map detail | none  | reported: no cropped detail exists`);
-/* Document A section 8: no image may be described as front row unless
-   verified, and none of these is. */
-for (const i of imgs) if (/front row/i.test(i.alt || '')) fail(`an image is described as front row: ${i.src}`);
-const unknown = imgs.filter(i => !Object.values(data.images).some(v => v.url === i.src));
+/* All six must be on the page: that was the instruction. */
+const onPageUrls = new Set(imgs.map(i => i.src));
+for (const p of data.photographs_supplied)
+  if (!onPageUrls.has(p.url)) fail(`photograph ${p.id} was supplied and is not on the page`);
+console.log(`   ${data.photographs_supplied.filter(p => onPageUrls.has(p.url)).length} of ${data.photographs_supplied.length} supplied photographs are on the page`);
+
+/* The map keeps Document A's own approved alt line. */
+const mapImgs = imgs.filter(i => i.src === data.images.map.url);
+if (!mapImgs.length) fail('the seating map is not on the page');
+for (const m of mapImgs) if (norm(m.alt) !== norm(DOC['alt.map']))
+  fail('the seating map alt is not Document A section 8\'s approved line');
+console.log(`   map          | ${data.images.map.url.split('/').pop().padEnd(13)} | Document A approved line`);
+console.log(`   Sections 3 to 7 map detail: none exists, reported`);
+
+const approvedUrls = new Set([...SUPPLIED.keys(), data.images.map.url]);
+const unknown = imgs.filter(i => !approvedUrls.has(i.src));
 unknown.forEach(i => fail(`unapproved image on page: ${i.src}`));
+/* Document A section 8: no image may be described as front row. */
+for (const i of imgs) if (/front row/i.test(i.alt || '')) fail(`an image is described as front row: ${i.src}`);
+/* Every image must carry alt text. */
+for (const i of imgs) if (!(i.alt || '').trim()) fail(`image with no alt text: ${i.src}`);
 console.log(`   ${imgs.length} images, ${unknown.length} outside the approved set`);
 
 /* ---- 6. Link audit (Document B section 11) ---- */

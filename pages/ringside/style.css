@@ -409,6 +409,54 @@
 .mtx-rs__practical li::before { content: ""; height: 8px; margin-top: 9px; background: var(--ring-green); }
 .mtx-rs .mtx-rs__practical p { font-size: 16.5px; max-width: 54ch; }
 
+/* ------------------------------------------------------- wide picture --- */
+
+.mtx-rs__wide { margin-top: clamp(28px, 3.4vw, 44px); }
+.mtx-rs__wide img {
+  width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover;
+  background: #202027;
+}
+@supports not (aspect-ratio: 21 / 9) { .mtx-rs__wide img { height: 360px; } }
+.mtx-rs__wide::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
+
+/* --------------------------------------------------------------- strip --- */
+
+/* Three photographs edge to edge. Three across on a desktop screen, and on a
+   phone the same three become a swipeable slider one at a time, so the strip
+   never collapses into three thin slivers or three full-height pictures to
+   scroll past. */
+.mtx-rs__strip { position: relative; background: var(--ink); }
+.mtx-rs__strip-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.mtx-rs__strip-track img {
+  width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;
+  background: #202027;
+}
+@supports not (aspect-ratio: 4 / 3) { .mtx-rs__strip-track img { height: 300px; } }
+.mtx-rs__strip-dots { display: none; }
+
+@media (max-width: 760px) {
+  .mtx-rs__strip-track {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .mtx-rs__strip-track::-webkit-scrollbar { display: none; }
+  .mtx-rs__strip-track img { flex: 0 0 100%; scroll-snap-align: center; aspect-ratio: 5 / 4; }
+  @supports not (aspect-ratio: 5 / 4) { .mtx-rs__strip-track img { height: 290px; } }
+  .mtx-rs__strip-dots {
+    position: absolute; left: 0; right: 0; bottom: 12px;
+    display: flex; justify-content: center; gap: 8px;
+  }
+  .mtx-rs__strip-dots button {
+    width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+    background: rgba(255, 255, 255, .5); cursor: pointer;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .3); transition: background .18s ease;
+  }
+  .mtx-rs__strip-dots button.is-on { background: #fff; }
+  .mtx-rs__strip-dots button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+}
+/* An empty dot row must never draw itself. */
+.mtx-rs__strip-dots:empty { display: none; }
+
 /* ----------------------------------------------------------- alignment --- */
 
 /* Stated, not inherited. Tilda centres text by matching every element

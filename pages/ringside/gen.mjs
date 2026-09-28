@@ -49,7 +49,7 @@ if (data.price_checked.match !== true) {
 const FACTS = ['sections', 'price', 'seating', 'location'];
 
 const hero = `  <header class="mtx-rs__hero">
-    <img class="mtx-rs__hero-media" src="${esc(IMG.hero.url)}" alt="${T('alt.hero')}" loading="eager" decoding="async">
+    <img class="mtx-rs__hero-media" src="${esc(IMG.hero.url)}" alt="${esc(IMG.hero.alt)}" loading="eager" decoding="async">
     <div class="mtx-rs__hero-wash" aria-hidden="true"></div>
     <div class="mtx-rs__shell mtx-rs__hero-in">
       <h1>${T('hero.h1')}</h1>
@@ -83,13 +83,15 @@ const answer = `  <section class="mtx-rs__band mtx-rs__band--paper">
 
 /* ========================================================== EXPERIENCE === */
 
-/* Document A section 3 allows a wide image OR a two-column section. It is
-   built as two columns with no photograph, because Document A section 8
-   supplies three approved alt lines and all three are already used
-   accurately elsewhere on this page. See blockers.txt. */
+/* Document A section 3: a wide image showing the atmosphere around the ring,
+   not a fighter close-up. The owner's Section 4 corner shot, which carries
+   the fighter walkway that splits Sections 3 and 4. */
 const experience = `  <section class="mtx-rs__band mtx-rs__band--ink">
     <div class="mtx-rs__shell">
       <h2>${T('experience.h2')}</h2>
+      <figure class="mtx-rs__wide">
+        <img src="${esc(IMG.experience.url)}" alt="${esc(IMG.experience.alt)}" loading="lazy" decoding="async">
+      </figure>
       <div class="mtx-rs__two">
         <div>
           <p>${T('experience.p1')}</p>
@@ -136,7 +138,7 @@ const frontrow = `  <section class="mtx-rs__band mtx-rs__band--paper">
       <h2>${T('frontrow.h2')}</h2>
       <div class="mtx-rs__split">
         <figure class="mtx-rs__split-fig">
-          <img src="${esc(IMG.seats.url)}" alt="${T('alt.seats')}" loading="lazy" decoding="async">
+          <img src="${esc(IMG.seats.url)}" alt="${esc(IMG.seats.alt)}" loading="lazy" decoding="async">
         </figure>
         <div class="mtx-rs__split-body">
           <p>${T('frontrow.p1')}</p>
@@ -147,6 +149,23 @@ const frontrow = `  <section class="mtx-rs__band mtx-rs__band--paper">
         </div>
       </div>
     </div>
+  </section>`;
+
+/* =============================================================== STRIP === */
+
+/* The remaining three photographs, edge to edge. Three across on a desktop
+   screen, in the format the owner pointed at on the homepage, and a
+   swipeable slider on a phone. His instruction of 28 September: put them on
+   a slider for mobile or in that desktop format. Both.
+   
+   The dots are built by the script at the foot of the block and only appear
+   where the slider is actually scrollable, so a desktop screen never shows
+   controls for something that is not a carousel. */
+const strip = `  <section class="mtx-rs__strip" aria-label="${esc(t('hero.h1'))}">
+    <div class="mtx-rs__strip-track" data-mtx-strip>
+${data.strip.map(s => `      <img src="${esc(s.url)}" alt="${esc(s.alt)}" loading="lazy" decoding="async">`).join('\n')}
+    </div>
+    <div class="mtx-rs__strip-dots" data-mtx-strip-dots></div>
   </section>`;
 
 /* ================================================================= WHO === */
@@ -242,27 +261,25 @@ const final = `  <section class="mtx-rs__band mtx-rs__band--ink mtx-rs__close">
 
 /* ---------- reported, not filled in ---------- */
 
-const unused = data.photographs_supplied.filter(p => !p.used);
-blockers.push(`Six Ringside photographs were supplied and two are on the page. Document A section 8 gives three `
-  + `approved alt lines and Document B section 3 forbids writing any, so only images that one of those three `
-  + `describes accurately could be placed. Four are unused: ${unused.map(p => p.id).join(', ')}. Supply alt text and `
-  + `they go in. The one that is missed most is 1000033703, the corner of Section 4 with the fighter walkway, which `
-  + `belongs beside "Where are the Ringside sections?".`);
+blockers.push('The annotated overview photograph, the one labelling Ringside Sections 3&4, 5, 6 and 7 against Club '
+  + 'Class 8 and 9, LEO and Third Class, is not on the Tilda CDN under any URL held here. A page cannot point at a '
+  + 'file with no address. Send its URL and it goes straight into "Where are the Ringside sections?", beside the '
+  + 'seat map, which is exactly where it earns its place.');
+
+blockers.push('Alt text for the six photographs is the owner\'s own note on each one, word for word, because his '
+  + 'instruction to put all six on the page needed six accurate descriptions and Document A section 8 supplies three '
+  + 'approved lines. Nothing was written by this build. His note on 1000033703 reads "I is also next to section 5", '
+  + 'and it is left exactly as he wrote it rather than corrected here.');
 
 blockers.push('No cropped Sections 3 to 7 map detail exists. Document A section 4 permits the seating map OR a '
-  + 'cropped detail, so the full seating map is used, which is the option Document A allows. A cropped detail would '
-  + 'be better and needs its own approved alt line.');
-
-blockers.push('Document A section 3 asks for a wide image or a two-column section for the Ringside experience. It is '
-  + 'built as two columns with no photograph, for the same reason: no approved alt line is left. One of the four '
-  + 'unused photographs belongs here.');
+  + 'cropped detail, so the full seating map is used, which is the option Document A allows.');
 
 blockers.push('None of the images can be opened from this environment, because static.tildacdn.com is blocked by the '
-  + 'network policy. Each is placed on the owner\'s own note about where it was taken, not on inspection. Whether the '
-  + 'hero reads as close enough, and whether any crop hides useful seating information, cannot be judged from here.');
+  + 'network policy. Each is placed on the owner\'s own note about where it was taken, not on inspection. Whether '
+  + 'any crop hides useful seating information cannot be judged from here.');
 
 writeFileSync('body.html',
-  [hero, answer, experience, sections, frontrow, who, compare, practical, booking, faq, final].join('\n\n') + '\n\n');
+  [hero, answer, experience, sections, frontrow, strip, who, compare, practical, booking, faq, final].join('\n\n') + '\n\n');
 
 /* ---------- schema ----------
    Document A section 10: WebPage, BreadcrumbList, FAQPage for visible FAQs
@@ -327,7 +344,7 @@ Already in the block, and there is exactly one. Do not add another in Tilda.
 
 writeFileSync('blockers.txt', blockers.map(b => '- ' + b).join('\n') + '\n');
 console.log(`body.html written from ${Object.keys(DOC).length} locked copy blocks`);
-console.log(`FAQ entries: ${FAQN.length}, quick facts: ${FACTS.length}, photographs used: 2 of 6`);
+console.log(`FAQ entries: ${FAQN.length}, quick facts: ${FACTS.length}, photographs on the page: ${1 + 1 + 1 + data.strip.length} of 6`);
 console.log(`Ringside price checked against live inventory: ${data.price_checked.document_a} = ${data.price_checked.live_minor} minor THB`);
 console.log(`\n${blockers.length} item(s) reported, not filled in:`);
 blockers.forEach(b => console.log('  - ' + b));

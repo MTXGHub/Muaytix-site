@@ -428,6 +428,54 @@
 .mtx-rs__practical li::before { content: ""; height: 8px; margin-top: 9px; background: var(--ring-green); }
 .mtx-rs .mtx-rs__practical p { font-size: 16.5px; max-width: 54ch; }
 
+/* ------------------------------------------------------- wide picture --- */
+
+.mtx-rs__wide { margin-top: clamp(28px, 3.4vw, 44px); }
+.mtx-rs__wide img {
+  width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover;
+  background: #202027;
+}
+@supports not (aspect-ratio: 21 / 9) { .mtx-rs__wide img { height: 360px; } }
+.mtx-rs__wide::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
+
+/* --------------------------------------------------------------- strip --- */
+
+/* Three photographs edge to edge. Three across on a desktop screen, and on a
+   phone the same three become a swipeable slider one at a time, so the strip
+   never collapses into three thin slivers or three full-height pictures to
+   scroll past. */
+.mtx-rs__strip { position: relative; background: var(--ink); }
+.mtx-rs__strip-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.mtx-rs__strip-track img {
+  width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;
+  background: #202027;
+}
+@supports not (aspect-ratio: 4 / 3) { .mtx-rs__strip-track img { height: 300px; } }
+.mtx-rs__strip-dots { display: none; }
+
+@media (max-width: 760px) {
+  .mtx-rs__strip-track {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .mtx-rs__strip-track::-webkit-scrollbar { display: none; }
+  .mtx-rs__strip-track img { flex: 0 0 100%; scroll-snap-align: center; aspect-ratio: 5 / 4; }
+  @supports not (aspect-ratio: 5 / 4) { .mtx-rs__strip-track img { height: 290px; } }
+  .mtx-rs__strip-dots {
+    position: absolute; left: 0; right: 0; bottom: 12px;
+    display: flex; justify-content: center; gap: 8px;
+  }
+  .mtx-rs__strip-dots button {
+    width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+    background: rgba(255, 255, 255, .5); cursor: pointer;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .3); transition: background .18s ease;
+  }
+  .mtx-rs__strip-dots button.is-on { background: #fff; }
+  .mtx-rs__strip-dots button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+}
+/* An empty dot row must never draw itself. */
+.mtx-rs__strip-dots:empty { display: none; }
+
 /* ----------------------------------------------------------- alignment --- */
 
 /* Stated, not inherited. Tilda centres text by matching every element
@@ -515,7 +563,7 @@
 </style>
 
   <header class="mtx-rs__hero">
-    <img class="mtx-rs__hero-media" src="https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg" alt="View of the ring from Ringside at Rajadamnern Stadium" loading="eager" decoding="async">
+    <img class="mtx-rs__hero-media" src="https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg" alt="Taken from the 3rd row in Section 5 of Ringside with section 9 of Club class directly behind" loading="eager" decoding="async">
     <div class="mtx-rs__hero-wash" aria-hidden="true"></div>
     <div class="mtx-rs__shell mtx-rs__hero-in">
       <h1>Rajadamnern Stadium Ringside Seats</h1>
@@ -560,6 +608,9 @@
   <section class="mtx-rs__band mtx-rs__band--ink">
     <div class="mtx-rs__shell">
       <h2>Close enough to be part of the fight night</h2>
+      <figure class="mtx-rs__wide">
+        <img src="https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg" alt="View from the corner of section 4, this corner is a fighter corner during fight nights, I is also next to section 5 of Ringside and also has the fighter walkway to the left which splits sections 4 &amp; 3" loading="lazy" decoding="async">
+      </figure>
       <div class="mtx-rs__two">
         <div>
           <p>From Ringside, the ring is only a few metres away.</p>
@@ -597,7 +648,7 @@
       <h2>Is front row the best Ringside seat?</h2>
       <div class="mtx-rs__split">
         <figure class="mtx-rs__split-fig">
-          <img src="https://static.tildacdn.com/tild3062-6533-4031-b764-353666613966/1000033702.jpg" alt="Ringside seating close to the Muay Thai ring at Rajadamnern Stadium" loading="lazy" decoding="async">
+          <img src="https://static.tildacdn.com/tild3062-6533-4031-b764-353666613966/1000033702.jpg" alt="View of the actual seats used in Ringside, these are in section 6 with Leo section directly behind" loading="lazy" decoding="async">
         </figure>
         <div class="mtx-rs__split-body">
           <p>Front row is the closest and most immersive Ringside position when available.</p>
@@ -608,6 +659,15 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="mtx-rs__strip" aria-label="Rajadamnern Stadium Ringside Seats">
+    <div class="mtx-rs__strip-track" data-mtx-strip>
+      <img src="https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg" alt="Taken from the 4th row in Section 6" loading="lazy" decoding="async">
+      <img src="https://static.tildacdn.com/tild3431-3465-4161-a238-373562636630/1000013053.jpg" alt="Taken from the edge of section 6, and next to section 5 of Ringside" loading="lazy" decoding="async">
+      <img src="https://static.tildacdn.com/tild6430-3330-4239-b435-353230396463/1000013051.jpg" alt="Taken on the corner between section 5 &amp; 6" loading="lazy" decoding="async">
+    </div>
+    <div class="mtx-rs__strip-dots" data-mtx-strip-dots></div>
   </section>
 
   <section class="mtx-rs__band mtx-rs__band--white">
@@ -760,11 +820,71 @@
     </div>
   </section>
 
-<!-- Document A section 10. WebPage, BreadcrumbList, FAQPage for the nine
+<!-- Document A section 10. WebPage, BreadcrumbList, FAQPage for the thirteen
      questions visible on the page, and Organization. No Event schema: this is
-     not an event page. No prices, availability or seat inventory in schema,
-     because live inventory owns those and schema would freeze them. -->
+     an evergreen Ringside page, not an event page. No prices, availability or
+     seat numbers in schema, because live inventory owns those. -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://muaytix.com/#organisation","name":"MuayTix","url":"https://muaytix.com"},{"@type":"WebPage","@id":"https://muaytix.com/rajadamnern-stadium-seating/ringside#webpage","url":"https://muaytix.com/rajadamnern-stadium-seating/ringside","name":"Rajadamnern Stadium Ringside Seats | MuayTix","description":"Book Ringside seats at Rajadamnern Stadium. See the view, sections, front-row guidance, atmosphere and what to expect close to the Muay Thai ring.","isPartOf":{"@type":"WebSite","@id":"https://muaytix.com/#website","name":"MuayTix","url":"https://muaytix.com","publisher":{"@id":"https://muaytix.com/#organisation"}}},{"@type":"BreadcrumbList","@id":"https://muaytix.com/rajadamnern-stadium-seating/ringside#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"MuayTix","item":"https://muaytix.com"},{"@type":"ListItem","position":2,"name":"Rajadamnern Stadium Seating","item":"https://muaytix.com/rajadamnern-stadium-seating"},{"@type":"ListItem","position":3,"name":"Rajadamnern Stadium Ringside Seats","item":"https://muaytix.com/rajadamnern-stadium-seating/ringside"}]},{"@type":"FAQPage","@id":"https://muaytix.com/rajadamnern-stadium-seating/ringside#faq","mainEntity":[{"@type":"Question","name":"How close are Ringside seats to the ring?","acceptedAnswer":{"@type":"Answer","text":"Ringside seats are on the floor and only a few metres from the ring."}},{"@type":"Question","name":"Which sections are Ringside?","acceptedAnswer":{"@type":"Answer","text":"Ringside covers Sections 3 to 7 around the ring."}},{"@type":"Question","name":"Which Ringside sections are closest to the fighter entrance?","acceptedAnswer":{"@type":"Answer","text":"Sections 3 and 4 are closest to the raised fighter entrance walkway, which runs between and through those sections."}},{"@type":"Question","name":"Is front row guaranteed?","acceptedAnswer":{"@type":"Answer","text":"No. Front row is allocated first when available, but it cannot be guaranteed in advance."}},{"@type":"Question","name":"Is front row the best Ringside seat?","acceptedAnswer":{"@type":"Answer","text":"That depends on the experience you want. Front row is the closest and most immersive position. Other rows remain excellent and can offer a wider perspective."}},{"@type":"Question","name":"Are Ringside seats assigned?","acceptedAnswer":{"@type":"Answer","text":"Yes. Ringside is assigned seating."}},{"@type":"Question","name":"Can I sit with my group?","acceptedAnswer":{"@type":"Answer","text":"Groups should book together so seats can be allocated together within the chosen seat class."}},{"@type":"Question","name":"Will fighters walk past my seat?","acceptedAnswer":{"@type":"Answer","text":"Fighter movement varies by fight, corner and event. Sections 3 and 4 are closest to the formal entrance walkway, but post-fight interaction and specific fighter movement should never be guaranteed."}},{"@type":"Question","name":"Will cameras or officials be near Ringside?","acceptedAnswer":{"@type":"Answer","text":"They may be. Judges, officials, cameras, broadcast personnel and production staff work around the ring as part of the live fight-night environment."}},{"@type":"Question","name":"Can food and drinks be served at Ringside?","acceptedAnswer":{"@type":"Answer","text":"Food, soft drinks and beer are available for purchase and can be served directly to Ringside seats during the evening."}},{"@type":"Question","name":"Can I take photographs and videos?","acceptedAnswer":{"@type":"Answer","text":"Yes. Personal photography and video recording are permitted. Flash may be used between bouts, but not while a fight is taking place."}},{"@type":"Question","name":"Is there a dress code for Ringside?","acceptedAnswer":{"@type":"Answer","text":"There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena."}},{"@type":"Question","name":"Are Ringside seats suitable for families?","acceptedAnswer":{"@type":"Answer","text":"Families and groups can choose Ringside if they want assigned seating close to the ring. Club Class is usually the more straightforward family choice for guests who prefer a more elevated position."}}]}]}
+</script>
+
+<script>
+/* The photograph strip.
+ *
+ * Three across on a desktop screen and a swipeable slider on a phone, which
+ * CSS does on its own. The only thing the script adds is the row of dots, and
+ * it adds them ONLY where the track can actually scroll. A desktop screen must
+ * never show controls for something that is not a carousel, and a browser with
+ * the script switched off still gets the pictures, just without the dots.
+ */
+(function () {
+  var track = document.querySelector('[data-mtx-strip]');
+  var dots = document.querySelector('[data-mtx-strip-dots]');
+  if (!track || !dots) return;
+
+  var shots = [].slice.call(track.querySelectorAll('img'));
+  if (shots.length < 2) return;
+
+  function scrollable() { return track.scrollWidth > track.clientWidth + 4; }
+
+  function build() {
+    dots.innerHTML = '';
+    if (!scrollable()) return;
+    shots.forEach(function (img, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      /* The photograph's own alt text names the position it was taken from,
+         so it is the honest label for the control that goes to it. */
+      b.setAttribute('aria-label', img.getAttribute('alt') || '');
+      b.addEventListener('click', function () {
+        track.scrollTo({ left: img.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      });
+      dots.appendChild(b);
+    });
+    mark();
+  }
+
+  function mark() {
+    var buttons = [].slice.call(dots.children);
+    if (!buttons.length) return;
+    var mid = track.scrollLeft + track.clientWidth / 2;
+    var best = 0, gap = Infinity;
+    shots.forEach(function (img, i) {
+      var centre = img.offsetLeft - track.offsetLeft + img.clientWidth / 2;
+      var d = Math.abs(centre - mid);
+      if (d < gap) { gap = d; best = i; }
+    });
+    buttons.forEach(function (b, i) { b.className = i === best ? 'is-on' : ''; });
+  }
+
+  var waiting;
+  track.addEventListener('scroll', function () {
+    if (waiting) return;
+    waiting = true;
+    requestAnimationFrame(function () { waiting = false; mark(); });
+  });
+  window.addEventListener('resize', build);
+  build();
+})();
 </script>
 </div>

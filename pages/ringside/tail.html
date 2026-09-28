@@ -1,8 +1,68 @@
-<!-- Document A section 10. WebPage, BreadcrumbList, FAQPage for the nine
+<!-- Document A section 10. WebPage, BreadcrumbList, FAQPage for the thirteen
      questions visible on the page, and Organization. No Event schema: this is
-     not an event page. No prices, availability or seat inventory in schema,
-     because live inventory owns those and schema would freeze them. -->
+     an evergreen Ringside page, not an event page. No prices, availability or
+     seat numbers in schema, because live inventory owns those. -->
 <script type="application/ld+json">
 @@SCHEMA@@
+</script>
+
+<script>
+/* The photograph strip.
+ *
+ * Three across on a desktop screen and a swipeable slider on a phone, which
+ * CSS does on its own. The only thing the script adds is the row of dots, and
+ * it adds them ONLY where the track can actually scroll. A desktop screen must
+ * never show controls for something that is not a carousel, and a browser with
+ * the script switched off still gets the pictures, just without the dots.
+ */
+(function () {
+  var track = document.querySelector('[data-mtx-strip]');
+  var dots = document.querySelector('[data-mtx-strip-dots]');
+  if (!track || !dots) return;
+
+  var shots = [].slice.call(track.querySelectorAll('img'));
+  if (shots.length < 2) return;
+
+  function scrollable() { return track.scrollWidth > track.clientWidth + 4; }
+
+  function build() {
+    dots.innerHTML = '';
+    if (!scrollable()) return;
+    shots.forEach(function (img, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      /* The photograph's own alt text names the position it was taken from,
+         so it is the honest label for the control that goes to it. */
+      b.setAttribute('aria-label', img.getAttribute('alt') || '');
+      b.addEventListener('click', function () {
+        track.scrollTo({ left: img.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      });
+      dots.appendChild(b);
+    });
+    mark();
+  }
+
+  function mark() {
+    var buttons = [].slice.call(dots.children);
+    if (!buttons.length) return;
+    var mid = track.scrollLeft + track.clientWidth / 2;
+    var best = 0, gap = Infinity;
+    shots.forEach(function (img, i) {
+      var centre = img.offsetLeft - track.offsetLeft + img.clientWidth / 2;
+      var d = Math.abs(centre - mid);
+      if (d < gap) { gap = d; best = i; }
+    });
+    buttons.forEach(function (b, i) { b.className = i === best ? 'is-on' : ''; });
+  }
+
+  var waiting;
+  track.addEventListener('scroll', function () {
+    if (waiting) return;
+    waiting = true;
+    requestAnimationFrame(function () { waiting = false; mark(); });
+  });
+  window.addEventListener('resize', build);
+  build();
+})();
 </script>
 </div>
