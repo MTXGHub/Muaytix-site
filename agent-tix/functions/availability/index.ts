@@ -251,7 +251,7 @@ Deno.serve(async (req: Request) => {
 
       const { data: cat, error: catError } = await supabase
         .from("ticket_classes")
-        .select("code,name,description,accent_colour,accent_ink,display_order")
+        .select("code,name,description,tagline,accent_colour,accent_ink,display_order")
         .eq("active", true)
         .order("display_order");
       if (catError) throw catError;
@@ -293,6 +293,7 @@ Deno.serve(async (req: Request) => {
           code: c.code,
           name: c.name,
           description: c.description,
+          tagline: c.tagline ?? null,
           colour: c.accent_colour,
           ink: c.accent_ink,
           nightsOnSale: onSale.get(c.code) ?? 0,
