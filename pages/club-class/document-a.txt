@@ -1,0 +1,314 @@
+# RAJADAMNERN STADIUM CLUB CLASS SEATS: LOCKED COPY, transcribed from Document A.
+#
+# Supplied by the owner, 28 September 2026, marked LOCKED COPY.
+# This file is the only place this page's prose exists. gen.mjs renders it by
+# key and verify.mjs reads the built page back and diffs it against this file.
+#
+# Document B section 2: reproduced exactly. No rewriting, paraphrasing,
+# shortening, expanding, polishing, alternative headlines, alternative CTAs,
+# new FAQs or supporting sentences.
+# Document B section 3: zero independently authored customer-facing sentences.
+
+[meta.seo_title]
+Rajadamnern Stadium Club Class Seats | MuayTix
+
+[meta.description]
+Discover Club Class at Rajadamnern Stadium. See Sections 8 and 9, the elevated view, numbered seating, best rows and why it suits families and groups.
+
+[meta.social_title]
+Rajadamnern Stadium Club Class Seats
+
+[meta.social_description]
+Choose Club Class for an elevated view of the ring, assigned numbered seating and easy access to the facilities at Rajadamnern Stadium.
+
+[hero.h1]
+Rajadamnern Stadium Club Class Seats
+
+[hero.p1]
+Club Class gives you an elevated view across the ring, with a numbered seat waiting for you when you arrive.
+
+[hero.p2]
+Located in Sections 8 and 9, it is Rajadamnern Stadium's most popular seating choice, combining a clear view of the fight with simple arrival, easy access to facilities and the reassurance of assigned seating.
+
+[hero.p3]
+For families, groups and first-time visitors, Club Class is the dependable way to enjoy the night.
+
+[facts.label.sections]
+Sections
+
+[facts.value.sections]
+8 and 9
+
+[facts.label.price]
+Price
+
+[facts.value.price]
+1,800 THB
+
+[facts.label.seating]
+Seating
+
+[facts.value.seating]
+Assigned, numbered seat
+
+[facts.label.location]
+Location
+
+[facts.value.location]
+Elevated main arena
+
+[hero.cta_primary]
+Book Club Class Tickets
+
+[hero.cta_secondary]
+View the Rajadamnern Seat Map
+
+[answer.h2]
+What is Club Class at Rajadamnern Stadium?
+
+[answer.p1]
+Club Class is assigned seating in Sections 8 and 9, on the elevated tier of the main arena.
+
+[answer.p2]
+Every guest receives a numbered seat, making it easy to arrive, find your place and sit together as a group.
+
+[answer.p3]
+From Club Class, you look down across the ring and can follow the fighters, corners and movement across the canvas.
+
+[answer.p4]
+It is especially suitable for families, groups and first-time visitors who want a clear view without sitting on the floor beside the ring.
+
+[view.h2]
+See the whole ring from above
+
+[view.p1]
+Club Class looks down across the ring from the elevated main-arena tier.
+
+[view.p2]
+The raised position gives you a broad view of the canvas, so it is easy to follow movement from one side of the ring to the other.
+
+[view.p3]
+You can watch the fighters enter, see the corners working between rounds and take in more of the stadium around the ring.
+
+[view.p4]
+MuayTix generally recommends Row D and above for the optimal viewing position. This brings you fully above the eye line of people moving along the walkway and creates a strong elevated perspective.
+
+[view.p5]
+Rows A, B and C still provide a clear view of the ring. The row guidance is a preference, not a warning that the lower rows are poor seats.
+
+[families.h2]
+A straightforward choice for families and groups
+
+[families.p1]
+Club Class is MuayTix's most popular seating section, chosen by approximately 55% of guests.
+
+[families.p2]
+It is particularly suitable for families with younger children because everyone has a numbered seat and the section is straightforward to navigate.
+
+[families.p3]
+It also works well for groups who want to sit together without choosing an unassigned position on arrival.
+
+[families.p4]
+Food, drinks, toilets and other facilities are easy to reach from the section, helping the evening run simply from arrival through to the final bout.
+
+[seats.h2]
+Simple seating, a clear view and less to think about
+
+[seats.p1]
+Club Class seats are simple blue plastic seat bases fixed onto the elevated tier.
+
+[seats.p2]
+They are not presented as padded or luxurious seats. The strength of Club Class is the position, the clear view and the ease of having a numbered seat.
+
+[seats.p3]
+You know where you are sitting before you arrive, and stadium staff can direct you to your position.
+
+[seats.p4]
+That makes Club Class a practical choice for visitors who want to spend the evening watching the Muay Thai rather than working out the seating arrangement.
+
+[who.h2]
+Who should choose Club Class?
+
+[who.q1]
+Choose Club Class if you are visiting Rajadamnern for the first time
+
+[who.a1]
+The numbered seating and elevated view make Club Class simple to understand from the moment you arrive.
+
+[who.q2]
+Choose Club Class if you are travelling with children
+
+[who.a2]
+The section is elevated, assigned and easy to navigate, with facilities close by.
+
+[who.q3]
+Choose Club Class if you are booking for a group
+
+[who.a3]
+Everyone receives a numbered seat, making it easier to allocate seats together within the section.
+
+[who.q4]
+Choose Club Class if you want a dependable all-round view
+
+[who.a4]
+You can follow the entire ring from above while still seeing the entrances, corners and wider stadium atmosphere.
+
+[compare.h2]
+Club Class or another Rajadamnern seat class?
+
+[compare.p1]
+Choose Club Class for an elevated view, a numbered seat and easy access to facilities.
+
+[compare.p2]
+Choose Ringside if you want to be only a few metres from the ring and close to the activity around it.
+
+[compare.p3]
+Choose LEO Section if you want a front-facing view and a more involved local atmosphere on Wednesday, Thursday and Sunday traditional fight nights.
+
+[compare.p4]
+Choose Third Class if you want a wide view across the whole stadium from the highest point.
+
+[compare.link]
+Compare all Rajadamnern Stadium seat classes
+
+[booking.h2]
+Book Club Class once your plans are confirmed
+
+[booking.p1]
+Club Class is popular because it gives guests an elevated view and the reassurance of assigned seating.
+
+[booking.p2]
+Preferred rows can disappear well before the event, particularly as busy travel periods approach. Once you know which fight night you want to attend, book your tickets rather than waiting for an arbitrary booking window.
+
+[booking.p3]
+Your seats are numbered within Sections 8 and 9.
+
+[booking.p4]
+Current availability and pricing are shown through the live booking system.
+
+[booking.cta]
+Book Club Class Tickets
+
+[practical.h2]
+Practical Club Class information
+
+[practical.1]
+Club Class is located in the elevated main arena.
+
+[practical.2]
+Food, drinks, toilets and other facilities are easy to reach from the section.
+
+[practical.3]
+Camera operators and production activity may be visible during the evening. They are part of the modern live fight-night production and should not be treated as a defect in the seating.
+
+[practical.4]
+There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena.
+
+[practical.5]
+The stadium can feel cool, so a light extra layer may be useful.
+
+[faq.h2]
+Club Class seating questions
+
+[faq.q1]
+What is Club Class at Rajadamnern Stadium?
+
+[faq.a1]
+Club Class is assigned, numbered seating in Sections 8 and 9, located on the elevated tier of the main arena.
+
+[faq.q2]
+What view do you get from Club Class?
+
+[faq.a2]
+Club Class looks down across the ring from above, giving you a broad view of the canvas, corners, fighter entrances and wider stadium.
+
+[faq.q3]
+Is Club Class assigned seating?
+
+[faq.a3]
+Yes. Every guest receives a numbered seat, and stadium staff can direct guests to it.
+
+[faq.q4]
+Which rows are best in Club Class?
+
+[faq.a4]
+MuayTix generally recommends Row D and above for the optimal elevated viewing position.
+
+Rows A, B and C still provide a clear view of the ring. The recommendation reflects the preferred perspective rather than a warning about the lower rows.
+
+[faq.q5]
+Is Club Class suitable for families?
+
+[faq.a5]
+Yes. Club Class is MuayTix's most popular choice for families, particularly families with younger children. The seating is assigned, elevated and easy to navigate.
+
+[faq.q6]
+Is Club Class suitable for groups?
+
+[faq.a6]
+Yes. Each guest receives a numbered seat, making Club Class suitable for groups who want to sit together.
+
+Groups should book together so seats can be allocated together within the chosen section.
+
+[faq.q7]
+Are Club Class seats padded?
+
+[faq.a7]
+No. Club Class uses simple blue plastic seat bases fixed onto the elevated tier.
+
+The value of Club Class is its position, view and numbered seating rather than padded seating.
+
+[faq.q8]
+Are cameras or production staff near Club Class?
+
+[faq.a8]
+Camera operators and production activity may be visible during the evening. They are part of the live fight-night production.
+
+They should not be described as an obstruction.
+
+[faq.q9]
+Are food and toilets close to Club Class?
+
+[faq.a9]
+Food, drinks, toilets and other facilities are easy to reach from the section.
+
+[faq.q10]
+Is there a dress code for Club Class?
+
+[faq.a10]
+There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena.
+
+[faq.q11]
+Should I book Club Class in advance?
+
+[faq.a11]
+If you know which fight night you want to attend, it is sensible to book once your plans are confirmed. Preferred rows can disappear before the event, particularly during busier periods.
+
+[final.h2]
+See the fight clearly from Club Class
+
+[final.p1]
+Choose Club Class for an elevated view of the ring, a numbered seat and a straightforward way to enjoy your night at Rajadamnern Stadium.
+
+[final.cta]
+Book Club Class Tickets
+
+# Document A section 9: the approved anchor concepts for the internal links.
+
+[link.seating]
+Compare Rajadamnern Stadium seat classes
+
+[link.seat_map]
+See the Rajadamnern Stadium seat map
+
+[link.stadium]
+Rajadamnern Stadium information
+
+[link.tickets]
+All Rajadamnern Stadium tickets
+
+# Document A section 8: the approved alt-text examples. Used for the seating
+# map, which the owner did not supply a note for.
+
+[alt.map]
+Rajadamnern Stadium Club Class Sections 8 and 9

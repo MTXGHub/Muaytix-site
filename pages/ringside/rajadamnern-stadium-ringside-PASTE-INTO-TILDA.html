@@ -135,6 +135,12 @@
 }
 .mtx-rs__answer-list li::before { content: ""; background: var(--seat); }
 .mtx-rs .mtx-rs__answer-list p { font-size: 17px; max-width: 70ch; }
+
+#mtx-rs.mtx-rs .mtx-rs__answer-copy {
+  margin-top: 16px; max-width: 70ch;
+  font-size: clamp(16px, 1.35vw, 18px);
+}
+
 .mtx-rs .mtx-rs__answer-close {
   margin-top: 26px !important; max-width: 62ch;
   font-family: var(--display); font-weight: 800;
@@ -335,6 +341,10 @@
   font-weight: 600; color: var(--ink) !important;
 }
 
+#mtx-rs.mtx-rs .mtx-rs__faq p { margin-top: 14px; }
+#mtx-rs.mtx-rs .mtx-rs__faq p + p { margin-top: 14px; }
+#mtx-rs.mtx-rs .mtx-rs__split-body p + p { margin-top: 16px; }
+
 .mtx-rs .mtx-rs__who {
   margin-top: clamp(28px, 3.4vw, 44px);
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -342,7 +352,7 @@
 }
 .mtx-rs__who li { padding: 26px clamp(22px, 2.6vw, 40px) 28px 0; border-bottom: 1px solid var(--rule); }
 .mtx-rs__who li::before { content: ""; display: block; width: 34px; height: 5px; margin-bottom: 16px; background: var(--ring-green); }
-.mtx-rs .mtx-rs__who p { margin-top: 12px !important; max-width: 46ch; font-size: 16.5px; color: var(--muted); }
+.mtx-rs .mtx-rs__who p { margin-top: 16px !important; max-width: 46ch; font-size: 16.5px; color: var(--muted); }
 
 .mtx-rs .mtx-rs__compare {
   margin-top: clamp(28px, 3.4vw, 44px);

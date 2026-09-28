@@ -1,19 +1,19 @@
-/* RAJADAMNERN STADIUM RINGSIDE SEATS
+/* RAJADAMNERN STADIUM CLUB CLASS SEATS
  * ----------------------------------------------------------------------
- * Scoped under .mtx-rs. Same system as the parent seating page, so the two
+ * Scoped under .mtx-cc. Same system as the parent seating page, so the two
  * read as one site: same neutrals, same type scale, same buttons.
  *
  * The alignment and colour blocks at the foot are not optional. Tilda applies
  * its own rules inside a zero block and matches every element directly, which
  * beats anything inherited. They are written in from the start, not bolted on.
  *
- * The Ringside class colour is used as a bar only, never as type.
+ * The Club Class class colour is used as a bar only, never as type.
  */
 
 
-.mtx-rs, .mtx-rs * { box-sizing: border-box; }
+.mtx-cc, .mtx-cc * { box-sizing: border-box; }
 
-.mtx-rs {
+.mtx-cc {
   --ink:        #0B0B0D;
   --paper:      #F4F3F0;
   --white:      #FFFFFF;
@@ -24,8 +24,8 @@
   --blue:       #1F5BFF;
   --blue-dark:  #1540C9;
   --blue-lite:  #6D95FF;
-  /* The Ringside class colour, from the owner's seat map artwork. A bar only. */
-  --ring-green: #00A651;
+  /* The Club Class class colour, from the owner's seat map artwork. A bar only. */
+  --cc-blue: #27AAE1;
 
   --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
   --body:    "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -41,31 +41,31 @@
   -webkit-font-smoothing: antialiased;
 }
 
-.mtx-rs p, .mtx-rs h1, .mtx-rs h2, .mtx-rs h3,
-.mtx-rs ul, .mtx-rs ol, .mtx-rs li, .mtx-rs figure, .mtx-rs table { margin: 0; padding: 0; }
-.mtx-rs ul, .mtx-rs ol { list-style: none; }
-.mtx-rs img { display: block; max-width: 100%; }
+.mtx-cc p, .mtx-cc h1, .mtx-cc h2, .mtx-cc h3,
+.mtx-cc ul, .mtx-cc ol, .mtx-cc li, .mtx-cc figure, .mtx-cc table { margin: 0; padding: 0; }
+.mtx-cc ul, .mtx-cc ol { list-style: none; }
+.mtx-cc img { display: block; max-width: 100%; }
 
-.mtx-rs__shell { width: min(100% - 48px, 1240px); margin-inline: auto; }
+.mtx-cc__shell { width: min(100% - 48px, 1240px); margin-inline: auto; }
 
-.mtx-rs__band { padding: clamp(52px, 6.4vw, 100px) 0; }
-.mtx-rs__band--paper { background: var(--paper); }
-.mtx-rs__band--white { background: var(--white); }
-.mtx-rs__band--ink   { background: var(--ink); color: var(--white); }
+.mtx-cc__band { padding: clamp(52px, 6.4vw, 100px) 0; }
+.mtx-cc__band--paper { background: var(--paper); }
+.mtx-cc__band--white { background: var(--white); }
+.mtx-cc__band--ink   { background: var(--ink); color: var(--white); }
 
 /* ---------------------------------------------------------------- type --- */
 
-.mtx-rs h1, .mtx-rs h2, .mtx-rs h3 {
+.mtx-cc h1, .mtx-cc h2, .mtx-cc h3 {
   font-family: var(--display); font-weight: 800;
   text-transform: uppercase; letter-spacing: -.005em; line-height: .94;
 }
-.mtx-rs h1 { font-size: var(--t-mega); letter-spacing: -.015em; }
-.mtx-rs h2 { font-size: var(--t-xl); }
-.mtx-rs h3 { font-size: clamp(20px, 2vw, 27px); }
+.mtx-cc h1 { font-size: var(--t-mega); letter-spacing: -.015em; }
+.mtx-cc h2 { font-size: var(--t-xl); }
+.mtx-cc h3 { font-size: clamp(20px, 2vw, 27px); }
 
 /* ------------------------------------------------------------- buttons --- */
 
-.mtx-rs__btn {
+.mtx-cc__btn {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: 54px; padding: 0 26px; border: 2px solid transparent;
   font-family: var(--display); font-weight: 800;
@@ -73,27 +73,27 @@
   text-decoration: none; cursor: pointer;
   transition: background-color .18s ease, color .18s ease, border-color .18s ease;
 }
-.mtx-rs__btn--blue  { background: var(--blue); color: var(--white); }
-.mtx-rs__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
-.mtx-rs__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
-.mtx-rs__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
-.mtx-rs__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
-.mtx-rs__btn--line:hover  { background: var(--ink); color: var(--white); }
-.mtx-rs__btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.mtx-cc__btn--blue  { background: var(--blue); color: var(--white); }
+.mtx-cc__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
+.mtx-cc__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
+.mtx-cc__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+.mtx-cc__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
+.mtx-cc__btn--line:hover  { background: var(--ink); color: var(--white); }
+.mtx-cc__btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
 
-.mtx-rs__go {
+.mtx-cc__go {
   display: inline-block; text-decoration: none;
   font-family: var(--display); font-weight: 800;
   font-size: 15px; line-height: 1.35; letter-spacing: .075em; text-transform: uppercase;
   color: var(--ink); padding-bottom: 3px; border-bottom: 2px solid currentColor;
   transition: color .18s ease;
 }
-.mtx-rs__go:hover { color: var(--blue); }
-.mtx-rs__band--ink .mtx-rs__go { color: var(--white); }
-.mtx-rs__band--ink .mtx-rs__go:hover { color: var(--blue-lite); }
-.mtx-rs__go:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+.mtx-cc__go:hover { color: var(--blue); }
+.mtx-cc__band--ink .mtx-cc__go { color: var(--white); }
+.mtx-cc__band--ink .mtx-cc__go:hover { color: var(--blue-lite); }
+.mtx-cc__go:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
 
-.mtx-rs .mtx-rs__actions {
+.mtx-cc .mtx-cc__actions {
   display: flex; flex-wrap: wrap; gap: 12px;
   margin-top: 32px !important; max-width: none !important;
 }
@@ -104,7 +104,7 @@
    on desktop and mobile, and the booking CTA must be reachable within the
    first major mobile view. The hero is deliberately shallow for that reason:
    it is not a full-screen photograph with the words pushed below it. */
-.mtx-rs__hero {
+.mtx-cc__hero {
   position: relative; overflow: hidden;
   padding: clamp(56px, 7vw, 104px) 0 clamp(48px, 5.6vw, 84px);
   background: var(--ink); color: var(--white);
@@ -113,31 +113,36 @@
    band is as tall as the words in it, so the band is given a floor close to
    the picture's own 1.88:1 and the picture fills it: at that shape almost
    nothing is lost off the top or the bottom. */
-.mtx-rs__hero { min-height: min(54vw, 640px); display: flex; align-items: center; }
-.mtx-rs__hero-media {
+.mtx-cc__hero { min-height: min(54vw, 640px); display: flex; align-items: center; }
+.mtx-cc__hero-media {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: center;
 }
-.mtx-rs__hero-wash {
+/* The hero picture is the annotated stadium view, and its labels are large
+   printed type. At the Ringside page's wash strength they came through as
+   half-legible words behind the headline, which reads as a fault rather than
+   as a backdrop. The wash is stronger here so the picture reads as the room
+   it is, and the labels do their real job at full size further down. */
+.mtx-cc__hero-wash {
   position: absolute; inset: 0;
   background:
-    linear-gradient(to top, rgba(11,11,13,.96) 0%, rgba(11,11,13,.70) 38%, rgba(11,11,13,.34) 78%, rgba(11,11,13,.40) 100%),
-    linear-gradient(100deg, rgba(11,11,13,.92) 0%, rgba(11,11,13,.74) 42%, rgba(11,11,13,.28) 80%, rgba(11,11,13,.14) 100%);
+    linear-gradient(to top, rgba(11,11,13,.97) 0%, rgba(11,11,13,.86) 38%, rgba(11,11,13,.70) 78%, rgba(11,11,13,.74) 100%),
+    linear-gradient(100deg, rgba(11,11,13,.95) 0%, rgba(11,11,13,.88) 42%, rgba(11,11,13,.62) 80%, rgba(11,11,13,.50) 100%);
 }
-.mtx-rs__hero::before {
+.mtx-cc__hero::before {
   content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
   background: var(--blue); z-index: 2;
 }
-.mtx-rs__hero-in { position: relative; }
-.mtx-rs__hero h1 { max-width: 16ch; }
+.mtx-cc__hero-in { position: relative; }
+.mtx-cc__hero h1 { max-width: 16ch; }
 
-/* The Ringside seat class graphic, asked for in the hero and asked to be seen
+/* The Club Class seat class graphic, asked for in the hero and asked to be seen
    clearly. Two things follow from "clearly". It is not the backdrop: it sits
    in its own column beside the words, so no headline is ever set over it. And
    it is a 1024 square, so it is sized by WIDTH and never cropped: the whole
    frame, both lines of type and the muaytix mark are always on screen.
-   .mtx-rs figure { margin: 0 } is (0,1,1), so the class is doubled here. */
-.mtx-rs .mtx-rs__hero-in {
+   .mtx-cc figure { margin: 0 } is (0,1,1), so the class is doubled here. */
+.mtx-cc .mtx-cc__hero-in {
   display: grid; align-items: center;
   grid-template-columns: minmax(0, 1fr) min(32%, 360px);
   gap: clamp(28px, 3.4vw, 60px);
@@ -146,13 +151,13 @@
    on the homepage and is not trusted here. The facts and the buttons run the
    full width underneath, so the four facts keep one line each instead of
    being crushed into the narrower column beside the graphic. */
-.mtx-rs .mtx-rs__hero-copy { grid-column: 1; grid-row: 1; }
-.mtx-rs .mtx-rs__hero-mark { grid-column: 2; grid-row: 1; margin: 0; }
-.mtx-rs .mtx-rs__hero-base { grid-column: 1 / -1; grid-row: 2; }
-.mtx-rs .mtx-rs__hero-mark img {
+.mtx-cc .mtx-cc__hero-copy { grid-column: 1; grid-row: 1; }
+.mtx-cc .mtx-cc__hero-mark { grid-column: 2; grid-row: 1; margin: 0; }
+.mtx-cc .mtx-cc__hero-base { grid-column: 1 / -1; grid-row: 2; }
+.mtx-cc .mtx-cc__hero-mark img {
   display: block; width: 100%; height: auto;
 }
-.mtx-rs .mtx-rs__lede {
+.mtx-cc .mtx-cc__lede {
   margin-top: 18px !important; max-width: 60ch;
   font-size: clamp(16.5px, 1.45vw, 19px); color: rgba(255,255,255,.88);
 }
@@ -161,27 +166,28 @@
 
 /* Document A section 4: a short text block with no image, placed immediately
    below the hero, that answers the question quickly. */
-.mtx-rs__answer { max-width: 1000px; }
-.mtx-rs .mtx-rs__answer-lead {
+.mtx-cc__answer { max-width: 1000px; }
+.mtx-cc .mtx-cc__answer-lead {
   margin-top: 20px !important; max-width: 62ch;
   font-size: clamp(17px, 1.5vw, 20px); color: var(--muted);
 }
-.mtx-rs .mtx-rs__answer-list { margin-top: 26px; display: grid; gap: 0; }
-.mtx-rs__answer-list li {
+.mtx-cc .mtx-cc__answer-list { margin-top: 26px; display: grid; gap: 0; }
+.mtx-cc__answer-list li {
   display: grid; grid-template-columns: 6px minmax(0, 1fr);
   column-gap: 20px; padding: 16px 0; border-top: 1px solid var(--rule);
 }
-.mtx-rs__answer-list li::before { content: ""; background: var(--seat); }
-.mtx-rs .mtx-rs__answer-list p { font-size: 17px; max-width: 70ch; }
-/* These middle paragraphs had no rule of their own and were relying on the
-   host for the air between them. The id is doubled in so nothing the host
-   sets on #allrecords p can zero it. */
-#mtx-rs.mtx-rs .mtx-rs__answer-copy {
+.mtx-cc__answer-list li::before { content: ""; background: var(--seat); }
+.mtx-cc .mtx-cc__answer-list p { font-size: 17px; max-width: 70ch; }
+/* Document A section 2's middle paragraphs. They had no rule of their own and
+   sat flush against each other: a whole class of fault this page must not
+   depend on the host to fix. The id is doubled in so nothing the host sets on
+   #allrecords p can zero it. */
+#mtx-cc.mtx-cc .mtx-cc__answer-copy {
   margin-top: 16px; max-width: 70ch;
   font-size: clamp(16px, 1.35vw, 18px);
 }
 
-.mtx-rs .mtx-rs__answer-close {
+.mtx-cc .mtx-cc__answer-close {
   margin-top: 26px !important; max-width: 62ch;
   font-family: var(--display); font-weight: 800;
   font-size: clamp(20px, 2vw, 27px); line-height: 1.12; text-transform: uppercase;
@@ -190,70 +196,70 @@
 /* --------------------------------------------------------------- cards --- */
 
 /* Document A section 4: two by two on desktop, a single stack on mobile. */
-.mtx-rs .mtx-rs__cards {
+.mtx-cc .mtx-cc__cards {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(28px, 3.4vw, 54px);
 }
-.mtx-rs__card { display: flex; flex-direction: column; }
-.mtx-rs__card-fig { position: relative; }
-.mtx-rs__shot {
+.mtx-cc__card { display: flex; flex-direction: column; }
+.mtx-cc__card-fig { position: relative; }
+.mtx-cc__shot {
   width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover;
   background: #E4E3DF;
 }
-@supports not (aspect-ratio: 3 / 2) { .mtx-rs__shot { height: 260px; } }
+@supports not (aspect-ratio: 3 / 2) { .mtx-cc__shot { height: 260px; } }
 /* The class colour, as a bar under its photograph. Never as type. */
-.mtx-rs__card-fig::after {
+.mtx-cc__card-fig::after {
   content: ""; display: block; height: 7px; background: var(--seat);
 }
-.mtx-rs__card-body { display: flex; flex-direction: column; flex: 1; }
-.mtx-rs .mtx-rs__card-name { margin-top: 22px; font-size: clamp(24px, 2.4vw, 33px); }
+.mtx-cc__card-body { display: flex; flex-direction: column; flex: 1; }
+.mtx-cc .mtx-cc__card-name { margin-top: 22px; font-size: clamp(24px, 2.4vw, 33px); }
 
-.mtx-rs .mtx-rs__facts {
+.mtx-cc .mtx-cc__facts {
   margin-top: 12px !important; display: flex; flex-wrap: wrap; gap: 8px 10px;
 }
-.mtx-rs__fact {
+.mtx-cc__fact {
   display: inline-block; padding: 6px 11px 5px;
   background: #ECEAE5;
   font-family: var(--display); font-weight: 700;
   font-size: 13px; letter-spacing: .09em; text-transform: uppercase;
   color: var(--ink);
 }
-.mtx-rs__fact--price { background: var(--ink); color: var(--white); }
+.mtx-cc__fact--price { background: var(--ink); color: var(--white); }
 
-.mtx-rs .mtx-rs__card-copy { margin-top: 15px !important; font-size: 16.5px; color: var(--muted); }
-.mtx-rs .mtx-rs__best {
+.mtx-cc .mtx-cc__card-copy { margin-top: 15px !important; font-size: 16.5px; color: var(--muted); }
+.mtx-cc .mtx-cc__best {
   margin-top: 16px !important; padding-left: 14px;
   border-left: 3px solid var(--seat);
   font-size: 16px; font-weight: 600; color: var(--ink);
 }
-.mtx-rs .mtx-rs__card-go { margin-top: auto !important; padding-top: 20px; }
-.mtx-rs .mtx-rs__card-cta { margin-top: 16px !important; }
-.mtx-rs__card-cta .mtx-rs__btn { width: 100%; padding: 0 14px; letter-spacing: .05em; }
+.mtx-cc .mtx-cc__card-go { margin-top: auto !important; padding-top: 20px; }
+.mtx-cc .mtx-cc__card-cta { margin-top: 16px !important; }
+.mtx-cc__card-cta .mtx-cc__btn { width: 100%; padding: 0 14px; letter-spacing: .05em; }
 
 /* ------------------------------------------------------------- compare --- */
 
-.mtx-rs__tablewrap { margin-top: clamp(30px, 3.6vw, 46px); }
-.mtx-rs__table { width: 100%; border-collapse: collapse; }
-.mtx-rs__table th, .mtx-rs__table td {
+.mtx-cc__tablewrap { margin-top: clamp(30px, 3.6vw, 46px); }
+.mtx-cc__table { width: 100%; border-collapse: collapse; }
+.mtx-cc__table th, .mtx-cc__table td {
   padding: 15px 16px 15px 0; border-bottom: 1px solid var(--rule-dark);
   vertical-align: top; font-size: 16px;
 }
-.mtx-rs__table thead th {
+.mtx-cc__table thead th {
   font-family: var(--display); font-weight: 800;
   font-size: 13px; letter-spacing: .15em; text-transform: uppercase;
   color: var(--muted-dark); border-bottom-color: rgba(255,255,255,.3);
 }
-.mtx-rs__table tbody th {
+.mtx-cc__table tbody th {
   font-family: var(--display); font-weight: 800;
   font-size: clamp(18px, 1.7vw, 22px); text-transform: uppercase;
   color: var(--white); white-space: nowrap;
 }
-.mtx-rs__table tbody td { color: var(--muted-dark); }
-.mtx-rs__swatch {
+.mtx-cc__table tbody td { color: var(--muted-dark); }
+.mtx-cc__swatch {
   display: inline-block; width: 12px; height: 12px; margin-right: 10px;
   background: var(--seat); vertical-align: baseline;
 }
-.mtx-rs .mtx-rs__table-note {
+.mtx-cc .mtx-cc__table-note {
   margin-top: 26px !important; max-width: 70ch; font-size: 17px; color: var(--muted-dark);
 }
 
@@ -261,113 +267,113 @@
 
 /* Document A section 5: a photograph beside each block on desktop, the image
    stacked above the text on mobile. */
-.mtx-rs__guide { margin-top: clamp(30px, 3.6vw, 46px); }
-.mtx-rs__choice {
+.mtx-cc__guide { margin-top: clamp(30px, 3.6vw, 46px); }
+.mtx-cc__choice {
   display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(24px, 3.2vw, 52px); align-items: center;
   padding: clamp(28px, 3.2vw, 46px) 0; border-top: 1px solid var(--rule);
 }
-.mtx-rs__choice:last-child { border-bottom: 1px solid var(--rule); }
-.mtx-rs__choice:nth-child(even) .mtx-rs__choice-fig { order: 2; }
-.mtx-rs__choice-fig::after { content: ""; display: block; height: 7px; background: var(--seat); }
-.mtx-rs .mtx-rs__choice-body h3 { max-width: 22ch; }
-.mtx-rs .mtx-rs__choice-body p {
+.mtx-cc__choice:last-child { border-bottom: 1px solid var(--rule); }
+.mtx-cc__choice:nth-child(even) .mtx-cc__choice-fig { order: 2; }
+.mtx-cc__choice-fig::after { content: ""; display: block; height: 7px; background: var(--seat); }
+.mtx-cc .mtx-cc__choice-body h3 { max-width: 22ch; }
+.mtx-cc .mtx-cc__choice-body p {
   margin-top: 15px !important; max-width: 62ch; font-size: 16.5px; color: var(--muted);
 }
 
 /* ----------------------------------------------------------------- map --- */
 
-.mtx-rs .mtx-rs__map {
+.mtx-cc .mtx-cc__map {
   margin-top: clamp(30px, 3.6vw, 46px);
   display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
   gap: clamp(28px, 3.6vw, 56px); align-items: start;
 }
 
-.mtx-rs .mtx-rs__map-body p { max-width: 58ch; font-size: 17px; color: var(--muted); }
-.mtx-rs .mtx-rs__map-body p + p { margin-top: 15px !important; }
-.mtx-rs .mtx-rs__map-list { margin: 22px 0; }
-.mtx-rs__map-list li {
+.mtx-cc .mtx-cc__map-body p { max-width: 58ch; font-size: 17px; color: var(--muted); }
+.mtx-cc .mtx-cc__map-body p + p { margin-top: 15px !important; }
+.mtx-cc .mtx-cc__map-list { margin: 22px 0; }
+.mtx-cc__map-list li {
   display: grid; grid-template-columns: 12px minmax(0, 1fr); column-gap: 14px;
   align-items: start; padding: 11px 0; border-top: 1px solid var(--rule);
   font-size: 16.5px;
 }
-.mtx-rs__map-list li::before { content: ""; height: 12px; margin-top: 7px; background: var(--seat); }
-.mtx-rs .mtx-rs__map-go { margin-top: 24px !important; }
+.mtx-cc__map-list li::before { content: ""; height: 12px; margin-top: 7px; background: var(--seat); }
+.mtx-cc .mtx-cc__map-go { margin-top: 24px !important; }
 
 /* ------------------------------------------------------------ includes --- */
 
 /* Document A section 7: four simple icon points, not a large text-heavy box. */
-.mtx-rs .mtx-rs__includes {
+.mtx-cc .mtx-cc__includes {
   margin-top: clamp(30px, 3.6vw, 46px);
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0;
   border-top: 1px solid var(--rule-dark);
 }
-.mtx-rs__includes li { padding: 26px clamp(20px, 2.4vw, 34px) 28px 0; }
-.mtx-rs__includes svg {
+.mtx-cc__includes li { padding: 26px clamp(20px, 2.4vw, 34px) 28px 0; }
+.mtx-cc__includes svg {
   width: 30px; height: 30px; stroke: var(--blue-lite); fill: none;
   stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
 }
-.mtx-rs .mtx-rs__includes p { margin-top: 16px !important; font-size: 16px; color: var(--muted-dark); }
+.mtx-cc .mtx-cc__includes p { margin-top: 16px !important; font-size: 16px; color: var(--muted-dark); }
 
 /* ------------------------------------------------------------- booking --- */
 
-.mtx-rs .mtx-rs__booking-copy {
+.mtx-cc .mtx-cc__booking-copy {
   margin-top: 16px !important; max-width: 64ch; font-size: 17px; color: var(--muted);
 }
-.mtx-rs__widget { margin-top: clamp(30px, 3.4vw, 44px); }
+.mtx-cc__widget { margin-top: clamp(30px, 3.4vw, 44px); }
 
 /* ----------------------------------------------------------------- faq --- */
 
-.mtx-rs__faq { margin-top: clamp(26px, 3.2vw, 42px); border-top: 1px solid var(--rule); }
-.mtx-rs__faq details { border-bottom: 1px solid var(--rule); }
-.mtx-rs__faq summary {
+.mtx-cc__faq { margin-top: clamp(26px, 3.2vw, 42px); border-top: 1px solid var(--rule); }
+.mtx-cc__faq details { border-bottom: 1px solid var(--rule); }
+.mtx-cc__faq summary {
   display: flex; align-items: flex-start; justify-content: space-between; gap: 22px;
   padding: 22px 0; cursor: pointer; list-style: none;
 }
-.mtx-rs__faq summary::-webkit-details-marker { display: none; }
-.mtx-rs__faq summary h3 { font-size: clamp(18px, 1.8vw, 24px); line-height: 1.12; }
-.mtx-rs__faq summary::after {
+.mtx-cc__faq summary::-webkit-details-marker { display: none; }
+.mtx-cc__faq summary h3 { font-size: clamp(18px, 1.8vw, 24px); line-height: 1.12; }
+.mtx-cc__faq summary::after {
   content: ""; flex: none; width: 14px; height: 14px; margin-top: 7px;
   border-right: 2px solid var(--blue); border-bottom: 2px solid var(--blue);
   transform: rotate(45deg); transition: transform .2s ease;
 }
-.mtx-rs__faq details[open] summary::after { transform: rotate(-135deg); margin-top: 12px; }
-.mtx-rs__faq summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
-.mtx-rs .mtx-rs__faq p { margin: 0 0 24px !important; max-width: 72ch; font-size: 16.5px; color: var(--muted); }
+.mtx-cc__faq details[open] summary::after { transform: rotate(-135deg); margin-top: 12px; }
+.mtx-cc__faq summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.mtx-cc .mtx-cc__faq p { margin: 0 0 24px !important; max-width: 72ch; font-size: 16.5px; color: var(--muted); }
 
 /* --------------------------------------------------------------- close --- */
 
-.mtx-rs .mtx-rs__close-copy {
+.mtx-cc .mtx-cc__close-copy {
   margin-top: 20px !important; max-width: 62ch;
   font-size: clamp(17px, 1.5vw, 20px); color: rgba(255,255,255,.9);
 }
-.mtx-rs .mtx-rs__elsewhere {
+.mtx-cc .mtx-cc__elsewhere {
   margin-top: 34px !important; padding-top: 24px;
   border-top: 1px solid var(--rule-dark);
   display: flex; flex-wrap: wrap; gap: 14px 30px;
 }
 
-.mtx-rs__inline { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
-.mtx-rs__inline:hover { color: var(--blue-dark); }
+.mtx-cc__inline { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+.mtx-cc__inline:hover { color: var(--blue-dark); }
 
 /* ---------------------------------------------------------- quick facts --- */
 
 /* Document B section 5: the first major mobile view has to establish the
    name, the distance, Sections 3 to 7, assigned seating and the first booking
    action. The facts sit in the hero for that reason, above the buttons. */
-.mtx-rs .mtx-rs__facts {
+.mtx-cc .mtx-cc__facts {
   margin-top: 28px; display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px; background: rgba(255, 255, 255, .22);
   border: 1px solid rgba(255, 255, 255, .22);
 }
-.mtx-rs__fact { padding: 15px 16px 16px; background: rgba(11, 11, 13, .74); }
-.mtx-rs .mtx-rs__fact dt {
+.mtx-cc__fact { padding: 15px 16px 16px; background: rgba(11, 11, 13, .74); }
+.mtx-cc .mtx-cc__fact dt {
   font-family: var(--display); font-weight: 800;
   font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
   color: var(--muted-dark);
 }
-.mtx-rs .mtx-rs__fact dd {
+.mtx-cc .mtx-cc__fact dd {
   margin: 5px 0 0; font-family: var(--display); font-weight: 800;
   font-size: clamp(19px, 1.9vw, 25px); line-height: 1.1;
   text-transform: uppercase; color: var(--white);
@@ -375,13 +381,13 @@
 
 /* ------------------------------------------------------- two-column copy --- */
 
-.mtx-rs__two {
+.mtx-cc__two {
   margin-top: clamp(28px, 3.4vw, 44px);
   display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   gap: clamp(26px, 3.4vw, 54px); align-items: start;
 }
-.mtx-rs .mtx-rs__two p { max-width: 58ch; font-size: 17px; color: rgba(255, 255, 255, .86); }
-.mtx-rs .mtx-rs__two p + p { margin-top: 15px !important; }
+.mtx-cc .mtx-cc__two p { max-width: 58ch; font-size: 17px; color: rgba(255, 255, 255, .86); }
+.mtx-cc .mtx-cc__two p + p { margin-top: 15px !important; }
 
 /* A 1024 square stays a 1024 square. No aspect-ratio box to fit into and no
    object-fit to cut it with: it renders at its own shape.
@@ -390,30 +396,30 @@
    height. Left to fill its column, a square goes full width on a narrow
    screen and becomes 183 per cent of a short one. min(100%, 56vh) makes it
    smaller on those screens and never takes a pixel off it. */
-.mtx-rs__square, .mtx-rs__split-fig, .mtx-rs__map-fig { width: fit-content; max-width: 100%; }
-.mtx-rs__square img,
-.mtx-rs__split-fig img,
-.mtx-rs__map-fig img {
+.mtx-cc__square, .mtx-cc__split-fig, .mtx-cc__map-fig { width: fit-content; max-width: 100%; }
+.mtx-cc__square img,
+.mtx-cc__split-fig img,
+.mtx-cc__map-fig img {
   display: block; height: auto;
   width: min(100%, 56vh);
 }
-.mtx-rs__square::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
+.mtx-cc__square::after { content: ""; display: block; height: 7px; background: var(--cc-blue); }
 
 /* ------------------------------------------------------------- split --- */
 
-.mtx-rs__split {
+.mtx-cc__split {
   margin-top: clamp(28px, 3.4vw, 44px);
   display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: clamp(26px, 3.4vw, 54px); align-items: start;
 }
 
-.mtx-rs__split-fig::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
-.mtx-rs .mtx-rs__split-body p { max-width: 60ch; font-size: 17px; color: var(--muted); }
-.mtx-rs .mtx-rs__split-body p + p { margin-top: 15px !important; }
+.mtx-cc__split-fig::after { content: ""; display: block; height: 7px; background: var(--cc-blue); }
+.mtx-cc .mtx-cc__split-body p { max-width: 60ch; font-size: 17px; color: var(--muted); }
+.mtx-cc .mtx-cc__split-body p + p { margin-top: 15px !important; }
 /* Document A section 5 ends on the plain statement that front row is not
    guaranteed. It is set as the strongest line in the section, not the
    quietest, because Document A section 7 forbids implying otherwise. */
-.mtx-rs .mtx-rs__caveat {
+.mtx-cc .mtx-cc__caveat {
   margin-top: 20px !important; padding-left: 15px;
   border-left: 3px solid var(--ink);
   font-weight: 600; color: var(--ink) !important;
@@ -421,58 +427,61 @@
 
 /* --------------------------------------------------------------- who --- */
 
-/* Spacing this page must own rather than inherit from the host. */
-#mtx-rs.mtx-rs .mtx-rs__faq p { margin-top: 14px; }
-#mtx-rs.mtx-rs .mtx-rs__faq p + p { margin-top: 14px; }
-#mtx-rs.mtx-rs .mtx-rs__split-body p + p { margin-top: 16px; }
+/* Same fault as the answer paragraphs: the gap under each heading was coming
+   from the host, not from this page. Stated here, with the id doubled in so
+   it cannot be zeroed by anything the host sets on #allrecords p. */
+#mtx-cc.mtx-cc .mtx-cc__faq p { margin-top: 14px; }
+#mtx-cc.mtx-cc .mtx-cc__faq p + p { margin-top: 14px; }
+#mtx-cc.mtx-cc .mtx-cc__split-body p + p { margin-top: 16px; }
+#mtx-cc.mtx-cc .mtx-cc__cols p { margin-bottom: 18px; }
 
 
-.mtx-rs .mtx-rs__who {
+.mtx-cc .mtx-cc__who {
   margin-top: clamp(28px, 3.4vw, 44px);
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0; border-top: 1px solid var(--rule);
 }
-.mtx-rs__who li { padding: 26px clamp(22px, 2.6vw, 40px) 28px 0; border-bottom: 1px solid var(--rule); }
-.mtx-rs__who li::before { content: ""; display: block; width: 34px; height: 5px; margin-bottom: 16px; background: var(--ring-green); }
-.mtx-rs .mtx-rs__who p { margin-top: 16px !important; max-width: 46ch; font-size: 16.5px; color: var(--muted); }
+.mtx-cc__who li { padding: 26px clamp(22px, 2.6vw, 40px) 28px 0; border-bottom: 1px solid var(--rule); }
+.mtx-cc__who li::before { content: ""; display: block; width: 34px; height: 5px; margin-bottom: 16px; background: var(--cc-blue); }
+.mtx-cc .mtx-cc__who p { margin-top: 16px !important; max-width: 46ch; font-size: 16.5px; color: var(--muted); }
 
 /* ----------------------------------------------------------- compare --- */
 
-.mtx-rs .mtx-rs__compare {
+.mtx-cc .mtx-cc__compare {
   margin-top: clamp(28px, 3.4vw, 44px);
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0; border-top: 1px solid var(--rule-dark);
 }
-.mtx-rs__compare li {
+.mtx-cc__compare li {
   display: grid; grid-template-columns: 6px minmax(0, 1fr); column-gap: 18px;
   padding: 20px clamp(22px, 2.6vw, 40px) 22px 0; border-bottom: 1px solid var(--rule-dark);
 }
-.mtx-rs__compare li::before { content: ""; background: rgba(255, 255, 255, .22); }
-.mtx-rs__compare--this::before { background: var(--ring-green) !important; }
-.mtx-rs .mtx-rs__compare p { font-size: 16.5px; color: var(--muted-dark); max-width: 50ch; }
-.mtx-rs .mtx-rs__compare--this p { color: var(--white); }
-.mtx-rs .mtx-rs__compare-go { margin-top: 30px !important; }
+.mtx-cc__compare li::before { content: ""; background: rgba(255, 255, 255, .22); }
+.mtx-cc__compare--this::before { background: var(--cc-blue) !important; }
+.mtx-cc .mtx-cc__compare p { font-size: 16.5px; color: var(--muted-dark); max-width: 50ch; }
+.mtx-cc .mtx-cc__compare--this p { color: var(--white); }
+.mtx-cc .mtx-cc__compare-go { margin-top: 30px !important; }
 
 /* --------------------------------------------------------- practical --- */
 
-.mtx-rs .mtx-rs__practical {
+.mtx-cc .mtx-cc__practical {
   margin-top: clamp(26px, 3.2vw, 42px);
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 clamp(26px, 3.4vw, 54px);
 }
-.mtx-rs__practical li {
+.mtx-cc__practical li {
   display: grid; grid-template-columns: 8px minmax(0, 1fr); column-gap: 16px;
   padding: 14px 0; border-bottom: 1px solid var(--rule);
 }
-.mtx-rs__practical li::before { content: ""; height: 8px; margin-top: 9px; background: var(--ring-green); }
-.mtx-rs .mtx-rs__practical p { font-size: 16.5px; max-width: 54ch; }
+.mtx-cc__practical li::before { content: ""; height: 8px; margin-top: 9px; background: var(--cc-blue); }
+.mtx-cc .mtx-cc__practical p { font-size: 16.5px; max-width: 54ch; }
 
 /* ------------------------------------------------------- wide picture --- */
 
-/* Doubled class. `.mtx-rs figure { margin: 0 }` in the reset is (0,1,1) and
+/* Doubled class. `.mtx-cc figure { margin: 0 }` in the reset is (0,1,1) and
    beats a single-class margin-top, so this sat flush against its own heading
    on the live page. CLAUDE.md section 8, and the third time it has bitten. */
-.mtx-rs .mtx-rs__wide { margin-top: clamp(28px, 3.4vw, 44px); }
+.mtx-cc .mtx-cc__wide { margin-top: clamp(28px, 3.4vw, 44px); }
 
 /* A wide picture, not a wall.
    
@@ -486,14 +495,14 @@
    only ever scale it. The height cap is in vh because the thing it prevents
    is a picture owning a short screen. The figure hugs the picture so the bar
    under it matches its width. */
-.mtx-rs .mtx-rs__wide { width: fit-content; max-width: 100%; }
-.mtx-rs .mtx-rs__wide img {
+.mtx-cc .mtx-cc__wide { width: fit-content; max-width: 100%; }
+.mtx-cc .mtx-cc__wide img {
   display: block;
   width: auto; height: auto;
   max-width: 100%;
   max-height: min(52vh, 540px);
 }
-.mtx-rs__wide::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
+.mtx-cc__wide::after { content: ""; display: block; height: 7px; background: var(--cc-blue); }
 
 /* --------------------------------------------------------------- strip --- */
 
@@ -501,119 +510,159 @@
    phone the same three become a swipeable slider one at a time, so the strip
    never collapses into three thin slivers or three full-height pictures to
    scroll past. */
-.mtx-rs__strip { position: relative; background: var(--ink); }
+.mtx-cc__strip { position: relative; background: var(--ink); }
 /* Three squares in a flush row. Same rule as every other square on the page:
    a square is held by its width, because its width is its height. Three of
    them across a short screen came to 64 per cent of it, so the track itself
    is capped at three times the single-square cap and centred. The row stays
    flush and full-bleed on anything but a short screen. */
-.mtx-rs__strip-track {
+.mtx-cc__strip-track {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
   width: min(100%, 168vh); margin-inline: auto;
 }
 /* Three squares across. They are the same shape as each other, so they land
    on the same height without being cut to a box. */
-.mtx-rs__strip-track img { display: block; width: 100%; height: auto; background: #202027; }
+.mtx-cc__strip-track img { display: block; width: 100%; height: auto; background: #202027; }
 /* One per screen on a phone, so the same width cap applies and the square is
    centred in its slide rather than filling a short screen. */
 @media (max-width: 760px) {
-  .mtx-rs__strip-track img { width: min(100%, 56vh); margin-inline: auto; }
+  .mtx-cc__strip-track img { width: min(100%, 56vh); margin-inline: auto; }
 }
-.mtx-rs__strip-dots { display: none; }
+.mtx-cc__strip-dots { display: none; }
 
 @media (max-width: 760px) {
-  .mtx-rs__strip-track {
+  .mtx-cc__strip-track {
     display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch; scrollbar-width: none;
   }
-  .mtx-rs__strip-track::-webkit-scrollbar { display: none; }
-  .mtx-rs__strip-track img { flex: 0 0 100%; scroll-snap-align: center; }
-  .mtx-rs__strip-dots {
+  .mtx-cc__strip-track::-webkit-scrollbar { display: none; }
+  .mtx-cc__strip-track img { flex: 0 0 100%; scroll-snap-align: center; }
+  .mtx-cc__strip-dots {
     position: absolute; left: 0; right: 0; bottom: 12px;
     display: flex; justify-content: center; gap: 8px;
   }
-  .mtx-rs__strip-dots button {
+  .mtx-cc__strip-dots button {
     width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
     background: rgba(255, 255, 255, .5); cursor: pointer;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .3); transition: background .18s ease;
   }
-  .mtx-rs__strip-dots button.is-on { background: #fff; }
-  .mtx-rs__strip-dots button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+  .mtx-cc__strip-dots button.is-on { background: #fff; }
+  .mtx-cc__strip-dots button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 }
 /* An empty dot row must never draw itself. */
-.mtx-rs__strip-dots:empty { display: none; }
+.mtx-cc__strip-dots:empty { display: none; }
 
 /* ----------------------------------------------------------- alignment --- */
 
 /* Stated, not inherited. Tilda centres text by matching every element
    directly, with a rule shaped like `#allrecords * { text-align: center }`,
    and a direct match beats an inherited value however specific the ancestor
-   rule is. #mtx-rs.mtx-rs * is (1,1,1) and beats (1,0,1) outright. */
-#mtx-rs.mtx-rs,
-#mtx-rs.mtx-rs * { text-align: left; }
-#mtx-rs.mtx-rs .mtx-rs__btn { text-align: center; }
+   rule is. #mtx-cc.mtx-cc * is (1,1,1) and beats (1,0,1) outright. */
+#mtx-cc.mtx-cc,
+#mtx-cc.mtx-cc * { text-align: left; }
+#mtx-cc.mtx-cc .mtx-cc__btn { text-align: center; }
 
 /* Colour, for the same reason: a host rule shaped like `#allrecords a {
    color: inherit }` beats every single-class button rule. */
-#mtx-rs.mtx-rs a.mtx-rs__btn--blue  { background: var(--blue); color: var(--white); }
-#mtx-rs.mtx-rs a.mtx-rs__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
-#mtx-rs.mtx-rs a.mtx-rs__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
-#mtx-rs.mtx-rs a.mtx-rs__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
-#mtx-rs.mtx-rs a.mtx-rs__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
-#mtx-rs.mtx-rs a.mtx-rs__btn--line:hover  { background: var(--ink); color: var(--white); }
-#mtx-rs.mtx-rs a.mtx-rs__inline { color: var(--blue); }
-#mtx-rs.mtx-rs a.mtx-rs__inline:hover { color: var(--blue-dark); }
-#mtx-rs.mtx-rs a.mtx-rs__go { color: var(--ink); }
-#mtx-rs.mtx-rs a.mtx-rs__go:hover { color: var(--blue); }
-#mtx-rs.mtx-rs .mtx-rs__band--ink a.mtx-rs__go { color: var(--white); }
-#mtx-rs.mtx-rs .mtx-rs__band--ink a.mtx-rs__go:hover { color: var(--blue-lite); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--blue  { background: var(--blue); color: var(--white); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--line:hover  { background: var(--ink); color: var(--white); }
+#mtx-cc.mtx-cc a.mtx-cc__inline { color: var(--blue); }
+#mtx-cc.mtx-cc a.mtx-cc__inline:hover { color: var(--blue-dark); }
+#mtx-cc.mtx-cc a.mtx-cc__go { color: var(--ink); }
+#mtx-cc.mtx-cc a.mtx-cc__go:hover { color: var(--blue); }
+#mtx-cc.mtx-cc .mtx-cc__band--ink a.mtx-cc__go { color: var(--white); }
+#mtx-cc.mtx-cc .mtx-cc__band--ink a.mtx-cc__go:hover { color: var(--blue-lite); }
 
 /* --------------------------------------------------------------- guard --- */
 
 /* A direct match on a heading inside the widget beats inheritance and has
    previously turned a fight night's own name white on white. CLAUDE.md
    section 8. This page mounts the widget, so this is not optional. */
-.mtx-rs #mtx-booking h1, .mtx-rs #mtx-booking h2,
-.mtx-rs #mtx-booking h3, .mtx-rs #mtx-booking h4 { color: inherit; text-transform: none; }
+.mtx-cc #mtx-booking h1, .mtx-cc #mtx-booking h2,
+.mtx-cc #mtx-booking h3, .mtx-cc #mtx-booking h4 { color: inherit; text-transform: none; }
+
+/* The Row D caveat sits on the ink band on this page, not on paper, so it
+   needs its own colour. Left at the paper-band value it measured 1.00:1,
+   dark grey on near-black, which is invisible rather than merely poor. */
+/* The base rule sets the colour with !important, so the override has to carry
+   it too or the line stays black on black. */
+.mtx-cc .mtx-cc__band--ink .mtx-cc__caveat { color: var(--white) !important; border-left-color: var(--cc-blue); }
+
+/* ------------------------------------------------------------- view --- */
+
+/* Document A section 3 asks for a wide view photograph. All four supplied
+   photographs are squares, so two are placed side by side instead of one
+   being cropped into a wide box. Same rule as every square on this page:
+   held by width, because for a square the width is the height. */
+.mtx-cc .mtx-cc__pair {
+  margin-top: clamp(26px, 3vw, 40px);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 26px);
+  align-items: start;
+}
+/* The figure carries the accent bar, so the figure must be exactly as wide as
+   the picture inside it or the bar overhangs. Cap the figure, not the image. */
+.mtx-cc .mtx-cc__pair .mtx-cc__square { width: min(100%, 56vh); }
+.mtx-cc .mtx-cc__pair .mtx-cc__square img { width: 100%; }
+
+/* Five approved paragraphs in one column is a wall of text at 1440.
+   Document B section 10 forbids that, and Document B section 2 forbids
+   cutting the copy, so the component changes instead of the words. */
+.mtx-cc .mtx-cc__cols {
+  margin-top: clamp(26px, 3vw, 40px);
+  columns: 2; column-gap: clamp(32px, 3.4vw, 64px);
+}
+.mtx-cc .mtx-cc__cols > * { break-inside: avoid; }
+.mtx-cc .mtx-cc__cols > p { margin-top: 0; margin-bottom: 18px; }
+
+/* Document A section 5 places the image and the copy the other way round in
+   one of the two split sections, so the two do not read as the same block
+   twice. */
+.mtx-cc .mtx-cc__split--flip .mtx-cc__split-fig { order: 2; }
 
 /* ----------------------------------------------------------- narrower --- */
 
 @media (max-width: 1080px) {
-  .mtx-rs .mtx-rs__includes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mtx-rs .mtx-rs__map { grid-template-columns: 1fr; }
+  .mtx-cc .mtx-cc__includes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-cc .mtx-cc__map { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 860px) {
-  .mtx-rs .mtx-rs__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-cc .mtx-cc__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* One column. The copy, the facts and the booking button come first, as
      Document B section 5 requires, and the graphic sits under them, full
      width of the shell, still inside the hero. */
-  .mtx-rs .mtx-rs__hero-in { grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .mtx-rs .mtx-rs__hero-copy { grid-column: 1; grid-row: 1; }
-  .mtx-rs .mtx-rs__hero-base { grid-column: 1; grid-row: 2; }
-  .mtx-rs .mtx-rs__hero-mark { grid-column: 1; grid-row: 3; margin-top: clamp(28px, 6vw, 44px); }
-  .mtx-rs .mtx-rs__hero-mark img { width: min(100%, 52vh); }
-  .mtx-rs__two { grid-template-columns: 1fr; gap: 24px; }
-  .mtx-rs__split { grid-template-columns: 1fr; }
-  .mtx-rs .mtx-rs__who { grid-template-columns: 1fr; }
-  .mtx-rs__who li { padding-right: 0; }
-  .mtx-rs .mtx-rs__compare { grid-template-columns: 1fr; }
-  .mtx-rs__compare li { padding-right: 0; }
-  .mtx-rs .mtx-rs__practical { grid-template-columns: 1fr; }
-  .mtx-rs .mtx-rs__cards { grid-template-columns: 1fr; }
+  .mtx-cc .mtx-cc__cols { columns: 1; }
+  .mtx-cc .mtx-cc__hero-in { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .mtx-cc .mtx-cc__hero-copy { grid-column: 1; grid-row: 1; }
+  .mtx-cc .mtx-cc__hero-base { grid-column: 1; grid-row: 2; }
+  .mtx-cc .mtx-cc__hero-mark { grid-column: 1; grid-row: 3; margin-top: clamp(28px, 6vw, 44px); }
+  .mtx-cc .mtx-cc__hero-mark img { width: min(100%, 52vh); }
+  .mtx-cc__two { grid-template-columns: 1fr; gap: 24px; }
+  .mtx-cc__split { grid-template-columns: 1fr; }
+  .mtx-cc .mtx-cc__who { grid-template-columns: 1fr; }
+  .mtx-cc__who li { padding-right: 0; }
+  .mtx-cc .mtx-cc__compare { grid-template-columns: 1fr; }
+  .mtx-cc__compare li { padding-right: 0; }
+  .mtx-cc .mtx-cc__practical { grid-template-columns: 1fr; }
+  .mtx-cc .mtx-cc__cards { grid-template-columns: 1fr; }
   /* Document A section 5: on mobile the image stacks above its text. */
-  .mtx-rs__choice { grid-template-columns: 1fr; gap: 20px; align-items: start; }
-  .mtx-rs__choice:nth-child(even) .mtx-rs__choice-fig { order: 0; }
+  .mtx-cc__choice { grid-template-columns: 1fr; gap: 20px; align-items: start; }
+  .mtx-cc__choice:nth-child(even) .mtx-cc__choice-fig { order: 0; }
 
   /* Document A section 4: the comparison table becomes stacked cards. */
-  .mtx-rs__table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
-  .mtx-rs__table, .mtx-rs__table tbody, .mtx-rs__table tr, .mtx-rs__table th, .mtx-rs__table td { display: block; }
-  .mtx-rs__table tr { padding: 20px 0 22px; border-top: 1px solid var(--rule-dark); }
-  .mtx-rs__table tr:last-child { border-bottom: 1px solid var(--rule-dark); }
-  .mtx-rs__table th, .mtx-rs__table td { border-bottom: 0; padding: 0; }
-  .mtx-rs__table tbody th { margin-bottom: 10px; white-space: normal; }
-  .mtx-rs__table td { position: relative; padding: 5px 0 5px 128px; }
-  .mtx-rs__table td::before {
+  .mtx-cc__table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+  .mtx-cc__table, .mtx-cc__table tbody, .mtx-cc__table tr, .mtx-cc__table th, .mtx-cc__table td { display: block; }
+  .mtx-cc__table tr { padding: 20px 0 22px; border-top: 1px solid var(--rule-dark); }
+  .mtx-cc__table tr:last-child { border-bottom: 1px solid var(--rule-dark); }
+  .mtx-cc__table th, .mtx-cc__table td { border-bottom: 0; padding: 0; }
+  .mtx-cc__table tbody th { margin-bottom: 10px; white-space: normal; }
+  .mtx-cc__table td { position: relative; padding: 5px 0 5px 128px; }
+  .mtx-cc__table td::before {
     content: attr(data-label); position: absolute; left: 0; top: 5px; width: 118px;
     font-family: var(--display); font-weight: 800; font-size: 12.5px;
     letter-spacing: .13em; text-transform: uppercase; color: var(--muted-dark);
@@ -621,18 +670,18 @@
 }
 
 @media (max-width: 620px) {
-  .mtx-rs .mtx-rs__wide img { max-height: none; }
+  .mtx-cc .mtx-cc__wide img { max-height: none; }
 
-  .mtx-rs__shell { width: min(100% - 32px, 1240px); }
-  .mtx-rs .mtx-rs__includes { grid-template-columns: 1fr; }
-  .mtx-rs__includes li { padding-right: 0; border-bottom: 1px solid var(--rule-dark); }
-  .mtx-rs__actions .mtx-rs__btn { width: 100%; }
-  .mtx-rs__table td { padding-left: 112px; }
-  .mtx-rs__table td::before { width: 104px; }
+  .mtx-cc__shell { width: min(100% - 32px, 1240px); }
+  .mtx-cc .mtx-cc__includes { grid-template-columns: 1fr; }
+  .mtx-cc__includes li { padding-right: 0; border-bottom: 1px solid var(--rule-dark); }
+  .mtx-cc__actions .mtx-cc__btn { width: 100%; }
+  .mtx-cc__table td { padding-left: 112px; }
+  .mtx-cc__table td::before { width: 104px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mtx-rs *, .mtx-rs *::before, .mtx-rs *::after {
+  .mtx-cc *, .mtx-cc *::before, .mtx-cc *::after {
     animation: none !important; transition: none !important; scroll-behavior: auto !important;
   }
 }

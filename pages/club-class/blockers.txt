@@ -1,0 +1,5 @@
+- Document A section 5 asks for a seating detail photograph as one option for section 5. None of the four photographs supplied is a detail of a seat: all four are views from a row. Document A allows a smaller supporting image instead, which is what is used. No generic photography was substituted.
+
+- Document A section 3 asks for a wide Club Class view photograph. All four supplied photographs are squares off a phone. Two of them are placed side by side rather than one being cropped into a wide box.
+
+- None of the images can be opened from this environment, because static.tildacdn.com is blocked by the network policy. Each is placed on the owner's own note about where it was taken, not on inspection.

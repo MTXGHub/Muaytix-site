@@ -1,0 +1,144 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://muaytix.com#org",
+      "name": "MuayTix",
+      "url": "https://muaytix.com"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://muaytix.com/rajadamnern-stadium-seating/club-class",
+      "url": "https://muaytix.com/rajadamnern-stadium-seating/club-class",
+      "name": "Rajadamnern Stadium Club Class Seats",
+      "description": "Discover Club Class at Rajadamnern Stadium. See Sections 8 and 9, the elevated view, numbered seating, best rows and why it suits families and groups.",
+      "isPartOf": {
+        "@id": "https://muaytix.com#org"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg",
+        "caption": "Rajadamnern Stadium Club Class Sections 8 and 9"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://muaytix.com/rajadamnern-stadium-seating/club-class#crumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Rajadamnern Stadium",
+          "item": "https://muaytix.com/rajadamnern-stadium"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Seating",
+          "item": "https://muaytix.com/rajadamnern-stadium-seating"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Rajadamnern Stadium Club Class Seats",
+          "item": "https://muaytix.com/rajadamnern-stadium-seating/club-class"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://muaytix.com/rajadamnern-stadium-seating/club-class#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Club Class at Rajadamnern Stadium?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Club Class is assigned, numbered seating in Sections 8 and 9, located on the elevated tier of the main arena."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What view do you get from Club Class?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Club Class looks down across the ring from above, giving you a broad view of the canvas, corners, fighter entrances and wider stadium."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Club Class assigned seating?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Every guest receives a numbered seat, and stadium staff can direct guests to it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which rows are best in Club Class?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MuayTix generally recommends Row D and above for the optimal elevated viewing position.\n\nRows A, B and C still provide a clear view of the ring. The recommendation reflects the preferred perspective rather than a warning about the lower rows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Club Class suitable for families?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Club Class is MuayTix's most popular choice for families, particularly families with younger children. The seating is assigned, elevated and easy to navigate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Club Class suitable for groups?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Each guest receives a numbered seat, making Club Class suitable for groups who want to sit together.\n\nGroups should book together so seats can be allocated together within the chosen section."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are Club Class seats padded?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Club Class uses simple blue plastic seat bases fixed onto the elevated tier.\n\nThe value of Club Class is its position, view and numbered seating rather than padded seating."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are cameras or production staff near Club Class?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Camera operators and production activity may be visible during the evening. They are part of the live fight-night production.\n\nThey should not be described as an obstruction."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are food and toilets close to Club Class?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Food, drinks, toilets and other facilities are easy to reach from the section."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a dress code for Club Class?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I book Club Class in advance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you know which fight night you want to attend, it is sensible to book once your plans are confirmed. Preferred rows can disappear before the event, particularly during busier periods."
+          }
+        }
+      ]
+    }
+  ]
+}

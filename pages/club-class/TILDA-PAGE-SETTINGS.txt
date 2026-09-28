@@ -1,0 +1,25 @@
+RAJADAMNERN STADIUM CLUB CLASS SEATS
+Tilda page settings. These are NOT in the HTML block. Paste them into the
+page's own settings in Tilda.
+
+URL
+  /rajadamnern-stadium-seating/club-class
+  Confirmed against the repository: the seating page already links here.
+
+TITLE
+  Rajadamnern Stadium Club Class Seats | MuayTix
+
+DESCRIPTION
+  Discover Club Class at Rajadamnern Stadium. See Sections 8 and 9, the elevated view, numbered seating, best rows and why it suits families and groups.
+
+SOCIAL TITLE (Open Graph)
+  Rajadamnern Stadium Club Class Seats
+
+SOCIAL DESCRIPTION (Open Graph)
+  Choose Club Class for an elevated view of the ring, assigned numbered seating and easy access to the facilities at Rajadamnern Stadium.
+
+SOCIAL IMAGE
+  https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg
+
+CANONICAL
+  https://muaytix.com/rajadamnern-stadium-seating/club-class

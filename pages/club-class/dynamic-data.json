@@ -1,0 +1,102 @@
+{
+  "_rule": "Document B section 4, zero inference. Every value here is either supplied by the owner, read back from live inventory, or read out of the repository. Nothing is assumed. gen.mjs throws on a missing key rather than substituting one.",
+  "sources": {
+    "copy": "Document A, supplied 28 September 2026, marked LOCKED COPY. Transcribed into document-a.txt and rendered by key.",
+    "price": "ticket_classes joined to ticket_class_prices in Supabase jlwopomkqeawrxlapwpc, read 28 September 2026: club_class, unit_amount 180000 thb, which is 1,800 THB. Document A section 5 says live inventory takes precedence; it agrees, so Document A's figure stands.",
+    "url": "Document A section 3 asks for a conflict check. pages/seating-v2/body.html line 67 already links to /rajadamnern-stadium-seating/club-class, so the established child-page URL and Document A's URL are the same. No conflict.",
+    "photographs": "Four Club Class photographs supplied by the owner, 28 September 2026, each with his own note on where it was taken. The notes are used as alt text because they are his and they are accurate to the file.",
+    "graphic": "Owner, 28 September 2026: 'Club class graphic image for hero section'. Same treatment as the Ringside page: beside the words, whole, at full strength.",
+    "overview": "Owner, 28 September 2026: '1690 x 900 full stadium view with sections marked'. This settles an open question from the Ringside build: this file is the annotated stadium view, and its labels include CLUB CLASS SECTION 8 and CLUB CLASS SECTION 9.",
+    "map": "The Rajadamnern seating map already approved and live on the Ringside page."
+  },
+  "price_checked": {
+    "document_a": "1,800 THB",
+    "live_minor": 180000,
+    "live_currency": "thb",
+    "match": true,
+    "read": "2026-09-28"
+  },
+  "photographs_supplied": [
+    {
+      "id": "1000033694",
+      "url": "https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg",
+      "owner_note": "Taken from row a section 9 club class"
+    },
+    {
+      "id": "1000033693",
+      "url": "https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg",
+      "owner_note": "Taken from row a section 8 of club class"
+    },
+    {
+      "id": "1000033696",
+      "url": "https://static.tildacdn.com/tild3665-3065-4334-b531-303164393066/1000033696.jpg",
+      "owner_note": "Taken from row I, the final row in Club Class"
+    },
+    {
+      "id": "1000033691",
+      "url": "https://static.tildacdn.com/tild6136-6131-4064-a639-636565363338/1000033691.jpg",
+      "owner_note": "Taken from row r in section 8 of club class, row r is the 9th row from the front of club class"
+    }
+  ],
+  "images": {
+    "mark": {
+      "url": "https://static.tildacdn.com/tild6633-3464-4335-b864-323737313634/1000033982.webp",
+      "alt": "Club Class. Elevated view of the entire ring.",
+      "shape": "square",
+      "why": "The Club Class seat class graphic, asked for in the hero. Beside the words, whole, nothing over it.",
+      "alt_source": "The two lines printed on the graphic. The strapline is the one held in ticket_classes.tagline for club_class, so the page, the widget and the artwork agree."
+    },
+    "hero": {
+      "url": "https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg",
+      "alt": "Rajadamnern Stadium Club Class Sections 8 and 9",
+      "shape": "wide",
+      "why": "1690 x 900, hero size. The annotated stadium view he supplied for this page. Its labels name Club Class Section 8 and Club Class Section 9, so it shows a guest where Club Class sits before a word is read."
+    },
+    "view_high": {
+      "url": "https://static.tildacdn.com/tild3665-3065-4334-b531-303164393066/1000033696.jpg",
+      "alt": "Taken from row I, the final row in Club Class",
+      "shape": "square",
+      "why": "Document A section 3, the elevated view. The highest of the four, looking down across the ring."
+    },
+    "view_mid": {
+      "url": "https://static.tildacdn.com/tild6136-6131-4064-a639-636565363338/1000033691.jpg",
+      "alt": "Taken from row r in section 8 of club class, row r is the 9th row from the front of club class",
+      "shape": "square",
+      "why": "Document A section 3 asks for a wide view photograph and none was supplied. Two squares side by side fill the width without cropping either, and they show the elevated perspective from two different heights, which a single frame cannot."
+    },
+    "families": {
+      "url": "https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg",
+      "alt": "Taken from row a section 9 club class",
+      "shape": "square",
+      "why": "Document A section 4, the two-column families and groups section."
+    },
+    "seats": {
+      "url": "https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg",
+      "alt": "Taken from row a section 8 of club class",
+      "shape": "square",
+      "why": "Document A section 5 allows a smaller supporting image OR a seating detail photograph. No seating detail photograph was supplied, so the supporting image option is used. Reported, not substituted."
+    },
+    "map": {
+      "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
+      "alt": null,
+      "shape": "square",
+      "why": "The full Rajadamnern seating map, already approved and live on the Ringside page. Its alt is Document A section 8's approved example line."
+    }
+  },
+  "destinations": {
+    "seating": "/rajadamnern-stadium-seating",
+    "seat_map": "/rajadamnern-stadium-seat-map",
+    "stadium": "/rajadamnern-stadium",
+    "tickets": "/rajadamnern-stadium-tickets",
+    "booking_anchor": "#mtx-cc-booking"
+  },
+  "seat_colour": {
+    "club_class": "#27AAE1",
+    "note": "Sampled from the seat map artwork. Used as a bar and a swatch only. It is not legible as type and no text is set in it anywhere on this page."
+  },
+  "blockers": [
+    "Document A section 5 asks for a seating detail photograph as one option for section 5. None of the four photographs supplied is a detail of a seat: all four are views from a row. Document A allows a smaller supporting image instead, which is what is used. No generic photography was substituted.",
+    "Document A section 3 asks for a wide Club Class view photograph. All four supplied photographs are squares off a phone. Two of them are placed side by side rather than one being cropped into a wide box.",
+    "None of the images can be opened from this environment, because static.tildacdn.com is blocked by the network policy. Each is placed on the owner's own note about where it was taken, not on inspection."
+  ]
+}
