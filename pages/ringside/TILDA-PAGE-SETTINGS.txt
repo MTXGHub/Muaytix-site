@@ -1,0 +1,31 @@
+RAJADAMNERN STADIUM RINGSIDE SEATS: what to paste into Tilda's page settings
+============================================================================
+Page settings, not part of the HTML block. Every line is Document A, word for
+word. Do not edit them here.
+
+
+URL
+/rajadamnern-stadium-seating/ringside
+
+Checked against the whole repository on 28 September 2026: no other Ringside
+child URL exists, and the parent seating page already links to this one.
+
+
+SEO TITLE
+Rajadamnern Stadium Ringside Seats | MuayTix
+
+
+META DESCRIPTION
+Book Ringside seats at Rajadamnern Stadium. See the view, sections, front-row guidance, atmosphere and what to expect close to the Muay Thai ring.
+
+
+SOCIAL TITLE (Open Graph)
+Rajadamnern Stadium Ringside Seats
+
+
+SOCIAL DESCRIPTION (Open Graph)
+Sit only a few metres from the ring at Rajadamnern Stadium, with assigned Ringside seating in Sections 3 to 7.
+
+
+H1
+Already in the block, and there is exactly one. Do not add another in Tilda.

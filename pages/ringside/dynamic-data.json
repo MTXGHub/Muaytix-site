@@ -1,0 +1,54 @@
+{
+  "_rule": "Document B sections 4 and 6. Every value comes from a verified source, named below. Nothing is inferred. A missing value is reported, never filled in.",
+
+  "sources": {
+    "price": "ticket_class_prices joined to ticket_classes, Supabase project jlwopomkqeawrxlapwpc, read 28 September 2026. Ringside reads 250000 THB minor, which is 2,500 THB, matching Document A. Document A section 5: if the live booking system ever shows a different verified price, the live system takes precedence and this build stops.",
+    "seating_type": "ticket_classes.assigned_seating for Ringside is true. Matches Document A's Assigned.",
+    "url": "No conflict. /rajadamnern-stadium-seating/ringside is the only Ringside child URL anywhere in this repository, and the parent seating page already links to it with the approved anchor Explore Ringside. Checked 28 September 2026.",
+    "photographs": "Supplied by the owner on 28 September 2026, each with the position it was taken from, in his own words. None of the files can be opened from this environment: static.tildacdn.com is blocked by the network policy.",
+    "alt_text": "Document A section 8 supplies three approved alt lines and no more. Only images that one of those three describes accurately are placed on the page.",
+    "destinations": "Document A section 9. No URL was composed."
+  },
+
+  "price_checked": {
+    "_read": "28 September 2026",
+    "document_a": "2,500 THB", "live_minor": 250000, "currency": "thb", "match": true
+  },
+
+  "photographs_supplied": [
+    { "id": "1000033705", "url": "https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg",
+      "owner_note": "Taken from the 4th row in Section 6", "used": false },
+    { "id": "1000013053", "url": "https://static.tildacdn.com/tild3431-3465-4161-a238-373562636630/1000013053.jpg",
+      "owner_note": "Taken from the edge of section 6, and next to section 5 of Ringside", "used": false },
+    { "id": "1000013051", "url": "https://static.tildacdn.com/tild6430-3330-4239-b435-353230396463/1000013051.jpg",
+      "owner_note": "Taken on the corner between section 5 & 6", "used": false },
+    { "id": "1000033702", "url": "https://static.tildacdn.com/tild3062-6533-4031-b764-353666613966/1000033702.jpg",
+      "owner_note": "View of the actual seats used in Ringside, these are in section 6 with Leo section directly behind", "used": true },
+    { "id": "1000033703", "url": "https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg",
+      "owner_note": "View from the corner of section 4, this corner is a fighter corner during fight nights, it is also next to section 5 of Ringside and also has the fighter walkway to the left which splits sections 4 & 3", "used": false },
+    { "id": "1000013049", "url": "https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg",
+      "owner_note": "Taken from the 3rd row in Section 5 of Ringside with section 9 of Club class directly behind", "used": true }
+  ],
+
+  "images": {
+    "hero":  { "url": "https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg",
+               "why": "Document A section 1 asks for a Ringside photograph showing the ring from the audience position, and says not to imply a row unless verified. The owner places this one in the 3rd row of Section 5, so it is a view of the ring from a Ringside seat and the page never names its row." },
+    "seats": { "url": "https://static.tildacdn.com/tild3062-6533-4031-b764-353666613966/1000033702.jpg",
+               "why": "Document A section 5 asks for a close Ringside image that is not labelled front row unless verified. The owner describes this as the actual seats used in Ringside, Section 6. It is not labelled as front row anywhere." },
+    "map":   { "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
+               "why": "Document A section 4 permits the seating map or a cropped map detail showing Sections 3 to 7. No cropped detail exists, so the full map is used, which is the option Document A allows." }
+  },
+
+  "destinations": {
+    "seat_map": "/rajadamnern-stadium-seat-map",
+    "seating":  "/rajadamnern-stadium-seating",
+    "stadium":  "/rajadamnern-stadium",
+    "tickets":  "/rajadamnern-stadium-tickets",
+    "booking_anchor": "#mtx-rs-booking"
+  },
+
+  "seat_colour": {
+    "_source": "Sampled from the owner's own seat map artwork and recorded in CLAUDE.md. Used as a bar only, never as type.",
+    "ringside": "#00A651"
+  }
+}

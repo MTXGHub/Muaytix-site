@@ -1,0 +1,317 @@
+# RAJADAMNERN STADIUM RINGSIDE SEATS: LOCKED COPY, transcribed from Document A.
+#
+# Supplied by the owner, 28 September 2026, marked LOCKED COPY.
+# This file is the only place this page's prose exists. gen.mjs renders it by
+# key and verify.mjs reads the built page back and diffs it against this file.
+#
+# Document B section 2: reproduced exactly. No rewriting, paraphrasing,
+# shortening, expanding, polishing, alternative headlines, alternative CTAs,
+# new FAQs or supporting sentences.
+# Document B section 3: zero independently authored customer-facing sentences.
+
+[meta.seo_title]
+Rajadamnern Stadium Ringside Seats | MuayTix
+
+[meta.description]
+Book Ringside seats at Rajadamnern Stadium. See the view, sections, front-row guidance, atmosphere and what to expect close to the Muay Thai ring.
+
+[meta.social_title]
+Rajadamnern Stadium Ringside Seats
+
+[meta.social_description]
+Sit only a few metres from the ring at Rajadamnern Stadium, with assigned Ringside seating in Sections 3 to 7.
+
+[hero.h1]
+Rajadamnern Stadium Ringside Seats
+
+[hero.p1]
+Ringside is the closest public seating to the ring at Rajadamnern Stadium.
+
+[hero.p2]
+From only a few metres away, you are close to the fighters, corners, officials and production team working around the ring throughout the evening.
+
+[hero.p3]
+This is the seat class for guests who want to feel close to the movement, sound and energy of a live Muay Thai fight night.
+
+[facts.label.sections]
+Sections
+
+[facts.value.sections]
+3 to 7
+
+[facts.label.price]
+Price
+
+[facts.value.price]
+2,500 THB
+
+[facts.label.seating]
+Seating
+
+[facts.value.seating]
+Assigned
+
+[facts.label.location]
+Location
+
+[facts.value.location]
+Floor level, around the ring
+
+[hero.cta_primary]
+Book Ringside Tickets
+
+[hero.cta_secondary]
+View the Rajadamnern Seat Map
+
+[answer.h2]
+What are Ringside seats like at Rajadamnern Stadium?
+
+[answer.p1]
+Ringside seats place you on the floor around the ring, only a few metres from the action.
+
+[answer.p2]
+The seats are assigned and located in Sections 3 to 7. You have a close view of the fighters and the ring, while corners, officials, cameras and production staff work nearby as part of the live fight-night environment.
+
+[answer.p3]
+Sections 3 and 4 are closest to the raised fighter entrance walkway.
+
+[answer.p4]
+Ringside is best suited to guests who value proximity, sound and the feeling of being inside the working event rather than watching from a distance.
+
+[experience.h2]
+Close enough to be part of the fight night
+
+[experience.p1]
+From Ringside, the ring is only a few metres away.
+
+[experience.p2]
+You see the fighters enter, watch the corners prepare between rounds and follow the officials and production team as they work around the ring.
+
+[experience.p3]
+You can hear the corner instructions at close range and see the concentration change as each bout develops.
+
+[experience.p4]
+The view is close, but Ringside is not separated from the rest of the event. The ropes, cameras, officials, team corners and movement around the ring all form part of what you are there to experience.
+
+[sections.h2]
+Where are the Ringside sections?
+
+[sections.p1]
+Ringside seating wraps around most of the ring in Sections 3 to 7.
+
+[sections.p2]
+The raised fighter entrance walkway runs between and through Sections 3 and 4. These sections are especially close to the formal fighter entrance route and have a smaller, more intimate layout than Sections 5, 6 and 7.
+
+[sections.p3]
+Fighters may leave by different routes after a bout, and movement around the ring can vary by fight, corner and event. Being close to fighters during entrances or after a bout should never be guaranteed.
+
+[sections.link]
+See the full Rajadamnern Stadium Seat Map
+
+[frontrow.h2]
+Is front row the best Ringside seat?
+
+[frontrow.p1]
+Front row is the closest and most immersive Ringside position when available.
+
+[frontrow.p2]
+It is also the position most guests request, so MuayTix normally allocates front row first when it is available unless a guest asks for a different position.
+
+[frontrow.p3]
+There is no universal best Ringside row. Front row brings you closest to the ring and the surrounding activity, while other rows can offer a slightly wider perspective.
+
+[frontrow.p4]
+Guests in the front row may have a judge, production staff member or broadcast personnel positioned nearby. This is part of the live fight-night environment.
+
+[frontrow.p5]
+Front row is not guaranteed in advance.
+
+[who.h2]
+Who should choose Ringside?
+
+[who.h3.close]
+Choose Ringside if closeness matters most
+
+[who.p.close]
+You want to be only a few metres from the ring and close to the fighters, corners and officials.
+
+[who.h3.sound]
+Choose Ringside if sound and movement matter
+
+[who.p.sound]
+You want to hear the corner instructions and experience the activity around the ring as the bouts develop.
+
+[who.h3.entrances]
+Choose Ringside if entrances are part of the appeal
+
+[who.p.entrances]
+Sections 3 and 4 are especially close to the raised fighter entrance walkway.
+
+[who.h3.assigned]
+Choose Ringside if you want assigned seating close to the action
+
+[who.p.assigned]
+Every Ringside ticket is assigned, making it suitable for guests and groups who want a defined seat position near the ring.
+
+[compare.h2]
+Ringside or another Rajadamnern seat class?
+
+[compare.ringside]
+Choose Ringside for the closest public position, assigned seating and the strongest sense of being inside the working fight night.
+
+[compare.club-class]
+Choose Club Class for an elevated view, a numbered seat and easier facilities for families and groups.
+
+[compare.leo-section]
+Choose LEO Section for a front-facing view and a more involved local atmosphere on Wednesday, Thursday and Sunday traditional fight nights.
+
+[compare.third-class]
+Choose Third Class for a wide view across the whole arena from the highest point of the stadium.
+
+[compare.link]
+Compare all Rajadamnern Stadium seat classes
+
+[practical.h2]
+Practical Ringside information
+
+[practical.p1]
+Food, soft drinks and beer are available for purchase and can be served directly to Ringside seats during the evening.
+
+[practical.p2]
+Personal photography and video recording are permitted.
+
+[practical.p3]
+Flash may be used between bouts, but not while a fight is taking place.
+
+[practical.p4]
+Commercial filming requires permission from the stadium in advance.
+
+[practical.p5]
+There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena.
+
+[booking.h2]
+Book your Ringside seats
+
+[booking.p1]
+Choose Ringside if you want to be close to the ring and inside the movement of the live fight night.
+
+[booking.p2]
+Your seats are assigned within Sections 3 to 7.
+
+[booking.p3]
+Select your event date, choose Ringside and complete your booking securely online.
+
+[booking.p4]
+Current availability and pricing are shown through the live booking system.
+
+[booking.cta]
+Book Ringside Tickets
+
+[faq.h2]
+Ringside seating questions
+
+[faq.q1]
+How close are Ringside seats to the ring?
+
+[faq.a1]
+Ringside seats are on the floor and only a few metres from the ring.
+
+[faq.q2]
+Which sections are Ringside?
+
+[faq.a2]
+Ringside covers Sections 3 to 7 around the ring.
+
+[faq.q3]
+Which Ringside sections are closest to the fighter entrance?
+
+[faq.a3]
+Sections 3 and 4 are closest to the raised fighter entrance walkway, which runs between and through those sections.
+
+[faq.q4]
+Is front row guaranteed?
+
+[faq.a4]
+No. Front row is allocated first when available, but it cannot be guaranteed in advance.
+
+[faq.q5]
+Is front row the best Ringside seat?
+
+[faq.a5]
+That depends on the experience you want. Front row is the closest and most immersive position. Other rows remain excellent and can offer a wider perspective.
+
+[faq.q6]
+Are Ringside seats assigned?
+
+[faq.a6]
+Yes. Ringside is assigned seating.
+
+[faq.q7]
+Can I sit with my group?
+
+[faq.a7]
+Groups should book together so seats can be allocated together within the chosen seat class.
+
+[faq.q8]
+Will fighters walk past my seat?
+
+[faq.a8]
+Fighter movement varies by fight, corner and event. Sections 3 and 4 are closest to the formal entrance walkway, but post-fight interaction and specific fighter movement should never be guaranteed.
+
+[faq.q9]
+Will cameras or officials be near Ringside?
+
+[faq.a9]
+They may be. Judges, officials, cameras, broadcast personnel and production staff work around the ring as part of the live fight-night environment.
+
+[faq.q10]
+Can food and drinks be served at Ringside?
+
+[faq.a10]
+Food, soft drinks and beer are available for purchase and can be served directly to Ringside seats during the evening.
+
+[faq.q11]
+Can I take photographs and videos?
+
+[faq.a11]
+Yes. Personal photography and video recording are permitted. Flash may be used between bouts, but not while a fight is taking place.
+
+[faq.q12]
+Is there a dress code for Ringside?
+
+[faq.a12]
+There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena.
+
+[faq.q13]
+Are Ringside seats suitable for families?
+
+[faq.a13]
+Families and groups can choose Ringside if they want assigned seating close to the ring. Club Class is usually the more straightforward family choice for guests who prefer a more elevated position.
+
+[final.h2]
+Sit close to the ring at Rajadamnern Stadium
+
+[final.p1]
+Choose Ringside for an assigned seat only a few metres from the ring and close to the movement of the live fight night.
+
+[final.cta]
+Book Ringside Tickets
+
+# --- Document A section 9, approved anchor concepts ---
+
+[links.stadium]
+Rajadamnern Stadium information
+
+[links.tickets]
+All Rajadamnern Stadium tickets
+
+# --- Document A section 8, approved alt text. Three lines, no more. ---
+
+[alt.hero]
+View of the ring from Ringside at Rajadamnern Stadium
+
+[alt.seats]
+Ringside seating close to the Muay Thai ring at Rajadamnern Stadium
+
+[alt.map]
+Rajadamnern Stadium Ringside Sections 3 to 7 around the ring

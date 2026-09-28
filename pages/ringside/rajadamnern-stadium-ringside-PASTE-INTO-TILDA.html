@@ -1,0 +1,668 @@
+<div class="mtx-rs" id="mtx-rs">
+<style>.mtx-rs, .mtx-rs * { box-sizing: border-box; }
+
+.mtx-rs {
+  --ink:        #0B0B0D;
+  --paper:      #F4F3F0;
+  --white:      #FFFFFF;
+  --muted:      #56565F;
+  --muted-dark: #A9AAB3;
+  --rule:       rgba(11, 11, 13, .15);
+  --rule-dark:  rgba(255, 255, 255, .17);
+  --blue:       #1F5BFF;
+  --blue-dark:  #1540C9;
+  --blue-lite:  #6D95FF;
+  
+  --ring-green: #00A651;
+
+  --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --body:    "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --t-mega: clamp(40px, 6.6vw, 92px);
+  --t-xl:   clamp(30px, 4.2vw, 58px);
+  --t-lg:   clamp(24px, 2.8vw, 38px);
+
+  font-family: var(--body);
+  color: var(--ink);
+  line-height: 1.6;
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+.mtx-rs p, .mtx-rs h1, .mtx-rs h2, .mtx-rs h3,
+.mtx-rs ul, .mtx-rs ol, .mtx-rs li, .mtx-rs figure, .mtx-rs table { margin: 0; padding: 0; }
+.mtx-rs ul, .mtx-rs ol { list-style: none; }
+.mtx-rs img { display: block; max-width: 100%; }
+
+.mtx-rs__shell { width: min(100% - 48px, 1240px); margin-inline: auto; }
+
+.mtx-rs__band { padding: clamp(52px, 6.4vw, 100px) 0; }
+.mtx-rs__band--paper { background: var(--paper); }
+.mtx-rs__band--white { background: var(--white); }
+.mtx-rs__band--ink   { background: var(--ink); color: var(--white); }
+
+.mtx-rs h1, .mtx-rs h2, .mtx-rs h3 {
+  font-family: var(--display); font-weight: 800;
+  text-transform: uppercase; letter-spacing: -.005em; line-height: .94;
+}
+.mtx-rs h1 { font-size: var(--t-mega); letter-spacing: -.015em; }
+.mtx-rs h2 { font-size: var(--t-xl); }
+.mtx-rs h3 { font-size: clamp(20px, 2vw, 27px); }
+
+.mtx-rs__btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 54px; padding: 0 26px; border: 2px solid transparent;
+  font-family: var(--display); font-weight: 800;
+  font-size: 16px; letter-spacing: .08em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.mtx-rs__btn--blue  { background: var(--blue); color: var(--white); }
+.mtx-rs__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
+.mtx-rs__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
+.mtx-rs__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+.mtx-rs__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
+.mtx-rs__btn--line:hover  { background: var(--ink); color: var(--white); }
+.mtx-rs__btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+.mtx-rs__go {
+  display: inline-block; text-decoration: none;
+  font-family: var(--display); font-weight: 800;
+  font-size: 15px; line-height: 1.35; letter-spacing: .075em; text-transform: uppercase;
+  color: var(--ink); padding-bottom: 3px; border-bottom: 2px solid currentColor;
+  transition: color .18s ease;
+}
+.mtx-rs__go:hover { color: var(--blue); }
+.mtx-rs__band--ink .mtx-rs__go { color: var(--white); }
+.mtx-rs__band--ink .mtx-rs__go:hover { color: var(--blue-lite); }
+.mtx-rs__go:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+
+.mtx-rs .mtx-rs__actions {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-top: 32px !important; max-width: none !important;
+}
+
+.mtx-rs__hero {
+  position: relative; overflow: hidden;
+  padding: clamp(56px, 7vw, 104px) 0 clamp(48px, 5.6vw, 84px);
+  background: var(--ink); color: var(--white);
+}
+.mtx-rs__hero-media {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 42%;
+}
+.mtx-rs__hero-wash {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, rgba(11,11,13,.96) 0%, rgba(11,11,13,.70) 38%, rgba(11,11,13,.34) 78%, rgba(11,11,13,.40) 100%),
+    linear-gradient(100deg, rgba(11,11,13,.92) 0%, rgba(11,11,13,.74) 42%, rgba(11,11,13,.28) 80%, rgba(11,11,13,.14) 100%);
+}
+.mtx-rs__hero::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  background: var(--blue); z-index: 2;
+}
+.mtx-rs__hero-in { position: relative; }
+.mtx-rs__hero h1 { max-width: 16ch; }
+.mtx-rs .mtx-rs__lede {
+  margin-top: 18px !important; max-width: 60ch;
+  font-size: clamp(16.5px, 1.45vw, 19px); color: rgba(255,255,255,.88);
+}
+
+.mtx-rs__answer { max-width: 1000px; }
+.mtx-rs .mtx-rs__answer-lead {
+  margin-top: 20px !important; max-width: 62ch;
+  font-size: clamp(17px, 1.5vw, 20px); color: var(--muted);
+}
+.mtx-rs .mtx-rs__answer-list { margin-top: 26px; display: grid; gap: 0; }
+.mtx-rs__answer-list li {
+  display: grid; grid-template-columns: 6px minmax(0, 1fr);
+  column-gap: 20px; padding: 16px 0; border-top: 1px solid var(--rule);
+}
+.mtx-rs__answer-list li::before { content: ""; background: var(--seat); }
+.mtx-rs .mtx-rs__answer-list p { font-size: 17px; max-width: 70ch; }
+.mtx-rs .mtx-rs__answer-close {
+  margin-top: 26px !important; max-width: 62ch;
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(20px, 2vw, 27px); line-height: 1.12; text-transform: uppercase;
+}
+
+.mtx-rs .mtx-rs__cards {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 3.4vw, 54px);
+}
+.mtx-rs__card { display: flex; flex-direction: column; }
+.mtx-rs__card-fig { position: relative; }
+.mtx-rs__shot {
+  width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover;
+  background: #E4E3DF;
+}
+@supports not (aspect-ratio: 3 / 2) { .mtx-rs__shot { height: 260px; } }
+
+.mtx-rs__card-fig::after {
+  content: ""; display: block; height: 7px; background: var(--seat);
+}
+.mtx-rs__card-body { display: flex; flex-direction: column; flex: 1; }
+.mtx-rs .mtx-rs__card-name { margin-top: 22px; font-size: clamp(24px, 2.4vw, 33px); }
+
+.mtx-rs .mtx-rs__facts {
+  margin-top: 12px !important; display: flex; flex-wrap: wrap; gap: 8px 10px;
+}
+.mtx-rs__fact {
+  display: inline-block; padding: 6px 11px 5px;
+  background: #ECEAE5;
+  font-family: var(--display); font-weight: 700;
+  font-size: 13px; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--ink);
+}
+.mtx-rs__fact--price { background: var(--ink); color: var(--white); }
+
+.mtx-rs .mtx-rs__card-copy { margin-top: 15px !important; font-size: 16.5px; color: var(--muted); }
+.mtx-rs .mtx-rs__best {
+  margin-top: 16px !important; padding-left: 14px;
+  border-left: 3px solid var(--seat);
+  font-size: 16px; font-weight: 600; color: var(--ink);
+}
+.mtx-rs .mtx-rs__card-go { margin-top: auto !important; padding-top: 20px; }
+.mtx-rs .mtx-rs__card-cta { margin-top: 16px !important; }
+.mtx-rs__card-cta .mtx-rs__btn { width: 100%; padding: 0 14px; letter-spacing: .05em; }
+
+.mtx-rs__tablewrap { margin-top: clamp(30px, 3.6vw, 46px); }
+.mtx-rs__table { width: 100%; border-collapse: collapse; }
+.mtx-rs__table th, .mtx-rs__table td {
+  padding: 15px 16px 15px 0; border-bottom: 1px solid var(--rule-dark);
+  vertical-align: top; font-size: 16px;
+}
+.mtx-rs__table thead th {
+  font-family: var(--display); font-weight: 800;
+  font-size: 13px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--muted-dark); border-bottom-color: rgba(255,255,255,.3);
+}
+.mtx-rs__table tbody th {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(18px, 1.7vw, 22px); text-transform: uppercase;
+  color: var(--white); white-space: nowrap;
+}
+.mtx-rs__table tbody td { color: var(--muted-dark); }
+.mtx-rs__swatch {
+  display: inline-block; width: 12px; height: 12px; margin-right: 10px;
+  background: var(--seat); vertical-align: baseline;
+}
+.mtx-rs .mtx-rs__table-note {
+  margin-top: 26px !important; max-width: 70ch; font-size: 17px; color: var(--muted-dark);
+}
+
+.mtx-rs__guide { margin-top: clamp(30px, 3.6vw, 46px); }
+.mtx-rs__choice {
+  display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 3.2vw, 52px); align-items: center;
+  padding: clamp(28px, 3.2vw, 46px) 0; border-top: 1px solid var(--rule);
+}
+.mtx-rs__choice:last-child { border-bottom: 1px solid var(--rule); }
+.mtx-rs__choice:nth-child(even) .mtx-rs__choice-fig { order: 2; }
+.mtx-rs__choice-fig::after { content: ""; display: block; height: 7px; background: var(--seat); }
+.mtx-rs .mtx-rs__choice-body h3 { max-width: 22ch; }
+.mtx-rs .mtx-rs__choice-body p {
+  margin-top: 15px !important; max-width: 62ch; font-size: 16.5px; color: var(--muted);
+}
+
+.mtx-rs__map {
+  margin-top: clamp(30px, 3.6vw, 46px);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 3.6vw, 56px); align-items: start;
+}
+.mtx-rs__map-fig img { width: 100%; height: auto; }
+.mtx-rs .mtx-rs__map-body p { max-width: 58ch; font-size: 17px; color: var(--muted); }
+.mtx-rs .mtx-rs__map-list { margin: 22px 0; }
+.mtx-rs__map-list li {
+  display: grid; grid-template-columns: 12px minmax(0, 1fr); column-gap: 14px;
+  align-items: start; padding: 11px 0; border-top: 1px solid var(--rule);
+  font-size: 16.5px;
+}
+.mtx-rs__map-list li::before { content: ""; height: 12px; margin-top: 7px; background: var(--seat); }
+.mtx-rs .mtx-rs__map-go { margin-top: 24px !important; }
+
+.mtx-rs .mtx-rs__includes {
+  margin-top: clamp(30px, 3.6vw, 46px);
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0;
+  border-top: 1px solid var(--rule-dark);
+}
+.mtx-rs__includes li { padding: 26px clamp(20px, 2.4vw, 34px) 28px 0; }
+.mtx-rs__includes svg {
+  width: 30px; height: 30px; stroke: var(--blue-lite); fill: none;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+.mtx-rs .mtx-rs__includes p { margin-top: 16px !important; font-size: 16px; color: var(--muted-dark); }
+
+.mtx-rs .mtx-rs__booking-copy {
+  margin-top: 16px !important; max-width: 64ch; font-size: 17px; color: var(--muted);
+}
+.mtx-rs__widget { margin-top: clamp(30px, 3.4vw, 44px); }
+
+.mtx-rs__faq { margin-top: clamp(26px, 3.2vw, 42px); border-top: 1px solid var(--rule); }
+.mtx-rs__faq details { border-bottom: 1px solid var(--rule); }
+.mtx-rs__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 22px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+}
+.mtx-rs__faq summary::-webkit-details-marker { display: none; }
+.mtx-rs__faq summary h3 { font-size: clamp(18px, 1.8vw, 24px); line-height: 1.12; }
+.mtx-rs__faq summary::after {
+  content: ""; flex: none; width: 14px; height: 14px; margin-top: 7px;
+  border-right: 2px solid var(--blue); border-bottom: 2px solid var(--blue);
+  transform: rotate(45deg); transition: transform .2s ease;
+}
+.mtx-rs__faq details[open] summary::after { transform: rotate(-135deg); margin-top: 12px; }
+.mtx-rs__faq summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.mtx-rs .mtx-rs__faq p { margin: 0 0 24px !important; max-width: 72ch; font-size: 16.5px; color: var(--muted); }
+
+.mtx-rs .mtx-rs__close-copy {
+  margin-top: 20px !important; max-width: 62ch;
+  font-size: clamp(17px, 1.5vw, 20px); color: rgba(255,255,255,.9);
+}
+.mtx-rs .mtx-rs__elsewhere {
+  margin-top: 34px !important; padding-top: 24px;
+  border-top: 1px solid var(--rule-dark);
+  display: flex; flex-wrap: wrap; gap: 14px 30px;
+}
+
+.mtx-rs__inline { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+.mtx-rs__inline:hover { color: var(--blue-dark); }
+
+.mtx-rs .mtx-rs__facts {
+  margin-top: 28px; display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px; background: rgba(255, 255, 255, .22);
+  border: 1px solid rgba(255, 255, 255, .22);
+}
+.mtx-rs__fact { padding: 15px 16px 16px; background: rgba(11, 11, 13, .74); }
+.mtx-rs .mtx-rs__fact dt {
+  font-family: var(--display); font-weight: 800;
+  font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--muted-dark);
+}
+.mtx-rs .mtx-rs__fact dd {
+  margin: 5px 0 0; font-family: var(--display); font-weight: 800;
+  font-size: clamp(19px, 1.9vw, 25px); line-height: 1.1;
+  text-transform: uppercase; color: var(--white);
+}
+
+.mtx-rs__two {
+  margin-top: clamp(28px, 3.4vw, 44px);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(26px, 3.4vw, 54px);
+}
+.mtx-rs .mtx-rs__two p { max-width: 54ch; font-size: 17px; color: rgba(255, 255, 255, .86); }
+.mtx-rs .mtx-rs__two p + p { margin-top: 15px !important; }
+
+.mtx-rs__split {
+  margin-top: clamp(28px, 3.4vw, 44px);
+  display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(26px, 3.4vw, 54px); align-items: start;
+}
+.mtx-rs__split-fig img { width: 100%; height: auto; }
+.mtx-rs__split-fig::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
+.mtx-rs .mtx-rs__split-body p { max-width: 60ch; font-size: 17px; color: var(--muted); }
+.mtx-rs .mtx-rs__split-body p + p { margin-top: 15px !important; }
+
+.mtx-rs .mtx-rs__caveat {
+  margin-top: 20px !important; padding-left: 15px;
+  border-left: 3px solid var(--ink);
+  font-weight: 600; color: var(--ink) !important;
+}
+
+.mtx-rs .mtx-rs__who {
+  margin-top: clamp(28px, 3.4vw, 44px);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0; border-top: 1px solid var(--rule);
+}
+.mtx-rs__who li { padding: 26px clamp(22px, 2.6vw, 40px) 28px 0; border-bottom: 1px solid var(--rule); }
+.mtx-rs__who li::before { content: ""; display: block; width: 34px; height: 5px; margin-bottom: 16px; background: var(--ring-green); }
+.mtx-rs .mtx-rs__who p { margin-top: 12px !important; max-width: 46ch; font-size: 16.5px; color: var(--muted); }
+
+.mtx-rs .mtx-rs__compare {
+  margin-top: clamp(28px, 3.4vw, 44px);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0; border-top: 1px solid var(--rule-dark);
+}
+.mtx-rs__compare li {
+  display: grid; grid-template-columns: 6px minmax(0, 1fr); column-gap: 18px;
+  padding: 20px clamp(22px, 2.6vw, 40px) 22px 0; border-bottom: 1px solid var(--rule-dark);
+}
+.mtx-rs__compare li::before { content: ""; background: rgba(255, 255, 255, .22); }
+.mtx-rs__compare--this::before { background: var(--ring-green) !important; }
+.mtx-rs .mtx-rs__compare p { font-size: 16.5px; color: var(--muted-dark); max-width: 50ch; }
+.mtx-rs .mtx-rs__compare--this p { color: var(--white); }
+.mtx-rs .mtx-rs__compare-go { margin-top: 30px !important; }
+
+.mtx-rs .mtx-rs__practical {
+  margin-top: clamp(26px, 3.2vw, 42px);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(26px, 3.4vw, 54px);
+}
+.mtx-rs__practical li {
+  display: grid; grid-template-columns: 8px minmax(0, 1fr); column-gap: 16px;
+  padding: 14px 0; border-bottom: 1px solid var(--rule);
+}
+.mtx-rs__practical li::before { content: ""; height: 8px; margin-top: 9px; background: var(--ring-green); }
+.mtx-rs .mtx-rs__practical p { font-size: 16.5px; max-width: 54ch; }
+
+#mtx-rs.mtx-rs,
+#mtx-rs.mtx-rs * { text-align: left; }
+#mtx-rs.mtx-rs .mtx-rs__btn { text-align: center; }
+
+#mtx-rs.mtx-rs a.mtx-rs__btn--blue  { background: var(--blue); color: var(--white); }
+#mtx-rs.mtx-rs a.mtx-rs__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
+#mtx-rs.mtx-rs a.mtx-rs__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
+#mtx-rs.mtx-rs a.mtx-rs__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+#mtx-rs.mtx-rs a.mtx-rs__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
+#mtx-rs.mtx-rs a.mtx-rs__btn--line:hover  { background: var(--ink); color: var(--white); }
+#mtx-rs.mtx-rs a.mtx-rs__inline { color: var(--blue); }
+#mtx-rs.mtx-rs a.mtx-rs__inline:hover { color: var(--blue-dark); }
+#mtx-rs.mtx-rs a.mtx-rs__go { color: var(--ink); }
+#mtx-rs.mtx-rs a.mtx-rs__go:hover { color: var(--blue); }
+#mtx-rs.mtx-rs .mtx-rs__band--ink a.mtx-rs__go { color: var(--white); }
+#mtx-rs.mtx-rs .mtx-rs__band--ink a.mtx-rs__go:hover { color: var(--blue-lite); }
+
+.mtx-rs #mtx-booking h1, .mtx-rs #mtx-booking h2,
+.mtx-rs #mtx-booking h3, .mtx-rs #mtx-booking h4 { color: inherit; text-transform: none; }
+
+@media (max-width: 1080px) {
+  .mtx-rs .mtx-rs__includes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-rs__map { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 860px) {
+  .mtx-rs .mtx-rs__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-rs__two { grid-template-columns: 1fr; gap: 0; }
+  .mtx-rs .mtx-rs__two > div + div p:first-child { margin-top: 15px !important; }
+  .mtx-rs__split { grid-template-columns: 1fr; }
+  .mtx-rs .mtx-rs__who { grid-template-columns: 1fr; }
+  .mtx-rs__who li { padding-right: 0; }
+  .mtx-rs .mtx-rs__compare { grid-template-columns: 1fr; }
+  .mtx-rs__compare li { padding-right: 0; }
+  .mtx-rs .mtx-rs__practical { grid-template-columns: 1fr; }
+  .mtx-rs .mtx-rs__cards { grid-template-columns: 1fr; }
+  
+  .mtx-rs__choice { grid-template-columns: 1fr; gap: 20px; align-items: start; }
+  .mtx-rs__choice:nth-child(even) .mtx-rs__choice-fig { order: 0; }
+
+  
+  .mtx-rs__table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+  .mtx-rs__table, .mtx-rs__table tbody, .mtx-rs__table tr, .mtx-rs__table th, .mtx-rs__table td { display: block; }
+  .mtx-rs__table tr { padding: 20px 0 22px; border-top: 1px solid var(--rule-dark); }
+  .mtx-rs__table tr:last-child { border-bottom: 1px solid var(--rule-dark); }
+  .mtx-rs__table th, .mtx-rs__table td { border-bottom: 0; padding: 0; }
+  .mtx-rs__table tbody th { margin-bottom: 10px; white-space: normal; }
+  .mtx-rs__table td { position: relative; padding: 5px 0 5px 128px; }
+  .mtx-rs__table td::before {
+    content: attr(data-label); position: absolute; left: 0; top: 5px; width: 118px;
+    font-family: var(--display); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .13em; text-transform: uppercase; color: var(--muted-dark);
+  }
+}
+
+@media (max-width: 620px) {
+  .mtx-rs__shell { width: min(100% - 32px, 1240px); }
+  .mtx-rs .mtx-rs__includes { grid-template-columns: 1fr; }
+  .mtx-rs__includes li { padding-right: 0; border-bottom: 1px solid var(--rule-dark); }
+  .mtx-rs__actions .mtx-rs__btn { width: 100%; }
+  .mtx-rs__table td { padding-left: 112px; }
+  .mtx-rs__table td::before { width: 104px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtx-rs *, .mtx-rs *::before, .mtx-rs *::after {
+    animation: none !important; transition: none !important; scroll-behavior: auto !important;
+  }
+}</style>
+
+  <header class="mtx-rs__hero">
+    <img class="mtx-rs__hero-media" src="https://static.tildacdn.com/tild3563-6463-4661-b765-373530333066/1000013049.jpg" alt="View of the ring from Ringside at Rajadamnern Stadium" loading="eager" decoding="async">
+    <div class="mtx-rs__hero-wash" aria-hidden="true"></div>
+    <div class="mtx-rs__shell mtx-rs__hero-in">
+      <h1>Rajadamnern Stadium Ringside Seats</h1>
+      <p class="mtx-rs__lede">Ringside is the closest public seating to the ring at Rajadamnern Stadium.</p>
+      <p class="mtx-rs__lede">From only a few metres away, you are close to the fighters, corners, officials and production team working around the ring throughout the evening.</p>
+      <p class="mtx-rs__lede">This is the seat class for guests who want to feel close to the movement, sound and energy of a live Muay Thai fight night.</p>
+      <dl class="mtx-rs__facts">
+        <div class="mtx-rs__fact">
+          <dt>Sections</dt>
+          <dd>3 to 7</dd>
+        </div>
+        <div class="mtx-rs__fact">
+          <dt>Price</dt>
+          <dd>2,500 THB</dd>
+        </div>
+        <div class="mtx-rs__fact">
+          <dt>Seating</dt>
+          <dd>Assigned</dd>
+        </div>
+        <div class="mtx-rs__fact">
+          <dt>Location</dt>
+          <dd>Floor level, around the ring</dd>
+        </div>
+      </dl>
+      <p class="mtx-rs__actions">
+        <a class="mtx-rs__btn mtx-rs__btn--blue" href="#mtx-rs-booking">Book Ringside Tickets</a>
+        <a class="mtx-rs__btn mtx-rs__btn--ghost" href="/rajadamnern-stadium-seat-map">View the Rajadamnern Seat Map</a>
+      </p>
+    </div>
+  </header>
+
+  <section class="mtx-rs__band mtx-rs__band--paper">
+    <div class="mtx-rs__shell mtx-rs__answer">
+      <h2>What are Ringside seats like at Rajadamnern Stadium?</h2>
+      <p class="mtx-rs__answer-lead">Ringside seats place you on the floor around the ring, only a few metres from the action.</p>
+      <p class="mtx-rs__answer-copy">The seats are assigned and located in Sections 3 to 7. You have a close view of the fighters and the ring, while corners, officials, cameras and production staff work nearby as part of the live fight-night environment.</p>
+      <p class="mtx-rs__answer-copy">Sections 3 and 4 are closest to the raised fighter entrance walkway.</p>
+      <p class="mtx-rs__answer-close">Ringside is best suited to guests who value proximity, sound and the feeling of being inside the working event rather than watching from a distance.</p>
+    </div>
+  </section>
+
+  <section class="mtx-rs__band mtx-rs__band--ink">
+    <div class="mtx-rs__shell">
+      <h2>Close enough to be part of the fight night</h2>
+      <div class="mtx-rs__two">
+        <div>
+          <p>From Ringside, the ring is only a few metres away.</p>
+          <p>You see the fighters enter, watch the corners prepare between rounds and follow the officials and production team as they work around the ring.</p>
+        </div>
+        <div>
+          <p>You can hear the corner instructions at close range and see the concentration change as each bout develops.</p>
+          <p>The view is close, but Ringside is not separated from the rest of the event. The ropes, cameras, officials, team corners and movement around the ring all form part of what you are there to experience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-rs__band mtx-rs__band--white">
+    <div class="mtx-rs__shell">
+      <h2>Where are the Ringside sections?</h2>
+      <div class="mtx-rs__map">
+        <figure class="mtx-rs__map-fig">
+          <a href="/rajadamnern-stadium-seat-map">
+            <img src="https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg" alt="Rajadamnern Stadium Ringside Sections 3 to 7 around the ring" loading="lazy" decoding="async">
+          </a>
+        </figure>
+        <div class="mtx-rs__map-body">
+          <p>Ringside seating wraps around most of the ring in Sections 3 to 7.</p>
+          <p>The raised fighter entrance walkway runs between and through Sections 3 and 4. These sections are especially close to the formal fighter entrance route and have a smaller, more intimate layout than Sections 5, 6 and 7.</p>
+          <p>Fighters may leave by different routes after a bout, and movement around the ring can vary by fight, corner and event. Being close to fighters during entrances or after a bout should never be guaranteed.</p>
+          <p class="mtx-rs__map-go"><a class="mtx-rs__go" href="/rajadamnern-stadium-seat-map">See the full Rajadamnern Stadium Seat Map</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-rs__band mtx-rs__band--paper">
+    <div class="mtx-rs__shell">
+      <h2>Is front row the best Ringside seat?</h2>
+      <div class="mtx-rs__split">
+        <figure class="mtx-rs__split-fig">
+          <img src="https://static.tildacdn.com/tild3062-6533-4031-b764-353666613966/1000033702.jpg" alt="Ringside seating close to the Muay Thai ring at Rajadamnern Stadium" loading="lazy" decoding="async">
+        </figure>
+        <div class="mtx-rs__split-body">
+          <p>Front row is the closest and most immersive Ringside position when available.</p>
+          <p>It is also the position most guests request, so MuayTix normally allocates front row first when it is available unless a guest asks for a different position.</p>
+          <p>There is no universal best Ringside row. Front row brings you closest to the ring and the surrounding activity, while other rows can offer a slightly wider perspective.</p>
+          <p>Guests in the front row may have a judge, production staff member or broadcast personnel positioned nearby. This is part of the live fight-night environment.</p>
+          <p class="mtx-rs__caveat">Front row is not guaranteed in advance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-rs__band mtx-rs__band--white">
+    <div class="mtx-rs__shell">
+      <h2>Who should choose Ringside?</h2>
+      <ul class="mtx-rs__who">
+        <li>
+          <h3>Choose Ringside if closeness matters most</h3>
+          <p>You want to be only a few metres from the ring and close to the fighters, corners and officials.</p>
+        </li>
+        <li>
+          <h3>Choose Ringside if sound and movement matter</h3>
+          <p>You want to hear the corner instructions and experience the activity around the ring as the bouts develop.</p>
+        </li>
+        <li>
+          <h3>Choose Ringside if entrances are part of the appeal</h3>
+          <p>Sections 3 and 4 are especially close to the raised fighter entrance walkway.</p>
+        </li>
+        <li>
+          <h3>Choose Ringside if you want assigned seating close to the action</h3>
+          <p>Every Ringside ticket is assigned, making it suitable for guests and groups who want a defined seat position near the ring.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mtx-rs__band mtx-rs__band--ink">
+    <div class="mtx-rs__shell">
+      <h2>Ringside or another Rajadamnern seat class?</h2>
+      <ul class="mtx-rs__compare">
+        <li class="mtx-rs__compare--this"><p>Choose Ringside for the closest public position, assigned seating and the strongest sense of being inside the working fight night.</p></li>
+        <li><p>Choose Club Class for an elevated view, a numbered seat and easier facilities for families and groups.</p></li>
+        <li><p>Choose LEO Section for a front-facing view and a more involved local atmosphere on Wednesday, Thursday and Sunday traditional fight nights.</p></li>
+        <li><p>Choose Third Class for a wide view across the whole arena from the highest point of the stadium.</p></li>
+      </ul>
+      <p class="mtx-rs__compare-go"><a class="mtx-rs__go" href="/rajadamnern-stadium-seating">Compare all Rajadamnern Stadium seat classes</a></p>
+    </div>
+  </section>
+
+  <section class="mtx-rs__band mtx-rs__band--white">
+    <div class="mtx-rs__shell">
+      <h2>Practical Ringside information</h2>
+      <ul class="mtx-rs__practical">
+        <li><p>Food, soft drinks and beer are available for purchase and can be served directly to Ringside seats during the evening.</p></li>
+        <li><p>Personal photography and video recording are permitted.</p></li>
+        <li><p>Flash may be used between bouts, but not while a fight is taking place.</p></li>
+        <li><p>Commercial filming requires permission from the stadium in advance.</p></li>
+        <li><p>There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mtx-rs__band mtx-rs__band--paper" id="mtx-rs-booking">
+    <div class="mtx-rs__shell">
+      <h2>Book your Ringside seats</h2>
+      <p class="mtx-rs__booking-copy">Choose Ringside if you want to be close to the ring and inside the movement of the live fight night.</p>
+      <p class="mtx-rs__booking-copy">Your seats are assigned within Sections 3 to 7.</p>
+      <p class="mtx-rs__booking-copy">Select your event date, choose Ringside and complete your booking securely online.</p>
+      <p class="mtx-rs__booking-copy">Current availability and pricing are shown through the live booking system.</p>
+      <div class="mtx-rs__widget"><div class="muaytix-ticket-selector"></div></div>
+      <p class="mtx-rs__actions">
+        <a class="mtx-rs__btn mtx-rs__btn--blue" href="/rajadamnern-stadium-tickets">Book Ringside Tickets</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="mtx-rs__band mtx-rs__band--white">
+    <div class="mtx-rs__shell">
+      <h2>Ringside seating questions</h2>
+      <div class="mtx-rs__faq">
+        <details>
+          <summary><h3>How close are Ringside seats to the ring?</h3></summary>
+          <p>Ringside seats are on the floor and only a few metres from the ring.</p>
+        </details>
+
+        <details>
+          <summary><h3>Which sections are Ringside?</h3></summary>
+          <p>Ringside covers Sections 3 to 7 around the ring.</p>
+        </details>
+
+        <details>
+          <summary><h3>Which Ringside sections are closest to the fighter entrance?</h3></summary>
+          <p>Sections 3 and 4 are closest to the raised fighter entrance walkway, which runs between and through those sections.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is front row guaranteed?</h3></summary>
+          <p>No. Front row is allocated first when available, but it cannot be guaranteed in advance.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is front row the best Ringside seat?</h3></summary>
+          <p>That depends on the experience you want. Front row is the closest and most immersive position. Other rows remain excellent and can offer a wider perspective.</p>
+        </details>
+
+        <details>
+          <summary><h3>Are Ringside seats assigned?</h3></summary>
+          <p>Yes. Ringside is assigned seating.</p>
+        </details>
+
+        <details>
+          <summary><h3>Can I sit with my group?</h3></summary>
+          <p>Groups should book together so seats can be allocated together within the chosen seat class.</p>
+        </details>
+
+        <details>
+          <summary><h3>Will fighters walk past my seat?</h3></summary>
+          <p>Fighter movement varies by fight, corner and event. Sections 3 and 4 are closest to the formal entrance walkway, but post-fight interaction and specific fighter movement should never be guaranteed.</p>
+        </details>
+
+        <details>
+          <summary><h3>Will cameras or officials be near Ringside?</h3></summary>
+          <p>They may be. Judges, officials, cameras, broadcast personnel and production staff work around the ring as part of the live fight-night environment.</p>
+        </details>
+
+        <details>
+          <summary><h3>Can food and drinks be served at Ringside?</h3></summary>
+          <p>Food, soft drinks and beer are available for purchase and can be served directly to Ringside seats during the evening.</p>
+        </details>
+
+        <details>
+          <summary><h3>Can I take photographs and videos?</h3></summary>
+          <p>Yes. Personal photography and video recording are permitted. Flash may be used between bouts, but not while a fight is taking place.</p>
+        </details>
+
+        <details>
+          <summary><h3>Is there a dress code for Ringside?</h3></summary>
+          <p>There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena.</p>
+        </details>
+
+        <details>
+          <summary><h3>Are Ringside seats suitable for families?</h3></summary>
+          <p>Families and groups can choose Ringside if they want assigned seating close to the ring. Club Class is usually the more straightforward family choice for guests who prefer a more elevated position.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-rs__band mtx-rs__band--ink mtx-rs__close">
+    <div class="mtx-rs__shell">
+      <h2>Sit close to the ring at Rajadamnern Stadium</h2>
+      <p class="mtx-rs__close-copy">Choose Ringside for an assigned seat only a few metres from the ring and close to the movement of the live fight night.</p>
+      <p class="mtx-rs__actions">
+        <a class="mtx-rs__btn mtx-rs__btn--blue" href="#mtx-rs-booking">Book Ringside Tickets</a>
+      </p>
+      <p class="mtx-rs__elsewhere">
+        <a class="mtx-rs__go" href="/rajadamnern-stadium">Rajadamnern Stadium information</a>
+        <a class="mtx-rs__go" href="/rajadamnern-stadium-tickets">All Rajadamnern Stadium tickets</a>
+      </p>
+    </div>
+  </section>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://muaytix.com/#organisation","name":"MuayTix","url":"https://muaytix.com"},{"@type":"WebPage","@id":"https://muaytix.com/rajadamnern-stadium-seating/ringside#webpage","url":"https://muaytix.com/rajadamnern-stadium-seating/ringside","name":"Rajadamnern Stadium Ringside Seats | MuayTix","description":"Book Ringside seats at Rajadamnern Stadium. See the view, sections, front-row guidance, atmosphere and what to expect close to the Muay Thai ring.","isPartOf":{"@type":"WebSite","@id":"https://muaytix.com/#website","name":"MuayTix","url":"https://muaytix.com","publisher":{"@id":"https://muaytix.com/#organisation"}}},{"@type":"BreadcrumbList","@id":"https://muaytix.com/rajadamnern-stadium-seating/ringside#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"MuayTix","item":"https://muaytix.com"},{"@type":"ListItem","position":2,"name":"Rajadamnern Stadium Seating","item":"https://muaytix.com/rajadamnern-stadium-seating"},{"@type":"ListItem","position":3,"name":"Rajadamnern Stadium Ringside Seats","item":"https://muaytix.com/rajadamnern-stadium-seating/ringside"}]},{"@type":"FAQPage","@id":"https://muaytix.com/rajadamnern-stadium-seating/ringside#faq","mainEntity":[{"@type":"Question","name":"How close are Ringside seats to the ring?","acceptedAnswer":{"@type":"Answer","text":"Ringside seats are on the floor and only a few metres from the ring."}},{"@type":"Question","name":"Which sections are Ringside?","acceptedAnswer":{"@type":"Answer","text":"Ringside covers Sections 3 to 7 around the ring."}},{"@type":"Question","name":"Which Ringside sections are closest to the fighter entrance?","acceptedAnswer":{"@type":"Answer","text":"Sections 3 and 4 are closest to the raised fighter entrance walkway, which runs between and through those sections."}},{"@type":"Question","name":"Is front row guaranteed?","acceptedAnswer":{"@type":"Answer","text":"No. Front row is allocated first when available, but it cannot be guaranteed in advance."}},{"@type":"Question","name":"Is front row the best Ringside seat?","acceptedAnswer":{"@type":"Answer","text":"That depends on the experience you want. Front row is the closest and most immersive position. Other rows remain excellent and can offer a wider perspective."}},{"@type":"Question","name":"Are Ringside seats assigned?","acceptedAnswer":{"@type":"Answer","text":"Yes. Ringside is assigned seating."}},{"@type":"Question","name":"Can I sit with my group?","acceptedAnswer":{"@type":"Answer","text":"Groups should book together so seats can be allocated together within the chosen seat class."}},{"@type":"Question","name":"Will fighters walk past my seat?","acceptedAnswer":{"@type":"Answer","text":"Fighter movement varies by fight, corner and event. Sections 3 and 4 are closest to the formal entrance walkway, but post-fight interaction and specific fighter movement should never be guaranteed."}},{"@type":"Question","name":"Will cameras or officials be near Ringside?","acceptedAnswer":{"@type":"Answer","text":"They may be. Judges, officials, cameras, broadcast personnel and production staff work around the ring as part of the live fight-night environment."}},{"@type":"Question","name":"Can food and drinks be served at Ringside?","acceptedAnswer":{"@type":"Answer","text":"Food, soft drinks and beer are available for purchase and can be served directly to Ringside seats during the evening."}},{"@type":"Question","name":"Can I take photographs and videos?","acceptedAnswer":{"@type":"Answer","text":"Yes. Personal photography and video recording are permitted. Flash may be used between bouts, but not while a fight is taking place."}},{"@type":"Question","name":"Is there a dress code for Ringside?","acceptedAnswer":{"@type":"Answer","text":"There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena."}},{"@type":"Question","name":"Are Ringside seats suitable for families?","acceptedAnswer":{"@type":"Answer","text":"Families and groups can choose Ringside if they want assigned seating close to the ring. Club Class is usually the more straightforward family choice for guests who prefer a more elevated position."}}]}]}
+</script>
+</div>
