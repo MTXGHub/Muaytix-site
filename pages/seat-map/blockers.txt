@@ -6,6 +6,4 @@
 
 - Document A section 3 wants the seating map large and readable in the hero, and section 3 wants it large and readable in its own block two screens later. It is placed once, in the hero, rather than twice within a screen and a half. The full-size link is in the map block where Document A puts it.
 
-- The annotated stadium view is used as the hero backdrop only, with an empty alt and aria-hidden. Document A section 4 supplies no approved alt text for that file and Document B section 3 forbids writing one. One approved line would let it carry proper alt text.
-
 - None of the images can be opened from this environment, because static.tildacdn.com is blocked by the network policy.

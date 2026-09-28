@@ -337,15 +337,16 @@ for (const [slot, key] of [['Main seating map', 'map'], ['Ringside crop', 'rings
 }
 console.log(`   ${'Third Class'.padEnd(16)} | none supplied   | reported, not substituted`);
 
-/* The backdrop is decorative and must stay that way: an empty alt AND
-   aria-hidden, so a screen reader skips it rather than reading a filename. */
+/* The backdrop carries the owner's own approved line for that exact file,
+   supplied 28 September. It must be his words, unedited, and it must not be
+   hidden from a screen reader now that it has them. */
 const back = imgs.filter(i => i.src === data.images.backdrop.url);
 if (!back.length) fail('the hero backdrop is not on the page');
 for (const b of back) {
-  if ((b.alt || '') !== '') fail('the hero backdrop has alt text; Document A supplies no approved line for that file');
-  if (b.hidden !== 'true') fail('the hero backdrop is not marked aria-hidden');
+  if (norm(b.alt) !== norm(DOC['alt.stadium'])) fail('the hero backdrop alt is not the approved line, word for word');
+  if (b.hidden === 'true') fail('the hero backdrop is hidden from screen readers but now carries approved alt text');
 }
-console.log(`   ${'Backdrop'.padEnd(16)} | ${data.images.backdrop.url.split('/').pop().padEnd(15)} | decorative, aria-hidden`);
+console.log(`   ${'Stadium view'.padEnd(16)} | ${data.images.backdrop.url.split('/').pop().padEnd(15)} | yes`);
 
 const approvedUrls = new Set([data.images.backdrop.url, ...['map', 'ringside', 'clubclass', 'leo'].map(k => data.images[k].url)]);
 imgs.filter(i => !approvedUrls.has(i.src)).forEach(i => fail(`unapproved image on page: ${i.src}`));

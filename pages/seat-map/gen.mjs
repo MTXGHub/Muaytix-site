@@ -61,7 +61,7 @@ const fig = (k, cls, swatch) =>
    on a desktop screen and directly under them on a phone, at its own 1:1
    shape, never cropped. The annotated stadium view behind is a backdrop only. */
 const hero = `  <header class="mtx-sm__hero">
-    <img class="mtx-sm__hero-media" src="${esc(IMG.backdrop.url)}" alt="" aria-hidden="true" loading="eager" decoding="async">
+    <img class="mtx-sm__hero-media" src="${esc(IMG.backdrop.url)}" alt="${esc(ALT('backdrop'))}" loading="eager" decoding="async">
     <div class="mtx-sm__hero-wash" aria-hidden="true"></div>
     <div class="mtx-sm__shell mtx-sm__hero-in">
       <div class="mtx-sm__hero-copy">
