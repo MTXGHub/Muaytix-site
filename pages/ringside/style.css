@@ -411,12 +411,26 @@
 
 /* ------------------------------------------------------- wide picture --- */
 
-.mtx-rs__wide { margin-top: clamp(28px, 3.4vw, 44px); }
-.mtx-rs__wide img {
-  width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover;
+/* Doubled class. `.mtx-rs figure { margin: 0 }` in the reset is (0,1,1) and
+   beats a single-class margin-top, so this sat flush against its own heading
+   on the live page. CLAUDE.md section 8, and the third time it has bitten. */
+.mtx-rs .mtx-rs__wide { margin-top: clamp(28px, 3.4vw, 44px); }
+
+/* A wide picture, not a wall.
+   
+   21:9 alone is a ratio with no ceiling: on a short landscape screen it grew
+   to about three quarters of the visible height and pushed every word of the
+   section below the fold. The cap is what stops that, and it is in vh because
+   the fault is a relationship between the image and the SCREEN, not between
+   the image and the column. object-fit keeps the crop centred as it tightens. */
+.mtx-rs .mtx-rs__wide img {
+  width: 100%; height: auto;
+  aspect-ratio: 21 / 9;
+  max-height: min(48vh, 500px);
+  object-fit: cover; object-position: center;
   background: #202027;
 }
-@supports not (aspect-ratio: 21 / 9) { .mtx-rs__wide img { height: 360px; } }
+@supports not (aspect-ratio: 21 / 9) { .mtx-rs .mtx-rs__wide img { height: min(48vh, 500px); } }
 .mtx-rs__wide::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
 
 /* --------------------------------------------------------------- strip --- */
@@ -528,6 +542,10 @@
 }
 
 @media (max-width: 620px) {
+  /* 21:9 across a phone is a 150px sliver. The picture keeps its job by
+     getting squarer, not by getting shorter. */
+  .mtx-rs .mtx-rs__wide img { aspect-ratio: 3 / 2; max-height: 42vh; }
+
   .mtx-rs__shell { width: min(100% - 32px, 1240px); }
   .mtx-rs .mtx-rs__includes { grid-template-columns: 1fr; }
   .mtx-rs__includes li { padding-right: 0; border-bottom: 1px solid var(--rule-dark); }

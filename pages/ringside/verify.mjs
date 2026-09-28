@@ -69,6 +69,41 @@ for (const w of [1440, 1280, 1024, 860, 620, 390]) {
   await p.close();
 }
 
+/* ---- 1b. Two whole families of fault, caught by measurement ---- */
+console.log('\n=== 1b. SPACING AND PICTURE SCALE ===');
+for (const [w, h] of [[1440, 900], [1280, 800], [1000, 520], [390, 844]]) {
+  const p = await browser.newPage({ viewport: { width: w, height: h } });
+  await p.setContent(doc, { waitUntil: 'load' });
+  const r = await p.evaluate(() => {
+    /* A heading flush against the thing under it is almost always a reset
+       rule at (0,1,1) beating a single-class margin-top. It has bitten this
+       project three times, so it is measured rather than eyeballed. */
+    const tight = [...document.querySelectorAll('.mtx-rs h2, .mtx-rs h3')].map(hd => {
+      const next = hd.nextElementSibling;
+      if (!next) return null;
+      const gap = next.getBoundingClientRect().top - hd.getBoundingClientRect().bottom;
+      return gap < 14 ? { text: hd.textContent.trim().slice(0, 44), gap: Math.round(gap) } : null;
+    }).filter(Boolean);
+    /* A picture in the flow of the page is not allowed to own the screen.
+       A background layer is excluded: the hero photograph is positioned to
+       fill its own band and is supposed to, which is a different thing from
+       a content picture pushing the copy under it off the fold. */
+    const huge = [...document.querySelectorAll('.mtx-rs img')].filter(i => {
+      const cs = getComputedStyle(i);
+      return cs.position === 'static' || cs.position === 'relative';
+    }).map(i => {
+      const b = i.getBoundingClientRect();
+      const share = b.height / window.innerHeight;
+      return share > 0.62 && b.height > 0 ? { src: i.getAttribute('src').split('/').pop(), pct: Math.round(share * 100) } : null;
+    }).filter(Boolean);
+    return { tight, huge };
+  });
+  r.tight.forEach(t => fail(`${w}x${h}: "${t.text}" sits ${t.gap}px above the next element`));
+  r.huge.forEach(x => fail(`${w}x${h}: ${x.src} is ${x.pct}% of the screen height`));
+  console.log(`   ${String(w) + 'x' + h}  headings sitting flush: ${r.tight.length}   pictures over 62% of the screen: ${r.huge.length}`);
+  await p.close();
+}
+
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 await page.setContent(doc, { waitUntil: 'load' });
 const visible = norm(await page.evaluate(() => document.querySelector('.mtx-rs').textContent));

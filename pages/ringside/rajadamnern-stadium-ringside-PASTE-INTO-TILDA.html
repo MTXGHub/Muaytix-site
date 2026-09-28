@@ -346,12 +346,16 @@
 .mtx-rs__practical li::before { content: ""; height: 8px; margin-top: 9px; background: var(--ring-green); }
 .mtx-rs .mtx-rs__practical p { font-size: 16.5px; max-width: 54ch; }
 
-.mtx-rs__wide { margin-top: clamp(28px, 3.4vw, 44px); }
-.mtx-rs__wide img {
-  width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover;
+.mtx-rs .mtx-rs__wide { margin-top: clamp(28px, 3.4vw, 44px); }
+
+.mtx-rs .mtx-rs__wide img {
+  width: 100%; height: auto;
+  aspect-ratio: 21 / 9;
+  max-height: min(48vh, 500px);
+  object-fit: cover; object-position: center;
   background: #202027;
 }
-@supports not (aspect-ratio: 21 / 9) { .mtx-rs__wide img { height: 360px; } }
+@supports not (aspect-ratio: 21 / 9) { .mtx-rs .mtx-rs__wide img { height: min(48vh, 500px); } }
 .mtx-rs__wide::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
 
 .mtx-rs__strip { position: relative; background: var(--ink); }
@@ -442,6 +446,9 @@
 }
 
 @media (max-width: 620px) {
+  
+  .mtx-rs .mtx-rs__wide img { aspect-ratio: 3 / 2; max-height: 42vh; }
+
   .mtx-rs__shell { width: min(100% - 32px, 1240px); }
   .mtx-rs .mtx-rs__includes { grid-template-columns: 1fr; }
   .mtx-rs__includes li { padding-right: 0; border-bottom: 1px solid var(--rule-dark); }
