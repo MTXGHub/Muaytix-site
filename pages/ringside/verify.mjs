@@ -46,13 +46,34 @@ const norm = s => s.replace(/\s+/g, ' ').replace(/ /g, ' ').trim();
 let fails = 0;
 const fail = m => { fails++; console.log('   FAIL  ' + m); };
 
+/* static.tildacdn.com is blocked by this environment's network policy, so
+   without this every image collapses to nothing and every measurement of how
+   big a picture is on screen is worthless. A stand-in of a plausible shape is
+   served in its place: a wide one for the wide slots, a square one for the
+   map, 4:3 for the rest. The layout measured below is then the layout a guest
+   actually gets, which is the entire point of measuring it. */
+const STAND = (w, h) => ({ status: 200, contentType: 'image/svg+xml',
+  body: `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="${w}" height="${h}" fill="#6f6f78"/></svg>` });
+async function servePictures(target) {
+  await target.route('**static.tildacdn.com/**', r => {
+    const u = r.request().url();
+    if (/1000034569/.test(u)) return r.fulfill(STAND(1600, 700));   // the overview, wide
+    if (/1000033717/.test(u)) return r.fulfill(STAND(900, 900));    // the seat map, square
+    if (/1000033703/.test(u)) return r.fulfill(STAND(1600, 700));   // the wide picture
+    r.fulfill(STAND(1200, 900));
+  });
+}
+
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 
 /* ---- 1. Layout, at every width (Document B section 12) ---- */
 console.log('\n=== 1. LAYOUT AND MOBILE AUDIT ===');
 for (const w of [1440, 1280, 1024, 860, 620, 390]) {
   const p = await browser.newPage({ viewport: { width: w, height: 1000 } });
+  await servePictures(p);
   await p.setContent(doc, { waitUntil: 'load' });
+  await p.evaluate(async () => { document.querySelectorAll('img[loading="lazy"]').forEach(i => i.loading = 'eager');
+    await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
   const r = await p.evaluate(() => ({
     over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
     h: document.documentElement.scrollHeight,
@@ -73,7 +94,10 @@ for (const w of [1440, 1280, 1024, 860, 620, 390]) {
 console.log('\n=== 1b. SPACING AND PICTURE SCALE ===');
 for (const [w, h] of [[1440, 900], [1280, 800], [1000, 520], [390, 844]]) {
   const p = await browser.newPage({ viewport: { width: w, height: h } });
+  await servePictures(p);
   await p.setContent(doc, { waitUntil: 'load' });
+  await p.evaluate(async () => { document.querySelectorAll('img[loading="lazy"]').forEach(i => i.loading = 'eager');
+    await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
   const r = await p.evaluate(() => {
     /* A heading flush against the thing under it is almost always a reset
        rule at (0,1,1) beating a single-class margin-top. It has bitten this
@@ -83,6 +107,13 @@ for (const [w, h] of [[1440, 900], [1280, 800], [1000, 520], [390, 844]]) {
       if (!next) return null;
       const gap = next.getBoundingClientRect().top - hd.getBoundingClientRect().bottom;
       return gap < 14 ? { text: hd.textContent.trim().slice(0, 44), gap: Math.round(gap) } : null;
+    }).filter(Boolean);
+    /* Consecutive paragraphs with no air between them: the same reset-beats-
+       single-class fault as a flush heading, one level down. */
+    const runOn = [...document.querySelectorAll('.mtx-rs p + p')].map(p => {
+      const prev = p.previousElementSibling;
+      const gap = p.getBoundingClientRect().top - prev.getBoundingClientRect().bottom;
+      return gap < 6 ? { text: p.textContent.trim().slice(0, 44), gap: Math.round(gap) } : null;
     }).filter(Boolean);
     /* A picture in the flow of the page is not allowed to own the screen.
        A background layer is excluded: the hero photograph is positioned to
@@ -96,15 +127,17 @@ for (const [w, h] of [[1440, 900], [1280, 800], [1000, 520], [390, 844]]) {
       const share = b.height / window.innerHeight;
       return share > 0.62 && b.height > 0 ? { src: i.getAttribute('src').split('/').pop(), pct: Math.round(share * 100) } : null;
     }).filter(Boolean);
-    return { tight, huge };
+    return { tight, runOn, huge };
   });
   r.tight.forEach(t => fail(`${w}x${h}: "${t.text}" sits ${t.gap}px above the next element`));
+  r.runOn.forEach(t => fail(`${w}x${h}: "${t.text}" runs into the paragraph above it, ${t.gap}px gap`));
   r.huge.forEach(x => fail(`${w}x${h}: ${x.src} is ${x.pct}% of the screen height`));
-  console.log(`   ${String(w) + 'x' + h}  headings sitting flush: ${r.tight.length}   pictures over 62% of the screen: ${r.huge.length}`);
+  console.log(`   ${String(w) + 'x' + h}  headings flush: ${r.tight.length}   paragraphs run together: ${r.runOn.length}   pictures over 62% of the screen: ${r.huge.length}`);
   await p.close();
 }
 
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+await servePictures(page);
 await page.setContent(doc, { waitUntil: 'load' });
 const visible = norm(await page.evaluate(() => document.querySelector('.mtx-rs').textContent));
 
@@ -253,7 +286,15 @@ for (const m of mapImgs) if (norm(m.alt) !== norm(DOC['alt.map']))
 console.log(`   map          | ${data.images.map.url.split('/').pop().padEnd(13)} | Document A approved line`);
 console.log(`   Sections 3 to 7 map detail: none exists, reported`);
 
-const approvedUrls = new Set([...SUPPLIED.keys(), data.images.map.url]);
+/* The overview: his own approved alt line for this exact file, from Document A
+   of the seating page, transcribed into this page's locked copy. */
+const ovImgs = imgs.filter(i => i.src === data.images.overview.url);
+if (!ovImgs.length) fail('the overview photograph is not on the page');
+for (const o of ovImgs) if (norm(o.alt) !== norm(DOC['alt.overview']))
+  fail('the overview alt is not the owner\'s approved line for that file');
+console.log(`   overview     | ${data.images.overview.url.split('/').pop().padEnd(13)} | his approved line for this file`);
+
+const approvedUrls = new Set([...SUPPLIED.keys(), data.images.map.url, data.images.overview.url]);
 const unknown = imgs.filter(i => !approvedUrls.has(i.src));
 unknown.forEach(i => fail(`unapproved image on page: ${i.src}`));
 /* Document A section 8: no image may be described as front row. */

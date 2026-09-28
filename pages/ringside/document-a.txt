@@ -315,3 +315,11 @@ Ringside seating close to the Muay Thai ring at Rajadamnern Stadium
 
 [alt.map]
 Rajadamnern Stadium Ringside Sections 3 to 7 around the ring
+
+# The overview photograph the owner asked for on 28 September, so a guest can
+# see where Ringside sits against the other seat classes. The line below is
+# not written here: it is his own approved alt for this exact file, from
+# Document A of /rajadamnern-stadium-seating, section 7.
+
+[alt.overview]
+Interior view of Rajadamnern Stadium seating around the Muay Thai ring

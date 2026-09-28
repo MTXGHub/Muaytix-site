@@ -205,13 +205,19 @@
   margin-top: 15px !important; max-width: 62ch; font-size: 16.5px; color: var(--muted);
 }
 
-.mtx-rs__map {
+.mtx-rs .mtx-rs__map {
   margin-top: clamp(30px, 3.6vw, 46px);
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
   gap: clamp(28px, 3.6vw, 56px); align-items: start;
 }
-.mtx-rs__map-fig img { width: 100%; height: auto; }
+
+.mtx-rs__map-fig img {
+  width: 100%; height: auto;
+  max-height: min(48vh, 430px);
+  object-fit: contain; object-position: left top;
+}
 .mtx-rs .mtx-rs__map-body p { max-width: 58ch; font-size: 17px; color: var(--muted); }
+.mtx-rs .mtx-rs__map-body p + p { margin-top: 15px !important; }
 .mtx-rs .mtx-rs__map-list { margin: 22px 0; }
 .mtx-rs__map-list li {
   display: grid; grid-template-columns: 12px minmax(0, 1fr); column-gap: 14px;
@@ -299,7 +305,12 @@
   display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: clamp(26px, 3.4vw, 54px); align-items: start;
 }
-.mtx-rs__split-fig img { width: 100%; height: auto; }
+
+.mtx-rs__split-fig img {
+  width: 100%; height: auto;
+  max-height: min(46vh, 470px);
+  object-fit: cover; object-position: center;
+}
 .mtx-rs__split-fig::after { content: ""; display: block; height: 7px; background: var(--ring-green); }
 .mtx-rs .mtx-rs__split-body p { max-width: 60ch; font-size: 17px; color: var(--muted); }
 .mtx-rs .mtx-rs__split-body p + p { margin-top: 15px !important; }
@@ -412,7 +423,7 @@
 
 @media (max-width: 1080px) {
   .mtx-rs .mtx-rs__includes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mtx-rs__map { grid-template-columns: 1fr; }
+  .mtx-rs .mtx-rs__map { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 860px) {
@@ -528,6 +539,9 @@
   <section class="mtx-rs__band mtx-rs__band--white">
     <div class="mtx-rs__shell">
       <h2>Where are the Ringside sections?</h2>
+      <figure class="mtx-rs__wide">
+        <img src="https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg" alt="Interior view of Rajadamnern Stadium seating around the Muay Thai ring" loading="lazy" decoding="async">
+      </figure>
       <div class="mtx-rs__map">
         <figure class="mtx-rs__map-fig">
           <a href="/rajadamnern-stadium-seat-map">

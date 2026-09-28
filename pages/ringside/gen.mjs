@@ -110,6 +110,9 @@ const experience = `  <section class="mtx-rs__band mtx-rs__band--ink">
 const sections = `  <section class="mtx-rs__band mtx-rs__band--white">
     <div class="mtx-rs__shell">
       <h2>${T('sections.h2')}</h2>
+      <figure class="mtx-rs__wide">
+        <img src="${esc(IMG.overview.url)}" alt="${T('alt.overview')}" loading="lazy" decoding="async">
+      </figure>
       <div class="mtx-rs__map">
         <figure class="mtx-rs__map-fig">
           <a href="${esc(D.seat_map)}">
@@ -261,10 +264,11 @@ const final = `  <section class="mtx-rs__band mtx-rs__band--ink mtx-rs__close">
 
 /* ---------- reported, not filled in ---------- */
 
-blockers.push('The annotated overview photograph, the one labelling Ringside Sections 3&4, 5, 6 and 7 against Club '
-  + 'Class 8 and 9, LEO and Third Class, is not on the Tilda CDN under any URL held here. A page cannot point at a '
-  + 'file with no address. Send its URL and it goes straight into "Where are the Ringside sections?", beside the '
-  + 'seat map, which is exactly where it earns its place.');
+blockers.push('The overview photograph is in, under the heading of "Where are the Ringside sections?". Its URL is '
+  + 'character for character the one the owner gave for the HERO of /rajadamnern-stadium-seating. Either that page\'s '
+  + 'hero is this annotated overview, which would be a good hero for a comparison page, or one of the two is a slip. '
+  + 'It cannot be opened from here to tell. Its alt text is his own approved line for this exact file, from Document A '
+  + 'of the seating page. If the image carries section labels, the alt should say so and needs one line from him.');
 
 blockers.push('Alt text for the six photographs is the owner\'s own note on each one, word for word, because his '
   + 'instruction to put all six on the page needed six accurate descriptions and Document A section 8 supplies three '
