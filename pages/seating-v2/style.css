@@ -1,0 +1,391 @@
+/* RAJADAMNERN STADIUM SEATING
+ * ----------------------------------------------------------------------
+ * Scoped under .mtx-ss so the block cannot reach the rest of the Tilda site,
+ * and so Tilda's nav and footer cannot reach into it.
+ *
+ * The alignment and colour blocks at the foot are not optional and are not
+ * defensive padding. Tilda applies its own rules inside a zero block and
+ * matches every element directly, which beats anything inherited. The
+ * homepage shipped without them and every paragraph on it came out centred.
+ * They are written first here, not bolted on afterwards.
+ *
+ * Seat class colours are used as bars and swatches only. LEO's yellow
+ * measures 1.04:1 on a pale ground. None of the four is ever set as type.
+ */
+
+.mtx-ss, .mtx-ss * { box-sizing: border-box; }
+
+.mtx-ss {
+  --ink:        #0B0B0D;
+  --paper:      #F4F3F0;
+  --white:      #FFFFFF;
+  --muted:      #56565F;
+  --muted-dark: #A9AAB3;
+  --rule:       rgba(11, 11, 13, .15);
+  --rule-dark:  rgba(255, 255, 255, .17);
+  --blue:       #1F5BFF;
+  --blue-dark:  #1540C9;
+  --blue-lite:  #6D95FF;
+
+  --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --body:    "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --t-mega: clamp(40px, 6.6vw, 92px);
+  --t-xl:   clamp(30px, 4.2vw, 58px);
+  --t-lg:   clamp(24px, 2.8vw, 38px);
+
+  font-family: var(--body);
+  color: var(--ink);
+  line-height: 1.6;
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+.mtx-ss p, .mtx-ss h1, .mtx-ss h2, .mtx-ss h3,
+.mtx-ss ul, .mtx-ss ol, .mtx-ss li, .mtx-ss figure, .mtx-ss table { margin: 0; padding: 0; }
+.mtx-ss ul, .mtx-ss ol { list-style: none; }
+.mtx-ss img { display: block; max-width: 100%; }
+
+.mtx-ss__shell { width: min(100% - 48px, 1240px); margin-inline: auto; }
+
+.mtx-ss__band { padding: clamp(52px, 6.4vw, 100px) 0; }
+.mtx-ss__band--paper { background: var(--paper); }
+.mtx-ss__band--white { background: var(--white); }
+.mtx-ss__band--ink   { background: var(--ink); color: var(--white); }
+
+/* ---------------------------------------------------------------- type --- */
+
+.mtx-ss h1, .mtx-ss h2, .mtx-ss h3 {
+  font-family: var(--display); font-weight: 800;
+  text-transform: uppercase; letter-spacing: -.005em; line-height: .94;
+}
+.mtx-ss h1 { font-size: var(--t-mega); letter-spacing: -.015em; }
+.mtx-ss h2 { font-size: var(--t-xl); }
+.mtx-ss h3 { font-size: clamp(20px, 2vw, 27px); }
+
+/* ------------------------------------------------------------- buttons --- */
+
+.mtx-ss__btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 54px; padding: 0 26px; border: 2px solid transparent;
+  font-family: var(--display); font-weight: 800;
+  font-size: 16px; letter-spacing: .08em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.mtx-ss__btn--blue  { background: var(--blue); color: var(--white); }
+.mtx-ss__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
+.mtx-ss__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
+.mtx-ss__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+.mtx-ss__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
+.mtx-ss__btn--line:hover  { background: var(--ink); color: var(--white); }
+.mtx-ss__btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+.mtx-ss__go {
+  display: inline-block; text-decoration: none;
+  font-family: var(--display); font-weight: 800;
+  font-size: 15px; line-height: 1.35; letter-spacing: .075em; text-transform: uppercase;
+  color: var(--ink); padding-bottom: 3px; border-bottom: 2px solid currentColor;
+  transition: color .18s ease;
+}
+.mtx-ss__go:hover { color: var(--blue); }
+.mtx-ss__band--ink .mtx-ss__go { color: var(--white); }
+.mtx-ss__band--ink .mtx-ss__go:hover { color: var(--blue-lite); }
+.mtx-ss__go:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+
+.mtx-ss .mtx-ss__actions {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-top: 32px !important; max-width: none !important;
+}
+
+/* ---------------------------------------------------------------- hero --- */
+
+/* Document A section 4: the H1 and opening copy must be immediately visible
+   on desktop and mobile, and the booking CTA must be reachable within the
+   first major mobile view. The hero is deliberately shallow for that reason:
+   it is not a full-screen photograph with the words pushed below it. */
+.mtx-ss__hero {
+  position: relative; overflow: hidden;
+  padding: clamp(56px, 7vw, 104px) 0 clamp(48px, 5.6vw, 84px);
+  background: var(--ink); color: var(--white);
+}
+.mtx-ss__hero-media {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 42%;
+}
+.mtx-ss__hero-wash {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, rgba(11,11,13,.96) 0%, rgba(11,11,13,.70) 38%, rgba(11,11,13,.34) 78%, rgba(11,11,13,.40) 100%),
+    linear-gradient(100deg, rgba(11,11,13,.92) 0%, rgba(11,11,13,.74) 42%, rgba(11,11,13,.28) 80%, rgba(11,11,13,.14) 100%);
+}
+.mtx-ss__hero::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  background: var(--blue); z-index: 2;
+}
+.mtx-ss__hero-in { position: relative; }
+.mtx-ss__hero h1 { max-width: 16ch; }
+.mtx-ss .mtx-ss__lede {
+  margin-top: 18px !important; max-width: 60ch;
+  font-size: clamp(16.5px, 1.45vw, 19px); color: rgba(255,255,255,.88);
+}
+
+/* -------------------------------------------------------------- answer --- */
+
+/* Document A section 4: a short text block with no image, placed immediately
+   below the hero, that answers the question quickly. */
+.mtx-ss__answer { max-width: 1000px; }
+.mtx-ss .mtx-ss__answer-lead {
+  margin-top: 20px !important; max-width: 62ch;
+  font-size: clamp(17px, 1.5vw, 20px); color: var(--muted);
+}
+.mtx-ss .mtx-ss__answer-list { margin-top: 26px; display: grid; gap: 0; }
+.mtx-ss__answer-list li {
+  display: grid; grid-template-columns: 6px minmax(0, 1fr);
+  column-gap: 20px; padding: 16px 0; border-top: 1px solid var(--rule);
+}
+.mtx-ss__answer-list li::before { content: ""; background: var(--seat); }
+.mtx-ss .mtx-ss__answer-list p { font-size: 17px; max-width: 70ch; }
+.mtx-ss .mtx-ss__answer-close {
+  margin-top: 26px !important; max-width: 62ch;
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(20px, 2vw, 27px); line-height: 1.12; text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------- cards --- */
+
+/* Document A section 4: two by two on desktop, a single stack on mobile. */
+.mtx-ss .mtx-ss__cards {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 3.4vw, 54px);
+}
+.mtx-ss__card { display: flex; flex-direction: column; }
+.mtx-ss__card-fig { position: relative; }
+.mtx-ss__shot {
+  width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover;
+  background: #E4E3DF;
+}
+@supports not (aspect-ratio: 3 / 2) { .mtx-ss__shot { height: 260px; } }
+/* The class colour, as a bar under its photograph. Never as type. */
+.mtx-ss__card-fig::after {
+  content: ""; display: block; height: 7px; background: var(--seat);
+}
+.mtx-ss__card-body { display: flex; flex-direction: column; flex: 1; }
+.mtx-ss .mtx-ss__card-name { margin-top: 22px; font-size: clamp(24px, 2.4vw, 33px); }
+
+.mtx-ss .mtx-ss__facts {
+  margin-top: 12px !important; display: flex; flex-wrap: wrap; gap: 8px 10px;
+}
+.mtx-ss__fact {
+  display: inline-block; padding: 6px 11px 5px;
+  background: #ECEAE5;
+  font-family: var(--display); font-weight: 700;
+  font-size: 13px; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--ink);
+}
+.mtx-ss__fact--price { background: var(--ink); color: var(--white); }
+
+.mtx-ss .mtx-ss__card-copy { margin-top: 15px !important; font-size: 16.5px; color: var(--muted); }
+.mtx-ss .mtx-ss__best {
+  margin-top: 16px !important; padding-left: 14px;
+  border-left: 3px solid var(--seat);
+  font-size: 16px; font-weight: 600; color: var(--ink);
+}
+.mtx-ss .mtx-ss__card-go { margin-top: auto !important; padding-top: 20px; }
+.mtx-ss .mtx-ss__card-cta { margin-top: 16px !important; }
+.mtx-ss__card-cta .mtx-ss__btn { width: 100%; padding: 0 14px; letter-spacing: .05em; }
+
+/* ------------------------------------------------------------- compare --- */
+
+.mtx-ss__tablewrap { margin-top: clamp(30px, 3.6vw, 46px); }
+.mtx-ss__table { width: 100%; border-collapse: collapse; }
+.mtx-ss__table th, .mtx-ss__table td {
+  padding: 15px 16px 15px 0; border-bottom: 1px solid var(--rule-dark);
+  vertical-align: top; font-size: 16px;
+}
+.mtx-ss__table thead th {
+  font-family: var(--display); font-weight: 800;
+  font-size: 13px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--muted-dark); border-bottom-color: rgba(255,255,255,.3);
+}
+.mtx-ss__table tbody th {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(18px, 1.7vw, 22px); text-transform: uppercase;
+  color: var(--white); white-space: nowrap;
+}
+.mtx-ss__table tbody td { color: var(--muted-dark); }
+.mtx-ss__swatch {
+  display: inline-block; width: 12px; height: 12px; margin-right: 10px;
+  background: var(--seat); vertical-align: baseline;
+}
+.mtx-ss .mtx-ss__table-note {
+  margin-top: 26px !important; max-width: 70ch; font-size: 17px; color: var(--muted-dark);
+}
+
+/* --------------------------------------------------------------- guide --- */
+
+/* Document A section 5: a photograph beside each block on desktop, the image
+   stacked above the text on mobile. */
+.mtx-ss__guide { margin-top: clamp(30px, 3.6vw, 46px); }
+.mtx-ss__choice {
+  display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 3.2vw, 52px); align-items: center;
+  padding: clamp(28px, 3.2vw, 46px) 0; border-top: 1px solid var(--rule);
+}
+.mtx-ss__choice:last-child { border-bottom: 1px solid var(--rule); }
+.mtx-ss__choice:nth-child(even) .mtx-ss__choice-fig { order: 2; }
+.mtx-ss__choice-fig::after { content: ""; display: block; height: 7px; background: var(--seat); }
+.mtx-ss .mtx-ss__choice-body h3 { max-width: 22ch; }
+.mtx-ss .mtx-ss__choice-body p {
+  margin-top: 15px !important; max-width: 62ch; font-size: 16.5px; color: var(--muted);
+}
+
+/* ----------------------------------------------------------------- map --- */
+
+.mtx-ss__map {
+  margin-top: clamp(30px, 3.6vw, 46px);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 3.6vw, 56px); align-items: start;
+}
+.mtx-ss__map-fig img { width: 100%; height: auto; }
+.mtx-ss .mtx-ss__map-body p { max-width: 58ch; font-size: 17px; color: var(--muted); }
+.mtx-ss .mtx-ss__map-list { margin: 22px 0; }
+.mtx-ss__map-list li {
+  display: grid; grid-template-columns: 12px minmax(0, 1fr); column-gap: 14px;
+  align-items: start; padding: 11px 0; border-top: 1px solid var(--rule);
+  font-size: 16.5px;
+}
+.mtx-ss__map-list li::before { content: ""; height: 12px; margin-top: 7px; background: var(--seat); }
+.mtx-ss .mtx-ss__map-go { margin-top: 24px !important; }
+
+/* ------------------------------------------------------------ includes --- */
+
+/* Document A section 7: four simple icon points, not a large text-heavy box. */
+.mtx-ss .mtx-ss__includes {
+  margin-top: clamp(30px, 3.6vw, 46px);
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0;
+  border-top: 1px solid var(--rule-dark);
+}
+.mtx-ss__includes li { padding: 26px clamp(20px, 2.4vw, 34px) 28px 0; }
+.mtx-ss__includes svg {
+  width: 30px; height: 30px; stroke: var(--blue-lite); fill: none;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+.mtx-ss .mtx-ss__includes p { margin-top: 16px !important; font-size: 16px; color: var(--muted-dark); }
+
+/* ------------------------------------------------------------- booking --- */
+
+.mtx-ss .mtx-ss__booking-copy {
+  margin-top: 16px !important; max-width: 64ch; font-size: 17px; color: var(--muted);
+}
+.mtx-ss__widget { margin-top: clamp(30px, 3.4vw, 44px); }
+
+/* ----------------------------------------------------------------- faq --- */
+
+.mtx-ss__faq { margin-top: clamp(26px, 3.2vw, 42px); border-top: 1px solid var(--rule); }
+.mtx-ss__faq details { border-bottom: 1px solid var(--rule); }
+.mtx-ss__faq summary {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 22px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+}
+.mtx-ss__faq summary::-webkit-details-marker { display: none; }
+.mtx-ss__faq summary h3 { font-size: clamp(18px, 1.8vw, 24px); line-height: 1.12; }
+.mtx-ss__faq summary::after {
+  content: ""; flex: none; width: 14px; height: 14px; margin-top: 7px;
+  border-right: 2px solid var(--blue); border-bottom: 2px solid var(--blue);
+  transform: rotate(45deg); transition: transform .2s ease;
+}
+.mtx-ss__faq details[open] summary::after { transform: rotate(-135deg); margin-top: 12px; }
+.mtx-ss__faq summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.mtx-ss .mtx-ss__faq p { margin: 0 0 24px !important; max-width: 72ch; font-size: 16.5px; color: var(--muted); }
+
+/* --------------------------------------------------------------- close --- */
+
+.mtx-ss .mtx-ss__close-copy {
+  margin-top: 20px !important; max-width: 62ch;
+  font-size: clamp(17px, 1.5vw, 20px); color: rgba(255,255,255,.9);
+}
+.mtx-ss .mtx-ss__elsewhere {
+  margin-top: 34px !important; padding-top: 24px;
+  border-top: 1px solid var(--rule-dark);
+  display: flex; flex-wrap: wrap; gap: 14px 30px;
+}
+
+.mtx-ss__inline { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+.mtx-ss__inline:hover { color: var(--blue-dark); }
+
+/* ----------------------------------------------------------- alignment --- */
+
+/* Stated, not inherited. Tilda centres text by matching every element
+   directly, with a rule shaped like `#allrecords * { text-align: center }`,
+   and a direct match beats an inherited value however specific the ancestor
+   rule is. #mtx-ss.mtx-ss * is (1,1,1) and beats (1,0,1) outright. */
+#mtx-ss.mtx-ss,
+#mtx-ss.mtx-ss * { text-align: left; }
+#mtx-ss.mtx-ss .mtx-ss__btn { text-align: center; }
+
+/* Colour, for the same reason: a host rule shaped like `#allrecords a {
+   color: inherit }` beats every single-class button rule. */
+#mtx-ss.mtx-ss a.mtx-ss__btn--blue  { background: var(--blue); color: var(--white); }
+#mtx-ss.mtx-ss a.mtx-ss__btn--blue:hover  { background: var(--blue-dark); color: var(--white); }
+#mtx-ss.mtx-ss a.mtx-ss__btn--ghost { background: transparent; border-color: rgba(255,255,255,.55); color: var(--white); }
+#mtx-ss.mtx-ss a.mtx-ss__btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+#mtx-ss.mtx-ss a.mtx-ss__btn--line  { background: transparent; border-color: var(--ink); color: var(--ink); }
+#mtx-ss.mtx-ss a.mtx-ss__btn--line:hover  { background: var(--ink); color: var(--white); }
+#mtx-ss.mtx-ss a.mtx-ss__inline { color: var(--blue); }
+#mtx-ss.mtx-ss a.mtx-ss__inline:hover { color: var(--blue-dark); }
+#mtx-ss.mtx-ss a.mtx-ss__go { color: var(--ink); }
+#mtx-ss.mtx-ss a.mtx-ss__go:hover { color: var(--blue); }
+#mtx-ss.mtx-ss .mtx-ss__band--ink a.mtx-ss__go { color: var(--white); }
+#mtx-ss.mtx-ss .mtx-ss__band--ink a.mtx-ss__go:hover { color: var(--blue-lite); }
+
+/* --------------------------------------------------------------- guard --- */
+
+/* A direct match on a heading inside the widget beats inheritance and has
+   previously turned a fight night's own name white on white. CLAUDE.md
+   section 8. This page mounts the widget, so this is not optional. */
+.mtx-ss #mtx-booking h1, .mtx-ss #mtx-booking h2,
+.mtx-ss #mtx-booking h3, .mtx-ss #mtx-booking h4 { color: inherit; text-transform: none; }
+
+/* ----------------------------------------------------------- narrower --- */
+
+@media (max-width: 1080px) {
+  .mtx-ss .mtx-ss__includes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-ss__map { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 860px) {
+  .mtx-ss .mtx-ss__cards { grid-template-columns: 1fr; }
+  /* Document A section 5: on mobile the image stacks above its text. */
+  .mtx-ss__choice { grid-template-columns: 1fr; gap: 20px; align-items: start; }
+  .mtx-ss__choice:nth-child(even) .mtx-ss__choice-fig { order: 0; }
+
+  /* Document A section 4: the comparison table becomes stacked cards. */
+  .mtx-ss__table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+  .mtx-ss__table, .mtx-ss__table tbody, .mtx-ss__table tr, .mtx-ss__table th, .mtx-ss__table td { display: block; }
+  .mtx-ss__table tr { padding: 20px 0 22px; border-top: 1px solid var(--rule-dark); }
+  .mtx-ss__table tr:last-child { border-bottom: 1px solid var(--rule-dark); }
+  .mtx-ss__table th, .mtx-ss__table td { border-bottom: 0; padding: 0; }
+  .mtx-ss__table tbody th { margin-bottom: 10px; white-space: normal; }
+  .mtx-ss__table td { position: relative; padding: 5px 0 5px 128px; }
+  .mtx-ss__table td::before {
+    content: attr(data-label); position: absolute; left: 0; top: 5px; width: 118px;
+    font-family: var(--display); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .13em; text-transform: uppercase; color: var(--muted-dark);
+  }
+}
+
+@media (max-width: 620px) {
+  .mtx-ss__shell { width: min(100% - 32px, 1240px); }
+  .mtx-ss .mtx-ss__includes { grid-template-columns: 1fr; }
+  .mtx-ss__includes li { padding-right: 0; border-bottom: 1px solid var(--rule-dark); }
+  .mtx-ss__actions .mtx-ss__btn { width: 100%; }
+  .mtx-ss__table td { padding-left: 112px; }
+  .mtx-ss__table td::before { width: 104px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtx-ss *, .mtx-ss *::before, .mtx-ss *::after {
+    animation: none !important; transition: none !important; scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,433 @@
+# RAJADAMNERN STADIUM SEATING: LOCKED COPY, transcribed from Document A.
+#
+# Supplied by the owner, 28 September 2026, marked LOCKED COPY.
+# This file is the only place this page's prose exists. gen.mjs renders from
+# it by key and verify.mjs reads the built page back and diffs it against
+# this file. Nothing here may be edited without the owner's explicit
+# authorisation.
+#
+# Document B, section 2: the approved copy is reproduced exactly. No
+# rewriting, paraphrasing, shortening, expanding, polishing, alternative
+# headlines, alternative CTAs, new FAQs or supporting sentences.
+# Section 3: zero independently authored customer-facing sentences.
+#
+# Lines starting with # are comments. Blank lines inside a block are kept.
+
+[meta.seo_title]
+Rajadamnern Stadium Seating | Choose Your Best Seats
+
+[meta.description]
+Compare Ringside, Club Class, LEO Section and Third Class at Rajadamnern Stadium. See the views, atmosphere, prices and best seats for your Bangkok fight night.
+
+[meta.social_title]
+Rajadamnern Stadium Seating: Choose Your View
+
+[meta.social_description]
+From the closest seats beside the ring to the wide view from the upper tier, choose the Rajadamnern Stadium seating that suits your night.
+
+[hero.h1]
+Rajadamnern Stadium Seating
+
+[hero.p1]
+Choose how you want to experience a night of Muay Thai at Rajadamnern Stadium.
+
+[hero.p2]
+Sit only a few metres from the ring in Ringside, look down across the action from Club Class, face the ring from the atmospheric LEO Section, or take in the whole arena from the upper tier in Third Class.
+
+[hero.p3]
+Every seat gives you a clear view of the ring. The difference is the experience around it.
+
+[hero.cta_primary]
+Book Your Tickets
+
+[hero.cta_secondary]
+View the Seat Map
+
+[answer.h2]
+Which are the best seats at Rajadamnern Stadium?
+
+[answer.p1]
+There is no single best seat for everyone. The right choice depends on how you want to experience the fight night.
+
+[answer.p2]
+Ringside is closest to the action and places you inside the working fight-night environment.
+
+[answer.p3]
+Club Class gives you an elevated view, a numbered seat and easy access to the stadium facilities.
+
+[answer.p4]
+LEO Section faces the front of the ring and brings you closest to the local fight-night atmosphere on traditional Muay Thai nights.
+
+[answer.p5]
+Third Class sits at the highest point of the stadium and gives you a wide view across the ring, crowd and arena.
+
+[answer.p6]
+The best Rajadamnern Stadium seats are the ones that match the kind of night you want.
+
+[cards.name.ringside]
+Ringside Seats
+
+[cards.sections.ringside]
+Sections 3 to 7
+
+[cards.price.ringside]
+2,500 THB
+
+[cards.seating.ringside]
+Assigned seating
+
+[cards.p1.ringside]
+Only a few metres from the ring, Ringside puts you close enough to hear the corners, feel the energy around the ropes and watch the fight-night team working around you.
+
+[cards.p2.ringside]
+Sections 3 and 4 sit closest to the fighter entrance walkway. Sections 5 to 7 wrap around the remaining sides of the ring.
+
+[cards.best.ringside]
+Best for: Maximum proximity, sound and immersion.
+
+[cards.link.ringside]
+Explore Ringside
+
+[cards.cta.ringside]
+Book Ringside Tickets
+
+[cards.name.club-class]
+Club Class Seats
+
+[cards.sections.club-class]
+Sections 8 and 9
+
+[cards.price.club-class]
+1,800 THB
+
+[cards.seating.club-class]
+Assigned numbered seating
+
+[cards.p1.club-class]
+Club Class is the dependable choice for a clear elevated view of the ring, with your numbered seat waiting for you when you arrive.
+
+[cards.p2.club-class]
+It is popular with first-time visitors, families and groups who want a straightforward seating experience with food, drinks and facilities close by.
+
+[cards.best.club-class]
+Best for: Families, groups and an easy elevated view.
+
+[cards.link.club-class]
+Explore Club Class
+
+[cards.cta.club-class]
+Book Club Class Tickets
+
+[cards.name.leo-section]
+LEO Section
+
+[cards.sections.leo-section]
+Section 10
+
+[cards.price.leo-section]
+1,500 THB
+
+[cards.seating.leo-section]
+Unassigned seating, seat guaranteed
+
+[cards.p1.leo-section]
+LEO faces the front of the ring and sits where the broadcast cameras and commentary team create a strong full-ring perspective.
+
+[cards.p2.leo-section]
+On Wednesday, Thursday and Sunday traditional fight nights, this is also where the local betting crowd gathers, bringing a distinctive atmosphere to the section.
+
+[cards.best.leo-section]
+Best for: Front-facing views, atmosphere and choosing your own position.
+
+[cards.link.leo-section]
+Explore the LEO Section
+
+[cards.cta.leo-section]
+Book LEO Tickets
+
+[cards.name.third-class]
+Third Class
+
+[cards.sections.third-class]
+Section 11
+
+[cards.price.third-class]
+1,000 THB
+
+[cards.seating.third-class]
+Unassigned seating, seat guaranteed
+
+[cards.p1.third-class]
+At the highest point of Rajadamnern Stadium, Third Class gives you a broad view across the ring, entrance walkway, crowd and arena.
+
+[cards.p2.third-class]
+It opens according to demand and is most commonly available as the stadium fills on the busiest nights.
+
+[cards.best.third-class]
+Best for: A wide whole-arena view and major fight-night atmosphere.
+
+[cards.link.third-class]
+Explore Third Class
+
+[cards.cta.third-class]
+Check Third Class Availability
+
+[compare.h2]
+Rajadamnern Stadium seating compared
+
+[compare.th.class]
+Seat class
+
+[compare.th.sections]
+Sections
+
+[compare.th.price]
+Price
+
+[compare.th.seating]
+Seating
+
+[compare.th.experience]
+Main experience
+
+[compare.name.ringside]
+Ringside
+
+[compare.sections.ringside]
+3 to 7
+
+[compare.price.ringside]
+2,500 THB
+
+[compare.seating.ringside]
+Assigned
+
+[compare.experience.ringside]
+Maximum proximity, sound and energy
+
+[compare.name.club-class]
+Club Class
+
+[compare.sections.club-class]
+8 and 9
+
+[compare.price.club-class]
+1,800 THB
+
+[compare.seating.club-class]
+Assigned, numbered
+
+[compare.experience.club-class]
+Elevated view, easy access and family suitability
+
+[compare.name.leo-section]
+LEO Section
+
+[compare.sections.leo-section]
+10
+
+[compare.price.leo-section]
+1,500 THB
+
+[compare.seating.leo-section]
+Unassigned, seat guaranteed
+
+[compare.experience.leo-section]
+Front-facing view and local fight-night atmosphere
+
+[compare.name.third-class]
+Third Class
+
+[compare.sections.third-class]
+11
+
+[compare.price.third-class]
+1,000 THB
+
+[compare.seating.third-class]
+Unassigned, seat guaranteed
+
+[compare.experience.third-class]
+Wide view across the whole stadium
+
+[compare.note]
+All four seat classes provide a seat and a clear view of the ring. You are choosing the position, atmosphere and pace of the experience that suits you.
+
+[guide.h2]
+Which Rajadamnern seats should you choose?
+
+[guide.h3.ringside]
+Choose Ringside if you want to feel close to everything
+
+[guide.p1.ringside]
+Ringside is the closest public seating to the ring. You will hear the corner instructions, see the fighters and officials working at close range, and feel the movement of the fight night around you.
+
+[guide.p2.ringside]
+Front row is the closest and most immersive position when available. Sections 3 and 4 are closest to the fighter entrance walkway.
+
+[guide.h3.club-class]
+Choose Club Class if you want the easiest choice
+
+[guide.p1.club-class]
+Club Class combines an elevated view with a numbered seat. It is simple to understand, comfortable for families and practical for groups who want to sit together.
+
+[guide.p2.club-class]
+MuayTix generally recommends Row D and above for the clearest elevated perspective, although the lower rows still provide a clear view of the ring.
+
+[guide.h3.leo-section]
+Choose LEO if atmosphere matters most
+
+[guide.p1.leo-section]
+LEO faces the front of the ring and gives you a strong view of the entire canvas.
+
+[guide.p2.leo-section]
+On Wednesday, Thursday and Sunday, the section also carries the sound and movement of the local betting crowd. You do not need to take part in betting. You can simply watch the action and experience the atmosphere around it.
+
+[guide.h3.third-class]
+Choose Third Class if you want the whole arena
+
+[guide.p1.third-class]
+Third Class is at the highest point of the stadium. Instead of focusing only on the ring, you see the event as one large picture: the fighters, walkout, corners, crowd and arena around them.
+
+[guide.p2.third-class]
+It opens according to demand, so availability changes from one event to another.
+
+[map.h2]
+Rajadamnern Stadium seat map
+
+[map.p1]
+The Rajadamnern Stadium seating plan is arranged around the ring, with each class offering a different view and atmosphere.
+
+[map.item.ringside]
+Ringside: Sections 3 to 7, on the floor around the ring
+
+[map.item.club-class]
+Club Class: Sections 8 and 9, on the elevated main-arena tier
+
+[map.item.leo-section]
+LEO Section: Section 10, facing the front of the ring
+
+[map.item.third-class]
+Third Class: Section 11, at the highest point of the stadium
+
+[map.p2]
+The main arena is compact, so the different seating areas are closer to the ring than photographs often suggest.
+
+[map.link]
+See the full Rajadamnern Stadium Seat Map
+
+[includes.h2]
+What every Rajadamnern ticket includes
+
+[includes.p1]
+Every public ticket at Rajadamnern Stadium guarantees a seat. There are no standing areas.
+
+[includes.p2]
+The stadium is fully air-conditioned and has clear sightlines to the ring, with no internal pillars blocking the view.
+
+[includes.p3]
+Assigned seating gives you a numbered position. Unassigned seating means you choose your position within the ticketed section, while still having a seat guaranteed.
+
+[includes.p4]
+For groups, book together so your seats can be allocated together within the chosen class.
+
+[booking.h2]
+Choose your seats, then choose your fight night
+
+[booking.p1]
+Once you know which seating experience suits you, booking is simple.
+
+[booking.p2]
+Select your seat class first, choose the date that works for you, and book your tickets securely online.
+
+[booking.p3]
+Availability changes by event and demand, particularly for Club Class and Third Class. If you already know which night you want to attend, it is sensible to book once your plans are confirmed.
+
+[booking.cta]
+Book Your Rajadamnern Tickets
+
+[faq.h2]
+Rajadamnern Stadium seating questions
+
+[faq.q1]
+Are there bad views at Rajadamnern Stadium?
+
+[faq.a1]
+No. The stadium was designed as an amphitheatre around the ring, so the seating provides clear sightlines. Each section offers a different perspective rather than a different standard of view.
+
+[faq.q2]
+Do unassigned seats mean I might have to stand?
+
+[faq.a2]
+No. Every ticket guarantees a seat. Unassigned seating means you choose your position within the section when you arrive.
+
+[faq.q3]
+Which seats are best for families?
+
+[faq.a3]
+Club Class is usually the easiest choice for families because it has numbered seats, an elevated view and convenient access to food, drinks and toilets.
+
+[faq.q4]
+Is Ringside really close to the ring?
+
+[faq.a4]
+Yes. Ringside seats are on the floor and only a few metres from the ring. Officials, cameras and production staff may work nearby as part of the live fight-night environment.
+
+[faq.q5]
+Is LEO Section the betting section?
+
+[faq.a5]
+LEO is where the local betting crowd gathers on Wednesday New Power, Thursday Petchyindee and Sunday Kiatpetch. This atmosphere does not apply to every night of the week, and guests do not have to take part in betting.
+
+[faq.q6]
+Are LEO and Third Class standing areas?
+
+[faq.a6]
+No. Both sections provide a seat for every ticket. Guests choose their position within the ticketed section.
+
+[faq.q7]
+Which rows are best?
+
+[faq.a7]
+MuayTix generally recommends Row D and above for Club Class, LEO and Third Class. At Ringside, there is no universal best row. Front row is the closest and most immersive position when available.
+
+[faq.q8]
+Can children attend?
+
+[faq.a8]
+Children can attend all four public seat classes. Club Class is usually the most straightforward choice for younger children. LEO and Third Class can suit families who prefer a livelier atmosphere or a wider view of the stadium.
+
+[faq.q9]
+Is there a dress code?
+
+[faq.a9]
+There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena. The stadium can feel cool, so a light extra layer may be useful.
+
+[final.h2]
+Find your place at Rajadamnern Stadium
+
+[final.p1]
+Choose the view, atmosphere and proximity that suit your night, then book your seats for an unforgettable evening of Muay Thai in Bangkok.
+
+[final.cta]
+Book Your Tickets
+
+# --- Approved alt text, Document A section 7 ---
+
+[alt.hero]
+Interior view of Rajadamnern Stadium seating around the Muay Thai ring
+
+[alt.ringside]
+View of the ring from Ringside at Rajadamnern Stadium
+
+[alt.club-class]
+Elevated view of the ring from Club Class at Rajadamnern Stadium
+
+[alt.leo-section]
+Front-facing view from the LEO Section at Rajadamnern Stadium
+
+[alt.third-class]
+Wide view of the Rajadamnern Stadium arena from Third Class
+
+[alt.map]
+Rajadamnern Stadium seating map showing Ringside Club Class LEO and Third Class sections

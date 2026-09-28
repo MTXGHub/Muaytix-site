@@ -1,0 +1,31 @@
+RAJADAMNERN STADIUM SEATING: what to paste into Tilda's page settings
+=====================================================================
+Page settings, not part of the HTML block. Every line is Document A, word for
+word. Do not edit them here.
+
+
+URL
+/rajadamnern-stadium-seating
+
+Document A section 3 and Document B section 5: retain this URL. It has Search
+Console history and must not be changed without a migration decision.
+
+
+SEO TITLE
+Rajadamnern Stadium Seating | Choose Your Best Seats
+
+
+META DESCRIPTION
+Compare Ringside, Club Class, LEO Section and Third Class at Rajadamnern Stadium. See the views, atmosphere, prices and best seats for your Bangkok fight night.
+
+
+SOCIAL TITLE (Open Graph)
+Rajadamnern Stadium Seating: Choose Your View
+
+
+SOCIAL DESCRIPTION (Open Graph)
+From the closest seats beside the ring to the wide view from the upper tier, choose the Rajadamnern Stadium seating that suits your night.
+
+
+H1
+Already in the block, and there is exactly one. Do not add another in Tilda.
