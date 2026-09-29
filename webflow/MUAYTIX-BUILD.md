@@ -1722,3 +1722,32 @@ worth remembering next time a component prop edit fails this way.
 Also needed the exact value shape for this tool, which only came clear once
 the deferred schema was loaded, not by guessing key names: `values: [{
 prop_id, type: "string", string_value: "..." }]`.
+
+## Navbar logo swapped for a new red/blue transparent version
+
+User supplied two new Drive files for the site-wide navbar logo, one after
+the other. The first ("muaytix-red-white-blue-logo.svg") decoded cleanly but
+turned out to have a plain white background, not blue as described, so it
+was flagged rather than used. The user then sent a second file
+("red-white-blue-muaytix-logo-transparent.svg") to use instead.
+
+**Same PNG-in-SVG-mask trick as the promoter logos, but genuinely usable
+this time.** The file held two embedded PNGs: a white-silhouette mask
+(wordmark in white on solid black) and a colour image (red "muay" + blue
+"tix" + red dot, on solid black, alpha channel fully opaque despite the look
+of transparency). The colour image is not itself transparent, it needs the
+mask's luminance applied as its alpha channel, exactly the construction the
+SVG's own `<mask>`/`<filter>` would do in a browser. Extracted both, used the
+mask's per-pixel luminance as the alpha channel for the colour image, then
+cropped to bounds. Verified corner alpha is 0 before using it.
+
+**Where the navbar logo actually lives.** Not on the homepage's own element
+tree — it's inside the shared `Navbar` component (instance element
+`798a4629-c4a6-4c8e-a190-6453422c0a47`, definition
+`798a4629-c4a6-4c8e-a190-6453422c0a48`), reused across all 29 pages. The
+image element itself is `798a4629-c4a6-4c8e-a190-6453422c0a4e`, style
+"Nav Logo". Checked the Footer component too in case it carried a matching
+logo; it doesn't, it's a stock-photo marquee only.
+
+New asset id `6abb0e933083e6cf82185fa0`. Swapped onto the Nav Logo element
+via `set_image_asset` and published to the Webflow subdomain.
