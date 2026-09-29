@@ -1688,3 +1688,16 @@ section doesn't reserve blank space where that line used to be. The About
 statement now reads as the single line from the previous pass:
 
 > Your direct route to an unforgettable night of Muay Thai at Rajadamnern Stadium.
+
+## Fixed: hiding the mobile block took the new sentence down with it
+
+Jason reported the new About line wasn't showing on mobile at all. Cause: on
+mobile, unlike desktop, the two halves aren't separate sibling blocks. The old
+headline text and the new sentence share one parent block, the new sentence
+sits inside it as a nested inline span. Hiding that block, as the previous
+pass did, hid everything inside it, headline and new sentence both.
+
+Fixed properly: unhid the block, and blanked only the headline string itself
+rather than touching the block. Verified by reading both text nodes back
+before publishing rather than assuming the fix worked. The mobile About
+section now reads only the new sentence, same as desktop.
