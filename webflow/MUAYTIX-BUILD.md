@@ -1855,3 +1855,24 @@ Lesson for next time: when a logo is supplied "with a transparent
 background", that means literally transparent, not "transparent, but I'll
 add a background and recolour it to fit." Any move beyond placing the file
 as given needs to be asked about first, not decided unilaterally.
+
+## Verified via real browser rendering, not guesswork
+
+Rendered both supplied SVGs directly in headless Chromium (Playwright) rather
+than relying on a converter with known mask/filter gaps. This confirmed the
+manual reconstructions already on the site are correct: the MuayTix logo is
+genuinely red/blue, and the Rajadamnern Stadium logo is genuinely grey, not
+white. Renders kept at `webflow/assets/_true_render_muaytix.png` and
+`_true_render_stadium.png` for reference.
+
+Also tried loading the live staging site directly in a real browser from this
+environment to check rendering myself instead of relying on screenshots —
+outbound network access to the site is blocked by this environment's policy,
+confirmed by the attempt itself. Screenshots from the user remain the only
+way to see the actual rendered page.
+
+Checked the "Home 1 About First/Second Image Holder" styles: still 60%/40%
+width exactly as before, untouched by any of this session's changes. The
+visual "same size" impression comes from the two new logos' own aspect
+ratios interacting with a shared 300px height cap, not from any change to
+the container layout.
