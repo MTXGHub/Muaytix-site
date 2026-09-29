@@ -1701,3 +1701,24 @@ Fixed properly: unhid the block, and blanked only the headline string itself
 rather than touching the block. Verified by reading both text nodes back
 before publishing rather than assuming the fix worked. The mobile About
 section now reads only the new sentence, same as desktop.
+
+## About eyebrow: "ABOUT US" changed to "FROM FIRST CLICK TO FINAL BELL"
+
+**Where this text actually lives, worth recording.** It's not a plain text
+node on the page at all, it's a prop on a reusable "Section Tag" component
+instance, the same small component used for every section eyebrow on the
+page. Found it by dumping the full page tree fresh and reading each
+component instance's own props rather than assuming.
+
+**Addressing trap, cost two failed calls.** The component tool's error
+messages pointed at a real bug in my own approach: I first grabbed the ID out
+of `instanceDetails.id`, which is the shared component *definition* ID, the
+same value for every "Section Tag" on the whole site. The actual element to
+address is the outer `id.element` on that instance's own record, a different
+ID per instance. Using the definition ID gets a plain "element not found",
+which reads like a wrong ID, not "you've addressed the wrong kind of thing" —
+worth remembering next time a component prop edit fails this way.
+
+Also needed the exact value shape for this tool, which only came clear once
+the deferred schema was loaded, not by guessing key names: `values: [{
+prop_id, type: "string", string_value: "..." }]`.
