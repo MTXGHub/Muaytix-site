@@ -1751,3 +1751,45 @@ logo; it doesn't, it's a stock-photo marquee only.
 
 New asset id `6abb0e933083e6cf82185fa0`. Swapped onto the Nav Logo element
 via `set_image_asset` and published to the Webflow subdomain.
+
+## Correction: the "blue background" logo was in the About section, not the navbar
+
+The user's original "blue background" request was pointed at two square image
+tiles in the About section, not the navbar — a screenshot cleared this up.
+Left the navbar logo as already swapped, and made no further changes there.
+
+**Blue-background MuayTix tile** (element `424bf3ea-03ab-2d2f-1db5-a887ec953bf6`,
+style "Home 1 About Image"): swapped onto the same transparent red/blue logo
+asset already uploaded for the navbar (`6abb0e933083e6cf82185fa0`), no
+re-upload needed.
+
+**"M" icon tile next to it** (element `87e81eef-e56b-eeda-4e06-60b8fd78b175`):
+replaced with a new Rajadamnern Stadium logo the user supplied, asset
+`6abb1063e29068e61593a0a1`.
+
+**Same PNG-in-SVG-mask construction as before, but the wrong layer was used
+on the first attempt.** Two embedded PNGs again: `embedded_0` (clean white
+silhouette, full 0-255 alpha range, ~89% of the shape near-opaque) and
+`embedded_1` (flat mid-grey ~181 throughout the shape, almost no dynamic
+range). Assumed `embedded_1` was the "colour" layer and used its luminance as
+alpha, first attempt; the result was semi-transparent all over, looked washed
+out against a blue test background.
+
+Rendered the actual SVG with `cairosvg` for a ground truth comparison — this
+file rendered cleanly (unlike the two corrupted promoter logos earlier),
+confirming the intended mark is solid white, but cairosvg flattened the
+transparency to solid black rather than resolving the mask, so it wasn't
+usable directly either.
+
+The SVG's own `<feColorMatrix>` filters gave the real answer: one matrix's
+alpha row is the standard `0.2126 0.7152 0.0722 0 0`, the exact
+luminance-to-alpha transform, meaning whichever layer that filter targets is
+meant to become the shape's alpha via luminance. `embedded_0`'s luminance
+profile (full range, clean edges) fits that role, not `embedded_1`'s (flat,
+low-contrast). Re-extracted using `embedded_0`'s luminance as alpha with a
+solid white fill; previewed on a dark blue swatch to confirm clean, fully
+opaque letterforms with correct edge antialiasing before uploading.
+
+Files kept in `webflow/assets/rajadamnern-stadium-logo/` for the record,
+including the two embedded layers, the cairosvg render (for comparison), and
+the two preview composites used to sanity-check before publishing.
