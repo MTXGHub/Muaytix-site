@@ -1661,3 +1661,18 @@ animation speed, and found nothing:
 API.** It may be something only visible and editable in the Designer's own
 on-canvas panel, not exposed by any of the endpoints available here. Flagged
 to Jason rather than keep guessing.
+
+## About statement: second half replaced
+
+The About section text is one sentence split into two scroll-reveal halves
+(bold, then a lighter fade-in continuation), duplicated again for mobile, so
+four text nodes in total for what looks like one sentence on screen.
+
+Replaced the second (lighter) half on both the desktop and mobile copies with:
+> Your direct route to an unforgettable night of Muay Thai at Rajadamnern Stadium.
+
+The first (bold) half still reads "MuayTix is a Bangkok based team. Every
+ticket comes from the stadium's own allocation," — Jason said this needs to
+change but hasn't supplied the new wording yet. Left as-is rather than
+invented, per the brief's own rule against inventing copy. Waiting on that
+line before touching it.
