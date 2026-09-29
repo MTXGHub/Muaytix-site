@@ -1615,3 +1615,49 @@ is what likely introduced or preserved the corruption.
 original files, the nine PNGs extracted from inside them, the seven
 successfully keyed transparent PNGs, and the five final resized WebP files
 used on the site.
+
+## Logo strip: real fix for the tiny logos, and a genuine dead end on scroll speed
+
+Jason sent a desktop screenshot showing the logos far too small, plus said the
+scroll speed on desktop is faster than mobile, and mobile is the correct
+speed.
+
+### Logo size: found and fixed
+
+`.home-1-brand-image` carried **`max-height: 40px` on the base rule**,
+invisible unless you inspect every property, not just the one (`height`) the
+build note quoted earlier. Setting `height` alone, as done previously, did
+nothing: the cap silently overrode it at every breakpoint. Raised both
+together:
+
+| Breakpoint | Before | Now |
+|---|---|---|
+| Desktop (main) | 40px | 72px |
+| Tablet (medium) | 40px (inherited) | 64px |
+| Mobile landscape (small) | 40px (inherited) | 60px |
+| Mobile (tiny) | 40px (inherited) | 56px |
+
+Confirmed by reading the property set back after each write, not just trusting
+the write succeeded.
+
+### Scroll speed mismatch: could not locate the mechanism
+
+Checked every place the Webflow API exposes for something that could control
+animation speed, and found nothing:
+
+- The three relevant style classes (marquee wrapper, image wrapper, outer
+  holder) at every breakpoint: no `animation`, `animation-duration` or
+  `transition` property on any of them
+- Webflow's own interactions list for the site: empty, zero interactions
+  exist
+- Registered/attached scripts: none
+- Site-level and page-level custom code, head and footer: only the counter
+  script already known about
+- Nearby HTML embeds on the page: two, both are button arrow icons
+  unconnected to the marquee
+- Custom attributes on the marquee elements: none
+
+**Honest conclusion: I cannot find what drives this animation through the
+API.** It may be something only visible and editable in the Designer's own
+on-canvas panel, not exposed by any of the endpoints available here. Flagged
+to Jason rather than keep guessing.
