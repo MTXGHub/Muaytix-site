@@ -1,0 +1,45 @@
+{
+  "_rule": "Zero inference. Every value here is either taken directly from the spec, or reused from pages/seating-v2 because the spec says to reuse the existing photos. Nothing here is guessed.",
+
+  "sources": {
+    "spec": "PAGE SPEC: https://muaytix.com/rajadamnern-stadium-seating, prepared 29 September 2026, supplied whole. This is the trial build asked for the same day, to be looked at before anything is decided.",
+    "images": "Section 3: 'reuse the existing photos on the current page for the four seat classes and the hero.' Pulled from pages/seating-v2/dynamic-data.json, the live page's own image set, rather than placeholders, because the real URLs are already known.",
+    "hrefs": "Section 2 says to use the live footer hrefs for Ringside, Club Class, LEO Section and the Seat Map. This environment cannot open muaytix.com to read the footer, so the paths used are the ones already built and verified in this repository: pages/ringside, pages/club-class, pages/leo-section, pages/seat-map. If the live footer actually points somewhere else, these are wrong and traceable to this one entry."
+  },
+
+  "images": {
+    "hero": { "url": "https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg" },
+    "ringside": { "url": "https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg" },
+    "club-class": { "url": "https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg" },
+    "leo-section": { "url": "https://static.tildacdn.com/tild3136-6363-4533-b935-633230626564/1000008294.jpg" },
+    "third-class": { "url": "https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg" },
+    "map": { "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg" }
+  },
+
+  "destinations": {
+    "ringside": "/rajadamnern-stadium-seating/ringside",
+    "club-class": "/rajadamnern-stadium-seating/club-class",
+    "leo-section": "/rajadamnern-stadium-seating/leo-section",
+    "seat_map": "/rajadamnern-stadium-seat-map",
+    "tickets": "/rajadamnern-stadium-tickets",
+    "stadium": "/rajadamnern-stadium",
+    "booking_anchor": "#booking",
+    "compare_anchor": "#compare"
+  },
+
+  "accent": {
+    "note": "Section 3 of the spec gives its own hex values, sampled or specified fresh for this trial. They are NOT the swatches verified against the live database in CLAUDE.md section 3 (Ringside #00A651, Club Class #27AAE1, LEO #FFF200, Third Class #F7941E), which are the ones the widget, the seat map and all three child pages currently use. Built exactly as this spec states, because it is a trial and says so itself; flagged in the completion report rather than silently swapped either way.",
+    "ringside": "#55F21D",
+    "club_class": "#1F5BFF",
+    "leo_section": "#F2C300",
+    "third_class": "#FF7A00",
+    "blue": "#1F5BFF",
+    "red": "#FF0000",
+    "ink": "#0A0A0A",
+    "off_white": "#F2F2F2",
+    "white": "#FFFFFF",
+    "card_rule": "#DCDCE1"
+  },
+
+  "third_class_page_exists": false
+}

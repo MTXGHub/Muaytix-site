@@ -1,0 +1,17 @@
+RAJADAMNERN STADIUM SEATS -- TRIAL
+This is a trial build, not a replacement. Jason asked to see it before any
+decision is made. Do not paste this over the live seating page.
+
+If it is approved and pasted:
+
+TITLE
+  Rajadamnern Stadium Seats | Ringside to Third Class | MuayTix
+
+DESCRIPTION
+  Four seat classes, 1,000 to 2,500 THB. Ringside, Club Class, LEO Section and Third Class compared.
+
+SOCIAL TITLE / DESCRIPTION
+  Same as above (the spec says og:title and og:description are identical).
+
+CANONICAL
+  https://muaytix.com/rajadamnern-stadium-seating

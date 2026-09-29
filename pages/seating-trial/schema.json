@@ -1,0 +1,107 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FAQPage",
+      "@id": "https://muaytix.com/rajadamnern-stadium-seating#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much do Rajadamnern Stadium seats cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ringside is 2,500 THB, Club Class 1,800 THB, LEO Section 1,500 THB and Third Class 1,000 THB. Prices are set by seat class, not by night."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which are the best seats at Rajadamnern Stadium?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a first visit, Club Class. It has numbered seats at ring height and the clearest view in the stadium. Ringside is closest to the action, LEO Section has the strongest atmosphere, and Third Class has the widest view."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Section 11 at Rajadamnern Stadium?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Section 11 is Third Class, the upper tier that runs around the whole stadium. It is the highest and widest view in the building and opens only when the main arena is close to full."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are there bad views at Rajadamnern Stadium?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The stadium is built as an amphitheatre around the ring with no pillars, so every seat class has a clear view. Each section gives a different perspective, not a different standard of view."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do unassigned seats mean I might have to stand?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Every ticket has a seat. Unassigned means you pick your spot within your section when you arrive."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which seats are best for families?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Club Class. The seats are numbered, the view is elevated, and food, drinks and toilets are close by. Children are welcome in every seat class."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Ringside really close to the ring?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Ringside seats are on the floor a few metres from the ropes. The referee, judges, cameras and production staff work nearby as part of the live fight night."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is LEO Section the betting section?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On Wednesday, Thursday and Sunday the local betting crowd gathers in the LEO Section. You do not need to take part. Most guests simply watch the fights and enjoy the atmosphere around them."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which rows are best?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In Club Class, LEO Section and Third Class, Row D and above gives the clearest elevated view. At Ringside, the front row is the closest seat in the stadium and the first to go."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Rajadamnern Stadium air-conditioned?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, the whole stadium. It can feel cool, so a light layer is worth bringing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a dress code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Dress comfortably for a sporting event. Closed shoes are a good idea at Ringside."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I pick my exact seat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Seat selection is by class, not by seat number. In Ringside and Club Class the MuayTix team allocates the best available numbered seats when you book. In LEO Section and Third Class you pick your spot when you arrive."
+          }
+        }
+      ]
+    }
+  ]
+}

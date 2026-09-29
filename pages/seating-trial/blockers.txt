@@ -1,0 +1,1 @@
+- Third Class has no page yet, so Tile 7 has no secondary button, exactly as the spec's own layout note for that tile asks for ("one primary button only, because Third Class opens on demand"). Its primary button anchors to #booking, matching the spec's Tile 7 button.
