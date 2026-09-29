@@ -1676,3 +1676,15 @@ ticket comes from the stadium's own allocation," — Jason said this needs to
 change but hasn't supplied the new wording yet. Left as-is rather than
 invented, per the brief's own rule against inventing copy. Waiting on that
 line before touching it.
+
+## About statement: old headline removed, not just replaced
+
+Jason clarified: the bold first half ("MuayTix is a Bangkok based team. Every
+ticket comes from the stadium's own allocation.") isn't being replaced with
+new wording, it's being removed outright.
+
+Hidden rather than emptied, on both the desktop and mobile copies, so the
+section doesn't reserve blank space where that line used to be. The About
+statement now reads as the single line from the previous pass:
+
+> Your direct route to an unforgettable night of Muay Thai at Rajadamnern Stadium.
