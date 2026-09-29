@@ -239,6 +239,9 @@
 .mtx-ss .mtx-ss__choice-body p {
   margin-top: 15px !important; max-width: 62ch; font-size: 16.5px; color: var(--muted);
 }
+/* The button to the child page. More air than a third paragraph of body
+   copy would get, because it is the one thing here asking to be pressed. */
+.mtx-ss .mtx-ss__choice-go { margin-top: 22px !important; }
 
 /* ----------------------------------------------------------------- map --- */
 

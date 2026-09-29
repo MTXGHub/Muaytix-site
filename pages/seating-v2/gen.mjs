@@ -154,6 +154,18 @@ ${CLASSES.map(k => `            <tr style="--seat:${esc(SEAT[k])}">
 
 /* ============================================================== GUIDE === */
 
+/* 29 September 2026: Ringside, Club Class and LEO Section now have their own
+   pages, so the guide can send a guest straight to the one that matches the
+   answer it just gave them. Third Class does not have a page yet -- Jason
+   parked it on 28 September because the stadium only opens it itself, and
+   Document A gives no destination for it -- so its article stays as it was,
+   with no button.
+
+   The link text is not new copy: it is cards.link.<k>, the exact "Explore
+   Ringside" / "Explore Club Class" / "Explore the LEO Section" already
+   approved and already rendered once on this page, in the cards section
+   above. Reused, not authored twice. */
+const PARENT_LINKED = new Set(['ringside', 'club-class', 'leo-section']);
 const guide = `  <section class="mtx-ss__band mtx-ss__band--paper">
     <div class="mtx-ss__shell">
       <h2>${T('guide.h2')}</h2>
@@ -164,7 +176,9 @@ ${CLASSES.map(k => `        <article class="mtx-ss__choice" style="--seat:${esc(
             <h3>${T('guide.h3.' + k)}</h3>
             <p>${T('guide.p1.' + k)}</p>
             <p>${T('guide.p2.' + k)}</p>
-          </div>
+${PARENT_LINKED.has(k) ? `            <p class="mtx-ss__choice-go">
+              <a class="mtx-ss__btn mtx-ss__btn--line" href="${esc(D[k])}">${T('cards.link.' + k)}</a>
+            </p>\n` : ''}          </div>
         </article>`).join('\n\n')}
       </div>
     </div>

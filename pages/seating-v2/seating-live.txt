@@ -203,6 +203,8 @@
   margin-top: 15px !important; max-width: 62ch; font-size: 16.5px; color: var(--muted);
 }
 
+.mtx-ss .mtx-ss__choice-go { margin-top: 22px !important; }
+
 .mtx-ss__map {
   margin-top: clamp(30px, 3.6vw, 46px);
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -506,6 +508,9 @@
             <h3>Choose Ringside if you want to feel close to everything</h3>
             <p>Ringside is the closest public seating to the ring. You will hear the corner instructions, see the fighters and officials working at close range, and feel the movement of the fight night around you.</p>
             <p>Front row is the closest and most immersive position when available. Sections 3 and 4 are closest to the fighter entrance walkway.</p>
+            <p class="mtx-ss__choice-go">
+              <a class="mtx-ss__btn mtx-ss__btn--line" href="/rajadamnern-stadium-seating/ringside">Explore Ringside</a>
+            </p>
           </div>
         </article>
 
@@ -515,6 +520,9 @@
             <h3>Choose Club Class if you want the easiest choice</h3>
             <p>Club Class combines an elevated view with a numbered seat. It is simple to understand, comfortable for families and practical for groups who want to sit together.</p>
             <p>MuayTix generally recommends Row D and above for the clearest elevated perspective, although the lower rows still provide a clear view of the ring.</p>
+            <p class="mtx-ss__choice-go">
+              <a class="mtx-ss__btn mtx-ss__btn--line" href="/rajadamnern-stadium-seating/club-class">Explore Club Class</a>
+            </p>
           </div>
         </article>
 
@@ -524,6 +532,9 @@
             <h3>Choose LEO if atmosphere matters most</h3>
             <p>LEO faces the front of the ring and gives you a strong view of the entire canvas.</p>
             <p>On Wednesday, Thursday and Sunday, the section also carries the sound and movement of the local betting crowd. You do not need to take part in betting. You can simply watch the action and experience the atmosphere around it.</p>
+            <p class="mtx-ss__choice-go">
+              <a class="mtx-ss__btn mtx-ss__btn--line" href="/rajadamnern-stadium-seating/leo-section">Explore the LEO Section</a>
+            </p>
           </div>
         </article>
 
