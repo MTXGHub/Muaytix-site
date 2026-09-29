@@ -1876,3 +1876,30 @@ width exactly as before, untouched by any of this session's changes. The
 visual "same size" impression comes from the two new logos' own aspect
 ratios interacting with a shared 300px height cap, not from any change to
 the container layout.
+
+## Fixed the mismatched-pair look, verified locally before publishing
+
+Root cause, confirmed by comparing the original template screenshot against
+the live mobile screenshot side by side: the About section's two boxes were
+designed for photographs that fill the box edge to edge under a rounded
+corner. A logo on a transparent background can't do that under
+`object-fit: contain`, it just floats in the middle with visible empty
+space, so the two logos never looked like a matched pair no matter their
+size.
+
+Asked the user how they wanted it handled (keep logos here with a proper
+card treatment, or move logos elsewhere and restore photography); they left
+the call to me, so went with the lower-risk option: added the site's own
+existing "Color Background Secondary" token (`whitesmoke`) as
+`background-color` on both `Home 1 About First/Second Image Holder`
+classes. Both already had matching border-radius and `overflow: hidden`
+from the template, they just had nothing to show it against. No change to
+either logo's own colours.
+
+**This time, checked it before publishing, not after.** Built a local HTML
+page reproducing the exact holder CSS (60/40 width, 300px max-height,
+border-radius, background colour) with the two real logo files inside, and
+rendered it with Playwright at both a desktop and a mobile viewport width.
+Only published once both looked like a proper matched pair. Screenshots
+kept at `webflow/assets/about-tiles-original/preview_desktop.png` and
+`preview_mobile.png`.
