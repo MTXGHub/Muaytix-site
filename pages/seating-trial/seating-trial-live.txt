@@ -502,63 +502,63 @@
       <h2>Rajadamnern Stadium Seating Questions</h2>
       <div class="mtx-rss__faq">
         <details>
+          <summary><h3>What are the seat classes at Rajadamnern Stadium?</h3></summary>
+          <p>There are four public seat classes. Ringside in Sections 3 to 7, Club Class in Sections 8 and 9, the LEO Section in Section 10 and Third Class in Section 11. Every class has a seat and a clear view of the ring.</p>
+        </details>
+
+        <details>
           <summary><h3>How much do Rajadamnern Stadium seats cost?</h3></summary>
-          <p>Ringside is 2,500 THB, Club Class 1,800 THB, LEO Section 1,500 THB and Third Class 1,000 THB. Prices are set by seat class, not by night.</p>
+          <p>Ringside is 2,500 THB, Club Class 1,800 THB, LEO Section 1,500 THB and Third Class 1,000 THB. The price is set by seat class, not by fight night.</p>
         </details>
 
         <details>
           <summary><h3>Which are the best seats at Rajadamnern Stadium?</h3></summary>
-          <p>For a first visit, Club Class. It has numbered seats at ring height and the clearest view in the stadium. Ringside is closest to the action, LEO Section has the strongest atmosphere, and Third Class has the widest view.</p>
+          <p>For a first visit, Club Class: numbered seats at ring height with the clearest view in the stadium. Ringside is closest to the action, LEO Section has the strongest atmosphere and Third Class has the widest view.</p>
+        </details>
+
+        <details>
+          <summary><h3>Where is the LEO Section at Rajadamnern Stadium?</h3></summary>
+          <p>The LEO Section is Section 10, elevated at ring height and facing the front of the ring, where the broadcast cameras and commentary team sit. Seats are unassigned, so you pick your spot within the section, and every ticket has a seat.</p>
         </details>
 
         <details>
           <summary><h3>What is Section 11 at Rajadamnern Stadium?</h3></summary>
-          <p>Section 11 is Third Class, the upper tier that runs around the whole stadium. It is the highest and widest view in the building and opens only when the main arena is close to full.</p>
+          <p>Section 11 is Third Class, the upper tier that runs around the whole stadium. It is the highest seating in the building and opens only when the main arena is close to full, most often on RWS Saturdays.</p>
         </details>
 
         <details>
-          <summary><h3>Are there bad views at Rajadamnern Stadium?</h3></summary>
-          <p>No. The stadium is built as an amphitheatre around the ring with no pillars, so every seat class has a clear view. Each section gives a different perspective, not a different standard of view.</p>
+          <summary><h3>What is the view like from Section 11?</h3></summary>
+          <p>The Section 11 view takes in the whole event at once: the ring, the fighter walkway, the crowd below and the dome show above. The rows are steeply stepped, so every row sees over the one in front.</p>
         </details>
 
         <details>
-          <summary><h3>Do unassigned seats mean I might have to stand?</h3></summary>
-          <p>No. Every ticket has a seat. Unassigned means you pick your spot within your section when you arrive.</p>
+          <summary><h3>What is the Club Class view like at Rajadamnern Stadium?</h3></summary>
+          <p>Club Class sits elevated at ring height in Sections 8 and 9, so you look across the whole ring with nothing in the way. About 55 percent of MuayTix guests choose it.</p>
         </details>
 
         <details>
-          <summary><h3>Which seats are best for families?</h3></summary>
-          <p>Club Class. The seats are numbered, the view is elevated, and food, drinks and toilets are close by. Children are welcome in every seat class.</p>
+          <summary><h3>What is the difference between Section 8 and Section 9?</h3></summary>
+          <p>Both are Club Class with the same elevated view and the same price. Section 8 has the most direct route to the food counters. The live orchestra sits at the back of Section 9.</p>
         </details>
 
         <details>
-          <summary><h3>Is Ringside really close to the ring?</h3></summary>
-          <p>Yes. Ringside seats are on the floor a few metres from the ropes. The referee, judges, cameras and production staff work nearby as part of the live fight night.</p>
+          <summary><h3>What is the view like from Ringside seats?</h3></summary>
+          <p>Ringside seats are on the floor a few metres from the ropes, level with the canvas and looking up at the raised ring. You hear the corners and watch the fighters walk past on the way in.</p>
         </details>
 
         <details>
-          <summary><h3>Is LEO Section the betting section?</h3></summary>
-          <p>On Wednesday, Thursday and Sunday the local betting crowd gathers in the LEO Section. You do not need to take part. Most guests simply watch the fights and enjoy the atmosphere around them.</p>
+          <summary><h3>What is the difference between LEO Section and Club Class?</h3></summary>
+          <p>The view is the same height and angle. Club Class has a numbered seat with a backrest and costs 1,800 THB. LEO Section is unassigned bench seating at 1,500 THB with the local crowd around you.</p>
         </details>
 
         <details>
-          <summary><h3>Which rows are best?</h3></summary>
-          <p>In Club Class, LEO Section and Third Class, Row D and above gives the clearest elevated view. At Ringside, the front row is the closest seat in the stadium and the first to go.</p>
+          <summary><h3>Are Rajadamnern Stadium seats assigned?</h3></summary>
+          <p>Ringside and Club Class are assigned numbered seats. LEO Section and Third Class are unassigned, so you pick your spot within the section when you arrive. Every ticket in every class has a seat.</p>
         </details>
 
         <details>
-          <summary><h3>Is Rajadamnern Stadium air-conditioned?</h3></summary>
-          <p>Yes, the whole stadium. It can feel cool, so a light layer is worth bringing.</p>
-        </details>
-
-        <details>
-          <summary><h3>Is there a dress code?</h3></summary>
-          <p>No. Dress comfortably for a sporting event. Closed shoes are a good idea at Ringside.</p>
-        </details>
-
-        <details>
-          <summary><h3>Can I pick my exact seat?</h3></summary>
-          <p>Seat selection is by class, not by seat number. In Ringside and Club Class the MuayTix team allocates the best available numbered seats when you book. In LEO Section and Third Class you pick your spot when you arrive.</p>
+          <summary><h3>Are Third Class seats always available?</h3></summary>
+          <p>No. Third Class opens only when the main arena is close to full, which at present is most often RWS Saturdays. When it opens it usually sells out by midday.</p>
         </details>
       </div>
     </div>
@@ -584,10 +584,18 @@
       "mainEntity": [
         {
           "@type": "Question",
+          "name": "What are the seat classes at Rajadamnern Stadium?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There are four public seat classes. Ringside in Sections 3 to 7, Club Class in Sections 8 and 9, the LEO Section in Section 10 and Third Class in Section 11. Every class has a seat and a clear view of the ring."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "How much do Rajadamnern Stadium seats cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ringside is 2,500 THB, Club Class 1,800 THB, LEO Section 1,500 THB and Third Class 1,000 THB. Prices are set by seat class, not by night."
+            "text": "Ringside is 2,500 THB, Club Class 1,800 THB, LEO Section 1,500 THB and Third Class 1,000 THB. The price is set by seat class, not by fight night."
           }
         },
         {
@@ -595,7 +603,15 @@
           "name": "Which are the best seats at Rajadamnern Stadium?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "For a first visit, Club Class. It has numbered seats at ring height and the clearest view in the stadium. Ringside is closest to the action, LEO Section has the strongest atmosphere, and Third Class has the widest view."
+            "text": "For a first visit, Club Class: numbered seats at ring height with the clearest view in the stadium. Ringside is closest to the action, LEO Section has the strongest atmosphere and Third Class has the widest view."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is the LEO Section at Rajadamnern Stadium?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The LEO Section is Section 10, elevated at ring height and facing the front of the ring, where the broadcast cameras and commentary team sit. Seats are unassigned, so you pick your spot within the section, and every ticket has a seat."
           }
         },
         {
@@ -603,79 +619,63 @@
           "name": "What is Section 11 at Rajadamnern Stadium?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Section 11 is Third Class, the upper tier that runs around the whole stadium. It is the highest and widest view in the building and opens only when the main arena is close to full."
+            "text": "Section 11 is Third Class, the upper tier that runs around the whole stadium. It is the highest seating in the building and opens only when the main arena is close to full, most often on RWS Saturdays."
           }
         },
         {
           "@type": "Question",
-          "name": "Are there bad views at Rajadamnern Stadium?",
+          "name": "What is the view like from Section 11?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. The stadium is built as an amphitheatre around the ring with no pillars, so every seat class has a clear view. Each section gives a different perspective, not a different standard of view."
+            "text": "The Section 11 view takes in the whole event at once: the ring, the fighter walkway, the crowd below and the dome show above. The rows are steeply stepped, so every row sees over the one in front."
           }
         },
         {
           "@type": "Question",
-          "name": "Do unassigned seats mean I might have to stand?",
+          "name": "What is the Club Class view like at Rajadamnern Stadium?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Every ticket has a seat. Unassigned means you pick your spot within your section when you arrive."
+            "text": "Club Class sits elevated at ring height in Sections 8 and 9, so you look across the whole ring with nothing in the way. About 55 percent of MuayTix guests choose it."
           }
         },
         {
           "@type": "Question",
-          "name": "Which seats are best for families?",
+          "name": "What is the difference between Section 8 and Section 9?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Club Class. The seats are numbered, the view is elevated, and food, drinks and toilets are close by. Children are welcome in every seat class."
+            "text": "Both are Club Class with the same elevated view and the same price. Section 8 has the most direct route to the food counters. The live orchestra sits at the back of Section 9."
           }
         },
         {
           "@type": "Question",
-          "name": "Is Ringside really close to the ring?",
+          "name": "What is the view like from Ringside seats?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Ringside seats are on the floor a few metres from the ropes. The referee, judges, cameras and production staff work nearby as part of the live fight night."
+            "text": "Ringside seats are on the floor a few metres from the ropes, level with the canvas and looking up at the raised ring. You hear the corners and watch the fighters walk past on the way in."
           }
         },
         {
           "@type": "Question",
-          "name": "Is LEO Section the betting section?",
+          "name": "What is the difference between LEO Section and Club Class?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "On Wednesday, Thursday and Sunday the local betting crowd gathers in the LEO Section. You do not need to take part. Most guests simply watch the fights and enjoy the atmosphere around them."
+            "text": "The view is the same height and angle. Club Class has a numbered seat with a backrest and costs 1,800 THB. LEO Section is unassigned bench seating at 1,500 THB with the local crowd around you."
           }
         },
         {
           "@type": "Question",
-          "name": "Which rows are best?",
+          "name": "Are Rajadamnern Stadium seats assigned?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "In Club Class, LEO Section and Third Class, Row D and above gives the clearest elevated view. At Ringside, the front row is the closest seat in the stadium and the first to go."
+            "text": "Ringside and Club Class are assigned numbered seats. LEO Section and Third Class are unassigned, so you pick your spot within the section when you arrive. Every ticket in every class has a seat."
           }
         },
         {
           "@type": "Question",
-          "name": "Is Rajadamnern Stadium air-conditioned?",
+          "name": "Are Third Class seats always available?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, the whole stadium. It can feel cool, so a light layer is worth bringing."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is there a dress code?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. Dress comfortably for a sporting event. Closed shoes are a good idea at Ringside."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I pick my exact seat?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Seat selection is by class, not by seat number. In Ringside and Club Class the MuayTix team allocates the best available numbered seats when you book. In LEO Section and Third Class you pick your spot when you arrive."
+            "text": "No. Third Class opens only when the main arena is close to full, which at present is most often RWS Saturdays. When it opens it usually sells out by midday."
           }
         }
       ]
