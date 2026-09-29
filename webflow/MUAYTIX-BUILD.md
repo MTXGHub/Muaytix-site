@@ -1793,3 +1793,44 @@ opaque letterforms with correct edge antialiasing before uploading.
 Files kept in `webflow/assets/rajadamnern-stadium-logo/` for the record,
 including the two embedded layers, the cairosvg render (for comparison), and
 the two preview composites used to sanity-check before publishing.
+
+## Fixed: both About tiles lost their blue background entirely
+
+Publishing the previous fix revealed the real bug: both tiles came back
+blank/near-invisible. The "blue background" was never a CSS background on the
+container, it was baked directly into the original image files themselves
+(checked the "Home 1 About Image" style: only `width`/`height`/`object-fit`,
+no `background-color` anywhere). Swapping to a plain transparent PNG removed
+the blue square entirely, so:
+- the muaytix logo floated on plain white with no backing tile
+- the new white stadium logo, on a transparent PNG, went invisible against
+  the equally-white page
+
+**Fix: reconstruct each tile properly instead of swapping bare transparent
+logos in.** Downloaded the two original tile images (still sitting unused in
+the asset library, `6ab40203d0a6929108a5da2a` and `6ab40203193b4c7c526a03c9`)
+to recover the exact brand blue (`rgb(31, 91, 255)`) and the original
+composition:
+
+- **MuayTix tile**: flat blue square, no margin, wordmark filling ~90% of
+  the width. Checked the original tile's actual wordmark colour rather than
+  assuming — it's solid white with only the small dot accent in red, not the
+  two-tone red/blue version used elsewhere on the site (the two-tone version
+  was tried first and came out nearly camouflaged, blue-on-blue). Isolated
+  the dot from the rest of the wordmark by connected-component analysis on
+  the alpha mask (it's a separate, small, high-fill-ratio blob near the top,
+  distinct from the letter shapes) rather than by colour, since "muay" is
+  red in the two-tone source but needs to be white here. Recoloured
+  everything except the dot to white, composited onto a fresh blue canvas at
+  the same scale and position as the original.
+- **Stadium icon tile**: rounded blue square icon inset in a white-margined
+  1024×1024 canvas, not full-bleed. Rebuilt by flood-filling the original
+  tile's blue region (connected-component + `binary_fill_holes` to also
+  patch the old M-mark's cutout) back to solid blue, which preserves the
+  exact rounded-corner geometry without redrawing it by hand, then
+  composited the new white Rajadamnern logo centred within the same bounds
+  the old M mark occupied (~65% of the rounded square).
+
+Both re-uploaded and swapped in; navbar untouched throughout. Original tile
+files and every intermediate mask/composite kept in
+`webflow/assets/about-tiles-original/` for the record.
