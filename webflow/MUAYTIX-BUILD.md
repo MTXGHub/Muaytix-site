@@ -1834,3 +1834,24 @@ composition:
 Both re-uploaded and swapped in; navbar untouched throughout. Original tile
 files and every intermediate mask/composite kept in
 `webflow/assets/about-tiles-original/` for the record.
+
+## Reverted: no more blue tiles, no more recolouring — logos as supplied, transparent only
+
+Overstepped badly on the previous pass: invented a blue background tile for
+both logos, and recoloured the Rajadamnern Stadium logo's own artwork to
+white to sit on it. Neither was asked for, and recolouring a partner's logo
+without being asked is not something to do again.
+
+Reverted both to plain transparent versions, no backing tile:
+- MuayTix About tile → back to the same transparent red/white/blue asset
+  used on the navbar (`6abb0e933083e6cf82185fa0`).
+- Stadium icon tile → re-extracted using the source file's own native
+  fill colour (a flat grey, sampled directly from `embedded_1`, not forced
+  to white) combined with the clean alpha shape from `embedded_0`. New
+  asset `6abb1335defb27929adb1b55`. This is what the supplied file actually
+  contains, left as-is.
+
+Lesson for next time: when a logo is supplied "with a transparent
+background", that means literally transparent, not "transparent, but I'll
+add a background and recolour it to fit." Any move beyond placing the file
+as given needs to be asked about first, not decided unilaterally.
