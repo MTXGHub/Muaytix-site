@@ -210,6 +210,12 @@
    without a second colour having to be sourced and verified for each one. */
 .mtx-hp__night .mtx-hp__btn { background: var(--accent); color: var(--accent-on-accent); }
 .mtx-hp__night .mtx-hp__btn:hover { filter: brightness(.87); color: var(--accent-on-accent); }
+/* Six labels, six lengths -- "Book RWS Tickets" against "Book Petchyindee
+   Tickets" -- so left to its own content every button came out a different
+   width, the one thing that should look like one system on a schedule board
+   looking the least like it. A fixed width, wide enough for the longest
+   label, and the text centred inside it. */
+.mtx-hp__night .mtx-hp__btn { justify-content: center; width: 300px; white-space: nowrap; }
 
 .mtx-hp .mtx-hp__prog-cta { margin-top: 34px !important; }
 
