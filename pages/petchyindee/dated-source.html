@@ -145,6 +145,28 @@
    it at 643px and stacking four buttons one per line down the page. */
 .mtx-pi .mtx-pi__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; max-width: none !important; }
 
+/* Four link destinations, one look. A row of identical black-outline
+   buttons reads as a single grey wall, not four different places to go.
+   Cards with an icon each let the eye tell them apart before reading a
+   word. Same fix as pages/new-power, 30 September 2026. */
+.mtx-pi .mtx-pi__quicklinks {
+  margin-top: 28px !important; max-width: none !important; padding: 0;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+}
+@media (max-width: 620px) { .mtx-pi .mtx-pi__quicklinks { grid-template-columns: 1fr; } }
+.mtx-pi__quicklink {
+  display: flex; align-items: center; gap: 14px; height: 100%;
+  padding: 16px 18px; background: #fff; border: 1px solid var(--pi-line);
+  border-left: 3px solid var(--pi-blue); text-decoration: none; color: var(--pi-ink);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 16px; line-height: 1.2; letter-spacing: .01em;
+  transition: border-color .15s ease, background .15s ease;
+}
+.mtx-pi__quicklink:hover { background: var(--pi-paper); border-left-color: var(--pi-blue-dark); }
+.mtx-pi__quicklink-i { flex: none; width: 26px; height: 26px; color: var(--pi-blue); }
+.mtx-pi__quicklink-i svg { width: 100%; height: 100%; }
+.mtx-pi__quicklink-t { flex: 1 1 auto; }
+
 /* ---------- Block 2: tonight and this week ----------
    Tonight is the first card and the only lifted one: a blue rule across the
    top, a "Tonight" label and its own weight. Every other night is a plain
@@ -669,6 +691,8 @@
    keeps winning. */
 #mtx-pi.mtx-pi .mtx-pi__ev--rws a.mtx-pi__btn--blue { background: var(--pi-rws-dark); }
 #mtx-pi.mtx-pi .mtx-pi__ev--rws a.mtx-pi__btn--blue:hover { background: #a80a15; }
+#mtx-pi.mtx-pi a.mtx-pi__quicklink { color: var(--pi-ink); }
+#mtx-pi.mtx-pi a.mtx-pi__quicklink:hover { color: var(--pi-ink); }
 
 /* The new per-class link on each seat card (Ringside, Club Class, LEO
    Section). Third Class has no page yet, so its card gets no button. */
@@ -780,12 +804,12 @@
       <p>Your Stripe receipt confirms payment. Your Petchyindee event tickets are prepared and sent separately by MuayTix by email.</p>
       <p>During operating hours, 10:00 to 22:00 Bangkok time, tickets are normally sent within 60 to 90 minutes.</p>
       <p>Bookings received outside those hours are normally fulfilled by midday the following day.</p>
-      <p class="mtx-pi__ctarow">
-        <a class="mtx-pi__btn mtx-pi__btn--outline" href="/petchyindee-muay-thai">What is Petchyindee Muay Thai?</a>
-        <a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium-seating">Choose your Rajadamnern seats</a>
-        <a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium">Rajadamnern Stadium information</a>
-        <a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium-tickets">All Rajadamnern Stadium tickets</a>
-      </p>
+      <ul class="mtx-pi__quicklinks">
+        <li><a class="mtx-pi__quicklink" href="/petchyindee-muay-thai"><span class="mtx-pi__quicklink-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.5" r="1.1" fill="currentColor" stroke="none"/></svg></span><span class="mtx-pi__quicklink-t">What is Petchyindee Muay Thai?</span></a></li>
+        <li><a class="mtx-pi__quicklink" href="/rajadamnern-stadium-seating"><span class="mtx-pi__quicklink-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18v-6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6"/><path d="M6 18h12v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z"/><path d="M8 10V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4"/></svg></span><span class="mtx-pi__quicklink-t">Choose your Rajadamnern seats</span></a></li>
+        <li><a class="mtx-pi__quicklink" href="/rajadamnern-stadium"><span class="mtx-pi__quicklink-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11.5A7 7 0 0 0 5 9.5C5 14.7 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg></span><span class="mtx-pi__quicklink-t">Rajadamnern Stadium information</span></a></li>
+        <li><a class="mtx-pi__quicklink" href="/rajadamnern-stadium-tickets"><span class="mtx-pi__quicklink-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1.5a1.75 1.75 0 0 0 0 3.5V16a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a1.75 1.75 0 0 0 0-3.5z"/><line x1="10" y1="7" x2="10" y2="17" stroke-dasharray="2.4 2.4"/></svg></span><span class="mtx-pi__quicklink-t">All Rajadamnern Stadium tickets</span></a></li>
+      </ul>
     </div>
   </section>
 

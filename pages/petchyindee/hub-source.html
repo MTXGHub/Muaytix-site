@@ -145,6 +145,28 @@
    it at 643px and stacking four buttons one per line down the page. */
 .mtx-pi .mtx-pi__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; max-width: none !important; }
 
+/* Four link destinations, one look. A row of identical black-outline
+   buttons reads as a single grey wall, not four different places to go.
+   Cards with an icon each let the eye tell them apart before reading a
+   word. Same fix as pages/new-power, 30 September 2026. */
+.mtx-pi .mtx-pi__quicklinks {
+  margin-top: 28px !important; max-width: none !important; padding: 0;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+}
+@media (max-width: 620px) { .mtx-pi .mtx-pi__quicklinks { grid-template-columns: 1fr; } }
+.mtx-pi__quicklink {
+  display: flex; align-items: center; gap: 14px; height: 100%;
+  padding: 16px 18px; background: #fff; border: 1px solid var(--pi-line);
+  border-left: 3px solid var(--pi-blue); text-decoration: none; color: var(--pi-ink);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 16px; line-height: 1.2; letter-spacing: .01em;
+  transition: border-color .15s ease, background .15s ease;
+}
+.mtx-pi__quicklink:hover { background: var(--pi-paper); border-left-color: var(--pi-blue-dark); }
+.mtx-pi__quicklink-i { flex: none; width: 26px; height: 26px; color: var(--pi-blue); }
+.mtx-pi__quicklink-i svg { width: 100%; height: 100%; }
+.mtx-pi__quicklink-t { flex: 1 1 auto; }
+
 /* ---------- Block 2: tonight and this week ----------
    Tonight is the first card and the only lifted one: a blue rule across the
    top, a "Tonight" label and its own weight. Every other night is a plain
@@ -669,6 +691,8 @@
    keeps winning. */
 #mtx-pi.mtx-pi .mtx-pi__ev--rws a.mtx-pi__btn--blue { background: var(--pi-rws-dark); }
 #mtx-pi.mtx-pi .mtx-pi__ev--rws a.mtx-pi__btn--blue:hover { background: #a80a15; }
+#mtx-pi.mtx-pi a.mtx-pi__quicklink { color: var(--pi-ink); }
+#mtx-pi.mtx-pi a.mtx-pi__quicklink:hover { color: var(--pi-ink); }
 
 /* The new per-class link on each seat card (Ringside, Club Class, LEO
    Section). Third Class has no page yet, so its card gets no button. */

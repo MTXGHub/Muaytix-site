@@ -19,6 +19,27 @@ const data = JSON.parse(readFileSync('dynamic-data.json', 'utf8'));
 const D = data.destinations;
 const reports = [];
 
+/* Four identical black-outline buttons stacked in a row read as one grey
+   wall, not four different destinations -- flagged directly from a live
+   screenshot of pages/new-power, 30 September 2026, same flaw, same fix,
+   here for consistency. Same labels, same links, no new copy: just a card
+   each, with a plain line icon so the eye can tell them apart before
+   reading the text. Icons are decorative (aria-hidden) and generic, not
+   brand marks. */
+const ICONS = {
+  info:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.5" r="1.1" fill="currentColor" stroke="none"/></svg>',
+  seat:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18v-6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6"/><path d="M6 18h12v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z"/><path d="M8 10V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4"/></svg>',
+  pin:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11.5A7 7 0 0 0 5 9.5C5 14.7 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>',
+  ticket:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1.5a1.75 1.75 0 0 0 0 3.5V16a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a1.75 1.75 0 0 0 0-3.5z"/><line x1="10" y1="7" x2="10" y2="17" stroke-dasharray="2.4 2.4"/></svg>',
+};
+function quickLinks(rows) {
+  return `      <ul class="mtx-pi__quicklinks">
+${rows.map(([icon, href, label]) => `        <li><a class="mtx-pi__quicklink" href="${esc(href)}">` +
+    `<span class="mtx-pi__quicklink-i" aria-hidden="true">${ICONS[icon]}</span>` +
+    `<span class="mtx-pi__quicklink-t">${esc(label)}</span></a></li>`).join('\n')}
+      </ul>`;
+}
+
 /* Document B section 12: a missing asset stops and is reported, never substituted. */
 if (!data.logo || !data.logo.url) throw new Error('No Petchyindee logo in dynamic-data.json. Document B section 12: STOP.');
 if (!data.logo.alt) throw new Error('The Petchyindee logo has no alt text.');
@@ -261,12 +282,12 @@ ${[1,2,3,4,5].map(n => `        <li>${T('source.' + n)}</li>`).join('\n')}
     <div class="mtx-pi__shell">
       <h2>${T('plan.h2')}</h2>
 ${[1,2,3,4,5].map(n => `      <p>${T('plan.p' + n)}</p>`).join('\n')}
-      <p class="mtx-pi__ctarow">
-        <a class="mtx-pi__btn mtx-pi__btn--outline" href="${esc(D.hub)}">${T('link.hub')}</a>
-        <a class="mtx-pi__btn mtx-pi__btn--outline" href="${esc(D.seating)}">${T('link.seating')}</a>
-        <a class="mtx-pi__btn mtx-pi__btn--outline" href="${esc(D.stadium)}">${T('link.stadium')}</a>
-        <a class="mtx-pi__btn mtx-pi__btn--outline" href="${esc(D.tickets)}">${T('link.tickets')}</a>
-      </p>
+${quickLinks([
+  ['info',   D.hub,      t('dated', 'link.hub')],
+  ['seat',   D.seating,  t('dated', 'link.seating')],
+  ['pin',    D.stadium,  t('dated', 'link.stadium')],
+  ['ticket', D.tickets,  t('dated', 'link.tickets')],
+])}
     </div>
   </section>
 

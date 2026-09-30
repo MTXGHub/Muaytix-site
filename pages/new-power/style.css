@@ -137,6 +137,28 @@
    it at 643px and stacking the buttons one per line down the page. */
 .mtx-np .mtx-np__ctarow { margin-top: 28px !important; display: flex; flex-wrap: wrap; gap: 12px; max-width: none !important; }
 
+/* Four link destinations, one look. A row of identical black-outline
+   buttons reads as a single grey wall, not four different places to go.
+   Cards with an icon each let the eye tell them apart before reading a
+   word, on the same off-white the page already uses for cards elsewhere. */
+.mtx-np .mtx-np__quicklinks {
+  margin-top: 28px !important; max-width: none !important; padding: 0;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+}
+@media (max-width: 620px) { .mtx-np .mtx-np__quicklinks { grid-template-columns: 1fr; } }
+.mtx-np__quicklink {
+  display: flex; align-items: center; gap: 14px; height: 100%;
+  padding: 16px 18px; background: #fff; border: 1px solid var(--np-line);
+  border-left: 3px solid var(--np-blue); text-decoration: none; color: var(--np-ink);
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+  font-size: 16px; line-height: 1.2; letter-spacing: .01em;
+  transition: border-color .15s ease, background .15s ease;
+}
+.mtx-np__quicklink:hover { background: var(--np-wash); border-left-color: var(--np-blue-dark); }
+.mtx-np__quicklink-i { flex: none; width: 26px; height: 26px; color: var(--np-blue); }
+.mtx-np__quicklink-i svg { width: 100%; height: 100%; }
+.mtx-np__quicklink-t { flex: 1 1 auto; }
+
 /* ---------- Block 2: tonight and this week ----------
    Tonight is the first card and the only lifted one: a blue rule across the
    top, a "Tonight" label and its own weight. Every other night is a plain
@@ -678,6 +700,8 @@
 #mtx-np.mtx-np a.mtx-np__btn--outline:hover { border-color: var(--np-blue); color: var(--np-blue); }
 #mtx-np.mtx-np a.mtx-np__btn--red     { background: var(--np-rws); color: #fff; }
 #mtx-np.mtx-np a.mtx-np__btn--red:hover     { background: var(--np-rws-dark); color: #fff; }
+#mtx-np.mtx-np a.mtx-np__quicklink { color: var(--np-ink); }
+#mtx-np.mtx-np a.mtx-np__quicklink:hover { color: var(--np-ink); }
 
 /* The new per-class link on each seat card (Ringside, Club Class, LEO
    Section). Third Class has no page yet, so its card gets no button, same
