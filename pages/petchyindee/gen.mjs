@@ -51,11 +51,14 @@ function seatCards(page, keys) {
     if (!g || !g.url) throw new Error(`Seat image missing for "${k}". Document B section 12: STOP.`);
     if (!g.alt) throw new Error(`Seat image "${k}" has no alt text.`);
     const extra = DOC[`${page}.seats.copy2.${k}`] ? `\n          <p>${esc(DOC[`${page}.seats.copy2.${k}`])}</p>` : '';
+    const link = data.seat_links && data.seat_links[k]
+      ? `\n          <p class="mtx-pi__cardgo"><a class="mtx-pi__btn mtx-pi__btn--outline" href="${esc(data.seat_links[k].href)}">${esc(data.seat_links[k].label)}</a></p>`
+      : '';
     return `        <li class="mtx-pi__card mtx-pi__card--gfx">
           <img class="mtx-pi__seatgfx" src="${esc(g.url)}" alt="${esc(g.alt)}" loading="lazy" decoding="async">
           <h3>${esc(t(page, 'seats.name.' + k))}</h3>
           <p class="mtx-pi__standfirst">${esc(t(page, 'seats.descriptor.' + k))}</p>
-          <p>${esc(t(page, 'seats.copy.' + k))}</p>${extra}
+          <p>${esc(t(page, 'seats.copy.' + k))}</p>${extra}${link}
         </li>`;
   }).join('\n\n');
 }

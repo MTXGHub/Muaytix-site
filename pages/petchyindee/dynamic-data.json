@@ -36,6 +36,13 @@
                      "alt": "Third Class seating at Rajadamnern Stadium" }
   },
   "_alt_note": "Document B section 25 lists these exact strings as acceptable alt text. Used verbatim.",
+
+  "seat_links": {
+    "ringside":    { "href": "/rajadamnern-stadium-seating/ringside",    "label": "Explore Ringside" },
+    "club-class":  { "href": "/rajadamnern-stadium-seating/club-class",  "label": "Explore Club Class" },
+    "leo-section": { "href": "/rajadamnern-stadium-seating/leo-section", "label": "Explore the LEO Section" }
+  },
+  "_seat_links_note": "30 September 2026, Jason: the seat-class cards had no way through to Ringside, Club Class or LEO Section's own pages. Not new copy: same URLs and the same verbatim button text already approved and live on pages/seating-v2/document-a.txt, linking to the same three pages, and already added to pages/new-power the same day. Third Class has no page yet, so its card gets no link.",
   "seat_map": {
     "url": "https://static.tildacdn.com/tild6364-3766-4031-a562-646639666662/1000033717.jpg",
     "alt": "Rajadamnern Stadium seating map"

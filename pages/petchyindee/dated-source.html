@@ -9,7 +9,7 @@
   All visible wording is generated from document-a.txt, the approved editorial
   source. It is not typed into this file and must not be edited here.
 -->
-<div class="mtx-pi">
+<div class="mtx-pi" id="mtx-pi">
 <style>
 /* All styles are scoped under .mtx-pi so nothing here can affect the rest of
    the site, and the site's own styles are less likely to affect this block.
@@ -631,6 +631,48 @@
 .mtx-pi__close .mtx-pi__ctarow { justify-content: center; }
 @media (max-width: 1000px) { .mtx-pi__dates { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 620px) { .mtx-pi__dates { grid-template-columns: 1fr; } .mtx-pi .mtx-pi__seatgfx { width: calc(100% + 40px); margin-inline: -20px; } }
+
+/* Every page in this project pastes into Tilda under one HTML block, and
+   Tilda's own host template carries `#allrecords * { text-align: center }`.
+   That is an ID selector, (1,0,0), and it beats every rule above here: none
+   of them sets text-align at all, so on the live page every lede, every
+   fact, every card title and every FAQ question came back centred. Found
+   the same defect, same missing id, on pages/new-power/style.css first (30
+   September 2026); this page had never had the id either.
+
+   #mtx-pi.mtx-pi * is (1,1,1) and beats (1,0,0) outright, regardless of
+   source order. */
+#mtx-pi.mtx-pi,
+#mtx-pi.mtx-pi * { text-align: left; }
+
+/* The handful that genuinely centre are told again, one level higher. */
+#mtx-pi.mtx-pi .mtx-pi__btn,
+#mtx-pi.mtx-pi .mtx-pi__close,
+#mtx-pi.mtx-pi .mtx-pi__close * { text-align: center; }
+
+/* Colour, stated the same way and for the same reason: a host rule shaped
+   like `#allrecords a { color: inherit }` is (1,0,1) and beats every
+   single-class button rule above it. */
+#mtx-pi.mtx-pi a.mtx-pi__btn--blue    { background: var(--pi-blue); color: #fff; }
+#mtx-pi.mtx-pi a.mtx-pi__btn--blue:hover    { background: var(--pi-blue-dark); color: #fff; }
+#mtx-pi.mtx-pi a.mtx-pi__btn--ghost   { background: transparent; border-color: #fff; color: #fff; }
+#mtx-pi.mtx-pi a.mtx-pi__btn--ghost:hover   { background: #fff; color: var(--pi-ink); }
+#mtx-pi.mtx-pi a.mtx-pi__btn--outline { background: #fff; border-color: var(--pi-ink); color: var(--pi-ink); }
+#mtx-pi.mtx-pi a.mtx-pi__btn--outline:hover { border-color: var(--pi-blue); color: var(--pi-blue); }
+#mtx-pi.mtx-pi a.mtx-pi__btn--red     { background: var(--pi-rws); color: #fff; }
+#mtx-pi.mtx-pi a.mtx-pi__btn--red:hover     { background: var(--pi-rws-dark); color: #fff; }
+
+/* The RWS-branded event card recolours its own blue button darker. That rule
+   is .mtx-pi__ev--rws .mtx-pi__btn--blue, (0,2,0), which the plain-coloured
+   reassertion two lines up, now (1,2,1) with the id added, would otherwise
+   beat and silently turn back to ordinary blue. Restated with the id so it
+   keeps winning. */
+#mtx-pi.mtx-pi .mtx-pi__ev--rws a.mtx-pi__btn--blue { background: var(--pi-rws-dark); }
+#mtx-pi.mtx-pi .mtx-pi__ev--rws a.mtx-pi__btn--blue:hover { background: #a80a15; }
+
+/* The new per-class link on each seat card (Ringside, Club Class, LEO
+   Section). Third Class has no page yet, so its card gets no button. */
+.mtx-pi__cardgo { margin-top: 16px !important; }
 </style>
 
   <header class="mtx-pi__hero">
@@ -694,6 +736,7 @@
           <h3>Ringside</h3>
           <p class="mtx-pi__standfirst">Closest to the ring</p>
           <p>Assigned seating for guests who want the closest available public viewing position.</p>
+          <p class="mtx-pi__cardgo"><a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium-seating/ringside">Explore Ringside</a></p>
         </li>
 
         <li class="mtx-pi__card mtx-pi__card--gfx">
@@ -701,6 +744,7 @@
           <h3>Club Class</h3>
           <p class="mtx-pi__standfirst">Elevated, assigned seating</p>
           <p>Assigned seats with a clear view across the ring.</p>
+          <p class="mtx-pi__cardgo"><a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium-seating/club-class">Explore Club Class</a></p>
         </li>
 
         <li class="mtx-pi__card mtx-pi__card--gfx">
@@ -708,6 +752,7 @@
           <h3>LEO Section</h3>
           <p class="mtx-pi__standfirst">A more involved local atmosphere</p>
           <p>Unassigned seating at the same general level as Club Class, with a strong local following.</p>
+          <p class="mtx-pi__cardgo"><a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium-seating/leo-section">Explore the LEO Section</a></p>
         </li>
       </ul>
         <p class="mtx-pi__maplayout">

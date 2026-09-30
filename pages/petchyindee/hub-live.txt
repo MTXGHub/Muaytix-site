@@ -1,4 +1,4 @@
-<div class="mtx-pi">
+<div class="mtx-pi" id="mtx-pi">
 <style>.mtx-pi, .mtx-pi * { box-sizing: border-box; }
 .mtx-pi {
   --pi-blue: #1f5bff;
@@ -468,7 +468,28 @@
 .mtx-pi .mtx-pi__close p { margin-inline: auto; }
 .mtx-pi__close .mtx-pi__ctarow { justify-content: center; }
 @media (max-width: 1000px) { .mtx-pi__dates { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 620px) { .mtx-pi__dates { grid-template-columns: 1fr; } .mtx-pi .mtx-pi__seatgfx { width: calc(100% + 40px); margin-inline: -20px; } }</style>
+@media (max-width: 620px) { .mtx-pi__dates { grid-template-columns: 1fr; } .mtx-pi .mtx-pi__seatgfx { width: calc(100% + 40px); margin-inline: -20px; } }
+
+#mtx-pi.mtx-pi,
+#mtx-pi.mtx-pi * { text-align: left; }
+
+#mtx-pi.mtx-pi .mtx-pi__btn,
+#mtx-pi.mtx-pi .mtx-pi__close,
+#mtx-pi.mtx-pi .mtx-pi__close * { text-align: center; }
+
+#mtx-pi.mtx-pi a.mtx-pi__btn--blue    { background: var(--pi-blue); color: #fff; }
+#mtx-pi.mtx-pi a.mtx-pi__btn--blue:hover    { background: var(--pi-blue-dark); color: #fff; }
+#mtx-pi.mtx-pi a.mtx-pi__btn--ghost   { background: transparent; border-color: #fff; color: #fff; }
+#mtx-pi.mtx-pi a.mtx-pi__btn--ghost:hover   { background: #fff; color: var(--pi-ink); }
+#mtx-pi.mtx-pi a.mtx-pi__btn--outline { background: #fff; border-color: var(--pi-ink); color: var(--pi-ink); }
+#mtx-pi.mtx-pi a.mtx-pi__btn--outline:hover { border-color: var(--pi-blue); color: var(--pi-blue); }
+#mtx-pi.mtx-pi a.mtx-pi__btn--red     { background: var(--pi-rws); color: #fff; }
+#mtx-pi.mtx-pi a.mtx-pi__btn--red:hover     { background: var(--pi-rws-dark); color: #fff; }
+
+#mtx-pi.mtx-pi .mtx-pi__ev--rws a.mtx-pi__btn--blue { background: var(--pi-rws-dark); }
+#mtx-pi.mtx-pi .mtx-pi__ev--rws a.mtx-pi__btn--blue:hover { background: #a80a15; }
+
+.mtx-pi__cardgo { margin-top: 16px !important; }</style>
 
   <header class="mtx-pi__hero">
     <div class="mtx-pi__shell">
@@ -552,6 +573,7 @@
           <h3>Ringside</h3>
           <p class="mtx-pi__standfirst">Closest to the ring</p>
           <p>Assigned seating for guests who want the closest available public viewing position.</p>
+          <p class="mtx-pi__cardgo"><a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium-seating/ringside">Explore Ringside</a></p>
         </li>
 
         <li class="mtx-pi__card mtx-pi__card--gfx">
@@ -559,6 +581,7 @@
           <h3>Club Class</h3>
           <p class="mtx-pi__standfirst">Elevated, assigned seating</p>
           <p>Assigned seats with a clear view across the ring.</p>
+          <p class="mtx-pi__cardgo"><a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium-seating/club-class">Explore Club Class</a></p>
         </li>
 
         <li class="mtx-pi__card mtx-pi__card--gfx">
@@ -566,6 +589,7 @@
           <h3>LEO Section</h3>
           <p class="mtx-pi__standfirst">A more involved local atmosphere</p>
           <p>Unassigned seating at the same general level as Club Class, with a strong local following.</p>
+          <p class="mtx-pi__cardgo"><a class="mtx-pi__btn mtx-pi__btn--outline" href="/rajadamnern-stadium-seating/leo-section">Explore the LEO Section</a></p>
         </li>
 
         <li class="mtx-pi__card mtx-pi__card--gfx">

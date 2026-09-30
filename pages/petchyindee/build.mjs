@@ -26,7 +26,7 @@ for (const p of PAGES) {
   All visible wording is generated from document-a.txt, the approved editorial
   source. It is not typed into this file and must not be edited here.
 -->
-<div class="mtx-pi">
+<div class="mtx-pi" id="mtx-pi">
 <style>
 `;
   const source = head + css + '</style>\n\n'

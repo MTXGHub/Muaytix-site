@@ -46,7 +46,8 @@ const FORBIDDEN = [
 ];
 
 const ALLOWED = ['/petchyindee-muay-thai','/petchyindee-muay-thai/2026-10-01','/rajadamnern-stadium-seating',
-  '/rajadamnern-stadium-tickets','/rajadamnern-stadium','#book'];
+  '/rajadamnern-stadium-tickets','/rajadamnern-stadium','#book',
+  '/rajadamnern-stadium-seating/ringside','/rajadamnern-stadium-seating/club-class','/rajadamnern-stadium-seating/leo-section'];
 
 const norm = s => s.replace(/\s+/g,' ').replace(/ /g,' ').trim();
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
@@ -72,11 +73,32 @@ const NEEDS_OWNER = new Map([
 ]);
 const block = m => { omitted++; console.log('   NEEDS OWNER  ' + m); };
 
+/* Every page in this project pastes into one Tilda HTML block, inside the
+   site's own #allrecords wrapper, which carries `#allrecords * { text-align:
+   center }` and `#allrecords a { color: inherit }`. Both are ID selectors
+   and beat any single-class rule regardless of source order. Rendering
+   against a blank page tests nothing competes with it -- which is exactly
+   how this page's missing #mtx-pi id shipped to live and centred every
+   tile on desktop before anyone caught it here (found first on New Power,
+   30 September 2026, same missing id, same fix). Deliberately hostile: if
+   the block cannot hold its own shape against it, it is not finished. */
+const TILDA_HOST = `
+  #allrecords { font-family: Arial, Helvetica, sans-serif; }
+  #allrecords * { text-align: center; }
+  #allrecords a { text-decoration: none; color: inherit; }
+  #allrecords img { max-width: 100%; }
+  #allrecords p, #allrecords h1, #allrecords h2, #allrecords h3 { margin: 0 0 15px; }
+  #allrecords ul, #allrecords ol { list-style: none; padding: 0; }
+`;
+
 for (const P of [{ key: 'hub', prefix: 'hub', kw: [...CL031, ...CL035] },
                  { key: 'dated', prefix: 'dated', kw: DATED_KW }]) {
   console.log(`\n${'='.repeat(58)}\nPAGE: ${P.key}\n${'='.repeat(58)}`);
   const frag = readFileSync(`${P.key}-live.txt`, 'utf8');
-  const doc = `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0">${frag}</body></html>`;
+  const doc = `<!doctype html><html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{margin:0}${TILDA_HOST}</style></head>
+<body><div id="allrecords">${frag}</div></body></html>`;
 
   console.log('\n-- layout --');
   for (const w of [1440, 1280, 1024, 860, 620, 390]) {
@@ -99,6 +121,14 @@ for (const P of [{ key: 'hub', prefix: 'hub', kw: [...CL031, ...CL035] },
   const visible = norm(await page.evaluate(() => document.querySelector('.mtx-pi').textContent));
   const low = visible.toLowerCase();
 
+  console.log('\n-- hostile host: text-align --');
+  const centred = await page.evaluate(() =>
+    [...document.querySelectorAll('.mtx-pi h1,.mtx-pi h2,.mtx-pi h3,.mtx-pi p,.mtx-pi dt,.mtx-pi dd,.mtx-pi li,.mtx-pi summary')]
+      .filter(e => e.textContent.trim() && !e.closest('.mtx-pi__close') && getComputedStyle(e).textAlign === 'center')
+      .map(e => e.textContent.trim().slice(0, 50)));
+  console.log(`   ${centred.length} element(s) forced centre by the Tilda host`);
+  centred.forEach(t => fail(`centred by #allrecords, not defended against: "${t}"`));
+
   console.log('\n-- copy diff --');
   const keys = Object.keys(DOC).filter(k => k.startsWith(P.prefix + '.') && !k.includes('.meta.'));
   const miss = keys.filter(k => !visible.includes(norm(DOC[k])));
@@ -114,7 +144,8 @@ for (const P of [{ key: 'hub', prefix: 'hub', kw: [...CL031, ...CL035] },
       .map(e => e.textContent.replace(/\s+/g,' ').trim()).filter(Boolean));
   const approved = Object.values(DOC).map(norm);
   const bAnchors = [];
-  const dataShaped = s => data.dates.some(d => d.label === s) || s === 'Doors open: 17:00 · Event starts: 18:00';
+  const dataShaped = s => data.dates.some(d => d.label === s) || s === 'Doors open: 17:00 · Event starts: 18:00'
+    || (data.seat_links && Object.values(data.seat_links).some(l => l.label === s));
   const extra = nodes.filter(s => !approved.some(a => a === s || a.includes(s)) && !bAnchors.includes(s) && !dataShaped(s));
   console.log(`   ${nodes.length} text nodes; ${extra.length} not from Document A, Document B anchors or verified data`);
   extra.forEach(s => fail(`unapproved text: "${s.slice(0,90)}"`));
