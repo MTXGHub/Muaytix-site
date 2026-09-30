@@ -9,7 +9,7 @@
   All visible wording is generated from document-a.txt, the approved editorial
   source. It is not typed into this file and must not be edited here.
 -->
-<div class="mtx-np">
+<div class="mtx-np" id="mtx-np">
 <style>
 /* All styles are scoped under .mtx-np so nothing here can affect the rest of
    the site, and the site's own styles are less likely to affect this block.
@@ -656,6 +656,46 @@
 /* The two Wednesday questions are open by default: Document A places them as
    body content in that section, not as a collapsed FAQ. */
 .mtx-np .mtx-np__faq { margin-top: 24px; }
+
+/* Every page in this project pastes into Tilda under one HTML block, and
+   Tilda's own host template carries `#allrecords * { text-align: center }`.
+   That is an ID selector, (1,0,0), and it beats every rule above here: none
+   of them sets text-align at all, so on the live page every lede, every
+   fact, every card title and every FAQ question came back centred, all for
+   the same reason, which is why it looked identical on every single tile.
+   This page was built without the ID every other page in this project
+   carries for exactly this fight (compare pages/homepage-v6/style.css or
+   pages/club-class/style.css). Found from a live screenshot, 30 September
+   2026, not caught here first: verify.mjs rendered on a blank page with
+   nothing competing, so it never saw this.
+
+   #mtx-np.mtx-np * is (1,1,1) and beats (1,0,0) outright, regardless of
+   source order. */
+#mtx-np.mtx-np,
+#mtx-np.mtx-np * { text-align: left; }
+
+/* The handful that genuinely centre are told again, one level higher. */
+#mtx-np.mtx-np .mtx-np__btn,
+#mtx-np.mtx-np .mtx-np__close,
+#mtx-np.mtx-np .mtx-np__close * { text-align: center; }
+
+/* Colour, stated the same way and for the same reason: a host rule shaped
+   like `#allrecords a { color: inherit }` is (1,0,1) and beats every
+   single-class button rule above it, which would have made the ghost and
+   outline buttons the same colour as the text around them. */
+#mtx-np.mtx-np a.mtx-np__btn--blue    { background: var(--np-blue); color: #fff; }
+#mtx-np.mtx-np a.mtx-np__btn--blue:hover    { background: var(--np-blue-dark); color: #fff; }
+#mtx-np.mtx-np a.mtx-np__btn--ghost   { background: transparent; border-color: #fff; color: #fff; }
+#mtx-np.mtx-np a.mtx-np__btn--ghost:hover   { background: #fff; color: var(--np-ink); }
+#mtx-np.mtx-np a.mtx-np__btn--outline { background: #fff; border-color: var(--np-ink); color: var(--np-ink); }
+#mtx-np.mtx-np a.mtx-np__btn--outline:hover { border-color: var(--np-blue); color: var(--np-blue); }
+#mtx-np.mtx-np a.mtx-np__btn--red     { background: var(--np-rws); color: #fff; }
+#mtx-np.mtx-np a.mtx-np__btn--red:hover     { background: var(--np-rws-dark); color: #fff; }
+
+/* The new per-class link on each seat card (Ringside, Club Class, LEO
+   Section). Third Class has no page yet, so its card gets no button, same
+   as everywhere else this has come up. */
+.mtx-np__cardgo { margin-top: 16px !important; }
 </style>
 
   <header class="mtx-np__hero">
@@ -724,6 +764,7 @@
           <h3>Ringside</h3>
           <p class="mtx-np__standfirst">Closest to the ring</p>
           <p>Assigned seating for guests who want the closest available public viewing position.</p>
+          <p class="mtx-np__cardgo"><a class="mtx-np__btn mtx-np__btn--outline" href="/rajadamnern-stadium-seating/ringside">Explore Ringside</a></p>
         </li>
 
         <li class="mtx-np__card mtx-np__card--gfx">
@@ -731,6 +772,7 @@
           <h3>Club Class</h3>
           <p class="mtx-np__standfirst">Elevated, assigned seating</p>
           <p>Assigned seats with a clear view across the ring.</p>
+          <p class="mtx-np__cardgo"><a class="mtx-np__btn mtx-np__btn--outline" href="/rajadamnern-stadium-seating/club-class">Explore Club Class</a></p>
         </li>
 
         <li class="mtx-np__card mtx-np__card--gfx">
@@ -739,6 +781,7 @@
           <p class="mtx-np__standfirst">A more involved local atmosphere</p>
           <p>Unassigned seating at the same general level as Club Class, with a strong local following.</p>
           <p>Legal betting activity around the stadium can be particularly visible from this area during traditional fight nights.</p>
+          <p class="mtx-np__cardgo"><a class="mtx-np__btn mtx-np__btn--outline" href="/rajadamnern-stadium-seating/leo-section">Explore the LEO Section</a></p>
         </li>
       </ul>
         <p class="mtx-np__maplayout">

@@ -1,4 +1,4 @@
-<div class="mtx-np">
+<div class="mtx-np" id="mtx-np">
 <style>.mtx-np, .mtx-np * { box-sizing: border-box; }
 .mtx-np {
   
@@ -476,7 +476,25 @@
 @media (max-width: 860px) { .mtx-np .mtx-np__factlist { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 620px) { .mtx-np .mtx-np__factlist { grid-template-columns: 1fr; } }
 
-.mtx-np .mtx-np__faq { margin-top: 24px; }</style>
+.mtx-np .mtx-np__faq { margin-top: 24px; }
+
+#mtx-np.mtx-np,
+#mtx-np.mtx-np * { text-align: left; }
+
+#mtx-np.mtx-np .mtx-np__btn,
+#mtx-np.mtx-np .mtx-np__close,
+#mtx-np.mtx-np .mtx-np__close * { text-align: center; }
+
+#mtx-np.mtx-np a.mtx-np__btn--blue    { background: var(--np-blue); color: #fff; }
+#mtx-np.mtx-np a.mtx-np__btn--blue:hover    { background: var(--np-blue-dark); color: #fff; }
+#mtx-np.mtx-np a.mtx-np__btn--ghost   { background: transparent; border-color: #fff; color: #fff; }
+#mtx-np.mtx-np a.mtx-np__btn--ghost:hover   { background: #fff; color: var(--np-ink); }
+#mtx-np.mtx-np a.mtx-np__btn--outline { background: #fff; border-color: var(--np-ink); color: var(--np-ink); }
+#mtx-np.mtx-np a.mtx-np__btn--outline:hover { border-color: var(--np-blue); color: var(--np-blue); }
+#mtx-np.mtx-np a.mtx-np__btn--red     { background: var(--np-rws); color: #fff; }
+#mtx-np.mtx-np a.mtx-np__btn--red:hover     { background: var(--np-rws-dark); color: #fff; }
+
+.mtx-np__cardgo { margin-top: 16px !important; }</style>
 
   <header class="mtx-np__hero">
       <p class="mtx-np__plain">The Garuda appears across Rajadamnern Stadium’s immersive dome above the Muay Thai ring, with green light beams illuminating the packed arena during New Power Muay Thai in Bangkok.</p>
@@ -543,6 +561,7 @@
           <h3>Ringside</h3>
           <p class="mtx-np__standfirst">Closest to the ring</p>
           <p>Assigned seating for guests who want the closest available public viewing position.</p>
+          <p class="mtx-np__cardgo"><a class="mtx-np__btn mtx-np__btn--outline" href="/rajadamnern-stadium-seating/ringside">Explore Ringside</a></p>
         </li>
 
         <li class="mtx-np__card mtx-np__card--gfx">
@@ -550,6 +569,7 @@
           <h3>Club Class</h3>
           <p class="mtx-np__standfirst">Elevated, assigned seating</p>
           <p>Assigned seats with a clear view across the ring.</p>
+          <p class="mtx-np__cardgo"><a class="mtx-np__btn mtx-np__btn--outline" href="/rajadamnern-stadium-seating/club-class">Explore Club Class</a></p>
         </li>
 
         <li class="mtx-np__card mtx-np__card--gfx">
@@ -558,6 +578,7 @@
           <p class="mtx-np__standfirst">A more involved local atmosphere</p>
           <p>Unassigned seating at the same general level as Club Class, with a strong local following.</p>
           <p>Legal betting activity around the stadium can be particularly visible from this area during traditional fight nights.</p>
+          <p class="mtx-np__cardgo"><a class="mtx-np__btn mtx-np__btn--outline" href="/rajadamnern-stadium-seating/leo-section">Explore the LEO Section</a></p>
         </li>
       </ul>
         <p class="mtx-np__maplayout">
