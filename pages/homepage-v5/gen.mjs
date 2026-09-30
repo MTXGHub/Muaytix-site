@@ -140,13 +140,25 @@ const weekCards = week.map(r => {
      its own copy so any of them can be the one revealed. */
   const desc = `          <p class="mtx-hp__night-desc">${T('week.desc.' + r.series_slug)}</p>\n`;
 
-  /* Document B section 10: do not invent a URL and do not redirect an
-     approved anchor to a similar page. No page, no button. */
+  /* Jason, 1 October 2026: guests think in days, not event names, on this
+     section specifically -- "we land Friday, so Saturday or Sunday" -- and
+     the event's own name is already the row's own heading, so repeating it
+     on the button added nothing. Every row's button now reads "Book
+     {weekday} Night", built from the row's own real weekday, not a label
+     per series: Rajadamnern Knockout alone shows on three different
+     weekdays, so a single static string could never have been right for
+     all three. "Book Tonight" was considered for whichever row is
+     currently live, but which row that is isn't known until a guest's own
+     browser works it out at runtime (see the script at the foot of this
+     file), so a second, JS-driven label would have to track two separate
+     wordings never drifting apart. "Book {weekday} Night" reads correctly
+     on every row on every day with no runtime dependency at all, so that
+     is what ships here. */
   let cta = '';
   if (ev.path) {
-    cta = `          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="${esc(ev.path)}/${esc(r.local_date)}">${T('week.cta.' + r.series_slug)}</a></p>\n`;
+    cta = `          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="${esc(ev.path)}/${esc(r.local_date)}">${T('week.cta_prefix')} ${esc(r.weekday)} ${T('week.cta_suffix')}</a></p>\n`;
   } else {
-    blockers.push(`No destination exists for ${ev.name} (${r.local_date}). Document A gives the CTA "${t('week.cta.' + r.series_slug)}" but no URL, so the row renders without a button.`);
+    blockers.push(`No destination exists for ${ev.name} (${r.local_date}). The row would read "Book ${r.weekday} Night" but has no URL, so the row renders without a button.`);
   }
 
   /* The row's destination also lives on the <li>, so the hero's "tonight"

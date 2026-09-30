@@ -56,38 +56,26 @@ There is live Muay Thai at Rajadamnern Stadium every night of the week, but the 
 [week.desc.rws]
 Rajadamnern’s flagship Saturday event combines three-round Muay Thai, Thai and international fighters, open scoring and major-event production.
 
-[week.cta.rws]
-Book RWS Tickets
-
 [week.desc.kiatpetch]
 Traditional five-round Muay Thai meets faster three-round contests, accompanied by live traditional music and a knowledgeable local crowd.
-
-[week.cta.kiatpetch]
-Book Kiatpetch Tickets
 
 [week.desc.all-star-buakaw]
 Buakaw’s monthly Rajadamnern event replaces the regular Monday Knockout programme.
 
-[week.cta.all-star-buakaw]
-View Event Details
-
 [week.desc.rajadamnern-knockout]
 Seven fights, three rounds and an advertised 80% knockout rate create one of Rajadamnern’s most direct, action-focused formats.
-
-[week.cta.rajadamnern-knockout]
-Book Knockout Tickets
 
 [week.desc.new-power]
 Traditional five-round fights develop through timing, scoring and tactical pressure, accompanied by live sarama music.
 
-[week.cta.new-power]
-Book New Power Tickets
-
 [week.desc.petchyindee]
 Technical Muay Thai built around balance, timing, ring intelligence and the contrast between controlled exchanges and sudden attacks.
 
-[week.cta.petchyindee]
-Book Petchyindee Tickets
+[week.cta_prefix]
+Book
+
+[week.cta_suffix]
+Night
 
 [week.section_cta]
 See all upcoming Rajadamnern dates
