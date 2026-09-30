@@ -23,7 +23,7 @@ const head = `<!--
   The script at the foot drops a night the moment its real booking cutoff
   passes and moves the next one up.
 -->
-<div class="mtx-hp">
+<div class="mtx-hp" id="mtx-hp">
 <style>
 `;
 

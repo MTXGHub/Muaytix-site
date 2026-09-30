@@ -89,11 +89,11 @@
   background-color: var(--hp-ink);
   background-image:
     linear-gradient(100deg,
-      rgba(11,11,13,.95) 0%,
-      rgba(11,11,13,.88) 38%,
-      rgba(11,11,13,.66) 72%,
-      rgba(11,11,13,.52) 100%),
-    url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+      rgba(11,11,13,.72) 0%,
+      rgba(11,11,13,.50) 38%,
+      rgba(11,11,13,.28) 72%,
+      rgba(11,11,13,.12) 100%),
+    url("https://static.tildacdn.com/tild3836-3165-4461-b261-643437363735/1000007513.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center 38%;
@@ -104,11 +104,11 @@
   .mtx-hp__hero {
     background-image:
       linear-gradient(180deg,
-        rgba(11,11,13,.86) 0%,
-        rgba(11,11,13,.74) 30%,
-        rgba(11,11,13,.88) 72%,
-        rgba(11,11,13,.96) 100%),
-      url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+        rgba(11,11,13,.62) 0%,
+        rgba(11,11,13,.42) 30%,
+        rgba(11,11,13,.62) 72%,
+        rgba(11,11,13,.80) 100%),
+      url("https://static.tildacdn.com/tild3836-3165-4461-b261-643437363735/1000007513.jpg");
     background-position: center 30%;
   }
 }
@@ -557,3 +557,59 @@
 /* Three approved paragraphs in the stadium column need air between them.
    .mtx-hp__venue p sets margin-top: 0 !important, so this has to match it. */
 .mtx-hp .mtx-hp__venue p + p { margin-top: 14px !important; }
+
+/* Every page in this project pastes into Tilda under one HTML block, and
+   Tilda's own host template carries `#allrecords * { text-align: center }`.
+   That is an ID selector, (1,0,0), and it beats every rule above here: none
+   of them sets text-align at all, so on the live page the hero headline and
+   both lede paragraphs came back centred in a narrow column, exactly as
+   Jason's own screenshot of muaytix.com showed, 30 September 2026. This page
+   was built without the ID every sibling page in this project carries for
+   exactly this fight (compare pages/new-power/style.css or
+   pages/petchyindee/style.css, both fixed the same night). Found from a live
+   screenshot, not caught here first: verify.mjs rendered on a blank page
+   with nothing competing, so it never saw this either.
+
+   #mtx-hp.mtx-hp * is (1,1,1) and beats (1,0,0) outright, regardless of
+   source order. */
+#mtx-hp.mtx-hp,
+#mtx-hp.mtx-hp * { text-align: left; }
+
+/* The handful that genuinely centre are told again, one level higher. */
+#mtx-hp.mtx-hp .mtx-hp__btn,
+#mtx-hp.mtx-hp .mtx-hp__close,
+#mtx-hp.mtx-hp .mtx-hp__close * { text-align: center; }
+
+/* Colour, stated the same way and for the same reason: a host rule shaped
+   like `#allrecords a { color: inherit }` is (1,0,1) and beats every
+   single-class button rule above it, which would have made the ghost and
+   outline buttons the same colour as the text around them. */
+#mtx-hp.mtx-hp a.mtx-hp__btn--blue    { background: var(--hp-blue); color: #fff; }
+#mtx-hp.mtx-hp a.mtx-hp__btn--blue:hover    { background: var(--hp-blue-dark); color: #fff; }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ghost   { background: transparent; border-color: #fff; color: #fff; }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ghost:hover   { background: #fff; color: var(--hp-ink); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--outline { background: #fff; border-color: var(--hp-ink); color: var(--hp-ink); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--outline:hover { border-color: var(--hp-blue); color: var(--hp-blue); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--red     { background: var(--hp-rws); color: #fff; }
+#mtx-hp.mtx-hp a.mtx-hp__btn--red:hover     { background: var(--hp-rws-dark); color: #fff; }
+
+/* The RWS event card already overrides the blue button to its own darker
+   red-tinted blue (line 349 above), at a lower specificity than the reassertion
+   just above. Restated here, ID-qualified, so it keeps winning rather than
+   silently reverting to plain blue. */
+#mtx-hp.mtx-hp .mtx-hp__ev--rws a.mtx-hp__btn--blue { background: var(--hp-rws-dark); }
+#mtx-hp.mtx-hp .mtx-hp__ev--rws a.mtx-hp__btn--blue:hover { background: #a80a15; }
+
+/* The close band's CTA row is a flex row, not a block of text, so the
+   text-align reset above does not centre it: it needs its own justify-content. */
+#mtx-hp.mtx-hp .mtx-hp__close .mtx-hp__ctarow { justify-content: center; }
+
+/* `#allrecords a { color: inherit }` is (1,0,1) and outranks the This Week
+   schedule's own per-event button colour at (0,2,0) (line 211 above), which
+   would have set every one of the six accent-coloured "Book X Tickets"
+   buttons back to whatever text colour surrounds it -- caught here by
+   verify.mjs's hostile-host simulation as a wall of failed contrast checks,
+   not by eye, because on a blank page nothing competed with it. Restated
+   ID-qualified so the accent system keeps winning. */
+#mtx-hp.mtx-hp .mtx-hp__night a.mtx-hp__btn { color: var(--accent-on-accent); }
+#mtx-hp.mtx-hp .mtx-hp__night a.mtx-hp__btn:hover { color: var(--accent-on-accent); }

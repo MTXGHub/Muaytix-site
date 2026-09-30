@@ -9,10 +9,31 @@ import pw from '/opt/node22/lib/node_modules/playwright/index.js';
 const { chromium } = pw;
 import { readFileSync, existsSync } from 'node:fs';
 
+const data = JSON.parse(readFileSync('dynamic-data.json', 'utf8'));
 const frag = readFileSync('homepage-live.txt', 'utf8');
+
+/* This page pastes into one Tilda HTML block, inside the site's own
+   #allrecords wrapper, which carries `#allrecords * { text-align: center }`
+   and `#allrecords a { color: inherit }`. Both are ID selectors and beat any
+   single-class rule regardless of source order. Rendering against a blank
+   page, as this file did until 30 September 2026, tests nothing competing
+   with it, which is exactly how this page shipped to live with its hero
+   headline and both lede paragraphs centred in a narrow column on desktop,
+   caught only from Jason's own screenshot, not here. This is deliberately
+   hostile. If the block cannot hold its own shape against it, it is not
+   finished. */
+const TILDA_HOST = `
+  #allrecords { font-family: Arial, Helvetica, sans-serif; }
+  #allrecords * { text-align: center; }
+  #allrecords a { text-decoration: none; color: inherit; }
+  #allrecords img { max-width: 100%; }
+  #allrecords p, #allrecords h1, #allrecords h2, #allrecords h3 { margin: 0 0 15px; }
+  #allrecords ul, #allrecords ol { list-style: none; padding: 0; }
+`;
 const doc = `<!doctype html><html lang="en-GB"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0">${frag}</body></html>`;
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{margin:0}${TILDA_HOST}</style></head>
+<body><div id="allrecords">${frag}</div></body></html>`;
 
 /* The locked copy, parsed from the same file the page is generated from. */
 const DOC = (() => {
@@ -70,8 +91,14 @@ for (const w of [1440, 1280, 1024, 860, 620, 390]) {
     small: [...document.querySelectorAll('.mtx-hp a.mtx-hp__btn')]
       .filter(a => a.offsetParent !== null || getComputedStyle(a).position === 'fixed')
       .map(a => a.getBoundingClientRect()).filter(r => r.height > 0 && r.height < 44).length,
-    /* Document B section 12: copy must not be truncated to fit. */
+    /* Document B section 12: copy must not be truncated to fit. .mtx-hp__plain
+       is deliberately clipped to 1px, off-screen, so a screen reader or a
+       crawler still gets the hero photo's alt text with nothing shown on
+       screen: that is the intended accessibility pattern, not a truncation
+       bug, so it is excluded here rather than failing the very thing it was
+       added to do correctly. */
     clipped: [...document.querySelectorAll('.mtx-hp p, .mtx-hp h1, .mtx-hp h2, .mtx-hp h3')]
+      .filter(e => !e.classList.contains('mtx-hp__plain'))
       .filter(e => { const s = getComputedStyle(e);
         return (s.textOverflow === 'ellipsis' || s.overflow === 'hidden') && e.scrollHeight > e.clientHeight + 1; }).length,
   }));
@@ -85,6 +112,14 @@ for (const w of [1440, 1280, 1024, 860, 620, 390]) {
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 await page.setContent(doc, { waitUntil: 'load' });
 const visible = norm(await page.evaluate(() => document.querySelector('.mtx-hp').textContent));
+
+console.log('\n-- hostile host: text-align --');
+const centred = await page.evaluate(() =>
+  [...document.querySelectorAll('.mtx-hp h1,.mtx-hp h2,.mtx-hp h3,.mtx-hp p,.mtx-hp dt,.mtx-hp dd,.mtx-hp li,.mtx-hp summary')]
+    .filter(e => e.textContent.trim() && !e.closest('.mtx-hp__close') && getComputedStyle(e).textAlign === 'center')
+    .map(e => e.textContent.trim().slice(0, 50)));
+console.log(`   ${centred.length} element(s) forced centre by the Tilda host`);
+centred.forEach(t => fail(`centred by #allrecords, not defended against: "${t}"`));
 
 /* ---- Section 23: the copy diff ---- */
 console.log('\n=== 2. COPY DIFF against document-a.txt ===');
@@ -112,7 +147,8 @@ const approved = Object.values(DOC).map(norm);
    doors, first bout. Those are data, not authored prose. */
 const dataShaped = s =>
   /^(Doors .+First bout .+|[A-Z][a-z]+day \d{1,2} [A-Z][a-z]+|Tonight)$/.test(s) ||
-  /^(RWS Rajadamnern World Series|Kiatpetch Muay Thai|All Star Fight by Buakaw|Rajadamnern Knockout|New Power Muay Thai|Petchyindee Muay Thai|Ringside|Club Class|LEO Section|Third Class)$/.test(s);
+  /^(RWS Rajadamnern World Series|Kiatpetch Muay Thai|All Star Fight by Buakaw|Rajadamnern Knockout|New Power Muay Thai|Petchyindee Muay Thai|Ringside|Club Class|LEO Section|Third Class)$/.test(s) ||
+  (data.hero_image && s === norm(data.hero_image.alt));
 const unapproved = onPage.filter(s => !approved.some(a => a === s || a.includes(s)) && !dataShaped(s));
 console.log(`   ${onPage.length} visible text nodes; ${unapproved.length} not traceable to Document A or to verified data`);
 unapproved.forEach(s => fail(`unapproved text on page: "${s.slice(0, 90)}"`));

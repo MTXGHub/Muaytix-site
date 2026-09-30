@@ -1,4 +1,4 @@
-<div class="mtx-hp">
+<div class="mtx-hp" id="mtx-hp">
 <style>.mtx-hp, .mtx-hp * { box-sizing: border-box; }
 .mtx-hp {
   --hp-blue: #1f5bff;
@@ -67,11 +67,11 @@
   background-color: var(--hp-ink);
   background-image:
     linear-gradient(100deg,
-      rgba(11,11,13,.95) 0%,
-      rgba(11,11,13,.88) 38%,
-      rgba(11,11,13,.66) 72%,
-      rgba(11,11,13,.52) 100%),
-    url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+      rgba(11,11,13,.72) 0%,
+      rgba(11,11,13,.50) 38%,
+      rgba(11,11,13,.28) 72%,
+      rgba(11,11,13,.12) 100%),
+    url("https://static.tildacdn.com/tild3836-3165-4461-b261-643437363735/1000007513.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center 38%;
@@ -81,11 +81,11 @@
   .mtx-hp__hero {
     background-image:
       linear-gradient(180deg,
-        rgba(11,11,13,.86) 0%,
-        rgba(11,11,13,.74) 30%,
-        rgba(11,11,13,.88) 72%,
-        rgba(11,11,13,.96) 100%),
-      url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+        rgba(11,11,13,.62) 0%,
+        rgba(11,11,13,.42) 30%,
+        rgba(11,11,13,.62) 72%,
+        rgba(11,11,13,.80) 100%),
+      url("https://static.tildacdn.com/tild3836-3165-4461-b261-643437363735/1000007513.jpg");
     background-position: center 30%;
   }
 }
@@ -414,9 +414,34 @@
   .mtx-hp__trustcard--wide { grid-column: span 1; }
 }
 
-.mtx-hp .mtx-hp__venue p + p { margin-top: 14px !important; }</style>
+.mtx-hp .mtx-hp__venue p + p { margin-top: 14px !important; }
+
+#mtx-hp.mtx-hp,
+#mtx-hp.mtx-hp * { text-align: left; }
+
+#mtx-hp.mtx-hp .mtx-hp__btn,
+#mtx-hp.mtx-hp .mtx-hp__close,
+#mtx-hp.mtx-hp .mtx-hp__close * { text-align: center; }
+
+#mtx-hp.mtx-hp a.mtx-hp__btn--blue    { background: var(--hp-blue); color: #fff; }
+#mtx-hp.mtx-hp a.mtx-hp__btn--blue:hover    { background: var(--hp-blue-dark); color: #fff; }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ghost   { background: transparent; border-color: #fff; color: #fff; }
+#mtx-hp.mtx-hp a.mtx-hp__btn--ghost:hover   { background: #fff; color: var(--hp-ink); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--outline { background: #fff; border-color: var(--hp-ink); color: var(--hp-ink); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--outline:hover { border-color: var(--hp-blue); color: var(--hp-blue); }
+#mtx-hp.mtx-hp a.mtx-hp__btn--red     { background: var(--hp-rws); color: #fff; }
+#mtx-hp.mtx-hp a.mtx-hp__btn--red:hover     { background: var(--hp-rws-dark); color: #fff; }
+
+#mtx-hp.mtx-hp .mtx-hp__ev--rws a.mtx-hp__btn--blue { background: var(--hp-rws-dark); }
+#mtx-hp.mtx-hp .mtx-hp__ev--rws a.mtx-hp__btn--blue:hover { background: #a80a15; }
+
+#mtx-hp.mtx-hp .mtx-hp__close .mtx-hp__ctarow { justify-content: center; }
+
+#mtx-hp.mtx-hp .mtx-hp__night a.mtx-hp__btn { color: var(--accent-on-accent); }
+#mtx-hp.mtx-hp .mtx-hp__night a.mtx-hp__btn:hover { color: var(--accent-on-accent); }</style>
 
   <header class="mtx-hp__hero">
+      <p class="mtx-hp__plain">A Muay Thai fight in action at Rajadamnern Stadium in Bangkok, the world's original professional Muay Thai stadium.</p>
     <div class="mtx-hp__shell">
       <h1>Muay Thai Tickets Bangkok: Rajadamnern Stadium</h1>
       <p class="mtx-hp__lede">Book Muay Thai tickets for live fights at Rajadamnern Stadium, with events running seven nights a week.</p>

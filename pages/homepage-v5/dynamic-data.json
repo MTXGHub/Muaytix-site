@@ -5,7 +5,12 @@
     "cutoff": "events.booking_cutoff_minutes, same read. First bout minus the cutoff, written onto each card as an absolute UTC instant.",
     "doors": "MuayTix's own published day-dated pages in this repository, which carry an explicit doors attribute. Not derived and not offset from the first bout.",
     "destinations": "Document A. Dated URL patterns are the ones already in use across the published day-dated pages.",
-    "week_accent": "Same six colours already verified and sourced for pages/homepage-v6/dynamic-data.json on 27 September 2026. Reused rather than re-sourced. Used here as a solid colour bar and button fill per event on the This Week schedule, replacing five identical white cards."
+    "week_accent": "Same six colours already verified and sourced for pages/homepage-v6/dynamic-data.json on 27 September 2026. Reused rather than re-sourced. Used here as a solid colour bar and button fill per event on the This Week schedule, replacing five identical white cards.",
+    "hero_image": "Owner-supplied URL, 30 September 2026, sent to replace the previous hero photo and lighten the scrim over it so the photo actually shows. static.tildacdn.com is blocked in this environment, so the image could not be opened and inspected directly here: the alt text below states only what the owner said the photo is (a Muay Thai fight in action at Rajadamnern Stadium), not any pose, fighter count or detail beyond that. Flag to Jason if the alt text does not match what is actually in the photo. Requested file name 'muay-thai-fight-action-rajadamnern-stadium-bangkok.jpg' cannot be set here: the URL is Tilda's own asset host and its file name is Tilda's internal id, not something this build controls."
+  },
+  "hero_image": {
+    "url": "https://static.tildacdn.com/tild3836-3165-4461-b261-643437363735/1000007513.jpg",
+    "alt": "A Muay Thai fight in action at Rajadamnern Stadium in Bangkok, the world's original professional Muay Thai stadium."
   },
   "doors": {
     "rws": {

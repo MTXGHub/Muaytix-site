@@ -38,6 +38,15 @@ const data = JSON.parse(readFileSync('dynamic-data.json', 'utf8'));
 const week = JSON.parse(readFileSync('week.json', 'utf8'));
 const D = data.destinations;
 
+/* The hero photo has no native alt attribute because it is a CSS
+   background-image, not an <img>: this hidden paragraph is how a screen
+   reader or a crawler gets the description instead. Document B section 12:
+   a missing entry stops the build rather than shipping a silent, undescribed
+   photo. */
+if (!data.hero_image || !data.hero_image.url) throw new Error('hero_image missing from dynamic-data.json. Document B section 12: STOP.');
+if (!data.hero_image.alt) throw new Error('hero_image has no alt text.');
+const heroAlt = `      <p class="mtx-hp__plain">${esc(data.hero_image.alt)}</p>`;
+
 /* Anything the implementation could not complete from verified data. Reported
    at the end of the build and in the completion response, never patched over. */
 const blockers = [];
@@ -229,6 +238,7 @@ const faq = [1, 2, 3, 4, 5, 6].map(n =>
         </details>`).join('\n\n');
 
 const body = `  <header class="mtx-hp__hero">
+${heroAlt}
     <div class="mtx-hp__shell">
       <h1>${T('hero.h1')}</h1>
       <p class="mtx-hp__lede">${T('hero.body1')}</p>
