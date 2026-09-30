@@ -226,9 +226,12 @@ ${logoMark}
 ${['date','venue','doors','starts'].map(k =>
   `        <div class="mtx-pi__fact"><dt>${T('facts.label.' + k)}</dt><dd>${T('facts.value.' + k)}</dd></div>`).join('\n')}
       </dl>
+      <!-- Jason, 1 October 2026: "Choose Your Seats" sent a guest who had
+           already arrived here from the homepage's "See Tonight's Fight"
+           button out again, to the main seating page, before they had
+           booked anything. One button now, straight into the widget below. -->
       <p class="mtx-pi__actions">
         <a class="mtx-pi__btn mtx-pi__btn--blue" href="#book">${T('hero.cta_primary')}</a>
-        <a class="mtx-pi__btn mtx-pi__btn--ghost" href="${esc(D.seating)}">${T('hero.cta_secondary')}</a>
       </p>
     </div>
   </header>

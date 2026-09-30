@@ -452,18 +452,24 @@
 
 /* ---------- The seat class graphic ----------
    Full bleed to the card edges, above the name. No aspect-ratio and no crop:
-   these graphics carry type, and object-fit: cover would slice the words off.
-   They take whatever shape they were drawn at.
+   Jason swapped these graphics for real seat photographs, 1 October 2026:
+   Ringside's is a wide 1690x900 hero shot, already used as-is on its own
+   page, and the other three are 1024 square, so height: auto would have
+   given Ringside's card a visibly flatter photo than its siblings in the
+   same row. A shared aspect-ratio with object-fit: cover crops all four to
+   one shape instead, the way a card grid mixing sources should.
 
-   height: auto is not optional. A width or height attribute on an <img>
-   arrives as a presentational hint and outranks a stylesheet rule, which is
-   how a photo on this site once rendered three times too tall. */
+   height: auto is not optional on its own, though: a width or height
+   attribute on an <img> arrives as a presentational hint and outranks a
+   stylesheet rule, which is how a photo on this site once rendered three
+   times too tall. Neither is set on these images. */
 .mtx-pi__card--gfx { padding-top: 0; overflow: hidden; }
 /* The class is doubled. .mtx-pi img { max-width: 100% } is (0,1,1) and beats
    a single class, which clamped the graphic to the card's content box and left
    it inset from both edges. Same family of fault as .mtx-pi p { margin: 0 }. */
 .mtx-pi .mtx-pi__seatgfx {
-  display: block; width: calc(100% + 48px); max-width: none; height: auto;
+  display: block; width: calc(100% + 48px); max-width: none;
+  aspect-ratio: 4 / 3; object-fit: cover; object-position: center;
   margin: 0 -24px 0; background: #e6e6ea;
 }
 .mtx-pi__card--gfx h3 { margin-top: 24px; }
@@ -619,8 +625,11 @@
 .mtx-pi .mtx-pi__faq { margin-top: 24px; }
 .mtx-pi__card--gfx { padding-top: 0; overflow: hidden; }
 /* Doubled class: .mtx-pi img { max-width: 100% } is (0,1,1) and would clamp
-   the graphic to the card's content box, leaving it inset from both edges. */
-.mtx-pi .mtx-pi__seatgfx { display: block; width: calc(100% + 48px); max-width: none; height: auto; margin: 0 -24px; background: #e6e6ea; }
+   the graphic to the card's content box, leaving it inset from both edges.
+   aspect-ratio + object-fit: cover, not height: auto, since these are now
+   real photos of mixed shapes (see the fuller note further up this file
+   where .mtx-pi__seatgfx is first defined). */
+.mtx-pi .mtx-pi__seatgfx { display: block; width: calc(100% + 48px); max-width: none; aspect-ratio: 4 / 3; object-fit: cover; object-position: center; margin: 0 -24px; background: #e6e6ea; }
 .mtx-pi__card--gfx h3 { margin-top: 24px; }
 .mtx-pi__dates { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .mtx-pi .mtx-pi__dates { margin-top: 28px; }

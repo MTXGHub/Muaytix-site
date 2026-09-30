@@ -7,7 +7,7 @@
     "bout_format": "NONE VERIFIED. Document B section 7: no bout count and no round format stated anywhere on either page.",
     "fight_card": "NONE VERIFIED for 1 October. The approved waiting message only.",
     "prices": "NOT USED. Live inventory only.",
-    "seat_images": "The four Tilda graphics supplied by the owner, class mapping confirmed by him.",
+    "seat_images": "Real photographs as of 1 October 2026, replacing the four class-identity graphics. See the _alt_note beside seat_images below for exactly where each one was already verified.",
     "seat_map": "The Rajadamnern seating map already published on MuayTix's own pages.",
     "logo": "MISSING. No Petchyindee logo exists anywhere in this project. Document B section 12: stop and report."
   },
@@ -26,16 +26,16 @@
     "seat_classes": { "ringside": "available", "club-class": "available", "leo-section": "available", "third-class": "closed" }
   },
   "seat_images": {
-    "ringside":    { "url": "https://static.tildacdn.com/tild3830-6232-4832-b331-666465393139/1000033985.webp",
-                     "alt": "Ringside seating at Rajadamnern Stadium" },
-    "club-class":  { "url": "https://static.tildacdn.com/tild6633-3464-4335-b864-323737313634/1000033982.webp",
-                     "alt": "Club Class elevated seating at Rajadamnern Stadium" },
-    "leo-section": { "url": "https://static.tildacdn.com/tild3333-3339-4135-b436-326637666663/1000033984.webp",
-                     "alt": "LEO Section seating at Rajadamnern Stadium" },
-    "third-class": { "url": "https://static.tildacdn.com/tild3864-6636-4461-a634-383639393261/1000033983.webp",
-                     "alt": "Third Class seating at Rajadamnern Stadium" }
+    "ringside":    { "url": "https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg",
+                     "alt": "View from the corner of section 4, this corner is a fighter corner during fight nights, I is also next to section 5 of Ringside and also has the fighter walkway to the left which splits sections 4 & 3" },
+    "club-class":  { "url": "https://static.tildacdn.com/tild3665-3065-4334-b531-303164393066/1000033696.jpg",
+                     "alt": "Taken from row I, the final row in Club Class" },
+    "leo-section": { "url": "https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg",
+                     "alt": "The view from the front row of Leo section" },
+    "third-class": { "url": "https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg",
+                     "alt": "The view from Third Class at Rajadamnern Stadium" }
   },
-  "_alt_note": "Document B section 25 lists these exact strings as acceptable alt text. Used verbatim.",
+  "_alt_note": "Swapped 1 October 2026, Jason: the four class-identity graphics out, one real photo per class in. Not new sourcing: all four are the same URLs and alt text already verified today for pages/homepage-v5/seat-images.json, each one already that class's own representative photo on its own standalone page (pages/ringside, pages/club-class, pages/leo-section) or, for Third Class, the only Third Class photo sourced anywhere in this project (pages/seating-v2/dynamic-data.json, which flags a conflicting caption on the same file elsewhere -- passed through, not resolved). Third Class is marked closed in dated.seat_classes for 1 October, so this page's own card list still omits it regardless of the image being ready; only the hub (evergreen) page shows all four.",
 
   "seat_links": {
     "ringside":    { "href": "/rajadamnern-stadium-seating/ringside",    "label": "Explore Ringside" },

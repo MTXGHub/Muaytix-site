@@ -290,9 +290,6 @@ Event starts
 [dated.hero.cta_primary]
 Book Tickets
 
-[dated.hero.cta_secondary]
-Choose Your Seats
-
 [dated.expect.h2]
 What to expect from Petchyindee Muay Thai
 

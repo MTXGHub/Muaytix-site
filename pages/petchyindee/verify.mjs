@@ -209,7 +209,7 @@ for (const P of [{ key: 'hub', prefix: 'hub', kw: [...CL031, ...CL035] },
       if (!ok) fail(`seating map alt text is "${i.alt}", expected "${data.seat_map.alt}"`);
       continue;
     }
-    const id = (i.src.match(/(\d{10})\.webp/) || [])[1];
+    const id = (i.src.match(/(\d{10})\.(webp|jpg|png)/) || [])[1];
     const entry = Object.entries(data.seat_images).find(([, v]) => v.url.includes(id));
     const cls = entry && DOC[`${P.prefix}.seats.name.${entry[0]}`];
     console.log(`   ${String(i.card).padEnd(13)} ${id}  ${cls === i.card ? 'MATCH' : 'MISMATCH'}`);
