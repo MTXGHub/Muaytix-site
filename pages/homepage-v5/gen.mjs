@@ -154,9 +154,18 @@ const weekCards = week.map(r => {
      wordings never drifting apart. "Book {weekday} Night" reads correctly
      on every row on every day with no runtime dependency at all, so that
      is what ships here. */
+  /* Jason, 1 October 2026: Sunday 4 October (Kiatpetch) and Monday 5 October
+     (Knockout) have no dated page yet, so those two rows link to the
+     evergreen event page instead of a URL that doesn't exist. Data-driven
+     (evergreen_only in dynamic-data.json), not a hardcoded date check here,
+     since it's a fact about these two specific occurrences rather than a
+     rule about either series. */
+  const noDatedPage = data.evergreen_only && data.evergreen_only[`${r.series_slug}:${r.local_date}`];
+  const dest = ev.path ? (noDatedPage ? ev.path : `${ev.path}/${r.local_date}`) : null;
+
   let cta = '';
-  if (ev.path) {
-    cta = `          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="${esc(ev.path)}/${esc(r.local_date)}">${T('week.cta_prefix')} ${esc(r.weekday)} ${T('week.cta_suffix')}</a></p>\n`;
+  if (dest) {
+    cta = `          <p class="mtx-hp__night-go"><a class="mtx-hp__btn" href="${esc(dest)}">${T('week.cta_prefix')} ${esc(r.weekday)} ${T('week.cta_suffix')}</a></p>\n`;
   } else {
     blockers.push(`No destination exists for ${ev.name} (${r.local_date}). The row would read "Book ${r.weekday} Night" but has no URL, so the row renders without a button.`);
   }
@@ -165,7 +174,7 @@ const weekCards = week.map(r => {
      button can read it without depending on a button being rendered inside
      the row. That dependency is why a card with no CTA silently left the
      hero pointing at whatever was hard-coded in the markup. */
-  const href = ev.path ? ` data-mtx-href="${esc(ev.path)}/${esc(r.local_date)}"` : '';
+  const href = dest ? ` data-mtx-href="${esc(dest)}"` : '';
 
   return `        <li class="mtx-hp__night" style="--accent:${esc(ev.accent)};--accent-on-accent:${esc(foregroundOn(ev.accent))}" data-mtx-date="${esc(r.local_date)}" data-mtx-cutoff="${esc(r.cutoff_utc)}"${href}>
           <span class="mtx-hp__night-bar" aria-hidden="true"></span>
