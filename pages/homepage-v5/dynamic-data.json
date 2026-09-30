@@ -7,7 +7,8 @@
     "destinations": "Document A. Dated URL patterns are the ones already in use across the published day-dated pages.",
     "week_accent": "Same six colours already verified and sourced for pages/homepage-v6/dynamic-data.json on 27 September 2026. Reused rather than re-sourced. Used here as a solid colour bar and button fill per event on the This Week schedule, replacing five identical white cards.",
     "hero_image": "Owner-supplied URL, 30 September 2026, sent to replace the previous hero photo and lighten the scrim over it so the photo actually shows. static.tildacdn.com is blocked in this environment, so the image could not be opened and inspected directly here: the alt text below states only what the owner said the photo is (a Muay Thai fight in action at Rajadamnern Stadium), not any pose, fighter count or detail beyond that. Flag to Jason if the alt text does not match what is actually in the photo. Requested file name 'muay-thai-fight-action-rajadamnern-stadium-bangkok.jpg' cannot be set here: the URL is Tilda's own asset host and its file name is Tilda's internal id, not something this build controls.",
-    "event_logos": "Owner-supplied URLs, 30 September 2026, for all six event cards including All Star Fight: Elite Fighter. Five of the six are character-for-character the same URLs already sourced and recorded in pages/homepage-v6/dynamic-data.json on 27 September 2026, so treated as re-confirmed rather than re-verified. The sixth, Kiatpetch, is new and different: homepage-v6's Kiatpetch logo was recorded as missing because the URL given for it on 27 September was an exact duplicate of New Power's, so it was never used; this message gives Kiatpetch its own distinct URL (1000026562.jpg), closing that gap. Recorded here only, not yet wired into gen.mjs or style.css: the owner asked not to rebuild the page until the rest of this round of images is in. static.tildacdn.com is blocked in this environment, so none of the six files has been opened or looked at."
+    "event_logos": "Owner-supplied URLs, 30 September 2026, for all six event cards including All Star Fight: Elite Fighter. Five of the six are character-for-character the same URLs already sourced and recorded in pages/homepage-v6/dynamic-data.json on 27 September 2026, so treated as re-confirmed rather than re-verified. The sixth, Kiatpetch, is new and different: homepage-v6's Kiatpetch logo was recorded as missing because the URL given for it on 27 September was an exact duplicate of New Power's, so it was never used; this message gives Kiatpetch its own distinct URL (1000026562.jpg), closing that gap. static.tildacdn.com is blocked in this environment, so none of the six files has been opened or looked at: logo_alt below states only that the image is that event's logo, no visual detail invented. logo_tile risk carried over from homepage-v6's own note and not yet resolved either way: a logo drawn in dark artwork on transparency would disappear against these cards' white background, and it has not been possible to check which of the six that applies to.",
+    "times": "Owner, dictated by voice, 30 September 2026, going through the event cards on the preview build card by card. Doors and first bell for New Power and Petchyindee match what was already on file (doors.new-power, doors.petchyindee, and the old nights.schedule first-bout wording); event end for Rajadamnern Knockout, Petchyindee, RWS and Kiatpetch, and RWS's first bell at 7:10 PM, are new facts from this message, not previously recorded anywhere. New Power's event end was not given and is not inferred, see the events block."
   },
   "hero_image": {
     "url": "https://static.tildacdn.com/tild3836-3165-4461-b261-643437363735/1000007513.jpg",
@@ -46,15 +47,19 @@
       "accent": "#FF1828",
       "short_name": "RWS",
       "accent_source": "pages/rws/rws-2026-09-26.html (--rws-red)",
-      "logo": "https://static.tildacdn.com/tild3264-3232-4735-b030-396436626134/1000029288.webp"
+      "logo": "https://static.tildacdn.com/tild3264-3232-4735-b030-396436626134/1000029288.webp",
+      "logo_alt": "RWS Rajadamnern World Series logo",
+      "times": { "doors": "6:00 PM", "first_bell": "7:10 PM", "event_end": "10:00 PM" }
     },
     "kiatpetch": {
-      "name": "Kiatpetch Muay Thai",
+      "name": "Kiatpetch Traditional Muay Thai",
       "path": "/kiatpetch-muay-thai",
       "accent": "#FF1828",
       "short_name": "Kiatpetch",
       "accent_source": "Owner, 27 September 2026: red, the same as RWS. No Kiatpetch hex is published anywhere in this repository.",
-      "logo": "https://static.tildacdn.com/tild3833-3962-4662-b230-616364373536/1000026562.jpg"
+      "logo": "https://static.tildacdn.com/tild3833-3962-4662-b230-616364373536/1000026562.jpg",
+      "logo_alt": "Kiatpetch Traditional Muay Thai logo",
+      "times": { "doors": "5:00 PM", "first_bell": "6:00 PM", "event_end": "10:00 PM" }
     },
     "all-star-buakaw": {
       "name": "All Star Fight by Buakaw",
@@ -62,7 +67,8 @@
       "accent": "#FFAE27",
       "short_name": "All Star",
       "accent_source": "Sampled from the owner's own All Star Fight logo file, 27 September 2026. He said the predominant colour is gold and sent a screen capture of 1000012081.png; #FFAE27 is the modal bright gold across the mark.",
-      "logo": "https://static.tildacdn.com/tild6334-3461-4332-a362-383432666132/1000012081.png"
+      "logo": "https://static.tildacdn.com/tild6334-3461-4332-a362-383432666132/1000012081.png",
+      "logo_alt": "All Star Fight by Buakaw: Elite Fighter logo"
     },
     "rajadamnern-knockout": {
       "name": "Rajadamnern Knockout",
@@ -70,23 +76,29 @@
       "accent": "#1F5BFF",
       "short_name": "Knockout",
       "accent_source": "pages/knockout-dated/style.css (--kd-blue)",
-      "logo": "https://static.tildacdn.com/tild6532-3165-4665-a139-323436353633/1000029307.svg"
+      "logo": "https://static.tildacdn.com/tild6532-3165-4665-a139-323436353633/1000029307.svg",
+      "logo_alt": "Rajadamnern Knockout logo",
+      "times": { "doors": "6:00 PM", "first_bell": "7:00 PM", "event_end": "9:00 PM" }
     },
     "new-power": {
-      "name": "New Power Muay Thai",
+      "name": "New Power Traditional Muay Thai",
       "path": "/new-power-muay-thai",
       "accent": "#01A453",
       "short_name": "New Power",
       "accent_source": "pages/new-power/style.css (--np-blue, green despite the variable name)",
-      "logo": "https://static.tildacdn.com/tild6661-6535-4461-b132-393634613066/2edd0c01-d473-4a1c-b.png"
+      "logo": "https://static.tildacdn.com/tild6661-6535-4461-b132-393634613066/2edd0c01-d473-4a1c-b.png",
+      "logo_alt": "New Power Traditional Muay Thai logo",
+      "times": { "doors": "5:00 PM", "first_bell": "6:00 PM", "event_end_note": "Not given. Jason stated Wednesday's doors and first bell, which match what was already on file, but never stated New Power's own event end time the way he did for the other four nights on 30 September 2026. Not guessed: ask him rather than assume it matches Petchyindee's Thursday." }
     },
     "petchyindee": {
-      "name": "Petchyindee Muay Thai",
+      "name": "Petchyindee Traditional Muay Thai",
       "path": "/petchyindee-muay-thai",
       "accent": "#01A453",
       "short_name": "Petchyindee",
       "accent_source": "Owner, 27 September 2026: green, the same as New Power. No Petchyindee hex is published anywhere in this repository.",
-      "logo": "https://static.tildacdn.com/tild3031-6434-4537-b433-373733626337/2edd0c01-d473-4a1c-b.png"
+      "logo": "https://static.tildacdn.com/tild3031-6434-4537-b433-373733626337/2edd0c01-d473-4a1c-b.png",
+      "logo_alt": "Petchyindee Traditional Muay Thai logo",
+      "times": { "doors": "5:00 PM", "first_bell": "6:00 PM", "event_end": "10:00 PM" }
     }
   },
   "destinations": {

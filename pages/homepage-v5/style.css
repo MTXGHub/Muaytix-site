@@ -341,27 +341,45 @@
   position: relative; display: flex; flex-direction: column;
   background: #fff; border: 1px solid var(--hp-line); padding: 30px 24px 26px;
 }
+/* Jason, 30 September 2026, on the preview: RWS was the only card with any
+   colour, every other card was plain white and outline. Each card now takes
+   its own event's accent (the same colours already sourced for the This
+   Week schedule) rather than one card being special-cased against a plain
+   default. */
 .mtx-hp__ev::before {
   content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 7px;
-  background: var(--hp-blue); transform: skewX(-25deg); transform-origin: left;
+  background: var(--accent); transform: skewX(-25deg); transform-origin: left;
 }
-.mtx-hp__ev--rws::before { background: var(--hp-rws); }
-.mtx-hp__ev--rws .mtx-hp__btn--blue { background: var(--hp-rws-dark); }
-.mtx-hp__ev--rws .mtx-hp__btn--blue:hover { background: #a80a15; }
+.mtx-hp__evlogo {
+  max-width: 140px; height: 40px; width: auto; object-fit: contain;
+  object-position: left center; margin: 0 0 14px;
+}
 .mtx-hp .mtx-hp__hook {
   margin-top: 8px !important;
   font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif; font-weight: 800;
   font-size: clamp(23px, 2.5vw, 29px); line-height: 1.04; text-transform: uppercase;
 }
 .mtx-hp .mtx-hp__evbody { margin-top: 13px !important; color: var(--hp-muted); font-size: 16px; }
-.mtx-hp .mtx-hp__evwhen {
+/* The day or days of the week, split out of the old combined schedule line
+   and set larger: Jason's own reasoning, 30 September 2026, is that a guest
+   deciding whether they can make it there in time reads the day first, so
+   it should not be the same small print as the times underneath it. */
+.mtx-hp .mtx-hp__evday {
   margin-top: 16px !important; padding-top: 14px; border-top: 1px solid var(--hp-line);
-  color: var(--hp-muted); font-size: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif; font-weight: 800;
+  font-size: 19px; line-height: 1.15; text-transform: uppercase; color: var(--hp-ink);
+}
+.mtx-hp .mtx-hp__evwhen {
+  margin-top: 6px !important; color: var(--hp-muted); font-size: 14px;
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
   letter-spacing: .07em; text-transform: uppercase;
 }
 .mtx-hp .mtx-hp__evcta { margin-top: auto !important; padding-top: 20px; }
-.mtx-hp__evcta .mtx-hp__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+.mtx-hp__evcta .mtx-hp__btn {
+  width: 100%; padding: 0 14px; letter-spacing: .04em;
+  background: var(--accent); color: var(--accent-on-accent);
+}
+.mtx-hp__evcta .mtx-hp__btn:hover { filter: brightness(.87); color: var(--accent-on-accent); }
 
 /* ---------- Block 7: the questions ----------
    <details> rather than a script: it opens without JavaScript, it is readable
@@ -593,23 +611,19 @@
 #mtx-hp.mtx-hp a.mtx-hp__btn--red     { background: var(--hp-rws); color: #fff; }
 #mtx-hp.mtx-hp a.mtx-hp__btn--red:hover     { background: var(--hp-rws-dark); color: #fff; }
 
-/* The RWS event card already overrides the blue button to its own darker
-   red-tinted blue (line 349 above), at a lower specificity than the reassertion
-   just above. Restated here, ID-qualified, so it keeps winning rather than
-   silently reverting to plain blue. */
-#mtx-hp.mtx-hp .mtx-hp__ev--rws a.mtx-hp__btn--blue { background: var(--hp-rws-dark); }
-#mtx-hp.mtx-hp .mtx-hp__ev--rws a.mtx-hp__btn--blue:hover { background: #a80a15; }
-
 /* The close band's CTA row is a flex row, not a block of text, so the
    text-align reset above does not centre it: it needs its own justify-content. */
 #mtx-hp.mtx-hp .mtx-hp__close .mtx-hp__ctarow { justify-content: center; }
 
-/* `#allrecords a { color: inherit }` is (1,0,1) and outranks the This Week
-   schedule's own per-event button colour at (0,2,0) (line 211 above), which
-   would have set every one of the six accent-coloured "Book X Tickets"
-   buttons back to whatever text colour surrounds it -- caught here by
+/* `#allrecords a { color: inherit }` is (1,0,1) and outranks a bare-class
+   accent-button colour rule at (0,2,0) (lines 211 and 364 above), which
+   would have set every accent-coloured button -- the This Week schedule's
+   six "Book X Tickets" buttons and, since 30 September 2026, the five event
+   cards below them -- back to whatever text colour surrounds it. Caught by
    verify.mjs's hostile-host simulation as a wall of failed contrast checks,
    not by eye, because on a blank page nothing competed with it. Restated
-   ID-qualified so the accent system keeps winning. */
+   ID-qualified so the accent system keeps winning in both places. */
 #mtx-hp.mtx-hp .mtx-hp__night a.mtx-hp__btn { color: var(--accent-on-accent); }
 #mtx-hp.mtx-hp .mtx-hp__night a.mtx-hp__btn:hover { color: var(--accent-on-accent); }
+#mtx-hp.mtx-hp .mtx-hp__ev a.mtx-hp__btn { color: var(--accent-on-accent); }
+#mtx-hp.mtx-hp .mtx-hp__ev a.mtx-hp__btn:hover { color: var(--accent-on-accent); }

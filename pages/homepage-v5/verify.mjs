@@ -147,7 +147,8 @@ const approved = Object.values(DOC).map(norm);
    doors, first bout. Those are data, not authored prose. */
 const dataShaped = s =>
   /^(Doors .+First bout .+|[A-Z][a-z]+day \d{1,2} [A-Z][a-z]+|Tonight)$/.test(s) ||
-  /^(RWS Rajadamnern World Series|Kiatpetch Muay Thai|All Star Fight by Buakaw|Rajadamnern Knockout|New Power Muay Thai|Petchyindee Muay Thai|Ringside|Club Class|LEO Section|Third Class)$/.test(s) ||
+  /^(RWS Rajadamnern World Series|Kiatpetch Traditional Muay Thai|All Star Fight by Buakaw|Rajadamnern Knockout|New Power Traditional Muay Thai|Petchyindee Traditional Muay Thai|Ringside|Club Class|LEO Section|Third Class)$/.test(s) ||
+  /^Doors open \d{1,2}:\d{2}\s(AM|PM) · First bell \d{1,2}:\d{2}\s(AM|PM)( · Event end \d{1,2}:\d{2}\s(AM|PM))?$/.test(s) ||
   (data.hero_image && s === norm(data.hero_image.alt));
 const unapproved = onPage.filter(s => !approved.some(a => a === s || a.includes(s)) && !dataShaped(s));
 console.log(`   ${onPage.length} visible text nodes; ${unapproved.length} not traceable to Document A or to verified data`);

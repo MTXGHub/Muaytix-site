@@ -358,27 +358,45 @@
   position: relative; display: flex; flex-direction: column;
   background: #fff; border: 1px solid var(--hp-line); padding: 30px 24px 26px;
 }
+/* Jason, 30 September 2026, on the preview: RWS was the only card with any
+   colour, every other card was plain white and outline. Each card now takes
+   its own event's accent (the same colours already sourced for the This
+   Week schedule) rather than one card being special-cased against a plain
+   default. */
 .mtx-hp__ev::before {
   content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 7px;
-  background: var(--hp-blue); transform: skewX(-25deg); transform-origin: left;
+  background: var(--accent); transform: skewX(-25deg); transform-origin: left;
 }
-.mtx-hp__ev--rws::before { background: var(--hp-rws); }
-.mtx-hp__ev--rws .mtx-hp__btn--blue { background: var(--hp-rws-dark); }
-.mtx-hp__ev--rws .mtx-hp__btn--blue:hover { background: #a80a15; }
+.mtx-hp__evlogo {
+  max-width: 140px; height: 40px; width: auto; object-fit: contain;
+  object-position: left center; margin: 0 0 14px;
+}
 .mtx-hp .mtx-hp__hook {
   margin-top: 8px !important;
   font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif; font-weight: 800;
   font-size: clamp(23px, 2.5vw, 29px); line-height: 1.04; text-transform: uppercase;
 }
 .mtx-hp .mtx-hp__evbody { margin-top: 13px !important; color: var(--hp-muted); font-size: 16px; }
-.mtx-hp .mtx-hp__evwhen {
+/* The day or days of the week, split out of the old combined schedule line
+   and set larger: Jason's own reasoning, 30 September 2026, is that a guest
+   deciding whether they can make it there in time reads the day first, so
+   it should not be the same small print as the times underneath it. */
+.mtx-hp .mtx-hp__evday {
   margin-top: 16px !important; padding-top: 14px; border-top: 1px solid var(--hp-line);
-  color: var(--hp-muted); font-size: 14px;
+  font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif; font-weight: 800;
+  font-size: 19px; line-height: 1.15; text-transform: uppercase; color: var(--hp-ink);
+}
+.mtx-hp .mtx-hp__evwhen {
+  margin-top: 6px !important; color: var(--hp-muted); font-size: 14px;
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700;
   letter-spacing: .07em; text-transform: uppercase;
 }
 .mtx-hp .mtx-hp__evcta { margin-top: auto !important; padding-top: 20px; }
-.mtx-hp__evcta .mtx-hp__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
+.mtx-hp__evcta .mtx-hp__btn {
+  width: 100%; padding: 0 14px; letter-spacing: .04em;
+  background: var(--accent); color: var(--accent-on-accent);
+}
+.mtx-hp__evcta .mtx-hp__btn:hover { filter: brightness(.87); color: var(--accent-on-accent); }
 
 /* ---------- Block 7: the questions ----------
    <details> rather than a script: it opens without JavaScript, it is readable
@@ -610,26 +628,22 @@
 #mtx-hp.mtx-hp a.mtx-hp__btn--red     { background: var(--hp-rws); color: #fff; }
 #mtx-hp.mtx-hp a.mtx-hp__btn--red:hover     { background: var(--hp-rws-dark); color: #fff; }
 
-/* The RWS event card already overrides the blue button to its own darker
-   red-tinted blue (line 349 above), at a lower specificity than the reassertion
-   just above. Restated here, ID-qualified, so it keeps winning rather than
-   silently reverting to plain blue. */
-#mtx-hp.mtx-hp .mtx-hp__ev--rws a.mtx-hp__btn--blue { background: var(--hp-rws-dark); }
-#mtx-hp.mtx-hp .mtx-hp__ev--rws a.mtx-hp__btn--blue:hover { background: #a80a15; }
-
 /* The close band's CTA row is a flex row, not a block of text, so the
    text-align reset above does not centre it: it needs its own justify-content. */
 #mtx-hp.mtx-hp .mtx-hp__close .mtx-hp__ctarow { justify-content: center; }
 
-/* `#allrecords a { color: inherit }` is (1,0,1) and outranks the This Week
-   schedule's own per-event button colour at (0,2,0) (line 211 above), which
-   would have set every one of the six accent-coloured "Book X Tickets"
-   buttons back to whatever text colour surrounds it -- caught here by
+/* `#allrecords a { color: inherit }` is (1,0,1) and outranks a bare-class
+   accent-button colour rule at (0,2,0) (lines 211 and 364 above), which
+   would have set every accent-coloured button -- the This Week schedule's
+   six "Book X Tickets" buttons and, since 30 September 2026, the five event
+   cards below them -- back to whatever text colour surrounds it. Caught by
    verify.mjs's hostile-host simulation as a wall of failed contrast checks,
    not by eye, because on a blank page nothing competed with it. Restated
-   ID-qualified so the accent system keeps winning. */
+   ID-qualified so the accent system keeps winning in both places. */
 #mtx-hp.mtx-hp .mtx-hp__night a.mtx-hp__btn { color: var(--accent-on-accent); }
 #mtx-hp.mtx-hp .mtx-hp__night a.mtx-hp__btn:hover { color: var(--accent-on-accent); }
+#mtx-hp.mtx-hp .mtx-hp__ev a.mtx-hp__btn { color: var(--accent-on-accent); }
+#mtx-hp.mtx-hp .mtx-hp__ev a.mtx-hp__btn:hover { color: var(--accent-on-accent); }
 </style>
 
   <header class="mtx-hp__hero">
@@ -664,7 +678,7 @@
             <p class="mtx-hp__night-date">Sunday 27 September</p>
           </div>
           <div class="mtx-hp__night-what">
-            <h3 class="mtx-hp__night-name">Kiatpetch Muay Thai</h3>
+            <h3 class="mtx-hp__night-name">Kiatpetch Traditional Muay Thai</h3>
           <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
           <p class="mtx-hp__night-desc">Traditional five-round Muay Thai meets faster three-round contests, accompanied by live traditional music and a knowledgeable local crowd.</p>
           </div>
@@ -721,7 +735,7 @@
             <p class="mtx-hp__night-date">Wednesday 30 September</p>
           </div>
           <div class="mtx-hp__night-what">
-            <h3 class="mtx-hp__night-name">New Power Muay Thai</h3>
+            <h3 class="mtx-hp__night-name">New Power Traditional Muay Thai</h3>
           <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
           <p class="mtx-hp__night-desc">Traditional five-round fights develop through timing, scoring and tactical pressure, accompanied by live sarama music.</p>
           </div>
@@ -740,7 +754,7 @@
             <p class="mtx-hp__night-date">Thursday 1 October</p>
           </div>
           <div class="mtx-hp__night-what">
-            <h3 class="mtx-hp__night-name">Petchyindee Muay Thai</h3>
+            <h3 class="mtx-hp__night-name">Petchyindee Traditional Muay Thai</h3>
           <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
           <p class="mtx-hp__night-desc">Technical Muay Thai built around balance, timing, ring intelligence and the contrast between controlled exchanges and sudden attacks.</p>
           </div>
@@ -797,7 +811,7 @@
             <p class="mtx-hp__night-date">Sunday 4 October</p>
           </div>
           <div class="mtx-hp__night-what">
-            <h3 class="mtx-hp__night-name">Kiatpetch Muay Thai</h3>
+            <h3 class="mtx-hp__night-name">Kiatpetch Traditional Muay Thai</h3>
           <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
           <p class="mtx-hp__night-desc">Traditional five-round Muay Thai meets faster three-round contests, accompanied by live traditional music and a knowledgeable local crowd.</p>
           </div>
@@ -854,7 +868,7 @@
             <p class="mtx-hp__night-date">Wednesday 7 October</p>
           </div>
           <div class="mtx-hp__night-what">
-            <h3 class="mtx-hp__night-name">New Power Muay Thai</h3>
+            <h3 class="mtx-hp__night-name">New Power Traditional Muay Thai</h3>
           <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
           <p class="mtx-hp__night-desc">Traditional five-round fights develop through timing, scoring and tactical pressure, accompanied by live sarama music.</p>
           </div>
@@ -873,7 +887,7 @@
             <p class="mtx-hp__night-date">Thursday 8 October</p>
           </div>
           <div class="mtx-hp__night-what">
-            <h3 class="mtx-hp__night-name">Petchyindee Muay Thai</h3>
+            <h3 class="mtx-hp__night-name">Petchyindee Traditional Muay Thai</h3>
           <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
           <p class="mtx-hp__night-desc">Technical Muay Thai built around balance, timing, ring intelligence and the contrast between controlled exchanges and sudden attacks.</p>
           </div>
@@ -930,7 +944,7 @@
             <p class="mtx-hp__night-date">Sunday 11 October</p>
           </div>
           <div class="mtx-hp__night-what">
-            <h3 class="mtx-hp__night-name">Kiatpetch Muay Thai</h3>
+            <h3 class="mtx-hp__night-name">Kiatpetch Traditional Muay Thai</h3>
           <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
           <p class="mtx-hp__night-desc">Traditional five-round Muay Thai meets faster three-round contests, accompanied by live traditional music and a knowledgeable local crowd.</p>
           </div>
@@ -987,7 +1001,7 @@
             <p class="mtx-hp__night-date">Wednesday 14 October</p>
           </div>
           <div class="mtx-hp__night-what">
-            <h3 class="mtx-hp__night-name">New Power Muay Thai</h3>
+            <h3 class="mtx-hp__night-name">New Power Traditional Muay Thai</h3>
           <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
           <p class="mtx-hp__night-desc">Traditional five-round fights develop through timing, scoring and tactical pressure, accompanied by live sarama music.</p>
           </div>
@@ -1006,7 +1020,7 @@
             <p class="mtx-hp__night-date">Thursday 15 October</p>
           </div>
           <div class="mtx-hp__night-what">
-            <h3 class="mtx-hp__night-name">Petchyindee Muay Thai</h3>
+            <h3 class="mtx-hp__night-name">Petchyindee Traditional Muay Thai</h3>
           <p class="mtx-hp__night-times">Doors 5:00 PM &middot; First bout 6:00 PM</p>
           <p class="mtx-hp__night-desc">Technical Muay Thai built around balance, timing, ring intelligence and the contrast between controlled exchanges and sudden attacks.</p>
           </div>
@@ -1062,44 +1076,54 @@
       <h2>Choose your Rajadamnern fight night</h2>
       <p>The right event depends on the kind of Muay Thai you want to watch.</p>
       <ul class="mtx-hp__evs">
-        <li class="mtx-hp__ev">
+        <li class="mtx-hp__ev" style="--accent:#1F5BFF;--accent-on-accent:#FFFFFF">
+          <img class="mtx-hp__evlogo" src="https://static.tildacdn.com/tild6532-3165-4665-a139-323436353633/1000029307.svg" alt="Rajadamnern Knockout logo" loading="lazy" decoding="async">
           <h3>Rajadamnern Knockout</h3>
           <p class="mtx-hp__hook">7 fights. 3 rounds. 80% knockout rate.</p>
           <p class="mtx-hp__evbody">Modern three-round Muay Thai inside Rajadamnern Stadium. Thai and international challengers, Wai Kru, live traditional music and a compressed format built around decisive action.</p>
-          <p class="mtx-hp__evwhen">Monday, Tuesday and Friday · Fights from 7:00 PM</p>
-          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/rajadamnern-knockout">View Rajadamnern Knockout</a></p>
+          <p class="mtx-hp__evday">Monday, Tuesday and Friday</p>
+          <p class="mtx-hp__evwhen">Doors open 6:00 PM · First bell 7:00 PM · Event end 9:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn" href="/rajadamnern-knockout">View Rajadamnern Knockout</a></p>
         </li>
 
-        <li class="mtx-hp__ev">
-          <h3>New Power Muay Thai</h3>
+        <li class="mtx-hp__ev" style="--accent:#01A453;--accent-on-accent:#0b0b0d">
+          <img class="mtx-hp__evlogo" src="https://static.tildacdn.com/tild6661-6535-4461-b132-393634613066/2edd0c01-d473-4a1c-b.png" alt="New Power Traditional Muay Thai logo" loading="lazy" decoding="async">
+          <h3>New Power Traditional Muay Thai</h3>
           <p class="mtx-hp__hook">The long game of Muay Thai.</p>
           <p class="mtx-hp__evbody">Traditional five-round fights where timing, scoring and momentum develop round by round. Live sarama music and a knowledgeable local crowd give Wednesday its traditional stadium rhythm.</p>
-          <p class="mtx-hp__evwhen">Wednesday · Fights from 6:00 PM</p>
-          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/new-power-muay-thai">View New Power Muay Thai</a></p>
+          <p class="mtx-hp__evday">Wednesday</p>
+          <p class="mtx-hp__evwhen">Doors open 5:00 PM · First bell 6:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn" href="/new-power-muay-thai">View New Power Muay Thai</a></p>
         </li>
 
-        <li class="mtx-hp__ev">
-          <h3>Petchyindee Muay Thai</h3>
+        <li class="mtx-hp__ev" style="--accent:#01A453;--accent-on-accent:#0b0b0d">
+          <img class="mtx-hp__evlogo" src="https://static.tildacdn.com/tild3031-6434-4537-b433-373733626337/2edd0c01-d473-4a1c-b.png" alt="Petchyindee Traditional Muay Thai logo" loading="lazy" decoding="async">
+          <h3>Petchyindee Traditional Muay Thai</h3>
           <p class="mtx-hp__hook">Technique. Timing. Then everything can change.</p>
           <p class="mtx-hp__evbody">Watch fighters use balance, control and ring intelligence before pressure develops into powerful kicks, clinching exchanges and sharper attacks.</p>
-          <p class="mtx-hp__evwhen">Thursday · Fights from 6:00 PM</p>
-          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/petchyindee-muay-thai">View Petchyindee Muay Thai</a></p>
+          <p class="mtx-hp__evday">Thursday</p>
+          <p class="mtx-hp__evwhen">Doors open 5:00 PM · First bell 6:00 PM · Event end 10:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn" href="/petchyindee-muay-thai">View Petchyindee Muay Thai</a></p>
         </li>
 
-        <li class="mtx-hp__ev mtx-hp__ev--rws">
+        <li class="mtx-hp__ev" style="--accent:#FF1828;--accent-on-accent:#0b0b0d">
+          <img class="mtx-hp__evlogo" src="https://static.tildacdn.com/tild3264-3232-4735-b030-396436626134/1000029288.webp" alt="RWS Rajadamnern World Series logo" loading="lazy" decoding="async">
           <h3>RWS Rajadamnern World Series</h3>
           <p class="mtx-hp__hook">Rajadamnern’s flagship Saturday night.</p>
           <p class="mtx-hp__evbody">Thai and international fighters compete in predominantly three-round contests with open scoring and major-event production, while Wai Kru and traditional Muay Thai remain part of the night.</p>
-          <p class="mtx-hp__evwhen">Saturday · Doors from 6:00 PM</p>
-          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--blue" href="/rws">Explore RWS Rajadamnern World Series</a></p>
+          <p class="mtx-hp__evday">Saturday</p>
+          <p class="mtx-hp__evwhen">Doors open 6:00 PM · First bell 7:10 PM · Event end 10:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn" href="/rws">Explore RWS Rajadamnern World Series</a></p>
         </li>
 
-        <li class="mtx-hp__ev">
-          <h3>Kiatpetch Muay Thai</h3>
+        <li class="mtx-hp__ev" style="--accent:#FF1828;--accent-on-accent:#0b0b0d">
+          <img class="mtx-hp__evlogo" src="https://static.tildacdn.com/tild3833-3962-4662-b230-616364373536/1000026562.jpg" alt="Kiatpetch Traditional Muay Thai logo" loading="lazy" decoding="async">
+          <h3>Kiatpetch Traditional Muay Thai</h3>
           <p class="mtx-hp__hook">A real Sunday night at Rajadamnern.</p>
           <p class="mtx-hp__evbody">Traditional five-round Muay Thai sits alongside faster three-round contests, with skilled Thai fighters, traditional music and a local crowd following every shift in momentum.</p>
-          <p class="mtx-hp__evwhen">Sunday · Fights from 6:00 PM</p>
-          <p class="mtx-hp__evcta"><a class="mtx-hp__btn mtx-hp__btn--outline" href="/kiatpetch-muay-thai">View Kiatpetch Muay Thai</a></p>
+          <p class="mtx-hp__evday">Sunday</p>
+          <p class="mtx-hp__evwhen">Doors open 5:00 PM · First bell 6:00 PM · Event end 10:00 PM</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn" href="/kiatpetch-muay-thai">View Kiatpetch Muay Thai</a></p>
         </li>
       </ul>
     </div>

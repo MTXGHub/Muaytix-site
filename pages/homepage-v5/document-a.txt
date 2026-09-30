@@ -104,8 +104,8 @@ The right event depends on the kind of Muay Thai you want to watch.
 [nights.copy.rajadamnern-knockout]
 Modern three-round Muay Thai inside Rajadamnern Stadium. Thai and international challengers, Wai Kru, live traditional music and a compressed format built around decisive action.
 
-[nights.schedule.rajadamnern-knockout]
-Monday, Tuesday and Friday · Fights from 7:00 PM
+[nights.days.rajadamnern-knockout]
+Monday, Tuesday and Friday
 
 [nights.cta.rajadamnern-knockout]
 View Rajadamnern Knockout
@@ -116,8 +116,8 @@ The long game of Muay Thai.
 [nights.copy.new-power]
 Traditional five-round fights where timing, scoring and momentum develop round by round. Live sarama music and a knowledgeable local crowd give Wednesday its traditional stadium rhythm.
 
-[nights.schedule.new-power]
-Wednesday · Fights from 6:00 PM
+[nights.days.new-power]
+Wednesday
 
 [nights.cta.new-power]
 View New Power Muay Thai
@@ -128,8 +128,8 @@ Technique. Timing. Then everything can change.
 [nights.copy.petchyindee]
 Watch fighters use balance, control and ring intelligence before pressure develops into powerful kicks, clinching exchanges and sharper attacks.
 
-[nights.schedule.petchyindee]
-Thursday · Fights from 6:00 PM
+[nights.days.petchyindee]
+Thursday
 
 [nights.cta.petchyindee]
 View Petchyindee Muay Thai
@@ -140,8 +140,8 @@ Rajadamnern’s flagship Saturday night.
 [nights.copy.rws]
 Thai and international fighters compete in predominantly three-round contests with open scoring and major-event production, while Wai Kru and traditional Muay Thai remain part of the night.
 
-[nights.schedule.rws]
-Saturday · Doors from 6:00 PM
+[nights.days.rws]
+Saturday
 
 [nights.cta.rws]
 Explore RWS Rajadamnern World Series
@@ -152,11 +152,20 @@ A real Sunday night at Rajadamnern.
 [nights.copy.kiatpetch]
 Traditional five-round Muay Thai sits alongside faster three-round contests, with skilled Thai fighters, traditional music and a local crowd following every shift in momentum.
 
-[nights.schedule.kiatpetch]
-Sunday · Fights from 6:00 PM
+[nights.days.kiatpetch]
+Sunday
 
 [nights.cta.kiatpetch]
 View Kiatpetch Muay Thai
+
+[nights.label.doors]
+Doors open
+
+[nights.label.first_bell]
+First bell
+
+[nights.label.event_end]
+Event end
 
 [seats.h2]
 Choose your seats at Rajadamnern Stadium

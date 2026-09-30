@@ -163,18 +163,36 @@ ${times}${desc}          </div>
 ${cta}        </li>`;
 }).join('\n');
 
-/* ---------- Section 3: the five event cards ---------- */
+/* ---------- Section 3: the five event cards ----------
+ * Jason, 30 September 2026, marking up the preview: RWS was the only card
+ * with any colour, every other card was plain. Each card now carries its
+ * own event's accent as a custom property, the same system already built
+ * for the This Week schedule, so the top trim and the button both take the
+ * event's own colour and foregroundOn() still picks whichever of black or
+ * white actually clears 4.5:1 on it. */
 const NIGHT_ORDER = ['rajadamnern-knockout', 'new-power', 'petchyindee', 'rws', 'kiatpetch'];
 const nightCards = NIGHT_ORDER.map(k => {
   const ev = data.events[k];
-  const rws = k === 'rws' ? ' mtx-hp__ev--rws' : '';
-  const btn = k === 'rws' ? 'mtx-hp__btn--blue' : 'mtx-hp__btn--outline';
-  return `        <li class="mtx-hp__ev${rws}">
+  const logo = ev.logo
+    ? `\n          <img class="mtx-hp__evlogo" src="${esc(ev.logo)}" alt="${esc(ev.logo_alt)}" loading="lazy" decoding="async">`
+    : '';
+  /* Doors, first bell and, on four of the five nights, when it ends: three
+     facts Jason dictated card by card so a visitor can tell before they
+     travel whether they will make it in time, not three lines of prose. */
+  const tm = ev.times;
+  /* A non-breaking space before AM/PM stops the line wrapping a time in two,
+     e.g. "7:00" stranded from "PM" on the line below it. */
+  const nb = s => esc(s).replace(' ', ' ');
+  let when = `${T('nights.label.doors')} ${nb(tm.doors)} · ${T('nights.label.first_bell')} ${nb(tm.first_bell)}`;
+  if (tm.event_end) when += ` · ${T('nights.label.event_end')} ${nb(tm.event_end)}`;
+  else blockers.push(`No event-end time on file for ${ev.name}: card shows doors and first bell only.`);
+  return `        <li class="mtx-hp__ev" style="--accent:${esc(ev.accent)};--accent-on-accent:${esc(foregroundOn(ev.accent))}">${logo}
           <h3>${esc(ev.name)}</h3>
           <p class="mtx-hp__hook">${T('nights.hook.' + k)}</p>
           <p class="mtx-hp__evbody">${T('nights.copy.' + k)}</p>
-          <p class="mtx-hp__evwhen">${T('nights.schedule.' + k)}</p>
-          <p class="mtx-hp__evcta"><a class="mtx-hp__btn ${btn}" href="${esc(ev.path)}">${T('nights.cta.' + k)}</a></p>
+          <p class="mtx-hp__evday">${T('nights.days.' + k)}</p>
+          <p class="mtx-hp__evwhen">${when}</p>
+          <p class="mtx-hp__evcta"><a class="mtx-hp__btn" href="${esc(ev.path)}">${T('nights.cta.' + k)}</a></p>
         </li>`;
 }).join('\n\n');
 
