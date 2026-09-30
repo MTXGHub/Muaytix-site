@@ -83,6 +83,22 @@ ${[1,2,3,4,5,6].map(n => `        <li>${H('facts.' + n)}</li>`).join('\n')}
     </div>
   </header>
 
+  <!-- The evergreen booking widget. Every other recurring-series page in this
+       project (Petchyindee, and per Jason directly on 30 September 2026,
+       Knockout and RWS) carries this on its evergreen page, filtered to that
+       series with data-series so only New Power Wednesdays are offered. This
+       page never had it: confirmed against the full git history of every
+       branch in this repository, not just this file, with zero trace of a
+       data-series (or any dateless) mount ever existing here. Added now. -->
+  <section class="mtx-np__band mtx-np__band--paper" id="book">
+    <div class="mtx-np__shell">
+      <div class="muaytix-ticket-selector" data-series="${esc(data.series_slug)}"></div>
+      <p class="mtx-np__ctarow">
+        <a class="mtx-np__btn mtx-np__btn--outline" href="${esc(D.tickets)}">${H('dates.cta_secondary')}</a>
+      </p>
+    </div>
+  </section>
+
   <section class="mtx-np__band">
     <div class="mtx-np__shell">
       <h2>${H('what.h2')}</h2>

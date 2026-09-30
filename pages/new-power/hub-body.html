@@ -19,6 +19,22 @@
     </div>
   </header>
 
+  <!-- The evergreen booking widget. Every other recurring-series page in this
+       project (Petchyindee, and per Jason directly on 30 September 2026,
+       Knockout and RWS) carries this on its evergreen page, filtered to that
+       series with data-series so only New Power Wednesdays are offered. This
+       page never had it: confirmed against the full git history of every
+       branch in this repository, not just this file, with zero trace of a
+       data-series (or any dateless) mount ever existing here. Added now. -->
+  <section class="mtx-np__band mtx-np__band--paper" id="book">
+    <div class="mtx-np__shell">
+      <div class="muaytix-ticket-selector" data-series="new-power"></div>
+      <p class="mtx-np__ctarow">
+        <a class="mtx-np__btn mtx-np__btn--outline" href="/rajadamnern-stadium-tickets">View All Rajadamnern Tickets</a>
+      </p>
+    </div>
+  </section>
+
   <section class="mtx-np__band">
     <div class="mtx-np__shell">
       <h2>What is New Power Muay Thai?</h2>
