@@ -104,9 +104,16 @@
   "destinations": {
     "tickets": "/rajadamnern-stadium-tickets",
     "seating": "/rajadamnern-stadium-seating",
+    "seat_map": "/rajadamnern-stadium-seat-map",
     "stadium": "/rajadamnern-stadium",
     "whatsapp": "https://wa.me/66922706095",
     "maps": "https://www.google.com/maps/search/?api=1&query=Rajadamnern+Stadium"
   },
-  "_verified_destinations_note": "whatsapp and maps are the existing destinations already published across this repository's pages, as Document A instructs. Neither was composed here."
+  "seat_links": {
+    "ringside": { "href": "/rajadamnern-stadium-seating/ringside", "label": "See Ringside seating" },
+    "club-class": { "href": "/rajadamnern-stadium-seating/club-class", "label": "See Club Class seating" },
+    "leo-section": { "href": "/rajadamnern-stadium-seating/leo-section", "label": "See the LEO Section" }
+  },
+  "_seat_links_note": "Jason, 1 October 2026: the four seat-class cards' buttons link to the main seating page instead of their own child pages, and need relinking. Ringside, Club Class and LEO Section each already have a standalone page in this project, with its own canonical URL confirmed in its own TILDA-PAGE-SETTINGS.txt, matching what pages/new-power/dynamic-data.json already uses for the same three (seat_links there, sourced 28 September 2026). Third Class has no standalone page anywhere in this project: not in this repository, and no other page here links to one either. pages/seating-v2/dynamic-data.json does assert /rajadamnern-stadium-seating/third-class as a destination, but that page cannot be confirmed to actually exist since nothing here builds it and muaytix.com is blocked from this environment, so its Third Class card keeps the main seating page for now, flagged to Jason below rather than pointed at an unconfirmed URL.",
+  "_verified_destinations_note": "whatsapp and maps are the existing destinations already published across this repository's pages, as Document A instructs. seat_map is /rajadamnern-stadium-seat-map, confirmed from pages/seat-map/TILDA-PAGE-SETTINGS.txt's own canonical, 1 October 2026. Neither was composed here."
 }

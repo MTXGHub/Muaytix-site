@@ -225,11 +225,19 @@ const seatCards = SEATS.map(k => {
     ? `          <img class="mtx-hp__seatgfx" src="${esc(gfx.url)}" alt="${esc(gfx.alt)}" loading="lazy" decoding="async">\n`
     : '';
   if (!gfx.url) blockers.push(`Seat graphic for ${t('seats.name.' + k)} has no hosted URL yet, so that card renders without an image.`);
+  /* Jason, 1 October 2026: these buttons were linking to the main seating
+     page instead of each class's own child page. Ringside, Club Class and
+     LEO Section each have one; Third Class doesn't, anywhere in this
+     project, so it keeps the main seating page rather than a URL nobody
+     can confirm exists. */
+  const seatLink = data.seat_links[k];
+  if (!seatLink) blockers.push(`${t('seats.name.' + k)} has no standalone page on file: its card button still points at the main seating page, not its own.`);
+  const href = seatLink ? esc(seatLink.href) : `${esc(D.seating)}#${k}`;
   return `        <li class="mtx-hp__card${gfx.url ? ' mtx-hp__card--gfx' : ''}">
 ${figure}          <h3>${T('seats.name.' + k)}</h3>
           <p class="mtx-hp__standfirst">${T('seats.descriptor.' + k)}</p>
           <p>${T('seats.copy.' + k)}</p>
-          <p class="mtx-hp__cardbtn"><a class="mtx-hp__btn mtx-hp__btn--outline" href="${D.seating}#${k}">${T('seats.cta.' + k)}</a></p>
+          <p class="mtx-hp__cardbtn"><a class="mtx-hp__btn mtx-hp__btn--outline" href="${href}">${T('seats.cta.' + k)}</a></p>
         </li>`;
 }).join('\n\n');
 
@@ -311,6 +319,7 @@ ${seatCards}
       </ul>
       <p class="mtx-hp__ctarow">
         <a class="mtx-hp__btn mtx-hp__btn--outline" href="${esc(D.seating)}">${T('seats.section_cta')}</a>
+        <a class="mtx-hp__btn mtx-hp__btn--outline" href="${esc(D.seat_map)}">${T('seats.section_cta_map')}</a>
       </p>
     </div>
   </section>

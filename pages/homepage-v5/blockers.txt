@@ -1,1 +1,2 @@
 - No event-end time on file for New Power Traditional Muay Thai: card shows doors and first bell only.
+- Third Class has no standalone page on file: its card button still points at the main seating page, not its own.

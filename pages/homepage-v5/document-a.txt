@@ -222,7 +222,10 @@ An elevated full-ring perspective from the outer tier when Third Class is availa
 See Third Class seating
 
 [seats.section_cta]
-Compare every Rajadamnern seat class
+Visit the Main Seating Page
+
+[seats.section_cta_map]
+View the Rajadamnern Stadium Seat Maps
 
 [trust.h2]
 Why book with MuayTix?

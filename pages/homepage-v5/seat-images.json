@@ -1,21 +1,24 @@
 {
-  "_note": "Tilda-hosted seat class graphics. URLs supplied by the owner on 26 September 2026, and the class each one belongs to was confirmed by him: 982 Club Class, 985 Ringside, 984 LEO Section, 983 Third Class. Tilda renames uploads to numbers, so the mapping cannot be read off the filenames and was not guessed.",
-  "_alt": "Alt text supplied by the owner. His wording, used word for word.",
+  "_note": "Swapped 1 October 2026 from the class-identity graphics (the 982/985/984/983 artwork, kept in git history) to real seat photographs, on Jason's instruction: 'remove these graphic images... and put in one image of each seat class'. None of the four is new photography: each is the same file already published, and already designated as that page's own representative photo, on that seat class's own standalone page (pages/ringside, pages/club-class, pages/leo-section) or, for Third Class, on pages/seating-v2, the only place in this project a Third Class photo has been sourced at all. Nothing here was newly composed; every URL and every alt line is copied from where it was already verified.",
 
   "ringside": {
-    "url": "https://static.tildacdn.com/tild3830-6232-4832-b331-666465393139/1000033985.webp",
-    "alt": "MuayTix Ringside seating at Rajadamnern Stadium in Bangkok, positioned closest to the Muay Thai ring and live fight action"
+    "url": "https://static.tildacdn.com/tild3265-3465-4064-a332-343536383265/1000033703.jpg",
+    "alt": "View from the corner of section 4, this corner is a fighter corner during fight nights, I is also next to section 5 of Ringside and also has the fighter walkway to the left which splits sections 4 & 3",
+    "source": "pages/ringside/dynamic-data.json, images.hero. The owner's own note, typo included, exactly as his page already uses it."
   },
   "club-class": {
-    "url": "https://static.tildacdn.com/tild6633-3464-4335-b864-323737313634/1000033982.webp",
-    "alt": "MuayTix Club Class seating at Rajadamnern Stadium in Bangkok, offering an elevated view across the Muay Thai ring"
+    "url": "https://static.tildacdn.com/tild3665-3065-4334-b531-303164393066/1000033696.jpg",
+    "alt": "Taken from row I, the final row in Club Class",
+    "source": "pages/club-class/dynamic-data.json, images.view_high. Club Class's own hero image is the shared annotated stadium overview also used on the LEO Section page, so this distinct photo is used here instead, to avoid the same picture appearing on two different seat-class cards."
   },
   "leo-section": {
-    "url": "https://static.tildacdn.com/tild3333-3339-4135-b436-326637666663/1000033984.webp",
-    "alt": "MuayTix LEO Section seating at Rajadamnern Stadium in Bangkok, known for its energetic atmosphere and strong view of the Muay Thai ring"
+    "url": "https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg",
+    "alt": "The view from the front row of Leo section",
+    "source": "pages/leo-section/dynamic-data.json, images.view_front. Same reasoning as Club Class: the page's own hero is the shared stadium overview, so this distinct photo is used instead."
   },
   "third-class": {
-    "url": "https://static.tildacdn.com/tild3864-6636-4461-a634-383639393261/1000033983.webp",
-    "alt": "MuayTix Third Class seating at Rajadamnern Stadium in Bangkok, offering a 360-degree elevated view of the Muay Thai action"
+    "url": "https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg",
+    "alt": "The view from Third Class at Rajadamnern Stadium",
+    "source": "pages/seating-v2/dynamic-data.json, images.third-class, the only Third Class photo sourced anywhere in this project. That file carries this note: 'Nominated by the owner, 28 September 2026, as the view from Third Class. NOTE: the same file is published elsewhere on the site with the alt text \"Third Class seating at Rajadamnern Stadium, Bangkok\", which describes a different subject.' Alt text here follows the owner's own designation of what this photo is for, not the conflicting caption reported on the other use. Flagged, not resolved: worth asking him which one is actually correct."
   }
 }

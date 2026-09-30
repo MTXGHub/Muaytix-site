@@ -517,20 +517,21 @@
    to the foot, so all three card types read as one system. */
 .mtx-hp__cardbtn .mtx-hp__btn { width: 100%; padding: 0 14px; letter-spacing: .04em; }
 
-/* ---------- The seat class graphic ----------
-   Full bleed to the card edges, above the name. No aspect-ratio and no crop:
-   these graphics carry type, and object-fit: cover would slice the words off.
-   They take whatever shape they were drawn at.
-
-   height: auto is not optional. A width or height attribute on an <img>
-   arrives as a presentational hint and outranks a stylesheet rule, which is
-   how a photo on this site once rendered three times too tall. */
+/* ---------- The seat class photograph ----------
+   Full bleed to the card edges, above the name. Jason swapped the class
+   graphics for real seat photographs, 1 October 2026: Ringside's is a wide
+   1690x900 hero shot and the other three are 1024 square, so height: auto
+   would have given Ringside a visibly flatter card than its siblings in the
+   same row. A fixed aspect-ratio and object-fit: cover crop all four to one
+   shape instead, the way a card grid mixing sources should, and unlike the
+   old class graphics a photo has no type baked in to lose by cropping. */
 .mtx-hp__card--gfx { padding-top: 0; overflow: hidden; }
 /* The class is doubled. .mtx-hp img { max-width: 100% } is (0,1,1) and beats
    a single class, which clamped the graphic to the card's content box and left
    it inset from both edges. Same family of fault as .mtx-hp p { margin: 0 }. */
 .mtx-hp .mtx-hp__seatgfx {
-  display: block; width: calc(100% + 48px); max-width: none; height: auto;
+  display: block; width: calc(100% + 48px); max-width: none;
+  aspect-ratio: 4 / 3; object-fit: cover; object-position: center;
   margin: 0 -24px 0; background: #e6e6ea;
 }
 .mtx-hp__card--gfx h3 { margin-top: 24px; }
