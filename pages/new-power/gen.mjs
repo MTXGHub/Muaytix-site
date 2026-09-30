@@ -45,6 +45,13 @@ const mapFigure = `        <p class="mtx-np__maplayout">
           <img src="${esc(data.seat_map.url)}" alt="${esc(data.seat_map.alt)}" loading="lazy" decoding="async">
         </p>`;
 
+/* The hero photo is a CSS background (style.css), which has no alt attribute
+   of its own. This carries the owner-supplied alt text into the DOM anyway,
+   visually hidden but readable to a screen reader or a crawler. */
+if (!data.hero_image || !data.hero_image.url) throw new Error('hero_image missing from dynamic-data.json. Document B section 12: STOP.');
+if (!data.hero_image.alt) throw new Error('hero_image has no alt text.');
+const heroAlt = `      <p class="mtx-np__plain">${esc(data.hero_image.alt)}</p>`;
+
 /* ---------------- EVERGREEN ---------------- */
 const H = k => esc(t('hub', k));
 const dateCards = data.dates.map(d => {
@@ -58,6 +65,7 @@ const dateCards = data.dates.map(d => {
 }).join('\n\n');
 
 const hub = `  <header class="mtx-np__hero">
+${heroAlt}
     <div class="mtx-np__shell">
       <h1>${H('h1')}</h1>
       <p class="mtx-np__lede">${H('hero.p1')}</p>
@@ -158,6 +166,7 @@ for (const [k, v] of Object.entries(dd.seat_classes)) {
 reports.push(`${dd.url}: no verified fight card supplied, so the approved waiting message is shown and no fighter is named.`);
 
 const dated = `  <header class="mtx-np__hero">
+${heroAlt}
     <div class="mtx-np__shell">
       <h1>${T('h1')}</h1>
       <p class="mtx-np__lede">${T('hero.body')}</p>

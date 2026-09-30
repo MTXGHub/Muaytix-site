@@ -7,6 +7,7 @@
     "inventory": "event_ticket_classes through ticket_availability_status per event key, read 26 September 2026.",
     "seat_images": "The four Tilda graphics supplied by the owner, class mapping confirmed by him.",
     "seat_map": "The Rajadamnern seating map already published on MuayTix's own pages, with its published alt text.",
+    "hero_image": "Owner-supplied URL and alt text, 30 September 2026. Requested file name 'new-power-muay-thai-rajadamnern-stadium-garuda-immersive-dome.jpg' cannot be set here: the URL is Tilda's own asset host and its file name is Tilda's internal id, not something this build controls. Flagged to Jason rather than silently ignored.",
     "logo": "MISSING. No New Power logo exists anywhere in this project. Document B section 12: stop and report, do not substitute.",
     "fight_card": "NONE VERIFIED for 30 September. The approved waiting message is shown and no fighter is named.",
     "prices": "NOT USED. Live inventory only. No price appears on either page."
@@ -56,6 +57,11 @@
   },
 
   "logo": null,
+
+  "hero_image": {
+    "url": "https://static.tildacdn.com/tild3230-3961-4337-b463-373839306631/1000007613.jpg",
+    "alt": "The Garuda appears across Rajadamnern Stadium’s immersive dome above the Muay Thai ring, with green light beams illuminating the packed arena during New Power Muay Thai in Bangkok."
+  },
 
   "destinations": {
     "hub": "/new-power-muay-thai",

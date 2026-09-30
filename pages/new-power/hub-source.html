@@ -95,10 +95,14 @@
    wipe out both the photograph and the black behind it, leaving white type on
    a white hero. The hero brings its own padding instead.
 
-   The photograph sits under a scrim rather than on its own: the dome is bright
-   teal and red and the headline is white, so without it the type would be
-   unreadable across the top third. The gradient is heavier on the left, where
-   all the words are, and thins to the right so the stadium still shows.
+   The photograph sits under a scrim rather than on its own, just enough to
+   keep the white headline readable over the brightest part of the image. The
+   gradient is heavier on the left, where all the words are, and thins to the
+   right so the dome and the crowd actually show. Jason's own words on the
+   original, much heavier version of this scrim: "you can hardly see [the
+   photograph], in fact it's hardly even worth putting the photograph in" --
+   30 September 2026. Lightened here for that reason. Do not darken it back up
+   without checking contrast on the headline first.
 
    background-color stays as a fallback. If the image is slow, or blocked, or
    the URL ever changes, the hero is simply black again and nothing breaks. */
@@ -108,27 +112,27 @@
   background-color: var(--np-ink);
   background-image:
     linear-gradient(100deg,
-      rgba(11,11,13,.95) 0%,
-      rgba(11,11,13,.88) 38%,
-      rgba(11,11,13,.66) 72%,
-      rgba(11,11,13,.52) 100%),
-    url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
+      rgba(11,11,13,.72) 0%,
+      rgba(11,11,13,.50) 38%,
+      rgba(11,11,13,.28) 72%,
+      rgba(11,11,13,.12) 100%),
+    url("https://static.tildacdn.com/tild3230-3961-4337-b463-373839306631/1000007613.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center 38%;
+  background-position: center 32%;
 }
-/* On a narrow screen the hero is tall and the square crops to a column, so the
-   scrim runs top to bottom instead of left to right. */
+/* On a narrow screen the hero is tall and the wide photo crops to a column,
+   so the scrim runs top to bottom instead of left to right. */
 @media (max-width: 760px) {
   .mtx-np__hero {
     background-image:
       linear-gradient(180deg,
-        rgba(11,11,13,.86) 0%,
-        rgba(11,11,13,.74) 30%,
-        rgba(11,11,13,.88) 72%,
-        rgba(11,11,13,.96) 100%),
-      url("https://static.tildacdn.com/tild6364-3165-4631-a135-656136313164/1000007575.jpg");
-    background-position: center 30%;
+        rgba(11,11,13,.62) 0%,
+        rgba(11,11,13,.42) 30%,
+        rgba(11,11,13,.62) 72%,
+        rgba(11,11,13,.80) 100%),
+      url("https://static.tildacdn.com/tild3230-3961-4337-b463-373839306631/1000007613.jpg");
+    background-position: center 25%;
   }
 }
 /* Nothing sits between the H1 and this paragraph, in the markup or on screen.
@@ -655,6 +659,7 @@
 </style>
 
   <header class="mtx-np__hero">
+      <p class="mtx-np__plain">The Garuda appears across Rajadamnern Stadium’s immersive dome above the Muay Thai ring, with green light beams illuminating the packed arena during New Power Muay Thai in Bangkok.</p>
     <div class="mtx-np__shell">
       <h1>New Power Muay Thai: Wednesday at Rajadamnern Stadium</h1>
       <p class="mtx-np__lede">New Power Muay Thai brings traditional five-round Muay Thai to Rajadamnern Stadium every Wednesday evening.</p>

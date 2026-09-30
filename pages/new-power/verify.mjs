@@ -106,7 +106,8 @@ for (const P of [{ key: 'hub', prefix: 'hub', kw: [...CL030, ...CL035] },
       .map(e => e.textContent.replace(/\s+/g,' ').trim()).filter(Boolean));
   const approved = Object.values(DOC).map(norm);
   const bAnchors = [];
-  const dataShaped = s => data.dates.some(d => d.label === s) || s === 'Doors open: 17:00 · Event starts: 18:00';
+  const dataShaped = s => data.dates.some(d => d.label === s) || s === 'Doors open: 17:00 · Event starts: 18:00'
+    || (data.hero_image && s === norm(data.hero_image.alt));
   const extra = nodes.filter(s => !approved.some(a => a === s || a.includes(s)) && !bAnchors.includes(s) && !dataShaped(s));
   console.log(`   ${nodes.length} text nodes; ${extra.length} not from Document A, Document B anchors or verified data`);
   extra.forEach(s => fail(`unapproved text: "${s.slice(0,90)}"`));
