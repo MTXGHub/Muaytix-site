@@ -203,13 +203,17 @@
   font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
 }
 
-/* Every row's own button, filled with that row's own colour. Not a variant
-   of .mtx-hp__btn --blue/--outline/--ghost: it takes its colour from the
-   --accent custom property set on the <li>, so one rule serves all six
-   events and a seventh needs no new class. brightness() darkens it on hover
-   without a second colour having to be sourced and verified for each one. */
-.mtx-hp__night .mtx-hp__btn { background: var(--accent); color: var(--accent-on-accent); }
-.mtx-hp__night .mtx-hp__btn:hover { filter: brightness(.87); color: var(--accent-on-accent); }
+/* Jason, 1 October 2026, on the solid-fill version: "very blocky, like
+   they've been stuck onto the website." This band is dark, so the button
+   now reads as black with the event's own colour as a 3px border, not a
+   variant of .mtx-hp__btn --blue/--outline/--ghost: it takes its colour
+   from the --accent custom property set on the <li>, so one rule serves
+   all six events and a seventh needs no new class. On hover it fills with
+   the accent, the way an outline button conventionally confirms a tap. */
+.mtx-hp__night .mtx-hp__btn {
+  background: var(--hp-ink); border: 3px solid var(--accent); color: #fff;
+}
+.mtx-hp__night .mtx-hp__btn:hover { background: var(--accent); color: var(--accent-on-accent); }
 /* Six labels, six lengths -- "Book RWS Tickets" against "Book Petchyindee
    Tickets" -- so left to its own content every button came out a different
    width, the one thing that should look like one system on a schedule board
@@ -375,11 +379,16 @@
   letter-spacing: .07em; text-transform: uppercase;
 }
 .mtx-hp .mtx-hp__evcta { margin-top: auto !important; padding-top: 20px; }
+/* Jason, 1 October 2026: on the white card, an outline instead of a solid
+   fill. --accent-card-ink tries the event's own colour as the border and
+   the text, and falls back to ink automatically wherever that colour is too
+   light to read on white (green and red both are; only the Knockout blue
+   clears 4.5:1) -- see accentOrInkOnWhite() in gen.mjs. */
 .mtx-hp__evcta .mtx-hp__btn {
   width: 100%; padding: 0 14px; letter-spacing: .04em;
-  background: var(--accent); color: var(--accent-on-accent);
+  background: #fff; border: 3px solid var(--accent); color: var(--accent-card-ink);
 }
-.mtx-hp__evcta .mtx-hp__btn:hover { filter: brightness(.87); color: var(--accent-on-accent); }
+.mtx-hp__evcta .mtx-hp__btn:hover { background: var(--accent); color: var(--accent-on-accent); }
 
 /* ---------- Block 7: the questions ----------
    <details> rather than a script: it opens without JavaScript, it is readable
@@ -616,14 +625,14 @@
 #mtx-hp.mtx-hp .mtx-hp__close .mtx-hp__ctarow { justify-content: center; }
 
 /* `#allrecords a { color: inherit }` is (1,0,1) and outranks a bare-class
-   accent-button colour rule at (0,2,0) (lines 211 and 364 above), which
-   would have set every accent-coloured button -- the This Week schedule's
-   six "Book X Tickets" buttons and, since 30 September 2026, the five event
-   cards below them -- back to whatever text colour surrounds it. Caught by
-   verify.mjs's hostile-host simulation as a wall of failed contrast checks,
-   not by eye, because on a blank page nothing competed with it. Restated
-   ID-qualified so the accent system keeps winning in both places. */
-#mtx-hp.mtx-hp .mtx-hp__night a.mtx-hp__btn { color: var(--accent-on-accent); }
+   accent-button colour rule at (0,2,0) (lines 211 and 382 above), which
+   would have set every accent-bordered button -- the This Week schedule's
+   six "Book X Tickets" buttons and the five event cards below them -- back
+   to whatever text colour surrounds it. Caught by verify.mjs's hostile-host
+   simulation as a wall of failed contrast checks, not by eye, because on a
+   blank page nothing competed with it. Restated ID-qualified so the accent
+   system keeps winning in both places. */
+#mtx-hp.mtx-hp .mtx-hp__night a.mtx-hp__btn { color: #fff; }
 #mtx-hp.mtx-hp .mtx-hp__night a.mtx-hp__btn:hover { color: var(--accent-on-accent); }
-#mtx-hp.mtx-hp .mtx-hp__ev a.mtx-hp__btn { color: var(--accent-on-accent); }
+#mtx-hp.mtx-hp .mtx-hp__ev a.mtx-hp__btn { color: var(--accent-card-ink); }
 #mtx-hp.mtx-hp .mtx-hp__ev a.mtx-hp__btn:hover { color: var(--accent-on-accent); }

@@ -75,6 +75,16 @@ function foregroundOn(bg) {
   }
   return pick;
 }
+/* Jason, 1 October 2026: for the white-background event cards, try the
+   event's own colour as the button's text and border, and only fall back to
+   black if that colour itself doesn't read. Checked, not eyeballed: of the
+   three colours in play, only the Knockout blue clears 4.5:1 on white
+   (5.25:1); the green and the red do not (3.26:1 and 3.88:1), so those two
+   fall back automatically rather than by a separate rule someone has to
+   remember to apply. */
+function accentOrInkOnWhite(bg) {
+  return ratio(bg, WHITE) >= 4.5 ? bg : INK;
+}
 
 /* ---------- Section 2: the dated schedule ----------
  *
@@ -186,7 +196,7 @@ const nightCards = NIGHT_ORDER.map(k => {
   let when = `${T('nights.label.doors')} ${nb(tm.doors)} · ${T('nights.label.first_bell')} ${nb(tm.first_bell)}`;
   if (tm.event_end) when += ` · ${T('nights.label.event_end')} ${nb(tm.event_end)}`;
   else blockers.push(`No event-end time on file for ${ev.name}: card shows doors and first bell only.`);
-  return `        <li class="mtx-hp__ev" style="--accent:${esc(ev.accent)};--accent-on-accent:${esc(foregroundOn(ev.accent))}">${logo}
+  return `        <li class="mtx-hp__ev" style="--accent:${esc(ev.accent)};--accent-on-accent:${esc(foregroundOn(ev.accent))};--accent-card-ink:${esc(accentOrInkOnWhite(ev.accent))}">${logo}
           <h3>${esc(ev.name)}</h3>
           <p class="mtx-hp__hook">${T('nights.hook.' + k)}</p>
           <p class="mtx-hp__evbody">${T('nights.copy.' + k)}</p>
