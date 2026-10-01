@@ -877,3 +877,7 @@
    card itself, not on the heading and four paragraphs above it. A small margin
    keeps the card's top edge in view when the browser scrolls to it. */
 .mtx-cc .mtx-cc__widget { scroll-margin-top: 14px; }
+
+/* Owner, 2 October 2026: red on this band felt too much like RWS. The band is
+   the company blue, #1F5BFF. The buttons and the bar stay red. */
+.mtx-cc .mtx-cc__band--blue { background: #1F5BFF; }
