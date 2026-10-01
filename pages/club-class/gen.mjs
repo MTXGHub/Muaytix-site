@@ -243,7 +243,7 @@ const booking = `  <section class="mtx-cc__band mtx-cc__band--white" id="mtx-cc-
       <p class="mtx-cc__booking-copy">${T('booking.p2')}</p>
       <p class="mtx-cc__booking-copy">${T('booking.p3')}</p>
       <p class="mtx-cc__booking-copy">${T('booking.p4')}</p>
-      <div class="mtx-cc__widget"><div class="muaytix-ticket-selector"></div></div>
+      <div class="mtx-cc__widget" id="mtx-cc-calendar"><div class="muaytix-ticket-selector"></div></div>
       <p class="mtx-cc__actions">
         <a class="mtx-cc__btn mtx-cc__btn--blue" href="${esc(D.tickets)}">${T('booking.cta')}</a>
       </p>

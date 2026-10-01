@@ -95,7 +95,7 @@
     "seat_map": "/rajadamnern-stadium-seat-map",
     "stadium": "/rajadamnern-stadium",
     "tickets": "/rajadamnern-stadium-tickets",
-    "booking_anchor": "#mtx-cc-booking"
+    "booking_anchor": "#mtx-cc-calendar"
   },
   "seat_colour": {
     "club_class": "#27AAE1",
