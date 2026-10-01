@@ -707,14 +707,6 @@
 .mtx-cc { --body-ink: #2A2A31; }
 .mtx-cc__band--blue { background: var(--blue); color: var(--white); }
 
-/* ------------------------------------------------------------ buttons --- */
-
-.mtx-cc .mtx-cc__cta { margin-top: 30px !important; }
-.mtx-cc .mtx-cc__cta--center { justify-content: center; margin-top: clamp(32px, 3.6vw, 48px) !important; }
-.mtx-cc__btn--lg { min-height: 60px; padding: 0 36px; font-size: 18px; }
-#mtx-cc.mtx-cc a.mtx-cc__btn--white { background: var(--white); border-color: var(--white); color: var(--ink); }
-#mtx-cc.mtx-cc a.mtx-cc__btn--white:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
-
 /* ------------------------------------------------------------- answer --- */
 
 /* A blue band straight after the dark hero, with the first line set large.
@@ -788,25 +780,57 @@
 
 /* ------------------------------------------------------------- the bar --- */
 
+/* The one booking button that follows the guest. It has to be the loudest
+   thing on the page, so it is not the blue every other button on the site
+   uses: a hot red on near-black, large, with an arrow and a slow pulse. */
+.mtx-cc { --cta: #DC1220; --cta-dark: #B80D19; }
 .mtx-cc__bar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
-  background: var(--ink); border-top: 3px solid var(--blue);
+  background: rgba(11, 11, 13, .97); border-top: 4px solid var(--cta);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, .35);
   transform: translateY(100%); visibility: hidden;
   transition: transform .25s ease, visibility 0s linear .25s;
 }
 .mtx-cc__bar.is-on { transform: none; visibility: visible; transition: transform .25s ease; }
 .mtx-cc__bar-in {
-  width: min(100% - 32px, 1240px); margin-inline: auto; padding: 10px 0;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  width: min(100% - 32px, 1240px); margin-inline: auto; padding: 14px 0;
+  display: flex; align-items: center; justify-content: center; gap: clamp(18px, 3vw, 40px);
 }
-.mtx-cc .mtx-cc__bar-price { display: flex; flex-direction: column; line-height: 1.1; }
+.mtx-cc .mtx-cc__bar-price { display: flex; flex-direction: column; line-height: 1.05; }
 .mtx-cc .mtx-cc__bar-label {
   font-family: var(--display); font-weight: 800; font-size: 12px;
   letter-spacing: .13em; text-transform: uppercase; color: var(--muted-dark);
 }
-.mtx-cc .mtx-cc__bar-value { font-family: var(--display); font-weight: 800; font-size: 24px; color: var(--white); white-space: nowrap; }
-.mtx-cc .mtx-cc__bar .mtx-cc__btn { min-height: 48px; padding: 0 24px; font-size: 15px; white-space: nowrap; }
-@media (prefers-reduced-motion: reduce) { .mtx-cc__bar, .mtx-cc__bar.is-on { transition: none; } }
+.mtx-cc .mtx-cc__bar-value {
+  font-family: var(--display); font-weight: 800; font-size: 28px;
+  color: var(--white); white-space: nowrap;
+}
+.mtx-cc .mtx-cc__bar .mtx-cc__btn--cta {
+  min-height: 64px; padding: 0 44px; font-size: 21px; letter-spacing: .06em;
+  white-space: nowrap; border-color: var(--cta);
+  animation: mtx-cc-pulse 2.4s ease-out infinite;
+}
+.mtx-cc__btn--cta::after { content: "\2192"; margin-left: 14px; font-size: 1.25em; line-height: 1; transition: transform .18s ease; }
+.mtx-cc__btn--cta:hover::after { transform: translateX(5px); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--cta { background: var(--cta); border-color: var(--cta); color: var(--white); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--cta:hover { background: var(--cta-dark); border-color: var(--cta-dark); color: var(--white); }
+@keyframes mtx-cc-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(220, 18, 32, .65); }
+  70%  { box-shadow: 0 0 0 16px rgba(220, 18, 32, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 18, 32, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mtx-cc__bar, .mtx-cc__bar.is-on { transition: none; }
+  .mtx-cc .mtx-cc__bar .mtx-cc__btn--cta { animation: none; }
+}
+
+/* On a narrow phone the button gets the whole bar: the price is already in
+   the hero, and a button that cannot show its own words is worse than no
+   price. */
+@media (max-width: 440px) {
+  .mtx-cc .mtx-cc__bar-price { display: none; }
+  .mtx-cc .mtx-cc__bar .mtx-cc__btn--cta { width: 100%; font-size: 16px; }
+}
 
 /* ----------------------------------------------------------- narrower --- */
 
@@ -825,8 +849,8 @@
 @media (max-width: 620px) {
   .mtx-cc .mtx-cc__who, .mtx-cc .mtx-cc__practical { grid-template-columns: minmax(0, 1fr); }
   .mtx-cc .mtx-cc__viewgrid { grid-template-columns: minmax(0, 1fr); }
-  .mtx-cc .mtx-cc__cta .mtx-cc__btn { width: 100%; }
-  .mtx-cc__btn--lg { font-size: 16px; padding: 0 14px; }
-  .mtx-cc .mtx-cc__bar .mtx-cc__btn { flex: 1; }
-  .mtx-cc .mtx-cc__bar-value { font-size: 20px; }
+  .mtx-cc .mtx-cc__bar .mtx-cc__btn--cta { flex: 1; min-width: 0; padding: 0 8px; font-size: 15px; letter-spacing: .03em; min-height: 58px; }
+  .mtx-cc .mtx-cc__bar .mtx-cc__btn--cta::after { display: none; }
+  .mtx-cc .mtx-cc__bar-value { font-size: 22px; }
+  .mtx-cc__bar-in { justify-content: space-between; gap: 14px; }
 }

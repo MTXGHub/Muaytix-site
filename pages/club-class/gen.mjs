@@ -52,14 +52,6 @@ const ALT = k => IMG[k].alt ?? t('alt.' + k);
 const fig = (k, cls) =>
   `<figure class="mtx-cc__${cls}"><img src="${esc(IMG[k].url)}" alt="${esc(ALT(k))}" loading="lazy" decoding="async"></figure>`;
 
-/* Owner, 2 October 2026: "there's not enough buttons on it". The same approved
-   label as the hero button ([hero.cta_primary]), pointing at the same booking
-   section, so a guest has a way to book on every screen of the page. It is
-   one function so the label and the destination cannot drift apart between
-   the dozen places it appears. */
-const BOOK = (cls = '', tone = 'blue') =>
-  `<p class="mtx-cc__actions mtx-cc__cta${cls ? ' ' + cls : ''}"><a class="mtx-cc__btn mtx-cc__btn--${tone} mtx-cc__btn--lg" href="${esc(D.booking_anchor)}">${T('hero.cta_primary')}</a></p>`;
-
 /* ================================================================ HERO === */
 
 const FACTS = ['sections', 'price', 'seating', 'location'];
@@ -105,7 +97,6 @@ const answer = `  <section class="mtx-cc__band mtx-cc__band--blue">
         <p class="mtx-cc__answer-copy">${T('answer.p2')}</p>
         <p class="mtx-cc__answer-copy">${T('answer.p3')}</p>
         <p class="mtx-cc__answer-close">${T('answer.p4')}</p>
-        ${BOOK('', 'white')}
       </div>
     </div>
   </section>`;
@@ -126,7 +117,6 @@ const sections = `  <section class="mtx-cc__band mtx-cc__band--white">
         ${fig('sections', 'split-fig')}
         <div class="mtx-cc__split-body">
           <p>${T('sections.p1')}</p>
-          ${BOOK()}
         </div>
       </div>
     </div>
@@ -150,7 +140,6 @@ const view = `  <section class="mtx-cc__band mtx-cc__band--ink">
           <p>${T('view.p3')}</p>
           <p>${T('view.p4')}</p>
           <p class="mtx-cc__caveat">${T('view.p5')}</p>
-          ${BOOK()}
         </div>
       </div>
     </div>
@@ -169,7 +158,6 @@ const families = `  <section class="mtx-cc__band mtx-cc__band--paper">
           <p>${T('families.p2')}</p>
           <p>${T('families.p3')}</p>
           <p>${T('families.p4')}</p>
-          ${BOOK()}
         </div>
       </div>
     </div>
@@ -187,7 +175,6 @@ const seats = `  <section class="mtx-cc__band mtx-cc__band--white">
           <p>${T('seats.p2')}</p>
           <p>${T('seats.p3')}</p>
           <p>${T('seats.p4')}</p>
-          ${BOOK()}
         </div>
       </div>
     </div>
@@ -205,7 +192,6 @@ ${WHON.map(n => `        <li>
           <p>${T('who.a' + n)}</p>
         </li>`).join('\n')}
       </ul>
-      ${BOOK('mtx-cc__cta--center')}
     </div>
   </section>`;
 
@@ -226,7 +212,6 @@ const compare = `  <section class="mtx-cc__band mtx-cc__band--ink">
             <li>${T('compare.p3')}</li>
             <li>${T('compare.p4')}</li>
           </ul>
-          ${BOOK()}
           <p class="mtx-cc__map-go"><a class="mtx-cc__go" href="${esc(D.seating)}">${T('compare.link')}</a></p>
         </div>
       </div>
@@ -307,7 +292,7 @@ const final = `  <section class="mtx-cc__band mtx-cc__band--ink mtx-cc__close">
 const bar = `  <div class="mtx-cc__bar" data-mtx-bar>
     <div class="mtx-cc__bar-in">
       <p class="mtx-cc__bar-price"><span class="mtx-cc__bar-label">${T('facts.label.price')}</span><span class="mtx-cc__bar-value">${T('facts.value.price')}</span></p>
-      <a class="mtx-cc__btn mtx-cc__btn--blue" href="${esc(D.booking_anchor)}">${T('hero.cta_primary')}</a>
+      <a class="mtx-cc__btn mtx-cc__btn--cta" href="${esc(D.booking_anchor)}">${T('hero.cta_primary')}</a>
     </div>
   </div>`;
 

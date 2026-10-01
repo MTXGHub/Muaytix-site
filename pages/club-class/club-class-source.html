@@ -726,14 +726,6 @@
 .mtx-cc { --body-ink: #2A2A31; }
 .mtx-cc__band--blue { background: var(--blue); color: var(--white); }
 
-/* ------------------------------------------------------------ buttons --- */
-
-.mtx-cc .mtx-cc__cta { margin-top: 30px !important; }
-.mtx-cc .mtx-cc__cta--center { justify-content: center; margin-top: clamp(32px, 3.6vw, 48px) !important; }
-.mtx-cc__btn--lg { min-height: 60px; padding: 0 36px; font-size: 18px; }
-#mtx-cc.mtx-cc a.mtx-cc__btn--white { background: var(--white); border-color: var(--white); color: var(--ink); }
-#mtx-cc.mtx-cc a.mtx-cc__btn--white:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
-
 /* ------------------------------------------------------------- answer --- */
 
 /* A blue band straight after the dark hero, with the first line set large.
@@ -807,25 +799,57 @@
 
 /* ------------------------------------------------------------- the bar --- */
 
+/* The one booking button that follows the guest. It has to be the loudest
+   thing on the page, so it is not the blue every other button on the site
+   uses: a hot red on near-black, large, with an arrow and a slow pulse. */
+.mtx-cc { --cta: #DC1220; --cta-dark: #B80D19; }
 .mtx-cc__bar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
-  background: var(--ink); border-top: 3px solid var(--blue);
+  background: rgba(11, 11, 13, .97); border-top: 4px solid var(--cta);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, .35);
   transform: translateY(100%); visibility: hidden;
   transition: transform .25s ease, visibility 0s linear .25s;
 }
 .mtx-cc__bar.is-on { transform: none; visibility: visible; transition: transform .25s ease; }
 .mtx-cc__bar-in {
-  width: min(100% - 32px, 1240px); margin-inline: auto; padding: 10px 0;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  width: min(100% - 32px, 1240px); margin-inline: auto; padding: 14px 0;
+  display: flex; align-items: center; justify-content: center; gap: clamp(18px, 3vw, 40px);
 }
-.mtx-cc .mtx-cc__bar-price { display: flex; flex-direction: column; line-height: 1.1; }
+.mtx-cc .mtx-cc__bar-price { display: flex; flex-direction: column; line-height: 1.05; }
 .mtx-cc .mtx-cc__bar-label {
   font-family: var(--display); font-weight: 800; font-size: 12px;
   letter-spacing: .13em; text-transform: uppercase; color: var(--muted-dark);
 }
-.mtx-cc .mtx-cc__bar-value { font-family: var(--display); font-weight: 800; font-size: 24px; color: var(--white); white-space: nowrap; }
-.mtx-cc .mtx-cc__bar .mtx-cc__btn { min-height: 48px; padding: 0 24px; font-size: 15px; white-space: nowrap; }
-@media (prefers-reduced-motion: reduce) { .mtx-cc__bar, .mtx-cc__bar.is-on { transition: none; } }
+.mtx-cc .mtx-cc__bar-value {
+  font-family: var(--display); font-weight: 800; font-size: 28px;
+  color: var(--white); white-space: nowrap;
+}
+.mtx-cc .mtx-cc__bar .mtx-cc__btn--cta {
+  min-height: 64px; padding: 0 44px; font-size: 21px; letter-spacing: .06em;
+  white-space: nowrap; border-color: var(--cta);
+  animation: mtx-cc-pulse 2.4s ease-out infinite;
+}
+.mtx-cc__btn--cta::after { content: "\2192"; margin-left: 14px; font-size: 1.25em; line-height: 1; transition: transform .18s ease; }
+.mtx-cc__btn--cta:hover::after { transform: translateX(5px); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--cta { background: var(--cta); border-color: var(--cta); color: var(--white); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--cta:hover { background: var(--cta-dark); border-color: var(--cta-dark); color: var(--white); }
+@keyframes mtx-cc-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(220, 18, 32, .65); }
+  70%  { box-shadow: 0 0 0 16px rgba(220, 18, 32, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 18, 32, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mtx-cc__bar, .mtx-cc__bar.is-on { transition: none; }
+  .mtx-cc .mtx-cc__bar .mtx-cc__btn--cta { animation: none; }
+}
+
+/* On a narrow phone the button gets the whole bar: the price is already in
+   the hero, and a button that cannot show its own words is worse than no
+   price. */
+@media (max-width: 440px) {
+  .mtx-cc .mtx-cc__bar-price { display: none; }
+  .mtx-cc .mtx-cc__bar .mtx-cc__btn--cta { width: 100%; font-size: 16px; }
+}
 
 /* ----------------------------------------------------------- narrower --- */
 
@@ -844,10 +868,10 @@
 @media (max-width: 620px) {
   .mtx-cc .mtx-cc__who, .mtx-cc .mtx-cc__practical { grid-template-columns: minmax(0, 1fr); }
   .mtx-cc .mtx-cc__viewgrid { grid-template-columns: minmax(0, 1fr); }
-  .mtx-cc .mtx-cc__cta .mtx-cc__btn { width: 100%; }
-  .mtx-cc__btn--lg { font-size: 16px; padding: 0 14px; }
-  .mtx-cc .mtx-cc__bar .mtx-cc__btn { flex: 1; }
-  .mtx-cc .mtx-cc__bar-value { font-size: 20px; }
+  .mtx-cc .mtx-cc__bar .mtx-cc__btn--cta { flex: 1; min-width: 0; padding: 0 8px; font-size: 15px; letter-spacing: .03em; min-height: 58px; }
+  .mtx-cc .mtx-cc__bar .mtx-cc__btn--cta::after { display: none; }
+  .mtx-cc .mtx-cc__bar-value { font-size: 22px; }
+  .mtx-cc__bar-in { justify-content: space-between; gap: 14px; }
 }
 </style>
 
@@ -901,7 +925,6 @@
         <p class="mtx-cc__answer-copy">Every guest receives a numbered seat, making it easy to arrive, find your place and sit together as a group.</p>
         <p class="mtx-cc__answer-copy">From Club Class, you look down across the ring and can follow the fighters, corners and movement across the canvas.</p>
         <p class="mtx-cc__answer-close">It is especially suitable for families, groups and first-time visitors who want a clear view without sitting on the floor beside the ring.</p>
-        <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--white mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
       </div>
     </div>
   </section>
@@ -913,7 +936,6 @@
         <figure class="mtx-cc__split-fig"><img src="https://static.tildacdn.com/tild3234-3864-4633-b736-306132383635/1000035044.jpg" alt="Rajadamnern Stadium. Club Class Section 9 on the left and Club Class Section 8 on the right of the ring." loading="lazy" decoding="async"></figure>
         <div class="mtx-cc__split-body">
           <p>Club Class occupies Sections 8 and 9, positioned on opposite sides of the ring at Rajadamnern Stadium. This view shows exactly where both Club Class sections are located, with elevated seating and a clear perspective across the ring.</p>
-          <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
         </div>
       </div>
     </div>
@@ -931,7 +953,6 @@
           <p>You can watch the fighters enter, see the corners working between rounds and take in more of the stadium around the ring.</p>
           <p>MuayTix generally recommends Row D and above for the optimal viewing position. This brings you fully above the eye line of people moving along the walkway and creates a strong elevated perspective.</p>
           <p class="mtx-cc__caveat">Rows A, B and C still provide a clear view of the ring. The row guidance is a preference, not a warning that the lower rows are poor seats.</p>
-          <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
         </div>
       </div>
     </div>
@@ -947,7 +968,6 @@
           <p>It is particularly suitable for families with younger children because everyone has a numbered seat and the section is straightforward to navigate.</p>
           <p>It also works well for groups who want to sit together without choosing an unassigned position on arrival.</p>
           <p>Food, drinks, toilets and other facilities are easy to reach from the section, helping the evening run simply from arrival through to the final bout.</p>
-          <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
         </div>
       </div>
     </div>
@@ -963,7 +983,6 @@
           <p>They are not presented as padded or luxurious seats. The strength of Club Class is the position, the clear view and the ease of having a numbered seat.</p>
           <p>You know where you are sitting before you arrive, and stadium staff can direct you to your position.</p>
           <p>That makes Club Class a practical choice for visitors who want to spend the evening watching the Muay Thai rather than working out the seating arrangement.</p>
-          <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
         </div>
       </div>
     </div>
@@ -990,7 +1009,6 @@
           <p>You can follow the entire ring from above while still seeing the entrances, corners and wider stadium atmosphere.</p>
         </li>
       </ul>
-      <p class="mtx-cc__actions mtx-cc__cta mtx-cc__cta--center"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
     </div>
   </section>
 
@@ -1006,7 +1024,6 @@
             <li>Choose LEO Section if you want a front-facing view and a more involved local atmosphere on Wednesday, Thursday and Sunday traditional fight nights.</li>
             <li>Choose Third Class if you want a wide view across the whole stadium from the highest point.</li>
           </ul>
-          <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
           <p class="mtx-cc__map-go"><a class="mtx-cc__go" href="/rajadamnern-stadium-seating">Compare all Rajadamnern Stadium seat classes</a></p>
         </div>
       </div>
@@ -1125,7 +1142,7 @@
   <div class="mtx-cc__bar" data-mtx-bar>
     <div class="mtx-cc__bar-in">
       <p class="mtx-cc__bar-price"><span class="mtx-cc__bar-label">Price</span><span class="mtx-cc__bar-value">1,800 THB</span></p>
-      <a class="mtx-cc__btn mtx-cc__btn--blue" href="#mtx-cc-booking">Book Club Class Tickets</a>
+      <a class="mtx-cc__btn mtx-cc__btn--cta" href="#mtx-cc-booking">Book Club Class Tickets</a>
     </div>
   </div>
 
@@ -1342,26 +1359,29 @@
 <script>
 /* The booking bar.
  *
- * It is shown whenever none of the page's own booking buttons is on screen:
- * the hero buttons, the booking section and the closing block. On a phone that
- * means it is up from the first screen, because the hero button sits below
- * the fold there. Without the script, or in a browser that cannot observe
- * scrolling, it stays hidden and the page works as it did.
+ * Shown from the moment the hero buttons have gone, until the calendar comes
+ * into view, and then it is done: it does not come back further down the page.
+ * On a phone, where the hero buttons sit below the first screen, it is up from
+ * the start. Without the script it stays hidden and the page works as before.
  */
 (function () {
   var bar = document.querySelector('[data-mtx-bar]');
-  if (!bar || !('IntersectionObserver' in window)) return;
-  var targets = [
-    document.querySelector('.mtx-cc__hero .mtx-cc__actions'),
-    document.getElementById('mtx-cc-booking'),
-    document.querySelector('.mtx-cc__close')
-  ].filter(Boolean);
-  var seen = [];
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { seen[targets.indexOf(e.target)] = e.isIntersecting; });
-    bar.className = 'mtx-cc__bar' + (seen.some(Boolean) ? '' : ' is-on');
-  });
-  targets.forEach(function (t) { io.observe(t); });
+  var hero = document.querySelector('.mtx-cc__hero .mtx-cc__actions');
+  var calendar = document.querySelector('.mtx-cc__widget');
+  if (!bar || !hero || !calendar) return;
+  var waiting = false;
+  function update() {
+    waiting = false;
+    var h = hero.getBoundingClientRect();
+    var c = calendar.getBoundingClientRect();
+    var heroOnScreen = h.bottom > 0 && h.top < window.innerHeight;
+    var calendarReached = c.top < window.innerHeight;
+    bar.className = 'mtx-cc__bar' + (!heroOnScreen && !calendarReached ? ' is-on' : '');
+  }
+  function queue() { if (!waiting) { waiting = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  update();
 })();
 </script>
 </div>

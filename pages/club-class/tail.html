@@ -68,26 +68,29 @@
 <script>
 /* The booking bar.
  *
- * It is shown whenever none of the page's own booking buttons is on screen:
- * the hero buttons, the booking section and the closing block. On a phone that
- * means it is up from the first screen, because the hero button sits below
- * the fold there. Without the script, or in a browser that cannot observe
- * scrolling, it stays hidden and the page works as it did.
+ * Shown from the moment the hero buttons have gone, until the calendar comes
+ * into view, and then it is done: it does not come back further down the page.
+ * On a phone, where the hero buttons sit below the first screen, it is up from
+ * the start. Without the script it stays hidden and the page works as before.
  */
 (function () {
   var bar = document.querySelector('[data-mtx-bar]');
-  if (!bar || !('IntersectionObserver' in window)) return;
-  var targets = [
-    document.querySelector('.mtx-cc__hero .mtx-cc__actions'),
-    document.getElementById('mtx-cc-booking'),
-    document.querySelector('.mtx-cc__close')
-  ].filter(Boolean);
-  var seen = [];
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { seen[targets.indexOf(e.target)] = e.isIntersecting; });
-    bar.className = 'mtx-cc__bar' + (seen.some(Boolean) ? '' : ' is-on');
-  });
-  targets.forEach(function (t) { io.observe(t); });
+  var hero = document.querySelector('.mtx-cc__hero .mtx-cc__actions');
+  var calendar = document.querySelector('.mtx-cc__widget');
+  if (!bar || !hero || !calendar) return;
+  var waiting = false;
+  function update() {
+    waiting = false;
+    var h = hero.getBoundingClientRect();
+    var c = calendar.getBoundingClientRect();
+    var heroOnScreen = h.bottom > 0 && h.top < window.innerHeight;
+    var calendarReached = c.top < window.innerHeight;
+    bar.className = 'mtx-cc__bar' + (!heroOnScreen && !calendarReached ? ' is-on' : '');
+  }
+  function queue() { if (!waiting) { waiting = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  update();
 })();
 </script>
 </div>
