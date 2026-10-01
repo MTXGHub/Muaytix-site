@@ -78,6 +78,12 @@ From Club Class, you look down across the ring and can follow the fighters, corn
 [answer.p4]
 It is especially suitable for families, groups and first-time visitors who want a clear view without sitting on the floor beside the ring.
 
+[sections.h2]
+Club Class Sections 8 & 9
+
+[sections.p1]
+Club Class occupies Sections 8 and 9, positioned on opposite sides of the ring at Rajadamnern Stadium. This view shows exactly where both Club Class sections are located, with elevated seating and a clear perspective across the ring.
+
 [view.h2]
 See the whole ring from above
 

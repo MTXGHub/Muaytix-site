@@ -97,6 +97,27 @@ const answer = `  <section class="mtx-cc__band mtx-cc__band--paper">
     </div>
   </section>`;
 
+/* ============================================================ SECTIONS === */
+
+/* Owner, 2 October 2026: the graphic with the arrows, added as its own block
+   after the answer. His heading and paragraph, word for word, in
+   document-a.txt. Nothing else on the page was touched. The picture is
+   landscape, so it takes the wide split modifier rather than the square rule
+   the other split figures use. */
+if (!IMG.sections.url)
+  throw new Error('images.sections.url in dynamic-data.json is empty: upload the picture to Tilda and put its link there');
+const sections = `  <section class="mtx-cc__band mtx-cc__band--white">
+    <div class="mtx-cc__shell">
+      <h2>${T('sections.h2')}</h2>
+      <div class="mtx-cc__split mtx-cc__split--wide">
+        ${fig('sections', 'split-fig')}
+        <div class="mtx-cc__split-body">
+          <p>${T('sections.p1')}</p>
+        </div>
+      </div>
+    </div>
+  </section>`;
+
 /* ================================================================ VIEW === */
 
 /* Document A section 3 asks for a wide view photograph. None was supplied:
@@ -259,7 +280,7 @@ const final = `  <section class="mtx-cc__band mtx-cc__band--ink mtx-cc__close">
   </section>`;
 
 writeFileSync('body.html',
-  [hero, answer, view, families, seats, who, compare, practical, booking, faq, final].join('\n\n') + '\n\n');
+  [hero, answer, sections, view, families, seats, who, compare, practical, booking, faq, final].join('\n\n') + '\n\n');
 
 /* ============================================================== SCHEMA === */
 

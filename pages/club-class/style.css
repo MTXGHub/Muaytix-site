@@ -624,6 +624,15 @@
    twice. */
 .mtx-cc .mtx-cc__split--flip .mtx-cc__split-fig { order: 2; }
 
+/* The sections graphic is landscape, 3:2. Every other split figure is a square
+   held by width, so this one takes its column, but never more than 84vh wide,
+   which is 56vh tall at 3:2, the same ceiling the squares have. height:auto
+   is written in because width and height attributes would otherwise win over
+   the aspect ratio. */
+.mtx-cc .mtx-cc__split--wide { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+.mtx-cc .mtx-cc__split--wide .mtx-cc__split-fig { width: min(100%, 84vh); }
+.mtx-cc .mtx-cc__split--wide .mtx-cc__split-fig img { width: 100%; height: auto; }
+
 /* ----------------------------------------------------------- narrower --- */
 
 @media (max-width: 1080px) {
@@ -644,6 +653,8 @@
   .mtx-cc .mtx-cc__hero-mark img { width: min(100%, 52vh); }
   .mtx-cc__two { grid-template-columns: 1fr; gap: 24px; }
   .mtx-cc__split { grid-template-columns: 1fr; }
+  /* Two classes beat the one above, so the wide split needs its own one-column rule. */
+  .mtx-cc .mtx-cc__split--wide { grid-template-columns: minmax(0, 1fr); }
   .mtx-cc .mtx-cc__who { grid-template-columns: 1fr; }
   .mtx-cc__who li { padding-right: 0; }
   .mtx-cc .mtx-cc__compare { grid-template-columns: 1fr; }

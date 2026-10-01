@@ -66,6 +66,7 @@ async function servePictures(target) {
        was being measured as a 1200 x 900, which is shorter: the picture-scale
        check was passing on pictures the page will never actually be sent. */
     if (/1000034569/.test(u)) return r.fulfill(STAND(1690, 900));  // the annotated stadium view, hero size
+    if (u === data.images.sections.url) return r.fulfill(STAND(1280, 853));  // the sections graphic, 3:2
     r.fulfill(STAND(1024, 1024));                                             // everything else is a 1024 square
   });
 }
@@ -345,7 +346,7 @@ console.log(`   ${data.photographs_supplied.filter(p => onPageUrls.has(p.url)).l
 
 /* The hero is the annotated 1690 x 900 stadium view he supplied for this
    page, and the map is Document A section 8's approved alt line. */
-for (const [slot, img] of [['hero', data.images.hero], ['map', data.images.map], ['mark', data.images.mark]]) {
+for (const [slot, img] of [['hero', data.images.hero], ['map', data.images.map], ['mark', data.images.mark], ['sections', data.images.sections]]) {
   const found = imgs.filter(i => i.src === img.url);
   if (!found.length) { fail(`the ${slot} image is not on the page`); continue; }
   const want = slot === 'map' ? DOC['alt.map'] : img.alt;
@@ -353,7 +354,7 @@ for (const [slot, img] of [['hero', data.images.hero], ['map', data.images.map],
   console.log(`   ${slot.padEnd(12)} | ${img.url.split('/').pop().padEnd(13)} | approved line`);
 }
 
-const approvedUrls = new Set([...SUPPLIED.keys(), data.images.map.url, data.images.hero.url, data.images.mark.url]);
+const approvedUrls = new Set([...SUPPLIED.keys(), data.images.map.url, data.images.hero.url, data.images.mark.url, data.images.sections.url]);
 imgs.filter(i => !approvedUrls.has(i.src)).forEach(i => fail(`unapproved image on page: ${i.src}`));
 /* Document A section 8: no image may be tied to a row that is not verified.
    The owner verified rows A, I and R himself; Row D is the recommendation and

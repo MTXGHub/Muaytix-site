@@ -7,7 +7,8 @@
     "photographs": "Four Club Class photographs supplied by the owner, 28 September 2026, each with his own note on where it was taken. The notes are used as alt text because they are his and they are accurate to the file.",
     "graphic": "Owner, 28 September 2026: 'Club class graphic image for hero section'. Same treatment as the Ringside page: beside the words, whole, at full strength.",
     "overview": "Owner, 28 September 2026: '1690 x 900 full stadium view with sections marked'. This settles an open question from the Ringside build: this file is the annotated stadium view, and its labels include CLUB CLASS SECTION 8 and CLUB CLASS SECTION 9.",
-    "map": "The Rajadamnern seating map already approved and live on the Ringside page."
+    "map": "The Rajadamnern seating map already approved and live on the Ringside page.",
+    "sections_graphic": "Owner, 2 October 2026: a graphic of the stadium with arrows and the labels CLUB CLASS SECTION 9 (left) and CLUB CLASS SECTION 8 (right), to sit on the Club Class page as its own block with his heading and paragraph. Alt text is a plain description of what the graphic shows."
   },
   "price_checked": {
     "document_a": "1,800 THB",
@@ -81,6 +82,12 @@
       "alt": null,
       "shape": "square",
       "why": "The full Rajadamnern seating map, already approved and live on the Ringside page. Its alt is Document A section 8's approved example line."
+    },
+    "sections": {
+      "url": "",
+      "alt": "Rajadamnern Stadium. Club Class Section 9 on the left and Club Class Section 8 on the right of the ring.",
+      "shape": "wide",
+      "why": "The owner's graphic showing both Club Class sections on opposite sides of the ring. 1280 x 853, 3:2. Placed whole, beside his paragraph, after the answer block."
     }
   },
   "destinations": {
