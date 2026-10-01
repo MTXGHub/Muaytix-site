@@ -873,6 +873,24 @@
   .mtx-cc .mtx-cc__bar-value { font-size: 22px; }
   .mtx-cc__bar-in { justify-content: space-between; gap: 14px; }
 }
+
+/* ===================================================================== */
+/* Colour pass, 2 October 2026.
+   Owner: black, blue and white is dull. On this page the accent that every
+   button, rule and band took from --blue is now a hot red, so booking is red
+   from the hero to the bar. The Club Class blue (--cc-blue) stays on the
+   small class bars and nowhere else, because that one is the class's own. */
+/* ===================================================================== */
+
+.mtx-cc {
+  --blue: #DC1220; --blue-dark: #B80D19; --blue-lite: #FF8A92;
+  --cta: var(--blue); --cta-dark: var(--blue-dark);
+}
+/* The dark bands were flat black. A warm glow in one corner, nothing else. */
+.mtx-cc__band--ink {
+  background-color: var(--ink);
+  background-image: radial-gradient(120% 150% at 88% 0%, #2B0B10 0%, #14090B 45%, #0B0B0D 100%);
+}
 </style>
 
   <header class="mtx-cc__hero">
