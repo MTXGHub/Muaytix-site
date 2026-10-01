@@ -715,6 +715,140 @@
     animation: none !important; transition: none !important; scroll-behavior: auto !important;
   }
 }
+
+/* ===================================================================== */
+/* Conversion pass, 2 October 2026.
+   Owner: not enough buttons, and every block was a photograph beside text.
+   Same approved copy and the same pictures. What changes is the rhythm of the
+   page and a booking button on every screen of it. */
+/* ===================================================================== */
+
+.mtx-cc { --body-ink: #2A2A31; }
+.mtx-cc__band--blue { background: var(--blue); color: var(--white); }
+
+/* ------------------------------------------------------------ buttons --- */
+
+.mtx-cc .mtx-cc__cta { margin-top: 30px !important; }
+.mtx-cc .mtx-cc__cta--center { justify-content: center; margin-top: clamp(32px, 3.6vw, 48px) !important; }
+.mtx-cc__btn--lg { min-height: 60px; padding: 0 36px; font-size: 18px; }
+#mtx-cc.mtx-cc a.mtx-cc__btn--white { background: var(--white); border-color: var(--white); color: var(--ink); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--white:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
+
+/* ------------------------------------------------------------- answer --- */
+
+/* A blue band straight after the dark hero, with the first line set large.
+   Two columns on a desktop so it reads as a statement, not a paragraph. */
+.mtx-cc .mtx-cc__answer--split {
+  max-width: none;
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 88px); align-items: start;
+}
+#mtx-cc.mtx-cc .mtx-cc__band--blue .mtx-cc__answer-lead {
+  margin-top: 22px !important; max-width: 26ch;
+  font-size: clamp(23px, 2.5vw, 34px); line-height: 1.25; font-weight: 600; color: var(--white);
+}
+#mtx-cc.mtx-cc .mtx-cc__band--blue .mtx-cc__answer-copy {
+  margin-top: 0; max-width: 56ch; font-size: clamp(17px, 1.4vw, 19px); color: rgba(255, 255, 255, .96);
+}
+#mtx-cc.mtx-cc .mtx-cc__band--blue .mtx-cc__answer-copy + .mtx-cc__answer-copy { margin-top: 16px; }
+#mtx-cc.mtx-cc .mtx-cc__band--blue .mtx-cc__answer-close { margin-top: 26px !important; color: var(--white); }
+
+/* -------------------------------------------------------------- splits --- */
+
+/* Larger, darker body copy, and the text centred against the picture so a
+   short paragraph beside a tall picture no longer leaves a hole under it. */
+.mtx-cc .mtx-cc__split-body p { font-size: 18px; color: var(--body-ink); max-width: 56ch; }
+.mtx-cc .mtx-cc__split--center { align-items: center; }
+
+/* --------------------------------------------------------- view grid --- */
+
+/* Two photographs and the words in one row, instead of two tall squares with
+   the words stacked underneath them. */
+.mtx-cc .mtx-cc__viewgrid {
+  margin-top: clamp(26px, 3vw, 40px);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, .95fr);
+  gap: clamp(18px, 2.4vw, 36px); align-items: start;
+}
+.mtx-cc .mtx-cc__viewgrid .mtx-cc__square { width: min(100%, 56vh); }
+.mtx-cc .mtx-cc__viewgrid .mtx-cc__square img { width: 100%; }
+.mtx-cc .mtx-cc__viewgrid .mtx-cc__cols { columns: 1; margin-top: 0; }
+.mtx-cc .mtx-cc__viewgrid .mtx-cc__cols p { font-size: 17px; }
+
+/* --------------------------------------------------------------- who --- */
+
+/* Four cards across instead of four ruled lines. */
+.mtx-cc .mtx-cc__who {
+  grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; border-top: 0;
+}
+.mtx-cc__who li {
+  padding: 0 0 28px; border-bottom: 0; background: var(--white);
+  box-shadow: 0 0 0 1px var(--rule);
+}
+.mtx-cc__who li::before { width: 100%; height: 7px; margin: 0 0 22px; }
+.mtx-cc__who h3 { padding-inline: 22px; font-size: clamp(19px, 1.7vw, 23px); line-height: 1.05; }
+.mtx-cc .mtx-cc__who p { padding-inline: 22px; font-size: 16.5px; color: var(--body-ink); max-width: none; }
+
+/* ---------------------------------------------------------- practical --- */
+
+.mtx-cc .mtx-cc__practical { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-cc__practical li {
+  display: block; padding: 22px 22px 24px; background: var(--white);
+  border: 1px solid var(--rule);
+}
+.mtx-cc__practical li::before { display: block; width: 34px; height: 5px; margin: 0 0 14px; }
+.mtx-cc .mtx-cc__practical p { max-width: none; color: var(--body-ink); }
+
+/* The accent bar hangs off the figure, so the figure has to be exactly as wide
+   as the picture or the bar overhangs it. Capped on the figure, the same way
+   the pair of views already is. */
+.mtx-cc .mtx-cc__split:not(.mtx-cc__split--wide) .mtx-cc__split-fig { width: min(100%, 56vh); }
+.mtx-cc .mtx-cc__split:not(.mtx-cc__split--wide) .mtx-cc__split-fig img { width: 100%; }
+.mtx-cc .mtx-cc__viewgrid { align-items: center; }
+
+/* ------------------------------------------------------------- the bar --- */
+
+.mtx-cc__bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  background: var(--ink); border-top: 3px solid var(--blue);
+  transform: translateY(100%); visibility: hidden;
+  transition: transform .25s ease, visibility 0s linear .25s;
+}
+.mtx-cc__bar.is-on { transform: none; visibility: visible; transition: transform .25s ease; }
+.mtx-cc__bar-in {
+  width: min(100% - 32px, 1240px); margin-inline: auto; padding: 10px 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.mtx-cc .mtx-cc__bar-price { display: flex; flex-direction: column; line-height: 1.1; }
+.mtx-cc .mtx-cc__bar-label {
+  font-family: var(--display); font-weight: 800; font-size: 12px;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--muted-dark);
+}
+.mtx-cc .mtx-cc__bar-value { font-family: var(--display); font-weight: 800; font-size: 24px; color: var(--white); white-space: nowrap; }
+.mtx-cc .mtx-cc__bar .mtx-cc__btn { min-height: 48px; padding: 0 24px; font-size: 15px; white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .mtx-cc__bar, .mtx-cc__bar.is-on { transition: none; } }
+
+/* ----------------------------------------------------------- narrower --- */
+
+@media (max-width: 1100px) {
+  .mtx-cc .mtx-cc__who { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-cc .mtx-cc__viewgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-cc .mtx-cc__viewgrid .mtx-cc__cols { grid-column: 1 / -1; columns: 2; column-gap: clamp(32px, 3.4vw, 64px); }
+}
+@media (max-width: 1000px) {
+  .mtx-cc .mtx-cc__practical { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .mtx-cc .mtx-cc__answer--split { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .mtx-cc .mtx-cc__viewgrid .mtx-cc__cols { columns: 1; }
+}
+@media (max-width: 620px) {
+  .mtx-cc .mtx-cc__who, .mtx-cc .mtx-cc__practical { grid-template-columns: minmax(0, 1fr); }
+  .mtx-cc .mtx-cc__viewgrid { grid-template-columns: minmax(0, 1fr); }
+  .mtx-cc .mtx-cc__cta .mtx-cc__btn { width: 100%; }
+  .mtx-cc__btn--lg { font-size: 16px; padding: 0 14px; }
+  .mtx-cc .mtx-cc__bar .mtx-cc__btn { flex: 1; }
+  .mtx-cc .mtx-cc__bar-value { font-size: 20px; }
+}
 </style>
 
   <header class="mtx-cc__hero">
@@ -757,23 +891,29 @@
     </div>
   </header>
 
-  <section class="mtx-cc__band mtx-cc__band--paper">
-    <div class="mtx-cc__shell mtx-cc__answer">
-      <h2>What is Club Class at Rajadamnern Stadium?</h2>
-      <p class="mtx-cc__answer-lead">Club Class is assigned seating in Sections 8 and 9, on the elevated tier of the main arena.</p>
-      <p class="mtx-cc__answer-copy">Every guest receives a numbered seat, making it easy to arrive, find your place and sit together as a group.</p>
-      <p class="mtx-cc__answer-copy">From Club Class, you look down across the ring and can follow the fighters, corners and movement across the canvas.</p>
-      <p class="mtx-cc__answer-close">It is especially suitable for families, groups and first-time visitors who want a clear view without sitting on the floor beside the ring.</p>
+  <section class="mtx-cc__band mtx-cc__band--blue">
+    <div class="mtx-cc__shell mtx-cc__answer mtx-cc__answer--split">
+      <div class="mtx-cc__answer-main">
+        <h2>What is Club Class at Rajadamnern Stadium?</h2>
+        <p class="mtx-cc__answer-lead">Club Class is assigned seating in Sections 8 and 9, on the elevated tier of the main arena.</p>
+      </div>
+      <div class="mtx-cc__answer-side">
+        <p class="mtx-cc__answer-copy">Every guest receives a numbered seat, making it easy to arrive, find your place and sit together as a group.</p>
+        <p class="mtx-cc__answer-copy">From Club Class, you look down across the ring and can follow the fighters, corners and movement across the canvas.</p>
+        <p class="mtx-cc__answer-close">It is especially suitable for families, groups and first-time visitors who want a clear view without sitting on the floor beside the ring.</p>
+        <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--white mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
+      </div>
     </div>
   </section>
 
   <section class="mtx-cc__band mtx-cc__band--white">
     <div class="mtx-cc__shell">
       <h2>Club Class Sections 8 &amp; 9</h2>
-      <div class="mtx-cc__split mtx-cc__split--wide">
+      <div class="mtx-cc__split mtx-cc__split--wide mtx-cc__split--center">
         <figure class="mtx-cc__split-fig"><img src="https://static.tildacdn.com/tild3234-3864-4633-b736-306132383635/1000035044.jpg" alt="Rajadamnern Stadium. Club Class Section 9 on the left and Club Class Section 8 on the right of the ring." loading="lazy" decoding="async"></figure>
         <div class="mtx-cc__split-body">
           <p>Club Class occupies Sections 8 and 9, positioned on opposite sides of the ring at Rajadamnern Stadium. This view shows exactly where both Club Class sections are located, with elevated seating and a clear perspective across the ring.</p>
+          <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
         </div>
       </div>
     </div>
@@ -782,30 +922,16 @@
   <section class="mtx-cc__band mtx-cc__band--ink">
     <div class="mtx-cc__shell">
       <h2>See the whole ring from above</h2>
-      <div class="mtx-cc__pair">
+      <div class="mtx-cc__viewgrid">
         <figure class="mtx-cc__square"><img src="https://static.tildacdn.com/tild3665-3065-4334-b531-303164393066/1000033696.jpg" alt="Taken from row I, the final row in Club Class" loading="lazy" decoding="async"></figure>
         <figure class="mtx-cc__square"><img src="https://static.tildacdn.com/tild6136-6131-4064-a639-636565363338/1000033691.jpg" alt="Taken from row r in section 8 of club class, row r is the 9th row from the front of club class" loading="lazy" decoding="async"></figure>
-      </div>
-      <div class="mtx-cc__cols">
-        <p>Club Class looks down across the ring from the elevated main-arena tier.</p>
-        <p>The raised position gives you a broad view of the canvas, so it is easy to follow movement from one side of the ring to the other.</p>
-        <p>You can watch the fighters enter, see the corners working between rounds and take in more of the stadium around the ring.</p>
-        <p>MuayTix generally recommends Row D and above for the optimal viewing position. This brings you fully above the eye line of people moving along the walkway and creates a strong elevated perspective.</p>
-        <p class="mtx-cc__caveat">Rows A, B and C still provide a clear view of the ring. The row guidance is a preference, not a warning that the lower rows are poor seats.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="mtx-cc__band mtx-cc__band--white">
-    <div class="mtx-cc__shell">
-      <h2>A straightforward choice for families and groups</h2>
-      <div class="mtx-cc__split">
-        <figure class="mtx-cc__split-fig"><img src="https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg" alt="Taken from row a section 9 club class" loading="lazy" decoding="async"></figure>
-        <div class="mtx-cc__split-body">
-          <p>Club Class is MuayTix's most popular seating section, chosen by approximately 55% of guests.</p>
-          <p>It is particularly suitable for families with younger children because everyone has a numbered seat and the section is straightforward to navigate.</p>
-          <p>It also works well for groups who want to sit together without choosing an unassigned position on arrival.</p>
-          <p>Food, drinks, toilets and other facilities are easy to reach from the section, helping the evening run simply from arrival through to the final bout.</p>
+        <div class="mtx-cc__cols">
+          <p>Club Class looks down across the ring from the elevated main-arena tier.</p>
+          <p>The raised position gives you a broad view of the canvas, so it is easy to follow movement from one side of the ring to the other.</p>
+          <p>You can watch the fighters enter, see the corners working between rounds and take in more of the stadium around the ring.</p>
+          <p>MuayTix generally recommends Row D and above for the optimal viewing position. This brings you fully above the eye line of people moving along the walkway and creates a strong elevated perspective.</p>
+          <p class="mtx-cc__caveat">Rows A, B and C still provide a clear view of the ring. The row guidance is a preference, not a warning that the lower rows are poor seats.</p>
+          <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
         </div>
       </div>
     </div>
@@ -813,20 +939,37 @@
 
   <section class="mtx-cc__band mtx-cc__band--paper">
     <div class="mtx-cc__shell">
-      <h2>Simple seating, a clear view and less to think about</h2>
-      <div class="mtx-cc__split mtx-cc__split--flip">
-        <figure class="mtx-cc__split-fig"><img src="https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg" alt="Taken from row a section 8 of club class" loading="lazy" decoding="async"></figure>
+      <h2>A straightforward choice for families and groups</h2>
+      <div class="mtx-cc__split mtx-cc__split--center">
+        <figure class="mtx-cc__split-fig"><img src="https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg" alt="Taken from row a section 9 club class" loading="lazy" decoding="async"></figure>
         <div class="mtx-cc__split-body">
-          <p>Club Class seats are simple blue plastic seat bases fixed onto the elevated tier.</p>
-          <p>They are not presented as padded or luxurious seats. The strength of Club Class is the position, the clear view and the ease of having a numbered seat.</p>
-          <p>You know where you are sitting before you arrive, and stadium staff can direct you to your position.</p>
-          <p>That makes Club Class a practical choice for visitors who want to spend the evening watching the Muay Thai rather than working out the seating arrangement.</p>
+          <p>Club Class is MuayTix's most popular seating section, chosen by approximately 55% of guests.</p>
+          <p>It is particularly suitable for families with younger children because everyone has a numbered seat and the section is straightforward to navigate.</p>
+          <p>It also works well for groups who want to sit together without choosing an unassigned position on arrival.</p>
+          <p>Food, drinks, toilets and other facilities are easy to reach from the section, helping the evening run simply from arrival through to the final bout.</p>
+          <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="mtx-cc__band mtx-cc__band--white">
+    <div class="mtx-cc__shell">
+      <h2>Simple seating, a clear view and less to think about</h2>
+      <div class="mtx-cc__split mtx-cc__split--flip mtx-cc__split--center">
+        <figure class="mtx-cc__split-fig"><img src="https://static.tildacdn.com/tild3163-3535-4132-b338-373731323538/1000033693.jpg" alt="Taken from row a section 8 of club class" loading="lazy" decoding="async"></figure>
+        <div class="mtx-cc__split-body">
+          <p>Club Class seats are simple blue plastic seat bases fixed onto the elevated tier.</p>
+          <p>They are not presented as padded or luxurious seats. The strength of Club Class is the position, the clear view and the ease of having a numbered seat.</p>
+          <p>You know where you are sitting before you arrive, and stadium staff can direct you to your position.</p>
+          <p>That makes Club Class a practical choice for visitors who want to spend the evening watching the Muay Thai rather than working out the seating arrangement.</p>
+          <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-cc__band mtx-cc__band--paper">
     <div class="mtx-cc__shell">
       <h2>Who should choose Club Class?</h2>
       <ul class="mtx-cc__who">
@@ -847,6 +990,7 @@
           <p>You can follow the entire ring from above while still seeing the entrances, corners and wider stadium atmosphere.</p>
         </li>
       </ul>
+      <p class="mtx-cc__actions mtx-cc__cta mtx-cc__cta--center"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
     </div>
   </section>
 
@@ -862,6 +1006,7 @@
             <li>Choose LEO Section if you want a front-facing view and a more involved local atmosphere on Wednesday, Thursday and Sunday traditional fight nights.</li>
             <li>Choose Third Class if you want a wide view across the whole stadium from the highest point.</li>
           </ul>
+          <p class="mtx-cc__actions mtx-cc__cta"><a class="mtx-cc__btn mtx-cc__btn--blue mtx-cc__btn--lg" href="#mtx-cc-booking">Book Club Class Tickets</a></p>
           <p class="mtx-cc__map-go"><a class="mtx-cc__go" href="/rajadamnern-stadium-seating">Compare all Rajadamnern Stadium seat classes</a></p>
         </div>
       </div>
@@ -976,6 +1121,13 @@
       </p>
     </div>
   </section>
+
+  <div class="mtx-cc__bar" data-mtx-bar>
+    <div class="mtx-cc__bar-in">
+      <p class="mtx-cc__bar-price"><span class="mtx-cc__bar-label">Price</span><span class="mtx-cc__bar-value">1,800 THB</span></p>
+      <a class="mtx-cc__btn mtx-cc__btn--blue" href="#mtx-cc-booking">Book Club Class Tickets</a>
+    </div>
+  </div>
 
 <!-- Document A section 10. WebPage, BreadcrumbList, FAQPage for the thirteen
      questions visible on the page, and Organization. No Event schema: this is
@@ -1185,6 +1337,31 @@
   });
   window.addEventListener('resize', build);
   build();
+})();
+</script>
+<script>
+/* The booking bar.
+ *
+ * It is shown whenever none of the page's own booking buttons is on screen:
+ * the hero buttons, the booking section and the closing block. On a phone that
+ * means it is up from the first screen, because the hero button sits below
+ * the fold there. Without the script, or in a browser that cannot observe
+ * scrolling, it stays hidden and the page works as it did.
+ */
+(function () {
+  var bar = document.querySelector('[data-mtx-bar]');
+  if (!bar || !('IntersectionObserver' in window)) return;
+  var targets = [
+    document.querySelector('.mtx-cc__hero .mtx-cc__actions'),
+    document.getElementById('mtx-cc-booking'),
+    document.querySelector('.mtx-cc__close')
+  ].filter(Boolean);
+  var seen = [];
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[targets.indexOf(e.target)] = e.isIntersecting; });
+    bar.className = 'mtx-cc__bar' + (seen.some(Boolean) ? '' : ' is-on');
+  });
+  targets.forEach(function (t) { io.observe(t); });
 })();
 </script>
 </div>

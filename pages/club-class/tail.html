@@ -65,4 +65,29 @@
   build();
 })();
 </script>
+<script>
+/* The booking bar.
+ *
+ * It is shown whenever none of the page's own booking buttons is on screen:
+ * the hero buttons, the booking section and the closing block. On a phone that
+ * means it is up from the first screen, because the hero button sits below
+ * the fold there. Without the script, or in a browser that cannot observe
+ * scrolling, it stays hidden and the page works as it did.
+ */
+(function () {
+  var bar = document.querySelector('[data-mtx-bar]');
+  if (!bar || !('IntersectionObserver' in window)) return;
+  var targets = [
+    document.querySelector('.mtx-cc__hero .mtx-cc__actions'),
+    document.getElementById('mtx-cc-booking'),
+    document.querySelector('.mtx-cc__close')
+  ].filter(Boolean);
+  var seen = [];
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[targets.indexOf(e.target)] = e.isIntersecting; });
+    bar.className = 'mtx-cc__bar' + (seen.some(Boolean) ? '' : ' is-on');
+  });
+  targets.forEach(function (t) { io.observe(t); });
+})();
+</script>
 </div>

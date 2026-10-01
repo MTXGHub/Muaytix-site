@@ -696,3 +696,137 @@
     animation: none !important; transition: none !important; scroll-behavior: auto !important;
   }
 }
+
+/* ===================================================================== */
+/* Conversion pass, 2 October 2026.
+   Owner: not enough buttons, and every block was a photograph beside text.
+   Same approved copy and the same pictures. What changes is the rhythm of the
+   page and a booking button on every screen of it. */
+/* ===================================================================== */
+
+.mtx-cc { --body-ink: #2A2A31; }
+.mtx-cc__band--blue { background: var(--blue); color: var(--white); }
+
+/* ------------------------------------------------------------ buttons --- */
+
+.mtx-cc .mtx-cc__cta { margin-top: 30px !important; }
+.mtx-cc .mtx-cc__cta--center { justify-content: center; margin-top: clamp(32px, 3.6vw, 48px) !important; }
+.mtx-cc__btn--lg { min-height: 60px; padding: 0 36px; font-size: 18px; }
+#mtx-cc.mtx-cc a.mtx-cc__btn--white { background: var(--white); border-color: var(--white); color: var(--ink); }
+#mtx-cc.mtx-cc a.mtx-cc__btn--white:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
+
+/* ------------------------------------------------------------- answer --- */
+
+/* A blue band straight after the dark hero, with the first line set large.
+   Two columns on a desktop so it reads as a statement, not a paragraph. */
+.mtx-cc .mtx-cc__answer--split {
+  max-width: none;
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 88px); align-items: start;
+}
+#mtx-cc.mtx-cc .mtx-cc__band--blue .mtx-cc__answer-lead {
+  margin-top: 22px !important; max-width: 26ch;
+  font-size: clamp(23px, 2.5vw, 34px); line-height: 1.25; font-weight: 600; color: var(--white);
+}
+#mtx-cc.mtx-cc .mtx-cc__band--blue .mtx-cc__answer-copy {
+  margin-top: 0; max-width: 56ch; font-size: clamp(17px, 1.4vw, 19px); color: rgba(255, 255, 255, .96);
+}
+#mtx-cc.mtx-cc .mtx-cc__band--blue .mtx-cc__answer-copy + .mtx-cc__answer-copy { margin-top: 16px; }
+#mtx-cc.mtx-cc .mtx-cc__band--blue .mtx-cc__answer-close { margin-top: 26px !important; color: var(--white); }
+
+/* -------------------------------------------------------------- splits --- */
+
+/* Larger, darker body copy, and the text centred against the picture so a
+   short paragraph beside a tall picture no longer leaves a hole under it. */
+.mtx-cc .mtx-cc__split-body p { font-size: 18px; color: var(--body-ink); max-width: 56ch; }
+.mtx-cc .mtx-cc__split--center { align-items: center; }
+
+/* --------------------------------------------------------- view grid --- */
+
+/* Two photographs and the words in one row, instead of two tall squares with
+   the words stacked underneath them. */
+.mtx-cc .mtx-cc__viewgrid {
+  margin-top: clamp(26px, 3vw, 40px);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, .95fr);
+  gap: clamp(18px, 2.4vw, 36px); align-items: start;
+}
+.mtx-cc .mtx-cc__viewgrid .mtx-cc__square { width: min(100%, 56vh); }
+.mtx-cc .mtx-cc__viewgrid .mtx-cc__square img { width: 100%; }
+.mtx-cc .mtx-cc__viewgrid .mtx-cc__cols { columns: 1; margin-top: 0; }
+.mtx-cc .mtx-cc__viewgrid .mtx-cc__cols p { font-size: 17px; }
+
+/* --------------------------------------------------------------- who --- */
+
+/* Four cards across instead of four ruled lines. */
+.mtx-cc .mtx-cc__who {
+  grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; border-top: 0;
+}
+.mtx-cc__who li {
+  padding: 0 0 28px; border-bottom: 0; background: var(--white);
+  box-shadow: 0 0 0 1px var(--rule);
+}
+.mtx-cc__who li::before { width: 100%; height: 7px; margin: 0 0 22px; }
+.mtx-cc__who h3 { padding-inline: 22px; font-size: clamp(19px, 1.7vw, 23px); line-height: 1.05; }
+.mtx-cc .mtx-cc__who p { padding-inline: 22px; font-size: 16.5px; color: var(--body-ink); max-width: none; }
+
+/* ---------------------------------------------------------- practical --- */
+
+.mtx-cc .mtx-cc__practical { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mtx-cc__practical li {
+  display: block; padding: 22px 22px 24px; background: var(--white);
+  border: 1px solid var(--rule);
+}
+.mtx-cc__practical li::before { display: block; width: 34px; height: 5px; margin: 0 0 14px; }
+.mtx-cc .mtx-cc__practical p { max-width: none; color: var(--body-ink); }
+
+/* The accent bar hangs off the figure, so the figure has to be exactly as wide
+   as the picture or the bar overhangs it. Capped on the figure, the same way
+   the pair of views already is. */
+.mtx-cc .mtx-cc__split:not(.mtx-cc__split--wide) .mtx-cc__split-fig { width: min(100%, 56vh); }
+.mtx-cc .mtx-cc__split:not(.mtx-cc__split--wide) .mtx-cc__split-fig img { width: 100%; }
+.mtx-cc .mtx-cc__viewgrid { align-items: center; }
+
+/* ------------------------------------------------------------- the bar --- */
+
+.mtx-cc__bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  background: var(--ink); border-top: 3px solid var(--blue);
+  transform: translateY(100%); visibility: hidden;
+  transition: transform .25s ease, visibility 0s linear .25s;
+}
+.mtx-cc__bar.is-on { transform: none; visibility: visible; transition: transform .25s ease; }
+.mtx-cc__bar-in {
+  width: min(100% - 32px, 1240px); margin-inline: auto; padding: 10px 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.mtx-cc .mtx-cc__bar-price { display: flex; flex-direction: column; line-height: 1.1; }
+.mtx-cc .mtx-cc__bar-label {
+  font-family: var(--display); font-weight: 800; font-size: 12px;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--muted-dark);
+}
+.mtx-cc .mtx-cc__bar-value { font-family: var(--display); font-weight: 800; font-size: 24px; color: var(--white); white-space: nowrap; }
+.mtx-cc .mtx-cc__bar .mtx-cc__btn { min-height: 48px; padding: 0 24px; font-size: 15px; white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .mtx-cc__bar, .mtx-cc__bar.is-on { transition: none; } }
+
+/* ----------------------------------------------------------- narrower --- */
+
+@media (max-width: 1100px) {
+  .mtx-cc .mtx-cc__who { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-cc .mtx-cc__viewgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-cc .mtx-cc__viewgrid .mtx-cc__cols { grid-column: 1 / -1; columns: 2; column-gap: clamp(32px, 3.4vw, 64px); }
+}
+@media (max-width: 1000px) {
+  .mtx-cc .mtx-cc__practical { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .mtx-cc .mtx-cc__answer--split { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .mtx-cc .mtx-cc__viewgrid .mtx-cc__cols { columns: 1; }
+}
+@media (max-width: 620px) {
+  .mtx-cc .mtx-cc__who, .mtx-cc .mtx-cc__practical { grid-template-columns: minmax(0, 1fr); }
+  .mtx-cc .mtx-cc__viewgrid { grid-template-columns: minmax(0, 1fr); }
+  .mtx-cc .mtx-cc__cta .mtx-cc__btn { width: 100%; }
+  .mtx-cc__btn--lg { font-size: 16px; padding: 0 14px; }
+  .mtx-cc .mtx-cc__bar .mtx-cc__btn { flex: 1; }
+  .mtx-cc .mtx-cc__bar-value { font-size: 20px; }
+}

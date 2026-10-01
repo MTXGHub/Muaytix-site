@@ -52,6 +52,14 @@ const ALT = k => IMG[k].alt ?? t('alt.' + k);
 const fig = (k, cls) =>
   `<figure class="mtx-cc__${cls}"><img src="${esc(IMG[k].url)}" alt="${esc(ALT(k))}" loading="lazy" decoding="async"></figure>`;
 
+/* Owner, 2 October 2026: "there's not enough buttons on it". The same approved
+   label as the hero button ([hero.cta_primary]), pointing at the same booking
+   section, so a guest has a way to book on every screen of the page. It is
+   one function so the label and the destination cannot drift apart between
+   the dozen places it appears. */
+const BOOK = (cls = '', tone = 'blue') =>
+  `<p class="mtx-cc__actions mtx-cc__cta${cls ? ' ' + cls : ''}"><a class="mtx-cc__btn mtx-cc__btn--${tone} mtx-cc__btn--lg" href="${esc(D.booking_anchor)}">${T('hero.cta_primary')}</a></p>`;
+
 /* ================================================================ HERO === */
 
 const FACTS = ['sections', 'price', 'seating', 'location'];
@@ -87,13 +95,18 @@ ${FACTS.map(k => `          <div class="mtx-cc__fact">
 /* ============================================================== ANSWER === */
 
 /* Document A section 2: directly below the hero, concise, easy to extract. */
-const answer = `  <section class="mtx-cc__band mtx-cc__band--paper">
-    <div class="mtx-cc__shell mtx-cc__answer">
-      <h2>${T('answer.h2')}</h2>
-      <p class="mtx-cc__answer-lead">${T('answer.p1')}</p>
-      <p class="mtx-cc__answer-copy">${T('answer.p2')}</p>
-      <p class="mtx-cc__answer-copy">${T('answer.p3')}</p>
-      <p class="mtx-cc__answer-close">${T('answer.p4')}</p>
+const answer = `  <section class="mtx-cc__band mtx-cc__band--blue">
+    <div class="mtx-cc__shell mtx-cc__answer mtx-cc__answer--split">
+      <div class="mtx-cc__answer-main">
+        <h2>${T('answer.h2')}</h2>
+        <p class="mtx-cc__answer-lead">${T('answer.p1')}</p>
+      </div>
+      <div class="mtx-cc__answer-side">
+        <p class="mtx-cc__answer-copy">${T('answer.p2')}</p>
+        <p class="mtx-cc__answer-copy">${T('answer.p3')}</p>
+        <p class="mtx-cc__answer-close">${T('answer.p4')}</p>
+        ${BOOK('', 'white')}
+      </div>
     </div>
   </section>`;
 
@@ -109,10 +122,11 @@ if (!IMG.sections.url)
 const sections = `  <section class="mtx-cc__band mtx-cc__band--white">
     <div class="mtx-cc__shell">
       <h2>${T('sections.h2')}</h2>
-      <div class="mtx-cc__split mtx-cc__split--wide">
+      <div class="mtx-cc__split mtx-cc__split--wide mtx-cc__split--center">
         ${fig('sections', 'split-fig')}
         <div class="mtx-cc__split-body">
           <p>${T('sections.p1')}</p>
+          ${BOOK()}
         </div>
       </div>
     </div>
@@ -127,16 +141,17 @@ const sections = `  <section class="mtx-cc__band mtx-cc__band--white">
 const view = `  <section class="mtx-cc__band mtx-cc__band--ink">
     <div class="mtx-cc__shell">
       <h2>${T('view.h2')}</h2>
-      <div class="mtx-cc__pair">
+      <div class="mtx-cc__viewgrid">
         ${fig('view_high', 'square')}
         ${fig('view_mid', 'square')}
-      </div>
-      <div class="mtx-cc__cols">
-        <p>${T('view.p1')}</p>
-        <p>${T('view.p2')}</p>
-        <p>${T('view.p3')}</p>
-        <p>${T('view.p4')}</p>
-        <p class="mtx-cc__caveat">${T('view.p5')}</p>
+        <div class="mtx-cc__cols">
+          <p>${T('view.p1')}</p>
+          <p>${T('view.p2')}</p>
+          <p>${T('view.p3')}</p>
+          <p>${T('view.p4')}</p>
+          <p class="mtx-cc__caveat">${T('view.p5')}</p>
+          ${BOOK()}
+        </div>
       </div>
     </div>
   </section>`;
@@ -144,16 +159,17 @@ const view = `  <section class="mtx-cc__band mtx-cc__band--ink">
 /* ============================================================ FAMILIES === */
 
 /* Document A section 4: a two-column section with an image and the copy. */
-const families = `  <section class="mtx-cc__band mtx-cc__band--white">
+const families = `  <section class="mtx-cc__band mtx-cc__band--paper">
     <div class="mtx-cc__shell">
       <h2>${T('families.h2')}</h2>
-      <div class="mtx-cc__split">
+      <div class="mtx-cc__split mtx-cc__split--center">
         ${fig('families', 'split-fig')}
         <div class="mtx-cc__split-body">
           <p>${T('families.p1')}</p>
           <p>${T('families.p2')}</p>
           <p>${T('families.p3')}</p>
           <p>${T('families.p4')}</p>
+          ${BOOK()}
         </div>
       </div>
     </div>
@@ -161,16 +177,17 @@ const families = `  <section class="mtx-cc__band mtx-cc__band--white">
 
 /* =============================================================== SEATS === */
 
-const seats = `  <section class="mtx-cc__band mtx-cc__band--paper">
+const seats = `  <section class="mtx-cc__band mtx-cc__band--white">
     <div class="mtx-cc__shell">
       <h2>${T('seats.h2')}</h2>
-      <div class="mtx-cc__split mtx-cc__split--flip">
+      <div class="mtx-cc__split mtx-cc__split--flip mtx-cc__split--center">
         ${fig('seats', 'split-fig')}
         <div class="mtx-cc__split-body">
           <p>${T('seats.p1')}</p>
           <p>${T('seats.p2')}</p>
           <p>${T('seats.p3')}</p>
           <p>${T('seats.p4')}</p>
+          ${BOOK()}
         </div>
       </div>
     </div>
@@ -179,7 +196,7 @@ const seats = `  <section class="mtx-cc__band mtx-cc__band--paper">
 /* ================================================================= WHO === */
 
 const WHON = [1, 2, 3, 4];
-const who = `  <section class="mtx-cc__band mtx-cc__band--white">
+const who = `  <section class="mtx-cc__band mtx-cc__band--paper">
     <div class="mtx-cc__shell">
       <h2>${T('who.h2')}</h2>
       <ul class="mtx-cc__who">
@@ -188,6 +205,7 @@ ${WHON.map(n => `        <li>
           <p>${T('who.a' + n)}</p>
         </li>`).join('\n')}
       </ul>
+      ${BOOK('mtx-cc__cta--center')}
     </div>
   </section>`;
 
@@ -208,6 +226,7 @@ const compare = `  <section class="mtx-cc__band mtx-cc__band--ink">
             <li>${T('compare.p3')}</li>
             <li>${T('compare.p4')}</li>
           </ul>
+          ${BOOK()}
           <p class="mtx-cc__map-go"><a class="mtx-cc__go" href="${esc(D.seating)}">${T('compare.link')}</a></p>
         </div>
       </div>
@@ -279,8 +298,21 @@ const final = `  <section class="mtx-cc__band mtx-cc__band--ink mtx-cc__close">
     </div>
   </section>`;
 
+/* ================================================================ BAR === */
+
+/* A bar that follows the guest down the page, so the button is never more
+   than a thumb away on a phone. The script in tail.html shows it only while
+   no other booking button is on screen. Price and label are the approved
+   fact strings from the hero, not new words. */
+const bar = `  <div class="mtx-cc__bar" data-mtx-bar>
+    <div class="mtx-cc__bar-in">
+      <p class="mtx-cc__bar-price"><span class="mtx-cc__bar-label">${T('facts.label.price')}</span><span class="mtx-cc__bar-value">${T('facts.value.price')}</span></p>
+      <a class="mtx-cc__btn mtx-cc__btn--blue" href="${esc(D.booking_anchor)}">${T('hero.cta_primary')}</a>
+    </div>
+  </div>`;
+
 writeFileSync('body.html',
-  [hero, answer, sections, view, families, seats, who, compare, practical, booking, faq, final].join('\n\n') + '\n\n');
+  [hero, answer, sections, view, families, seats, who, compare, practical, booking, faq, final, bar].join('\n\n') + '\n\n');
 
 /* ============================================================== SCHEMA === */
 
