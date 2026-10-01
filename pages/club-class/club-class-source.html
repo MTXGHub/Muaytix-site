@@ -643,6 +643,15 @@
    twice. */
 .mtx-cc .mtx-cc__split--flip .mtx-cc__split-fig { order: 2; }
 
+/* The sections graphic is landscape, 3:2. Every other split figure is a square
+   held by width, so this one takes its column, but never more than 84vh wide,
+   which is 56vh tall at 3:2, the same ceiling the squares have. height:auto
+   is written in because width and height attributes would otherwise win over
+   the aspect ratio. */
+.mtx-cc .mtx-cc__split--wide { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+.mtx-cc .mtx-cc__split--wide .mtx-cc__split-fig { width: min(100%, 84vh); }
+.mtx-cc .mtx-cc__split--wide .mtx-cc__split-fig img { width: 100%; height: auto; }
+
 /* ----------------------------------------------------------- narrower --- */
 
 @media (max-width: 1080px) {
@@ -663,6 +672,8 @@
   .mtx-cc .mtx-cc__hero-mark img { width: min(100%, 52vh); }
   .mtx-cc__two { grid-template-columns: 1fr; gap: 24px; }
   .mtx-cc__split { grid-template-columns: 1fr; }
+  /* Two classes beat the one above, so the wide split needs its own one-column rule. */
+  .mtx-cc .mtx-cc__split--wide { grid-template-columns: minmax(0, 1fr); }
   .mtx-cc .mtx-cc__who { grid-template-columns: 1fr; }
   .mtx-cc__who li { padding-right: 0; }
   .mtx-cc .mtx-cc__compare { grid-template-columns: 1fr; }
@@ -753,6 +764,18 @@
       <p class="mtx-cc__answer-copy">Every guest receives a numbered seat, making it easy to arrive, find your place and sit together as a group.</p>
       <p class="mtx-cc__answer-copy">From Club Class, you look down across the ring and can follow the fighters, corners and movement across the canvas.</p>
       <p class="mtx-cc__answer-close">It is especially suitable for families, groups and first-time visitors who want a clear view without sitting on the floor beside the ring.</p>
+    </div>
+  </section>
+
+  <section class="mtx-cc__band mtx-cc__band--white">
+    <div class="mtx-cc__shell">
+      <h2>Club Class Sections 8 &amp; 9</h2>
+      <div class="mtx-cc__split mtx-cc__split--wide">
+        <figure class="mtx-cc__split-fig"><img src="https://static.tildacdn.com/tild3234-3864-4633-b736-306132383635/1000035044.jpg" alt="Rajadamnern Stadium. Club Class Section 9 on the left and Club Class Section 8 on the right of the ring." loading="lazy" decoding="async"></figure>
+        <div class="mtx-cc__split-body">
+          <p>Club Class occupies Sections 8 and 9, positioned on opposite sides of the ring at Rajadamnern Stadium. This view shows exactly where both Club Class sections are located, with elevated seating and a clear perspective across the ring.</p>
+        </div>
+      </div>
     </div>
   </section>
 
