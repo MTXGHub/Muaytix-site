@@ -1,0 +1,330 @@
+/* RWS KNOCKTOBERFEST, SATURDAY 10 OCTOBER 2026
+ * ----------------------------------------------------------------------
+ * Every selector starts with .mtx-kt-page, so nothing here can reach the rest
+ * of the Tilda site. Mobile first: written for 390px, then 620px, 860px and
+ * 1200px. Nothing is loaded from outside. Fonts are the RWS pages' own: Arial
+ * Black for display, Calibri for body. The booking widget in the site head
+ * brings its own face and keeps it.
+ *
+ * Tilda matches elements directly and centres text, which beats anything a
+ * block inherits, so alignment and link colour are stated at the foot with the
+ * id in front. Margins are written with the class doubled in where a
+ * .mtx-kt-page p { margin: 0 } (0,1,1) would beat a single-class margin-top.
+ */
+
+.mtx-kt-page, .mtx-kt-page * { box-sizing: border-box; }
+
+.mtx-kt-page {
+  --blue:  #1F5BFF;
+  --blue-d: #1540C9;
+  --black: #0A0A0A;
+  --ink:   #111114;
+  --off:   #F2F2F2;
+  --white: #FFFFFF;
+  --gold:  #FFD400;
+  --muted: #484850;
+  --rule:  #DADADA;
+  --display: "Arial Black", "Arial Bold", Arial, Helvetica, sans-serif;
+  --body:    Calibri, Arial, Helvetica, sans-serif;
+
+  display: block;
+  font-family: var(--body); font-size: 17px; line-height: 1.6;
+  color: var(--ink); background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+.mtx-kt-page p, .mtx-kt-page h1, .mtx-kt-page h2, .mtx-kt-page h3,
+.mtx-kt-page ul, .mtx-kt-page li, .mtx-kt-page dl, .mtx-kt-page dt,
+.mtx-kt-page dd, .mtx-kt-page summary { margin: 0; padding: 0; }
+.mtx-kt-page ul { list-style: none; }
+.mtx-kt-page img { display: block; max-width: 100%; height: auto; }
+
+.mtx-kt-page .mtx-kt-wrap { width: min(100% - 32px, 1100px); margin-inline: auto; }
+
+/* ---------------------------------------------------------------- type --- */
+
+.mtx-kt-page .mtx-kt-h1, .mtx-kt-page .mtx-kt-h2, .mtx-kt-page .mtx-kt-h3 {
+  font-family: var(--display); font-weight: 900; letter-spacing: 0; overflow-wrap: break-word;
+}
+.mtx-kt-page .mtx-kt-h1 { font-size: clamp(26px, 8vw, 72px); line-height: 1.04; }
+.mtx-kt-page .mtx-kt-h2 { font-size: 26px; line-height: 1.12; }
+.mtx-kt-page .mtx-kt-h2::before {
+  content: ""; display: block; width: 52px; height: 5px; margin-bottom: 16px; background: var(--gold);
+}
+.mtx-kt-page .mtx-kt-h3 { font-size: 19px; line-height: 1.2; }
+
+/* ------------------------------------------------------------ sections --- */
+
+.mtx-kt-page .mtx-kt-sec { padding: 40px 0; }
+.mtx-kt-page .mtx-kt-sec--white { background: var(--white); }
+.mtx-kt-page .mtx-kt-sec--off   { background: var(--off); }
+.mtx-kt-page .mtx-kt-sec--blue  { background: var(--blue); color: var(--white); }
+
+/* ----------------------------------------------------------- utility bar --- */
+
+.mtx-kt-page .mtx-kt-util { background: var(--gold); color: var(--black); }
+.mtx-kt-page .mtx-kt-util-in {
+  display: flex; flex-wrap: wrap; gap: 2px 20px; padding: 9px 0;
+  font-family: var(--display); font-weight: 900; font-size: 11.5px; line-height: 1.35;
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.mtx-kt-page .mtx-kt-util-in li { display: flex; align-items: center; gap: 8px; }
+.mtx-kt-page .mtx-kt-util-in li::before {
+  content: ""; flex: none; width: 6px; height: 6px; background: var(--black); transform: rotate(45deg);
+}
+
+/* ---------------------------------------------------------------- hero --- */
+
+.mtx-kt-page .mtx-kt-hero {
+  color: var(--white); padding: 34px 0 40px;
+  background: #0A0A0A radial-gradient(120% 90% at 85% 0%, #2B2B30 0%, #151518 45%, #0A0A0A 100%);
+}
+.mtx-kt-page .mtx-kt-hero-in { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px; align-items: center; }
+.mtx-kt-page .mtx-kt-when {
+  margin-top: 14px; display: flex; flex-direction: column; gap: 2px;
+  font-family: var(--display); font-weight: 900; font-size: 19px; line-height: 1.25;
+}
+.mtx-kt-page .mtx-kt-when span:first-child { color: var(--gold); }
+
+.mtx-kt-page .mtx-kt-cta-row { margin-top: 24px; }
+.mtx-kt-page .mtx-kt-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 100%; min-height: 58px; padding: 0 30px;
+  background: var(--blue); color: var(--white); border: 2px solid var(--blue);
+  font-family: var(--display); font-weight: 900; font-size: 16px; line-height: 1.2;
+  text-decoration: none; text-align: center; cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.mtx-kt-page .mtx-kt-btn:hover { background: var(--blue-d); border-color: var(--blue-d); }
+.mtx-kt-page .mtx-kt-btn--ghost { background: transparent; color: var(--white); border-color: var(--white); }
+.mtx-kt-page .mtx-kt-btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--blue); }
+
+.mtx-kt-page .mtx-kt-btn:focus-visible, .mtx-kt-page .mtx-kt-link:focus-visible,
+.mtx-kt-page .mtx-kt-det summary:focus-visible, .mtx-kt-page .mtx-kt-bar:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+.mtx-kt-page .mtx-kt-hero .mtx-kt-btn:focus-visible, .mtx-kt-page .mtx-kt-conf .mtx-kt-btn:focus-visible,
+.mtx-kt-page .mtx-kt-conf .mtx-kt-link:focus-visible, .mtx-kt-page .mtx-kt-bar:focus-visible { outline-color: var(--white); }
+
+.mtx-kt-page .mtx-kt-facts {
+  margin-top: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px; background: rgba(255, 255, 255, .26); border: 1px solid rgba(255, 255, 255, .26);
+}
+.mtx-kt-page .mtx-kt-fact { padding: 12px 12px 13px; background: rgba(10, 10, 10, .9); min-width: 0; }
+.mtx-kt-page .mtx-kt-fact-l {
+  display: block; color: var(--gold); font-family: var(--display); font-weight: 900;
+  font-size: 11px; line-height: 1.3; letter-spacing: .1em; text-transform: uppercase;
+}
+.mtx-kt-page .mtx-kt-fact-v { display: block; margin-top: 4px; font-family: var(--display); font-weight: 900; font-size: 17px; line-height: 1.25; }
+.mtx-kt-page .mtx-kt-fact-l + .mtx-kt-fact-v { margin-top: 5px; }
+.mtx-kt-page .mtx-kt-fact:nth-child(n+3) { display: flex; align-items: center; }
+
+.mtx-kt-page .mtx-kt-avail {
+  margin-top: 18px; padding: 13px 16px; border-left: 6px solid var(--gold);
+  background: rgba(255, 255, 255, .08); font-weight: 700; font-size: 16.5px;
+}
+
+.mtx-kt-page .mtx-kt-hero-art { order: 6; }
+.mtx-kt-page .mtx-kt-hero-art .mtx-kt-poster {
+  width: 100%; aspect-ratio: 1 / 1; height: auto; object-fit: cover; object-position: center 66%;
+  border: 1px solid rgba(255, 255, 255, .16); box-shadow: 0 18px 50px rgba(0, 0, 0, .55);
+}
+
+/* -------------------------------------------------------------- booking --- */
+
+.mtx-kt-page .mtx-kt-lead { margin-top: 14px; max-width: 70ch; font-size: 17.5px; }
+.mtx-kt-page .mtx-kt-widget { margin-top: 22px; scroll-margin-top: 14px; min-height: 160px; }
+.mtx-kt-page .mtx-kt-trust {
+  margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px 22px;
+  font-size: 15px; line-height: 1.4; color: var(--muted);
+}
+.mtx-kt-page .mtx-kt-trust li, .mtx-kt-page .mtx-kt-list li, .mtx-kt-page .mtx-kt-points li { display: flex; align-items: flex-start; gap: 8px; }
+.mtx-kt-page .mtx-kt-tick { flex: none; margin-top: 3px; }
+.mtx-kt-page .mtx-kt-trust .mtx-kt-tick { color: var(--black); }
+.mtx-kt-page .mtx-kt-guarantee { margin-top: 12px; font-weight: 700; font-size: 16px; }
+
+.mtx-kt-page .mtx-kt-seats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.mtx-kt-page .mtx-kt-seat { background: var(--white); border-top: 5px solid var(--gold); border-bottom: 1px solid var(--rule); }
+.mtx-kt-page .mtx-kt-seat-img { width: 100%; aspect-ratio: 4 / 3; height: auto; object-fit: cover; }
+.mtx-kt-page .mtx-kt-seat-t { padding: 12px 12px 14px; }
+.mtx-kt-page .mtx-kt-seat-t p { margin-top: 4px; font-size: 15px; line-height: 1.4; color: var(--muted); }
+.mtx-kt-page .mtx-kt-notsure { margin-top: 22px; font-size: 17px; font-weight: 700; }
+
+/* ----------------------------------------------------------------- links --- */
+
+.mtx-kt-page .mtx-kt-link { color: var(--white); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.mtx-kt-page .mtx-kt-link--dark { color: var(--black); }
+.mtx-kt-page .mtx-kt-link:hover { text-decoration-thickness: 2px; }
+
+/* ----------------------------------------------------------------- cards --- */
+
+.mtx-kt-page .mtx-kt-why { margin-top: 24px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; align-items: start; }
+.mtx-kt-page .mtx-kt-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.mtx-kt-page .mtx-kt-card { padding: 20px 20px 22px; background: var(--white); border: 1px solid var(--rule); border-top: 5px solid var(--gold); }
+.mtx-kt-page .mtx-kt-card p { margin-top: 8px; font-size: 16.5px; color: var(--muted); }
+.mtx-kt-page .mtx-kt-posters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.mtx-kt-page .mtx-kt-poster--g { width: 100%; height: auto; border: 1px solid var(--rule); }
+
+/* ------------------------------------------------------------ accordions --- */
+
+.mtx-kt-page .mtx-kt-acc { margin-top: 24px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; align-items: start; }
+.mtx-kt-page .mtx-kt-det { background: var(--white); border: 1px solid var(--rule); border-left: 5px solid transparent; }
+.mtx-kt-page .mtx-kt-det[open] { border-left-color: var(--gold); }
+.mtx-kt-page .mtx-kt-det summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  min-height: 60px; padding: 14px 14px; cursor: pointer; list-style: none;
+}
+.mtx-kt-page .mtx-kt-det summary::-webkit-details-marker { display: none; }
+.mtx-kt-page .mtx-kt-det summary::marker { content: ""; }
+.mtx-kt-page .mtx-kt-sum { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.mtx-kt-page .mtx-kt-name { font-family: var(--display); font-weight: 900; font-size: 17px; line-height: 1.25; color: var(--black); }
+.mtx-kt-page .mtx-kt-ttl { font-size: 15px; line-height: 1.35; color: var(--muted); }
+.mtx-kt-page .mtx-kt-chev { flex: none; color: var(--black); transition: transform .2s ease; }
+.mtx-kt-page .mtx-kt-det[open] .mtx-kt-chev { transform: rotate(180deg); }
+.mtx-kt-page .mtx-kt-det-b { padding: 0 14px 18px; }
+.mtx-kt-page .mtx-kt-det-b p { max-width: 70ch; }
+.mtx-kt-page .mtx-kt-read { max-width: 1100px; }
+
+/* ----------------------------------------------------------------- plan --- */
+
+.mtx-kt-page .mtx-kt-plan { margin-top: 24px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.mtx-kt-page .mtx-kt-dl { margin-top: 12px; border-top: 1px solid var(--rule); }
+.mtx-kt-page .mtx-kt-dl > div { display: flex; flex-wrap: wrap; gap: 2px 14px; padding: 11px 0; border-bottom: 1px solid var(--rule); }
+.mtx-kt-page .mtx-kt-dl dt { flex: 0 0 120px; font-family: var(--display); font-weight: 900; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.mtx-kt-page .mtx-kt-dl dd { flex: 1 1 160px; font-weight: 700; }
+.mtx-kt-page .mtx-kt-list { margin-top: 12px; display: grid; gap: 10px; }
+.mtx-kt-page .mtx-kt-list .mtx-kt-tick { color: var(--blue); }
+.mtx-kt-page .mtx-kt-h3--gap { margin-top: 26px; }
+.mtx-kt-page .mtx-kt-linklist { margin-top: 12px; display: grid; gap: 8px; }
+
+/* ------------------------------------------------------------ confidence --- */
+
+.mtx-kt-page .mtx-kt-conf .mtx-kt-h2::before { background: var(--gold); }
+.mtx-kt-page .mtx-kt-conf-body { margin-top: 14px; max-width: 62ch; font-size: 18px; }
+.mtx-kt-page .mtx-kt-points { margin-top: 20px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; font-weight: 700; }
+.mtx-kt-page .mtx-kt-points .mtx-kt-tick { color: var(--gold); }
+
+/* --------------------------------------------------------------- related --- */
+
+.mtx-kt-page .mtx-kt-related { padding: 32px 0 40px; border-top: 1px solid var(--rule); }
+.mtx-kt-page .mtx-kt-rel { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px 26px; }
+
+/* ----------------------------------------------- the widget, on this page --- */
+
+/* Everything below restyles the shared booking widget on THIS page only. It is
+   written against the widget's own class names and carries the page prefix and
+   the widget's id, so no other page that uses the widget is touched. */
+
+.mtx-kt-page #mtx-booking .mtx-go {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  width: 100%; align-self: stretch; min-height: 64px; margin-top: 8px; padding: 14px 20px;
+  background: var(--blue); color: var(--white); border: 0; border-radius: 12px;
+  font-size: 21px; font-weight: 800; letter-spacing: .06em; line-height: 1.1;
+  box-shadow: 0 5px 0 #1240B8; animation: none;
+  transition: transform .1s ease, box-shadow .1s ease, background-color .15s ease;
+}
+.mtx-kt-page #mtx-booking .mtx-go::after { content: "\2192"; font-size: 1.3em; line-height: 1; font-weight: 800; }
+.mtx-kt-page #mtx-booking .mtx-go:hover:not(:disabled) { background: var(--blue-d); transform: translateY(-1px); box-shadow: 0 6px 0 #1240B8; }
+.mtx-kt-page #mtx-booking .mtx-go:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 #1240B8; }
+.mtx-kt-page #mtx-booking .mtx-go:disabled { background: #E6E6E6; color: #4F4F55; border: 0; box-shadow: none; cursor: not-allowed; transform: none; }
+.mtx-kt-page #mtx-booking .mtx-go:disabled::after { content: none; }
+.mtx-kt-page #mtx-booking .mtx-go:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+.mtx-kt-page #mtx-booking .mtx-sel select { border: 2px solid var(--black); min-height: 52px; }
+
+/* A direct match on a heading inside the widget has turned a fight night's
+   name white on white before. This page mounts the widget. */
+.mtx-kt-page #mtx-booking h1, .mtx-kt-page #mtx-booking h2,
+.mtx-kt-page #mtx-booking h3, .mtx-kt-page #mtx-booking h4 { color: inherit; text-transform: none; }
+
+/* ----------------------------------------------------------- sticky bar --- */
+
+/* Phones only. The script shows it once the guest is past the first button and
+   the widget is off screen, so it never sits over the seats or the checkout
+   fields. */
+.mtx-kt-page .mtx-kt-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  display: none; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 0 20px env(safe-area-inset-bottom, 0px);
+  height: calc(58px + env(safe-area-inset-bottom, 0px));
+  background: var(--blue); color: var(--white); text-decoration: none;
+  font-family: var(--display); font-weight: 900; font-size: 16px;
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, .25);
+}
+.mtx-kt-page .mtx-kt-bar.is-on { display: flex; }
+.mtx-kt-page .mtx-kt-bar-r { white-space: nowrap; }
+.mtx-kt-page .mtx-kt-bar-r::after { content: " \2192"; }
+.mtx-kt-page .mtx-kt-related { padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px) + 28px); }
+
+@media (max-width: 520px) {
+  .mtx-kt-page #mtx-booking .mtx-go { font-size: 18px; letter-spacing: .03em; min-height: 60px; }
+}
+
+/* -------------------------------------------------------------- 620px --- */
+
+@media (min-width: 620px) {
+  .mtx-kt-page .mtx-kt-util-in { font-size: 12.5px; gap: 2px 28px; }
+  .mtx-kt-page .mtx-kt-when { font-size: 22px; }
+  .mtx-kt-page .mtx-kt-btn { width: auto; min-width: 300px; }
+  .mtx-kt-page .mtx-kt-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .mtx-kt-page .mtx-kt-fact { padding: 14px 14px 15px; }
+  .mtx-kt-page .mtx-kt-seats { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .mtx-kt-page .mtx-kt-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .mtx-kt-page .mtx-kt-points { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .mtx-kt-page .mtx-kt-hero-art .mtx-kt-poster { aspect-ratio: 16 / 10; object-position: center 82%; }
+}
+
+/* -------------------------------------------------------------- 860px --- */
+
+@media (min-width: 860px) {
+  .mtx-kt-page { font-size: 18px; }
+  .mtx-kt-page .mtx-kt-wrap { width: min(100% - 80px, 1100px); }
+  .mtx-kt-page .mtx-kt-sec { padding: 56px 0; }
+  .mtx-kt-page .mtx-kt-h1 { font-size: 52px; }
+  .mtx-kt-page .mtx-kt-h2 { font-size: 34px; line-height: 1.1; }
+  .mtx-kt-page .mtx-kt-h3 { font-size: 20px; }
+
+  .mtx-kt-page .mtx-kt-hero { padding: 56px 0 60px; }
+  .mtx-kt-page .mtx-kt-hero-in { grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); gap: 48px; }
+  .mtx-kt-page .mtx-kt-hero-art { order: 0; }
+  .mtx-kt-page .mtx-kt-hero-art .mtx-kt-poster { aspect-ratio: auto; object-fit: initial; max-width: 420px; margin-left: auto; }
+
+  .mtx-kt-page .mtx-kt-acc--two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .mtx-kt-page .mtx-kt-plan { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; }
+  .mtx-kt-page .mtx-kt-why { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 44px; }
+  .mtx-kt-page .mtx-kt-cards { grid-template-columns: minmax(0, 1fr); }
+  .mtx-kt-page .mtx-kt-posters { gap: 18px; }
+
+  .mtx-kt-page .mtx-kt-bar, .mtx-kt-page .mtx-kt-bar.is-on { display: none; }
+  .mtx-kt-page .mtx-kt-related { padding: 40px 0 56px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mtx-kt.mtx-kt-page, #mtx-kt.mtx-kt-page * { transition: none; animation: none; scroll-behavior: auto; }
+}
+
+/* ----------------------------------------------------------- the host --- */
+
+/* Stated, not inherited. Tilda centres text by matching every element, and a
+   direct match beats an inherited value however specific the ancestor is. */
+#mtx-kt.mtx-kt-page, #mtx-kt.mtx-kt-page * { text-align: left; }
+#mtx-kt.mtx-kt-page .mtx-kt-btn { text-align: center; }
+
+#mtx-kt.mtx-kt-page a.mtx-kt-btn { background: var(--blue); border-color: var(--blue); color: var(--white); }
+#mtx-kt.mtx-kt-page a.mtx-kt-btn:hover { background: var(--blue-d); border-color: var(--blue-d); color: var(--white); }
+#mtx-kt.mtx-kt-page a.mtx-kt-btn--ghost { background: transparent; border-color: var(--white); color: var(--white); }
+#mtx-kt.mtx-kt-page a.mtx-kt-btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--blue); }
+#mtx-kt.mtx-kt-page a.mtx-kt-link { color: var(--white); }
+#mtx-kt.mtx-kt-page a.mtx-kt-link--dark { color: var(--black); }
+#mtx-kt.mtx-kt-page a.mtx-kt-bar { color: var(--white); }
+#mtx-kt.mtx-kt-page summary, #mtx-kt.mtx-kt-page summary * { color: inherit; }
+#mtx-kt.mtx-kt-page .mtx-kt-name { color: var(--black); }
+#mtx-kt.mtx-kt-page .mtx-kt-ttl { color: var(--muted); }
+#mtx-kt.mtx-kt-page .mtx-kt-util-in, #mtx-kt.mtx-kt-page .mtx-kt-util-in li { color: var(--black); }
+
+/* Heading and body colour on the dark and blue sections, for the same reason. */
+#mtx-kt.mtx-kt-page .mtx-kt-hero, #mtx-kt.mtx-kt-page .mtx-kt-hero h1, #mtx-kt.mtx-kt-page .mtx-kt-hero p,
+#mtx-kt.mtx-kt-page .mtx-kt-hero li, #mtx-kt.mtx-kt-page .mtx-kt-hero span { color: var(--white); }
+#mtx-kt.mtx-kt-page .mtx-kt-hero .mtx-kt-when span:first-child, #mtx-kt.mtx-kt-page .mtx-kt-hero .mtx-kt-fact-l { color: var(--gold); }
+#mtx-kt.mtx-kt-page .mtx-kt-conf, #mtx-kt.mtx-kt-page .mtx-kt-conf h2, #mtx-kt.mtx-kt-page .mtx-kt-conf p,
+#mtx-kt.mtx-kt-page .mtx-kt-conf li, #mtx-kt.mtx-kt-page .mtx-kt-conf span { color: var(--white); }
+#mtx-kt.mtx-kt-page .mtx-kt-conf .mtx-kt-points .mtx-kt-tick { color: var(--gold); }
+#mtx-kt.mtx-kt-page .mtx-kt-h2, #mtx-kt.mtx-kt-page .mtx-kt-h3 { color: var(--black); }
+#mtx-kt.mtx-kt-page .mtx-kt-conf .mtx-kt-h2 { color: var(--white); }

@@ -1,0 +1,61 @@
+<script type="application/ld+json">
+@@SCHEMA@@
+</script>
+
+<script>
+/* Three behaviours, plain JavaScript, nothing loaded from outside: the anchor
+   jumps, the phone bar, and the widget's own button label. The accordions are
+   native details elements and need no script. */
+(function () {
+  var root = document.getElementById('mtx-kt');
+  if (root === null) return;
+  var slot = document.getElementById('mtx-kt-book');
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 1. Every button that says book scrolls to the widget on this page. */
+  var jumps = root.querySelectorAll('a[href="#mtx-kt-book"]');
+  for (var i = 0; i < jumps.length; i++) {
+    jumps[i].addEventListener('click', function (e) {
+      if (slot === null) return;
+      e.preventDefault();
+      slot.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
+    });
+  }
+
+  /* 2. The phone bar. On once the guest is past the first button and the
+     widget is off screen, off again as soon as the widget is in view. CSS keeps
+     it off a screen 860px or wider. */
+  var bar = root.querySelector('[data-mtx-kt-bar]');
+  var first = root.querySelector('.mtx-kt-hero .mtx-kt-btn');
+  if (bar && slot && first) {
+    var queued = false;
+    var update = function () {
+      queued = false;
+      var past = first.getBoundingClientRect().bottom < 0;
+      var w = slot.getBoundingClientRect();
+      var seen = w.bottom > 0 && w.top < window.innerHeight;
+      bar.className = 'mtx-kt-bar' + (past && !seen ? ' is-on' : '');
+    };
+    var queue = function () {
+      if (queued === false) { queued = true; window.requestAnimationFrame(update); }
+    };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    update();
+  }
+
+  /* 3. The widget's own button says Reserve your tickets. On this page it says
+     what the page's copy says. The widget writes that label again each time the
+     guest changes anything, so this watches for it and puts the page's words
+     back; it never touches any other label. */
+  if (slot === null || typeof MutationObserver === 'undefined') return;
+  var label = slot.getAttribute('data-label');
+  if (!label) return;
+  new MutationObserver(function () {
+    var b = slot.querySelector('[data-go]');
+    if (b === null) return;
+    if (b.textContent === 'Reserve your tickets') b.textContent = label;
+  }).observe(slot, { childList: true, subtree: true, characterData: true });
+})();
+</script>
+</div>

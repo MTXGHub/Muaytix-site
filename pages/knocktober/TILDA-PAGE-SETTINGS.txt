@@ -1,0 +1,27 @@
+RWS KNOCKTOBERFEST, SATURDAY 10 OCTOBER 2026
+Tilda page settings. These are NOT in the HTML block. Paste them into the
+page's own settings in Tilda.
+
+These are my draft. The brief gave no meta text, so please read them before
+you paste. Every fact in them is on the page.
+
+PAGE ADDRESS (follows the 3 October page's pattern)
+  /rws/2026-10-10
+
+TITLE (52 characters)
+  RWS Knocktoberfest Tickets, Saturday 10 October 2026
+
+DESCRIPTION (152 characters)
+  Book RWS Knocktoberfest tickets for Saturday 10 October 2026 at Rajadamnern Stadium, Bangkok. Gates 6:00 pm, first fight 7:10 pm. Secure online booking.
+
+SOCIAL TITLE (Open Graph), identical to the title
+  RWS Knocktoberfest Tickets, Saturday 10 October 2026
+
+SOCIAL DESCRIPTION (Open Graph), identical to the description
+  Book RWS Knocktoberfest tickets for Saturday 10 October 2026 at Rajadamnern Stadium, Bangkok. Gates 6:00 pm, first fight 7:10 pm. Secure online booking.
+
+SOCIAL IMAGE
+  https://static.tildacdn.com/tild3561-6636-4763-b933-646666383235/1000035156.jpg
+
+CANONICAL
+  https://muaytix.com/rws/2026-10-10

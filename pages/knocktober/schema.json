@@ -1,0 +1,80 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Event",
+      "name": "RWS Knocktoberfest",
+      "description": "RWS Knocktoberfest at Rajadamnern Stadium, Bangkok, on Saturday 10 October 2026. Gates open at 6:00 pm and the first fight begins at 7:10 pm.",
+      "startDate": "2026-10-10T19:10:00+07:00",
+      "endDate": "2026-10-10T22:00:00+07:00",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Rajadamnern Stadium",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Ratchadamnoen Nok Road",
+          "addressLocality": "Bangkok",
+          "addressCountry": "TH"
+        }
+      },
+      "image": [
+        "https://static.tildacdn.com/tild3561-6636-4763-b933-646666383235/1000035156.jpg"
+      ],
+      "url": "https://muaytix.com/rws/2026-10-10",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "THB",
+        "lowPrice": "1000",
+        "availability": "https://schema.org/InStock",
+        "url": "https://muaytix.com/rws/2026-10-10"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is RWS Knocktoberfest sold out?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The official stadium allocation has sold out. MuayTix has a limited number of pre-secured tickets while availability lasts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What time should I arrive?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gates open at 6:00 pm. We recommend arriving early so you have time for entry and to find your seat before the fights begin at 7:10 pm."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is RWS Knocktoberfest held?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The event takes place at Rajadamnern Stadium in Bangkok."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which seats should I choose?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Club Class is the best all-round choice for many first-time guests. Use the Rajadamnern seating guide to compare every category."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will I receive my ticket immediately?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As soon as you pay, you receive instant confirmation of your payment and your booking."
+          }
+        }
+      ]
+    }
+  ]
+}

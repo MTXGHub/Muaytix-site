@@ -311,3 +311,28 @@ Before handing anything over:
 `agent-tix/notes/` holds older working notes. **`current-state.md` describes the
 previous system** (the `muaytix-stripe-elements` project and nine edge functions)
 and is historical, not current. The current system is section 6 above.
+
+---
+
+## 13. Facts Jason has stated. Never ask him these again.
+
+Recorded on 3 October 2026, in his words. They are facts about the business and
+the stadium, not copy. They can be used on any page.
+
+- **The stadium is air-conditioned.** It is a modern arena in the middle of
+  Bangkok, the hottest place on earth across a year.
+- **Instant confirmation.** The minute a guest pays, they get instant
+  confirmation of their payment and their booking.
+- **Pre-booked, guaranteed tickets.** MuayTix secures its allocation in advance
+  of a sell-out, for last-minute bookings. That is why an event can show sold
+  out at the stadium while MuayTix still has tickets. The tickets it holds are
+  guaranteed, pre-booked and waiting to go.
+- **Face value.** No markups and no booking fees.
+- **Every RWS card has seven bouts.** Do not ask how many fights there are, and
+  do not name or count fights on an event page unless he asks for it. Guests do
+  not book on the number or order of the fights, and the fight card lives on its
+  own page.
+- **First bell is 7:10 pm for RWS, doors 6:00 pm, finishing around 10:00 pm.**
+- **"Official" and "limited".** Banned in section 2, but on 3 October 2026 he
+  said to leave both in the RWS Knocktoberfest page copy because no advertising
+  (Google, Facebook) is running at the moment. If ads start again, ask first.
