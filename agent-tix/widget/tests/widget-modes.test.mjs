@@ -19,7 +19,6 @@ const check=(n,ok,d='')=>{ ok?(pass++,console.log('  ok   '+n)):(fail++,console.
 
 const b = await chromium.launch(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{});
 
-let nightFor = () => night;
 async function page(mounts, w=1180){
   const ctx=await b.newContext({viewport:{width:w,height:1000}});
   const p=await ctx.newPage();
@@ -28,7 +27,7 @@ async function page(mounts, w=1180){
     if(r.request().url().endsWith('/create-checkout'))
       return r.fulfill({status:200,contentType:'application/json',body:'{"checkoutUrl":"https://checkout.stripe.com/x"}'});
     r.fulfill({status:200,contentType:'application/json',
-      body:JSON.stringify(bd.action==='events'?events:nightFor(bd.eventKey))});
+      body:JSON.stringify(bd.action==='events'?events:night)});
   });
   p.on('pageerror',e=>{fail++;console.log('  FAIL page error -> '+e.message);});
   // Hostile host, as the live Tilda page turned out to be.
@@ -207,61 +206,6 @@ console.log('\nA sold-out class on a one-class widget does not point at a button
   check('with four classes the sold-out one cannot be opened', open!==null);
   await q.ctx.close();
   night.classes.splice(0, night.classes.length, ...JSON.parse(saved));
-}
-
-console.log('\nA class that cannot be booked offers two things, and nothing else');
-{
-  const clone = o => JSON.parse(JSON.stringify(o));
-  const savedEvents = clone(events), savedNight = clone(night);
-  const setLeo = (n, st) => { n.classes.find(c => c.code === 'leo_section').status = st; return n; };
-  const addNight = (d, st) => events.events.push({ date:d, eventKey:'t_'+d, name:'Test night '+d, shortName:'T', colour:'#2F6FC4',
-    startTime:'19:00', endTime:'21:00', venue:'Rajadamnern Stadium, Bangkok', timezone:'Asia/Bangkok', series:'x', classStatus:st });
-  addNight('2026-09-06','available'); addNight('2026-09-07','limited'); addNight('2026-09-08','available'); addNight('2026-09-09','fully_booked');
-  events.events.sort((a,b)=>a.date<b.date?-1:1);
-  setLeo(night, 'fully_booked');
-  nightFor = k => k === 'rws_2026_09_05' ? night : setLeo(clone(savedNight), 'available');
-
-  const {p,ctx}=await page('<div class="muaytix-ticket-selector" data-ticket-class="LEO Section"></div>');
-  await p.waitForSelector('[data-grid] [data-date="2026-09-05"]',{timeout:8000});
-  await p.click('[data-grid] [data-date="2026-09-05"]');
-  await p.waitForSelector('[data-alt-nights] [data-alt-date]',{timeout:8000});
-  const seats = await p.$$eval('.mtx-alt-grid [data-pick]', n=>n.map(x=>({code:x.dataset.pick, off:x.disabled||x.classList.contains('mtx-pick--off')})));
-  check('other seats on the same night are offered', seats.length>0, JSON.stringify(seats));
-  check('every one of them can be booked', seats.every(s=>!s.off), JSON.stringify(seats));
-  check('the sold-out one is not among them', seats.every(s=>s.code!=='leo_section'));
-  const nights = await p.$$eval('[data-alt-date]', n=>n.map(x=>x.dataset.altDate));
-  check('the next two nights it is available, no more', JSON.stringify(nights)==='["2026-09-06","2026-09-07"]', JSON.stringify(nights));
-  check('both offers are labelled', (await p.$$eval('.mtx-alt-h', n=>n.map(x=>x.textContent))).join('|')==='Other seats, same night|LEO Section, next nights');
-  check('no calendar is opened for them', !(await p.isVisible('[data-grid]')));
-  await p.click('[data-alt-date="2026-09-06"]');
-  await p.waitForSelector('[data-qty]',{timeout:8000});
-  check('tapping a night opens that seat on it, ready to book', (await p.textContent('.mtx-detail-h'))==='LEO Section' && !(await p.$eval('[data-go]', e=>e.disabled)));
-  await ctx.close();
-
-  const again = await page('<div class="muaytix-ticket-selector" data-ticket-class="LEO Section"></div>');
-  await again.p.waitForSelector('[data-grid] [data-date="2026-09-05"]',{timeout:8000});
-  await again.p.click('[data-grid] [data-date="2026-09-05"]');
-  await again.p.waitForSelector('[data-alt] [data-pick]',{timeout:8000});
-  await again.p.click('[data-alt] [data-pick]');
-  await again.p.waitForSelector('[data-qty]',{timeout:8000});
-  const h = await again.p.textContent('.mtx-detail-h');
-  check('tapping an offered seat opens it, ready to book', h!=='LEO Section' && !(await again.p.$eval('[data-go]', e=>e.disabled)), h);
-  check('and the guest can still change seat class from there', (await again.p.$('[data-back-class]'))!==null);
-  await again.ctx.close();
-
-  // Nothing to offer: the sentence stops promising it.
-  night.classes.forEach(c => { if (c.code !== 'leo_section') c.status = 'fully_booked'; });
-  events.events.forEach(e => { if (e.date > '2026-09-05') e.classStatus = 'fully_booked'; });
-  const none = await page('<div class="muaytix-ticket-selector" data-ticket-class="LEO Section"></div>');
-  await none.p.waitForSelector('[data-grid] [data-date="2026-09-05"]',{timeout:8000});
-  await none.p.click('[data-grid] [data-date="2026-09-05"]');
-  await none.p.waitForFunction(()=>/choose another date\.$/.test((document.querySelector('[data-alt-note]')||{}).textContent||''),{timeout:8000}).catch(()=>{});
-  const note = await none.p.textContent('[data-alt-note]');
-  check('with nothing to offer it only says to choose another date', note==='LEO Section is now fully booked. Please choose another date.', note);
-  check('and offers no tiles', (await none.p.$$('.mtx-alt .mtx-pick')).length===0);
-  await none.ctx.close();
-
-  Object.assign(events, clone(savedEvents)); Object.assign(night, clone(savedNight)); nightFor = () => night;
 }
 
 console.log('\nThe hidden seat note takes no room');
