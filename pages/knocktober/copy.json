@@ -1,123 +1,253 @@
 {
   "_source": "Every visible string on the page. From the structure and copy in the Perplexity brief Jason supplied on 3 October 2026, with his corrections the same day: first fight 7:10 pm, no fight card, no fourth fight, instant confirmation and air conditioning confirmed, the words official and limited kept. Nothing is typed anywhere else. gen.mjs reads this file and stops if a key is missing.",
-
-  "utility": ["Official Rajadamnern Stadium ticket partner", "Secure online booking", "Instant confirmation"],
-
+  "utility": [
+    "Official Rajadamnern Stadium ticket partner",
+    "Secure online booking",
+    "Instant confirmation"
+  ],
   "hero": {
     "h1": "RWS Knocktoberfest",
     "date": "Saturday 10 October",
     "venue": "Rajadamnern Stadium, Bangkok",
     "cta": "View seats & book tickets",
     "facts": [
-      { "label": "Gates", "value": "6:00 pm" },
-      { "label": "Fights from", "value": "7:10 pm" },
-      { "value": "7 bouts" },
-      { "value": "3 rounds per bout" }
+      {
+        "label": "Gates",
+        "value": "6:00 pm"
+      },
+      {
+        "label": "Fights from",
+        "value": "7:10 pm"
+      },
+      {
+        "value": "7 bouts"
+      },
+      {
+        "value": "3 rounds per bout"
+      }
     ],
     "availability": "Stadium allocation sold out. Limited MuayTix tickets available."
   },
-
   "book": {
     "h2": "Choose your tickets",
     "lead": "Select your preferred seating area. Tickets are issued for RWS Knocktoberfest on Saturday 10 October.",
     "checkout_label": "Continue to secure checkout",
     "notsure_text": "Not sure where to sit?",
     "notsure_link": "Compare Rajadamnern seating →",
-    "trust": ["Secure online checkout", "Instant booking confirmation", "Support before your event"],
+    "trust": [
+      "Secure online checkout",
+      "Instant booking confirmation",
+      "Support before your event"
+    ],
     "guarantee": "Tickets are pre-booked and guaranteed. Face value, no markups, no booking fees."
   },
-
   "seats": [
-    { "name": "Ringside", "line": "Closest to the ring" },
-    { "name": "Club Class", "line": "Elevated view of the entire ring" },
-    { "name": "LEO Section", "line": "Where the atmosphere lives" },
-    { "name": "Third Class", "line": "360 degree view of the action" }
+    {
+      "name": "Ringside",
+      "line": "Closest to the ring",
+      "href": "/rajadamnern-stadium-seating/ringside"
+    },
+    {
+      "name": "Club Class",
+      "line": "Elevated view of the entire ring",
+      "href": "/rajadamnern-stadium-seating/club-class"
+    },
+    {
+      "name": "LEO Section",
+      "line": "Where the atmosphere lives",
+      "href": "/rajadamnern-stadium-seating/leo-section"
+    },
+    {
+      "name": "Third Class",
+      "line": "360 degree view of the action",
+      "href": "/rajadamnern-stadium-seating/third-class"
+    }
   ],
-
   "why": {
     "h2": "Why Knocktoberfest is different",
     "cards": [
-      { "head": "Historic venue", "text": "Live at Rajadamnern Stadium, the world’s first Muay Thai stadium" },
-      { "head": "One-night special", "text": "A sold-out RWS event with limited remaining MuayTix tickets" }
+      {
+        "head": "Historic venue",
+        "text": "Live at Rajadamnern Stadium, the world’s first Muay Thai stadium"
+      },
+      {
+        "head": "One-night special",
+        "text": "A sold-out RWS event with limited remaining MuayTix tickets"
+      }
     ]
   },
-
   "fighters": {
     "h2": "Meet the headline fighters",
     "items": [
-      { "name": "Petchsila Wor. Auracha", "title": "Rajadamnern Super Bantamweight champion",
-        "text": "A Thai southpaw and proven stadium-level champion. Petchsila enters as the home champion against Japanese RISE titleholder Koki Osaki." },
-      { "name": "Koki Osaki", "title": "Japanese RISE Bantamweight champion",
-        "text": "One of Japan’s leading lighter-weight fighters, Osaki arrives with proven success in RWS rules and an interim Super Bantamweight title." },
-      { "name": "Egor Bikrev", "title": "Rajadamnern Lightweight champion",
-        "text": "The Russian champion made history by winning the title with the fastest knockout in RWS history. He now defends against former RISE champion Kan Nakamura." },
-      { "name": "Kan Nakamura", "title": "Former RISE Lightweight champion",
-        "text": "A high-output Japanese contender with a strong knockout record and a dangerous knee-strike game." }
+      {
+        "name": "Petchsila Wor. Auracha",
+        "title": "Rajadamnern Super Bantamweight champion",
+        "text": "A Thai southpaw and proven stadium-level champion. Petchsila enters as the home champion against Japanese RISE titleholder Koki Osaki."
+      },
+      {
+        "name": "Koki Osaki",
+        "title": "Japanese RISE Bantamweight champion",
+        "text": "One of Japan’s leading lighter-weight fighters, Osaki arrives with proven success in RWS rules and an interim Super Bantamweight title."
+      },
+      {
+        "name": "Egor Bikrev",
+        "title": "Rajadamnern Lightweight champion",
+        "text": "The Russian champion made history by winning the title with the fastest knockout in RWS history. He now defends against former RISE champion Kan Nakamura."
+      },
+      {
+        "name": "Kan Nakamura",
+        "title": "Former RISE Lightweight champion",
+        "text": "A high-output Japanese contender with a strong knockout record and a dangerous knee-strike game."
+      }
     ]
   },
-
   "plan": {
     "h2": "Plan your night at Rajadamnern",
     "details_h": "Event details",
     "details": [
-      { "label": "Date", "value": "Saturday 10 October 2026" },
-      { "label": "Gates open", "value": "6:00 pm" },
-      { "label": "Fights begin", "value": "7:10 pm" },
-      { "label": "Finishes", "value": "around 10:00 pm" },
-      { "label": "Venue", "value": "Rajadamnern Stadium, Bangkok" },
-      { "label": "Format", "value": "7 bouts · 3 rounds per bout" }
+      {
+        "label": "Date",
+        "value": "Saturday 10 October 2026"
+      },
+      {
+        "label": "Gates open",
+        "value": "6:00 pm"
+      },
+      {
+        "label": "Fights begin",
+        "value": "7:10 pm"
+      },
+      {
+        "label": "Finishes",
+        "value": "around 10:00 pm"
+      },
+      {
+        "label": "Venue",
+        "value": "Rajadamnern Stadium, Bangkok"
+      },
+      {
+        "label": "Format",
+        "value": "7 bouts · 3 rounds per bout"
+      }
     ],
     "expect_h": "What to expect",
-    "expect": ["Arrive early for security and to find your seats.", "Dress is casual. The stadium is air-conditioned."],
+    "expect": [
+      "Arrive early for security and to find your seats.",
+      "Dress is casual. The stadium is air-conditioned."
+    ],
     "links_h": "Useful links",
     "links": [
-      { "text": "Rajadamnern seating guide", "href": "/rajadamnern-stadium-seating" },
-      { "text": "RWS schedule", "href": "/rws/" }
+      {
+        "text": "Rajadamnern seating guide",
+        "href": "/rajadamnern-stadium-seating"
+      },
+      {
+        "text": "RWS schedule",
+        "href": "/rws/"
+      }
     ]
   },
-
   "confidence": {
     "h2": "Your Knocktoberfest ticket, made simple",
     "body": "Choose your seat, complete secure checkout and receive your booking confirmation straight away. We are here to help if you need support before the event.",
-    "points": ["Secure checkout", "Instant booking confirmation", "Clear seat category", "Support before the event"],
+    "points": [
+      "Secure checkout",
+      "Instant booking confirmation",
+      "Clear seat category",
+      "Support before the event"
+    ],
     "cta": "Choose your tickets"
   },
-
   "faq": {
     "h2": "Frequently asked questions",
     "items": [
-      { "q": "Is RWS Knocktoberfest sold out?", "a": "The official stadium allocation has sold out. MuayTix has a limited number of pre-secured tickets while availability lasts." },
-      { "q": "What time should I arrive?", "a": "Gates open at 6:00 pm. We recommend arriving early so you have time for entry and to find your seat before the fights begin at 7:10 pm." },
-      { "q": "Where is RWS Knocktoberfest held?", "a": "The event takes place at Rajadamnern Stadium in Bangkok." },
-      { "q": "Which seats should I choose?", "a": "Club Class is the best all-round choice for many first-time guests. Use the Rajadamnern seating guide to compare every category." },
-      { "q": "Will I receive my ticket immediately?", "a": "As soon as you pay, you receive instant confirmation of your payment and your booking." }
+      {
+        "q": "Is RWS Knocktoberfest sold out?",
+        "a": "The official stadium allocation has sold out. MuayTix has a limited number of pre-secured tickets while availability lasts."
+      },
+      {
+        "q": "What time should I arrive?",
+        "a": "Gates open at 6:00 pm. We recommend arriving early so you have time for entry and to find your seat before the fights begin at 7:10 pm."
+      },
+      {
+        "q": "Where is RWS Knocktoberfest held?",
+        "a": "The event takes place at Rajadamnern Stadium in Bangkok."
+      },
+      {
+        "q": "Which seats should I choose?",
+        "a": "Club Class is the best all-round choice for many first-time guests. Use the Rajadamnern seating guide to compare every category."
+      },
+      {
+        "q": "Will I receive my ticket immediately?",
+        "a": "As soon as you pay, you receive instant confirmation of your payment and your booking."
+      }
     ]
   },
-
   "related": {
     "h2": "Explore RWS",
     "links": [
-      { "text": "RWS schedule", "href": "/rws/" },
-      { "text": "RWS tickets", "href": "/rajadamnern-stadium-tickets" },
-      { "text": "Rajadamnern seating guide", "href": "/rajadamnern-stadium-seating" }
+      {
+        "text": "RWS schedule",
+        "href": "/rws/"
+      },
+      {
+        "text": "RWS tickets",
+        "href": "/rajadamnern-stadium-tickets"
+      },
+      {
+        "text": "Rajadamnern seating guide",
+        "href": "/rajadamnern-stadium-seating"
+      }
     ]
   },
-
-  "bar": { "price": "From ฿1,000", "label": "View seats" },
-
-  "images": {
-    "hero":    { "url": "https://static.tildacdn.com/tild3561-6636-4763-b933-646666383235/1000035156.jpg", "w": 985, "h": 1234,
-                 "alt": "RWS Knocktoberfest fight poster for Saturday 10 October 2026 at Rajadamnern Stadium in Bangkok, featuring the super bantamweight world championship superfight between Petchsila and Koki Osaki." },
-    "egor":    { "url": "https://static.tildacdn.com/tild6364-3835-4761-a632-336134373134/1000035155.jpg", "w": 985, "h": 1234,
-                 "alt": "RWS Knocktoberfest fight poster for Saturday 10 October 2026 at Rajadamnern Stadium in Bangkok, featuring the lightweight world championship superfight between Egor Bikrev and Kan Nakamura." },
-    "petchdej":{ "url": "https://static.tildacdn.com/tild3464-3361-4666-b630-623862363066/1000035157.jpg", "w": 985, "h": 1234,
-                 "alt": "RWS Knocktoberfest fight poster for Saturday 10 October 2026 at Rajadamnern Stadium in Bangkok, featuring the super flyweight world championship superfight between Petchdej and Jigsaw." },
-    "Ringside":    { "url": "https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg", "w": 1024, "h": 1024, "alt": "Ringside seating at Rajadamnern Stadium, Bangkok" },
-    "Club Class":  { "url": "https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg", "w": 1024, "h": 1024, "alt": "Club Class seating at Rajadamnern Stadium, Bangkok" },
-    "LEO Section": { "url": "https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg", "w": 1024, "h": 1024, "alt": "LEO Section at Rajadamnern Stadium, Bangkok" },
-    "Third Class": { "url": "https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg", "w": 1024, "h": 1024, "alt": "Third Class seating at Rajadamnern Stadium, Bangkok" }
+  "bar": {
+    "price": "From ฿1,000",
+    "label": "View seats"
   },
-
+  "images": {
+    "hero": {
+      "url": "https://static.tildacdn.com/tild3561-6636-4763-b933-646666383235/1000035156.jpg",
+      "w": 985,
+      "h": 1234,
+      "alt": "RWS Knocktoberfest fight poster for Saturday 10 October 2026 at Rajadamnern Stadium in Bangkok, featuring the super bantamweight world championship superfight between Petchsila and Koki Osaki."
+    },
+    "egor": {
+      "url": "https://static.tildacdn.com/tild6364-3835-4761-a632-336134373134/1000035155.jpg",
+      "w": 985,
+      "h": 1234,
+      "alt": "RWS Knocktoberfest fight poster for Saturday 10 October 2026 at Rajadamnern Stadium in Bangkok, featuring the lightweight world championship superfight between Egor Bikrev and Kan Nakamura."
+    },
+    "petchdej": {
+      "url": "https://static.tildacdn.com/tild3464-3361-4666-b630-623862363066/1000035157.jpg",
+      "w": 985,
+      "h": 1234,
+      "alt": "RWS Knocktoberfest fight poster for Saturday 10 October 2026 at Rajadamnern Stadium in Bangkok, featuring the super flyweight world championship superfight between Petchdej and Jigsaw."
+    },
+    "Ringside": {
+      "url": "https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg",
+      "w": 1024,
+      "h": 1024,
+      "alt": "Ringside seating at Rajadamnern Stadium, Bangkok"
+    },
+    "Club Class": {
+      "url": "https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg",
+      "w": 1024,
+      "h": 1024,
+      "alt": "Club Class seating at Rajadamnern Stadium, Bangkok"
+    },
+    "LEO Section": {
+      "url": "https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg",
+      "w": 1024,
+      "h": 1024,
+      "alt": "LEO Section at Rajadamnern Stadium, Bangkok"
+    },
+    "Third Class": {
+      "url": "https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg",
+      "w": 1024,
+      "h": 1024,
+      "alt": "Third Class seating at Rajadamnern Stadium, Bangkok"
+    }
+  },
   "seo": {
     "path": "/rws/2026-10-10",
     "title": "RWS Knocktoberfest Tickets, Saturday 10 October 2026",

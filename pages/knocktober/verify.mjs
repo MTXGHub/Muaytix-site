@@ -153,6 +153,13 @@ console.log('\n=== 6. PICTURES, STRUCTURE, SCHEMA ===');
   for (const k of ['Ringside', 'Club Class', 'LEO Section', 'Third Class']) { const i = C.images[k]; const m = r.imgs.find(x => x.src === i.url); if (!m) fail(`seat photo ${k} missing`); else if (m.alt !== i.alt) fail(`seat photo ${k} alt differs`); }
   if (r.imgs.some(i => !i.w || !i.h)) fail('an image has no width and height'); else ok('every image has width and height set, 7 pictures, supplied alt text used exactly');
   if (r.imgs.some(i => /graphic|illustration/i.test(i.alt))) fail('a graphic image is used');
+  const order = await p.evaluate(() => [...document.querySelector('#mtx-kt').children].filter(e => ['HEADER', 'DIV', 'SECTION'].includes(e.tagName) && !e.matches('style,script')).map(e => e.tagName === 'HEADER' ? 'hero' : e.classList.contains('mtx-kt-util') ? 'strip' : e.className.includes('mtx-kt-sec') ? 'section' : 'other').slice(0, 3));
+  if (order.join() !== 'hero,strip,section') fail('the gold strip is not straight under the hero: ' + order.join()); else ok('the gold strip is gone from the top and sits straight under the hero');
+  const seatLinks = await p.evaluate(() => [...document.querySelectorAll('#mtx-kt .mtx-kt-seat a')].map(a => ({ href: a.getAttribute('href'), name: a.querySelector('.mtx-kt-h3').textContent })));
+  const want = { 'Ringside': '/rajadamnern-stadium-seating/ringside', 'Club Class': '/rajadamnern-stadium-seating/club-class', 'LEO Section': '/rajadamnern-stadium-seating/leo-section', 'Third Class': '/rajadamnern-stadium-seating/third-class' };
+  if (seatLinks.length !== 4 || seatLinks.some(l => want[l.name] !== l.href)) fail('seat cards do not link to their pages: ' + JSON.stringify(seatLinks)); else ok('all four seat cards link to their own seat page');
+  const allLinks = await p.evaluate(() => [...document.querySelectorAll('#mtx-kt a[href]')].map(a => a.getAttribute('href')).filter(h => !h.startsWith('#')));
+  console.log('   links out: ' + [...new Set(allLinks)].join('  '));
   const m = frag.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/);
   const j = JSON.parse(m[1]);
   const ev = j['@graph'].find(x => x['@type'] === 'Event'), fq = j['@graph'].find(x => x['@type'] === 'FAQPage');

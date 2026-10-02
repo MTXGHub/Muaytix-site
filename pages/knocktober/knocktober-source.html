@@ -78,9 +78,9 @@
 
 /* ----------------------------------------------------------- utility bar --- */
 
-.mtx-kt-page .mtx-kt-util { background: var(--gold); color: var(--black); }
+.mtx-kt-page .mtx-kt-util { background: var(--gold); color: var(--black); padding: 10px 0; }
 .mtx-kt-page .mtx-kt-util-in {
-  display: flex; flex-wrap: wrap; gap: 2px 20px; padding: 9px 0;
+  display: flex; flex-wrap: wrap; gap: 2px 20px;
   font-family: var(--display); font-weight: 900; font-size: 11.5px; line-height: 1.35;
   letter-spacing: .06em; text-transform: uppercase;
 }
@@ -116,7 +116,7 @@
 .mtx-kt-page .mtx-kt-btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--blue); }
 
 .mtx-kt-page .mtx-kt-btn:focus-visible, .mtx-kt-page .mtx-kt-link:focus-visible,
-.mtx-kt-page .mtx-kt-det summary:focus-visible, .mtx-kt-page .mtx-kt-bar:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+.mtx-kt-page .mtx-kt-det summary:focus-visible, .mtx-kt-page .mtx-kt-seat-a:focus-visible, .mtx-kt-page .mtx-kt-bar:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
 .mtx-kt-page .mtx-kt-hero .mtx-kt-btn:focus-visible, .mtx-kt-page .mtx-kt-conf .mtx-kt-btn:focus-visible,
 .mtx-kt-page .mtx-kt-conf .mtx-kt-link:focus-visible, .mtx-kt-page .mtx-kt-bar:focus-visible { outline-color: var(--white); }
 
@@ -160,8 +160,14 @@
 .mtx-kt-page .mtx-kt-seats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .mtx-kt-page .mtx-kt-seat { background: var(--white); border-top: 5px solid var(--gold); border-bottom: 1px solid var(--rule); }
 .mtx-kt-page .mtx-kt-seat-img { width: 100%; aspect-ratio: 4 / 3; height: auto; object-fit: cover; }
-.mtx-kt-page .mtx-kt-seat-t { padding: 12px 12px 14px; }
-.mtx-kt-page .mtx-kt-seat-t p { margin-top: 4px; font-size: 15px; line-height: 1.4; color: var(--muted); }
+.mtx-kt-page .mtx-kt-seat-a { display: block; color: var(--ink); text-decoration: none; }
+.mtx-kt-page .mtx-kt-seat-img { transition: opacity .18s ease; }
+.mtx-kt-page .mtx-kt-seat-a:hover .mtx-kt-seat-img { opacity: .88; }
+.mtx-kt-page .mtx-kt-seat-t { display: block; padding: 12px 12px 14px; }
+.mtx-kt-page .mtx-kt-seat-t .mtx-kt-h3 { display: block; }
+.mtx-kt-page .mtx-kt-seat-t .mtx-kt-h3::after { content: " \2192"; color: var(--blue); }
+.mtx-kt-page .mtx-kt-seat-a:hover .mtx-kt-h3 { text-decoration: underline; text-underline-offset: 4px; }
+.mtx-kt-page .mtx-kt-seat-line { display: block; margin-top: 4px; font-size: 15px; line-height: 1.4; color: var(--muted); }
 .mtx-kt-page .mtx-kt-notsure { margin-top: 22px; font-size: 17px; font-weight: 700; }
 
 /* ----------------------------------------------------------------- links --- */
@@ -330,6 +336,8 @@
 #mtx-kt.mtx-kt-page a.mtx-kt-link { color: var(--white); }
 #mtx-kt.mtx-kt-page a.mtx-kt-link--dark { color: var(--black); }
 #mtx-kt.mtx-kt-page a.mtx-kt-bar { color: var(--white); }
+#mtx-kt.mtx-kt-page a.mtx-kt-seat-a { color: var(--ink); text-decoration: none; }
+#mtx-kt.mtx-kt-page .mtx-kt-seat-line { color: var(--muted); }
 #mtx-kt.mtx-kt-page summary, #mtx-kt.mtx-kt-page summary * { color: inherit; }
 #mtx-kt.mtx-kt-page .mtx-kt-name { color: var(--black); }
 #mtx-kt.mtx-kt-page .mtx-kt-ttl { color: var(--muted); }
@@ -345,12 +353,6 @@
 #mtx-kt.mtx-kt-page .mtx-kt-h2, #mtx-kt.mtx-kt-page .mtx-kt-h3 { color: var(--black); }
 #mtx-kt.mtx-kt-page .mtx-kt-conf .mtx-kt-h2 { color: var(--white); }
 </style>
-
-  <div class="mtx-kt-util"><ul class="mtx-kt-wrap mtx-kt-util-in">
-    <li>Official Rajadamnern Stadium ticket partner</li>
-    <li>Secure online booking</li>
-    <li>Instant confirmation</li>
-  </ul></div>
 
   <header class="mtx-kt-hero">
     <div class="mtx-kt-wrap mtx-kt-hero-in">
@@ -370,6 +372,12 @@
     </div>
   </header>
 
+  <div class="mtx-kt-util"><ul class="mtx-kt-wrap mtx-kt-util-in">
+    <li>Official Rajadamnern Stadium ticket partner</li>
+    <li>Secure online booking</li>
+    <li>Instant confirmation</li>
+  </ul></div>
+
   <section class="mtx-kt-sec mtx-kt-sec--white">
     <div class="mtx-kt-wrap">
       <h2 class="mtx-kt-h2">Choose your tickets</h2>
@@ -388,20 +396,28 @@
     <div class="mtx-kt-wrap">
       <ul class="mtx-kt-seats">
         <li class="mtx-kt-seat">
-          <img class="mtx-kt-seat-img" src="https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg" alt="Ringside seating at Rajadamnern Stadium, Bangkok" width="1024" height="1024" loading="lazy" decoding="async">
-          <div class="mtx-kt-seat-t"><h3 class="mtx-kt-h3">Ringside</h3><p>Closest to the ring</p></div>
+          <a class="mtx-kt-seat-a" href="/rajadamnern-stadium-seating/ringside">
+            <img class="mtx-kt-seat-img" src="https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg" alt="Ringside seating at Rajadamnern Stadium, Bangkok" width="1024" height="1024" loading="lazy" decoding="async">
+            <span class="mtx-kt-seat-t"><span class="mtx-kt-h3">Ringside</span><span class="mtx-kt-seat-line">Closest to the ring</span></span>
+          </a>
         </li>
         <li class="mtx-kt-seat">
-          <img class="mtx-kt-seat-img" src="https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg" alt="Club Class seating at Rajadamnern Stadium, Bangkok" width="1024" height="1024" loading="lazy" decoding="async">
-          <div class="mtx-kt-seat-t"><h3 class="mtx-kt-h3">Club Class</h3><p>Elevated view of the entire ring</p></div>
+          <a class="mtx-kt-seat-a" href="/rajadamnern-stadium-seating/club-class">
+            <img class="mtx-kt-seat-img" src="https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg" alt="Club Class seating at Rajadamnern Stadium, Bangkok" width="1024" height="1024" loading="lazy" decoding="async">
+            <span class="mtx-kt-seat-t"><span class="mtx-kt-h3">Club Class</span><span class="mtx-kt-seat-line">Elevated view of the entire ring</span></span>
+          </a>
         </li>
         <li class="mtx-kt-seat">
-          <img class="mtx-kt-seat-img" src="https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg" alt="LEO Section at Rajadamnern Stadium, Bangkok" width="1024" height="1024" loading="lazy" decoding="async">
-          <div class="mtx-kt-seat-t"><h3 class="mtx-kt-h3">LEO Section</h3><p>Where the atmosphere lives</p></div>
+          <a class="mtx-kt-seat-a" href="/rajadamnern-stadium-seating/leo-section">
+            <img class="mtx-kt-seat-img" src="https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg" alt="LEO Section at Rajadamnern Stadium, Bangkok" width="1024" height="1024" loading="lazy" decoding="async">
+            <span class="mtx-kt-seat-t"><span class="mtx-kt-h3">LEO Section</span><span class="mtx-kt-seat-line">Where the atmosphere lives</span></span>
+          </a>
         </li>
         <li class="mtx-kt-seat">
-          <img class="mtx-kt-seat-img" src="https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg" alt="Third Class seating at Rajadamnern Stadium, Bangkok" width="1024" height="1024" loading="lazy" decoding="async">
-          <div class="mtx-kt-seat-t"><h3 class="mtx-kt-h3">Third Class</h3><p>360 degree view of the action</p></div>
+          <a class="mtx-kt-seat-a" href="/rajadamnern-stadium-seating/third-class">
+            <img class="mtx-kt-seat-img" src="https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg" alt="Third Class seating at Rajadamnern Stadium, Bangkok" width="1024" height="1024" loading="lazy" decoding="async">
+            <span class="mtx-kt-seat-t"><span class="mtx-kt-h3">Third Class</span><span class="mtx-kt-seat-line">360 degree view of the action</span></span>
+          </a>
         </li>
       </ul>
       <p class="mtx-kt-notsure">Not sure where to sit? <a class="mtx-kt-link mtx-kt-link--dark" href="/rajadamnern-stadium-seating">Compare Rajadamnern seating →</a></p>
@@ -511,7 +527,7 @@
         </details>
         <details class="mtx-kt-det">
           <summary><span class="mtx-kt-sum"><strong class="mtx-kt-name">Which seats should I choose?</strong></span><svg class="mtx-kt-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
-          <div class="mtx-kt-det-b"><p>Club Class is the best all-round choice for many first-time guests. Use the Rajadamnern seating guide to compare every category.</p></div>
+          <div class="mtx-kt-det-b"><p>Club Class is the best all-round choice for many first-time guests. Use the <a class="mtx-kt-link mtx-kt-link--dark" href="/rajadamnern-stadium-seating">Rajadamnern seating guide</a> to compare every category.</p></div>
         </details>
         <details class="mtx-kt-det">
           <summary><span class="mtx-kt-sum"><strong class="mtx-kt-name">Will I receive my ticket immediately?</strong></span><svg class="mtx-kt-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>

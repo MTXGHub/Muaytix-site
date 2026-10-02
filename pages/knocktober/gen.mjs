@@ -47,9 +47,12 @@ ${H.facts.map(f => `          <li class="mtx-kt-fact">${f.label ? `<span class="
 
 /* ------------------------------------------------------------- booking -- */
 const B = need(C, 'book');
+/* Each card goes to that seat class's own page, which holds the full detail. */
 const seatCards = need(C, 'seats').map(s => `        <li class="mtx-kt-seat">
-          ${img(s.name, 'mtx-kt-seat-img')}
-          <div class="mtx-kt-seat-t"><h3 class="mtx-kt-h3">${esc(s.name)}</h3><p>${esc(s.line)}</p></div>
+          <a class="mtx-kt-seat-a" href="${esc(need(s, 'href'))}">
+            ${img(s.name, 'mtx-kt-seat-img')}
+            <span class="mtx-kt-seat-t"><span class="mtx-kt-h3">${esc(s.name)}</span><span class="mtx-kt-seat-line">${esc(s.line)}</span></span>
+          </a>
         </li>`).join('\n');
 
 const booking = `  <section class="mtx-kt-sec mtx-kt-sec--white">
@@ -151,7 +154,7 @@ const faq = `  <section class="mtx-kt-sec mtx-kt-sec--off">
       <div class="mtx-kt-acc">
 ${Q.items.map(f => `        <details class="mtx-kt-det">
           <summary><span class="mtx-kt-sum"><strong class="mtx-kt-name">${esc(f.q)}</strong></span>${chev}</summary>
-          <div class="mtx-kt-det-b"><p>${esc(f.a)}</p></div>
+          <div class="mtx-kt-det-b"><p>${esc(f.a).replace('Rajadamnern seating guide', '<a class="mtx-kt-link mtx-kt-link--dark" href="/rajadamnern-stadium-seating">Rajadamnern seating guide</a>')}</p></div>
         </details>`).join('\n')}
       </div>
     </div>
@@ -171,7 +174,7 @@ ${R.links.map(l => `        <li><a class="mtx-kt-link mtx-kt-link--dark" href="$
 /* ----------------------------------------------------------- sticky bar -- */
 const bar = `  <a class="mtx-kt-bar" href="${BOOK}" data-mtx-kt-bar><span>${esc(C.bar.price)}</span><span class="mtx-kt-bar-r">${esc(C.bar.label)}</span></a>`;
 
-writeFileSync('body.html', [utility, hero, booking, why, fighters, plan, confidence, faq, related, bar].join('\n\n') + '\n\n');
+writeFileSync('body.html', [hero, utility, booking, why, fighters, plan, confidence, faq, related, bar].join('\n\n') + '\n\n');
 
 /* --------------------------------------------------------------- schema -- */
 const url = 'https://muaytix.com' + C.seo.path;
