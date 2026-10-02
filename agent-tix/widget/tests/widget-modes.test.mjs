@@ -193,7 +193,9 @@ console.log('\nA sold-out class on a one-class widget does not point at a button
   const {p,ctx}=await page('<div class="muaytix-ticket-selector" data-event-id="rws_2026_09_05" data-ticket-class="LEO Section"></div>');
   await p.waitForSelector('.mtx-detail',{timeout:8000});
   const note = await p.textContent('.mtx-note');
-  check('says to choose another date', /another date/.test(note), note);
+  check('says it in Jason\'s words', note==='LEO Section is now fully booked. Please choose another seat class or another date.', note);
+  const badge = await p.textContent('.mtx-detail .mtx-pill');
+  check('the badge says Fully booked', badge.trim()==='Fully booked', badge);
   check('no mention of Change seat class', !/Change seat class/.test(note), note);
   check('never says officially', !/official/i.test(note), note);
   await ctx.close();
