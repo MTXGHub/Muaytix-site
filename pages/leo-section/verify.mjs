@@ -1,449 +1,368 @@
-/* Acceptance tests for /rajadamnern-stadium-seating/leo-section.
+/* Part F of the brief, run against the built fragment, plus the layout checks
+ * this project always runs.
  *
  *   node verify.mjs
  *
- * Every check renders inside a stand-in for the Tilda host, because Tilda is
- * not a blank page: it matches every element directly and centres text, which
- * beats anything the block inherits. The homepage shipped centred because it
- * was only ever tested on a blank page. That does not happen again.
- *
- * Document B sections 9 to 13 are implemented here: the render and copy-diff
- * test, the factual audit, the image audit, the link audit, the structured
- * data list and the mobile and visual audit.
+ * The copy is checked against brief.txt itself, not against copy.json, so the
+ * extractor and the renderer cannot agree with each other and both be wrong.
  */
 import pw from '/opt/node22/lib/node_modules/playwright/index.js';
 const { chromium } = pw;
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const frag = readFileSync('leo-live.txt', 'utf8');
-const TILDA_HOST = `
+const brief = readFileSync('brief.txt', 'utf8').split('\n');
+const norm = s => s.replace(/\s+/g, ' ').replace(/ /g, ' ').trim();
+let fails = 0;
+const copyIssues = [];
+const fail = m => { fails++; console.log('   FAIL  ' + m); };
+
+/* The host: Tilda is not a blank page. It centres text and restyles links by
+   matching elements directly, so the fragment is always tested inside it. */
+const HOST = `
   #allrecords { font-family: Arial, Helvetica, sans-serif; }
   #allrecords * { text-align: center; }
   #allrecords a { text-decoration: none; color: inherit; }
   #allrecords img { max-width: 100%; }
-  /* NO paragraph margin is simulated here. An earlier version gave #allrecords
-     p a 15px bottom margin, and because that is (1,0,1) it beat the page's own
-     rules and supplied spacing the page did not have. The spacing checks then
-     passed on a page whose paragraphs sat flush the moment the host did not
-     do that. muaytix.com is blocked from here, so what Tilda really sets
-     cannot be confirmed: the page must own its own spacing either way. */
-  #allrecords ul, #allrecords ol { list-style: none; padding: 0; }
-`;
+  #allrecords ul, #allrecords ol { list-style: none; padding: 0; }`;
 const doc = `<!doctype html><html lang="en-GB"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<style>body{margin:0}${TILDA_HOST}</style></head>
+<meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0}${HOST}</style></head>
 <body><div id="allrecords">${frag}</div></body></html>`;
 
-const DOC = (() => {
-  const out = {}; let key = null, buf = [];
-  for (const raw of readFileSync('document-a.txt', 'utf8').split('\n')) {
-    const m = raw.match(/^\[([a-z0-9._-]+)\]\s*$/i);
-    if (m) { if (key) out[key] = buf.join('\n').trim(); key = m[1]; buf = []; continue; }
-    if (raw.startsWith('#')) continue;
-    if (key) buf.push(raw);
-  }
-  if (key) out[key] = buf.join('\n').trim();
-  return out;
-})();
-const data = JSON.parse(readFileSync('dynamic-data.json', 'utf8'));
-const norm = s => s.replace(/\s+/g, ' ').replace(/ /g, ' ').trim();
-
-let fails = 0;
-const fail = m => { fails++; console.log('   FAIL  ' + m); };
-
-/* static.tildacdn.com is blocked by this environment's network policy, so
-   without this every image collapses to nothing and every measurement of how
-   big a picture is on screen is worthless. A stand-in of a plausible shape is
-   served in its place: a wide one for the wide slots, a square one for the
-   map, 4:3 for the rest. The layout measured below is then the layout a guest
-   actually gets, which is the entire point of measuring it. */
+/* static.tildacdn.com is blocked here, so pictures are served as stand-ins of
+   their real shapes. */
 const STAND = (w, h) => ({ status: 200, contentType: 'image/svg+xml',
-  body: `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="${w}" height="${h}" fill="#6f6f78"/></svg>` });
-async function servePictures(target) {
-  await target.route('**static.tildacdn.com/**', r => {
-    const u = r.request().url();
-    /* The stand-ins must be the real shapes. They were not, and a 1024 square
-       was being measured as a 1200 x 900, which is shorter: the picture-scale
-       check was passing on pictures the page will never actually be sent. */
-    if (/1000034569/.test(u)) return r.fulfill(STAND(1690, 900));  // the annotated stadium view, hero size
-    r.fulfill(STAND(1024, 1024));                                             // everything else is a 1024 square
-  });
+  body: `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="#566178"/></svg>` });
+async function pictures(page) {
+  await page.route('**static.tildacdn.com/**', r => r.fulfill(/1000034569/.test(r.request().url()) ? STAND(1690, 900) : STAND(1024, 1024)));
+}
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+async function open(w, h, opts = {}) {
+  const ctx = await browser.newContext({ viewport: { width: w, height: h }, reducedMotion: opts.reduce ? 'reduce' : 'no-preference' });
+  const p = await ctx.newPage();
+  await pictures(p);
+  await p.setContent(doc, { waitUntil: 'load' });
+  await p.evaluate(async () => { document.querySelectorAll('img').forEach(i => i.loading = 'eager');
+    await Promise.all([...document.images].map(i => i.decode().catch(() => {}))); });
+  return p;
 }
 
-const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+/* ---- Part E, read straight from the brief ---- */
+const a = brief.findIndex(l => l.startsWith('SECTION 1. '));
+const z = brief.findIndex(l => l.startsWith('BUILD NOTES (not copy)'));
+const LABELS = /^(Kicker|H1|Subheading|Intro|Fact strip|Primary CTA|Secondary link|H2|Urgency line|Trust line|CTA|Headline|Body|Detail|Photo captions|Link|Tile \d)$/;
+const copyLines = [];
+const h2s = [];
+let lastLabel = null, secNo = 0;
+for (const raw of brief.slice(a, z)) {
+  const l = raw.trim();
+  if (!l || /^=+$/.test(l) || l.startsWith('[BUILD')) continue;
+  if (/^SECTION \d+\. /.test(l)) { secNo = +l.match(/^SECTION (\d+)/)[1]; lastLabel = null; continue; }
+  if (LABELS.test(l)) { lastLabel = l; continue; }
+  const t = l.replace(/^[QA]: /, '');
+  if (lastLabel === 'H2') { h2s.push({ sec: secNo, text: t }); lastLabel = null; }
+  copyLines.push(t);
+}
+const copySet = copyLines.map(norm);
+const copyJoined = '\n' + copySet.join('\n') + '\n';
 
-/* ---- 1. Layout, at every width (Document B section 12) ---- */
-console.log('\n=== 1. LAYOUT AND MOBILE AUDIT ===');
-for (const w of [1440, 1280, 1024, 860, 620, 390]) {
-  const p = await browser.newPage({ viewport: { width: w, height: 1000 } });
-  await servePictures(p);
-  await p.setContent(doc, { waitUntil: 'load' });
-  await p.evaluate(async () => { document.querySelectorAll('img[loading="lazy"]').forEach(i => i.loading = 'eager');
-    await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
+/* ---- 0. Structure ---- */
+console.log('=== 0. STRUCTURE ===');
+{
+  const classes = new Set([...frag.matchAll(/class="([^"]+)"/g)].flatMap(m => m[1].split(/\s+/)));
+  const foreign = [...classes].filter(c => !c.startsWith('mtx-leo-') && c !== 'muaytix-ticket-selector' && c !== 'is-on' && c !== 'is-open');
+  foreign.forEach(c => fail(`class outside the mtx-leo- namespace: ${c}`));
+  if (/<(html|head|body)\b/i.test(frag)) fail('the fragment contains a document wrapper tag');
+  if (/<link\b|<script[^>]*\ssrc=|@import|https?:\/\/(fonts|cdn|ajax|unpkg)/i.test(frag)) fail('the fragment loads something from outside');
+  const scripts = [...frag.matchAll(/<script\b([^>]*)>/g)].map(m => m[1].trim());
+  const js = scripts.filter(s => !/ld\+json/.test(s));
+  if (js.length !== 1) fail(`expected one script block of behaviour, found ${js.length}`);
+  const style = (frag.match(/<style>([\s\S]*?)<\/style>/) || [])[1] || '';
+  const bad = [...style.matchAll(/(^|\})\s*([^{}@]+)\{/g)].map(m => m[2].trim()).filter(sel =>
+    sel.split(',').some(s => s.trim() && !/^(#mtx-leo\.mtx-leo-page|\.mtx-leo-page)\b/.test(s.trim()) && !/^(\d+%|from|to)$/.test(s.trim())));
+  bad.slice(0, 5).forEach(s => fail(`CSS selector not scoped to the page: ${s.slice(0, 70)}`));
+  console.log(`   ${classes.size} classes, all in the mtx-leo- namespace; ${js.length} behaviour script; no external loads; ${bad.length} unscoped selectors`);
+}
+
+/* ---- 1. Diff check ---- */
+console.log('\n=== 1. DIFF CHECK: page text against Part E ===');
+const page = await open(1440, 900);
+const { nodes, full } = await page.evaluate(() => {
+  const w = document.createTreeWalker(document.getElementById('mtx-leo'), NodeFilter.SHOW_TEXT);
+  const nodes = []; let n;
+  while ((n = w.nextNode())) {
+    const e = n.parentElement;
+    if (['STYLE', 'SCRIPT', 'NOSCRIPT'].includes(e.tagName)) continue;
+    const t = n.textContent.replace(/\s+/g, ' ').trim();
+    if (t) nodes.push(t);
+  }
+  /* Block level text, joined with a newline, so a line of copy can be looked
+     for as a whole. */
+  const blocks = [...document.querySelectorAll('#mtx-leo h1,#mtx-leo h2,#mtx-leo h3,#mtx-leo p,#mtx-leo li,#mtx-leo figcaption,#mtx-leo .mtx-leo-fact,#mtx-leo .mtx-leo-qbtn,#mtx-leo .mtx-leo-btn,#mtx-leo .mtx-leo-link')]
+    .map(e => e.textContent.replace(/\s+/g, ' ').trim()).filter(Boolean);
+  return { nodes, full: blocks.join('\n') };
+});
+const fullN = '\n' + full.split('\n').map(norm).join('\n') + '\n';
+const missing = copySet.filter(l => !fullN.includes(l) && !fullN.includes('\n' + l));
+missing.forEach(l => fail(`line of copy not on the page: "${l.slice(0, 80)}"`));
+const extra = [...new Set(nodes.filter(t => !copyJoined.includes(norm(t))))];
+extra.forEach(t => fail(`text on the page that is not in Part E: "${t.slice(0, 80)}"`));
+console.log(`   ${copySet.length} lines of copy in Part E; ${missing.length} missing from the page`);
+console.log(`   ${nodes.length} text nodes on the page; ${extra.length} not traceable to Part E`);
+console.log('   diff output: ' + (missing.length + extra.length === 0 ? 'none' : 'see failures above'));
+
+/* ---- 2. Order check ---- */
+console.log('\n=== 2. ORDER CHECK: H2s in DOM order against Part C ===');
+const domH2 = await page.evaluate(() => [...document.querySelectorAll('#mtx-leo h2')].map(h => h.textContent.trim()));
+const wantH2 = h2s.map(h => h.text);
+domH2.forEach((t, i) => console.log(`   ${String(i + 1).padStart(2)}. ${t}`));
+if (JSON.stringify(domH2.map(norm)) !== JSON.stringify(wantH2.map(norm))) fail('the H2s are not the Part E H2s in Part C order');
+const heads = await page.evaluate(() => ({ h1: document.querySelectorAll('#mtx-leo h1').length, h2: document.querySelectorAll('#mtx-leo h2').length, h3: document.querySelectorAll('#mtx-leo h3').length }));
+if (heads.h1 !== 1) fail(`the page has ${heads.h1} H1 elements`);
+const secOrder = await page.evaluate(() => [...document.querySelectorAll('#mtx-leo > header, #mtx-leo > section, #mtx-leo > div.mtx-leo-sec')].map(e =>
+  e.tagName === 'HEADER' ? 'hero' : (e.querySelector('[data-mtx-slot]') ? 'widget' : (e.querySelector('h2') ? e.querySelector('h2').textContent.slice(0, 28) : 'links'))));
+console.log(`   H1 ${heads.h1}, H2 ${heads.h2}, H3 ${heads.h3} (4 + 5 tiles and 13 questions expected: 22)`);
+if (heads.h3 !== 22) fail(`expected 22 H3 elements, found ${heads.h3}`);
+
+/* ---- 3. Keyword check ---- */
+console.log('\n=== 3. KEYWORD CHECK ===');
+const visible = norm(await page.evaluate(() => document.getElementById('mtx-leo').textContent)).toLowerCase();
+for (const k of ['leo section rajadamnern stadium', 'leo section rajadamnern', 'rajadamnern stadium leo section', 'rajadamnern leo section',
+  'leo section muay thai', 'leo class', 'rajadamnern stadium section 10', 'section 10 rajadamnern stadium', 'second class']) {
+  const n = visible.split(k).length - 1;
+  console.log(`   ${n > 0 ? 'present' : 'MISSING'}  (${String(n).padStart(2)}x)  ${k}`);
+  if (!n) copyIssues.push(`keyword string not in the rendered copy: "${k}"`);
+}
+
+/* ---- 4. Character check ---- */
+console.log('\n=== 4. CHARACTER CHECK ===');
+const ems = (frag.match(/[—–]/g) || []).length, bangs = (frag.match(/!/g) || []).length;
+console.log(`   em or en dashes in the whole fragment: ${ems};  exclamation marks in the whole fragment: ${bangs}`);
+if (ems) fail('a dash character is in the fragment');
+if (bangs) fail('an exclamation mark is in the fragment');
+
+/* ---- 5. Widget position ---- */
+console.log('\n=== 5. WIDGET POSITION ===');
+console.log('   blocks in DOM order: ' + secOrder.slice(0, 4).join(' | ') + ' | ...');
+if (secOrder[2] !== 'widget') fail('the widget is not the third block');
+{
+  const links = await page.evaluate(() => [...document.querySelectorAll('#mtx-leo a')].filter(a => /Book LEO Tickets/.test(a.textContent)).map(a => a.getAttribute('href')));
+  console.log(`   Book LEO Tickets links: ${links.length}, all to ${[...new Set(links)].join(', ')}`);
+  if (links.some(h => h !== '#mtx-leo-book')) fail('a Book LEO Tickets button does not jump to the widget');
+  for (const [w, h] of [[1440, 900], [390, 844]]) {
+    const p = await open(w, h, { reduce: true });
+    const tops = [];
+    for (const sel of ['.mtx-leo-hero .mtx-leo-btn', '#mtx-leo > section:nth-of-type(7) .mtx-leo-btn', '.mtx-leo-final .mtx-leo-btn']) {
+      await p.evaluate(() => scrollTo(0, 0));
+      await p.evaluate(s => document.querySelector(s).scrollIntoView(), sel);
+      await p.evaluate(s => document.querySelector(s).click(), sel);
+      await p.waitForTimeout(300);
+      tops.push(await p.evaluate(() => Math.round(document.getElementById('mtx-leo-book').getBoundingClientRect().top)));
+    }
+    console.log(`   ${w}px: after each button the widget is ${tops.join(', ')}px from the top of the screen`);
+    if (tops.some(t => Math.abs(t - 14) > 2)) fail(`${w}px: a button does not land on the widget`);
+    await p.context().close();
+  }
+}
+
+/* ---- 6. Mobile check ---- */
+console.log('\n=== 6. MOBILE CHECK (390 x 844) ===');
+{
+  const p = await open(390, 844);
+  const m = await p.evaluate(() => {
+    const b = document.querySelector('.mtx-leo-hero .mtx-leo-btn').getBoundingClientRect();
+    const facts = [...document.querySelectorAll('.mtx-leo-fact')].map(f => Math.round(f.getBoundingClientRect().top));
+    return { top: Math.round(b.top), bottom: Math.round(b.bottom), rows: new Set(facts).size, vh: innerHeight };
+  });
+  console.log(`   hero button: ${m.top}px to ${m.bottom}px of an ${m.vh}px screen; fact strip rows: ${m.rows}`);
+  if (m.bottom > m.vh - 120) fail(`the hero button ends at ${m.bottom}px, too close to the fold once a site header is above it`);
+  if (m.rows !== 2) fail(`the fact strip is ${m.rows} rows on a phone, not two`);
+  await p.screenshot({ path: 'qa/mobile-1-hero-button-visible.jpg', type: 'jpeg', quality: 72 });
+  const states = [];
+  const bar = () => p.evaluate(() => { const b = document.querySelector('[data-mtx-leo-bar]'); const r = b.getBoundingClientRect(); return { shown: getComputedStyle(b).display !== 'none', h: Math.round(r.height), bottom: Math.round(r.bottom), vh: innerHeight }; });
+  await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(150); states.push(['top', await bar()]);
+  await p.evaluate(() => { const w = document.getElementById('mtx-leo-book'); scrollTo(0, w.getBoundingClientRect().top + scrollY - 20); }); await p.waitForTimeout(150); states.push(['widget in view', await bar()]);
+  await p.evaluate(() => { const w = document.getElementById('mtx-leo-book'); scrollTo(0, w.getBoundingClientRect().bottom + scrollY + 400); }); await p.waitForTimeout(250); states.push(['past the widget', await bar()]);
+  await p.screenshot({ path: 'qa/mobile-2-sticky-bar-after-widget.jpg', type: 'jpeg', quality: 72 });
+  for (const [n, s] of states) console.log(`   ${n.padEnd(16)} bar shown: ${s.shown}  height ${s.h}px`);
+  if (states[0][1].shown || states[1][1].shown) fail('the bar is showing when it should not be');
+  if (!states[2][1].shown) fail('the bar does not show once the guest is past the widget');
+  if (states[2][1].h !== 56) fail(`the bar is ${states[2][1].h}px tall, not 56`);
+  const wide = await open(1024, 800);
+  await wide.evaluate(() => { const w = document.getElementById('mtx-leo-book'); scrollTo(0, w.getBoundingClientRect().bottom + scrollY + 400); }); await wide.waitForTimeout(250);
+  const ws = await wide.evaluate(() => getComputedStyle(document.querySelector('[data-mtx-leo-bar]')).display);
+  console.log(`   at 1024px wide, past the widget: bar display ${ws}`);
+  if (ws !== 'none') fail('the bar shows on a screen 768px or wider');
+  await wide.context().close();
+}
+
+/* ---- 7. Schema check ---- */
+console.log('\n=== 7. SCHEMA CHECK ===');
+{
+  const blocks = [...frag.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => m[1]);
+  if (blocks.length !== 1) fail(`expected one JSON-LD block, found ${blocks.length}`);
+  let j = null; try { j = JSON.parse(blocks[0]); } catch (e) { fail('the JSON-LD does not parse: ' + e.message); }
+  if (j) {
+    if (j['@context'] !== 'https://schema.org' || j['@type'] !== 'FAQPage') fail('the block is not a FAQPage');
+    const qa = [];
+    let q = null;
+    for (const raw of brief.slice(a, z)) { const l = raw.trim(); if (l.startsWith('Q: ')) q = l.slice(3); else if (l.startsWith('A: ') && q) { qa.push([q, l.slice(3)]); q = null; } }
+    if (j.mainEntity.length !== qa.length) fail(`schema has ${j.mainEntity.length} questions, Part E has ${qa.length}`);
+    qa.forEach(([qq, aa], i) => {
+      const e = j.mainEntity[i];
+      if (!e || e['@type'] !== 'Question' || e.name !== qq) fail(`question ${i + 1} differs from Part E`);
+      else if (e.acceptedAnswer['@type'] !== 'Answer' || e.acceptedAnswer.text !== aa) fail(`answer ${i + 1} differs from Part E`);
+    });
+    const bad = Object.keys(j).filter(k => !['@context', '@type', 'mainEntity'].includes(k));
+    if (bad.length) fail(`unexpected schema fields: ${bad.join(', ')}`);
+    console.log(`   one FAQPage block, ${j.mainEntity.length} questions, every question and answer identical to Part E, no other schema`);
+    console.log('   structural validation only: Google\'s Rich Results Test is an external service and was not run from here');
+  }
+}
+
+/* ---- 8. Meta check ---- */
+console.log('\n=== 8. META CHECK ===');
+{
+  const settings = readFileSync('TILDA-PAGE-SETTINGS.txt', 'utf8');
+  const titleBrief = brief[brief.findIndex(l => l.startsWith('Meta title (')) + 1].trim();
+  const descBrief = brief[brief.findIndex(l => l.startsWith('Meta description (')) + 1].trim();
+  const wantT = +brief.find(l => l.startsWith('Meta title (')).match(/\((\d+) characters/)[1];
+  const wantD = +brief.find(l => l.startsWith('Meta description (')).match(/\((\d+) characters/)[1];
+  console.log(`   title (${titleBrief.length} characters, brief says ${wantT}): ${titleBrief}`);
+  console.log(`   description (${descBrief.length} characters, brief says ${wantD}): ${descBrief}`);
+  if (titleBrief.length !== wantT) fail(`the title is ${titleBrief.length} characters, the brief says ${wantT}`);
+  if (descBrief.length !== wantD) fail(`the description is ${descBrief.length} characters, the brief says ${wantD}`);
+  if (!settings.includes(titleBrief) || !settings.includes(descBrief)) fail('TILDA-PAGE-SETTINGS.txt does not carry the exact title and description');
+  if ((settings.match(new RegExp(titleBrief.replace(/[|]/g, '\\|'), 'g')) || []).length !== 2) fail('the Open Graph title is not identical to the title');
+  if (!/CANONICAL\s+https:\/\/muaytix\.com\/rajadamnern-stadium-seating\/leo-section\s*$/.test(settings)) fail('the canonical is not the page URL');
+}
+
+/* ---- 9. The checks this project always runs ---- */
+console.log('\n=== 9. LAYOUT, IMAGES, CONTRAST, ACCESSIBILITY ===');
+for (const w of [1440, 1280, 1024, 860, 768, 620, 390]) {
+  const p = await open(w, 1000);
   const r = await p.evaluate(() => ({
     over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    h: document.documentElement.scrollHeight,
-    small: [...document.querySelectorAll('.mtx-leo a.mtx-leo__btn')]
-      .map(a => a.getBoundingClientRect()).filter(r => r.height > 0 && r.height < 44).length,
-    clipped: [...document.querySelectorAll('.mtx-leo p, .mtx-leo h1, .mtx-leo h2, .mtx-leo h3, .mtx-leo td, .mtx-leo th')]
-      .filter(e => { const s = getComputedStyle(e);
-        return (s.textOverflow === 'ellipsis' || s.overflow === 'hidden') && e.scrollHeight > e.clientHeight + 1; }).length,
+    small: [...document.querySelectorAll('#mtx-leo a.mtx-leo-btn, #mtx-leo .mtx-leo-qbtn')].map(a => a.getBoundingClientRect()).filter(r => r.height > 0 && r.height < 44).length,
+    flush: [...document.querySelectorAll('#mtx-leo h2, #mtx-leo h3')].filter(h => !h.classList.contains('mtx-leo-q')).map(h => { const n = h.nextElementSibling; if (!n) return null;
+      const g = n.getBoundingClientRect().top - h.getBoundingClientRect().bottom; return g < 8 ? h.textContent.slice(0, 40) : null; }).filter(Boolean),
+    body: parseFloat(getComputedStyle(document.querySelector('#mtx-leo .mtx-leo-body')).fontSize),
+    tiny: [...document.querySelectorAll('#mtx-leo p:not(.mtx-leo-kicker), #mtx-leo li, #mtx-leo dd, #mtx-leo figcaption')].filter(e => parseFloat(getComputedStyle(e).fontSize) < 15).map(e => e.tagName + ' ' + parseFloat(getComputedStyle(e).fontSize) + 'px ' + e.textContent.trim().slice(0, 24)),
+    cols4: [...new Set([...document.querySelectorAll('.mtx-leo-tiles--four .mtx-leo-tile')].map(t => Math.round(t.getBoundingClientRect().top)))].length,
+    cols5: [...new Set([...document.querySelectorAll('.mtx-leo-tiles--five .mtx-leo-tile')].map(t => Math.round(t.getBoundingClientRect().top)))].length,
+    maxw: Math.round(document.querySelector('.mtx-leo-wrap').getBoundingClientRect().width),
+    h1: parseFloat(getComputedStyle(document.querySelector('.mtx-leo-h1')).fontSize),
+    h2: parseFloat(getComputedStyle(document.querySelector('.mtx-leo-sec .mtx-leo-h2')).fontSize),
   }));
-  console.log(`   ${String(w).padStart(5)}px  overflow ${r.over}px  height ${r.h}px  small taps ${r.small}  clipped ${r.clipped}`);
+  console.log(`   ${String(w).padStart(5)}px  overflow ${r.over}  small taps ${r.small}  flush headings ${r.flush.length}  body ${r.body}px  H1 ${r.h1}px  H2 ${r.h2}px  rows of tiles: four-up ${r.cols4}, five-up ${r.cols5}  content width ${r.maxw}`);
   if (r.over > 0) fail(`${w}px scrolls sideways by ${r.over}px`);
   if (r.small) fail(`${w}px has ${r.small} button(s) under 44px tall`);
-  if (r.clipped) fail(`${w}px has ${r.clipped} truncated text block(s)`);
-  await p.close();
+  r.flush.forEach(t => fail(`${w}px: "${t}" is flush against what follows`));
+  if (r.body < 16) fail(`${w}px: body text is ${r.body}px`);
+  r.tiny.forEach(t => fail(`${w}px: text under 15px: ${t}`));
+  if (w >= 1200 && (r.cols4 !== 1 || r.cols5 !== 1)) fail(`${w}px: tiles are not a single row`);
+  if (w >= 768 && w < 1200 && (r.cols4 !== 2 || r.cols5 !== 2)) fail(`${w}px: tiles are not 2x2 and 3+2`);
+  if (w < 768 && (r.cols4 !== 4 || r.cols5 !== 5)) fail(`${w}px: tiles are not a single column`);
+  if (w === 1440 && r.maxw > 1100) fail('the content is wider than 1100px');
+  if (w === 390 && (r.h1 !== 40 || r.h2 !== 28)) fail('headings are not 40px and 28px on a phone');
+  if (w === 1440 && (r.h1 !== 56 || r.h2 !== 36)) fail('headings are not 56px and 36px on desktop');
+  await p.context().close();
 }
-
-/* ---- 1b. Two whole families of fault, caught by measurement ---- */
-console.log('\n=== 1b. SPACING AND PICTURE SCALE ===');
-for (const [w, h] of [[1440, 900], [1280, 800], [1000, 520], [390, 844]]) {
-  const p = await browser.newPage({ viewport: { width: w, height: h } });
-  await servePictures(p);
-  await p.setContent(doc, { waitUntil: 'load' });
-  await p.evaluate(async () => { document.querySelectorAll('img[loading="lazy"]').forEach(i => i.loading = 'eager');
-    await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
-  const r = await p.evaluate(() => {
-    /* A heading flush against the thing under it is almost always a reset
-       rule at (0,1,1) beating a single-class margin-top. It has bitten this
-       project three times, so it is measured rather than eyeballed. */
-    const tight = [...document.querySelectorAll('.mtx-leo h2, .mtx-leo h3')].map(hd => {
-      const next = hd.nextElementSibling;
-      if (!next) return null;
-      const gap = next.getBoundingClientRect().top - hd.getBoundingClientRect().bottom;
-      return gap < 14 ? { text: hd.textContent.trim().slice(0, 44), gap: Math.round(gap) } : null;
-    }).filter(Boolean);
-    /* Consecutive paragraphs with no air between them: the same reset-beats-
-       single-class fault as a flush heading, one level down. */
-    const runOn = [...document.querySelectorAll('.mtx-leo p + p')].map(p => {
-      const prev = p.previousElementSibling;
-      /* Inside a multi-column container the next paragraph can start ABOVE
-         the bottom of the one before it, because it is in the next column.
-         Geometry says nothing there, so the spacing is checked from the
-         computed style instead of being skipped. */
-      const multi = p.closest('.mtx-leo__cols');
-      if (multi) {
-        const air = parseFloat(getComputedStyle(prev).marginBottom)
-                  + parseFloat(getComputedStyle(p).marginTop);
-        return air < 6 ? { text: p.textContent.trim().slice(0, 44), gap: Math.round(air) } : null;
-      }
-      const gap = p.getBoundingClientRect().top - prev.getBoundingClientRect().bottom;
-      return gap < 6 ? { text: p.textContent.trim().slice(0, 44), gap: Math.round(gap) } : null;
-    }).filter(Boolean);
-    /* A picture in the flow of the page is not allowed to own the screen.
-       A background layer is excluded: the hero photograph is positioned to
-       fill its own band and is supposed to, which is a different thing from
-       a content picture pushing the copy under it off the fold. */
-    const huge = [...document.querySelectorAll('.mtx-leo img')].filter(i => {
-      const cs = getComputedStyle(i);
-      return cs.position === 'static' || cs.position === 'relative';
-    }).map(i => {
-      const b = i.getBoundingClientRect();
-      const share = b.height / window.innerHeight;
-      return share > 0.62 && b.height > 0 ? { src: i.getAttribute('src').split('/').pop(), pct: Math.round(share * 100) } : null;
-    }).filter(Boolean);
-    /* "I want people to be able to see it clearly." Three things are measured
-       rather than trusted: the graphic is square, so no part of the frame or
-       either line of type is cut off; it is inside the hero; and the point at
-       its centre belongs to the graphic itself, so no headline, wash or
-       button is painted over it. */
-    const markEl = document.querySelector('.mtx-leo__hero-mark img');
-    let mark = null;
-    if (markEl) {
-      /* elementFromPoint only answers for points inside the viewport, so the
-         graphic is scrolled into view before the hit test. Without this the
-         check reported "something is painted over it" on a phone, where the
-         graphic simply sits below the fold. */
-      markEl.scrollIntoView({ block: 'center' });
-      const b = markEl.getBoundingClientRect();
-      const top = document.elementFromPoint(
-        Math.round(b.left + b.width / 2), Math.round(b.top + b.height / 2));
-      window.scrollTo(0, 0);
-      mark = {
-        w: Math.round(b.width), h: Math.round(b.height),
-        ratio: +(b.width / b.height).toFixed(3),
-        inHero: !!markEl.closest('.mtx-leo__hero'),
-        onTop: top === markEl || markEl.contains(top),
-        clipped: b.left < -1 || b.right > window.innerWidth + 1,
-      };
-    }
-    return { tight, runOn, huge, mark };
+{
+  const imgs = await page.evaluate(() => [...document.querySelectorAll('#mtx-leo img')].map(i => ({ src: i.getAttribute('src').split('/').pop(), alt: i.getAttribute('alt'),
+    w: i.getAttribute('width'), h: i.getAttribute('height'), lazy: i.getAttribute('loading') })));
+  const wantAlt = ['LEO Section Rajadamnern Stadium, Section 10 seating', 'View from the front row of LEO Section Rajadamnern Stadium',
+    'View from Row G in LEO Section at Rajadamnern Stadium', 'LEO Section bench seating, Section 10, Rajadamnern Stadium'];
+  console.log(`   ${imgs.length} images; alt lines: ${imgs.map(i => i.alt === null ? 'none' : 'ok').join(' ')}`);
+  for (const w of wantAlt) if (!imgs.some(i => i.alt === w)) fail(`image alt not as the brief gives it: ${w}`);
+  const loading = [...frag.matchAll(/<img\b[^>]*loading="(\w+)"/g)].map(m => m[1]);
+  imgs.forEach((i) => { if (!i.w || !i.h) fail(`image ${i.src} has no width and height`); });
+  if (loading[0] !== 'eager' || loading.slice(1).some(x => x !== 'lazy') || loading.length !== 4) fail(`image loading in the fragment is ${loading.join(', ')}; the hero is eager and the rest lazy`);
+  console.log(`   image loading as shipped: ${loading.join(', ')}`);
+}
+{
+  /* FAQ. Every answer present at load, the first open, the rest closed. */
+  const f = await page.evaluate(() => ({
+    answers: document.querySelectorAll('#mtx-leo .mtx-leo-a').length,
+    withText: [...document.querySelectorAll('#mtx-leo .mtx-leo-a')].filter(a => a.textContent.trim().length > 20).length,
+    open: [...document.querySelectorAll('#mtx-leo .mtx-leo-qbtn')].map(b => b.getAttribute('aria-expanded')),
+    hiddenOthers: [...document.querySelectorAll('#mtx-leo .mtx-leo-a')].slice(1).every(a => a.hidden),
+  }));
+  console.log(`   FAQ: ${f.answers} answers in the DOM at load (${f.withText} with text); first open: ${f.open[0]}; the rest closed: ${f.open.slice(1).every(x => x === 'false')}`);
+  if (f.answers !== 13 || f.withText !== 13) fail('not every FAQ answer is in the DOM at load');
+  if (f.open[0] !== 'true' || !f.open.slice(1).every(x => x === 'false') || !f.hiddenOthers) fail('the FAQ is not first-open, rest-closed at load');
+  await page.click('#mtx-leo-q3');
+  const after = await page.evaluate(() => ({ q3: document.getElementById('mtx-leo-q3').getAttribute('aria-expanded'), a3hidden: document.getElementById('mtx-leo-a3').hidden }));
+  if (after.q3 !== 'true' || after.a3hidden) fail('clicking a question does not open its answer');
+  await page.click('#mtx-leo-q3');
+  const again = await page.evaluate(() => document.getElementById('mtx-leo-a3').hidden);
+  if (!again) fail('clicking an open question does not close it');
+  console.log('   FAQ click: opens, then closes, aria-expanded follows');
+}
+{
+  const lum = c => { const v = c.map(x => x / 255).map(x => x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4)); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; };
+  const bar = await open(390, 844);
+  await bar.evaluate(() => { document.querySelector('[data-mtx-leo-bar]').classList.add('is-on'); });
+  const nodesC = await bar.evaluate(() => {
+    const out = []; const w = document.createTreeWalker(document.getElementById('mtx-leo'), NodeFilter.SHOW_TEXT); let n;
+    while ((n = w.nextNode())) {
+      const txt = n.textContent.trim(); if (!txt) continue;
+      const e = n.parentElement; if (['STYLE', 'SCRIPT', 'NOSCRIPT'].includes(e.tagName)) continue;
+      const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || cs.display === 'none') continue;
+      if (e.closest('[hidden]')) continue;
+      const parse = s => { const m = (s.match(/[\d.]+/g) || []).map(Number); return m.length ? [m[0] | 0, m[1] | 0, m[2] | 0, m.length > 3 ? m[3] : 1] : [0, 0, 0, 0]; };
+      let stack = [], p = e;
+      while (p) { const c = parse(getComputedStyle(p).backgroundColor); if (c[3] > 0) stack.push(c); if (c[3] >= 1) break; p = p.parentElement; }
+      if (!stack.length || stack[stack.length - 1][3] < 1) stack.push([255, 255, 255, 1]);
+      let acc = stack.pop().slice(0, 3);
+      while (stack.length) { const c = stack.pop(); acc = acc.map((v, i) => Math.round(c[i] * c[3] + v * (1 - c[3]))); }
+      out.push({ txt: txt.slice(0, 36), fg: cs.color, bg: acc, size: parseFloat(cs.fontSize), weight: Number(cs.fontWeight) || 400 });
+    } return out;
   });
-  r.tight.forEach(t => fail(`${w}x${h}: "${t.text}" sits ${t.gap}px above the next element`));
-  r.runOn.forEach(t => fail(`${w}x${h}: "${t.text}" runs into the paragraph above it, ${t.gap}px gap`));
-  r.huge.forEach(x => fail(`${w}x${h}: ${x.src} is ${x.pct}% of the screen height`));
-  if (!r.mark) fail(`${w}x${h}: the LEO Section graphic is not in the hero`);
-  else {
-    if (Math.abs(r.mark.ratio - 1) > 0.02) fail(`${w}x${h}: the LEO Section graphic is ${r.mark.ratio}:1, not square`);
-    if (!r.mark.inHero) fail(`${w}x${h}: the LEO Section graphic is outside the hero`);
-    if (!r.mark.onTop) fail(`${w}x${h}: something is painted over the LEO Section graphic`);
-    if (r.mark.clipped) fail(`${w}x${h}: the LEO Section graphic runs off the screen`);
-    if (r.mark.w < 240) fail(`${w}x${h}: the LEO Section graphic is only ${r.mark.w}px wide`);
-    console.log(`   ${String(w) + 'x' + h}  LEO Section graphic ${r.mark.w}x${r.mark.h} in the hero, nothing over it`);
+  let bad = 0;
+  for (const n of nodesC) {
+    const f = (n.fg.match(/\d+(\.\d+)?/g) || [0, 0, 0]).slice(0, 3).map(Number);
+    const r = (Math.max(lum(f), lum(n.bg)) + .05) / (Math.min(lum(f), lum(n.bg)) + .05);
+    const large = n.size >= 24 || (n.size >= 18.66 && n.weight >= 700);
+    if (r < (large ? 3 : 4.5)) { bad++; fail(`contrast ${r.toFixed(2)} at ${n.size}px: "${n.txt}"`); }
   }
-  console.log(`   ${String(w) + 'x' + h}  headings flush: ${r.tight.length}   paragraphs run together: ${r.runOn.length}   pictures over 62% of the screen: ${r.huge.length}`);
-  await p.close();
+  console.log(`   contrast: ${nodesC.length} text nodes, ${bad} failing (AA)`);
+  await bar.context().close();
+}
+{
+  /* Keyboard focus is visible on every control. */
+  const f = readFileSync('style.css', 'utf8');
+  for (const sel of ['.mtx-leo-btn:focus-visible', '.mtx-leo-qbtn:focus-visible', '.mtx-leo-link:focus-visible', '.mtx-leo-bar:focus-visible'])
+    if (!f.includes(sel)) fail(`no visible focus style for ${sel}`);
+  console.log('   focus-visible styles present for buttons, links, FAQ rows and the bar');
 }
 
-const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
-await servePictures(page);
-await page.setContent(doc, { waitUntil: 'load' });
-const visible = norm(await page.evaluate(() => document.querySelector('.mtx-leo').textContent));
-
-/* ---- 2. Copy diff (Document B section 9) ---- */
-console.log('\n=== 2. RENDERED COPY DIFF against Document A ===');
-const SKIP = new Set(['meta.seo_title', 'meta.description', 'meta.social_title', 'meta.social_description']);
-let checked = 0; const missing = [];
-for (const [k, v] of Object.entries(DOC)) {
-  if (SKIP.has(k)) continue;
-  checked++;
-  if (k.startsWith('alt.')) continue;            /* alt text is checked separately */
-  if (!visible.includes(norm(v))) missing.push(k);
+/* ---- 10. Wide-face stress test ----
+   Arial Black is not installed here, so every render above uses a lighter
+   stand-in and is narrower than the real thing. This pass swaps the display
+   face for one that is wider than Arial Black (DejaVu Sans Bold) so that a
+   cell, a heading or a button that only fits in the narrow face shows up. */
+console.log('\n=== 10. WIDE-FACE STRESS TEST (display face swapped for a wider one) ===');
+for (const [w, h] of [[320, 640], [360, 740], [390, 844], [768, 1000], [1440, 900]]) {
+  const p = await open(w, h);
+  await p.addStyleTag({ content: '.mtx-leo-page { --display: "DejaVu Sans", sans-serif; } .mtx-leo-page .mtx-leo-h1, .mtx-leo-page .mtx-leo-h2, .mtx-leo-page .mtx-leo-h3, .mtx-leo-page .mtx-leo-fact dd, .mtx-leo-page .mtx-leo-btn, .mtx-leo-page .mtx-leo-headline, .mtx-leo-page .mtx-leo-qbtn { font-family: "DejaVu Sans", sans-serif; font-weight: 900; }' });
+  await p.waitForTimeout(150);
+  const r = await p.evaluate(() => ({
+    over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    cellsOver: [...document.querySelectorAll('#mtx-leo .mtx-leo-fact dd, #mtx-leo .mtx-leo-fact dt, #mtx-leo .mtx-leo-btn, #mtx-leo .mtx-leo-tile h3')].filter(e => e.scrollWidth > e.clientWidth + 1).map(e => e.textContent.trim().slice(0, 24)),
+    btn: Math.round(document.querySelector('.mtx-leo-hero .mtx-leo-btn').getBoundingClientRect().bottom),
+  }));
+  console.log(`   ${String(w).padStart(5)}px  overflow ${r.over}  cells wider than their box: ${r.cellsOver.length}  hero button ends at ${r.btn}px of ${h}px`);
+  if (r.over > 0) fail(`wide face, ${w}px: the page scrolls sideways by ${r.over}px`);
+  r.cellsOver.forEach(t => fail(`wide face, ${w}px: "${t}" is wider than its box`));
+  if (w <= 430 && r.btn > h - 120) fail(`wide face, ${w}px: the hero button ends at ${r.btn}px of ${h}px`);
+  await p.context().close();
 }
-missing.forEach(k => fail(`locked block [${k}] does not appear verbatim in the rendered page`));
-console.log(`   ${checked - missing.length} of ${checked} locked blocks render exactly as written`);
-console.log(`   Unauthorised wording differences: ${missing.length}`);
-
-/* ---- 3. Nothing authored outside Document A (Document B section 3) ---- */
-console.log('\n=== 3. INDEPENDENTLY AUTHORED SENTENCES ===');
-const onPage = await page.evaluate(() =>
-  [...document.querySelectorAll('.mtx-leo h1, .mtx-leo h2, .mtx-leo h3, .mtx-leo p, .mtx-leo li, .mtx-leo summary, .mtx-leo th, .mtx-leo td, .mtx-leo a')]
-    .filter(e => ![...e.children].some(c => c.textContent.trim()))
-    .map(e => e.textContent.replace(/\s+/g, ' ').trim()).filter(Boolean));
-const approved = Object.values(DOC).map(norm);
-const extra = [...new Set(onPage.filter(s => !approved.some(a => a === norm(s) || a.includes(norm(s)))))];
-extra.forEach(s => fail(`independently authored text on page: "${s.slice(0, 90)}"`));
-console.log(`   ${onPage.length} visible text nodes; ${extra.length} not traceable to Document A`);
-
-/* ---- 3b. Alignment inside the host ---- */
-console.log('\n=== 3b. ALIGNMENT INSIDE THE TILDA HOST ===');
-const ALIGN = [
-  ['.mtx-leo__hero h1', 'left'], ['.mtx-leo__lede', 'left'], ['.mtx-leo__fact dd', 'left'],
-  ['.mtx-leo__answer-lead', 'left'], ['.mtx-leo__answer-copy', 'left'],
-  ['.mtx-leo__cols p', 'left'], ['.mtx-leo__map-body p', 'left'],
-  ['.mtx-leo__split-body p', 'left'], ['.mtx-leo__caveat', 'left'],
-  ['.mtx-leo__who h3', 'left'], ['.mtx-leo__who p', 'left'],
-  ['.mtx-leo__compare li', 'left'], ['.mtx-leo__practical li', 'left'],
-  ['.mtx-leo__booking-copy', 'left'], ['.mtx-leo__faq summary h3', 'left'],
-  ['.mtx-leo__faq p', 'left'], ['.mtx-leo__close-copy', 'left'],
-];
-const aligned = await page.evaluate(sel => sel.map(([s, want]) => {
-  const e = document.querySelector(s);
-  return { s, want, got: e ? getComputedStyle(e).textAlign : null };
-}), ALIGN);
-let amiss = 0;
-for (const a of aligned) {
-  if (a.got === null) { fail(`alignment check found nothing matching ${a.s}`); amiss++; continue; }
-  if (a.got !== a.want) { fail(`${a.s} is ${a.got} inside the Tilda host, should be ${a.want}`); amiss++; }
-}
-console.log(`   ${ALIGN.length} elements checked; ${amiss} aligned the wrong way`);
-
-/* ---- 4. Factual audit (Document B section 10) ---- */
-console.log('\n=== 4. FACTUAL AUDIT ===');
-/* Document B section 10. The point of this audit is to catch a claim THIS
-   BUILD introduced, not to re-litigate the owner's own approved wording. So a
-   term is only a failure where it appears somewhere that section 3 could not
-   trace back to Document A.
-   "official" is matched as the marketing adjective and not as "officials",
-   the match officials, who appear in two approved sentences. */
-const BANNED = [
-  /* Document B section 8, word for word, plus Document A section 7. */
-  ['official', /\bofficial\b/i],
-  ['second level', /second[ -]level/i],
-  ['second floor', /second[ -]floor/i],
-  ['standing', /\bstanding\b/i],
-  ['no seats', /\bno seats\b/i],
-  ['first come, first served', /first come,? first served/i],
-  ['betting every night', /betting every night|bet every night/i],
-  ['easy betting', /easy betting/i],
-  ['gambling attraction', /gambling attraction/i],
-  ['unsuitable for children', /unsuitable for children/i],
-  ['adults only', /adults only/i],
-  ['loudest section', /loudest section/i],
-  ['best view', /best view/i],
-  ['unobstructed', /\bunobstructed\b/i],
-  ['panoramic', /\bpanoramic\b/i],
-  ['guaranteed front row', /guaranteed front row|front row is guaranteed/i],
-  ['guaranteed best position', /guaranteed best position/i],
-  ['guaranteed betting access', /guaranteed betting|betting access is guaranteed/i],
-  ['guaranteed betting experience', /guaranteed betting experience/i],
-  ['simply turn up and bet', /simply turn up and bet/i],
-  ['padded seating', /\bpadded\b/i],
-  ['extra legroom', /extra legroom/i],
-  ['local spectators only', /local spectators only/i],
-  ['surrounded by Thai gamblers', /surrounded by thai/i],
-  ['safest section', /safest section/i],
-  ['dangerous section', /dangerous section/i],
-  ['nearly sold out', /nearly sold out/i],
-  ['limited seats', /limited seats/i],
-];
-const approvedBlob = Object.values(DOC).map(norm).join(' \u241F ');
-let flagged = 0;
-for (const [label, re] of BANNED) {
-  if (!re.test(visible)) continue;
-  /* Several of these words appear in the owner's own copy precisely because
-     it denies them: "Unassigned does not mean standing", "it should not be
-     described as a simple turn-up-and-bet process". Flagging his sentence
-     would be flagging the page for saying the right thing, so the check asks
-     where the phrase came from before it fails. */
-  if (re.test(approvedBlob)) {
-    const where = Object.entries(DOC).filter(([, val]) => re.test(val)).map(([key]) => key);
-    console.log(`   "${label}" appears only inside approved copy: ${where.join(', ')}`);
-    continue;
-  }
-  fail(`unsupported claim introduced by this build: "${label}"`); flagged++;
-}
-console.log(`   ${BANNED.length} terms checked; ${flagged} introduced by this build`);
-
-/* Document A section 1 and the final acceptance standard. These are the four
-   things this page is most likely to get wrong, so each is asserted rather
-   than assumed. */
-const MUST = [
-  ['every ticket guarantees a seat',        /every (leo )?ticket guarantees a seat/i],
-  ['unassigned does not mean standing',     /unassigned does not mean standing/i],
-  ['betting is limited to three nights',    /wednesday,? thursday and sunday|wednesday new power/i],
-  ['a guest does not have to bet',          /you do not have to take part in betting/i],
-  ['children are not excluded',             /no age restriction preventing children/i],
-  ['Row D reads as a recommendation',       /generally recommends around row d/i],
-];
-for (const [what, re] of MUST) if (!re.test(visible)) fail(`the page does not state: ${what}`);
-console.log(`   ${MUST.length} required statements present: seat guarantee, not standing, three named nights, no obligation to bet, children not excluded, Row D a recommendation`);
-
-/* Document A section 3: do not lead with "second level". The phrase is banned
-   outright above; this checks the positioning it protects is actually made. */
-if (!/same general tier and elevation as club class/i.test(visible))
-  fail('the page does not state that LEO is on the same tier and elevation as Club Class');
-
-/* Document A section 5: the price on the page must still match live inventory. */
-const pc = data.price_checked;
-if (!visible.includes(pc.document_a)) fail(`the LEO price ${pc.document_a} is not on the page`);
-if ((pc.live_minor / 100).toLocaleString('en-GB') + ' THB' !== pc.document_a)
-  fail('the LEO price no longer matches live inventory');
-console.log(`   LEO price ${pc.document_a} checked against live inventory: match`);
-
-/* ---- 5. Image audit (Document B section 6) ---- */
-console.log('\n=== 5. IMAGE AUDIT ===');
-const imgs = await page.evaluate(() =>
-  [...document.querySelectorAll('.mtx-leo img')].map(i => ({ src: i.getAttribute('src'), alt: i.getAttribute('alt') })));
-
-const SUPPLIED = new Map(data.photographs_supplied.map(p => [p.url, p]));
-const placed = [
-  ['view_front', data.images.view_front],
-  ['view_back',  data.images.view_back],
-  ['seating',    data.images.seating],
-];
-console.log("   Slot         | File          | Alt is the owner's own note");
-for (const [slot, img] of placed) {
-  const found = imgs.filter(i => i.src === img.url);
-  if (!found.length) { fail(`no <img> on the page uses the ${slot} photograph`); continue; }
-  const owner = SUPPLIED.get(img.url);
-  if (!owner) { fail(`${slot} uses a file the owner did not supply: ${img.url}`); continue; }
-  const bad = found.filter(i => norm(i.alt) !== norm(owner.owner_note));
-  if (bad.length) fail(`${slot} alt text is not the owner's own note for that file`);
-  console.log(`   ${slot.padEnd(12)} | ${img.url.split('/').pop().padEnd(13)} | ${bad.length ? 'NO' : 'yes'}`);
-}
-const onPageUrls = new Set(imgs.map(i => i.src));
-for (const p of data.photographs_supplied)
-  if (!onPageUrls.has(p.url)) fail(`photograph ${p.id} was supplied and is not on the page`);
-console.log(`   ${data.photographs_supplied.filter(p => onPageUrls.has(p.url)).length} of ${data.photographs_supplied.length} supplied photographs are on the page`);
-
-for (const [slot, img] of [['hero', data.images.hero], ['map', data.images.map], ['mark', data.images.mark]]) {
-  const found = imgs.filter(i => i.src === img.url);
-  if (!found.length) { fail(`the ${slot} image is not on the page`); continue; }
-  const want = slot === 'map' ? DOC['alt.map'] : img.alt;
-  if (found.some(i => norm(i.alt) !== norm(want))) fail(`the ${slot} alt text is not the approved line`);
-  console.log(`   ${slot.padEnd(12)} | ${img.url.split('/').pop().padEnd(13)} | approved line`);
-}
-console.log('   atmosphere   | none supplied | reported, not substituted');
-
-const approvedUrls = new Set([...SUPPLIED.keys(), data.images.map.url, data.images.hero.url, data.images.mark.url]);
-imgs.filter(i => !approvedUrls.has(i.src)).forEach(i => fail(`unapproved image on page: ${i.src}`));
-/* Document A section 8: no image may suggest a standing-only area, and Row D
-   is a recommendation, never a position attached to a picture. */
-for (const i of imgs) if (/\bstanding\b/i.test(i.alt || '')) fail(`an image alt suggests standing: ${i.src}`);
-for (const i of imgs) if (/row d\b/i.test(i.alt || '')) fail(`an image is described as Row D: ${i.src}`);
-for (const i of imgs) if (!(i.alt || '').trim()) fail(`image with no alt text: ${i.src}`);
-console.log(`   ${imgs.length} images, ${imgs.filter(i => !approvedUrls.has(i.src)).length} outside the approved set`);
-
-/* ---- 6. Link audit (Document B section 11) ---- */
-console.log('\n=== 6. INTERNAL LINK AUDIT ===');
-const links = await page.evaluate(() =>
-  [...document.querySelectorAll('.mtx-leo a')].map(a => ({
-    href: a.getAttribute('href'), text: a.textContent.trim(),
-    imgAlt: [...a.querySelectorAll('img')].map(i => i.getAttribute('alt') || '').join('').trim() })));
-const ALLOWED = new Set(Object.values(data.destinations));
-const REQUIRED = ['/rajadamnern-stadium-seating', '/rajadamnern-stadium-seat-map',
-  '/rajadamnern-stadium', '/rajadamnern-stadium-tickets'];
-for (const l of links) {
-  if (!l.text && !l.imgAlt) fail(`link with neither text nor an image with alt text: ${l.href}`);
-  if (!ALLOWED.has(l.href)) fail(`destination not in Document A section 8: ${l.href}`);
-}
-const hrefs = new Set(links.map(l => l.href));
-for (const r of REQUIRED) if (!hrefs.has(r)) fail(`Document A section 9 requires a link to ${r} and there is none`);
-console.log(`   ${links.length} links, ${hrefs.size} distinct, ${REQUIRED.length}/${REQUIRED.length} required destinations present`);
-/* The page must not link to itself. */
-if (hrefs.has('/rajadamnern-stadium-seating/leo-section')) fail('the page links to itself');
-
-/* ---- 7. Headings and structured data ---- */
-console.log('\n=== 7. HEADINGS AND STRUCTURED DATA ===');
-const heads = await page.evaluate(() => [...document.querySelectorAll('.mtx-leo h1,.mtx-leo h2,.mtx-leo h3')].map(h => h.tagName));
-const h1 = heads.filter(h => h === 'H1').length;
-if (h1 !== 1) fail(`the page has ${h1} H1 elements, it must have exactly one`);
-console.log(`   H1 ${h1}, H2 ${heads.filter(h => h === 'H2').length}, H3 ${heads.filter(h => h === 'H3').length}`);
-const schema = JSON.parse(readFileSync('schema.json', 'utf8'));
-const types = schema['@graph'].map(n => n['@type']);
-console.log(`   schema: ${types.join(', ')}`);
-if (types.includes('Event')) fail('Event schema must not appear on a seating page');
-const faqQ = schema['@graph'].find(n => n['@type'] === 'FAQPage').mainEntity;
-for (const q of faqQ) if (!visible.includes(norm(q.name))) fail(`FAQ schema question is not visible on the page: ${q.name}`);
-console.log(`   ${faqQ.length} FAQ entries in schema, all visible on the page`);
-/* Field names only. The approved meta description contains the word "prices",
-   and that is the owner's copy, not an invented schema field. */
-const keysOf = o => (o && typeof o === 'object')
-  ? Object.keys(o).concat(Object.values(o).flatMap(keysOf)) : [];
-const fields = new Set(keysOf(schema).map(k => k.toLowerCase()));
-for (const bad of ['price', 'offers', 'offer', 'availability', 'seatingcapacity', 'startdate', 'performer'])
-  if (fields.has(bad)) fail(`schema declares a "${bad}" field, which live inventory owns`);
-console.log(`   ${fields.size} distinct schema fields, none of them owned by live inventory`);
-
-/* ---- 8. Contrast ---- */
-console.log('\n=== 8. CONTRAST ===');
-const lum = c => { const v = c.map(x => x / 255).map(x => x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4));
-  return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; };
-const nodes = await page.evaluate(() => {
-  const out = []; const walk = document.createTreeWalker(document.querySelector('.mtx-leo'), NodeFilter.SHOW_TEXT);
-  let n; while ((n = walk.nextNode())) {
-    const txt = n.textContent.trim(); if (!txt) continue;
-    const e = n.parentElement; if (!e || ['STYLE', 'SCRIPT'].includes(e.tagName)) continue;
-    const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || cs.display === 'none') continue;
-    /* Walk up compositing, so a translucent panel is measured as what the eye
-       actually sees rather than as its own colour at full strength. */
-    const parse = s => { const m = (s.match(/[\d.]+/g) || []).map(Number); return m.length ? [m[0]|0, m[1]|0, m[2]|0, m.length > 3 ? m[3] : 1] : [0,0,0,0]; };
-    let stack = [], p = e;
-    while (p) { const c = parse(getComputedStyle(p).backgroundColor); if (c[3] > 0) stack.push(c); if (c[3] >= 1) break; p = p.parentElement; }
-    if (!stack.length || stack[stack.length - 1][3] < 1) stack.push([255, 255, 255, 1]);
-    let acc = stack.pop().slice(0, 3);
-    while (stack.length) { const c = stack.pop(); acc = acc.map((v, i) => Math.round(c[i] * c[3] + v * (1 - c[3]))); }
-    const bg = `rgb(${acc.join(', ')})`;
-    out.push({ txt: txt.slice(0, 40), fg: cs.color, bg, size: parseFloat(cs.fontSize), weight: Number(cs.fontWeight) || 400 });
-  } return out;
-});
-let cbad = 0;
-for (const n of nodes) {
-  const rgb = s => (s.match(/\d+(\.\d+)?/g) || [0, 0, 0]).slice(0, 3).map(Number);
-  const a = lum(rgb(n.fg)), b = lum(rgb(n.bg));
-  const ratio = (Math.max(a, b) + .05) / (Math.min(a, b) + .05);
-  const large = n.size >= 24 || (n.size >= 18.66 && n.weight >= 700);
-  const need = large ? 3 : 4.5;
-  if (ratio < need) { fail(`contrast ${ratio.toFixed(2)} (needs ${need}) at ${n.size}px: "${n.txt}"`); cbad++; }
-}
-console.log(`   ${nodes.length} text nodes, ${cbad} failing`);
-
-console.log('\n=== 9. REPORTED, NOT FILLED IN ===');
-console.log(readFileSync('blockers.txt', 'utf8').trimEnd());
 
 await browser.close();
-console.log(`\n   Implementation failures: ${fails}`);
-console.log(fails ? '\nNOT ACCEPTABLE: fix the failures above.' : '\nAll acceptance checks passed.');
+console.log('\n=== REPORTED, NOT BUILD FAILURES: the copy decides these ===');
+for (const c of copyIssues) console.log('   ' + c);
+if (!copyIssues.length) console.log('   none');
+console.log(`\n   Failures: ${fails}`);
+console.log(fails ? '\nNOT ACCEPTABLE: fix the failures above.' : '\nAll checks passed.');
 process.exit(fails ? 1 : 0);

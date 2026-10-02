@@ -1,160 +1,110 @@
 {
   "@context": "https://schema.org",
-  "@graph": [
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-      "@type": "Organization",
-      "@id": "https://muaytix.com#org",
-      "name": "MuayTix",
-      "url": "https://muaytix.com"
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://muaytix.com/rajadamnern-stadium-seating/leo-section",
-      "url": "https://muaytix.com/rajadamnern-stadium-seating/leo-section",
-      "name": "LEO Section at Rajadamnern Stadium",
-      "description": "Discover the LEO Section at Rajadamnern Stadium. See Section 10, the front-facing ring view, seating style, betting nights and booking information.",
-      "isPartOf": {
-        "@id": "https://muaytix.com#org"
-      },
-      "primaryImageOfPage": {
-        "@type": "ImageObject",
-        "url": "https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg",
-        "caption": "Rajadamnern Stadium Section 10 LEO seating"
+      "@type": "Question",
+      "name": "What is the LEO Section at Rajadamnern Stadium?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Rajadamnern LEO Section is Section 10, main-arena seating that faces the front of the ring at exactly the same elevation as Club Class. It has 300 unassigned seats, in-section food and drink service, and the strongest local atmosphere in the stadium. Tickets are 1,500 THB."
       }
     },
     {
-      "@type": "BreadcrumbList",
-      "@id": "https://muaytix.com/rajadamnern-stadium-seating/leo-section#crumbs",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Rajadamnern Stadium",
-          "item": "https://muaytix.com/rajadamnern-stadium"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Seating",
-          "item": "https://muaytix.com/rajadamnern-stadium-seating"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "LEO Section at Rajadamnern Stadium",
-          "item": "https://muaytix.com/rajadamnern-stadium-seating/leo-section"
-        }
-      ]
+      "@type": "Question",
+      "name": "Is LEO Section the same as Section 10?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. LEO Section and Section 10 are the same section. Rajadamnern Stadium numbers its sections, and LEO is the name used for Section 10."
+      }
     },
     {
-      "@type": "FAQPage",
-      "@id": "https://muaytix.com/rajadamnern-stadium-seating/leo-section#faq",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is the LEO Section at Rajadamnern Stadium?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The LEO Section is Section 10, an elevated section facing the front of the ring at Rajadamnern Stadium."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is LEO Section the same as Section 10?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. LEO Section is Section 10 at Rajadamnern Stadium."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is LEO assigned seating?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. LEO seating is unassigned, which means guests choose their position within the section.\n\nEvery ticket guarantees a seat."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do I have to stand in LEO?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. There are no standing areas at Rajadamnern Stadium. Every LEO ticket guarantees a seat."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is LEO the betting section?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "LEO is where the local betting crowd gathers on Wednesday New Power, Thursday Petchyindee and Sunday Kiatpetch.\n\nThis atmosphere does not apply to every night of the week."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do I have to take part in betting?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. Guests do not have to take part in betting. You can sit alongside the activity, watch what is happening and experience the atmosphere around it."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can visitors bet in LEO?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Visitors may be able to bet, but it should not be described as a simple turn-up-and-bet process. There is a learning curve and established relationships with bookmakers involved."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What view do you get from LEO?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "LEO directly faces the front of the ring and provides a strong view across the whole canvas."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Which rows are best in LEO?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "MuayTix generally recommends around Row D and above for the clearest overall sightline.\n\nArriving early gives you more choice of position, but it is not required to secure a seat."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is LEO suitable for children?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. There is no age restriction preventing children from sitting in LEO.\n\nClub Class is normally the calmer and more straightforward family choice, but LEO can suit families who prefer the atmosphere and seating style."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is LEO the same level as Club Class?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "LEO has effectively the same tier, elevation and row configuration as Club Class next door.\n\nThe main differences are the concrete tier seating and the unassigned seating arrangement."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is LEO suitable for families?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "It can be. Families who prefer a numbered seat and simpler arrival may find Club Class more straightforward. Families who want the LEO atmosphere can choose LEO."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is there a dress code for LEO?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "There is no formal smart-casual dress requirement. Dress sensibly for a sporting event inside an air-conditioned arena."
-          }
-        }
-      ]
+      "@type": "Question",
+      "name": "Was the LEO Section called Second Class?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Older guides and some ticket listings call Section 10 Second Class, 2nd Class, LEO Second Class or LEO Class. They all mean the same section. LEO Section is the current name."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is LEO assigned seating?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. LEO is unassigned seating. You pick your position within Section 10 when you arrive, and you can move to another free position during the event."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to stand in LEO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Every LEO ticket guarantees a seat. LEO is concrete bench seating with strict control of ticket numbers, and there is no standing area."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to arrive early to get a seat in LEO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Your seat is guaranteed whenever you arrive. Arriving when doors open, one hour before the first bout, gives you the widest choice of position, including front row."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is LEO the same level as Club Class?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. LEO has exactly the same elevation and the same number of rows as Club Class. LEO faces the front of the ring, while Club Class looks towards the sides."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What view do you get from LEO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A front-facing view across the whole ring from an elevated position, with the blue corner directly in front of the section. The camera gantry and commentary team are positioned in LEO."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which rows are best in LEO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MuayTix recommends around Row D and above for the fullest elevated view. Front row gives a closer, almost eye-level view of the ring. Both are good positions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is LEO the betting section?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On Wednesday New Power, Thursday Petchyindee and Sunday Kiatpetch, the local legal betting crowd gathers in LEO and creates a high-energy atmosphere. On other nights LEO is simply the section local Muay Thai fans prefer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to take part in betting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. You sit alongside the atmosphere and watch the fight. Nobody expects you to take part."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is free-flow beer included in LEO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only on Saturday RWS Rajadamnern World Series events, when free-flow beer is included with the LEO ticket at the normal 1,500 THB price. On other nights, servers bring drinks to the section and you pay as you order."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is LEO suitable for children and families?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. There is no age restriction, and the open bench seating lets families and groups sit together wherever they like."
+      }
     }
   ]
 }

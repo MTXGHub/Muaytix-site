@@ -1,0 +1,446 @@
+MUAYTIX BUILD BRIEF FOR CLAUDE CODE
+Page: LEO Section at Rajadamnern Stadium
+URL: /rajadamnern-stadium-seats/leo-section
+Platform: Tilda (temporary build ahead of the Webflow migration)
+Brief version: 1, 2 October 2026
+Copy version: 3, 2 October 2026 (embedded in full in Part E of this file)
+
+READ THIS WHOLE FILE BEFORE WRITING ANY CODE. Then confirm back, in one short message, the five hard rules in Part A in your own words, and wait for the go-ahead before building.
+
+==================================================
+PART A. HARD RULES. THESE ARE NOT NEGOTIABLE.
+==================================================
+
+1. The copy is final. You do not change, shorten, lengthen, reword, reorder, merge, split, summarise, "improve", add to or remove a single word of the copy in Part E. That includes headings, tiles, captions, FAQ questions, FAQ answers, CTA labels, alt text, the urgency line and the trust line. If a word of copy is found changed at QA, the build is rejected.
+
+2. You decide presentation only. Layout, spacing, typography sizes, image treatment, component structure, responsive behaviour and code are yours. Words are not.
+
+3. If any copy does not fit a layout, change the layout, never the copy. If you believe a piece of copy cannot be built as written, stop, say exactly which line and why, and wait. Do not work around it.
+
+4. Section order is fixed as given in Part C. In particular the booking widget is section 3, directly after the Why LEO tiles. Do not move it.
+
+5. No invented content. No placeholder text, no lorem ipsum, no stock phrases, no extra headings, no extra FAQs, no "learn more" lines, no badges, no star ratings, no review quotes, no counters, no urgency timers. If a component needs text that is not in Part E, leave the component out and say so.
+
+Additional standing rules:
+6. All CSS is scoped and namespaced with the .mtx-leo- prefix. Tilda strips document wrapper tags, so every embed is a self-contained fragment: no <html>, <head>, <body> tags, no global selectors, no resets that touch elements outside the fragment.
+7. No external fonts, frameworks or CDN libraries. No JavaScript except the three items in Part D (anchor jumps, sticky bar, FAQ accordion).
+8. Do not rebuild the booking widget. Leave a clearly marked slot where the existing MuayTix booking widget embed goes, with the heading, urgency line, intro, trust line and CTA from section 3 around it.
+9. British English is already in the copy. Do not "correct" spellings to US English.
+10. No em dashes and no exclamation marks anywhere, including in code comments that may render, aria labels and alt text.
+
+==================================================
+PART B. DESIGN SPECIFICATION
+==================================================
+
+Brand
+Colours: Blue #1F5BFF, Red #FF0000, Black #0A0A0A, Off-white #F2F2F2, Green #55F21D (accent only).
+LEO seat class colour: yellow/gold. Use it as the section accent (fact strip labels, tile icons or rules, the kicker, active FAQ state). Do not use it for body text or large background fills.
+Do not use deep navy anywhere.
+Fonts: Arial Black for display (H1, H2, tile headlines, fact strip values). Calibri for body, with Arial as the fallback stack.
+Tone of the design: confident, clean, sport, not nightclub. Generous white space. One accent colour per section at most.
+
+Layout principles
+Mobile first. Design at 390px, then 768px, then 1200px.
+Single column on mobile. Tiles become a 2x2 grid at 768px and a single row of four at 1200px (five tiles in section 9 wrap 3 plus 2 at 768px, single row at 1200px).
+Maximum content width 1100px, centred.
+Vertical rhythm: 64px between sections on desktop, 40px on mobile.
+Body text 17px to 18px on mobile, line height 1.6. Never below 16px.
+H1 40px mobile, 56px desktop. H2 28px mobile, 36px desktop. Tile headlines 20px.
+Every heading in the copy keeps its level: H1 once, H2 for every section heading, tile headlines are H3, FAQ questions are H3.
+
+Section-specific presentation
+Hero: full-width image with the kicker above the H1, subheading under it, intro as two short paragraphs, then the fact strip as a five-cell horizontal strip (two rows on mobile), then the primary CTA as a solid blue button and the seat map link as a text link beneath it. The CTA must be visible without scrolling on a 390px by 844px viewport.
+Why LEO: four tiles, each a light card on off-white with a thin gold top rule, H3 headline, one line of support text. No icons unless they are simple line icons you draw inline as SVG. No stock illustrations.
+Booking widget: H2, urgency line in a single highlighted bar (gold left border, off-white fill), intro paragraph, the widget slot, trust line in small text with a lock icon drawn inline, CTA button.
+The view: two photos side by side at 768px and up, stacked on mobile, captions under each. Headline in Arial Black, body, detail paragraph in slightly smaller text.
+Atmosphere, Seating, Food and drink, Availability: same pattern. Headline, body, detail. Seating section includes the bench photo. Availability section ends with a CTA button.
+Who LEO is for: five tiles, same card style as Why LEO.
+Other seat classes: four plain lines, each class name in Arial Black, with the compare link beneath as a button-styled text link.
+FAQ: accordion. Questions are H3 and are the clickable rows. First question open by default. All answers must be present in the DOM at page load for crawlers and for the FAQ schema, never injected on click.
+Final CTA: short centred block on blue background with white text and a white outlined button.
+Related links: simple list of text links.
+
+Images
+Use the existing MuayTix LEO photos: front row view, Row G back row view, bench seating, and a hero image of Section 10. Alt text is in the build notes in Part E and is copy, so it is used exactly as written.
+Compress to under 200KB each, serve at 2x for retina, lazy load everything except the hero.
+
+==================================================
+PART C. PAGE ORDER (FIXED)
+==================================================
+
+1. Hero
+2. Why LEO (four tiles)
+3. Booking widget with urgency line
+4. The view
+5. Atmosphere
+6. Seating
+7. Food, drink and RWS Saturdays
+8. Availability (ends with CTA)
+9. Who LEO is for (five tiles)
+10. Other seat classes
+11. FAQ
+12. Final CTA
+13. Related links
+
+==================================================
+PART D. BEHAVIOUR AND TECHNICAL
+==================================================
+
+Anchor jumps: every Book LEO Tickets button on the page scrolls smoothly to the section 3 widget. The widget wrapper has id="mtx-leo-book". No button on this page links away from the page.
+
+Sticky bar (mobile only, under 768px): once the user scrolls past the bottom of the section 3 widget, a fixed bottom bar appears with the text Book LEO Tickets and the price 1,500 THB. Tapping it jumps to #mtx-leo-book. It hides again when the widget is in view. Height 56px, blue background, white text, safe-area padding for iOS.
+
+FAQ accordion: plain JavaScript, no library. aria-expanded on the question buttons, answers in the DOM at load.
+
+Schema: one FAQPage JSON-LD block containing every question and answer from section 11, text copied exactly from Part E. No other schema on this page unless the existing site pattern already injects Organisation schema sitewide.
+
+Meta: title and description exactly as given in Part E. Canonical to the page URL. Open Graph title and description identical to the meta title and description.
+
+Performance: no layout shift from images (set width and height attributes), no render-blocking scripts, total page weight under 1.5MB with images.
+
+Accessibility: every button has a visible focus state, colour contrast at AA minimum, all images have the alt text from Part E, the sticky bar does not cover the booking widget or any form field.
+
+==================================================
+PART E. THE COPY (FINAL, VERBATIM)
+==================================================
+
+LEO SECTION PAGE COPY
+Rajadamnern Stadium LEO Section, Section 10
+Paste-ready for Tilda. Build notes are marked [BUILD] and are not copy.
+Facts from: latest_leo_section-Doc-2nd-october_2026, blue corner confirmed 2 October 2026. Keywords from: leo-section-keywords.csv (GSC, last 6 months).
+Version 3, 2 October 2026: booking widget moved to section 3, every core keyword present as an exact string.
+
+==================================================
+SEO METADATA
+==================================================
+
+Meta title (62 characters)
+LEO Section Tickets | Rajadamnern Stadium Section 10 | MuayTix
+
+Meta description (96 characters)
+Book LEO Section tickets at Rajadamnern Stadium. Section 10, front-facing view, seat guaranteed.
+
+URL
+/rajadamnern-stadium-seats/leo-section
+
+H1
+LEO Section at Rajadamnern Stadium
+
+==================================================
+SECTION 1. HERO
+==================================================
+[BUILD: hero image, H1, kicker, intro, fact strip, primary CTA. The CTA is an anchor jump to the booking widget in Section 3, not a link off the page. CTA above the fold on mobile.]
+
+Kicker
+LEO Section Rajadamnern Stadium, Section 10
+
+H1
+LEO Section at Rajadamnern Stadium
+
+Subheading
+Where the atmosphere lives.
+
+Intro
+The LEO Section is Section 10, the main-arena seating that faces the front of the ring. It sits at exactly the same elevation as Club Class, with the same number of rows, and it is where the camera gantry, the commentary team, the local Muay Thai crowd and the loudest reactions in the stadium all sit together.
+
+Every LEO ticket guarantees a seat. You pick your position within the section when you arrive, and you can move during the night if a better spot opens up.
+
+Fact strip
+Section: 10
+Price: 1,500 THB
+Seating: Unassigned, seat guaranteed
+View: Front-facing, same elevation as Club Class
+Capacity: 300 seats
+
+Primary CTA
+Book LEO Tickets
+
+Secondary link
+View the Rajadamnern seat map
+
+==================================================
+SECTION 2. WHY LEO
+==================================================
+[BUILD: four short benefit tiles, one line headline and one line support each. Fast-scan block for guests who will not read further.]
+
+H2
+Why guests book LEO Section Rajadamnern Stadium tickets
+
+Tile 1
+The view the cameras use
+The camera gantry and commentary team are in LEO. Sports cameras go where the whole fight can be seen.
+
+Tile 2
+Same height as Club Class
+Exactly the same elevation and number of rows. The difference is that LEO faces the front of the ring.
+
+Tile 3
+Sit where you like
+Pick your position within Section 10 when you arrive. Front row is yours if it is free when you walk in. Every ticket guarantees a seat.
+
+Tile 4
+Service to your seat
+Servers work inside the section all night. Beer and food come to you. On RWS Saturdays the beer is included.
+
+==================================================
+SECTION 3. BOOKING WIDGET
+==================================================
+[BUILD: date-led widget restricted to LEO. This is the conversion point and sits here on purpose, directly after the benefit tiles. On mobile, a sticky Book LEO bar appears once the guest scrolls past this widget and jumps back to it.]
+
+H2
+Book LEO Section tickets at Rajadamnern Stadium
+
+Urgency line
+LEO sells out first on Wednesday, Thursday and Sunday, and about a week ahead for RWS Saturdays. MuayTix often holds tickets after the stadium has sold out.
+
+Intro
+Select your date, confirm LEO and complete your booking securely online. You receive a booking confirmation straight away, and your seat in Section 10 is guaranteed.
+
+Trust line
+Your payment details are encrypted and protected by Stripe's enterprise-level security.
+
+CTA
+Book LEO Tickets
+
+==================================================
+SECTION 4. THE VIEW
+==================================================
+[BUILD: front row photo and back row (Row G) photo side by side with captions.]
+
+H2
+The view from Section 10 Rajadamnern Stadium
+
+Headline
+Face the ring, not the side of it.
+
+Body
+LEO looks straight at the front of the ring. Club Class, next door, looks towards the sides. You share the same elevation and the same rows, so the difference is direction, not height.
+
+That direction matters more than most first-time visitors expect. The blue corner is directly in front of the section, the fighters enter past it, and the commentary team sits here. The camera gantry is in LEO, so the main broadcast cameras shoot from this side because it gives the clearest read of the whole canvas. When the referee raises the winner's hand at the end of a bout, the fighters are facing LEO.
+
+Detail
+MuayTix recommends around Row D and above for the fullest elevated view across the ring. Front row gives a flatter, closer, almost eye-level view. Both are good seats. The choice is yours on the night.
+
+Photo captions
+Front row, LEO Section Rajadamnern Stadium
+Row G, the back row of LEO Section
+
+==================================================
+SECTION 5. ATMOSPHERE
+==================================================
+
+H2
+LEO Section Muay Thai atmosphere at Rajadamnern
+
+Headline
+Sit with the people who follow this sport every week.
+
+Body
+LEO is the section local Muay Thai fans choose. It is louder, more communal and more reactive than anywhere else in the stadium, and it is where the MuayTix team sits when we come to watch for ourselves.
+
+On the traditional Muay Thai nights, Wednesday New Power, Thursday Petchyindee and Sunday Kiatpetch, the local legal betting crowd gathers in Section 10. Odds move by hand signal, the noise rises and falls with every exchange, and you feel the fight through the crowd as much as you see it in the ring. You sit alongside it without taking part.
+
+Detail
+That betting atmosphere belongs to those three nights. Saturday RWS and the other events bring a different crowd, but LEO stays the most energetic section in the building.
+
+==================================================
+SECTION 6. SEATING
+==================================================
+[BUILD: bench seating photo.]
+
+H2
+Is LEO Section unassigned seating? Yes, with a seat guaranteed
+
+Headline
+Unassigned means you choose. It never means you stand.
+
+Body
+LEO is concrete bench seating in Section 10, with 300 seats and strict control of ticket numbers. Every ticket has a seat waiting. There is no standing area and no risk of arriving to find the section full.
+
+Unassigned seating gives you control after you walk in. You do not need to study a seat map or guess which row will suit you. Doors open one hour before the first bout. Arrive at opening if you want the full choice of rows, including front row. Arrive later if you are not fussed about the exact row, because your seat is still there.
+
+Detail
+If a better position opens up during the night, you can move to it. For groups, that flexibility is the reason LEO works so well: you sit together wherever you like.
+
+==================================================
+SECTION 7. FOOD, DRINK AND RWS SATURDAYS
+==================================================
+
+H2
+Food and drink service in the LEO Section
+
+Headline
+Order from your seat. On RWS Saturdays, the beer is included.
+
+Body
+Servers operate inside LEO throughout the event. Beer and food are brought to you, paid for separately as you order, so you never miss a round queuing at a bar.
+
+On every Saturday RWS Rajadamnern World Series event, free-flow beer is included with your LEO ticket at the normal 1,500 THB price.
+
+Detail
+Free-flow beer applies to Saturday RWS only. On all other nights, LEO service is pay as you order.
+
+==================================================
+SECTION 8. AVAILABILITY
+==================================================
+
+H2
+LEO Section availability and when to book
+
+Headline
+LEO sells out first. Book before the stadium does.
+
+Body
+On Wednesday, Thursday and Sunday traditional nights, LEO is the first public section to sell out, ahead of Ringside and Club Class, and it can be gone a day or two before the fight. For Saturday RWS, LEO commonly sells out around a week in advance.
+
+MuayTix pre-buys LEO stock, so we often still hold tickets after the stadium has sold out. On 30 September the stadium had no LEO left for New Power while MuayTix still had tickets available.
+
+Detail
+If you want LEO for an RWS Saturday or a traditional night, book as early as you can. Live availability is shown in the booking widget above.
+
+CTA
+Book LEO Tickets
+
+==================================================
+SECTION 9. WHO LEO IS FOR
+==================================================
+[BUILD: short tiles.]
+
+H2
+Who should choose the LEO Section?
+
+Tile 1
+You want to feel the crowd as well as watch the fight
+Especially on Wednesday, Thursday or Sunday, when the local crowd fills Section 10.
+
+Tile 2
+You want the front-facing view of the ring
+The same elevation as Club Class, looking straight at the action.
+
+Tile 3
+You like to pick your own position
+Front row, Row D, the back row. Decide when you see the ring.
+
+Tile 4
+You are coming as a group
+Sit together wherever you like, with servers bringing drinks to the section.
+
+Tile 5
+You are going to Saturday RWS
+Free-flow beer included at the normal LEO price.
+
+==================================================
+SECTION 10. OTHER SEAT CLASSES
+==================================================
+[BUILD: compact, four lines, with the compare link. Do not expand into a comparison page.]
+
+H2
+LEO Section or another Rajadamnern Stadium seat class?
+
+Body
+Choose LEO for the front-facing view, the freedom to pick your position, service to your seat and the strongest atmosphere in the stadium.
+Choose Club Class for the same elevation with an assigned, numbered seat.
+Choose Ringside to sit a few metres from the ring on the arena floor.
+Choose Third Class for the widest view across the whole stadium from the highest tier, on the nights it opens.
+
+Link
+Compare all Rajadamnern Stadium seat classes
+
+==================================================
+SECTION 11. FAQ
+==================================================
+[BUILD: FAQ schema. Each answer is written to stand alone when quoted.]
+
+H2
+LEO Section seating questions
+
+Q: What is the LEO Section at Rajadamnern Stadium?
+A: The Rajadamnern LEO Section is Section 10, main-arena seating that faces the front of the ring at exactly the same elevation as Club Class. It has 300 unassigned seats, in-section food and drink service, and the strongest local atmosphere in the stadium. Tickets are 1,500 THB.
+
+Q: Is LEO Section the same as Section 10?
+A: Yes. LEO Section and Section 10 are the same section. Rajadamnern Stadium numbers its sections, and LEO is the name used for Section 10.
+
+Q: Was the LEO Section called Second Class?
+A: Yes. Older guides and some ticket listings call Section 10 Second Class, 2nd Class, LEO Second Class or LEO Class. They all mean the same section. LEO Section is the current name.
+
+Q: Is LEO assigned seating?
+A: No. LEO is unassigned seating. You pick your position within Section 10 when you arrive, and you can move to another free position during the event.
+
+Q: Do I have to stand in LEO?
+A: No. Every LEO ticket guarantees a seat. LEO is concrete bench seating with strict control of ticket numbers, and there is no standing area.
+
+Q: Do I need to arrive early to get a seat in LEO?
+A: No. Your seat is guaranteed whenever you arrive. Arriving when doors open, one hour before the first bout, gives you the widest choice of position, including front row.
+
+Q: Is LEO the same level as Club Class?
+A: Yes. LEO has exactly the same elevation and the same number of rows as Club Class. LEO faces the front of the ring, while Club Class looks towards the sides.
+
+Q: What view do you get from LEO?
+A: A front-facing view across the whole ring from an elevated position, with the blue corner directly in front of the section. The camera gantry and commentary team are positioned in LEO.
+
+Q: Which rows are best in LEO?
+A: MuayTix recommends around Row D and above for the fullest elevated view. Front row gives a closer, almost eye-level view of the ring. Both are good positions.
+
+Q: Is LEO the betting section?
+A: On Wednesday New Power, Thursday Petchyindee and Sunday Kiatpetch, the local legal betting crowd gathers in LEO and creates a high-energy atmosphere. On other nights LEO is simply the section local Muay Thai fans prefer.
+
+Q: Do I have to take part in betting?
+A: No. You sit alongside the atmosphere and watch the fight. Nobody expects you to take part.
+
+Q: Is free-flow beer included in LEO?
+A: Only on Saturday RWS Rajadamnern World Series events, when free-flow beer is included with the LEO ticket at the normal 1,500 THB price. On other nights, servers bring drinks to the section and you pay as you order.
+
+Q: Is LEO suitable for children and families?
+A: Yes. There is no age restriction, and the open bench seating lets families and groups sit together wherever they like.
+
+==================================================
+SECTION 12. FINAL CTA
+==================================================
+
+H2
+Book the LEO Section at Rajadamnern Stadium
+
+Body
+Front-facing view, seat guaranteed, service to your section and the atmosphere the stadium is known for. Section 10 sells out first on the big nights, so book your date now.
+
+CTA
+Book LEO Tickets
+
+==================================================
+SECTION 13. RELATED LINKS
+==================================================
+All Rajadamnern Stadium tickets
+Rajadamnern Stadium seat map
+Compare Rajadamnern Stadium seat classes
+Club Class
+Ringside
+Third Class
+
+==================================================
+BUILD NOTES (not copy)
+==================================================
+1. Page order is fixed: hero, why LEO, booking widget, then the long-read sections. Do not move the widget back down.
+2. Every Book LEO Tickets button on the page is an anchor jump to the Section 3 widget.
+3. Mobile sticky Book LEO bar appears after the guest scrolls past the widget.
+4. Image alt text: hero "LEO Section Rajadamnern Stadium, Section 10 seating"; front row "View from the front row of LEO Section Rajadamnern Stadium"; back row "View from Row G in LEO Section at Rajadamnern Stadium"; bench "LEO Section bench seating, Section 10, Rajadamnern Stadium".
+5. Removed from the live page on purpose and not to be reinstated: Club Class as the family choice, the plastic seat base comparison, the dress code and air conditioning lines, and the "can visitors bet" FAQ.
+6. Blue corner confirmed by MuayTix 2 October 2026. Camera gantry and commentary team in LEO confirmed as a standing fact.
+7. FAQ schema on Section 11. Organisation and Product or Event schema per the existing site pattern.
+
+
+==================================================
+PART F. QA BEFORE YOU HAND BACK
+==================================================
+
+Run these checks yourself and report the result of each one in your handback message.
+
+1. Diff check: extract every text node from the built page and diff it against Part E. The only allowed differences are build notes (which are not rendered) and the section labels like "Tile 1" and "Headline" (which are structure markers, not copy). Report the diff output.
+2. Order check: list the H2s in DOM order and confirm they match Part C.
+3. Keyword check: confirm these exact strings appear in rendered text, case insensitive: leo section rajadamnern stadium, leo section rajadamnern, rajadamnern stadium leo section, rajadamnern leo section, leo section muay thai, leo class, rajadamnern stadium section 10, section 10 rajadamnern stadium, second class.
+4. Character check: confirm the rendered page contains no em dash and no exclamation mark.
+5. Widget position: confirm the widget slot is the third section and that the hero CTA scrolls to it.
+6. Mobile check: screenshot at 390px with the hero CTA visible without scrolling, and a second screenshot showing the sticky bar after scrolling past the widget.
+7. Schema check: paste the FAQPage JSON-LD and confirm it validates.
+8. Meta check: print the title and description tags and their character counts (62 and 96).
+
+Hand back the fragments, the screenshots and the eight check results. Do not publish anything.

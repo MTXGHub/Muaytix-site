@@ -1,22 +1,21 @@
-RAJADAMNERN STADIUM LEO SECTION SEATS
+LEO SECTION AT RAJADAMNERN STADIUM
 Tilda page settings. These are NOT in the HTML block. Paste them into the
 page's own settings in Tilda.
 
-URL
+URL (unchanged)
   /rajadamnern-stadium-seating/leo-section
-  Confirmed against the repository: the seating page already links here.
 
-TITLE
-  LEO Section at Rajadamnern Stadium | MuayTix
+TITLE (62 characters)
+  LEO Section Tickets | Rajadamnern Stadium Section 10 | MuayTix
 
-DESCRIPTION
-  Discover the LEO Section at Rajadamnern Stadium. See Section 10, the front-facing ring view, seating style, betting nights and booking information.
+DESCRIPTION (96 characters)
+  Book LEO Section tickets at Rajadamnern Stadium. Section 10, front-facing view, seat guaranteed.
 
-SOCIAL TITLE (Open Graph)
-  LEO Section at Rajadamnern Stadium
+SOCIAL TITLE (Open Graph), identical to the title
+  LEO Section Tickets | Rajadamnern Stadium Section 10 | MuayTix
 
-SOCIAL DESCRIPTION (Open Graph)
-  Choose the LEO Section for a front-facing view of the ring, flexible seating and traditional fight-night atmosphere on Wednesday, Thursday and Sunday.
+SOCIAL DESCRIPTION (Open Graph), identical to the description
+  Book LEO Section tickets at Rajadamnern Stadium. Section 10, front-facing view, seat guaranteed.
 
 SOCIAL IMAGE
   https://static.tildacdn.com/tild6537-3330-4365-b135-643437306534/1000034569.jpg

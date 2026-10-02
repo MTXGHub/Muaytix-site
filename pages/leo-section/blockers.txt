@@ -1,5 +1,0 @@
-- Document A section 4 asks for an atmosphere image showing the LEO Section or the wider stadium crowd, and Document B section 6 audits it. No such photograph was supplied. Document A section 4 also says not to use a generic photograph of gamblers, and Document A section 8 says to report a missing asset rather than substitute one, so that section is built without a photograph and is reported here. The owner said in the same message: 'Less images for leo section yes'.
-
-- The section labels printed inside the annotated stadium view read LEO SCECTION, not LEO SECTION. The mistake is baked into the image and cannot be corrected from here. The page's own alt text and copy spell it correctly.
-
-- None of the images can be opened from this environment, because static.tildacdn.com is blocked by the network policy. Each is placed on the owner's own description, not on inspection.
