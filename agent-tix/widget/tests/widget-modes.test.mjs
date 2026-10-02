@@ -153,9 +153,65 @@ console.log('\nTwo widgets on one page keep their own state');
   await p.waitForSelector('.mtx-detail',{timeout:8000});
   const names = await p.$$eval('.mtx-detail-h', n=>n.map(x=>x.textContent));
   check('each shows its own class', JSON.stringify(names)==='["Ringside","LEO Section"]', JSON.stringify(names));
-  await p.selectOption('.muaytix-ticket-selector:nth-of-type(1) [data-qty]','2');
+  const before = await p.$$eval('[data-total]', n=>n.map(x=>x.textContent));
+  await p.selectOption('.muaytix-ticket-selector:nth-of-type(1) [data-qty]','3');
   const totals = await p.$$eval('[data-total]', n=>n.map(x=>x.textContent));
-  check('one does not move the other', totals[0]!=='—' && totals[1]==='—', JSON.stringify(totals));
+  check('one does not move the other', totals[0]!==before[0] && totals[1]===before[1], JSON.stringify([before,totals]));
+  await ctx.close();
+}
+
+console.log('\nTickets open on two, so the button is live');
+{
+  const lineup = async (mut) => {
+    const saved = JSON.stringify(night.classes);
+    mut(night.classes);
+    const {p,ctx}=await page('<div class="muaytix-ticket-selector" data-event-id="rws_2026_09_05" data-ticket-class="Ringside"></div>');
+    await p.waitForSelector('.mtx-detail',{timeout:8000});
+    const r = await p.evaluate(()=>({q:document.querySelector('[data-qty]').value,
+      off:document.querySelector('[data-go]').disabled, label:document.querySelector('[data-go]').textContent,
+      total:document.querySelector('[data-total]').textContent,
+      blank:!!document.querySelector('[data-qty] option[value=""]')}));
+    await ctx.close();
+    night.classes.splice(0, night.classes.length, ...JSON.parse(saved));
+    return r;
+  };
+  const a = await lineup(()=>{});
+  check('two tickets chosen already', a.q==='2', a.q);
+  check('the button is live and says so', !a.off && a.label==='Reserve your tickets', a.label);
+  check('the total is already shown', a.total!=='—', a.total);
+  check('there is no empty Select to fall back to', !a.blank);
+  const one = await lineup(c=>{ c.find(x=>x.code==='ringside').seatsLeft = 1; });
+  check('one ticket left: one ticket chosen, button live', one.q==='1' && !one.off, JSON.stringify(one));
+  const apart = await lineup(c=>{ c.find(x=>x.code==='ringside').maximumSeatsTogether = 1; });
+  check('two would split them: one ticket chosen, no tick box in the way', apart.q==='1' && !apart.off, JSON.stringify(apart));
+}
+
+console.log('\nA sold-out class on a one-class widget does not point at a button that is not there');
+{
+  const saved = JSON.stringify(night.classes);
+  night.classes.find(x=>x.code==='leo_section').status='fully_booked';
+  const {p,ctx}=await page('<div class="muaytix-ticket-selector" data-event-id="rws_2026_09_05" data-ticket-class="LEO Section"></div>');
+  await p.waitForSelector('.mtx-detail',{timeout:8000});
+  const note = await p.textContent('.mtx-note');
+  check('says to choose another date', /another date/.test(note), note);
+  check('no mention of Change seat class', !/Change seat class/.test(note), note);
+  check('never says officially', !/official/i.test(note), note);
+  await ctx.close();
+  const q = await page('<div class="muaytix-ticket-selector" data-event-id="rws_2026_09_05"></div>');
+  await q.p.waitForSelector('.mtx-pick',{timeout:8000});
+  await q.p.click('[data-pick="leo_section"]').catch(()=>{});
+  const open = await q.p.$('.mtx-pick--off');
+  check('with four classes the sold-out one cannot be opened', open!==null);
+  await q.ctx.close();
+  night.classes.splice(0, night.classes.length, ...JSON.parse(saved));
+}
+
+console.log('\nThe hidden seat note takes no room');
+{
+  const {p,ctx}=await page('<div class="muaytix-ticket-selector"></div>');
+  await p.waitForSelector('[data-grid] [data-date]',{timeout:8000});
+  const h = await p.$eval('.mtx-seat-note', e=>({hidden:e.hidden, h:Math.round(e.getBoundingClientRect().height), d:getComputedStyle(e).display}));
+  check('hidden means hidden', h.hidden && h.h===0 && h.d==='none', JSON.stringify(h));
   await ctx.close();
 }
 

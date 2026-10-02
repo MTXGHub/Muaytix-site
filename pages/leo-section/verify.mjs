@@ -388,21 +388,22 @@ console.log('\n=== 11. THE BOOKING WIDGET ON THIS PAGE ===');
       const q = getComputedStyle(document.querySelector('#mtx-booking [data-qty]'));
       return { tiles: document.querySelectorAll('#mtx-booking .mtx-pick').length, heading: det.querySelector('.mtx-detail-h').textContent,
         change: !!det.querySelector('[data-back-class]'), disabled: go.disabled, bg: cs.backgroundColor, h: Math.round(r.height), w: Math.round(r.width),
-        panelW: Math.round(det.getBoundingClientRect().width), thumb: af.backgroundImage, thumbW: parseFloat(af.width), qBorder: q.borderTopColor,
+        qty: document.querySelector('#mtx-booking [data-qty]').value, frame: getComputedStyle(det).borderTopColor, panelW: Math.round(det.getBoundingClientRect().width), thumb: af.backgroundImage, thumbW: parseFloat(af.width), qBorder: q.borderTopColor,
         over: document.documentElement.scrollWidth - innerWidth };
     });
-    await p.selectOption('#mtx-booking [data-qty]', '2');
     await p.waitForTimeout(250);
     const after = await p.evaluate(() => { const go = document.querySelector('#mtx-booking [data-go]'); const cs = getComputedStyle(go);
       return { disabled: go.disabled, bg: cs.backgroundColor, fg: cs.color, label: go.textContent.trim(), h: Math.round(go.getBoundingClientRect().height), arrow: getComputedStyle(go, '::after').content }; });
     const rgb = s => s.match(/\d+/g).slice(0, 3).map(Number);
     const ratio = (a, b) => (Math.max(lum(a), lum(b)) + .05) / (Math.min(lum(a), lum(b)) + .05);
-    console.log(`   ${String(w).padStart(5)}px  LEO tiles offered ${before.tiles}; opened: ${before.heading}; thumbnail ${before.thumbW}px; waiting button ${before.h}px tall, ${before.w} of ${before.panelW}px wide; ready: "${after.label}" ${after.h}px, contrast ${ratio(rgb(after.fg), rgb(after.bg)).toFixed(1)}:1; overflow ${before.over}`);
+    console.log(`   ${String(w).padStart(5)}px  LEO tiles offered ${before.tiles}; opened: ${before.heading}; thumbnail ${before.thumbW}px; button ${before.h}px tall, ${before.w} of ${before.panelW}px wide; ready: "${after.label}" ${after.h}px, contrast ${ratio(rgb(after.fg), rgb(after.bg)).toFixed(1)}:1; overflow ${before.over}`);
     if (before.tiles !== 0) fail(`${w}px: ${before.tiles} seat class tiles are offered, there should be none`);
     if (before.heading !== 'LEO Section') fail(`${w}px: the panel that opens is "${before.heading}", not LEO Section`);
     if (before.change) fail(`${w}px: a Change seat class button is offered with only one class`);
     if (!/1000033984\.webp/.test(before.thumb) || before.thumbW < 80) fail(`${w}px: the LEO graphic thumbnail is not showing (${before.thumb}, ${before.thumbW}px)`);
-    if (!before.disabled || before.bg !== 'rgb(230, 230, 230)') fail(`${w}px: the waiting button is not the grey disabled block (${before.bg})`);
+    if (before.qty !== '2') fail(`${w}px: tickets open on "${before.qty}", not 2`);
+    if (before.disabled) fail(`${w}px: the booking button is grey when the panel opens`);
+    if (before.frame !== 'rgb(0, 165, 80)') fail(`${w}px: the panel is not framed in the available green (${before.frame})`);
     if (before.h < 56) fail(`${w}px: the booking button is only ${before.h}px tall`);
     if (before.w < before.panelW * 0.8) fail(`${w}px: the booking button is ${before.w}px in a ${before.panelW}px panel`);
     if (after.disabled || after.bg !== 'rgb(31, 91, 255)' || after.fg !== 'rgb(255, 255, 255)') fail(`${w}px: the ready button is not the page blue with white type (${after.bg} / ${after.fg})`);
