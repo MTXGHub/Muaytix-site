@@ -112,7 +112,9 @@ ${tiles('2', 4)}
 
 /* The widget is not rebuilt here. This is the slot the existing MuayTix
    booking widget mounts into. The wrapper carries the anchor every Book LEO
-   Tickets button jumps to. */
+   Tickets button jumps to. data-ticket-class is the widget's own option: the
+   calendar stays date-led, and once a night is chosen the guest is shown LEO
+   already open, with no other seat class offered. */
 const lock = `<svg class="mtx-leo-lock" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>`;
 
 const booking = `  <section class="mtx-leo-sec mtx-leo-sec--white">
@@ -120,7 +122,7 @@ const booking = `  <section class="mtx-leo-sec mtx-leo-sec--white">
       <h2 class="mtx-leo-h2">${esc(one('3', 'H2'))}</h2>
       <p class="mtx-leo-urgency">${esc(one('3', 'Urgency line'))}</p>
       <p class="mtx-leo-lead">${esc(one('3', 'Intro'))}</p>
-      <div class="mtx-leo-widget" id="mtx-leo-book" data-mtx-slot="booking-widget"><div class="muaytix-ticket-selector"></div></div>
+      <div class="mtx-leo-widget" id="mtx-leo-book" data-mtx-slot="booking-widget"><div class="muaytix-ticket-selector" data-ticket-class="leo_section"></div></div>
       <p class="mtx-leo-trust">${lock}<span>${esc(one('3', 'Trust line'))}</span></p>
       <p class="mtx-leo-cta-row">${btn(one('3', 'CTA'))}</p>
     </div>

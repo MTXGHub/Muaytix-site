@@ -69,7 +69,7 @@ const copyJoined = '\n' + copySet.join('\n') + '\n';
 /* ---- 0. Structure ---- */
 console.log('=== 0. STRUCTURE ===');
 {
-  const classes = new Set([...frag.matchAll(/class="([^"]+)"/g)].flatMap(m => m[1].split(/\s+/)));
+  const classes = new Set([...frag.matchAll(/\sclass="([^"]+)"/g)].flatMap(m => m[1].split(/\s+/)));
   const foreign = [...classes].filter(c => !c.startsWith('mtx-leo-') && c !== 'muaytix-ticket-selector' && c !== 'is-on' && c !== 'is-open');
   foreign.forEach(c => fail(`class outside the mtx-leo- namespace: ${c}`));
   if (/<(html|head|body)\b/i.test(frag)) fail('the fragment contains a document wrapper tag');
@@ -357,6 +357,62 @@ for (const [w, h] of [[320, 640], [360, 740], [390, 844], [768, 1000], [1440, 90
   r.cellsOver.forEach(t => fail(`wide face, ${w}px: "${t}" is wider than its box`));
   if (w <= 430 && r.btn > h - 120) fail(`wide face, ${w}px: the hero button ends at ${r.btn}px of ${h}px`);
   await p.context().close();
+}
+
+/* ---- 11. The booking widget as it sits on this page ----
+   The real widget file, run against the widget's own test data, inside this
+   page and inside the hostile Tilda stand-in. */
+console.log('\n=== 11. THE BOOKING WIDGET ON THIS PAGE ===');
+{
+  const WT = '../../agent-tix/widget/';
+  const events = JSON.parse(readFileSync(WT + 'tests/calendar.json', 'utf8'));
+  const night = JSON.parse(readFileSync(WT + 'tests/night.json', 'utf8'));
+  const widgetJs = readFileSync(WT + 'widget.js', 'utf8');
+  if (!/<div class="muaytix-ticket-selector" data-ticket-class="leo_section"><\/div>/.test(frag)) fail('the widget slot does not carry data-ticket-class="leo_section"');
+  const lum = c => { const v = c.map(x => x / 255).map(x => x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4)); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; };
+  for (const [w, h] of [[1180, 900], [390, 844], [320, 640]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h } });
+    const p = await ctx.newPage();
+    await p.route('**/functions/v1/**', r => { const bd = JSON.parse(r.request().postData() || '{}');
+      r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(bd.action === 'events' ? events : night) }); });
+    await pictures(p);
+    await p.setContent(doc.replace('#allrecords button{', '#allrecords button{').replace('</style>', '#allrecords button{color:#000;font-family:serif}</style>'), { waitUntil: 'load' });
+    await p.addScriptTag({ content: widgetJs });
+    await p.waitForSelector('#mtx-booking [data-grid] [data-date]', { timeout: 8000 });
+    await p.click('#mtx-booking [data-grid] [data-date]');
+    await p.waitForSelector('#mtx-booking .mtx-detail', { timeout: 8000 });
+    await p.waitForTimeout(400);
+    const before = await p.evaluate(() => {
+      const go = document.querySelector('#mtx-booking [data-go]'); const r = go.getBoundingClientRect(); const cs = getComputedStyle(go);
+      const det = document.querySelector('#mtx-booking .mtx-detail'); const af = getComputedStyle(det, '::after');
+      const q = getComputedStyle(document.querySelector('#mtx-booking [data-qty]'));
+      return { tiles: document.querySelectorAll('#mtx-booking .mtx-pick').length, heading: det.querySelector('.mtx-detail-h').textContent,
+        change: !!det.querySelector('[data-back-class]'), disabled: go.disabled, bg: cs.backgroundColor, h: Math.round(r.height), w: Math.round(r.width),
+        panelW: Math.round(det.getBoundingClientRect().width), thumb: af.backgroundImage, thumbW: parseFloat(af.width), qBorder: q.borderTopColor,
+        over: document.documentElement.scrollWidth - innerWidth };
+    });
+    await p.selectOption('#mtx-booking [data-qty]', '2');
+    await p.waitForTimeout(250);
+    const after = await p.evaluate(() => { const go = document.querySelector('#mtx-booking [data-go]'); const cs = getComputedStyle(go);
+      return { disabled: go.disabled, bg: cs.backgroundColor, fg: cs.color, label: go.textContent.trim(), h: Math.round(go.getBoundingClientRect().height), arrow: getComputedStyle(go, '::after').content }; });
+    const rgb = s => s.match(/\d+/g).slice(0, 3).map(Number);
+    const ratio = (a, b) => (Math.max(lum(a), lum(b)) + .05) / (Math.min(lum(a), lum(b)) + .05);
+    console.log(`   ${String(w).padStart(5)}px  LEO tiles offered ${before.tiles}; opened: ${before.heading}; thumbnail ${before.thumbW}px; waiting button ${before.h}px tall, ${before.w} of ${before.panelW}px wide; ready: "${after.label}" ${after.h}px, contrast ${ratio(rgb(after.fg), rgb(after.bg)).toFixed(1)}:1; overflow ${before.over}`);
+    if (before.tiles !== 0) fail(`${w}px: ${before.tiles} seat class tiles are offered, there should be none`);
+    if (before.heading !== 'LEO Section') fail(`${w}px: the panel that opens is "${before.heading}", not LEO Section`);
+    if (before.change) fail(`${w}px: a Change seat class button is offered with only one class`);
+    if (!/1000033984\.webp/.test(before.thumb) || before.thumbW < 80) fail(`${w}px: the LEO graphic thumbnail is not showing (${before.thumb}, ${before.thumbW}px)`);
+    if (!before.disabled || before.bg !== 'rgb(230, 230, 230)') fail(`${w}px: the waiting button is not the grey disabled block (${before.bg})`);
+    if (before.h < 56) fail(`${w}px: the booking button is only ${before.h}px tall`);
+    if (before.w < before.panelW * 0.8) fail(`${w}px: the booking button is ${before.w}px in a ${before.panelW}px panel`);
+    if (after.disabled || after.bg !== 'rgb(85, 242, 29)' || after.fg !== 'rgb(10, 10, 10)') fail(`${w}px: the ready button is not lime with black type (${after.bg} / ${after.fg})`);
+    if (after.label !== 'Reserve your tickets') fail(`${w}px: the ready button says "${after.label}"`);
+    if (after.h < 56) fail(`${w}px: the ready button is ${after.h}px tall`);
+    if (!/2192/.test(JSON.stringify(after.arrow)) && after.arrow !== '"\u2192"') fail(`${w}px: the ready button has no arrow (${after.arrow})`);
+    if (ratio(rgb(after.fg), rgb(after.bg)) < 4.5) fail(`${w}px: the ready button text is under 4.5:1`);
+    if (before.over > 0) fail(`${w}px: the widget makes the page scroll sideways by ${before.over}px`);
+    await ctx.close();
+  }
 }
 
 await browser.close();

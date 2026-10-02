@@ -263,6 +263,72 @@
 .mtx-leo-page .mtx-leo-rel { display: flex; flex-wrap: wrap; gap: 12px 28px; }
 .mtx-leo-page .mtx-leo-related { padding: 36px 0 44px; }
 
+/* ------------------------------------------------- the widget, on this page --- */
+
+/* Everything below restyles the shared booking widget on THIS page only. It
+   is written against the widget's own class names and carries the page prefix
+   and the widget's id, so no other page that uses the widget is touched. The
+   widget's own file is not changed. */
+
+/* The LEO graphic, as a thumbnail on the panel the guest lands on once they
+   have chosen a night. Decorative: the heading beside it already says LEO
+   Section, so it carries no text of its own. */
+.mtx-leo-page #mtx-booking .mtx-detail { position: relative; }
+.mtx-leo-page #mtx-booking .mtx-detail::after {
+  content: ""; position: absolute; top: 16px; right: 16px; width: 84px; height: 84px;
+  background-color: var(--black);
+  background-image: url("https://static.tildacdn.com/tild3333-3339-4135-b436-326637666663/1000033984.webp");
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+  border-radius: 10px; border: 2px solid var(--gold);
+}
+.mtx-leo-page #mtx-booking .mtx-detail-k,
+.mtx-leo-page #mtx-booking .mtx-detail-top,
+.mtx-leo-page #mtx-booking .mtx-detail-d { padding-right: 104px; }
+
+/* The one button that books. Large, full width of its panel, lime with black
+   type, an arrow and a slow glow, so it cannot be read as part of the form
+   above it. Waiting, it is a plain grey block of the same size, still
+   unmistakably a button, still saying what it is waiting for. */
+.mtx-leo-page #mtx-booking .mtx-go {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  width: 100%; align-self: stretch; min-height: 64px; margin-top: 8px; padding: 14px 20px;
+  background: #55F21D; color: var(--black); border: 0; border-radius: 12px;
+  font-size: 21px; font-weight: 800; letter-spacing: .06em; line-height: 1.1;
+  box-shadow: 0 5px 0 #2C8D0B;
+  animation: mtx-leo-glow 2.4s ease-out infinite;
+  transition: transform .1s ease, box-shadow .1s ease, background-color .15s ease;
+}
+.mtx-leo-page #mtx-booking .mtx-go::after { content: "\2192"; font-size: 1.3em; line-height: 1; font-weight: 800; }
+.mtx-leo-page #mtx-booking .mtx-go:hover:not(:disabled) {
+  background: #6BFF3A; transform: translateY(-1px); box-shadow: 0 6px 0 #2C8D0B;
+}
+.mtx-leo-page #mtx-booking .mtx-go:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 #2C8D0B; }
+.mtx-leo-page #mtx-booking .mtx-go:disabled {
+  background: #E6E6E6; color: #4F4F55; border: 0; box-shadow: none; animation: none;
+  cursor: not-allowed; transform: none;
+}
+.mtx-leo-page #mtx-booking .mtx-go:disabled::after { content: none; }
+.mtx-leo-page #mtx-booking .mtx-go:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+@keyframes mtx-leo-glow {
+  0%   { box-shadow: 0 5px 0 #2C8D0B, 0 0 0 0 rgba(85, 242, 29, .6); }
+  70%  { box-shadow: 0 5px 0 #2C8D0B, 0 0 0 16px rgba(85, 242, 29, 0); }
+  100% { box-shadow: 0 5px 0 #2C8D0B, 0 0 0 0 rgba(85, 242, 29, 0); }
+}
+
+/* The field the guest has to fill before the button wakes up. Left empty it
+   is outlined in blue, so the next move is the one the eye finds. */
+.mtx-leo-page #mtx-booking .mtx-sel select { border: 2px solid var(--black); min-height: 52px; }
+.mtx-leo-page #mtx-booking .mtx-sel select:has(option[value=""]:checked) {
+  border-color: var(--blue); box-shadow: 0 0 0 4px rgba(31, 91, 255, .2);
+}
+
+@media (min-width: 521px) {
+  .mtx-leo-page #mtx-booking .mtx-detail::after { top: 18px; right: 18px; width: 100px; height: 100px; }
+  .mtx-leo-page #mtx-booking .mtx-detail-k,
+  .mtx-leo-page #mtx-booking .mtx-detail-top,
+  .mtx-leo-page #mtx-booking .mtx-detail-d { padding-right: 128px; }
+}
+
 /* ----------------------------------------------------------- sticky bar --- */
 
 /* Under 768px only. Shown by the script once the guest has scrolled past the
@@ -435,7 +501,7 @@
       <h2 class="mtx-leo-h2">Book LEO Section tickets at Rajadamnern Stadium</h2>
       <p class="mtx-leo-urgency">LEO sells out first on Wednesday, Thursday and Sunday, and about a week ahead for RWS Saturdays. MuayTix often holds tickets after the stadium has sold out.</p>
       <p class="mtx-leo-lead">Select your date, confirm LEO and complete your booking securely online. You receive a booking confirmation straight away, and your seat in Section 10 is guaranteed.</p>
-      <div class="mtx-leo-widget" id="mtx-leo-book" data-mtx-slot="booking-widget"><div class="muaytix-ticket-selector"></div></div>
+      <div class="mtx-leo-widget" id="mtx-leo-book" data-mtx-slot="booking-widget"><div class="muaytix-ticket-selector" data-ticket-class="leo_section"></div></div>
       <p class="mtx-leo-trust"><svg class="mtx-leo-lock" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><span>Your payment details are encrypted and protected by Stripe's enterprise-level security.</span></p>
       <p class="mtx-leo-cta-row"><a class="mtx-leo-btn" href="#mtx-leo-book">Book LEO Tickets</a></p>
     </div>
