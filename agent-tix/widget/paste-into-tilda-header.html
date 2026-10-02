@@ -51,6 +51,17 @@ function mayStoreAttribution() {
   return true;
 }
 
+function deviceNow() {
+  try {
+    var ua = String(navigator.userAgent || "");
+    if (/iPad|Tablet|PlayBook|Silk/i.test(ua)) return "t";
+    if (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) return "t";
+    if (/Android/i.test(ua) && !/Mobile/i.test(ua)) return "t";
+    if (/Mobi|iPhone|iPod|Android/i.test(ua)) return "m";
+  } catch (e) {}
+  return "d";
+}
+
 function readStoredAttribution() {
   try {
     var raw = window.localStorage.getItem(ATTR_KEY);
@@ -850,6 +861,9 @@ function mount(root, opts) {
     if(fail) fail.innerHTML = "";
 
     var won = readStoredAttribution();
+    var attr = {};
+    if(won) for(var k in won) if(Object.prototype.hasOwnProperty.call(won, k)) attr[k] = won[k];
+    if(!attr.device && mayStoreAttribution()) attr.device = deviceNow();
 
     call("create-checkout", {
       eventKey: state.night.event.eventKey,
@@ -857,7 +871,7 @@ function mount(root, opts) {
       quantity: state.qty,
       currency: state.cur,
       seatingAcknowledged: !!(ack && ack.checked),
-      attribution: won || undefined,
+      attribution: attr,
       pagePath: pathNow() || undefined,
       landingPage: readLanding() || undefined
     }, CHECKOUT_TIMEOUT)

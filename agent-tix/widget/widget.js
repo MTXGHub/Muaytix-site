@@ -121,6 +121,20 @@ function mayStoreAttribution() {
   return true;
 }
 
+// What the guest is booking on, from the browser's own description of itself.
+// An iPad asks for the desktop site and says Macintosh, so touch points are what
+// give it away. Anything that does not say phone or tablet is a computer.
+function deviceNow() {
+  try {
+    var ua = String(navigator.userAgent || "");
+    if (/iPad|Tablet|PlayBook|Silk/i.test(ua)) return "t";
+    if (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) return "t";
+    if (/Android/i.test(ua) && !/Mobile/i.test(ua)) return "t";
+    if (/Mobi|iPhone|iPod|Android/i.test(ua)) return "m";
+  } catch (e) {}
+  return "d";
+}
+
 function readStoredAttribution() {
   try {
     var raw = window.localStorage.getItem(ATTR_KEY);
@@ -1127,6 +1141,12 @@ function mount(root, opts) {
     // than on the success page: the reservation row is created by this call,
     // and the success page is on the far side of a redirect that loses the URL.
     var won = readStoredAttribution();
+    // The advert tells us the device when the guest came from one; everyone else
+    // arrived with nothing, so say what they are on. Same one-letter codes the
+    // adverts already use: m phone, t tablet, d computer. Nothing else is read.
+    var attr = {};
+    if(won) for(var k in won) if(Object.prototype.hasOwnProperty.call(won, k)) attr[k] = won[k];
+    if(!attr.device && mayStoreAttribution()) attr.device = deviceNow();
 
     call("create-checkout", {
       eventKey: state.night.event.eventKey,
@@ -1134,7 +1154,7 @@ function mount(root, opts) {
       quantity: state.qty,
       currency: state.cur,
       seatingAcknowledged: !!(ack && ack.checked),
-      attribution: won || undefined,
+      attribution: attr,
       // Read live rather than from storage: this is the page they are standing
       // on right now, which is the whole point of recording it.
       pagePath: pathNow() || undefined,

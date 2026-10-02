@@ -170,7 +170,7 @@ check('storage being refused does not break the widget', plainCheckout !== null)
 check('the ticket still sells',
   plainCheckout?.eventKey === night.event.eventKey && plainCheckout?.quantity === 1,
   JSON.stringify({ sent: plainCheckout?.eventKey }));
-check('no attribution is invented', plainCheckout?.attribution === undefined,
+check('no click or campaign is invented', !plainCheckout?.attribution?.clickId && !plainCheckout?.attribution?.source && !plainCheckout?.attribution?.campaign,
   JSON.stringify(plainCheckout?.attribution));
 await clean.close();
 
