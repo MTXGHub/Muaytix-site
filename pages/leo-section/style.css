@@ -268,35 +268,31 @@
 .mtx-leo-page #mtx-booking .mtx-detail-top,
 .mtx-leo-page #mtx-booking .mtx-detail-d { padding-right: 104px; }
 
-/* The one button that books. Large, full width of its panel, lime with black
-   type, an arrow and a slow glow, so it cannot be read as part of the form
-   above it. Waiting, it is a plain grey block of the same size, still
-   unmistakably a button, still saying what it is waiting for. */
+/* The one button that books. Large, the full width of its panel, in the same
+   blue as every other Book LEO Tickets button on the page, with an arrow and
+   a darker lower edge so it reads as something to press. Waiting, it is a
+   plain grey block of the same size, still a button, still saying what it is
+   waiting for. */
 .mtx-leo-page #mtx-booking .mtx-go {
   display: flex; align-items: center; justify-content: center; gap: 12px;
   width: 100%; align-self: stretch; min-height: 64px; margin-top: 8px; padding: 14px 20px;
-  background: #55F21D; color: var(--black); border: 0; border-radius: 12px;
+  background: var(--blue); color: var(--white); border: 0; border-radius: 12px;
   font-size: 21px; font-weight: 800; letter-spacing: .06em; line-height: 1.1;
-  box-shadow: 0 5px 0 #2C8D0B;
-  animation: mtx-leo-glow 2.4s ease-out infinite;
+  box-shadow: 0 5px 0 #1240B8;
+  animation: none;
   transition: transform .1s ease, box-shadow .1s ease, background-color .15s ease;
 }
 .mtx-leo-page #mtx-booking .mtx-go::after { content: "\2192"; font-size: 1.3em; line-height: 1; font-weight: 800; }
 .mtx-leo-page #mtx-booking .mtx-go:hover:not(:disabled) {
-  background: #6BFF3A; transform: translateY(-1px); box-shadow: 0 6px 0 #2C8D0B;
+  background: #1540C9; transform: translateY(-1px); box-shadow: 0 6px 0 #1240B8;
 }
-.mtx-leo-page #mtx-booking .mtx-go:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 #2C8D0B; }
+.mtx-leo-page #mtx-booking .mtx-go:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 #1240B8; }
 .mtx-leo-page #mtx-booking .mtx-go:disabled {
-  background: #E6E6E6; color: #4F4F55; border: 0; box-shadow: none; animation: none;
+  background: #E6E6E6; color: #4F4F55; border: 0; box-shadow: none;
   cursor: not-allowed; transform: none;
 }
 .mtx-leo-page #mtx-booking .mtx-go:disabled::after { content: none; }
 .mtx-leo-page #mtx-booking .mtx-go:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
-@keyframes mtx-leo-glow {
-  0%   { box-shadow: 0 5px 0 #2C8D0B, 0 0 0 0 rgba(85, 242, 29, .6); }
-  70%  { box-shadow: 0 5px 0 #2C8D0B, 0 0 0 16px rgba(85, 242, 29, 0); }
-  100% { box-shadow: 0 5px 0 #2C8D0B, 0 0 0 0 rgba(85, 242, 29, 0); }
-}
 
 /* The field the guest has to fill before the button wakes up. Left empty it
    is outlined in blue, so the next move is the one the eye finds. */

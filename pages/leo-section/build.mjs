@@ -26,7 +26,8 @@ const head = `<!--
 `;
 
 const parts = [head, readFileSync('style.css', 'utf8'), '</style>\n\n', readFileSync('body.html', 'utf8'), readFileSync('tail.html', 'utf8')];
-const source = parts.join('').replace('@@SCHEMA@@', readFileSync('schema.json', 'utf8').trim());
+const CTA = JSON.parse(readFileSync('copy.json', 'utf8')).sections['1']['Primary CTA'][0][0];
+const source = parts.join('').replace('@@SCHEMA@@', readFileSync('schema.json', 'utf8').trim()).replace('@@CTA_LABEL@@', CTA);
 if (/@@[A-Z_]+@@/.test(source)) { console.error('A build token was left unfilled'); process.exit(1); }
 writeFileSync('leo-source.html', source);
 

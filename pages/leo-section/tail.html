@@ -53,6 +53,18 @@
       this.parentNode.parentNode.className = 'mtx-leo-qa' + (open ? '' : ' is-open');
     });
   }
+
+  /* 4. The widget's own button says Reserve your tickets. On this page it says
+     what the page's other buttons say. The widget writes that label again each
+     time the guest changes anything, so this watches for it and puts the
+     page's words back; it never touches any other label. */
+  var slot = document.getElementById('mtx-leo-book');
+  if (slot === null || typeof MutationObserver === 'undefined') return;
+  new MutationObserver(function () {
+    var b = slot.querySelector('[data-go]');
+    if (b === null) return;
+    if (b.textContent === 'Reserve your tickets') b.textContent = '@@CTA_LABEL@@';
+  }).observe(slot, { childList: true, subtree: true, characterData: true });
 })();
 </script>
 </div>
