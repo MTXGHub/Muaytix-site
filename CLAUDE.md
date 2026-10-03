@@ -58,6 +58,21 @@ The seat class graphics set the standard: a name, one short line, nothing else.
 | Delivery timescales he has not set | Nothing |
 | Alcohol brand names in copy (Singha is allowed in alt text only) | "Ringside" |
 
+### Call it out before you build it
+
+Said on 4 October 2026, after a line explaining seat allocation sat under a
+booking button. Every line a guest reads either removes a question or creates
+one. A created question is a guest who leaves, or a WhatsApp message his team
+has to answer. Both cost more than the line was worth.
+
+Before building any line that **explains how something works, makes a promise,
+or uses a trade word** ("allocated", "assigned", "guaranteed seat location"),
+ask: does this give the guest a question they did not have? If yes, say so in
+one sentence **before** building it, even when the copy came from him. He
+wants it called out, not just written. A promise on the page that the checkout
+does not visibly keep is the worst case: the guest books, nothing matches, and
+they leave.
+
 ### Also
 
 - British English.
