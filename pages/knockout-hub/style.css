@@ -75,7 +75,7 @@
 .mtx-kh-page .mtx-kh-btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--navy); }
 
 .mtx-kh-page .mtx-kh-btn:focus-visible, .mtx-kh-page .mtx-kh-jump:focus-visible, .mtx-kh-page .mtx-kh-inline:focus-visible,
-.mtx-kh-page .mtx-kh-det summary:focus-visible, .mtx-kh-page .mtx-kh-seat:focus-visible,
+.mtx-kh-page .mtx-kh-det summary:focus-visible,
 .mtx-kh-page .mtx-kh-crumbs a:focus-visible, .mtx-kh-page .mtx-kh-bar:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 .mtx-kh-page .mtx-kh-hero .mtx-kh-btn:focus-visible, .mtx-kh-page .mtx-kh-conf .mtx-kh-btn:focus-visible,
 .mtx-kh-page .mtx-kh-bar:focus-visible { outline-color: var(--white); }
@@ -177,10 +177,22 @@
 
 /* -------------------------------------------------------------- related --- */
 
-.mtx-kh-page .mtx-kh-seats { margin-top: 26px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.mtx-kh-page .mtx-kh-seat { display: block; overflow: hidden; border: 1px solid var(--line); border-bottom: 4px solid var(--blue); background: var(--white); }
-.mtx-kh-page .mtx-kh-seat img { width: 100%; aspect-ratio: 4 / 3; height: auto; object-fit: cover; transition: opacity .18s ease; }
-.mtx-kh-page .mtx-kh-seat:hover img { opacity: .85; }
+
+/* ------------------------------------------------- seat orientation block --- */
+
+.mtx-kh-page .mtx-kh-pick { margin-top: 32px; padding: 22px 18px 24px; background: var(--white); border: 1px solid var(--line); border-top: 4px solid var(--blue); }
+.mtx-kh-page .mtx-kh-pick-b { margin-top: 8px; max-width: 68ch; font-size: 17px; color: var(--muted); }
+.mtx-kh-page .mtx-kh-pick-l { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.mtx-kh-page .mtx-kh-pick-i { padding: 10px 12px 10px 16px; border-left: 8px solid var(--c, var(--line)); background: var(--paper); font-size: 17px; line-height: 1.4; }
+.mtx-kh-page .mtx-kh-pick-n { font-family: var(--cond); font-weight: 800; font-size: 21px; letter-spacing: .02em; text-transform: uppercase; }
+.mtx-kh-page .mtx-kh-pick-i--ringside { --c: #00A651; }
+.mtx-kh-page .mtx-kh-pick-i--club { --c: #27AAE1; }
+.mtx-kh-page .mtx-kh-pick-i--leo { --c: #FFF200; }
+.mtx-kh-page .mtx-kh-pick-i--third { --c: #F7941E; }
+.mtx-kh-page .mtx-kh-pick .mtx-kh-cta-row { margin-top: 20px; }
+.mtx-kh-page .mtx-kh-pick .mtx-kh-btn { padding: 10px 16px; }
+.mtx-kh-page .mtx-kh-btn--line { background: var(--white); border-color: var(--ink); color: var(--ink); }
+.mtx-kh-page .mtx-kh-btn--line:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
 
 /* ----------------------------------------------- the widget, on this page --- */
 
@@ -236,7 +248,8 @@
   .mtx-kh-page .mtx-kh-dot { display: inline; color: var(--muted); }
   .mtx-kh-page .mtx-kh-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .mtx-kh-page .mtx-kh-rel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mtx-kh-page .mtx-kh-seats { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .mtx-kh-page .mtx-kh-pick-l { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-kh-page .mtx-kh-pick { padding: 26px 26px 28px; }
 }
 
 /* ---------------------------------------------------------------- 760px --- */
@@ -270,6 +283,8 @@
 
 #mtx-kh.mtx-kh-page a.mtx-kh-btn { background: var(--blue); border-color: var(--blue); color: var(--white); }
 #mtx-kh.mtx-kh-page a.mtx-kh-btn:hover { background: var(--blue-d); border-color: var(--blue-d); color: var(--white); }
+#mtx-kh.mtx-kh-page a.mtx-kh-btn--line { background: var(--white); border-color: var(--ink); color: var(--ink); }
+#mtx-kh.mtx-kh-page a.mtx-kh-btn--line:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
 #mtx-kh.mtx-kh-page a.mtx-kh-btn--ghost { background: transparent; border-color: var(--white); color: var(--white); }
 #mtx-kh.mtx-kh-page a.mtx-kh-btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--navy); }
 #mtx-kh.mtx-kh-page a.mtx-kh-bar { color: var(--white); }

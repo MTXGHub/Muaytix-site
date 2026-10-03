@@ -7,7 +7,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const LABEL = /^(H1|H2|Body|Primary CTA|Secondary CTA|Section heading|Helper text|Trust row|Operational note|Note|Subheading|CTA|Action|Link destination|(?:Card|Paragraph|Bullet|Question|Answer|Link) \d+(?: label| value| heading| body| visible anchor| destination)?):$/;
+const LABEL = /^(H1|H2|H3|Body|Primary CTA|Secondary CTA|Section heading|Helper text|Trust row|Operational note|Note|Subheading|CTA|Action|Link destination|(?:Card|Paragraph|Bullet|Question|Answer|Link|Seat line) \d+(?: label| value| heading| body| visible anchor| destination)?):$/;
 const out = {};
 let sec = null, label = null, block = [];
 const flush = () => { if (sec && label && block.length) { (out[sec][label] = out[sec][label] || []).push(block.join(' ')); } block = []; };

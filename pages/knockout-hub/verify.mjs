@@ -63,7 +63,7 @@ const visibleOf = p => p.evaluate(() => { const c = document.querySelector('#mtx
   let missing = 0;
   for (const l of lines) if (!flat.includes(l)) { missing++; fail('brief line not on the page: ' + l); }
   if (!missing) ok(`all ${lines.length} copy lines from the brief are on the page, word for word`);
-  const bans = [[/—/, 'em dash'], [/!/, 'exclamation mark'], [/book your seat/i, 'book your seat'], [/unassigned|assigned seating/i, 'assigned seating'],
+  const bans = [[/!/, 'exclamation mark'], [/book your seat/i, 'book your seat'], [/unassigned|assigned seating/i, 'assigned seating'],
     [/selling fast|hurry|% booked/i, 'scarcity'], [/singha|chang beer|leo beer/i, 'alcohol brand'], [/live[- ]?stream/i, 'live stream']];
   const before = fails;
   for (const [re, name] of bans) { const m = flat.match(re); if (m) fail(`banned: ${name} (${m[0]})`); }
@@ -72,6 +72,9 @@ const visibleOf = p => p.evaluate(() => { const c = document.querySelector('#mtx
   console.log(`   note  "official" and "limited" count: ${kept}`);
   if (/\b(official|limited)\b/i.test(flat)) fail('official or limited appears');
   else ok('neither official nor limited appears');
+  const em = (flat.match(/—/g) || []).length;
+  console.log(`   note  em dashes: ${em} (the four supplied seat lines, kept as written; house style bans them elsewhere)`);
+  if (em !== 4) fail(`${em} em dashes on the page, expected only the 4 in the supplied seat lines`);
   const en = (flat.match(/–/g) || []).length;
   console.log(`   note  en dashes: ${en} (the supplied "9:00–9:30 pm", kept as written)`);
   await ctx.close();
@@ -149,8 +152,8 @@ console.log('\n=== 5. BUTTONS AND THE PHONE BAR ===');
   const top2 = await p.evaluate(() => Math.round(document.getElementById('mtx-kh-book').getBoundingClientRect().top));
   if (top2 < 0 || top2 > 40) fail(`the phone bar lands the widget ${top2}px from the top`); else ok('phone bar scrolls back to the widget');
   await p.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight)); await p.waitForTimeout(250);
-  const clash = await p.evaluate(() => { const b = document.querySelector('[data-mtx-kh-bar]').getBoundingClientRect(); const last = document.querySelector('.mtx-kh-seats').getBoundingClientRect(); return last.bottom > b.top ? 'covered' : 'clear'; });
-  if (clash === 'covered') fail('the phone bar covers the last row of content'); else ok('the phone bar does not cover the last row of seat pictures');
+  const clash = await p.evaluate(() => { const b = document.querySelector('[data-mtx-kh-bar]').getBoundingClientRect(); const last = document.querySelector('.mtx-kh-pick').getBoundingClientRect(); return last.bottom > b.top ? 'covered' : 'clear'; });
+  if (clash === 'covered') fail('the phone bar covers the last row of content'); else ok('the phone bar does not cover the seat block');
   await ctx.close();
   const d = await open(1280, 800);
   await d.p.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight)); await d.p.waitForTimeout(250);
@@ -180,8 +183,9 @@ console.log('\n=== 6. PICTURES, STRUCTURE, LINKS, SCHEMA ===');
   if (r.widget !== 'rajadamnern-knockout') fail('widget is not the Knockout series: ' + r.widget); else ok('widget mounted with data-series="rajadamnern-knockout"');
   const order = ['crumbs', 'hero', 'Rajadamnern Knockout at a glance', 'Choose your Rajadamnern Knockout date', 'What is Rajadamnern Knockout?', 'New to Muay Thai? You are in the right place.', 'What to expect at Rajadamnern Knockout', 'The Rajadamnern Dome Experience', 'Is Rajadamnern Knockout right for you?', 'Book with MuayTix', 'Rajadamnern Knockout FAQs', 'Plan your Rajadamnern Knockout night'];
   if (r.secs.join('|') !== order.join('|')) fail('section order differs:\n     ' + r.secs.join(' | ')); else ok('twelve sections in the briefed order');
+  if (r.imgs.length !== 2) fail(`${r.imgs.length} images on the page, expected the hero and the logo only`);
   const bad = r.imgs.filter(i => !i.w || !i.h || !i.alt);
-  if (bad.length) fail('an image has no width, height or alt: ' + bad.map(i => i.src).join(',')); else ok(`${r.imgs.length} images, each with width, height and alt text`);
+  if (bad.length) fail('an image has no width, height or alt: ' + bad.map(i => i.src).join(',')); else ok(`${r.imgs.length} images (hero and logo only), each with width, height and alt text`);
   const hero = r.imgs[0];
   if (hero.pri !== 'high' || hero.lazy !== 'eager') fail('the hero image is not eager and high priority'); else ok('hero image is eager and high priority; the rest are lazy where below the fold');
   const want = {
@@ -191,14 +195,17 @@ console.log('\n=== 6. PICTURES, STRUCTURE, LINKS, SCHEMA ===');
     'View the Rajadamnern Knockout schedule': ['https://muaytix.com/rajadamnern-knockout/schedule'],
     'Choose Rajadamnern Knockout tickets': ['https://muaytix.com/rajadamnern-knockout/tickets'],
     'Compare Rajadamnern seating': ['https://muaytix.com/rajadamnern-stadium-seating'],
-    'Ringside': ['/rajadamnern-stadium-seating/ringside'], 'Club Class': ['/rajadamnern-stadium-seating/club-class'],
-    'LEO Section': ['/rajadamnern-stadium-seating/leo-section'], 'Third Class': ['/rajadamnern-stadium-seating#third-class'],
   };
   let linkFails = 0;
   for (const [t, hs] of Object.entries(want)) {
     const found = r.links.filter(l => l.text.startsWith(t) || l.label === t);
     if (!found.length || !found.every(l => hs.includes(l.href))) { linkFails++; fail(`link "${t}" is not ${hs[0]}: ${JSON.stringify(found.map(l => l.href))}`); }
   }
+  const seatCtas = r.links.filter(l => l.text === 'Compare Rajadamnern seating');
+  if (seatCtas.length !== 2 || seatCtas.some(l => l.href !== 'https://muaytix.com/rajadamnern-stadium-seating')) fail('seat CTA links: ' + JSON.stringify(seatCtas));
+  else ok('"Compare Rajadamnern seating" appears twice (the existing link and the new button), both to https://muaytix.com/rajadamnern-stadium-seating');
+  const seatLinks = r.links.filter(l => /seating/.test(l.href));
+  if (seatLinks.some(l => l.href !== 'https://muaytix.com/rajadamnern-stadium-seating')) fail('a seating link goes somewhere else: ' + JSON.stringify(seatLinks)); else ok('the only seating destination on the page is /rajadamnern-stadium-seating');
   if (!linkFails) ok(`${Object.keys(want).length} links point where the brief says, hero and confidence CTAs scroll to the widget`);
   if (r.pending.length !== 1) fail('expected one link waiting for a destination'); else console.log(`   note  waiting for a destination: "${r.pending[0]}"`);
   console.log(`   note  placeholders: ${r.placeholder.join(', ')}`);
@@ -210,6 +217,41 @@ console.log('\n=== 6. PICTURES, STRUCTURE, LINKS, SCHEMA ===');
   if (/"Event"|"FAQPage"|"VideoObject"|"BroadcastEvent"/.test(frag)) fail('Event, FAQPage or live-stream schema is present'); else ok('no Event, FAQPage or live-stream schema');
   await ctx.close();
 }
+
+/* ---- 6b. the seat block ---- */
+console.log('\n=== 6b. THE SEAT BLOCK ===');
+for (const [w, h] of [[1440, 900], [860, 800], [390, 844], [320, 640]]) {
+  const { ctx, p } = await open(w, h);
+  const r = await p.evaluate(() => {
+    const root = document.querySelector('#mtx-kh .mtx-kh-pick'); const rel = document.querySelector('#mtx-kh .mtx-kh-related');
+    const lines = [...root.querySelectorAll('.mtx-kh-pick-i')];
+    const tops = lines.map(l => Math.round(l.getBoundingClientRect().top)), lefts = lines.map(l => Math.round(l.getBoundingClientRect().left));
+    const nav = rel.querySelector('.mtx-kh-rel').getBoundingClientRect();
+    const cta = root.querySelector('a.mtx-kh-btn');
+    const cs = getComputedStyle(cta);
+    return { h3: root.querySelector('h3').textContent, body: root.querySelector('.mtx-kh-pick-b').textContent,
+      lines: lines.map(l => l.textContent.replace(/\s+/g, ' ').trim()), tops, lefts,
+      below: Math.round(root.getBoundingClientRect().top - nav.bottom), cta: cta.textContent.trim(), href: cta.getAttribute('href'),
+      ctaBg: cs.backgroundColor, ctaFg: cs.color, ctaH: Math.round(cta.getBoundingClientRect().height),
+      imgs: root.querySelectorAll('img, svg image, dialog, [role=dialog], [data-modal]').length,
+      price: /฿|THB|\$|£|\d,\d{3}/.test(root.textContent), buttons: root.querySelectorAll('button, input, select').length,
+      over: document.documentElement.scrollWidth - innerWidth, boxH: Math.round(root.getBoundingClientRect().height) };
+  });
+  const want = ['Ringside — closest to the ring', 'Club Class — best all-round view for most first-time guests', 'LEO Section — good-value stadium view and lively atmosphere', 'Third Class — the most affordable way to experience Rajadamnern'];
+  const cols = new Set(r.lefts).size;
+  console.log(`   ${String(w).padStart(5)}px  columns ${cols}  block ${r.boxH}px  sits ${r.below}px under the four links  button ${r.ctaH}px  overflow ${r.over}`);
+  if (r.h3 !== 'Choose the right seat') fail('heading: ' + r.h3);
+  if (r.body !== 'Every Rajadamnern seat category offers a different view and atmosphere.') fail('body: ' + r.body);
+  if (r.lines.join('|') !== want.join('|')) fail('seat lines differ: ' + JSON.stringify(r.lines));
+  if (r.cta !== 'Compare Rajadamnern seating' || r.href !== 'https://muaytix.com/rajadamnern-stadium-seating') fail(`cta: ${r.cta} ${r.href}`);
+  if (r.imgs || r.price || r.buttons) fail(`block has images/modals ${r.imgs}, a price ${r.price} or form controls ${r.buttons}`);
+  if (r.below < 0) fail('the block is not below the four links');
+  if (w >= 760 && cols !== 2) fail(`${w}px: ${cols} columns, expected 2`);
+  if (w < 620 && cols !== 1) fail(`${w}px: ${cols} columns, expected the lines stacked`);
+  if (r.over > 0) fail(`${w}px: sideways overflow`);
+  await ctx.close();
+}
+ok('heading, sentence, four lines and button read back exactly; no image, price, map, modal or booking control in the block');
 
 /* ---- 7. css scope ---- */
 console.log('\n=== 7. CSS STAYS INSIDE THE BLOCK ===');

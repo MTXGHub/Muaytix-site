@@ -24,13 +24,6 @@ const IMG = {
   logo: { url: 'https://static.tildacdn.com/tild6532-3165-4665-a139-323436353633/1000029307.svg', w: 280, h: 80,
           alt: 'Rajadamnern Knockout logo' },
 };
-const SEATS = [
-  { name: 'Ringside', href: '/rajadamnern-stadium-seating/ringside', url: 'https://static.tildacdn.com/tild3263-3037-4933-b536-393332643465/1000033705.jpg', alt: 'Ringside seating at Rajadamnern Stadium, Bangkok' },
-  { name: 'Club Class', href: '/rajadamnern-stadium-seating/club-class', url: 'https://static.tildacdn.com/tild3063-6461-4462-b734-383032326530/1000033694.jpg', alt: 'Club Class seating at Rajadamnern Stadium, Bangkok' },
-  { name: 'LEO Section', href: '/rajadamnern-stadium-seating/leo-section', url: 'https://static.tildacdn.com/tild6339-6239-4433-b062-343862316332/1000033687.jpg', alt: 'LEO Section at Rajadamnern Stadium, Bangkok' },
-  { name: 'Third Class', href: '/rajadamnern-stadium-seating#third-class', url: 'https://static.tildacdn.com/tild6236-3161-4463-a563-623231633836/1000012609.jpg', alt: 'Third Class seating at Rajadamnern Stadium, Bangkok' },
-];
-
 const tick = `<svg class="mtx-kh-tick" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>`;
 const arrow = `<svg class="mtx-kh-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>`;
 const chev = `<svg class="mtx-kh-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg>`;
@@ -187,15 +180,26 @@ ${faqs.map(f => `        <details class="mtx-kh-det">
 /* ------------------------------------------------------ 12. related */
 const S12 = 'RELATED LINKS';
 const rel = [1, 2, 3, 4].map(n => ({ text: one(S12, `Link ${n} visible anchor`), dest: one(S12, `Link ${n} destination`) }));
+const S13 = 'SEAT ORIENTATION';
+const seatLines = [1, 2, 3, 4].map(n => {
+  const t = one(S13, `Seat line ${n}`), at = t.indexOf(' — ');
+  if (at < 0) throw new Error('seat line has no dash: ' + t);
+  return { key: ['ringside', 'club', 'leo', 'third'][n - 1], name: t.slice(0, at), rest: t.slice(at + 1) };
+});
 const related = `  <section class="mtx-kh-sec mtx-kh-sec--paper mtx-kh-related">
     <div class="mtx-kh-wrap">
       <h2 class="mtx-kh-h2">${esc(one(S12, 'H2'))}</h2>
       <ul class="mtx-kh-rel">
 ${rel.map(l => `        <li><a class="mtx-kh-jump" href="${esc(l.dest)}">${esc(l.text)}${arrow}</a></li>`).join('\n')}
       </ul>
-      <ul class="mtx-kh-seats">
-${SEATS.map(s => `        <li><a class="mtx-kh-seat" href="${esc(s.href)}" aria-label="${esc(s.name)}"><img src="${esc(s.url)}" alt="${esc(s.alt)}" width="1024" height="1024" loading="lazy" decoding="async"></a></li>`).join('\n')}
-      </ul>
+      <div class="mtx-kh-pick">
+        <h3 class="mtx-kh-h3">${esc(one(S13, 'H3'))}</h3>
+        <p class="mtx-kh-pick-b">${esc(one(S13, 'Body'))}</p>
+        <ul class="mtx-kh-pick-l">
+${seatLines.map(s => `          <li class="mtx-kh-pick-i mtx-kh-pick-i--${s.key}"><strong class="mtx-kh-pick-n">${esc(s.name)}</strong> ${esc(s.rest)}</li>`).join('\n')}
+        </ul>
+        <p class="mtx-kh-cta-row"><a class="mtx-kh-btn mtx-kh-btn--line" href="${esc(one(S13, 'Link destination'))}">${esc(one(S13, 'CTA'))}</a></p>
+      </div>
     </div>
   </section>`;
 
