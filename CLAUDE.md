@@ -247,6 +247,20 @@ Rules:
 3. If no report answers the question, say so in one sentence and ask before
    building anything new.
 
+4. **Start every numbers answer with a header line**: the report name, the date
+   window, the page filter and the channel. He should never have to guess what
+   a number counts.
+5. **Totals come from the query, never from typing.** A hand-typed total (26
+   instead of 25) destroyed his trust in every other figure. Have the database
+   add it up and paste what it returns.
+6. **Give the one number he asked for, then stop.** No second table, no
+   explanation of two measures, unless he asks. If an answer needs a caveat,
+   put it in one sentence before the number, not after he pushes back.
+7. If his question is about **visits** (people who arrived, whether or not they
+   started checkout), say first that the reports cannot count visits and only
+   Google Analytics can. Then give that number on its own, labelled, and never
+   divide a report number by it.
+
 Source tagging only exists from 19 September 2026 09:56 Bangkok. Anything
 earlier shows as unattributed because it was never tagged, not because it did
 not happen. Say this whenever a window starts before that date.
