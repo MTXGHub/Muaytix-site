@@ -1,0 +1,36 @@
+RAJADAMNERN KNOCKOUT SCHEDULE
+Paste these into the Tilda page settings for /rajadamnern-knockout/schedule.
+They are not part of the HTML block.
+
+PAGE ADDRESS (keep as it is)
+  /rajadamnern-knockout/schedule
+
+TITLE
+  Rajadamnern Knockout Schedule | Monday, Tuesday & Friday
+
+META DESCRIPTION
+  See upcoming Rajadamnern Knockout dates at Rajadamnern Stadium, Bangkok. Live Muay Thai every Monday, Tuesday and Friday. Book tickets for your date online.
+
+CANONICAL
+  https://muaytix.com/rajadamnern-knockout/schedule
+
+ROBOTS
+  index,follow
+
+OPEN GRAPH
+  Type:         website
+  Site name:    MuayTix
+  URL:          https://muaytix.com/rajadamnern-knockout/schedule
+  Title:        Rajadamnern Knockout Schedule | Upcoming Bangkok Fight Nights
+  Description:  Find upcoming Rajadamnern Knockout dates at Rajadamnern Stadium. Live Muay Thai every Monday, Tuesday and Friday. Book tickets online.
+  Image:        NOT SET. Needs an approved Rajadamnern Knockout schedule or event visual, at least 1200 x 630.
+  Image alt:    Rajadamnern Knockout schedule at Rajadamnern Stadium in Bangkok
+
+X CARD
+  Card:         summary_large_image
+  Title:        Rajadamnern Knockout Schedule | Upcoming Bangkok Fight Nights
+  Description:  Find upcoming Rajadamnern Knockout dates at Rajadamnern Stadium. Live Muay Thai every Monday, Tuesday and Friday.
+  Image:        NOT SET. Use the same image as Open Graph.
+
+DO NOT ADD
+  Meta keywords. "Tonight" in the title or description. A second title or canonical tag.

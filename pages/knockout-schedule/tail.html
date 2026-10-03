@@ -1,0 +1,123 @@
+@@SCHEMA@@
+
+<script>
+/* Three behaviours, plain JavaScript, nothing loaded from outside. Every date
+   is already in the page as text, so with the script off the page still shows
+   every month, stacked, and every button works.
+
+   1. Finished nights drop out. A night counts as finished from 10:00 pm Bangkok
+      time on its date. The next-event feature moves to the nearest night that
+      has not finished, skipping special events.
+   2. The month tabs. The first month that still has nights opens, which is the
+      current month. Arrow keys move between tabs.
+   3. The phone bar shows once the first button has scrolled away and the date
+      list is not on screen.
+
+   The accordions are native details elements and need no script. */
+(function () {
+  var root = document.getElementById('mtx-ks');
+  var raw = document.getElementById('mtx-ks-data');
+  if (root === null || raw === null) return;
+  var data;
+  try { data = JSON.parse(raw.textContent); } catch (e) { return; }
+
+  var each = function (sel, fn) { var l = root.querySelectorAll(sel); for (var k = 0; k < l.length; k++) fn(l[k], k); };
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Bangkok is UTC+7 all year, so this is arithmetic, not a timezone library. */
+  var now = new Date();
+  var bkk = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 7 * 3600000);
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var today = bkk.getFullYear() + '-' + pad(bkk.getMonth() + 1) + '-' + pad(bkk.getDate());
+  var over = function (iso) { return today > iso || (today === iso && bkk.getHours() >= data.finishesAtBangkokHour); };
+
+  var WD = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var MO = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var label = function (iso) {
+    var p = iso.split('-'), d = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
+    var short = WD[d.getUTCDay()] + ' ' + (+p[2]) + ' ' + MO[+p[1] - 1];
+    return { short: short, long: short + ' ' + p[0] };
+  };
+
+  /* 1. finished nights */
+  each('.mtx-ks-row', function (r) { if (over(r.getAttribute('data-date'))) r.hidden = true; });
+  var nextRow = null;
+  each('.mtx-ks-row', function (r) { if (!nextRow && !r.hidden && r.getAttribute('data-kind') === 'knockout') nextRow = r; });
+  var feature = root.querySelector('[data-mtx-next]');
+  if (feature) {
+    if (nextRow === null) { feature.hidden = true; }
+    else {
+      var iso = nextRow.getAttribute('data-date'), t = label(iso);
+      var d = feature.querySelector('[data-mtx-next-date]'), s = feature.querySelector('[data-mtx-next-short]'), c = feature.querySelector('[data-mtx-next-cta]');
+      if (d) d.textContent = t.long;
+      if (s) s.textContent = t.short;
+      if (c) c.setAttribute('href', nextRow.querySelector('a.mtx-ks-btn').getAttribute('href'));
+    }
+  }
+
+  /* 2. month tabs */
+  var tabs = [], panels = {};
+  each('.mtx-ks-tab', function (a) { tabs.push(a); });
+  each('.mtx-ks-panel', function (p) { panels[p.getAttribute('data-month')] = p; });
+  var live = function (m) { var rows = panels[m].querySelectorAll('.mtx-ks-row'); for (var k = 0; k < rows.length; k++) if (!rows[k].hidden) return true; return false; };
+  var list = root.querySelector('[data-mtx-tabs]');
+  if (list && tabs.length) {
+    root.className += ' is-js';
+    list.setAttribute('role', 'tablist'); list.setAttribute('aria-label', 'Month');
+    var shown = [];
+    tabs.forEach(function (a) {
+      var m = a.getAttribute('data-month'), p = panels[m];
+      a.parentNode.setAttribute('role', 'presentation');
+      a.setAttribute('role', 'tab'); a.setAttribute('aria-controls', p.id); a.id = 'mtx-ks-t-' + m;
+      p.setAttribute('role', 'tabpanel'); p.setAttribute('aria-labelledby', a.id);
+      if (live(m)) shown.push(a); else { a.parentNode.hidden = true; p.hidden = true; }
+    });
+    var open = function (a, focus) {
+      tabs.forEach(function (b) {
+        var on = b === a, m = b.getAttribute('data-month');
+        b.className = 'mtx-ks-tab' + (on ? ' is-on' : '');
+        b.setAttribute('aria-selected', on ? 'true' : 'false'); b.setAttribute('tabindex', on ? '0' : '-1'); b.removeAttribute('aria-current');
+        if (live(m)) panels[m].hidden = !on;
+      });
+      if (focus) a.focus();
+    };
+    if (shown.length) open(shown[0], false);
+    tabs.forEach(function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); open(a, false); });
+      a.addEventListener('keydown', function (e) {
+        var i = shown.indexOf(a), n = -1;
+        if (e.key === 'ArrowRight') n = (i + 1) % shown.length;
+        else if (e.key === 'ArrowLeft') n = (i - 1 + shown.length) % shown.length;
+        else if (e.key === 'Home') n = 0;
+        else if (e.key === 'End') n = shown.length - 1;
+        if (n >= 0) { e.preventDefault(); open(shown[n], true); }
+      });
+    });
+  }
+
+  /* The hero button and the phone bar scroll to the dates. */
+  var target = document.getElementById('mtx-ks-dates');
+  each('a[data-mtx-jump]', function (a) {
+    a.addEventListener('click', function (e) { if (!target) return; e.preventDefault(); target.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' }); });
+  });
+
+  /* 3. the phone bar */
+  var bar = root.querySelector('[data-mtx-ks-bar]');
+  var first = root.querySelector('.mtx-ks-hero .mtx-ks-btn');
+  if (bar && first && target) {
+    var queued = false;
+    var update = function () {
+      queued = false;
+      var past = first.getBoundingClientRect().bottom < 0;
+      var r = target.getBoundingClientRect();
+      var seen = r.bottom > 0 && r.top < window.innerHeight;
+      bar.className = 'mtx-ks-bar' + (past && !seen ? ' is-on' : '');
+    };
+    var queue = function () { if (queued === false) { queued = true; window.requestAnimationFrame(update); } };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    update();
+  }
+})();
+</script>
+</div>
