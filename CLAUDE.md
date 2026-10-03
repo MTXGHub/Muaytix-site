@@ -336,3 +336,8 @@ the stadium, not copy. They can be used on any page.
 - **"Official" and "limited".** Banned in section 2, but on 3 October 2026 he
   said to leave both in the RWS Knocktoberfest page copy because no advertising
   (Google, Facebook) is running at the moment. If ads start again, ask first.
+- **"Best available seats are allocated in your chosen section at the time of
+  booking."** Said on 4 October 2026: it hurts conversion. Removed from the
+  Knockout schedule page. Do not put it on any page, in any form, unless he
+  authorises it for that page. It came from copy he supplied in a brief, so if a
+  brief contains it again, say so in one sentence and ask before building it in.

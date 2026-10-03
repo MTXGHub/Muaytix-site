@@ -90,7 +90,6 @@ const next = `  <section class="mtx-ks-sec mtx-ks-sec--paper mtx-ks-sec--next" d
 ${lines(S3, 'Event facts').map(f => `          <li class="mtx-ks-fact">${esc(f)}</li>`).join('\n')}
         </ul>
         <p class="mtx-ks-cta-row"><a class="mtx-ks-btn mtx-ks-btn--main" href="${koUrl(first.iso)}" data-mtx-next-cta><span class="mtx-ks-btn-t">${esc(ctaText.slice(0, at))}<span data-mtx-next-short>${esc(shortDate(first.iso))}</span></span></a></p>
-        <p class="mtx-ks-note">${esc(one(S3, 'Support note'))}</p>
       </div>
     </div>
   </section>`;

@@ -57,10 +57,8 @@ console.log('\n=== 1. THE WORDS (every line of the brief, read back from the DOM
   const before = fails;
   for (const [re, name] of bans) { const m = flat.match(re); if (m) fail(`banned: ${name} (${m[0]})`); }
   if (fails === before) ok('no em dashes, seat-selection wording, scarcity, "limited", "official" or live-stream words');
-  const alloc = (flat.match(/Best available seats are allocated/gi) || []).length;
-  if (alloc !== 1) fail(`the allocation sentence appears ${alloc} times, expected once (below the next-event button)`); else ok('the best-available-seat sentence appears once, in the next-event feature, and not in the FAQ or any row');
-  const below = await p.evaluate(() => { const f = document.querySelector('.mtx-ks-feat'), c = f.querySelector('[data-mtx-next-cta]').getBoundingClientRect(), n = f.querySelector('.mtx-ks-note').getBoundingClientRect(); return n.top >= c.bottom - 1 && f.querySelector('.mtx-ks-note').textContent === 'Best available seats are allocated in your chosen section at the time of booking.'; });
-  if (!below) fail('the sentence is not directly below the next-event button'); else ok('and it sits directly below the next-event button');
+  const alloc = (flat.match(/best available seats|allocated in your chosen section/gi) || []).length;
+  if (alloc) fail(`the best-available-seat sentence is on the page ${alloc} time(s); it must not be`); else ok('the best-available-seat sentence is nowhere on the page');
   if (flat.includes('Tap the tickers') || /\b[A-Z]{12,}\b/.test(flat)) fail('ticker wording or an all-capitals sentence is in the page block');
   const exact = ['Rajadamnern Knockout takes place every Monday, Tuesday and Friday. Occasionally, a Monday Knockout night is replaced by a separately ticketed special event.',
     'Looking for Muay Thai Monday Bangkok, Muay Thai Tuesday Bangkok or Muay Thai Friday Bangkok? Rajadamnern Knockout runs on all three nights, so you can choose the date that best fits your trip.',
@@ -68,13 +66,11 @@ console.log('\n=== 1. THE WORDS (every line of the brief, read back from the DOM
     'Rajadamnern Knockout may also appear in searches as Rajadamnern Knock Out, Raja Knockout or Rajadamnern Stadium Knockout. This page lists the upcoming Rajadamnern Knockout event dates at Rajadamnern Stadium.',
     'Select your preferred ticket section when booking. Your ticket confirmation will show the tickets allocated for your booking.'];
   const paras = await p.evaluate(() => [...document.querySelectorAll('#mtx-ks p')].map(e => e.textContent.replace(/\s+/g, ' ').trim()));
-  const gone = ['Rajadamnern Knockout dates are available every Monday', 'visitors can book Rajadamnern Knockout through the dates above', 'select the date that fits your trip and book tickets online', 'is also searched as', 'This schedule lists the upcoming', 'Choose your preferred ticket section', 'Best available seats are allocated in that section'];
+  const gone = ['Rajadamnern Knockout dates are available every Monday', 'visitors can book Rajadamnern Knockout through the dates above', 'select the date that fits your trip and book tickets online', 'is also searched as', 'This schedule lists the upcoming', 'Choose your preferred ticket section'];
   const missingExact = exact.filter(e => !paras.includes(e)), stale = gone.filter(g => flat.includes(g));
   if (missingExact.length || stale.length) fail('replacement copy: missing ' + JSON.stringify(missingExact) + ' still present ' + JSON.stringify(stale)); else ok('the five replacement texts are in the page as whole paragraphs, exactly, and none of the old wording is left');
   const dupes = exact.filter(e => paras.filter(x => x === e).length !== 1);
   if (dupes.length) fail('a replacement paragraph is repeated'); else ok('each replacement appears once');
-  const inFeature = await p.evaluate(() => document.querySelector('.mtx-ks-feat .mtx-ks-note').textContent);
-  if (!/^Best available seats are allocated in your chosen section at the time of booking\.$/.test(inFeature)) fail('support note: ' + inFeature);
   const kw = ['Rajadamnern Knockout schedule', 'Rajadamnern Knockout dates', 'Rajadamnern Knockout Monday', 'Rajadamnern Knockout Tuesday', 'Rajadamnern Knockout Friday', 'Rajadamnern Knockout tonight', 'Rajadamnern Knockout today', 'Rajadamnern Knockout Muay Thai', 'Rajadamnern Knockout event', 'Rajadamnern Knock Out', 'Rajadamnern Stadium Knockout', 'Muay Thai Monday Bangkok', 'Muay Thai Tuesday Bangkok', 'Muay Thai Friday Bangkok', 'Muay Thai fights Bangkok Monday', 'Muay Thai fights Bangkok Tuesday', 'Muay Thai fights Bangkok Friday'];
   const have = kw.filter(k => flat.toLowerCase().includes(k.toLowerCase())), lack = kw.filter(k => !have.includes(k));
   console.log(`   note  keyword phrases in the visible copy: ${have.length} of ${kw.length}`);
