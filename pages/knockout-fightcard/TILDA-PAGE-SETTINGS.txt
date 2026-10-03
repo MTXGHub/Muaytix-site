@@ -1,0 +1,36 @@
+RAJADAMNERN KNOCKOUT FIGHT CARD
+Paste these into the Tilda page settings for /rajadamnern-knockout/fight-card.
+They are not part of the HTML block.
+
+PAGE ADDRESS (keep as it is)
+  /rajadamnern-knockout/fight-card
+
+TITLE
+  Rajadamnern Knockout Fight Card | Latest Bouts at Rajadamnern
+
+META DESCRIPTION
+  See the latest Rajadamnern Knockout fight card at Rajadamnern Stadium, Bangkok. Confirmed bouts are updated when announced. Choose seats for the next event online.
+
+CANONICAL
+  https://muaytix.com/rajadamnern-knockout/fight-card
+
+ROBOTS
+  index,follow
+
+OPEN GRAPH
+  Type:         website
+  Site name:    MuayTix
+  URL:          https://muaytix.com/rajadamnern-knockout/fight-card
+  Title:        Rajadamnern Knockout Fight Card | Latest Confirmed Bouts
+  Description:  See the latest confirmed Rajadamnern Knockout line-up at Rajadamnern Stadium. Fight cards are updated when announced. Choose seats for the next event.
+  Image:        NOT SET. Needs a current approved card poster, or an approved generic Rajadamnern Knockout hero image, at least 1200 x 630.
+  Image alt:    Rajadamnern Knockout fight card at Rajadamnern Stadium in Bangkok
+
+X CARD
+  Card:         summary_large_image
+  Title:        Rajadamnern Knockout Fight Card | Latest Confirmed Bouts
+  Description:  See the latest confirmed Rajadamnern Knockout line-up at Rajadamnern Stadium. Fight cards are updated when announced.
+  Image:        NOT SET. Use the same image as Open Graph.
+
+DO NOT ADD
+  Meta keywords. "Tonight" in the title or description. A second title or canonical tag.

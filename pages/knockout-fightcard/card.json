@@ -1,0 +1,6 @@
+{
+  "_note": "Leave bouts empty until the stadium publishes a card. When it does, fill date, poster and bouts in the published order and rebuild: the page switches from 'being confirmed' to the full card.",
+  "date": null,
+  "poster": null,
+  "bouts": []
+}

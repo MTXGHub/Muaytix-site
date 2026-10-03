@@ -1,0 +1,79 @@
+@@SCHEMA@@
+
+<script>
+/* Two behaviours, plain JavaScript, nothing loaded from outside.
+
+   1. The booking buttons follow the calendar. Each one points at the nearest
+      Rajadamnern Knockout night that has not finished, by Bangkok time. When a
+      night finishes the buttons move to the next one by themselves. The page
+      is written for the first night, so it is right without this script too.
+   2. The phone bar shows once the first button has scrolled away and no other
+      booking button is on screen.
+
+   The accordions are native details elements and need no script. */
+(function () {
+  var root = document.getElementById('mtx-fc');
+  var raw = document.getElementById('mtx-fc-nights');
+  if (root === null || raw === null) return;
+  var data;
+  try { data = JSON.parse(raw.textContent); } catch (e) { return; }
+
+  /* Bangkok is UTC+7 all year, so this is arithmetic, not a timezone library. */
+  var now = new Date();
+  var bkk = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 7 * 3600000);
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var today = bkk.getFullYear() + '-' + pad(bkk.getMonth() + 1) + '-' + pad(bkk.getDate());
+
+  var live = [];
+  for (var i = 0; i < data.nights.length; i++) {
+    var n = data.nights[i];
+    var over = today > n.iso || (today === n.iso && bkk.getHours() >= data.finishesAtBangkokHour);
+    if (!over) live.push(n);
+  }
+
+  var each = function (sel, fn) { var l = root.querySelectorAll(sel); for (var k = 0; k < l.length; k++) fn(l[k]); };
+
+  if (live.length && live[0].iso !== data.nights[0].iso) {
+    var up = live[0];
+    each('[data-mtx-next="short"]', function (e) { e.textContent = up.short; });
+    each('[data-mtx-next="long"]', function (e) { e.textContent = up.long; });
+    each('a[data-mtx-cta]', function (e) { e.setAttribute('href', up.href); });
+  }
+  if (live.length === 0) {
+    /* Every scheduled night has finished: never offer a finished night. */
+    each('a[data-mtx-cta]', function (e) {
+      e.setAttribute('href', data.schedule);
+      var t = e.querySelector('.mtx-fc-btn-t');
+      (t || e).textContent = data.scheduleText;
+    });
+    each('[data-mtx-needs-next]', function (e) { e.hidden = true; });
+  }
+  each('[data-mtx-night]', function (e) {
+    var keep = false;
+    for (var k = 0; k < live.length; k++) if (live[k].iso === e.getAttribute('data-mtx-night')) keep = true;
+    if (!keep) e.hidden = true;
+  });
+
+  /* The phone bar. */
+  var bar = root.querySelector('[data-mtx-fc-bar]');
+  var first = root.querySelector('.mtx-fc-hero .mtx-fc-btn');
+  if (bar && first) {
+    var buttons = root.querySelectorAll('a.mtx-fc-btn[data-mtx-cta], a.mtx-fc-btn[data-mtx-cta-fixed]');
+    var queued = false;
+    var update = function () {
+      queued = false;
+      var past = first.getBoundingClientRect().bottom < 0, seen = false;
+      for (var k = 0; k < buttons.length; k++) {
+        var r = buttons[k].getBoundingClientRect();
+        if (r.bottom > 0 && r.top < window.innerHeight) seen = true;
+      }
+      bar.className = 'mtx-fc-bar' + (past && !seen ? ' is-on' : '');
+    };
+    var queue = function () { if (queued === false) { queued = true; window.requestAnimationFrame(update); } };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    update();
+  }
+})();
+</script>
+</div>

@@ -1,0 +1,14 @@
+{
+  "_note": "TEST FIXTURE ONLY. Used by verify.mjs to prove State B renders. Never written to the live page.",
+  "date": "2026-10-02",
+  "poster": "https://static.tildacdn.com/tild3064-6361-4439-a236-613163333062/1000034603.jpg",
+  "bouts": [
+    { "n": 1, "a": "PORNNAPHA", "ag": "POR. TAWAT-CHAWIN", "b": "ABI KAMATE", "bg": "TFC MUAY THAI" },
+    { "n": 2, "a": "YAKUZA", "ag": "SOR.RATCHASI MUAY THAI", "b": "ANIL MEHTA", "bg": "SASIPRAPA GYM" },
+    { "n": 3, "a": "NIKOLAOS RUETER", "ag": "TOR.SANGTIENNOI", "b": "JOBEN CHAUHAN", "bg": "SITJAOPHO" },
+    { "n": 4, "a": "MUSTANG", "ag": "ROTSUAYJAJATE", "b": "HAO SHUAI", "bg": "SATHIAN MUAY THAI" },
+    { "n": 5, "a": "RUEAROB", "ag": "SIT POR. YUT", "b": "REATHY SAR", "bg": "SASIPRAPA GYM" },
+    { "n": 6, "a": "LUKE HAYES", "ag": "SIT THAILAND", "b": "TIAGO BAADER", "bg": "MANOP MUAY THAI GYM" },
+    { "n": 7, "a": "MATTHEW BARBERIO", "ag": "SIT THAILAND", "b": "HUANG YUJIE", "bg": "MC MUAY THAI" }
+  ]
+}

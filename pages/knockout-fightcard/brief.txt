@@ -1,0 +1,237 @@
+## 1 BREADCRUMBS
+
+Home / Rajadamnern Knockout / Fight Card
+
+
+## 2 HERO
+
+H1:
+Rajadamnern Knockout Fight Card
+
+Body:
+See the latest confirmed Rajadamnern Knockout line-up at Rajadamnern Stadium, Bangkok.
+
+Supporting line:
+Rajadamnern Knockout takes place every Monday, Tuesday and Friday.
+
+Primary CTA:
+Choose seats for Monday 5 October
+
+Primary CTA destination:
+https://muaytix.com/rajadamnern-knockout/2026-10-05
+
+Secondary CTA:
+View the Rajadamnern Knockout schedule
+
+Secondary CTA destination:
+https://muaytix.com/rajadamnern-knockout/schedule
+
+
+## 3 STATUS
+
+H2:
+Next Rajadamnern Knockout event
+
+Date:
+Monday 5 October 2026
+
+Event facts:
+Rajadamnern Stadium, Bangkok
+Doors 6:00 pm
+First fight 7:00 pm
+7 bouts · 3 rounds per bout
+
+Status label:
+Fight card status
+
+Status value:
+Being confirmed by Rajadamnern Stadium
+
+Body:
+The next Rajadamnern Knockout fight card is being confirmed by the stadium. Confirmed bouts are added here as soon as they are announced.
+
+Last-updated label:
+Last updated
+
+Primary CTA:
+Choose seats for Monday 5 October
+
+Primary CTA destination:
+https://muaytix.com/rajadamnern-knockout/2026-10-05
+
+Secondary CTA:
+See all Rajadamnern Knockout dates
+
+Secondary CTA destination:
+https://muaytix.com/rajadamnern-knockout/schedule
+
+
+## 4A CARD AREA STATE A
+
+H2:
+Fight cards for next week
+
+Body:
+Rajadamnern Knockout fight cards are usually published by the stadium on Monday.
+
+Body 2:
+Monday 5 October, Tuesday 6 October and Friday 9 October are scheduled Rajadamnern Knockout nights. The official line-ups will be added here when they are released.
+
+Upcoming date 1:
+Monday 5 October 2026
+
+Upcoming date 2:
+Tuesday 6 October 2026
+
+Upcoming date 3:
+Friday 9 October 2026
+
+Supporting line:
+Each Rajadamnern Knockout night usually features seven fast three-round Muay Thai bouts.
+
+CTA:
+Choose seats for Monday 5 October
+
+CTA destination:
+https://muaytix.com/rajadamnern-knockout/2026-10-05
+
+
+## 4B CARD AREA STATE B
+
+H2:
+Rajadamnern Knockout Fight Card
+
+Event facts:
+Rajadamnern Stadium, Bangkok
+Doors 6:00 pm
+First fight 7:00 pm
+7 bouts · 3 rounds per bout
+
+Status label:
+Fight card status
+
+Status value:
+Confirmed
+
+Last-updated label:
+Last updated
+
+
+## 5 ACCURACY NOTE
+
+Body:
+Fight cards are published by Rajadamnern Stadium and can change. This page is updated when confirmed information becomes available.
+
+
+## 6 FORMAT CONTEXT
+
+H2:
+What to expect from Rajadamnern Knockout
+
+Body:
+Rajadamnern Knockout usually features seven three-round Muay Thai bouts, with Thai fighters meeting international challengers at Rajadamnern Stadium.
+
+Body 2:
+The format is fast and easy to follow, with elbows, knees and clinching under Muay Thai rules.
+
+Link:
+Learn about Rajadamnern Knockout
+
+Link destination:
+https://muaytix.com/rajadamnern-knockout
+
+
+## 7 BOOK THE NEXT EVENT
+
+H2:
+Book the next Rajadamnern Knockout night
+
+Body:
+Choose your seat for Monday 5 October at Rajadamnern Stadium. Doors open at 6:00 pm and the first fight begins at 7:00 pm.
+
+CTA:
+Choose seats for Monday 5 October
+
+CTA destination:
+https://muaytix.com/rajadamnern-knockout/2026-10-05
+
+
+## 8 RECENT CARDS
+
+H2:
+Recent Rajadamnern Knockout cards
+
+Body:
+Previous fight cards are shown here for reference. Current and upcoming cards always appear first.
+
+
+## 9 FAQ
+
+H2:
+Rajadamnern Knockout fight-card FAQs
+
+Question 1:
+When is the next Rajadamnern Knockout fight card announced?
+
+Answer 1:
+Rajadamnern Knockout fight cards are usually published by the stadium on Monday. Confirmed bouts are added to this page when they are announced.
+
+Question 2:
+Can the Rajadamnern Knockout fight card change?
+
+Answer 2:
+Yes. Fight cards can change. This page is updated when confirmed information becomes available.
+
+Question 3:
+What time do Rajadamnern Knockout fights start?
+
+Answer 3:
+Doors open at 6:00 pm and the first fight begins at 7:00 pm.
+
+Question 4:
+How many bouts are on a Rajadamnern Knockout card?
+
+Answer 4:
+Rajadamnern Knockout usually features seven three-round bouts.
+
+Question 5:
+How do I choose seats for the next event?
+
+Answer 5:
+Choose seats for the next Rajadamnern Knockout event through the selected event page.
+
+Link:
+Choose seats for Monday 5 October
+
+Link destination:
+https://muaytix.com/rajadamnern-knockout/2026-10-05
+
+
+## 10 RELATED LINKS
+
+H2:
+Plan your Rajadamnern Knockout night
+
+Link 1:
+Rajadamnern Knockout
+
+Destination 1:
+https://muaytix.com/rajadamnern-knockout
+
+Link 2:
+View the Rajadamnern Knockout schedule
+
+Destination 2:
+https://muaytix.com/rajadamnern-knockout/schedule
+
+Link 3:
+Choose Rajadamnern Knockout tickets
+
+Destination 3:
+https://muaytix.com/rajadamnern-knockout/tickets
+
+Link 4:
+Compare Rajadamnern seating
+
+Destination 4:
+https://muaytix.com/rajadamnern-stadium-seating

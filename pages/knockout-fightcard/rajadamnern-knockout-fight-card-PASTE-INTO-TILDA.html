@@ -1,0 +1,504 @@
+<div class="mtx-fc-page" id="mtx-fc">
+<style>.mtx-fc-page, .mtx-fc-page * { box-sizing: border-box; }
+
+.mtx-fc-page {
+  --blue:   #1F5BFF;
+  --blue-d: #1545CF;
+  --blue-l: #9DB8FF;
+  --navy:   #0A1640;
+  --ink:    #0B0B0D;
+  --paper:  #F2F4F8;
+  --white:  #FFFFFF;
+  --line:   #DCDFE6;
+  --muted:  #4A4F5C;
+  --ok:     #0B6B3A;
+  --cond: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --body: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  display: block; font-family: var(--body); font-size: 17px; line-height: 1.6;
+  color: var(--ink); background: var(--white); -webkit-font-smoothing: antialiased;
+}
+
+.mtx-fc-page p, .mtx-fc-page h1, .mtx-fc-page h2, .mtx-fc-page h3,
+.mtx-fc-page ul, .mtx-fc-page ol, .mtx-fc-page li, .mtx-fc-page summary { margin: 0; padding: 0; }
+.mtx-fc-page ul, .mtx-fc-page ol { list-style: none; }
+.mtx-fc-page img { display: block; max-width: 100%; height: auto; }
+.mtx-fc-page .mtx-fc-wrap { width: min(100% - 32px, 1100px); margin-inline: auto; }
+
+.mtx-fc-page .mtx-fc-h1, .mtx-fc-page .mtx-fc-h2, .mtx-fc-page .mtx-fc-h3 {
+  font-family: var(--cond); font-weight: 800; text-transform: uppercase; letter-spacing: .01em; overflow-wrap: break-word;
+}
+.mtx-fc-page .mtx-fc-h1 { font-size: clamp(40px, 10.5vw, 76px); line-height: .96; }
+.mtx-fc-page .mtx-fc-h2 { font-size: clamp(30px, 7.4vw, 44px); line-height: 1.02; }
+.mtx-fc-page .mtx-fc-h2::before { content: ""; display: block; width: 46px; height: 5px; margin-bottom: 14px; background: var(--blue); }
+.mtx-fc-page .mtx-fc-body { margin-top: 16px; max-width: 68ch; font-size: 18px; }
+.mtx-fc-page .mtx-fc-h2 + .mtx-fc-body { margin-top: 18px; }
+
+.mtx-fc-page .mtx-fc-sec { padding: 40px 0; }
+.mtx-fc-page .mtx-fc-sec--white { background: var(--white); }
+.mtx-fc-page .mtx-fc-sec--paper { background: var(--paper); }
+
+.mtx-fc-page .mtx-fc-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 100%; min-height: 56px; padding: 10px 24px; line-height: 1.15;
+  background: var(--blue); color: var(--white); border: 2px solid var(--blue);
+  font-family: var(--cond); font-weight: 800; font-size: 19px; letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none; text-align: center; cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.mtx-fc-page .mtx-fc-btn-t { display: block; }
+.mtx-fc-page .mtx-fc-btn:hover { background: var(--blue-d); border-color: var(--blue-d); }
+.mtx-fc-page .mtx-fc-btn--ghost { background: transparent; border-color: var(--white); }
+.mtx-fc-page .mtx-fc-btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--navy); }
+.mtx-fc-page .mtx-fc-btn--line { background: var(--white); border-color: var(--ink); color: var(--ink); }
+.mtx-fc-page .mtx-fc-btn--line:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
+
+.mtx-fc-page .mtx-fc-btn:focus-visible, .mtx-fc-page .mtx-fc-jump:focus-visible, .mtx-fc-page .mtx-fc-inline:focus-visible,
+.mtx-fc-page .mtx-fc-det summary:focus-visible, .mtx-fc-page .mtx-fc-crumbs a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.mtx-fc-page .mtx-fc-hero .mtx-fc-btn:focus-visible, .mtx-fc-page .mtx-fc-conf .mtx-fc-btn:focus-visible,
+.mtx-fc-page .mtx-fc-bar:focus-visible { outline-color: var(--white); }
+
+.mtx-fc-page .mtx-fc-cta-row { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+
+.mtx-fc-page .mtx-fc-crumbs { background: var(--paper); border-bottom: 1px solid var(--line); }
+.mtx-fc-page .mtx-fc-crumbs ol { display: flex; flex-wrap: wrap; padding: 10px 0; font-size: 15px; line-height: 1.4; color: var(--muted); }
+.mtx-fc-page .mtx-fc-crumbs a { color: var(--blue-d); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+.mtx-fc-page .mtx-fc-slash { white-space: pre; }
+
+.mtx-fc-page .mtx-fc-hero { color: var(--white); background: linear-gradient(135deg, #0A1640 0%, #12308C 100%); border-bottom: 6px solid var(--blue); }
+.mtx-fc-page .mtx-fc-hero-in { padding: 28px 0 34px; }
+.mtx-fc-page .mtx-fc-logo { display: inline-flex; align-items: center; margin-bottom: 16px; padding: 8px 14px; background: var(--white); border-radius: 6px; }
+.mtx-fc-page .mtx-fc-logo img { height: 34px; width: auto; max-width: 160px; object-fit: contain; }
+.mtx-fc-page .mtx-fc-lede { margin-top: 14px; max-width: 34ch; font-size: 20px; line-height: 1.35; font-weight: 500; }
+.mtx-fc-page .mtx-fc-days { margin-top: 10px; font-family: var(--cond); font-weight: 800; font-size: 22px; line-height: 1.15; letter-spacing: .02em; text-transform: uppercase; color: var(--blue-l); }
+.mtx-fc-page .mtx-fc-hero .mtx-fc-cta-row { margin-top: 22px; }
+
+.mtx-fc-page .mtx-fc-sec--status { padding: 28px 0 36px; }
+.mtx-fc-page .mtx-fc-panel { padding: 22px 18px 26px; background: var(--white); border: 1px solid var(--line); border-top: 6px solid var(--blue); }
+.mtx-fc-page .mtx-fc-panel .mtx-fc-h2 { font-size: clamp(26px, 6.4vw, 38px); }
+.mtx-fc-page .mtx-fc-date { margin-top: 4px; font-family: var(--cond); font-weight: 800; font-size: clamp(30px, 8vw, 46px); line-height: 1.05; letter-spacing: .01em; text-transform: uppercase; color: var(--blue-d); }
+.mtx-fc-page .mtx-fc-facts { margin-top: 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.mtx-fc-page .mtx-fc-fact { padding: 9px 12px; background: var(--paper); border-left: 5px solid var(--blue); font-weight: 600; font-size: 16px; line-height: 1.3; min-width: 0; overflow-wrap: break-word; }
+.mtx-fc-page .mtx-fc-state { margin-top: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+.mtx-fc-page .mtx-fc-state-l { font-family: var(--cond); font-weight: 800; font-size: 16px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.mtx-fc-page .mtx-fc-pill { display: inline-block; padding: 7px 14px; background: var(--navy); color: var(--white); font-family: var(--cond); font-weight: 800; font-size: 19px; line-height: 1.15; letter-spacing: .04em; text-transform: uppercase; }
+.mtx-fc-page .mtx-fc-pill--ok { background: var(--ok); }
+.mtx-fc-page .mtx-fc-panel .mtx-fc-body { margin-top: 14px; font-size: 17.5px; }
+.mtx-fc-page .mtx-fc-upd { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 2px 10px; font-size: 16px; color: var(--muted); }
+.mtx-fc-page .mtx-fc-upd-l { font-weight: 700; }
+.mtx-fc-page .mtx-fc-upd-v { color: var(--ink); font-weight: 600; }
+
+.mtx-fc-page .mtx-fc-nights { margin-top: 20px; display: grid; gap: 8px; max-width: 520px; }
+.mtx-fc-page .mtx-fc-night { padding: 12px 16px; background: var(--paper); border-left: 8px solid var(--blue); font-family: var(--cond); font-weight: 800; font-size: 22px; line-height: 1.15; letter-spacing: .02em; text-transform: uppercase; }
+.mtx-fc-page .mtx-fc-nights + .mtx-fc-body { margin-top: 20px; }
+
+.mtx-fc-page .mtx-fc-cardtop { margin-top: 20px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.mtx-fc-page .mtx-fc-poster { width: 100%; max-width: 300px; border: 1px solid var(--line); }
+.mtx-fc-page .mtx-fc-cardinfo .mtx-fc-date { margin-top: 0; }
+.mtx-fc-page .mtx-fc-bouts { margin-top: 26px; display: grid; gap: 10px; counter-reset: bout; }
+.mtx-fc-page .mtx-fc-bout { background: var(--white); border: 1px solid var(--line); border-top: 4px solid var(--blue); padding: 12px 14px 16px; }
+.mtx-fc-page .mtx-fc-bout-h { font-size: 15px; letter-spacing: .14em; color: var(--blue-d); }
+.mtx-fc-page .mtx-fc-vs { margin-top: 8px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; align-items: center; }
+.mtx-fc-page .mtx-fc-f strong { display: block; font-family: var(--cond); font-weight: 800; font-size: 26px; line-height: 1.05; letter-spacing: .01em; text-transform: uppercase; overflow-wrap: break-word; }
+.mtx-fc-page .mtx-fc-f span { display: block; margin-top: 3px; font-size: 15px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.mtx-fc-page .mtx-fc-v { font-family: var(--cond); font-weight: 800; font-size: 18px; color: var(--blue-d); text-transform: uppercase; letter-spacing: .1em; }
+
+.mtx-fc-page .mtx-fc-note { padding: 14px 16px; max-width: 68ch; background: var(--white); border-left: 5px solid var(--blue); font-weight: 600; font-size: 17.5px; }
+.mtx-fc-page .mtx-fc-sec--note { padding: 28px 0; }
+.mtx-fc-page .mtx-fc-sec--context .mtx-fc-body { padding-left: 16px; border-left: 4px solid var(--line); }
+.mtx-fc-page .mtx-fc-linkrow { margin-top: 22px; }
+
+.mtx-fc-page .mtx-fc-jump {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 54px; padding: 12px 16px; line-height: 1.2; max-width: 520px;
+  background: var(--white); color: var(--ink); border: 2px solid var(--ink); text-decoration: none;
+  font-family: var(--cond); font-weight: 800; font-size: 19px; letter-spacing: .04em; text-transform: uppercase;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.mtx-fc-page a.mtx-fc-jump:hover { background: var(--blue); border-color: var(--blue); color: var(--white); }
+.mtx-fc-page .mtx-fc-arr { flex: none; }
+
+.mtx-fc-page .mtx-fc-conf { padding: 44px 0; color: var(--white); background: var(--blue); }
+.mtx-fc-page .mtx-fc-conf .mtx-fc-h2::before { background: var(--white); }
+
+.mtx-fc-page .mtx-fc-recent { margin-top: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 640px; }
+.mtx-fc-page .mtx-fc-rc { background: var(--white); border: 1px solid var(--line); border-bottom: 4px solid var(--line); padding-bottom: 10px; }
+.mtx-fc-page .mtx-fc-rc-img { width: 100%; height: auto; }
+.mtx-fc-page .mtx-fc-rc-d { margin: 10px 10px 0; font-family: var(--cond); font-weight: 800; font-size: 19px; line-height: 1.15; text-transform: uppercase; }
+.mtx-fc-page .mtx-fc-rc-l { margin: 2px 10px 0; font-size: 15px; font-weight: 600; color: var(--muted); }
+
+.mtx-fc-page .mtx-fc-acc { margin-top: 24px; display: grid; gap: 10px; }
+.mtx-fc-page .mtx-fc-det { background: var(--white); border: 1px solid var(--line); border-left: 5px solid var(--line); }
+.mtx-fc-page .mtx-fc-det[open] { border-left-color: var(--blue); }
+.mtx-fc-page .mtx-fc-det summary { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 60px; padding: 14px; cursor: pointer; list-style: none; }
+.mtx-fc-page .mtx-fc-det summary::-webkit-details-marker { display: none; }
+.mtx-fc-page .mtx-fc-det summary::marker { content: ""; }
+.mtx-fc-page .mtx-fc-q { font-family: var(--cond); font-weight: 800; font-size: 21px; line-height: 1.15; letter-spacing: .01em; }
+.mtx-fc-page .mtx-fc-chev { flex: none; transition: transform .2s ease; }
+.mtx-fc-page .mtx-fc-det[open] .mtx-fc-chev { transform: rotate(180deg); }
+.mtx-fc-page .mtx-fc-det-b { padding: 0 14px 18px; }
+.mtx-fc-page .mtx-fc-det-b p { max-width: 68ch; font-size: 17.5px; }
+.mtx-fc-page .mtx-fc-inline { color: var(--blue-d); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+.mtx-fc-page .mtx-fc-rel { margin-top: 20px; display: grid; gap: 10px; }
+.mtx-fc-page .mtx-fc-rel li { display: flex; }
+.mtx-fc-page .mtx-fc-rel .mtx-fc-jump { flex: 1; max-width: none; }
+.mtx-fc-page .mtx-fc-related { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px) + 36px); }
+
+.mtx-fc-page .mtx-fc-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  display: none; align-items: center; justify-content: center;
+  height: calc(60px + env(safe-area-inset-bottom, 0px)); padding: 0 20px env(safe-area-inset-bottom, 0px);
+  background: var(--blue); color: var(--white); text-decoration: none; text-align: center;
+  font-family: var(--cond); font-weight: 800; font-size: 20px; letter-spacing: .07em; text-transform: uppercase;
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, .25);
+}
+.mtx-fc-page .mtx-fc-bar.is-on { display: flex; }
+
+@media (min-width: 620px) {
+  .mtx-fc-page .mtx-fc-sec { padding: 52px 0; }
+  .mtx-fc-page .mtx-fc-cta-row { flex-direction: row; flex-wrap: wrap; }
+  .mtx-fc-page .mtx-fc-btn { width: auto; min-width: 250px; }
+  .mtx-fc-page .mtx-fc-panel { padding: 28px 28px 32px; }
+  .mtx-fc-page .mtx-fc-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .mtx-fc-page .mtx-fc-rel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-fc-page .mtx-fc-recent { gap: 18px; }
+  .mtx-fc-page .mtx-fc-vs { grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr); }
+  .mtx-fc-page .mtx-fc-v { text-align: center; }
+  .mtx-fc-page .mtx-fc-f--a { text-align: right; }
+}
+
+@media (min-width: 760px) {
+  .mtx-fc-page { font-size: 18px; }
+  .mtx-fc-page .mtx-fc-wrap { width: min(100% - 80px, 1100px); }
+  .mtx-fc-page .mtx-fc-hero-in { padding: 56px 0 62px; }
+  .mtx-fc-page .mtx-fc-lede { font-size: 24px; max-width: 36ch; }
+  .mtx-fc-page .mtx-fc-days { font-size: 28px; }
+  .mtx-fc-page .mtx-fc-cardtop--poster { grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 36px; align-items: start; }
+  .mtx-fc-page .mtx-fc-poster { max-width: none; }
+  .mtx-fc-page .mtx-fc-bar, .mtx-fc-page .mtx-fc-bar.is-on { display: none; }
+  .mtx-fc-page .mtx-fc-related { padding-bottom: 60px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mtx-fc.mtx-fc-page, #mtx-fc.mtx-fc-page * { transition: none; animation: none; scroll-behavior: auto; }
+}
+
+#mtx-fc.mtx-fc-page, #mtx-fc.mtx-fc-page * { text-align: left; }
+#mtx-fc.mtx-fc-page .mtx-fc-btn, #mtx-fc.mtx-fc-page .mtx-fc-bar { text-align: center; }
+@media (min-width: 620px) {
+  #mtx-fc.mtx-fc-page .mtx-fc-v { text-align: center; }
+  #mtx-fc.mtx-fc-page .mtx-fc-f--a, #mtx-fc.mtx-fc-page .mtx-fc-f--a * { text-align: right; }
+}
+
+#mtx-fc.mtx-fc-page a.mtx-fc-btn { background: var(--blue); border-color: var(--blue); color: var(--white); }
+#mtx-fc.mtx-fc-page a.mtx-fc-btn:hover { background: var(--blue-d); border-color: var(--blue-d); color: var(--white); }
+#mtx-fc.mtx-fc-page a.mtx-fc-btn--line { background: var(--white); border-color: var(--ink); color: var(--ink); }
+#mtx-fc.mtx-fc-page a.mtx-fc-btn--line:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
+#mtx-fc.mtx-fc-page a.mtx-fc-btn--ghost { background: transparent; border-color: var(--white); color: var(--white); }
+#mtx-fc.mtx-fc-page a.mtx-fc-btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--navy); }
+#mtx-fc.mtx-fc-page a.mtx-fc-bar { color: var(--white); }
+#mtx-fc.mtx-fc-page a.mtx-fc-jump { color: var(--ink); text-decoration: none; }
+#mtx-fc.mtx-fc-page a.mtx-fc-jump:hover { color: var(--white); }
+#mtx-fc.mtx-fc-page a.mtx-fc-inline { color: var(--blue-d); }
+#mtx-fc.mtx-fc-page .mtx-fc-crumbs a { color: var(--blue-d); }
+
+#mtx-fc.mtx-fc-page .mtx-fc-hero, #mtx-fc.mtx-fc-page .mtx-fc-hero h1, #mtx-fc.mtx-fc-page .mtx-fc-hero p { color: var(--white); }
+#mtx-fc.mtx-fc-page .mtx-fc-hero .mtx-fc-days { color: var(--blue-l); }
+#mtx-fc.mtx-fc-page .mtx-fc-conf, #mtx-fc.mtx-fc-page .mtx-fc-conf h2, #mtx-fc.mtx-fc-page .mtx-fc-conf p { color: var(--white); }
+#mtx-fc.mtx-fc-page .mtx-fc-h2, #mtx-fc.mtx-fc-page .mtx-fc-h3 { color: var(--ink); }
+#mtx-fc.mtx-fc-page .mtx-fc-conf .mtx-fc-h2 { color: var(--white); }
+#mtx-fc.mtx-fc-page .mtx-fc-bout-h { color: var(--blue-d); }
+#mtx-fc.mtx-fc-page .mtx-fc-pill { color: var(--white); }
+#mtx-fc.mtx-fc-page .mtx-fc-date { color: var(--blue-d); }</style>
+
+  <nav class="mtx-fc-crumbs" aria-label="Breadcrumb"><ol class="mtx-fc-wrap">
+    <li><a href="/">Home</a></li><li aria-hidden="true" class="mtx-fc-slash"> / </li><li><a href="/rajadamnern-knockout">Rajadamnern Knockout</a></li><li aria-hidden="true" class="mtx-fc-slash"> / </li><li aria-current="page">Fight Card</li>
+  </ol></nav>
+
+  <header class="mtx-fc-hero">
+    <div class="mtx-fc-wrap mtx-fc-hero-in">
+      <span class="mtx-fc-logo"><img src="https://static.tildacdn.com/tild6532-3165-4665-a139-323436353633/1000029307.svg" alt="Rajadamnern Knockout logo" width="280" height="80" loading="eager" decoding="async"></span>
+      <h1 class="mtx-fc-h1">Rajadamnern Knockout Fight Card</h1>
+      <p class="mtx-fc-lede">See the latest confirmed Rajadamnern Knockout line-up at Rajadamnern Stadium, Bangkok.</p>
+      <p class="mtx-fc-days">Rajadamnern Knockout takes place every Monday, Tuesday and Friday.</p>
+      <p class="mtx-fc-cta-row">
+        <a class="mtx-fc-btn mtx-fc-btn--main" href="https://muaytix.com/rajadamnern-knockout/2026-10-05" data-mtx-cta><span class="mtx-fc-btn-t">Choose seats for <span data-mtx-next="short">Monday 5 October</span></span></a>
+        <a class="mtx-fc-btn mtx-fc-btn--ghost" href="https://muaytix.com/rajadamnern-knockout/schedule">View the Rajadamnern Knockout schedule</a>
+      </p>
+    </div>
+  </header>
+
+  <section class="mtx-fc-sec mtx-fc-sec--paper mtx-fc-sec--status">
+    <div class="mtx-fc-wrap">
+      <div class="mtx-fc-panel">
+        <h2 class="mtx-fc-h2">Next Rajadamnern Knockout event</h2>
+        <p class="mtx-fc-date" data-mtx-next="long">Monday 5 October 2026</p>
+        <ul class="mtx-fc-facts">
+          <li class="mtx-fc-fact">Rajadamnern Stadium, Bangkok</li>
+          <li class="mtx-fc-fact">Doors 6:00 pm</li>
+          <li class="mtx-fc-fact">First fight 7:00 pm</li>
+          <li class="mtx-fc-fact">7 bouts · 3 rounds per bout</li>
+        </ul>
+        <p class="mtx-fc-state"><span class="mtx-fc-state-l">Fight card status</span> <strong class="mtx-fc-pill">Being confirmed by Rajadamnern Stadium</strong></p>
+        <p class="mtx-fc-body">The next Rajadamnern Knockout fight card is being confirmed by the stadium. Confirmed bouts are added here as soon as they are announced.</p>
+        <p class="mtx-fc-upd"><span class="mtx-fc-upd-l">Last updated</span> <time class="mtx-fc-upd-v" datetime="2026-10-04T00:42:00+07:00">4 October 2026, 12:42 am Bangkok time</time></p>
+        <p class="mtx-fc-cta-row">
+          <a class="mtx-fc-btn mtx-fc-btn--main" href="https://muaytix.com/rajadamnern-knockout/2026-10-05" data-mtx-cta><span class="mtx-fc-btn-t">Choose seats for <span data-mtx-next="short">Monday 5 October</span></span></a>
+          <a class="mtx-fc-btn mtx-fc-btn--line" href="https://muaytix.com/rajadamnern-knockout/schedule">See all Rajadamnern Knockout dates</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-fc-sec mtx-fc-sec--white mtx-fc-sec--card" data-mtx-state="A">
+    <div class="mtx-fc-wrap">
+      <h2 class="mtx-fc-h2">Fight cards for next week</h2>
+      <p class="mtx-fc-body">Rajadamnern Knockout fight cards are usually published by the stadium on Monday.</p>
+      <p class="mtx-fc-body" data-mtx-needs-next>Monday 5 October, Tuesday 6 October and Friday 9 October are scheduled Rajadamnern Knockout nights. The official line-ups will be added here when they are released.</p>
+      <ul class="mtx-fc-nights">
+        <li class="mtx-fc-night" data-mtx-night="2026-10-05">Monday 5 October 2026</li>
+        <li class="mtx-fc-night" data-mtx-night="2026-10-06">Tuesday 6 October 2026</li>
+        <li class="mtx-fc-night" data-mtx-night="2026-10-09">Friday 9 October 2026</li>
+      </ul>
+      <p class="mtx-fc-body">Each Rajadamnern Knockout night usually features seven fast three-round Muay Thai bouts.</p>
+      <p class="mtx-fc-cta-row"><a class="mtx-fc-btn mtx-fc-btn--main" href="https://muaytix.com/rajadamnern-knockout/2026-10-05" data-mtx-cta><span class="mtx-fc-btn-t">Choose seats for <span data-mtx-next="short">Monday 5 October</span></span></a></p>
+    </div>
+  </section>
+
+  <section class="mtx-fc-sec mtx-fc-sec--paper mtx-fc-sec--note">
+    <div class="mtx-fc-wrap">
+      <p class="mtx-fc-note">Fight cards are published by Rajadamnern Stadium and can change. This page is updated when confirmed information becomes available.</p>
+    </div>
+  </section>
+
+  <section class="mtx-fc-sec mtx-fc-sec--white mtx-fc-sec--context">
+    <div class="mtx-fc-wrap mtx-fc-read">
+      <h2 class="mtx-fc-h2">What to expect from Rajadamnern Knockout</h2>
+      <p class="mtx-fc-body">Rajadamnern Knockout usually features seven three-round Muay Thai bouts, with Thai fighters meeting international challengers at Rajadamnern Stadium.</p>
+      <p class="mtx-fc-body">The format is fast and easy to follow, with elbows, knees and clinching under Muay Thai rules.</p>
+      <p class="mtx-fc-linkrow"><a class="mtx-fc-jump" href="https://muaytix.com/rajadamnern-knockout">Learn about Rajadamnern Knockout<svg class="mtx-fc-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></p>
+    </div>
+  </section>
+
+  <section class="mtx-fc-sec mtx-fc-conf">
+    <div class="mtx-fc-wrap mtx-fc-read">
+      <h2 class="mtx-fc-h2">Book the next Rajadamnern Knockout night</h2>
+      <p class="mtx-fc-body" data-mtx-needs-next>Choose your seat for <span data-mtx-next="short">Monday 5 October</span> at Rajadamnern Stadium. Doors open at 6:00 pm and the first fight begins at 7:00 pm.</p>
+      <p class="mtx-fc-cta-row"><a class="mtx-fc-btn mtx-fc-btn--ghost" href="https://muaytix.com/rajadamnern-knockout/2026-10-05" data-mtx-cta><span class="mtx-fc-btn-t">Choose seats for <span data-mtx-next="short">Monday 5 October</span></span></a></p>
+    </div>
+  </section>
+
+  <section class="mtx-fc-sec mtx-fc-sec--paper mtx-fc-sec--recent">
+    <div class="mtx-fc-wrap">
+      <h2 class="mtx-fc-h2">Recent Rajadamnern Knockout cards</h2>
+      <p class="mtx-fc-body">Previous fight cards are shown here for reference. Current and upcoming cards always appear first.</p>
+      <ul class="mtx-fc-recent">
+        <li class="mtx-fc-rc">
+          <img class="mtx-fc-rc-img" src="https://static.tildacdn.com/tild3064-6361-4439-a236-613163333062/1000034603.jpg" alt="Rajadamnern Knockout fight card, Friday 2 October 2026" width="900" height="1100" loading="lazy" decoding="async">
+          <p class="mtx-fc-rc-d"><time datetime="2026-10-02">Friday 2 October 2026</time></p>
+          <p class="mtx-fc-rc-l">Fight card</p>
+        </li>
+        <li class="mtx-fc-rc">
+          <img class="mtx-fc-rc-img" src="https://static.tildacdn.com/tild6434-3137-4135-a632-653037396237/1000034605.jpg" alt="Rajadamnern Knockout fight card, Tuesday 29 September 2026" width="900" height="1100" loading="lazy" decoding="async">
+          <p class="mtx-fc-rc-d"><time datetime="2026-09-29">Tuesday 29 September 2026</time></p>
+          <p class="mtx-fc-rc-l">Fight card</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mtx-fc-sec mtx-fc-sec--white mtx-fc-sec--faq">
+    <div class="mtx-fc-wrap mtx-fc-read">
+      <h2 class="mtx-fc-h2">Rajadamnern Knockout fight-card FAQs</h2>
+      <div class="mtx-fc-acc">
+        <details class="mtx-fc-det">
+          <summary><span class="mtx-fc-q">When is the next Rajadamnern Knockout fight card announced?</span><svg class="mtx-fc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="mtx-fc-det-b"><p>Rajadamnern Knockout fight cards are usually published by the stadium on Monday. Confirmed bouts are added to this page when they are announced.</p></div>
+        </details>
+        <details class="mtx-fc-det">
+          <summary><span class="mtx-fc-q">Can the Rajadamnern Knockout fight card change?</span><svg class="mtx-fc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="mtx-fc-det-b"><p>Yes. Fight cards can change. This page is updated when confirmed information becomes available.</p></div>
+        </details>
+        <details class="mtx-fc-det">
+          <summary><span class="mtx-fc-q">What time do Rajadamnern Knockout fights start?</span><svg class="mtx-fc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="mtx-fc-det-b"><p>Doors open at 6:00 pm and the first fight begins at 7:00 pm.</p></div>
+        </details>
+        <details class="mtx-fc-det">
+          <summary><span class="mtx-fc-q">How many bouts are on a Rajadamnern Knockout card?</span><svg class="mtx-fc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="mtx-fc-det-b"><p>Rajadamnern Knockout usually features seven three-round bouts.</p></div>
+        </details>
+        <details class="mtx-fc-det">
+          <summary><span class="mtx-fc-q">How do I choose seats for the next event?</span><svg class="mtx-fc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="mtx-fc-det-b"><p>Choose seats for the next Rajadamnern Knockout event through the selected event page. <a class="mtx-fc-inline" href="https://muaytix.com/rajadamnern-knockout/2026-10-05" data-mtx-cta>Choose seats for <span data-mtx-next="short">Monday 5 October</span></a></p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtx-fc-sec mtx-fc-sec--paper mtx-fc-related">
+    <div class="mtx-fc-wrap">
+      <h2 class="mtx-fc-h2">Plan your Rajadamnern Knockout night</h2>
+      <ul class="mtx-fc-rel">
+        <li><a class="mtx-fc-jump" href="https://muaytix.com/rajadamnern-knockout">Rajadamnern Knockout<svg class="mtx-fc-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></li>
+        <li><a class="mtx-fc-jump" href="https://muaytix.com/rajadamnern-knockout/schedule">View the Rajadamnern Knockout schedule<svg class="mtx-fc-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></li>
+        <li><a class="mtx-fc-jump" href="https://muaytix.com/rajadamnern-knockout/tickets">Choose Rajadamnern Knockout tickets<svg class="mtx-fc-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></li>
+        <li><a class="mtx-fc-jump" href="https://muaytix.com/rajadamnern-stadium-seating">Compare Rajadamnern seating<svg class="mtx-fc-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <a class="mtx-fc-bar" href="https://muaytix.com/rajadamnern-knockout/2026-10-05" data-mtx-cta data-mtx-fc-bar><span class="mtx-fc-btn-t">Choose seats for <span data-mtx-next="short">Monday 5 October</span></span></a>
+
+  <script type="application/json" id="mtx-fc-nights">{"finishesAtBangkokHour":22,"schedule":"https://muaytix.com/rajadamnern-knockout/schedule","scheduleText":"View the Rajadamnern Knockout schedule","nights":[{"iso":"2026-10-05","short":"Monday 5 October","long":"Monday 5 October 2026","href":"https://muaytix.com/rajadamnern-knockout/2026-10-05"},{"iso":"2026-10-06","short":"Tuesday 6 October","long":"Tuesday 6 October 2026","href":"https://muaytix.com/rajadamnern-knockout/2026-10-06"},{"iso":"2026-10-09","short":"Friday 9 October","long":"Friday 9 October 2026","href":"https://muaytix.com/rajadamnern-knockout/2026-10-09"}]}</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Rajadamnern Knockout Fight Card",
+  "url": "https://muaytix.com/rajadamnern-knockout/fight-card",
+  "description": "See the latest Rajadamnern Knockout fight card at Rajadamnern Stadium, Bangkok. Confirmed bouts are updated when announced. Choose seats for the next event online.",
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "Rajadamnern Knockout"
+    },
+    {
+      "@type": "Thing",
+      "name": "Rajadamnern Stadium"
+    }
+  ],
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MuayTix",
+    "url": "https://muaytix.com/"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Recent Rajadamnern Knockout cards",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Rajadamnern Knockout fight card, Friday 2 October 2026",
+      "image": "https://static.tildacdn.com/tild3064-6361-4439-a236-613163333062/1000034603.jpg"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Rajadamnern Knockout fight card, Tuesday 29 September 2026",
+      "image": "https://static.tildacdn.com/tild6434-3137-4135-a632-653037396237/1000034605.jpg"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://muaytix.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Rajadamnern Knockout",
+      "item": "https://muaytix.com/rajadamnern-knockout"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Fight Card",
+      "item": "https://muaytix.com/rajadamnern-knockout/fight-card"
+    }
+  ]
+}
+</script>
+
+<script>
+/* Two behaviours, plain JavaScript, nothing loaded from outside.
+
+   1. The booking buttons follow the calendar. Each one points at the nearest
+      Rajadamnern Knockout night that has not finished, by Bangkok time. When a
+      night finishes the buttons move to the next one by themselves. The page
+      is written for the first night, so it is right without this script too.
+   2. The phone bar shows once the first button has scrolled away and no other
+      booking button is on screen.
+
+   The accordions are native details elements and need no script. */
+(function () {
+  var root = document.getElementById('mtx-fc');
+  var raw = document.getElementById('mtx-fc-nights');
+  if (root === null || raw === null) return;
+  var data;
+  try { data = JSON.parse(raw.textContent); } catch (e) { return; }
+
+  /* Bangkok is UTC+7 all year, so this is arithmetic, not a timezone library. */
+  var now = new Date();
+  var bkk = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 7 * 3600000);
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var today = bkk.getFullYear() + '-' + pad(bkk.getMonth() + 1) + '-' + pad(bkk.getDate());
+
+  var live = [];
+  for (var i = 0; i < data.nights.length; i++) {
+    var n = data.nights[i];
+    var over = today > n.iso || (today === n.iso && bkk.getHours() >= data.finishesAtBangkokHour);
+    if (!over) live.push(n);
+  }
+
+  var each = function (sel, fn) { var l = root.querySelectorAll(sel); for (var k = 0; k < l.length; k++) fn(l[k]); };
+
+  if (live.length && live[0].iso !== data.nights[0].iso) {
+    var up = live[0];
+    each('[data-mtx-next="short"]', function (e) { e.textContent = up.short; });
+    each('[data-mtx-next="long"]', function (e) { e.textContent = up.long; });
+    each('a[data-mtx-cta]', function (e) { e.setAttribute('href', up.href); });
+  }
+  if (live.length === 0) {
+    /* Every scheduled night has finished: never offer a finished night. */
+    each('a[data-mtx-cta]', function (e) {
+      e.setAttribute('href', data.schedule);
+      var t = e.querySelector('.mtx-fc-btn-t');
+      (t || e).textContent = data.scheduleText;
+    });
+    each('[data-mtx-needs-next]', function (e) { e.hidden = true; });
+  }
+  each('[data-mtx-night]', function (e) {
+    var keep = false;
+    for (var k = 0; k < live.length; k++) if (live[k].iso === e.getAttribute('data-mtx-night')) keep = true;
+    if (!keep) e.hidden = true;
+  });
+
+  /* The phone bar. */
+  var bar = root.querySelector('[data-mtx-fc-bar]');
+  var first = root.querySelector('.mtx-fc-hero .mtx-fc-btn');
+  if (bar && first) {
+    var buttons = root.querySelectorAll('a.mtx-fc-btn[data-mtx-cta], a.mtx-fc-btn[data-mtx-cta-fixed]');
+    var queued = false;
+    var update = function () {
+      queued = false;
+      var past = first.getBoundingClientRect().bottom < 0, seen = false;
+      for (var k = 0; k < buttons.length; k++) {
+        var r = buttons[k].getBoundingClientRect();
+        if (r.bottom > 0 && r.top < window.innerHeight) seen = true;
+      }
+      bar.className = 'mtx-fc-bar' + (past && !seen ? ' is-on' : '');
+    };
+    var queue = function () { if (queued === false) { queued = true; window.requestAnimationFrame(update); } };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    update();
+  }
+})();
+</script>
+</div>
