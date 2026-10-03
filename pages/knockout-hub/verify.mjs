@@ -73,8 +73,8 @@ const visibleOf = p => p.evaluate(() => { const c = document.querySelector('#mtx
   if (/\b(official|limited)\b/i.test(flat)) fail('official or limited appears');
   else ok('neither official nor limited appears');
   const em = (flat.match(/—/g) || []).length;
-  console.log(`   note  em dashes: ${em} (the four supplied seat lines, kept as written; house style bans them elsewhere)`);
-  if (em !== 4) fail(`${em} em dashes on the page, expected only the 4 in the supplied seat lines`);
+  console.log(`   note  em dashes: ${em}`);
+  if (em !== 0) fail(`${em} em dashes on the page`);
   const en = (flat.match(/–/g) || []).length;
   console.log(`   note  en dashes: ${en} (the supplied "9:00–9:30 pm", kept as written)`);
   await ctx.close();
@@ -237,7 +237,7 @@ for (const [w, h] of [[1440, 900], [860, 800], [390, 844], [320, 640]]) {
       price: /฿|THB|\$|£|\d,\d{3}/.test(root.textContent), buttons: root.querySelectorAll('button, input, select').length,
       over: document.documentElement.scrollWidth - innerWidth, boxH: Math.round(root.getBoundingClientRect().height) };
   });
-  const want = ['Ringside — closest to the ring', 'Club Class — best all-round view for most first-time guests', 'LEO Section — good-value stadium view and lively atmosphere', 'Third Class — the most affordable way to experience Rajadamnern'];
+  const want = ['Ringside: closest to the ring', 'Club Class: best all-round view for most first-time guests', 'LEO Section: good-value stadium view and lively atmosphere', 'Third Class: the most affordable way to experience Rajadamnern'];
   const cols = new Set(r.lefts).size;
   console.log(`   ${String(w).padStart(5)}px  columns ${cols}  block ${r.boxH}px  sits ${r.below}px under the four links  button ${r.ctaH}px  overflow ${r.over}`);
   if (r.h3 !== 'Choose the right seat') fail('heading: ' + r.h3);

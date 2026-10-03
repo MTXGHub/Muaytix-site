@@ -182,9 +182,9 @@ const S12 = 'RELATED LINKS';
 const rel = [1, 2, 3, 4].map(n => ({ text: one(S12, `Link ${n} visible anchor`), dest: one(S12, `Link ${n} destination`) }));
 const S13 = 'SEAT ORIENTATION';
 const seatLines = [1, 2, 3, 4].map(n => {
-  const t = one(S13, `Seat line ${n}`), at = t.indexOf(' — ');
-  if (at < 0) throw new Error('seat line has no dash: ' + t);
-  return { key: ['ringside', 'club', 'leo', 'third'][n - 1], name: t.slice(0, at), rest: t.slice(at + 1) };
+  const t = one(S13, `Seat line ${n}`), at = t.indexOf(': ');
+  if (at < 0) throw new Error('seat line has no colon: ' + t);
+  return { key: ['ringside', 'club', 'leo', 'third'][n - 1], name: t.slice(0, at), rest: t.slice(at + 1).trim() };
 });
 const related = `  <section class="mtx-kh-sec mtx-kh-sec--paper mtx-kh-related">
     <div class="mtx-kh-wrap">
@@ -196,7 +196,7 @@ ${rel.map(l => `        <li><a class="mtx-kh-jump" href="${esc(l.dest)}">${esc(l
         <h3 class="mtx-kh-h3">${esc(one(S13, 'H3'))}</h3>
         <p class="mtx-kh-pick-b">${esc(one(S13, 'Body'))}</p>
         <ul class="mtx-kh-pick-l">
-${seatLines.map(s => `          <li class="mtx-kh-pick-i mtx-kh-pick-i--${s.key}"><strong class="mtx-kh-pick-n">${esc(s.name)}</strong> ${esc(s.rest)}</li>`).join('\n')}
+${seatLines.map(s => `          <li class="mtx-kh-pick-i mtx-kh-pick-i--${s.key}"><strong class="mtx-kh-pick-n">${esc(s.name)}</strong>${esc(': ' + s.rest)}</li>`).join('\n')}
         </ul>
         <p class="mtx-kh-cta-row"><a class="mtx-kh-btn mtx-kh-btn--line" href="${esc(one(S13, 'Link destination'))}">${esc(one(S13, 'CTA'))}</a></p>
       </div>
