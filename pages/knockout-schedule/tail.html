@@ -13,7 +13,9 @@
    3. The phone bar shows once the first button has scrolled away and the date
       list is not on screen.
 
-   The accordions are native details elements and need no script. */
+   The answers are in the page as plain text, open, so a reader with no script
+   sees every one. With the script on they fold shut and open from their
+   buttons. */
 (function () {
   var root = document.getElementById('mtx-ks');
   var raw = document.getElementById('mtx-ks-data');
@@ -55,6 +57,15 @@
     }
   }
 
+  /* The tonight line. Only on a standard Knockout night that is today, from
+     midnight until ticket sales close (first fight minus the booking cutoff),
+     never for a special event, never once the night has finished. */
+  var tonight = root.querySelector('[data-mtx-tonight]');
+  if (tonight && nextRow && nextRow.getAttribute('data-date') === today) {
+    var hm = pad(bkk.getHours()) + ':' + pad(bkk.getMinutes());
+    if (hm < data.bookingClosesAtBangkok) tonight.hidden = false;
+  }
+
   /* 2. month tabs */
   var tabs = [], panels = {};
   each('.mtx-ks-tab', function (a) { tabs.push(a); });
@@ -94,6 +105,15 @@
       });
     });
   }
+
+  /* The FAQ. Buttons own aria-expanded; the answers stay in the page either way. */
+  each('.mtx-ks-fqb', function (b) {
+    var p = document.getElementById(b.getAttribute('aria-controls'));
+    if (!p) return;
+    var set = function (open) { b.setAttribute('aria-expanded', open ? 'true' : 'false'); p.hidden = !open; };
+    set(false);
+    b.addEventListener('click', function () { set(b.getAttribute('aria-expanded') !== 'true'); });
+  });
 
   /* The hero button and the phone bar scroll to the dates. */
   var target = document.getElementById('mtx-ks-dates');

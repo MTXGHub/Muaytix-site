@@ -2,6 +2,8 @@
   "_note": "Read from the booking calendar (Supabase event_calendar) on 4 October 2026. Standard Rajadamnern Knockout nights and the Monday nights replaced by All Star Fight: Elite Fighter. Add or remove dates here when the calendar changes, then rebuild.",
   "builtOn": "2026-10-04",
   "finishesAtBangkokHour": 22,
+  "firstFightBangkok": "19:00",
+  "bookingCutoffMinutes": 30,
   "knockout": [
     "2026-10-05",
     "2026-10-06",

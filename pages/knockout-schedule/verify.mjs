@@ -47,7 +47,8 @@ console.log('\n=== 1. THE WORDS (every line of the brief, read back from the DOM
 {
   const { ctx, p } = await open(1280, 900, { js: false });
   const flat = norm(await textOf(p));
-  const lines = brief.split('\n').map(norm).filter(l => l && !l.startsWith('## ') && !/^[A-Z][A-Za-z0-9\- ]{0,40}:$/.test(l) && !/^https?:/.test(l));
+  let skipSec = false;
+  const lines = brief.split('\n').map(norm).filter(l => { if (l.startsWith('## ')) { skipSec = l.startsWith('## 3B'); return false; } return !skipSec; }).filter(l => l && !l.startsWith('## ') && !/^[A-Z][A-Za-z0-9\- ]{0,40}:$/.test(l) && !/^https?:/.test(l));
   let missing = 0;
   for (const l of lines) if (!flat.includes(l)) { missing++; fail('brief line not on the page: ' + l); }
   if (!missing) ok(`all ${lines.length} copy lines from the brief are on the page, word for word (read with the script switched off)`);
@@ -56,8 +57,22 @@ console.log('\n=== 1. THE WORDS (every line of the brief, read back from the DOM
   const before = fails;
   for (const [re, name] of bans) { const m = flat.match(re); if (m) fail(`banned: ${name} (${m[0]})`); }
   if (fails === before) ok('no em dashes, seat-selection wording, scarcity, "limited", "official" or live-stream words');
-  const alloc = (flat.match(/Best available seats are allocated/g) || []).length;
-  if (alloc !== 2) fail(`the allocation sentence appears ${alloc} times, expected 2 (next event, FAQ answer)`); else ok('the allocation sentence appears twice: beside the next event and in the FAQ answer');
+  const alloc = (flat.match(/Best available seats are allocated/gi) || []).length;
+  if (alloc !== 1) fail(`the allocation sentence appears ${alloc} times, expected once (below the next-event button)`); else ok('the best-available-seat sentence appears once, in the next-event feature, and not in the FAQ or any row');
+  const below = await p.evaluate(() => { const f = document.querySelector('.mtx-ks-feat'), c = f.querySelector('[data-mtx-next-cta]').getBoundingClientRect(), n = f.querySelector('.mtx-ks-note').getBoundingClientRect(); return n.top >= c.bottom - 1 && f.querySelector('.mtx-ks-note').textContent === 'Best available seats are allocated in your chosen section at the time of booking.'; });
+  if (!below) fail('the sentence is not directly below the next-event button'); else ok('and it sits directly below the next-event button');
+  if (flat.includes('Tap the tickers') || /\b[A-Z]{12,}\b/.test(flat)) fail('ticker wording or an all-capitals sentence is in the page block');
+  const exact = ['Rajadamnern Knockout takes place every Monday, Tuesday and Friday. Occasionally, a Monday Knockout night is replaced by a separately ticketed special event.',
+    'Looking for Muay Thai Monday Bangkok, Muay Thai Tuesday Bangkok or Muay Thai Friday Bangkok? Rajadamnern Knockout runs on all three nights, so you can choose the date that best fits your trip.',
+    'For visitors searching for Muay Thai fights Bangkok Monday, Muay Thai fights Bangkok Tuesday or Muay Thai fights Bangkok Friday, use the schedule above to view the available dates and book tickets online.',
+    'Rajadamnern Knockout may also appear in searches as Rajadamnern Knock Out, Raja Knockout or Rajadamnern Stadium Knockout. This page lists the upcoming Rajadamnern Knockout event dates at Rajadamnern Stadium.',
+    'Select your preferred ticket section when booking. Your ticket confirmation will show the tickets allocated for your booking.'];
+  const paras = await p.evaluate(() => [...document.querySelectorAll('#mtx-ks p')].map(e => e.textContent.replace(/\s+/g, ' ').trim()));
+  const gone = ['Rajadamnern Knockout dates are available every Monday', 'visitors can book Rajadamnern Knockout through the dates above', 'select the date that fits your trip and book tickets online', 'is also searched as', 'This schedule lists the upcoming', 'Choose your preferred ticket section', 'Best available seats are allocated in that section'];
+  const missingExact = exact.filter(e => !paras.includes(e)), stale = gone.filter(g => flat.includes(g));
+  if (missingExact.length || stale.length) fail('replacement copy: missing ' + JSON.stringify(missingExact) + ' still present ' + JSON.stringify(stale)); else ok('the five replacement texts are in the page as whole paragraphs, exactly, and none of the old wording is left');
+  const dupes = exact.filter(e => paras.filter(x => x === e).length !== 1);
+  if (dupes.length) fail('a replacement paragraph is repeated'); else ok('each replacement appears once');
   const inFeature = await p.evaluate(() => document.querySelector('.mtx-ks-feat .mtx-ks-note').textContent);
   if (!/^Best available seats are allocated in your chosen section at the time of booking\.$/.test(inFeature)) fail('support note: ' + inFeature);
   const kw = ['Rajadamnern Knockout schedule', 'Rajadamnern Knockout dates', 'Rajadamnern Knockout Monday', 'Rajadamnern Knockout Tuesday', 'Rajadamnern Knockout Friday', 'Rajadamnern Knockout tonight', 'Rajadamnern Knockout today', 'Rajadamnern Knockout Muay Thai', 'Rajadamnern Knockout event', 'Rajadamnern Knock Out', 'Rajadamnern Stadium Knockout', 'Muay Thai Monday Bangkok', 'Muay Thai Tuesday Bangkok', 'Muay Thai Friday Bangkok', 'Muay Thai fights Bangkok Monday', 'Muay Thai fights Bangkok Tuesday', 'Muay Thai fights Bangkok Friday'];
@@ -112,7 +127,7 @@ for (const w of [320, 390, 860]) {
   const wide = doc.replace('</style></head>', '#mtx-ks, #mtx-ks *{font-family:"DejaVu Sans",Verdana,sans-serif}#mtx-ks h1,#mtx-ks h2,#mtx-ks h3,#mtx-ks .mtx-ks-btn,#mtx-ks .mtx-ks-q,#mtx-ks .mtx-ks-jump,#mtx-ks .mtx-ks-fdate,#mtx-ks .mtx-ks-dm,#mtx-ks .mtx-ks-name,#mtx-ks .mtx-ks-tab{font-weight:900}</style></head>');
   const { ctx, p } = await open(w, 800, { d: wide });
   const r = await p.evaluate(() => ({ over: document.documentElement.scrollWidth - innerWidth,
-    tight: [...document.querySelectorAll('#mtx-ks h1,#mtx-ks h2,#mtx-ks .mtx-ks-btn,#mtx-ks summary,#mtx-ks .mtx-ks-jump,#mtx-ks .mtx-ks-fdate,#mtx-ks .mtx-ks-dm,#mtx-ks .mtx-ks-fact,#mtx-ks .mtx-ks-name')].filter(e => !e.closest('[hidden]') && e.scrollWidth > e.clientWidth + 1).map(e => e.className || e.tagName).slice(0, 4) }));
+    tight: [...document.querySelectorAll('#mtx-ks h1,#mtx-ks h2,#mtx-ks .mtx-ks-btn,#mtx-ks .mtx-ks-fqb,#mtx-ks .mtx-ks-jump,#mtx-ks .mtx-ks-fdate,#mtx-ks .mtx-ks-dm,#mtx-ks .mtx-ks-fact,#mtx-ks .mtx-ks-name')].filter(e => !e.closest('[hidden]') && e.scrollWidth > e.clientWidth + 1).map(e => e.className || e.tagName).slice(0, 4) }));
   console.log(`   ${String(w).padStart(5)}px  overflow ${r.over}  cells wider than their box: ${r.tight.length}`);
   if (r.over > 0 || r.tight.length) fail(`${w}px wide face: ${r.over} ${r.tight.join(',')}`);
   await ctx.close();
@@ -169,6 +184,65 @@ for (const [w, h] of [[1280, 800], [390, 844], [320, 640]]) {
   await ctx.close();
 }
 ok('tabs are real links with tab roles, aria-selected, roving tabindex and arrow-key movement');
+
+/* ---- 5b. the FAQ, as buttons ---- */
+console.log('\n=== 5b. THE FAQ ===');
+{
+  const off = await open(1280, 900, { js: false });
+  const o = await off.p.evaluate(() => [...document.querySelectorAll('.mtx-ks-fqp')].map(p => [p.id, p.textContent.trim().length, p.offsetHeight > 0]));
+  if (o.length !== 5 || o.some(x => !x[1] || !x[2])) fail('with the script off an answer is missing or hidden: ' + JSON.stringify(o)); else ok('script off: all five answers are in the page and readable');
+  await off.ctx.close();
+  const { ctx, p } = await open(390, 844);
+  const st = () => p.evaluate(() => [...document.querySelectorAll('.mtx-ks-fqb')].map(b => { const pn = document.getElementById(b.getAttribute('aria-controls')); return { id: b.id, ex: b.getAttribute('aria-expanded'), ctl: b.getAttribute('aria-controls'), panel: !!pn, labelled: pn && pn.getAttribute('aria-labelledby') === b.id, role: pn && pn.getAttribute('role'), shown: pn && !pn.hidden && pn.offsetHeight > 0, inDom: pn && pn.textContent.trim().length > 20, tag: b.tagName, type: b.getAttribute('type') }; }));
+  let s = await st();
+  if (s.length !== 5 || s.some(x => x.tag !== 'BUTTON' || !x.panel || !x.labelled || x.role !== 'region' || !x.inDom || x.ex !== 'false' || x.shown)) fail('FAQ markup: ' + JSON.stringify(s));
+  else ok('five buttons, each with aria-expanded="false", aria-controls pointing at its own answer panel, and the panel labelled by the button; all answers are in the DOM');
+  const ids = await p.evaluate(() => [...document.querySelectorAll('#mtx-ks [id]')].map(e => e.id)); if (new Set(ids).size !== ids.length) fail('duplicate ids');
+  await p.focus('#mtx-ks-q4'); await p.keyboard.press('Enter'); s = await st();
+  if (s[3].ex !== 'true' || !s[3].shown) fail('Enter does not open question 4'); else ok('Enter opens an answer from the keyboard');
+  await p.keyboard.press('Space'); s = await st();
+  if (s[3].ex !== 'false' || s[3].shown) fail('Space does not close it'); else ok('Space closes it again');
+  await p.keyboard.press('Space'); await p.keyboard.press('Tab'); await p.keyboard.press('Enter'); s = await st();
+  if (s[4].ex !== 'true' || !s[4].shown || s[3].ex !== 'true') fail('Tab then Enter does not open question 5'); else ok('Tab moves to the next question and Enter opens it');
+  const a4 = await p.evaluate(() => document.getElementById('mtx-ks-a4').textContent.trim());
+  if (a4 !== 'Select your preferred ticket section when booking. Your ticket confirmation will show the tickets allocated for your booking.') fail('answer 4: ' + a4); else ok('answer 4 is the approved replacement, with nothing added');
+  await ctx.close();
+}
+
+/* ---- 5c. the tonight line ---- */
+console.log('\n=== 5c. THE TONIGHT LINE (Bangkok time) ===');
+{
+  const cases = [
+    ['2026-10-04T12:00', false, 'Sunday: the next Knockout night is tomorrow'],
+    ['2026-10-05T00:01', true, 'Monday, just after midnight'],
+    ['2026-10-05T12:00', true, 'Monday noon'],
+    ['2026-10-05T18:29', true, 'Monday, one minute before ticket sales close'],
+    ['2026-10-05T18:30', false, 'Monday, ticket sales closed'],
+    ['2026-10-05T19:30', false, 'Monday, fights under way'],
+    ['2026-10-05T22:00', false, 'Monday, finished; the feature is Tuesday'],
+    ['2026-10-06T10:00', true, 'Tuesday morning'],
+    ['2026-10-09T09:00', true, 'Friday morning'],
+    ['2026-10-10T09:00', false, 'Saturday'],
+    ['2026-10-26T12:00', false, 'Monday 26 October, a special event replaces the Knockout night'],
+    ['2026-10-27T12:00', true, 'Tuesday 27 October'],
+    ['2026-12-25T12:00', true, 'Friday 25 December'],
+  ];
+  for (const [at, want, why] of cases) {
+    const { ctx, p } = await open(390, 844, { at });
+    const r = await p.evaluate(() => { const t = document.querySelector('[data-mtx-tonight]'); const f = document.querySelector('.mtx-ks-feat'); const kids = [...f.children].map(c => c.className.replace('mtx-ks-', '').split(' ')[0]); return { shown: !t.hidden && t.offsetHeight > 0, text: t.textContent, order: kids.join(' '), date: f.querySelector('[data-mtx-next-date]').textContent }; });
+    console.log(`   ${at}  ${r.shown ? 'SHOWN ' : 'hidden'}  feature ${r.date}   (${why})`);
+    if (r.shown !== want) fail(`${at}: tonight line ${r.shown ? 'shown' : 'hidden'}, expected ${want ? 'shown' : 'hidden'}`);
+    if (r.text !== 'Rajadamnern Knockout is on tonight.') fail('tonight text: ' + r.text);
+    if (!/h2 fdate tonight fname/.test(r.order)) fail('tonight is not between the date and the event name: ' + r.order);
+    await ctx.close();
+  }
+  const off = await open(390, 844, { js: false });
+  const n = await off.p.evaluate(() => { const t = document.querySelector('[data-mtx-tonight]'); return !t.hidden || t.offsetHeight > 0; });
+  if (n) fail('the tonight line shows with the script off'); else ok('script off: no tonight line, so a static page never claims tonight');
+  await off.ctx.close();
+  const meta = readFileSync('TILDA-PAGE-SETTINGS.txt', 'utf8').split('DO NOT ADD')[0];
+  if (/tonight|today/i.test(meta)) fail('tonight or today in the metadata'); else ok('no tonight or today in the metadata');
+}
 
 /* ---- 6. the clock ---- */
 console.log('\n=== 6. THE CLOCK (Bangkok time, either side of each boundary) ===');
@@ -233,7 +307,7 @@ console.log('\n=== 8. STRUCTURE, LINKS, PICTURES, SCHEMA ===');
     h1: document.querySelectorAll('#mtx-ks h1').length,
     heads: [...document.querySelectorAll('#mtx-ks h1,#mtx-ks h2,#mtx-ks h3')].map(e => e.tagName),
     secs: [...document.querySelectorAll('#mtx-ks > nav, #mtx-ks > header, #mtx-ks > section')].map(e => e.tagName === 'NAV' ? 'crumbs' : e.tagName === 'HEADER' ? 'hero' : e.querySelector('h2').textContent),
-    details: document.querySelectorAll('#mtx-ks details').length, answers: [...document.querySelectorAll('#mtx-ks details')].every(d => d.textContent.trim().length > 20),
+    details: document.querySelectorAll('#mtx-ks .mtx-ks-fqb').length, answers: [...document.querySelectorAll('#mtx-ks .mtx-ks-fqp')].every(d => d.textContent.trim().length > 20),
     imgs: [...document.querySelectorAll('#mtx-ks img')].map(i => ({ alt: i.alt, w: i.getAttribute('width'), h: i.getAttribute('height'), eager: i.getAttribute('loading'), pri: i.getAttribute('fetchpriority') })),
     links: [...document.querySelectorAll('#mtx-ks a[href]')].filter(a => !a.closest('.mtx-ks-row')).map(a => ({ href: a.getAttribute('href'), text: a.textContent.trim() })),
     rowFight: [...document.querySelectorAll('.mtx-ks-row a')].filter(a => /fight-card/.test(a.getAttribute('href'))).length,

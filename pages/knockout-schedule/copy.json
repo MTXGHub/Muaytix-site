@@ -75,6 +75,13 @@
       ]
     ]
   },
+  "3B TONIGHT (only shown when it is true)": {
+    "Tonight line": [
+      [
+        "Rajadamnern Knockout is on tonight."
+      ]
+    ]
+  },
   "4 DATES": {
     "H2": [
       [
@@ -83,7 +90,7 @@
     ],
     "Intro": [
       [
-        "Rajadamnern Knockout dates are available every Monday, Tuesday and Friday, subject to special-event changes."
+        "Rajadamnern Knockout takes place every Monday, Tuesday and Friday. Occasionally, a Monday Knockout night is replaced by a separately ticketed special event."
       ]
     ],
     "Month tabs": [
@@ -162,12 +169,12 @@
     ],
     "Body": [
       [
-        "Muay Thai Monday Bangkok, Muay Thai Tuesday Bangkok and Muay Thai Friday Bangkok visitors can book Rajadamnern Knockout through the dates above."
+        "Looking for Muay Thai Monday Bangkok, Muay Thai Tuesday Bangkok or Muay Thai Friday Bangkok? Rajadamnern Knockout runs on all three nights, so you can choose the date that best fits your trip."
       ]
     ],
     "Body 2": [
       [
-        "If you are searching for Muay Thai fights Bangkok Monday, Muay Thai fights Bangkok Tuesday or Muay Thai fights Bangkok Friday, select the date that fits your trip and book tickets online."
+        "For visitors searching for Muay Thai fights Bangkok Monday, Muay Thai fights Bangkok Tuesday or Muay Thai fights Bangkok Friday, use the schedule above to view the available dates and book tickets online."
       ]
     ],
     "H3 2": [
@@ -177,7 +184,7 @@
     ],
     "Body 3": [
       [
-        "Rajadamnern Knockout is also searched as Rajadamnern Knock Out, Raja Knockout and Rajadamnern Stadium Knockout. This schedule lists the upcoming Rajadamnern Knockout event dates at Rajadamnern Stadium."
+        "Rajadamnern Knockout may also appear in searches as Rajadamnern Knock Out, Raja Knockout or Rajadamnern Stadium Knockout. This page lists the upcoming Rajadamnern Knockout event dates at Rajadamnern Stadium."
       ]
     ],
     "Link": [
@@ -234,7 +241,7 @@
     ],
     "Answer 4": [
       [
-        "Choose your preferred ticket section when booking. Best available seats are allocated in that section at the time of booking."
+        "Select your preferred ticket section when booking. Your ticket confirmation will show the tickets allocated for your booking."
       ]
     ],
     "Question 5": [

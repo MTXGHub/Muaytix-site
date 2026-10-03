@@ -39,6 +39,9 @@ for (const e of entries) {
   if (e.kind === 'special' && dow !== 1) throw new Error(`${e.iso} is a ${DAYS[dow]}: a special replacement is a Monday`);
 }
 const first = entries.find(e => e.kind === 'knockout');
+const [fh, fm] = D.firstFightBangkok.split(':').map(Number);
+const closeMin = fh * 60 + fm - D.bookingCutoffMinutes;
+const closesAt = `${String(Math.floor(closeMin / 60)).padStart(2, '0')}:${String(closeMin % 60).padStart(2, '0')}`;
 
 /* The locked copy names the first night in the next-event button. If the data
    and the copy disagree, stop rather than ship a page that contradicts itself. */
@@ -80,6 +83,7 @@ const next = `  <section class="mtx-ks-sec mtx-ks-sec--paper mtx-ks-sec--next" d
       <div class="mtx-ks-feat">
         <h2 class="mtx-ks-h2">${esc(one(S3, 'H2'))}</h2>
         <p class="mtx-ks-fdate" data-mtx-next-date>${esc(longDate(first.iso))}</p>
+        <p class="mtx-ks-tonight" data-mtx-tonight hidden>${esc(one('3B TONIGHT (only shown when it is true)', 'Tonight line'))}</p>
         <p class="mtx-ks-fname">${esc(one(S3, 'Event name'))}</p>
         <p class="mtx-ks-body">${esc(one(S3, 'Body'))}</p>
         <ul class="mtx-ks-facts">
@@ -152,10 +156,10 @@ const faqSec = `  <section class="mtx-ks-sec mtx-ks-sec--white mtx-ks-sec--faq">
     <div class="mtx-ks-wrap mtx-ks-read">
       <h2 class="mtx-ks-h2">${esc(one(S6, 'H2'))}</h2>
       <div class="mtx-ks-acc">
-${faq.map((f, i) => `        <details class="mtx-ks-det">
-          <summary><span class="mtx-ks-q">${esc(f.q)}</span>${chev}</summary>
-          <div class="mtx-ks-det-b"><p>${esc(f.a)}${i === 4 ? ` <a class="mtx-ks-inline" href="${esc(one(S6, 'Link destination'))}">${esc(one(S6, 'Link'))}</a>` : ''}</p></div>
-        </details>`).join('\n')}
+${faq.map((f, i) => `        <div class="mtx-ks-fq">
+          <button class="mtx-ks-fqb" type="button" id="mtx-ks-q${i + 1}" aria-expanded="true" aria-controls="mtx-ks-a${i + 1}"><span class="mtx-ks-q">${esc(f.q)}</span>${chev}</button>
+          <div class="mtx-ks-fqp" id="mtx-ks-a${i + 1}" role="region" aria-labelledby="mtx-ks-q${i + 1}"><p>${esc(f.a)}${i === 4 ? ` <a class="mtx-ks-inline" href="${esc(one(S6, 'Link destination'))}">${esc(one(S6, 'Link'))}</a>` : ''}</p></div>
+        </div>`).join('\n')}
       </div>
     </div>
   </section>`;
@@ -173,7 +177,7 @@ ${rel.map(l => `        <li><a class="mtx-ks-jump" href="${esc(l.dest)}">${esc(l
   </section>`;
 
 const bar = `  <a class="mtx-ks-bar" href="#mtx-ks-dates" data-mtx-jump data-mtx-ks-bar>${esc(one(S2, 'Primary CTA'))}</a>`;
-const embed = `  <script type="application/json" id="mtx-ks-data">${JSON.stringify({ finishesAtBangkokHour: D.finishesAtBangkokHour })}</script>`;
+const embed = `  <script type="application/json" id="mtx-ks-data">${JSON.stringify({ finishesAtBangkokHour: D.finishesAtBangkokHour, bookingClosesAtBangkok: closesAt })}</script>`;
 
 writeFileSync(`${OUT}/body.html`, [crumbs, hero, next, dates, plan, faqSec, related, bar, embed].join('\n\n') + '\n\n');
 

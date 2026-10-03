@@ -55,7 +55,7 @@
 .mtx-ks-page .mtx-ks-btn--line:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
 
 .mtx-ks-page .mtx-ks-btn:focus-visible, .mtx-ks-page .mtx-ks-jump:focus-visible, .mtx-ks-page .mtx-ks-inline:focus-visible,
-.mtx-ks-page .mtx-ks-det summary:focus-visible, .mtx-ks-page .mtx-ks-crumbs a:focus-visible, .mtx-ks-page .mtx-ks-tab:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.mtx-ks-page .mtx-ks-crumbs a:focus-visible, .mtx-ks-page .mtx-ks-tab:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 .mtx-ks-page .mtx-ks-hero .mtx-ks-btn:focus-visible, .mtx-ks-page .mtx-ks-feat .mtx-ks-btn:focus-visible,
 .mtx-ks-page .mtx-ks-bar:focus-visible { outline-color: var(--white); }
 
@@ -80,6 +80,8 @@
 .mtx-ks-page .mtx-ks-feat .mtx-ks-h2 { font-size: clamp(24px, 6vw, 32px); }
 .mtx-ks-page .mtx-ks-feat .mtx-ks-h2::before { background: var(--blue-l); }
 .mtx-ks-page .mtx-ks-fdate { font-family: var(--cond); font-weight: 800; font-size: clamp(36px, 10vw, 64px); line-height: 1; letter-spacing: .01em; text-transform: uppercase; color: var(--blue-l); }
+.mtx-ks-page .mtx-ks-tonight { margin-top: 12px; display: inline-block; padding: 6px 14px; background: var(--blue); font-family: var(--cond); font-weight: 800; font-size: 20px; line-height: 1.2; letter-spacing: .04em; text-transform: uppercase; }
+.mtx-ks-page .mtx-ks-tonight[hidden] { display: none; }
 .mtx-ks-page .mtx-ks-fname { margin-top: 8px; font-family: var(--cond); font-weight: 800; font-size: clamp(24px, 6vw, 32px); line-height: 1.1; letter-spacing: .02em; text-transform: uppercase; }
 .mtx-ks-page .mtx-ks-feat .mtx-ks-body { margin-top: 10px; font-size: 18px; }
 .mtx-ks-page .mtx-ks-facts { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
@@ -132,16 +134,19 @@
 .mtx-ks-page .mtx-ks-arr { flex: none; }
 
 .mtx-ks-page .mtx-ks-acc { margin-top: 24px; display: grid; gap: 10px; }
-.mtx-ks-page .mtx-ks-det { background: var(--white); border: 1px solid var(--line); border-left: 5px solid var(--line); }
-.mtx-ks-page .mtx-ks-det[open] { border-left-color: var(--blue); }
-.mtx-ks-page .mtx-ks-det summary { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 60px; padding: 14px; cursor: pointer; list-style: none; }
-.mtx-ks-page .mtx-ks-det summary::-webkit-details-marker { display: none; }
-.mtx-ks-page .mtx-ks-det summary::marker { content: ""; }
+.mtx-ks-page .mtx-ks-fq { background: var(--white); border: 1px solid var(--line); border-left: 5px solid var(--line); }
+.mtx-ks-page .mtx-ks-fq:has(.mtx-ks-fqb[aria-expanded="true"]) { border-left-color: var(--blue); }
+.mtx-ks-page .mtx-ks-fqb {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; width: 100%; min-height: 60px; padding: 14px; margin: 0;
+  background: var(--white); color: var(--ink); border: 0; border-radius: 0; cursor: pointer; font: inherit; text-align: left;
+}
+.mtx-ks-page .mtx-ks-fqb:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }
 .mtx-ks-page .mtx-ks-q { font-family: var(--cond); font-weight: 800; font-size: 21px; line-height: 1.15; letter-spacing: .01em; }
 .mtx-ks-page .mtx-ks-chev { flex: none; transition: transform .2s ease; }
-.mtx-ks-page .mtx-ks-det[open] .mtx-ks-chev { transform: rotate(180deg); }
-.mtx-ks-page .mtx-ks-det-b { padding: 0 14px 18px; }
-.mtx-ks-page .mtx-ks-det-b p { max-width: 68ch; font-size: 17.5px; }
+.mtx-ks-page .mtx-ks-fqb[aria-expanded="true"] .mtx-ks-chev { transform: rotate(180deg); }
+.mtx-ks-page .mtx-ks-fqp { padding: 0 14px 18px; }
+.mtx-ks-page .mtx-ks-fqp[hidden] { display: none; }
+.mtx-ks-page .mtx-ks-fqp p { max-width: 68ch; font-size: 17.5px; }
 .mtx-ks-page .mtx-ks-inline { color: var(--blue-d); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 
 .mtx-ks-page .mtx-ks-rel { margin-top: 20px; display: grid; gap: 10px; }
@@ -229,6 +234,8 @@
 #mtx-ks.mtx-ks-page .mtx-ks-hero .mtx-ks-days { color: var(--blue-l); }
 #mtx-ks.mtx-ks-page .mtx-ks-feat, #mtx-ks.mtx-ks-page .mtx-ks-feat h2, #mtx-ks.mtx-ks-page .mtx-ks-feat p, #mtx-ks.mtx-ks-page .mtx-ks-feat li { color: var(--white); }
 #mtx-ks.mtx-ks-page .mtx-ks-feat .mtx-ks-fdate { color: var(--blue-l); }
+#mtx-ks.mtx-ks-page .mtx-ks-feat p.mtx-ks-tonight { color: var(--white); background: var(--blue); }
+#mtx-ks.mtx-ks-page button.mtx-ks-fqb { background: var(--white); color: var(--ink); font-family: inherit; text-align: left; border: 0; }
 #mtx-ks.mtx-ks-page .mtx-ks-h2, #mtx-ks.mtx-ks-page .mtx-ks-h3 { color: var(--ink); }
 #mtx-ks.mtx-ks-page .mtx-ks-feat .mtx-ks-h2 { color: var(--white); }
 #mtx-ks.mtx-ks-page .mtx-ks-wd, #mtx-ks.mtx-ks-page .mtx-ks-mlabel { color: var(--blue-d); }
@@ -259,6 +266,7 @@
       <div class="mtx-ks-feat">
         <h2 class="mtx-ks-h2">Next Rajadamnern Knockout event</h2>
         <p class="mtx-ks-fdate" data-mtx-next-date>Monday 5 October 2026</p>
+        <p class="mtx-ks-tonight" data-mtx-tonight hidden>Rajadamnern Knockout is on tonight.</p>
         <p class="mtx-ks-fname">Rajadamnern Knockout</p>
         <p class="mtx-ks-body">A fast three-round Muay Thai night at Rajadamnern Stadium, Bangkok.</p>
         <ul class="mtx-ks-facts">
@@ -275,7 +283,7 @@
   <section class="mtx-ks-sec mtx-ks-sec--white mtx-ks-sec--dates" id="mtx-ks-dates">
     <div class="mtx-ks-wrap">
       <h2 class="mtx-ks-h2">Rajadamnern Knockout dates</h2>
-      <p class="mtx-ks-body">Rajadamnern Knockout dates are available every Monday, Tuesday and Friday, subject to special-event changes.</p>
+      <p class="mtx-ks-body">Rajadamnern Knockout takes place every Monday, Tuesday and Friday. Occasionally, a Monday Knockout night is replaced by a separately ticketed special event.</p>
       <ul class="mtx-ks-tabs" data-mtx-tabs>
         <li><a class="mtx-ks-tab is-on" href="#mtx-ks-m-2026-10" data-month="2026-10" aria-current="true">October 2026</a></li>
         <li><a class="mtx-ks-tab" href="#mtx-ks-m-2026-11" data-month="2026-11">November 2026</a></li>
@@ -648,10 +656,10 @@
       <p class="mtx-ks-body">The event usually features seven three-round Muay Thai bouts. Doors open at 6:00 pm and the first fight begins at 7:00 pm.</p>
       <p class="mtx-ks-body">Most Rajadamnern Knockout nights finish around 9:00 pm to 9:30 pm. Later timings can vary with the length of the bouts.</p>
       <h3 class="mtx-ks-h3">Looking for a Muay Thai night in Bangkok?</h3>
-      <p class="mtx-ks-body">Muay Thai Monday Bangkok, Muay Thai Tuesday Bangkok and Muay Thai Friday Bangkok visitors can book Rajadamnern Knockout through the dates above.</p>
-      <p class="mtx-ks-body">If you are searching for Muay Thai fights Bangkok Monday, Muay Thai fights Bangkok Tuesday or Muay Thai fights Bangkok Friday, select the date that fits your trip and book tickets online.</p>
+      <p class="mtx-ks-body">Looking for Muay Thai Monday Bangkok, Muay Thai Tuesday Bangkok or Muay Thai Friday Bangkok? Rajadamnern Knockout runs on all three nights, so you can choose the date that best fits your trip.</p>
+      <p class="mtx-ks-body">For visitors searching for Muay Thai fights Bangkok Monday, Muay Thai fights Bangkok Tuesday or Muay Thai fights Bangkok Friday, use the schedule above to view the available dates and book tickets online.</p>
       <h3 class="mtx-ks-h3">Rajadamnern Knock Out and Raja Knockout</h3>
-      <p class="mtx-ks-body">Rajadamnern Knockout is also searched as Rajadamnern Knock Out, Raja Knockout and Rajadamnern Stadium Knockout. This schedule lists the upcoming Rajadamnern Knockout event dates at Rajadamnern Stadium.</p>
+      <p class="mtx-ks-body">Rajadamnern Knockout may also appear in searches as Rajadamnern Knock Out, Raja Knockout or Rajadamnern Stadium Knockout. This page lists the upcoming Rajadamnern Knockout event dates at Rajadamnern Stadium.</p>
       <p class="mtx-ks-linkrow"><a class="mtx-ks-jump" href="https://muaytix.com/rajadamnern-knockout">Learn about Rajadamnern Knockout<svg class="mtx-ks-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></p>
     </div>
   </section>
@@ -660,26 +668,26 @@
     <div class="mtx-ks-wrap mtx-ks-read">
       <h2 class="mtx-ks-h2">Rajadamnern Knockout schedule FAQs</h2>
       <div class="mtx-ks-acc">
-        <details class="mtx-ks-det">
-          <summary><span class="mtx-ks-q">Which nights is Rajadamnern Knockout held?</span><svg class="mtx-ks-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
-          <div class="mtx-ks-det-b"><p>Rajadamnern Knockout takes place every Monday, Tuesday and Friday at Rajadamnern Stadium in Bangkok.</p></div>
-        </details>
-        <details class="mtx-ks-det">
-          <summary><span class="mtx-ks-q">What time does Rajadamnern Knockout start?</span><svg class="mtx-ks-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
-          <div class="mtx-ks-det-b"><p>Doors open at 6:00 pm and the first fight begins at 7:00 pm.</p></div>
-        </details>
-        <details class="mtx-ks-det">
-          <summary><span class="mtx-ks-q">How long does Rajadamnern Knockout last?</span><svg class="mtx-ks-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
-          <div class="mtx-ks-det-b"><p>Most Rajadamnern Knockout nights finish around 9:00 pm to 9:30 pm. Later timings can vary with the length of the bouts.</p></div>
-        </details>
-        <details class="mtx-ks-det">
-          <summary><span class="mtx-ks-q">How are tickets allocated?</span><svg class="mtx-ks-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
-          <div class="mtx-ks-det-b"><p>Choose your preferred ticket section when booking. Best available seats are allocated in that section at the time of booking.</p></div>
-        </details>
-        <details class="mtx-ks-det">
-          <summary><span class="mtx-ks-q">Where can I see the latest Rajadamnern Knockout fight card?</span><svg class="mtx-ks-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
-          <div class="mtx-ks-det-b"><p>Visitors following the fighters can see the latest confirmed Rajadamnern Knockout fight card on the fight-card page. <a class="mtx-ks-inline" href="https://muaytix.com/rajadamnern-knockout/fight-card">See the latest Rajadamnern Knockout fight card</a></p></div>
-        </details>
+        <div class="mtx-ks-fq">
+          <button class="mtx-ks-fqb" type="button" id="mtx-ks-q1" aria-expanded="true" aria-controls="mtx-ks-a1"><span class="mtx-ks-q">Which nights is Rajadamnern Knockout held?</span><svg class="mtx-ks-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></button>
+          <div class="mtx-ks-fqp" id="mtx-ks-a1" role="region" aria-labelledby="mtx-ks-q1"><p>Rajadamnern Knockout takes place every Monday, Tuesday and Friday at Rajadamnern Stadium in Bangkok.</p></div>
+        </div>
+        <div class="mtx-ks-fq">
+          <button class="mtx-ks-fqb" type="button" id="mtx-ks-q2" aria-expanded="true" aria-controls="mtx-ks-a2"><span class="mtx-ks-q">What time does Rajadamnern Knockout start?</span><svg class="mtx-ks-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></button>
+          <div class="mtx-ks-fqp" id="mtx-ks-a2" role="region" aria-labelledby="mtx-ks-q2"><p>Doors open at 6:00 pm and the first fight begins at 7:00 pm.</p></div>
+        </div>
+        <div class="mtx-ks-fq">
+          <button class="mtx-ks-fqb" type="button" id="mtx-ks-q3" aria-expanded="true" aria-controls="mtx-ks-a3"><span class="mtx-ks-q">How long does Rajadamnern Knockout last?</span><svg class="mtx-ks-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></button>
+          <div class="mtx-ks-fqp" id="mtx-ks-a3" role="region" aria-labelledby="mtx-ks-q3"><p>Most Rajadamnern Knockout nights finish around 9:00 pm to 9:30 pm. Later timings can vary with the length of the bouts.</p></div>
+        </div>
+        <div class="mtx-ks-fq">
+          <button class="mtx-ks-fqb" type="button" id="mtx-ks-q4" aria-expanded="true" aria-controls="mtx-ks-a4"><span class="mtx-ks-q">How are tickets allocated?</span><svg class="mtx-ks-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></button>
+          <div class="mtx-ks-fqp" id="mtx-ks-a4" role="region" aria-labelledby="mtx-ks-q4"><p>Select your preferred ticket section when booking. Your ticket confirmation will show the tickets allocated for your booking.</p></div>
+        </div>
+        <div class="mtx-ks-fq">
+          <button class="mtx-ks-fqb" type="button" id="mtx-ks-q5" aria-expanded="true" aria-controls="mtx-ks-a5"><span class="mtx-ks-q">Where can I see the latest Rajadamnern Knockout fight card?</span><svg class="mtx-ks-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></button>
+          <div class="mtx-ks-fqp" id="mtx-ks-a5" role="region" aria-labelledby="mtx-ks-q5"><p>Visitors following the fighters can see the latest confirmed Rajadamnern Knockout fight card on the fight-card page. <a class="mtx-ks-inline" href="https://muaytix.com/rajadamnern-knockout/fight-card">See the latest Rajadamnern Knockout fight card</a></p></div>
+        </div>
       </div>
     </div>
   </section>
@@ -698,7 +706,7 @@
 
   <a class="mtx-ks-bar" href="#mtx-ks-dates" data-mtx-jump data-mtx-ks-bar>View upcoming dates</a>
 
-  <script type="application/json" id="mtx-ks-data">{"finishesAtBangkokHour":22}</script>
+  <script type="application/json" id="mtx-ks-data">{"finishesAtBangkokHour":22,"bookingClosesAtBangkok":"18:30"}</script>
 
 <script type="application/ld+json">
 {
@@ -1002,7 +1010,9 @@
    3. The phone bar shows once the first button has scrolled away and the date
       list is not on screen.
 
-   The accordions are native details elements and need no script. */
+   The answers are in the page as plain text, open, so a reader with no script
+   sees every one. With the script on they fold shut and open from their
+   buttons. */
 (function () {
   var root = document.getElementById('mtx-ks');
   var raw = document.getElementById('mtx-ks-data');
@@ -1044,6 +1054,15 @@
     }
   }
 
+  /* The tonight line. Only on a standard Knockout night that is today, from
+     midnight until ticket sales close (first fight minus the booking cutoff),
+     never for a special event, never once the night has finished. */
+  var tonight = root.querySelector('[data-mtx-tonight]');
+  if (tonight && nextRow && nextRow.getAttribute('data-date') === today) {
+    var hm = pad(bkk.getHours()) + ':' + pad(bkk.getMinutes());
+    if (hm < data.bookingClosesAtBangkok) tonight.hidden = false;
+  }
+
   /* 2. month tabs */
   var tabs = [], panels = {};
   each('.mtx-ks-tab', function (a) { tabs.push(a); });
@@ -1083,6 +1102,15 @@
       });
     });
   }
+
+  /* The FAQ. Buttons own aria-expanded; the answers stay in the page either way. */
+  each('.mtx-ks-fqb', function (b) {
+    var p = document.getElementById(b.getAttribute('aria-controls'));
+    if (!p) return;
+    var set = function (open) { b.setAttribute('aria-expanded', open ? 'true' : 'false'); p.hidden = !open; };
+    set(false);
+    b.addEventListener('click', function () { set(b.getAttribute('aria-expanded') !== 'true'); });
+  });
 
   /* The hero button and the phone bar scroll to the dates. */
   var target = document.getElementById('mtx-ks-dates');
