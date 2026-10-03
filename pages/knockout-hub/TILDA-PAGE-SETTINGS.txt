@@ -1,0 +1,37 @@
+RAJADAMNERN KNOCKOUT, EVERGREEN HUB
+Tilda page settings. These are NOT in the HTML block (a block has no head).
+Paste them into the page's own settings in Tilda. The text is the brief's, exact.
+
+PAGE ADDRESS (unchanged, no redirect)
+  /rajadamnern-knockout
+
+CANONICAL
+  https://muaytix.com/rajadamnern-knockout
+
+DOCUMENT TITLE
+  Rajadamnern Knockout | Fast Muay Thai in Bangkok
+
+META DESCRIPTION
+  Rajadamnern Knockout brings fast three-round Muay Thai to Rajadamnern Stadium every Monday, Tuesday and Friday. Choose your date and book seats online.
+
+ROBOTS
+  index,follow
+
+OPEN GRAPH
+  type        website
+  site name   MuayTix
+  url         https://muaytix.com/rajadamnern-knockout
+  title       Rajadamnern Knockout | Muay Thai at Rajadamnern Stadium
+  description Seven fast three-round Muay Thai fights at Rajadamnern Stadium, Bangkok. Choose a Monday, Tuesday or Friday and book your seats online.
+  image       NOT SET. The brief says: current approved Rajadamnern Knockout hero or event
+              image, canonical https URL, at least 1200 x 630 px, text-safe crop.
+              Send the image and I will fill it in. I cannot see Tilda's pictures from here.
+  image alt   Rajadamnern Knockout live Muay Thai at Rajadamnern Stadium in Bangkok
+
+X (TWITTER) CARD
+  card        summary_large_image
+  title       Rajadamnern Knockout | Muay Thai at Rajadamnern Stadium
+  description Seven fast three-round Muay Thai fights at Rajadamnern Stadium, Bangkok. Choose a Monday, Tuesday or Friday and book your seats online.
+  image       NOT SET. Same image as the Open Graph one.
+
+DO NOT ADD: meta keywords, "tonight" metadata, a second title tag, a second canonical.

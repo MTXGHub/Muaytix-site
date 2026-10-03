@@ -1,0 +1,288 @@
+/* RAJADAMNERN KNOCKOUT, EVERGREEN HUB
+ * ----------------------------------------------------------------------
+ * Every selector starts with .mtx-kh-page, so nothing here can reach the rest
+ * of the Tilda site. Mobile first: written for 390px, then 620px, 760px and
+ * 1100px. Nothing is loaded from outside. Type is the Knockout pages' own:
+ * Barlow and Barlow Condensed, which the booking widget in the site head loads
+ * on every page, with Arial Narrow behind them.
+ *
+ * Colours are the Knockout pages' own: company blue, ink, paper. Red belongs to
+ * RWS and is not used here. No brown anywhere.
+ *
+ * Tilda matches elements directly and centres text, which beats anything a
+ * block inherits, so alignment, link colour and heading colour are stated at
+ * the foot with the id in front. Margins that a (0,1,1) reset would beat are
+ * written with the class doubled in.
+ */
+
+.mtx-kh-page, .mtx-kh-page * { box-sizing: border-box; }
+
+.mtx-kh-page {
+  --blue:   #1F5BFF;
+  --blue-d: #1545CF;
+  --blue-l: #9DB8FF;
+  --navy:   #0A1640;
+  --ink:    #0B0B0D;
+  --paper:  #F2F4F8;
+  --white:  #FFFFFF;
+  --line:   #DCDFE6;
+  --muted:  #4A4F5C;
+  --green:  #00A550;
+  --cond: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --body: "Barlow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  display: block; font-family: var(--body); font-size: 17px; line-height: 1.6;
+  color: var(--ink); background: var(--white); -webkit-font-smoothing: antialiased;
+}
+
+.mtx-kh-page p, .mtx-kh-page h1, .mtx-kh-page h2, .mtx-kh-page h3,
+.mtx-kh-page ul, .mtx-kh-page ol, .mtx-kh-page li, .mtx-kh-page summary { margin: 0; padding: 0; }
+.mtx-kh-page ul, .mtx-kh-page ol { list-style: none; }
+.mtx-kh-page img { display: block; max-width: 100%; height: auto; }
+.mtx-kh-page .mtx-kh-wrap { width: min(100% - 32px, 1100px); margin-inline: auto; }
+
+/* ---------------------------------------------------------------- type --- */
+
+.mtx-kh-page .mtx-kh-h1, .mtx-kh-page .mtx-kh-h2, .mtx-kh-page .mtx-kh-h3 {
+  font-family: var(--cond); font-weight: 800; text-transform: uppercase; letter-spacing: .01em; overflow-wrap: break-word;
+}
+.mtx-kh-page .mtx-kh-h1 { font-size: clamp(42px, 11vw, 80px); line-height: .96; }
+.mtx-kh-page .mtx-kh-h2 { font-size: clamp(30px, 7.4vw, 44px); line-height: 1.02; }
+.mtx-kh-page .mtx-kh-h2::before {
+  content: ""; display: block; width: 46px; height: 5px; margin-bottom: 14px; background: var(--blue);
+}
+.mtx-kh-page .mtx-kh-h3 { font-size: 22px; line-height: 1.12; }
+.mtx-kh-page .mtx-kh-lead { margin-top: 14px; max-width: 68ch; font-size: 18px; }
+.mtx-kh-page .mtx-kh-body { margin-top: 16px; max-width: 68ch; font-size: 18px; }
+.mtx-kh-page .mtx-kh-body:first-of-type { margin-top: 18px; }
+
+.mtx-kh-page .mtx-kh-sec { padding: 40px 0; }
+.mtx-kh-page .mtx-kh-sec--white { background: var(--white); }
+.mtx-kh-page .mtx-kh-sec--paper { background: var(--paper); }
+
+/* --------------------------------------------------------------- buttons --- */
+
+.mtx-kh-page .mtx-kh-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 100%; min-height: 56px; padding: 10px 28px; line-height: 1.15;
+  background: var(--blue); color: var(--white); border: 2px solid var(--blue);
+  font-family: var(--cond); font-weight: 800; font-size: 19px; letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none; text-align: center; cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.mtx-kh-page .mtx-kh-btn:hover { background: var(--blue-d); border-color: var(--blue-d); }
+.mtx-kh-page .mtx-kh-btn--ghost { background: transparent; border-color: var(--white); }
+.mtx-kh-page .mtx-kh-btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--navy); }
+
+.mtx-kh-page .mtx-kh-btn:focus-visible, .mtx-kh-page .mtx-kh-jump:focus-visible, .mtx-kh-page .mtx-kh-inline:focus-visible,
+.mtx-kh-page .mtx-kh-det summary:focus-visible, .mtx-kh-page .mtx-kh-seat:focus-visible,
+.mtx-kh-page .mtx-kh-crumbs a:focus-visible, .mtx-kh-page .mtx-kh-bar:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.mtx-kh-page .mtx-kh-hero .mtx-kh-btn:focus-visible, .mtx-kh-page .mtx-kh-conf .mtx-kh-btn:focus-visible,
+.mtx-kh-page .mtx-kh-bar:focus-visible { outline-color: var(--white); }
+
+/* ----------------------------------------------------------- breadcrumbs --- */
+
+.mtx-kh-page .mtx-kh-crumbs { background: var(--paper); border-bottom: 1px solid var(--line); }
+.mtx-kh-page .mtx-kh-crumbs ol { display: flex; flex-wrap: wrap; padding: 10px 0; font-size: 15px; line-height: 1.4; color: var(--muted); }
+.mtx-kh-page .mtx-kh-crumbs a { color: var(--blue-d); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+.mtx-kh-page .mtx-kh-slash { white-space: pre; }
+
+/* ---------------------------------------------------------------- hero --- */
+
+.mtx-kh-page .mtx-kh-hero { position: relative; overflow: hidden; color: var(--white); background: var(--navy); }
+.mtx-kh-page .mtx-kh-hero-img {
+  position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: center 38%;
+}
+.mtx-kh-page .mtx-kh-hero-wash {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10, 22, 64, .90) 0%, rgba(10, 22, 64, .78) 40%, rgba(10, 22, 64, .92) 100%);
+}
+.mtx-kh-page .mtx-kh-hero-in { position: relative; padding: 30px 0 38px; }
+.mtx-kh-page .mtx-kh-logo { display: inline-flex; align-items: center; margin-bottom: 18px; padding: 8px 14px; background: var(--white); border-radius: 6px; }
+.mtx-kh-page .mtx-kh-logo img { height: 34px; width: auto; max-width: 160px; object-fit: contain; }
+.mtx-kh-page .mtx-kh-lede { margin-top: 16px; max-width: 30ch; font-size: 21px; line-height: 1.35; font-weight: 500; }
+.mtx-kh-page .mtx-kh-days { margin-top: 10px; font-family: var(--cond); font-weight: 800; font-size: 25px; line-height: 1.15; letter-spacing: .02em; text-transform: uppercase; color: var(--blue-l); }
+.mtx-kh-page .mtx-kh-cta-row { margin-top: 26px; display: flex; flex-direction: column; gap: 12px; }
+
+/* --------------------------------------------------------------- facts --- */
+
+.mtx-kh-page .mtx-kh-sec--facts { padding: 36px 0 40px; }
+.mtx-kh-page .mtx-kh-facts { margin-top: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.mtx-kh-page .mtx-kh-fact { padding: 14px 14px 16px; background: var(--white); border: 1px solid var(--line); border-top: 4px solid var(--blue); min-width: 0; }
+.mtx-kh-page .mtx-kh-fact-l { display: block; color: var(--blue-d); font-family: var(--cond); font-weight: 800; font-size: 14px; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; }
+.mtx-kh-page .mtx-kh-fact-v { display: block; margin-top: 6px; font-family: var(--cond); font-weight: 800; font-size: 22px; line-height: 1.12; overflow-wrap: break-word; }
+
+/* -------------------------------------------------------------- booking --- */
+
+.mtx-kh-page .mtx-kh-helper { margin-top: 14px; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; color: var(--muted); }
+.mtx-kh-page .mtx-kh-swatch { flex: none; width: 16px; height: 16px; border-radius: 4px; background: var(--green); }
+.mtx-kh-page .mtx-kh-widget { margin-top: 20px; scroll-margin-top: 14px; min-height: 420px; }
+.mtx-kh-page .mtx-kh-trust { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 16px; line-height: 1.4; font-weight: 600; color: var(--ink); }
+.mtx-kh-page .mtx-kh-trust li { display: flex; align-items: center; gap: 8px; }
+.mtx-kh-page .mtx-kh-tick { flex: none; color: var(--blue); }
+.mtx-kh-page .mtx-kh-dot { display: none; }
+
+/* ------------------------------------------------------ editorial blocks --- */
+
+.mtx-kh-page .mtx-kh-sec--what .mtx-kh-body { padding-left: 16px; border-left: 4px solid var(--line); }
+.mtx-kh-page .mtx-kh-cards { margin-top: 24px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.mtx-kh-page .mtx-kh-card { padding: 18px 18px 20px; background: var(--white); border: 1px solid var(--line); border-top: 4px solid var(--blue); }
+.mtx-kh-page .mtx-kh-card p { margin-top: 8px; font-size: 17px; color: var(--muted); }
+.mtx-kh-page .mtx-kh-note { margin-top: 22px; padding: 14px 16px; max-width: 68ch; background: var(--paper); border-left: 5px solid var(--blue); font-weight: 600; }
+
+.mtx-kh-page .mtx-kh-sec--dome { padding: 32px 0; color: var(--white); background: var(--navy); }
+.mtx-kh-page .mtx-kh-dome { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; align-items: center; }
+.mtx-kh-page .mtx-kh-dome-art {
+  min-height: 170px; border-radius: 10px; border: 1px solid rgba(157, 184, 255, .35);
+  background: radial-gradient(120% 140% at 50% 130%, #9DB8FF 0%, #1F5BFF 26%, #12308C 58%, #0A1640 100%);
+}
+.mtx-kh-page .mtx-kh-dome .mtx-kh-h2::before { background: var(--blue-l); }
+.mtx-kh-page .mtx-kh-dome .mtx-kh-body { margin-top: 12px; }
+.mtx-kh-page .mtx-kh-dome-note { margin-top: 14px; font-size: 16px; color: var(--blue-l); font-weight: 600; max-width: 68ch; }
+
+.mtx-kh-page .mtx-kh-list { margin-top: 16px; display: grid; gap: 10px; font-size: 18px; font-weight: 600; }
+.mtx-kh-page .mtx-kh-list li { display: flex; align-items: flex-start; gap: 10px; }
+.mtx-kh-page .mtx-kh-list .mtx-kh-tick { margin-top: 5px; }
+.mtx-kh-page .mtx-kh-sub { margin-top: 28px; }
+.mtx-kh-page .mtx-kh-jumps, .mtx-kh-page .mtx-kh-rel { margin-top: 20px; display: grid; gap: 10px; }
+.mtx-kh-page .mtx-kh-jump {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 54px; padding: 12px 16px; line-height: 1.2;
+  background: var(--white); color: var(--ink); border: 2px solid var(--ink); text-decoration: none;
+  font-family: var(--cond); font-weight: 800; font-size: 19px; letter-spacing: .04em; text-transform: uppercase;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.mtx-kh-page a.mtx-kh-jump:hover { background: var(--blue); border-color: var(--blue); color: var(--white); }
+.mtx-kh-page .mtx-kh-arr { flex: none; }
+.mtx-kh-page .mtx-kh-jump--pending { border: 2px dashed var(--muted); color: var(--muted); }
+
+.mtx-kh-page .mtx-kh-conf { padding: 44px 0; color: var(--white); background: var(--blue); }
+.mtx-kh-page .mtx-kh-conf .mtx-kh-h2::before { background: var(--white); }
+.mtx-kh-page .mtx-kh-conf .mtx-kh-body { margin-top: 14px; }
+.mtx-kh-page .mtx-kh-conf .mtx-kh-cta-row { margin-top: 24px; flex-direction: row; }
+
+/* ------------------------------------------------------------------ FAQ --- */
+
+.mtx-kh-page .mtx-kh-acc { margin-top: 24px; display: grid; gap: 10px; }
+.mtx-kh-page .mtx-kh-det { background: var(--white); border: 1px solid var(--line); border-left: 5px solid var(--line); }
+.mtx-kh-page .mtx-kh-det[open] { border-left-color: var(--blue); }
+.mtx-kh-page .mtx-kh-det summary { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 60px; padding: 14px; cursor: pointer; list-style: none; }
+.mtx-kh-page .mtx-kh-det summary::-webkit-details-marker { display: none; }
+.mtx-kh-page .mtx-kh-det summary::marker { content: ""; }
+.mtx-kh-page .mtx-kh-q { font-family: var(--cond); font-weight: 800; font-size: 21px; line-height: 1.15; letter-spacing: .01em; }
+.mtx-kh-page .mtx-kh-chev { flex: none; transition: transform .2s ease; }
+.mtx-kh-page .mtx-kh-det[open] .mtx-kh-chev { transform: rotate(180deg); }
+.mtx-kh-page .mtx-kh-det-b { padding: 0 14px 18px; }
+.mtx-kh-page .mtx-kh-det-b p { max-width: 68ch; font-size: 17.5px; }
+.mtx-kh-page .mtx-kh-inline { color: var(--blue-d); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+/* -------------------------------------------------------------- related --- */
+
+.mtx-kh-page .mtx-kh-seats { margin-top: 26px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.mtx-kh-page .mtx-kh-seat { display: block; overflow: hidden; border: 1px solid var(--line); border-bottom: 4px solid var(--blue); background: var(--white); }
+.mtx-kh-page .mtx-kh-seat img { width: 100%; aspect-ratio: 4 / 3; height: auto; object-fit: cover; transition: opacity .18s ease; }
+.mtx-kh-page .mtx-kh-seat:hover img { opacity: .85; }
+
+/* ----------------------------------------------- the widget, on this page --- */
+
+/* The reserve button is the widget's [data-go], so that is what is styled here.
+
+   Everything below restyles the shared booking widget on THIS page only. It is
+   written against the widget's own class names and carries the page prefix and
+   the widget's id, so no other page that uses the widget is touched. */
+
+.mtx-kh-page #mtx-booking button[data-go] {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  width: 100%; align-self: stretch; min-height: 60px; margin-top: 8px; padding: 14px 20px;
+  background: var(--blue); color: var(--white); border: 0; border-radius: 12px;
+  font-size: 19px; font-weight: 800; letter-spacing: .04em; line-height: 1.1;
+  box-shadow: 0 5px 0 #1240B8; animation: none;
+  transition: transform .1s ease, box-shadow .1s ease, background-color .15s ease;
+}
+.mtx-kh-page #mtx-booking button[data-go]::after { content: "\2192"; font-size: 1.3em; line-height: 1; font-weight: 800; }
+.mtx-kh-page #mtx-booking button[data-go]:hover:not(:disabled) { background: var(--blue-d); transform: translateY(-1px); box-shadow: 0 6px 0 #1240B8; }
+.mtx-kh-page #mtx-booking button[data-go]:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 #1240B8; }
+.mtx-kh-page #mtx-booking button[data-go]:disabled { background: #E6E6E6; color: #4F4F55; border: 0; box-shadow: none; cursor: not-allowed; transform: none; }
+.mtx-kh-page #mtx-booking button[data-go]:disabled::after { content: none; }
+.mtx-kh-page #mtx-booking button[data-go]:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.mtx-kh-page #mtx-booking .mtx-sel select { border: 2px solid var(--ink); min-height: 52px; }
+
+/* A direct match on a heading inside the widget has turned a fight night's
+   name white on white before. This page mounts the widget. */
+.mtx-kh-page #mtx-booking h1, .mtx-kh-page #mtx-booking h2,
+.mtx-kh-page #mtx-booking h3, .mtx-kh-page #mtx-booking h4 { color: inherit; text-transform: none; }
+
+/* ---------------------------------------------------------- sticky bar --- */
+
+/* Phones only. The script shows it once the guest is past the first button
+   and the widget is off screen, so it never sits over the calendar or the
+   checkout fields. */
+.mtx-kh-page .mtx-kh-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  display: none; align-items: center; justify-content: center;
+  height: calc(60px + env(safe-area-inset-bottom, 0px)); padding: 0 20px env(safe-area-inset-bottom, 0px);
+  background: var(--blue); color: var(--white); text-decoration: none; text-align: center;
+  font-family: var(--cond); font-weight: 800; font-size: 20px; letter-spacing: .07em; text-transform: uppercase;
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, .25);
+}
+.mtx-kh-page .mtx-kh-bar.is-on { display: flex; }
+.mtx-kh-page .mtx-kh-related { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px) + 36px); }
+
+/* ---------------------------------------------------------------- 620px --- */
+
+@media (min-width: 620px) {
+  .mtx-kh-page .mtx-kh-sec { padding: 52px 0; }
+  .mtx-kh-page .mtx-kh-cta-row { flex-direction: row; flex-wrap: wrap; }
+  .mtx-kh-page .mtx-kh-btn { width: auto; min-width: 250px; }
+  .mtx-kh-page .mtx-kh-dot { display: inline; color: var(--muted); }
+  .mtx-kh-page .mtx-kh-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .mtx-kh-page .mtx-kh-rel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mtx-kh-page .mtx-kh-seats { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+}
+
+/* ---------------------------------------------------------------- 760px --- */
+
+@media (min-width: 760px) {
+  .mtx-kh-page { font-size: 18px; }
+  .mtx-kh-page .mtx-kh-wrap { width: min(100% - 80px, 1100px); }
+  .mtx-kh-page .mtx-kh-hero-wash { background: linear-gradient(100deg, rgba(10, 22, 64, .93) 0%, rgba(10, 22, 64, .82) 46%, rgba(10, 22, 64, .5) 100%); }
+  .mtx-kh-page .mtx-kh-hero-in { padding: 76px 0 84px; }
+  .mtx-kh-page .mtx-kh-lede { font-size: 24px; max-width: 28ch; }
+  .mtx-kh-page .mtx-kh-days { font-size: 30px; }
+  .mtx-kh-page .mtx-kh-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .mtx-kh-page .mtx-kh-fact-v { font-size: 26px; }
+  .mtx-kh-page .mtx-kh-dome { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 40px; }
+  .mtx-kh-page .mtx-kh-dome-art { min-height: 220px; }
+  .mtx-kh-page .mtx-kh-jumps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mtx-kh-page .mtx-kh-bar, .mtx-kh-page .mtx-kh-bar.is-on { display: none; }
+  .mtx-kh-page .mtx-kh-related { padding-bottom: 60px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mtx-kh.mtx-kh-page, #mtx-kh.mtx-kh-page * { transition: none; animation: none; scroll-behavior: auto; }
+}
+
+/* ------------------------------------------------------------- the host --- */
+
+/* Stated, not inherited. Tilda centres text by matching every element, and a
+   direct match beats an inherited value however specific the ancestor is. */
+#mtx-kh.mtx-kh-page, #mtx-kh.mtx-kh-page * { text-align: left; }
+#mtx-kh.mtx-kh-page .mtx-kh-btn, #mtx-kh.mtx-kh-page .mtx-kh-bar { text-align: center; }
+
+#mtx-kh.mtx-kh-page a.mtx-kh-btn { background: var(--blue); border-color: var(--blue); color: var(--white); }
+#mtx-kh.mtx-kh-page a.mtx-kh-btn:hover { background: var(--blue-d); border-color: var(--blue-d); color: var(--white); }
+#mtx-kh.mtx-kh-page a.mtx-kh-btn--ghost { background: transparent; border-color: var(--white); color: var(--white); }
+#mtx-kh.mtx-kh-page a.mtx-kh-btn--ghost:hover { background: var(--white); border-color: var(--white); color: var(--navy); }
+#mtx-kh.mtx-kh-page a.mtx-kh-bar { color: var(--white); }
+#mtx-kh.mtx-kh-page a.mtx-kh-jump { color: var(--ink); text-decoration: none; }
+#mtx-kh.mtx-kh-page a.mtx-kh-jump:hover { color: var(--white); }
+#mtx-kh.mtx-kh-page a.mtx-kh-inline { color: var(--blue-d); }
+#mtx-kh.mtx-kh-page .mtx-kh-crumbs a { color: var(--blue-d); }
+
+/* Heading and body colour on the dark and blue bands, for the same reason. */
+#mtx-kh.mtx-kh-page .mtx-kh-hero, #mtx-kh.mtx-kh-page .mtx-kh-hero h1, #mtx-kh.mtx-kh-page .mtx-kh-hero p { color: var(--white); }
+#mtx-kh.mtx-kh-page .mtx-kh-hero .mtx-kh-days { color: var(--blue-l); }
+#mtx-kh.mtx-kh-page .mtx-kh-sec--dome, #mtx-kh.mtx-kh-page .mtx-kh-sec--dome h2, #mtx-kh.mtx-kh-page .mtx-kh-sec--dome p { color: var(--white); }
+#mtx-kh.mtx-kh-page .mtx-kh-sec--dome .mtx-kh-dome-note { color: var(--blue-l); }
+#mtx-kh.mtx-kh-page .mtx-kh-conf, #mtx-kh.mtx-kh-page .mtx-kh-conf h2, #mtx-kh.mtx-kh-page .mtx-kh-conf p { color: var(--white); }
+#mtx-kh.mtx-kh-page .mtx-kh-h2, #mtx-kh.mtx-kh-page .mtx-kh-h3 { color: var(--ink); }
+#mtx-kh.mtx-kh-page .mtx-kh-sec--dome .mtx-kh-h2, #mtx-kh.mtx-kh-page .mtx-kh-conf .mtx-kh-h2 { color: var(--white); }

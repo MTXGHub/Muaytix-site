@@ -1,0 +1,46 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Rajadamnern Knockout",
+    "url": "https://muaytix.com/rajadamnern-knockout",
+    "description": "Rajadamnern Knockout brings fast three-round Muay Thai to Rajadamnern Stadium every Monday, Tuesday and Friday.",
+    "about": [
+      {
+        "@type": "Thing",
+        "name": "Rajadamnern Knockout"
+      },
+      {
+        "@type": "Thing",
+        "name": "Muay Thai"
+      },
+      {
+        "@type": "Thing",
+        "name": "Rajadamnern Stadium"
+      }
+    ],
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "MuayTix",
+      "url": "https://muaytix.com/"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://muaytix.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Rajadamnern Knockout",
+        "item": "https://muaytix.com/rajadamnern-knockout"
+      }
+    ]
+  }
+]

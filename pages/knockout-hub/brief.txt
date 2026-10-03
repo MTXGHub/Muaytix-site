@@ -1,0 +1,274 @@
+## BREADCRUMBS
+
+Home / Rajadamnern Knockout
+
+
+## HERO
+
+H1:
+Rajadamnern Knockout
+
+Body:
+Modern three-round Muay Thai at Rajadamnern Stadium, Bangkok.
+
+Every Monday, Tuesday and Friday.
+
+Primary CTA:
+Choose your fight night
+
+Secondary CTA:
+See the latest fight card
+
+
+## ESSENTIAL FACT CARDS
+
+Section heading:
+Rajadamnern Knockout at a glance
+
+Card 1 label:
+Venue
+
+Card 1 value:
+Rajadamnern Stadium
+
+Card 2 label:
+Nights
+
+Card 2 value:
+Monday, Tuesday & Friday
+
+Card 3 label:
+Doors
+
+Card 3 value:
+6:00 pm
+
+Card 4 label:
+First fight
+
+Card 4 value:
+7:00 pm
+
+Card 5 label:
+Format
+
+Card 5 value:
+7 bouts · 3 rounds
+
+Card 6 label:
+Expected finish
+
+Card 6 value:
+Around 9:00–9:30 pm
+
+
+## BOOKING WIDGET
+
+H2:
+Choose your Rajadamnern Knockout date
+
+Body:
+Rajadamnern Knockout takes place every Monday, Tuesday and Friday. Select an available date below to choose your seats.
+
+Helper text:
+Available Rajadamnern Knockout nights are highlighted in green.
+
+[INSERT EXISTING EVENT-SPECIFIC RAJADAMNERN KNOCKOUT BOOKING WIDGET]
+
+Trust row:
+Secure online booking · Instant confirmation · Mobile tickets accepted
+
+
+## WHAT IS RAJADAMNERN KNOCKOUT?
+
+H2:
+What is Rajadamnern Knockout?
+
+Paragraph 1:
+Rajadamnern Knockout brings fast three-round fights to one of Bangkok’s historic Muay Thai stadiums. Thai fighters meet international challengers in a high-energy evening that is easy to follow, even if this is your first live Muay Thai event.
+
+Paragraph 2:
+Each event usually features seven three-round bouts, with knees, elbows and clinching under Muay Thai rules. Rajadamnern promotes the series around an advertised 80% knockout rate.
+
+
+## FIRST-TIME GUESTS
+
+H2:
+New to Muay Thai? You are in the right place.
+
+Body:
+You do not need to understand scoring, fighter rankings or stadium traditions before you arrive. The three-round format is easy to follow, and the action starts from the opening bell.
+
+Card 1 heading:
+Fast format
+
+Card 1 body:
+Seven three-round bouts keep the night moving.
+
+Card 2 heading:
+Thai traditions
+
+Card 2 body:
+See Wai Kru and hear live traditional music.
+
+Card 3 heading:
+Historic setting
+
+Card 3 body:
+Watch inside Rajadamnern Stadium, one of Bangkok’s best-known Muay Thai venues.
+
+
+## WHAT TO EXPECT
+
+H2:
+What to expect at Rajadamnern Knockout
+
+Paragraph 1:
+Rajadamnern Knockout combines modern three-round competition with the traditions that make Muay Thai unique.
+
+Paragraph 2:
+Expect Wai Kru before the bouts, live traditional Muay Thai music, knees, elbows and clinching under Muay Thai rules, plus Thai fighters and international challengers competing inside Rajadamnern Stadium.
+
+Paragraph 3:
+There is usually an interval around 8:00 pm, followed by the Rajadamnern Immersive Dome Experience at around 8:10 pm.
+
+Operational note:
+Fights start on time. Fight cards and later running times can change.
+
+
+## DOME EXPERIENCE
+
+H2:
+The Rajadamnern Dome Experience
+
+Body:
+After the interval, the stadium roof becomes an immersive visual show celebrating Muay Thai history and culture. It usually begins at around 8:10 pm.
+
+Note:
+The first fight starts on time. Later timings can vary with the length of the bouts.
+
+
+## EVENT CHOOSER
+
+H2:
+Is Rajadamnern Knockout right for you?
+
+Body:
+Rajadamnern Knockout is a good choice if you want:
+
+Bullet 1:
+Fast, easy-to-follow fights
+
+Bullet 2:
+A shorter evening at the stadium
+
+Bullet 3:
+Live Muay Thai on a Monday, Tuesday or Friday
+
+Bullet 4:
+Your first Muay Thai experience in Bangkok
+
+Subheading:
+Looking for something different?
+
+Link 1 visible anchor:
+Saturday championship cards
+
+Link 1 destination:
+https://muaytix.com/rws
+
+Link 2 visible anchor:
+Traditional five-round Muay Thai
+
+Link 2 destination:
+[CONFIGURE: Use the approved existing New Power / Petchyindee comparison destination. Do not invent a URL.]
+
+Link 3 visible anchor:
+Sunday stadium atmosphere
+
+Link 3 destination:
+https://muaytix.com/kiatpetch-muay-thai
+
+
+## BOOKING CONFIDENCE
+
+H2:
+Book with MuayTix
+
+Body:
+Choose your date and seat online. Your booking confirmation is sent by email, and mobile tickets are accepted at the stadium.
+
+CTA:
+Choose your fight night
+
+Action:
+Smooth-scroll to the existing Knockout booking widget.
+
+
+## FAQ
+
+H2:
+Rajadamnern Knockout FAQs
+
+Question 1:
+What is Rajadamnern Knockout?
+
+Answer 1:
+Rajadamnern Knockout is a fast three-round Muay Thai event at Rajadamnern Stadium in Bangkok. It usually features seven bouts, with Thai fighters meeting international challengers.
+
+Question 2:
+What time does Rajadamnern Knockout start?
+
+Answer 2:
+Doors open at 6:00 pm and the first fight begins at 7:00 pm. Fights start on time.
+
+Question 3:
+How long does Rajadamnern Knockout last?
+
+Answer 3:
+The event usually finishes between 9:00 pm and 9:30 pm. Later timings can vary with the length of the fights.
+
+Question 4:
+Which nights is Rajadamnern Knockout held?
+
+Answer 4:
+Rajadamnern Knockout takes place every Monday, Tuesday and Friday.
+
+Question 5:
+Where can I see the latest line-up?
+
+Answer 5:
+[LINK: See the latest Rajadamnern Knockout fight card]
+
+Link destination:
+https://muaytix.com/rajadamnern-knockout/fight-card
+
+
+## RELATED LINKS
+
+H2:
+Plan your Rajadamnern Knockout night
+
+Link 1 visible anchor:
+View the Rajadamnern Knockout schedule
+
+Link 1 destination:
+https://muaytix.com/rajadamnern-knockout/schedule
+
+Link 2 visible anchor:
+See the latest Rajadamnern Knockout fight card
+
+Link 2 destination:
+https://muaytix.com/rajadamnern-knockout/fight-card
+
+Link 3 visible anchor:
+Choose Rajadamnern Knockout tickets
+
+Link 3 destination:
+https://muaytix.com/rajadamnern-knockout/tickets
+
+Link 4 visible anchor:
+Compare Rajadamnern seating
+
+Link 4 destination:
+https://muaytix.com/rajadamnern-stadium-seating

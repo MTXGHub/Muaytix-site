@@ -1,0 +1,52 @@
+<script type="application/ld+json">
+@@SCHEMA_1@@
+</script>
+
+<script type="application/ld+json">
+@@SCHEMA_2@@
+</script>
+
+<script>
+/* Two behaviours, plain JavaScript, nothing loaded from outside: the anchor
+   jumps and the phone bar. The accordions are native details elements and need
+   no script. */
+(function () {
+  var root = document.getElementById('mtx-kh');
+  if (root === null) return;
+  var slot = document.getElementById('mtx-kh-book');
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 1. Every button that says book scrolls to the widget on this page. */
+  var jumps = root.querySelectorAll('a[href="#mtx-kh-book"]');
+  for (var i = 0; i < jumps.length; i++) {
+    jumps[i].addEventListener('click', function (e) {
+      if (slot === null) return;
+      e.preventDefault();
+      slot.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
+    });
+  }
+
+  /* 2. The phone bar. On once the guest is past the first button and the
+     widget is off screen, off again as soon as the widget is in view. CSS keeps
+     it off a screen 760px or wider. */
+  var bar = root.querySelector('[data-mtx-kh-bar]');
+  var first = root.querySelector('.mtx-kh-hero .mtx-kh-btn');
+  if (bar && slot && first) {
+    var queued = false;
+    var update = function () {
+      queued = false;
+      var past = first.getBoundingClientRect().bottom < 0;
+      var w = slot.getBoundingClientRect();
+      var seen = w.bottom > 0 && w.top < window.innerHeight;
+      bar.className = 'mtx-kh-bar' + (past && !seen ? ' is-on' : '');
+    };
+    var queue = function () {
+      if (queued === false) { queued = true; window.requestAnimationFrame(update); }
+    };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    update();
+  }
+})();
+</script>
+</div>
