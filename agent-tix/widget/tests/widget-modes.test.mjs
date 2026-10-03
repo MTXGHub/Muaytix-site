@@ -102,7 +102,7 @@ console.log('\nMode 4 — a page built around one promotion (data-series)');
   const lit = await p.$$eval('[data-grid] .mtx-hi', b=>b.map(x=>x.dataset.date));
   check('this promotion is the one marked out', JSON.stringify(lit)==='["2026-09-05"]', JSON.stringify(lit));
   check('and carries the green that means available',
-        (await p.$$('[data-grid] .mtx-hi.mtx-go')).length===1);
+        (await p.$$('[data-grid] .mtx-hi.mtx-open')).length===1);
   const months = await p.$$eval('[data-months] button', b=>b.map(x=>x.textContent.trim()));
   check('only months this promotion is in are offered',
         JSON.stringify(months)==='["Sep 2026"]', JSON.stringify(months));
