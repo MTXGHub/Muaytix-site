@@ -229,6 +229,47 @@ allocation as equivalent to a Club Class one.
 Third Class is opened by the stadium, usually only once the other classes are
 full or close to it.
 
+### Reports that already exist. Use them first.
+
+Said on 4 October 2026: reports were built, with time and credits, so that
+questions about bookings, channels and drop-off are answered by **running the
+report**, not by writing a fresh query or reaching for Google Analytics. Doing
+that mixed two different measures in one answer and cost him several chats.
+
+Rules:
+
+1. When he asks a numbers question, find the matching view below and run it
+   first. Say which report you ran.
+2. Do not pull Google Analytics unless he asks for it or no report can answer.
+   If you do, keep its numbers (visits) apart from the reports' numbers
+   (checkouts and paid bookings). They are different things and must never sit
+   in one sentence as if they were the same.
+3. If no report answers the question, say so in one sentence and ask before
+   building anything new.
+
+Source tagging only exists from 19 September 2026 09:56 Bangkok. Anything
+earlier shows as unattributed because it was never tagged, not because it did
+not happen. Say this whenever a window starts before that date.
+
+| Question | View |
+|---|---|
+| Paid bookings by channel, landing page, device, country, margin | `booking_attribution` |
+| Who started checkout and did not pay, with channel and page | `abandoned_checkouts` |
+| Of those who reached checkout, how many paid, by landing page | `checkout_funnel_by_landing_page` |
+| Same, by the page they pressed Book on | `checkout_funnel_by_page` |
+| Contribution won and lost by page | `contribution_lost_by_page` |
+| Bookings and contribution by day | `contribution_by_day` |
+| Bookings by card country, by payment method | `bookings_by_nationality`, `bookings_by_payment_method` |
+| How many looked at a night, how many reached checkout, how many paid, by day | `look_to_sale_by_day` |
+| Calendar and look-ups by day, by event, by page | `widget_looks_by_day`, `widget_looks_by_event`, `widget_looks_by_page` |
+| How many abandoned checkouts left an email | `abandoned_capture_by_day` |
+| Bookings that need a refund | `bookings_needing_a_refund` |
+| Weekly pay | `weekly_pay` |
+
+Visits that never start a checkout are not recorded anywhere in the database.
+`widget_looks_*` counts people who opened the booking widget, which is the
+nearest thing to a visit count the reports hold.
+
 ### Routine trading jobs
 
 Close a class: set `manual_status = 'fully_booked'`. Set a real allocation: set
