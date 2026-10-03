@@ -1,0 +1,32 @@
+@@SCHEMA@@
+
+<script>
+/* Two behaviours, plain JavaScript, nothing loaded from outside.
+
+   1. The hero button scrolls to the calendar.
+   2. The FAQ. The answers are in the page as plain text, open, so a reader with
+      no script sees every one. With the script on they fold shut and open from
+      their buttons, which own aria-expanded.
+
+   The calendar is the booking widget and runs from the site head. */
+(function () {
+  var root = document.getElementById('mtx-tk');
+  if (root === null) return;
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var each = function (sel, fn) { var l = root.querySelectorAll(sel); for (var k = 0; k < l.length; k++) fn(l[k]); };
+
+  var target = document.getElementById('mtx-tk-dates');
+  each('a[data-mtx-jump]', function (a) {
+    a.addEventListener('click', function (e) { if (!target) return; e.preventDefault(); target.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' }); });
+  });
+
+  each('.mtx-tk-fqb', function (b) {
+    var p = document.getElementById(b.getAttribute('aria-controls'));
+    if (!p) return;
+    var set = function (open) { b.setAttribute('aria-expanded', open ? 'true' : 'false'); p.hidden = !open; };
+    set(false);
+    b.addEventListener('click', function () { set(b.getAttribute('aria-expanded') !== 'true'); });
+  });
+})();
+</script>
+</div>
