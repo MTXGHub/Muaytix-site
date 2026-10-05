@@ -40,7 +40,11 @@ function compact(code, espree) {
   const toks = espree.tokenize(code, { ecmaVersion: 'latest', range: true, loc: true });
   let out = '', prev = null, prevText = '';
   for (const t of toks) {
-    const text = code.slice(t.range[0], t.range[1]);
+    let text = code.slice(t.range[0], t.range[1]);
+    // The stylesheet is one long string with a line break and indentation between
+    // rules. In CSS any run of white space means the same as one space, so the
+    // breaks and indentation go. Nothing else in any other string is touched.
+    if (t.type === 'String' && text.includes('#mtx-booking{')) text = text.replace(/\\n\s*/g, ' ');
     if (prev) {
       if (t.loc.start.line !== prev.loc.end.line) out += '\n';
       else if (needSpace(prev, prevText, t, text)) out += ' ';

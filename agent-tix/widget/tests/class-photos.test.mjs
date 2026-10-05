@@ -178,8 +178,8 @@ check('the select button chooses LEO Section',
 await page.close();
 
 /* ------------------------------------------------------------------------ */
-console.log('\nA class that cannot be bought loses its photos');
-for (const status of ['fully_booked', 'booking_closed', 'closed']) {
+console.log('\nA class that is sold out, or past its booking time, loses its photos');
+for (const status of ['fully_booked', 'booking_closed']) {
   page = await open(1000, { leo_section: { photos: PHOTOS, benefits: BENEFITS, status } });
   check(`${status}: no card`, await page.locator('.mtx-seatcard').count() === 0);
   check(`${status}: no photos on the page`, await page.locator('.mtx-slide img').count() === 0);
@@ -392,6 +392,64 @@ check('on a phone it fits without sideways scroll', await page.evaluate(() => do
 await page.close();
 page = await open(1000, { third_class: { status: 'closed', closedExplanation: null } });
 check('a closed class with no explanation shows no empty gap', await page.locator('.mtx-pick-note').count() === 0);
+await page.close();
+
+
+/* ------------------------------------------------------------------------ */
+console.log('\nA class that is not open yet keeps its photos, and leads the guest to the next one up');
+const WHY2 = 'Third Class is currently closed. The stadium opens it when the other seat classes are close to full. This does not happen every night.';
+const T_PHOTOS = [0, 1, 2, 3].map(i => ({ url: PHOTOS[i].url.replace('LEO', 'x'), alt: 'Third Class photo ' + (i + 1) }));
+const CLOSED_THIRD = { third_class: { status: 'closed', closedExplanation: WHY2, photos: T_PHOTOS, benefits: [{ text: 'Section 11, the upper tier of the stadium' }] } };
+page = await open(1000, { ...LEO_ON, ...CLOSED_THIRD });
+const cc = page.locator('.mtx-seatcard--closed');
+check('a closed card is drawn', await cc.count() === 1);
+check('with its photos', await cc.locator('.mtx-slide img').count() === 4);
+check('and its name and strapline', /Third Class/.test(await cc.locator('.mtx-pick-name').innerText()));
+check('and the reason it is closed', text(await cc.locator('.mtx-pick-note').innerText()) === WHY2);
+const cb = cc.locator('.mtx-closed-btn');
+check('a Closed button that cannot be pressed', /^CLOSED$/i.test(text(await cb.innerText())) && await cb.isDisabled());
+check('pressing it does nothing', await (async () => { await cb.dispatchEvent('click'); await page.waitForTimeout(300); return await page.locator('.mtx-detail').count() === 0; })());
+const up = cc.locator('.mtx-seatcard-go--up');
+check('under it, a button for the class above: Available | Book LEO Tickets', /^AVAILABLE\s*BOOK LEO TICKETS$/i.test(text(await up.innerText())), text(await up.innerText()));
+check('the closed card holds no list of selling lines', await cc.locator('.mtx-why-list').count() === 0);
+check('red-bordered and no taller than the card beside it', await cc.evaluate(e => getComputedStyle(e).borderTopColor === 'rgb(255, 0, 0)'));
+const cbColours = await cb.evaluate(e => { const c = getComputedStyle(e); return [c.color, c.backgroundColor]; });
+check('Closed is white on grey, readable', cbColours[0] === 'rgb(255, 255, 255)' && cbColours[1] === 'rgb(92, 92, 102)', JSON.stringify(cbColours));
+await up.click();
+await page.waitForSelector('.mtx-detail', { timeout: 4000 });
+check('pressing it goes straight to LEO Section', await page.locator('.mtx-detail-h').innerText() === 'LEO Section');
+await page.goBack();
+await page.waitForSelector('.mtx-seatcard--closed', { timeout: 4000 });
+check('and the browser back button returns to the seat list', await page.locator('.mtx-detail').count() === 0);
+await page.close();
+
+// The class offered is the nearest one above that can actually be bought.
+page = await open(1000, { ...CLOSED_THIRD, leo_section: { status: 'fully_booked', photos: PHOTOS, benefits: BENEFITS } });
+check('LEO sold out: it offers Club Class instead', /BOOK CLUB CLASS TICKETS/i.test(text(await page.locator('.mtx-seatcard--closed .mtx-seatcard-go--up').innerText())));
+await page.close();
+page = await open(1000, { ...CLOSED_THIRD, ringside: { status: 'fully_booked' }, club_class: { status: 'fully_booked' }, leo_section: { status: 'fully_booked' } });
+check('everything above sold out: no button offered', await page.locator('.mtx-seatcard--closed .mtx-seatcard-go--up').count() === 0);
+check('and the card is still there with its photos', await page.locator('.mtx-seatcard--closed .mtx-slide img').count() === 4);
+await page.close();
+page = await open(1000, { third_class: { status: 'closed', closedExplanation: WHY2, photos: [] } });
+check('a closed class with no photos stays the small tile', await page.locator('.mtx-seatcard--closed').count() === 0 && await page.locator('[data-pick="third_class"].mtx-pick').count() === 1);
+await page.close();
+page = await open(390, { ...LEO_ON, ...CLOSED_THIRD });
+check('on a phone the closed card fits', await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
+await page.close();
+
+/* ------------------------------------------------------------------------ */
+console.log('\nButtons in a row line up');
+const FIVE = [{ text: 'one' }, { text: 'two' }, { text: 'three' }, { text: 'four' }, { text: 'five', note: '(a note under the last line)' }];
+const THREE = [{ text: 'one' }, { text: 'a rather longer second line that will wrap onto another line in a narrow card' }, { text: 'three' }];
+page = await open(1280, { ringside: { photos: PHOTOS, benefits: FIVE }, club_class: { photos: PHOTOS, benefits: THREE }, leo_section: { photos: PHOTOS, benefits: BENEFITS }, ...CLOSED_THIRD });
+const bottoms = await page.locator('.mtx-seatcard:not(.mtx-seatcard--closed) .mtx-seatcard-go:not(.mtx-seatcard-go--up)').evaluateAll(els => els.map(e => Math.round(e.getBoundingClientRect().bottom)));
+check('Ringside and Club Class buttons sit on the same line', Math.abs(bottoms[0] - bottoms[1]) <= 1, bottoms.join(' '));
+const cards = await page.locator('.mtx-seatcard:not(.mtx-seatcard--closed)').evaluateAll(els => els.slice(0, 2).map(e => Math.round(e.getBoundingClientRect().height)));
+check('and the two cards are the same height', Math.abs(cards[0] - cards[1]) <= 1, cards.join(' '));
+const photoTops = await page.locator('.mtx-seatcard .mtx-slider').evaluateAll(els => els.slice(0, 2).map(e => Math.round(e.getBoundingClientRect().height)));
+check('with photos the same size', Math.abs(photoTops[0] - photoTops[1]) <= 1, photoTops.join(' '));
+check('nothing overflows sideways', await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
 await page.close();
 
 /* ------------------------------------------------------------------------ */

@@ -202,8 +202,12 @@ on 5 October 2026).
 - **Photos and selling lines** live on the class too (`ticket_classes.photos`
   and `.benefits`, both JSON lists, shown in the order stored). A class with
   photos is drawn as a card with a swipeable slider, the photos first and the
-  lines under them. **It only does that while the class can be bought**: sold
-  out, closed or booking closed, the photos go and the compact tile returns.
+  lines under them. **Sold out, or booking closed, the photos go** and the
+  compact tile returns. **A class that is only not open yet (Third Class)
+  keeps its photos**, shows why it is closed, has a grey Closed button, and
+  under it a green button for the nearest class above it that can be bought
+  (LEO Section for Third Class). Cards in the same row are the same height and
+  their buttons line up.
   A class with no photos is drawn as it always was, so classes are launched one
   at a time by filling in their row. Launched: LEO Section (5 October 2026).
   Photos are 3:2, about 1200 x 800, JPEG, uploaded to Tilda for the link. Lines
