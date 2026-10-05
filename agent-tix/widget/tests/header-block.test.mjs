@@ -77,6 +77,48 @@ console.log('\nSame block, pointed at one night');
   check('the calendar widget still works alongside it', (await p.$$('[data-grid] [data-date]')).length===3);
   await ctx.close();
 }
+console.log('\nWhat has to be true of the file itself, before it ever reaches Tilda');
+{
+  // 5 October 2026: a header that passed every test here, in a real browser, went
+  // into the site head and the widget did not appear on any page, while the page
+  // around it was untouched. We could not see the live page, so we do not know
+  // why. Two things were different about that file from every one we had pasted
+  // before, and both are now ruled out for good rather than left to chance:
+  // it held a pattern with a double slash in it (a simple tool that tidies
+  // scripts can read that as the start of a comment and cut the line short), and
+  // it was 67 KB, bigger than anything pasted before. Neither is proven to be the
+  // cause. Both are cheap to avoid.
+  const vm = await import('node:vm');
+  const script = block.slice(block.indexOf('<script>') + 8, block.lastIndexOf('</script>'));
+  let parses = true, why = '';
+  try { new vm.Script(script); } catch (e) { parses = false; why = e.message; }
+  check('the script parses', parses, why);
+  check('no double slash inside a pattern (read as a comment by simple tools)',
+    !/\\\/\\\//.test(script), 'found an escaped double slash');
+  check('the block is under 63,000 bytes (it was 67,345 when it failed, 58,664 when it last worked)',
+    Buffer.byteLength(block) < 63000, Buffer.byteLength(block) + ' bytes');
+  check('nothing in the block can end the script early', !/<\/script/i.test(script));
+
+  // The shrunk copy must be the same program as widget.js: same tokens in the
+  // same order. Needs a JavaScript parser; eslint ships one. Skipped, loudly, if
+  // it is not installed.
+  let espree = null;
+  try {
+    const { createRequire } = await import('node:module');
+    espree = createRequire(path.join(r, 'eslint', 'index.js'))('espree');
+  } catch { /* handled below */ }
+  if (!espree) {
+    console.log('  skip the shrunk copy is the same program as widget.js (no parser installed)');
+  } else {
+    const src = fs.readFileSync(new URL('../widget.js', import.meta.url), 'utf8');
+    const norm = (t) => t.type + ':' + (t.type === 'String' ? t.value.replace(/\/\*[\s\S]*?\*\//g, '') : t.value);
+    const a = espree.tokenize(src, { ecmaVersion: 'latest' }).map(norm);
+    const c = espree.tokenize(script, { ecmaVersion: 'latest' }).map(norm);
+    const same = a.length === c.length && a.every((x, i) => x === c[i]);
+    check('the shrunk copy is the same program as widget.js, token for token', same,
+      same ? '' : 'first difference near token ' + a.findIndex((x, i) => x !== c[i]));
+  }
+}
 await b.close();
 console.log('\n'+pass+' passed, '+fail+' failed');
 process.exit(fail?1:0);

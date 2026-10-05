@@ -46,78 +46,78 @@ var ATTR_DAYS = 90;              // Google's own click window
 var CLICK_KINDS = ["gclid", "gbraid", "wbraid"];
 
 function mayStoreAttribution() {
-  try {
-    if (typeof window.mtxAttributionConsent === "function") {
-      return window.mtxAttributionConsent() === true;
-    }
-    if (window.mtxAttributionConsent === false) return false;
-  } catch (e) {}
-  return true;
+try {
+if (typeof window.mtxAttributionConsent === "function") {
+return window.mtxAttributionConsent() === true;
+}
+if (window.mtxAttributionConsent === false) return false;
+} catch (e) {}
+return true;
 }
 
 function deviceNow() {
-  try {
-    var ua = String(navigator.userAgent || "");
-    if (/iPad|Tablet|PlayBook|Silk/i.test(ua)) return "t";
-    if (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) return "t";
-    if (/Android/i.test(ua) && !/Mobile/i.test(ua)) return "t";
-    if (/Mobi|iPhone|iPod|Android/i.test(ua)) return "m";
-  } catch (e) {}
-  return "d";
+try {
+var ua = String(navigator.userAgent || "");
+if (/iPad|Tablet|PlayBook|Silk/i.test(ua)) return "t";
+if (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) return "t";
+if (/Android/i.test(ua) && !/Mobile/i.test(ua)) return "t";
+if (/Mobi|iPhone|iPod|Android/i.test(ua)) return "m";
+} catch (e) {}
+return "d";
 }
 
 function readStoredAttribution() {
-  try {
-    var raw = window.localStorage.getItem(ATTR_KEY);
-    if (!raw) return null;
-    var held = JSON.parse(raw);
-    if (!held || !held.at) return null;
-    var age = Date.now() - Date.parse(held.at);
-    if (!(age >= 0) || age > ATTR_DAYS * 86400000) return null;   // let it lapse
-    return held;
-  } catch (e) {
-    return null;                 // private window, blocked storage, bad JSON
-  }
+try {
+var raw = window.localStorage.getItem(ATTR_KEY);
+if (!raw) return null;
+var held = JSON.parse(raw);
+if (!held || !held.at) return null;
+var age = Date.now() - Date.parse(held.at);
+if (!(age >= 0) || age > ATTR_DAYS * 86400000) return null;   // let it lapse
+return held;
+} catch (e) {
+return null;                 // private window, blocked storage, bad JSON
+}
 }
 
 function captureAttribution() {
-  var params;
-  try { params = new URLSearchParams(window.location.search); }
-  catch (e) { return; }
+var params;
+try { params = new URLSearchParams(window.location.search); }
+catch (e) { return; }
 
-  var kind = null, id = null;
-  for (var i = 0; i < CLICK_KINDS.length; i++) {
-    var v = (params.get(CLICK_KINDS[i]) || "").trim();
-    if (v) { kind = CLICK_KINDS[i]; id = v.slice(0, 512); break; }
-  }
+var kind = null, id = null;
+for (var i = 0; i < CLICK_KINDS.length; i++) {
+var v = (params.get(CLICK_KINDS[i]) || "").trim();
+if (v) { kind = CLICK_KINDS[i]; id = v.slice(0, 512); break; }
+}
 
-  function p(name) { return (params.get(name) || "").trim().slice(0, 255) || null; }
-  var utm = {
-    source:   p("utm_source"),
-    medium:   p("utm_medium"),
-    campaign: p("utm_campaign"),
-    term:     p("utm_term"),
-    content:  p("utm_content"),
-    adGroupId: p("mt_adgroup"),
-    matchType: p("mt_match"),
-    device:    p("mt_device")
-  };
+function p(name) { return (params.get(name) || "").trim().slice(0, 255) || null; }
+var utm = {
+source:   p("utm_source"),
+medium:   p("utm_medium"),
+campaign: p("utm_campaign"),
+term:     p("utm_term"),
+content:  p("utm_content"),
+adGroupId: p("mt_adgroup"),
+matchType: p("mt_match"),
+device:    p("mt_device")
+};
 
-  var anythingNew = id || utm.source || utm.medium || utm.campaign;
-  if (!anythingNew) return;      // an ordinary page view tells us nothing
+var anythingNew = id || utm.source || utm.medium || utm.campaign;
+if (!anythingNew) return;      // an ordinary page view tells us nothing
 
-  if (readStoredAttribution()) return;
-  if (!mayStoreAttribution()) return;
+if (readStoredAttribution()) return;
+if (!mayStoreAttribution()) return;
 
-  try {
-    window.localStorage.setItem(ATTR_KEY, JSON.stringify({
-      clickId: id, clickIdKind: kind,
-      source: utm.source, medium: utm.medium, campaign: utm.campaign,
-      term: utm.term, content: utm.content,
-      adGroupId: utm.adGroupId, matchType: utm.matchType, device: utm.device,
-      at: new Date().toISOString()
-    }));
-  } catch (e) {}               // storage full or refused: sell the ticket anyway
+try {
+window.localStorage.setItem(ATTR_KEY, JSON.stringify({
+clickId: id, clickIdKind: kind,
+source: utm.source, medium: utm.medium, campaign: utm.campaign,
+term: utm.term, content: utm.content,
+adGroupId: utm.adGroupId, matchType: utm.matchType, device: utm.device,
+at: new Date().toISOString()
+}));
+} catch (e) {}               // storage full or refused: sell the ticket anyway
 }
 
 captureAttribution();
@@ -125,985 +125,975 @@ captureAttribution();
 var PAGE_KEY = "mtx_landing";
 
 function pathNow() {
-  try {
-    return (window.location.pathname || "/").slice(0, 255);
-  } catch (e) {
-    return null;
-  }
+try {
+return (window.location.pathname || "/").slice(0, 255);
+} catch (e) {
+return null;
+}
 }
 
 function rememberLanding() {
-  try {
-    if (!window.sessionStorage.getItem(PAGE_KEY)) {
-      window.sessionStorage.setItem(PAGE_KEY, pathNow() || "/");
-    }
-  } catch (e) {}              // private window or blocked storage: sell the ticket anyway
+try {
+if (!window.sessionStorage.getItem(PAGE_KEY)) {
+window.sessionStorage.setItem(PAGE_KEY, pathNow() || "/");
+}
+} catch (e) {}              // private window or blocked storage: sell the ticket anyway
 }
 
 function readLanding() {
-  try {
-    return window.sessionStorage.getItem(PAGE_KEY) || null;
-  } catch (e) {
-    return null;
-  }
+try {
+return window.sessionStorage.getItem(PAGE_KEY) || null;
+} catch (e) {
+return null;
+}
 }
 
 rememberLanding();
 
 function injectStyles() {
-  if (document.getElementById(STYLE_ID)) return;
-  var link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap";
-  document.head.appendChild(link);
-  var style = document.createElement("style");
-  style.id = STYLE_ID;
-  style.textContent = CSS;
-  document.head.appendChild(style);
+if (document.getElementById(STYLE_ID)) return;
+var link = document.createElement("link");
+link.rel = "stylesheet";
+link.href = "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap";
+document.head.appendChild(link);
+var style = document.createElement("style");
+style.id = STYLE_ID;
+style.textContent = CSS;
+document.head.appendChild(style);
 }
 
 function shell(opts) {
-  return '<div class="mtx-stage"><div class="mtx-card">' +
-    (opts.eventKey ? "" :
-      '<div class="mtx-mast">' +
-        '<span class="mtx-mast-lead">Book Tickets for</span>' +
-        '<span class="mtx-mast-venue">Rajadamnern Stadium</span>' +
-        '<span class="mtx-mast-city">Bangkok</span>' +
-      '</div>') +
-    '<section class="mtx-cal" data-cal hidden>' +
-      '<div class="mtx-sec-label"><span class="mtx-num" data-step-month>1</span>Select your month</div>' +
-      '<div class="mtx-months" data-months></div>' +
-      '<div class="mtx-sec-label mtx-gap"><span class="mtx-num" data-step-date>2</span>Choose your date</div>' +
-      '<p class="mtx-seat-note" data-seatnote hidden></p>' +
-      '<p class="mtx-month-note">' +
-        '<svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg>' +
-        '<span>You are choosing dates for <b data-monthnote></b></span>' +
-      '</p>' +
-      '<div class="mtx-dow"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>' +
-      '<div class="mtx-grid" data-grid></div>' +
-    '</section>' +
-    '<div data-out></div>' +
-    '<div class="mtx-foot"><span>' +
-      '<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.8"/><path d="M5.4 7V5a2.6 2.6 0 0 1 5.2 0v2"/></svg>' +
-      'Your payment details are encrypted and protected by Stripe\u2019s enterprise-level security' +
-    '</span></div>' +
-    '</div></div>';
+return '<div class="mtx-stage"><div class="mtx-card">' +
+(opts.eventKey ? "" :
+'<div class="mtx-mast">' +
+'<span class="mtx-mast-lead">Book Tickets for</span>' +
+'<span class="mtx-mast-venue">Rajadamnern Stadium</span>' +
+'<span class="mtx-mast-city">Bangkok</span>' +
+'</div>') +
+'<section class="mtx-cal" data-cal hidden>' +
+'<div class="mtx-sec-label"><span class="mtx-num" data-step-month>1</span>Select your month</div>' +
+'<div class="mtx-months" data-months></div>' +
+'<div class="mtx-sec-label mtx-gap"><span class="mtx-num" data-step-date>2</span>Choose your date</div>' +
+'<p class="mtx-seat-note" data-seatnote hidden></p>' +
+'<p class="mtx-month-note">' +
+'<svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg>' +
+'<span>You are choosing dates for <b data-monthnote></b></span>' +
+'</p>' +
+'<div class="mtx-dow"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>' +
+'<div class="mtx-grid" data-grid></div>' +
+'</section>' +
+'<div data-out></div>' +
+'<div class="mtx-foot"><span>' +
+'<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.8"/><path d="M5.4 7V5a2.6 2.6 0 0 1 5.2 0v2"/></svg>' +
+'Your payment details are encrypted and protected by Stripe\u2019s enterprise-level security' +
+'</span></div>' +
+'</div></div>';
 }
 
 var warmed = false;
 
 function mount(root, opts) {
-  
-  var state = {
-    events: {},      // "2026-09-05" -> event summary from the calendar call
-    months: [],      // ["2026-09", ...] in order, built from the events themselves
-    month: null,
-    night: null,     // the availability response for the chosen date
-    date: null,
-    cls: null,
-    qty: 0,
-    cur: null,
-    busy: false,
-    picked: null,
-    catalogue: null
-  };
-
-  var cal    = root.querySelector("[data-cal]");
-  var months = root.querySelector("[data-months]");
-  var grid   = root.querySelector("[data-grid]");
-  var note   = root.querySelector("[data-monthnote]");
-  var out    = root.querySelector("[data-out]");
-  var seatNote  = root.querySelector("[data-seatnote]");
-  var stepMonth = root.querySelector("[data-step-month]");
-  var stepDate  = root.querySelector("[data-step-date]");
-
-  
-  function esc(s){
-    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
-      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
-    });
-  }
-
-  function todayAtVenue(){
-    var p = new Intl.DateTimeFormat("en-CA", {
-      timeZone:"Asia/Bangkok", year:"numeric", month:"2-digit", day:"2-digit"
-    }).format(new Date());
-    return p;   // en-CA formats as YYYY-MM-DD
-  }
-
-  function addMonths(iso, n){
-    var y = +iso.slice(0,4), m = +iso.slice(5,7) - 1 + n;
-    var d = new Date(Date.UTC(y + Math.floor(m/12), ((m%12)+12)%12 + 1, 0));
-    return d.toISOString().slice(0,10);
-  }
-
-  function parts(iso){ return {y:+iso.slice(0,4), m:+iso.slice(5,7)-1, d:+iso.slice(8,10)}; }
-  function monthKey(iso){ return iso.slice(0,7); }
-
-  function longDate(iso){
-    var p = parts(iso);
-    var dow = DAYS[new Date(Date.UTC(p.y, p.m, p.d)).getUTCDay()];
-    return dow + " " + p.d + " " + MONTHS[p.m] + " " + p.y;
-  }
-
-  function fmt12(t){
-    if(!t) return "";
-    var h = +t.slice(0,2), mm = t.slice(3,5);
-    return (h % 12 || 12) + (mm === "00" ? "" : ":" + mm) + (h >= 12 ? "pm" : "am");
-  }
-
-  function money(cur, minor){
-    var value = minor / 100;
-    try {
-      return new Intl.NumberFormat("en-GB", {
-        style:"currency", currency:cur.toUpperCase(), currencyDisplay:"narrowSymbol",
-        minimumFractionDigits: (minor % 100 === 0) ? 0 : 2, maximumFractionDigits: 2
-      }).format(value);
-    } catch(e) {
-      return cur.toUpperCase() + " " + value.toFixed(2);
-    }
-  }
-
-  function icon(k){
-    var a = 'width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"';
-    if(k === "cal")   return '<svg '+a+'><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg>';
-    if(k === "clock") return '<svg '+a+'><circle cx="8" cy="8" r="6.2"/><path d="M8 4.6V8l2.4 1.4"/></svg>';
-    return '<svg '+a+'><path d="M8 14.5s5-4.2 5-8a5 5 0 0 0-10 0c0 3.8 5 8 5 8Z"/><circle cx="8" cy="6.4" r="1.8"/></svg>';
-  }
-
-  var CURRENCY_BY_REGION = {
-    TH:"thb",
-    GB:"gbp", IE:"gbp",
-    US:"usd", CA:"usd",
-    AU:"aud", NZ:"aud",
-    CN:"cny", HK:"cny", TW:"cny", SG:"cny", MO:"cny",
-    DE:"eur", FR:"eur", ES:"eur", IT:"eur", NL:"eur", BE:"eur", AT:"eur",
-    PT:"eur", IE_EU:"eur", FI:"eur", GR:"eur", SK:"eur", SI:"eur", LT:"eur",
-    LV:"eur", EE:"eur", LU:"eur", MT:"eur", CY:"eur", HR:"eur"
-  };
-
-  function regionOfGuest(){
-    try {
-      var loc = Intl.Locale && navigator.language ? new Intl.Locale(navigator.language) : null;
-      var r = loc && (loc.region || (loc.maximize && loc.maximize().region));
-      if(r) return String(r).toUpperCase();
-    } catch(e) {}
-    var tag = String(navigator.language || "");
-    var m = tag.match(/[-_]([A-Za-z]{2})\b/);
-    return m ? m[1].toUpperCase() : "";
-  }
-
-  function guessCurrency(prices){
-    var have = {};
-    (prices || []).forEach(function(p){ have[p.currency] = true; });
-    var want = CURRENCY_BY_REGION[regionOfGuest()];
-    if(want && have[want]) return want;
-    if(have.usd) return "usd";               // the fallback is dollars, not baht
-    for(var i = 0; i < (prices || []).length; i++){
-      if(prices[i].currency !== "thb") return prices[i].currency;
-    }
-    return prices && prices[0] ? prices[0].currency : null;
-  }
-
-  function statusMeta(st, seatsLeft){
-    if(st === "available" || st === "limited"){
-      return (seatsLeft > 0)
-        ? {tile:"mtx-avail--go", pill:"mtx-ok", label:"Only " + seatsLeft + " left", low:true, seatsLeft:seatsLeft, live:true}
-        : {tile:"mtx-avail--go", pill:"mtx-ok", label:"Available",                   low:false,                    live:true};
-    }
-    if(st === "fully_booked")   return {tile:"mtx-avail--full", pill:"mtx-full", label:"Sold out",       live:false};
-    if(st === "booking_closed") return {tile:"mtx-avail--shut", pill:"mtx-shut", label:"Booking closed", live:false};
-    return {tile:"mtx-avail--shut", pill:"mtx-shut", label:"Closed", live:false};
-  }
-
-  
-  function call(fn, payload, timeout){
-    var ctrl = new AbortController();
-    var timer = setTimeout(function(){ ctrl.abort(); }, timeout);
-
-    return fetch(API + "/" + fn, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=UTF-8" },
-      body: JSON.stringify(payload),
-      signal: ctrl.signal
-    }).then(function(res){
-      clearTimeout(timer);
-      return res.json().catch(function(){ return {}; }).then(function(body){
-        if(!res.ok){
-          var err = new Error(body.error || "Something went wrong. Please try again.");
-          err.status = res.status;
-          err.body = body;
-          throw err;
-        }
-        return body;
-      });
-    }, function(err){
-      clearTimeout(timer);
-      var e = new Error(err && err.name === "AbortError"
-        ? "That took longer than expected. Please check your connection and try again."
-        : "We could not reach the booking system. Please try again.");
-      e.status = 0;
-      throw e;
-    });
-  }
-
-  
-  function panel(html){ out.innerHTML = html; }
-
-  function showLoading(message, tall){
-    panel('<div class="mtx-load' + (tall ? " mtx-load--tall" : "") + '">' +
-      '<div class="mtx-spin"></div>' + esc(message) + '&hellip;</div>');
-  }
-
-  function showProblem(title, message, retryLabel){
-    panel(
-      '<div class="mtx-state">' +
-        '<h3>' + esc(title) + '</h3>' +
-        '<p>' + esc(message) + '</p>' +
-        '<button class="mtx-retry" data-retry>' + esc(retryLabel || "Try again") + '</button>' +
-      '</div>'
-    );
-  }
-
-  
-  function boot(){
-    if(opts.eventKey){
-      cal.hidden = true;
-      state.events[""] = { eventKey: opts.eventKey };
-      openNight("", false);
-      return;
-    }
-    if(opts.seatsFirst && !state.picked){ loadSeatClasses(); return; }
-    loadNights();
-  }
-
-  function loadSeatClasses(){
-    cal.hidden = true;
-    showLoading("Loading seat classes");
-
-    var from = todayAtVenue();
-    call("availability", { action:"classes", from:from, to:addMonths(from, MONTHS_AHEAD) }, READ_TIMEOUT)
-      .then(function(data){
-        var list = (data.classes || []);
-        if(list.length === 0){
-          showProblem("No seats on sale",
-            "There are no seat classes open for booking at the moment. Please check back shortly, or message us and we will help.",
-            "Check again");
-          return;
-        }
-        state.catalogue = list;
-        renderSeatClasses();
-      })
-      .catch(function(err){
-        showProblem("We could not load the seat classes", err.message, "Try again");
-      });
-  }
-
-  function renderSeatClasses(){
-    panel(
-      '<section class="mtx-tix">' +
-        '<div class="mtx-tix-h"><h3><span class="mtx-num">1</span>Select your seat class</h3></div>' +
-        '<div class="mtx-picker">' + state.catalogue.map(function(c){
-          var off = c.nightsOnSale === 0;
-          return '<button class="mtx-pick' + (off ? " mtx-pick--off" : "") + '" data-seat="' + esc(c.code) + '" ' +
-                 'style="--c:' + esc(c.colour || "#5C5C66") + ';--ci:' + esc(c.ink || "#2E2E34") + '">' +
-                 '<span class="mtx-pick-bar"></span>' +
-                 (c.tagline ? '<span class="mtx-pick-why">' + esc(c.tagline) + '</span>' : "") +
-                 '<span class="mtx-pick-name">' + esc(c.name) + '</span>' +
-                 '<span class="mtx-pill ' + (off ? "mtx-shut" : "mtx-ok") + '"><i></i>' +
-                   (off ? "Not currently on sale" : "Available") +
-                 '</span></button>';
-        }).join("") + '</div>' +
-      '</section>'
-    );
-  }
-
-  function chooseSeat(code){
-    state.picked = code;
-    if(stepMonth) stepMonth.textContent = "2";
-    if(stepDate)  stepDate.textContent  = "3";
-    warmCheckout();
-    loadNights();
-  }
-
-  function backToSeats(){
-    state.picked = null;
-    state.date = null; state.night = null; state.cls = null; state.qty = 0; state.cur = null;
-    state.events = {}; state.months = []; state.month = null;
-    if(stepMonth) stepMonth.textContent = "1";
-    if(stepDate)  stepDate.textContent  = "2";
-    if(seatNote) seatNote.hidden = true;
-    cal.hidden = true;
-    renderSeatClasses();
-    out.scrollIntoView({behavior:"smooth", block:"start"});
-  }
-
-  function pickedClass(){
-    var list = state.catalogue || [];
-    for(var i = 0; i < list.length; i++) if(list[i].code === state.picked) return list[i];
-    return null;
-  }
-
-  function loadNights(){
-    cal.hidden = true;
-    showLoading("Loading fight nights");
-
-    var from = todayAtVenue();
-    var ask = { action:"events", from:from, to:addMonths(from, MONTHS_AHEAD) };
-    if(state.picked) ask.classCode = state.picked;
-
-    call("availability", ask, READ_TIMEOUT)
-      .then(function(data){
-        state.events = {};
-        state.months = [];
-        var firstHighlighted = null;
-        (data.events || []).forEach(function(ev){
-          ev.highlighted = !opts.series
-            || opts.series.indexOf(String(ev.series || "").toLowerCase()) !== -1;
-          ev.bookable = ev.highlighted;
-          ev.seatLive = !state.picked
-            || ev.classStatus === "available" || ev.classStatus === "limited";
-          if(ev.highlighted && ev.seatLive && !firstHighlighted) firstHighlighted = ev.date;
-          state.events[ev.date] = ev;
-          var k = monthKey(ev.date);
-          if(ev.bookable && state.months.indexOf(k) === -1) state.months.push(k);
-        });
-        state.months.sort();
-
-        if(state.months.length === 0){
-          showProblem(opts.series ? "No dates on sale for this event" : "No fight nights on sale",
-            opts.series
-              ? "There are no dates open for booking on this page at the moment. Every Rajadamnern Stadium ticket we sell is on the all-tickets page, or message us and we will help."
-              : "There are no dates open for booking at the moment. Please check back shortly, or message us and we will help.",
-            "Check again");
-          return;
-        }
-
-        state.month = (firstHighlighted && state.months.indexOf(monthKey(firstHighlighted)) !== -1)
-          ? monthKey(firstHighlighted)
-          : state.months[0];
-        panel("");
-        cal.hidden = false;
-        renderSeatNote();
-        renderMonths();
-        renderCal();
-      })
-      .catch(function(err){
-        showProblem("We could not load the fight nights", err.message, "Try again");
-      });
-  }
-
-  function seatName(){
-    var c = pickedClass();
-    return c ? c.name : "That seat class";
-  }
-
-  function renderSeatNote(){
-    if(!seatNote) return;
-    if(!state.picked){ seatNote.hidden = true; return; }
-    var gone = 0, total = 0;
-    for(var k in state.events){
-      if(!Object.prototype.hasOwnProperty.call(state.events, k)) continue;
-      total++;
-      if(!state.events[k].seatLive) gone++;
-    }
-    var cls = pickedClass();
-    var name = seatName();
-    seatNote.hidden = false;
-    seatNote.innerHTML =
-      '<span class="mtx-seat-note-k">Booking</span>' +
-      '<b>' + esc(name) + '</b>' +
-      (cls && cls.description
-        ? '<span class="mtx-seat-note-d">' + esc(cls.description) + '</span>'
-        : "") +
-      (gone > 0 && gone < total
-        ? '<span class="mtx-seat-note-d mtx-seat-note-sold">Faded dates are nights when ' +
-          esc(name) + ' has sold out. Open one and you can choose a different seat class for that night.</span>'
-        : "") +
-      '<button class="mtx-seat-change" data-back-seat>Change seat class</button>';
-  }
-
-  function renderMonths(){
-    months.innerHTML = state.months.map(function(k){
-      var m = +k.slice(5,7) - 1, y = k.slice(0,4);
-      var on = (k === state.month);
-      return '<button class="mtx-mbtn' + (on ? " mtx-on" : "") + '" data-month="' + k + '"' +
-             (on ? ' aria-current="true"' : '') + '>' + MONTHS_S[m] + ' ' + y + '</button>';
-    }).join("");
-  }
-
-  function renderCal(){
-    if(!state.month) return;
-    var y = +state.month.slice(0,4), m = +state.month.slice(5,7) - 1;
-    note.textContent = MONTHS[m].toUpperCase() + " " + y;
-
-    var lead = (new Date(Date.UTC(y, m, 1)).getUTCDay() + 6) % 7;   // week starts Monday
-    var days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
-    var html = "";
-    for(var i = 0; i < lead; i++) html += '<button class="mtx-day mtx-none" disabled></button>';
-
-    for(var d = 1; d <= days; d++){
-      var key = state.month + "-" + String(d).padStart(2, "0");
-      var ev = state.events[key];
-      if(!ev){
-        html += '<button class="mtx-day mtx-shut" disabled title="No fight this night">' +
-                '<span class="mtx-n">' + d + '</span><span class="mtx-tag">No fight</span></button>';
-        continue;
-      }
-      if(ev.bookable === false){
-        html += '<button class="mtx-day mtx-shut mtx-elsewhere" disabled ' +
-                'aria-label="' + esc(ev.name + ", " + longDate(key) +
-                  " \u2014 not on sale on this page") + '">' +
-                '<span class="mtx-n">' + d + '</span>' +
-                '<span class="mtx-tag">' + esc(ev.shortName || "") + '</span></button>';
-        continue;
-      }
-      var seatGone = state.picked && !ev.seatLive;
-      var seatWord = ev.classStatus === "fully_booked" ? "sold out"
-                   : ev.classStatus === "booking_closed" ? "booking closed" : "not on sale";
-      html += '<button class="mtx-day' + (state.date === key ? " mtx-sel" : "") +
-              (ev.highlighted ? " mtx-hi" : "") + (opts.series ? " mtx-open" : "") +
-              (seatGone ? " mtx-off" : "") + '" data-date="' + key + '" ' +
-              'style="--evt:' + esc(ev.colour || "#5C5C66") + '" ' +
-              'aria-label="' + esc(ev.name + ", " + longDate(key) +
-                (seatGone ? " \u2014 " + seatName() + " " + seatWord + ", other seats available" : "")) + '">' +
-              '<span class="mtx-n">' + d + '</span>' +
-              '<span class="mtx-dot"></span>' +
-              '<span class="mtx-tag">' + esc(ev.shortName || "") + '</span></button>';
-    }
-    grid.innerHTML = html;
-  }
-
-  function revealCalendar(){
-    if(!state.month) return;
-    var g = grid.getBoundingClientRect();
-    if(g.top >= 0 && g.bottom <= window.innerHeight) return;
-    (cal.querySelector(".mtx-gap") || grid).scrollIntoView({behavior:"smooth", block:"start"});
-  }
-
-  
-  function openNight(date, move){
-    state.date = date;
-    state.cls = null; state.qty = 0; state.cur = null;
-    renderCal();
-
-    cal.hidden = true;
-    showLoading("Checking live availability", move !== false);
-    if(move !== false) out.scrollIntoView({behavior:"smooth", block:"start"});
-
-    var started = Date.now();
-    var eventKey = state.events[date].eventKey;
-
-    call("availability", { action:"availability", eventKey:eventKey }, READ_TIMEOUT)
-      .then(function(data){
-        var wait = Math.max(0, MIN_CHECK_MS - (Date.now() - started));
-        setTimeout(function(){
-          if(state.date !== date) return;    // the guest moved on while we waited
-          state.night = filterClasses(data);
-          if(state.picked && state.night.classes.some(function(c){ return c.code === state.picked; })){
-            state.cls = state.picked;
-          }
-          renderNight();
-        }, wait);
-      })
-      .catch(function(err){
-        if(state.date !== date) return;
-        showProblem("We could not check availability", err.message, "Try this date again");
-      });
-  }
-
-  function filterClasses(data){
-    if(opts.seatsFirst) return data;
-    if(!opts.classes) return data;
-    var want = opts.classes;
-    var kept = data.classes.filter(function(c){
-      return want.indexOf(c.code.toLowerCase()) !== -1
-          || want.indexOf(c.name.toLowerCase()) !== -1;
-    });
-    if(kept.length > 0) data.classes = kept;
-    return data;
-  }
-
-  function backToDates(){
-    state.date = null; state.night = null; state.cls = null; state.qty = 0; state.cur = null;
-    panel("");
-    cal.hidden = false;
-    renderSeatNote();
-    renderCal();
-    cal.scrollIntoView({behavior:"smooth", block:"start"});
-  }
-
-  function renderNight(){
-    var ev = state.night.event;
-    panel(
-      '<section class="mtx-band">' +
-        '<div class="mtx-band-k">Your fight night</div>' +
-        '<h2 class="mtx-band-h">' + esc(ev.name) + '</h2>' +
-        '<div class="mtx-band-when">' +
-          '<span>' + icon("cal") + esc(longDate(ev.date)) + '</span>' +
-          (ev.startTime ? '<span>' + icon("clock") + esc(fmt12(ev.startTime) + (ev.endTime ? " – " + fmt12(ev.endTime) : "")) + '</span>' : "") +
-          '<span>' + icon("pin") + esc(ev.venue) + '</span>' +
-        '</div>' +
-        (ev.description ? '<p class="mtx-band-d">' + esc(ev.description) + '</p>' : "") +
-        (opts.eventKey ? "" : '<button class="mtx-band-change" data-back-date>Change date</button>') +
-      '</section>' +
-      '<section class="mtx-tix">' + seatStep() + '</section>'
-    );
-    if(state.cls) update();
-  }
-
-  function anythingBuyable(){
-    return state.night.classes.some(function(c){ return statusMeta(c.status).live; });
-  }
-
-  
-  function divertStep(){
-    var ev = state.night.event;
-    return '<div class="mtx-tix-h"><h3>Booking closed with us</h3></div>' +
-      '<div class="mtx-divert">' +
-        '<p class="mtx-divert-d">' +
-          esc(ev.divertNote || "We are not selling tickets for this fight night. The stadium is still selling them directly.") +
-        '</p>' +
-        '<a class="mtx-divert-go" href="' + esc(ev.divertUrl) + '" ' +
-           'target="_blank" rel="noopener noreferrer">' +
-          'Book this night at the stadium' +
-          '<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg>' +
-        '</a>' +
-        '<p class="mtx-divert-n">This opens the stadium\u2019s own website in a new tab.</p>' +
-      '</div>';
-  }
-
-  function seatStep(){
-    if(state.night.event.divertUrl && !anythingBuyable()) return divertStep();
-    if(!state.cls && state.night.classes.length === 1){
-      state.cls = state.night.classes[0].code;
-    }
-    if(!state.cls){
-      return '<div class="mtx-tix-h"><h3><span class="mtx-num">3</span>Select your seat class</h3></div>' +
-             '<div class="mtx-picker' + (state.night.classes.some(function(c){ return statusMeta(c.status, c.seatsLeft).live && goodPhotos(c).length > 0; }) ? " mtx-picker--photos" : "") + '">' +
-               state.night.classes.map(pickButton).join("") + '</div>';
-    }
-    return '<div class="mtx-tix-h"><h3><span class="mtx-num">3</span>Your seats</h3></div>' + classDetail(chosen());
-  }
-
-  function chosen(){
-    for(var i = 0; i < state.night.classes.length; i++){
-      if(state.night.classes[i].code === state.cls) return state.night.classes[i];
-    }
-    return null;
-  }
-
-  var CHEVRON =
-    '<svg class="mtx-pick-go" width="17" height="17" viewBox="0 0 16 16" fill="none" ' +
-    'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ' +
-    'aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>';
-
-  var TICK =
-    '<svg class="mtx-why-tick" width="18" height="18" viewBox="0 0 16 16" fill="none" ' +
-    'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ' +
-    'aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>';
-  var ARROW_L =
-    '<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" ' +
-    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>';
-  var ARROW_R =
-    '<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" ' +
-    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>';
-
-  function goodPhotos(t){
-    var out2 = [];
-    var list = t.photos || [];
-    for(var i = 0; i < list.length; i++){
-      if(list[i] && typeof list[i].url === "string" && /^https:\/\//i.test(list[i].url)) out2.push(list[i]);
-    }
-    return out2;
-  }
-
-  function seatCard(t, meta, cur, unit, photos){
-    var n = photos.length;
-    var slides = photos.map(function(p, i){
-      return '<li class="mtx-slide" role="group" aria-roledescription="slide" aria-label="Photo ' + (i + 1) + ' of ' + n + '">' +
-        '<img src="' + esc(p.url) + '" alt="' + esc(p.alt || "") + '" decoding="async"' +
-        (i === 0 ? "" : ' loading="lazy"') + '></li>';
-    }).join("");
-    var controls = n > 1
-      ? '<button type="button" class="mtx-slide-btn mtx-slide-prev" data-slide="-1" aria-label="Previous photo" disabled>' + ARROW_L + '</button>' +
-        '<button type="button" class="mtx-slide-btn mtx-slide-next" data-slide="1" aria-label="Next photo">' + ARROW_R + '</button>' +
-        '<div class="mtx-dots">' + photos.map(function(p, i){
-          return '<button type="button" class="mtx-dotb" data-slide-to="' + i + '" aria-label="Photo ' + (i + 1) + ' of ' + n + '"' +
-            (i === 0 ? ' aria-current="true"' : "") + '><i></i></button>';
-        }).join("") + '</div>'
-      : "";
-    var lines = (t.benefits || []).map(function(b){
-      return '<li>' + TICK + esc(b.text) +
-        (b.note ? '<span class="mtx-why-note">' + esc(b.note) + '</span>' : "") + '</li>';
-    }).join("");
-
-    return '<div class="mtx-seatcard' + (meta.low ? " mtx-seatcard--low" : "") + '">' +
-      '<div class="mtx-slider" role="group" aria-roledescription="carousel" aria-label="Photos of ' + esc(t.name) + '">' +
-        '<ul class="mtx-track" tabindex="0" aria-label="' + esc(t.name) + ' photos">' + slides + '</ul>' +
-        controls +
-      '</div>' +
-      '<div class="mtx-seatcard-body">' +
-        (t.tagline ? '<span class="mtx-pick-why">' + esc(t.tagline) + '</span>' : "") +
-        '<span class="mtx-pick-name">' + esc(t.name) + '</span>' +
-        (unit != null ? '<span class="mtx-pick-price">' + esc(money(cur, unit)) + ' per ticket</span>' : "") +
-        (lines ? '<ul class="mtx-why-list">' + lines + '</ul>' : '<div style="height:14px"></div>') +
-        '<button type="button" class="mtx-seatcard-go" data-pick="' + esc(t.code) + '">' +
-          (meta.low ? 'Only <b class="mtx-avail-n">' + meta.seatsLeft + '</b> left' : esc(meta.label)) +
-          CHEVRON +
-        '</button>' +
-      '</div>' +
-    '</div>';
-  }
-
-  function pickButton(t){
-    var meta = statusMeta(t.status, t.seatsLeft);
-    var cur  = state.cur || guessCurrency(t.prices);
-    var unit = cur ? priceFor(t, cur) : null;
-    var photos = meta.live ? goodPhotos(t) : [];
-    if(photos.length > 0) return seatCard(t, meta, cur, unit, photos);
-    return '<button class="mtx-pick mtx-pick--' + (meta.live ? "on" : "off") + (meta.low ? " mtx-pick--low" : "") + '" ' +
-      'data-pick="' + esc(t.code) + '"' + (meta.live ? "" : " disabled") + '>' +
-      '<span class="mtx-pick-bar"></span>' +
-      (t.tagline ? '<span class="mtx-pick-why">' + esc(t.tagline) + '</span>' : "") +
-      '<span class="mtx-pick-name">' + esc(t.name) + '</span>' +
-      (unit != null
-        ? '<span class="mtx-pick-price">' + esc(money(cur, unit)) + ' per ticket</span>'
-        : "") +
-      '<span class="mtx-avail ' + meta.tile + '">' +
-        (meta.low ? 'Only <b class="mtx-avail-n">' + meta.seatsLeft + '</b> left' : esc(meta.label)) +
-      '</span>' +
-      (meta.live ? CHEVRON : "") +
-    '</button>';
-  }
-
-  function classDetail(t){
-    var meta = statusMeta(t.status, t.seatsLeft);
-    var body;
-
-    if(t.status === "closed"){
-      body = '<div class="mtx-note">' + esc(t.closedExplanation || "This seat class is not on sale for this date.") + '</div>';
-    } else if(t.status === "booking_closed"){
-      body = '<div class="mtx-note">Online booking has now closed for this fight night. ' +
-             'Please choose another date, or message us and we will do what we can.</div>';
-    } else if(!meta.live){
-      body = '<div class="mtx-note">' + esc(t.name) + ' is now fully booked. ' +
-             'Please choose another seat class or another date.</div>';
-    } else {
-      var cur = state.cur || guessCurrency(t.prices);
-      var max = Math.max(1, Math.min(10, t.maxPerOrder || 10));
-      if(!state.qty){
-        var left = t.seatsLeft > 0 ? Math.min(max, t.seatsLeft) : max;
-        var tog = (t.assignedSeating && t.maximumSeatsTogether != null) ? Number(t.maximumSeatsTogether) : null;
-        state.qty = (left >= 2 && !(tog != null && 2 > Math.max(tog, 1))) ? 2 : 1;
-      }
-      body =
-        '<div class="mtx-fields">' +
-          '<div class="mtx-pair">' +
-            '<div class="mtx-f"><label for="mtxQty"><span class="mtx-num">4</span>Number of tickets</label>' +
-              '<div class="mtx-sel"><select id="mtxQty" data-qty>' +
-                qtyOpts(max, state.qty) +
-              '</select></div></div>' +
-            '<div class="mtx-f"><label for="mtxCur"><span class="mtx-num">5</span>Choose your currency</label>' +
-              '<div class="mtx-sel"><select id="mtxCur" data-cur>' +
-                t.prices.map(function(p){
-                  return '<option value="' + esc(p.currency) + '"' + (p.currency === cur ? " selected" : "") + '>' +
-                         esc(p.currency.toUpperCase()) + '</option>';
-                }).join("") +
-              '</select></div></div>' +
-          '</div>' +
-          '<div data-seatack></div>' +
-          '<div class="mtx-sums">' +
-            '<div class="mtx-sum"><span>Price per ticket</span><b data-unit>&mdash;</b></div>' +
-            '<div class="mtx-sum mtx-sum--total"><span>Total</span><b data-total>&mdash;</b></div>' +
-          '</div>' +
-          '<button class="mtx-go" data-go disabled>Select number of tickets</button>' +
-          '<div data-fail></div>' +
-        '</div>';
-    }
-
-    return '<section class="mtx-detail' + (meta.live ? "" : t.status === "fully_booked" ? " mtx-detail--off" : " mtx-detail--shut") +
-      '" style="--c:' + esc(t.colour || "#5C5C66") + '">' +
-      '<div class="mtx-detail-k">You have chosen</div>' +
-      '<div class="mtx-detail-top">' +
-        '<h3 class="mtx-detail-h">' + esc(t.name) + '</h3>' +
-        '<span class="mtx-pill ' + meta.pill + '"><i></i>' + (t.status === "fully_booked" ? "Fully booked" : meta.label) + '</span>' +
-      '</div>' +
-      (t.description ? '<p class="mtx-detail-d">' + esc(t.description) + '</p>' : "") +
-      body +
-      (state.night.classes.length > 1
-         ? '<button class="mtx-detail-change" data-back-class>Change seat class</button>' : "") +
-    '</section>';
-  }
-
-  function qtyOpts(max, picked){
-    var o = "";
-    for(var i = 1; i <= max; i++) o += '<option value="' + i + '"' + (i === picked ? " selected" : "") + '>' + i + (i === 1 ? " ticket" : " tickets") + '</option>';
-    return o;
-  }
-
-  function priceFor(t, cur){
-    for(var i = 0; i < t.prices.length; i++) if(t.prices[i].currency === cur) return t.prices[i].unitAmount;
-    return null;
-  }
-
-  
-  function update(){
-    var t = chosen();
-    if(!t) return;
-    var totalEl = out.querySelector("[data-total]");
-    if(!totalEl) return;
-
-    var unitEl  = out.querySelector("[data-unit]");
-    var go      = out.querySelector("[data-go]");
-    var seatWrap= out.querySelector("[data-seatack]");
-
-    var cur = state.cur || guessCurrency(t.prices);
-    state.cur = cur;
-    var unit = priceFor(t, cur);
-
-    if(unitEl) unitEl.textContent = unit == null ? "—" : money(cur, unit);
-    totalEl.textContent = (state.qty && unit != null) ? money(cur, unit * state.qty) : "—";
-
-    var together = (t.assignedSeating && t.maximumSeatsTogether != null)
-                 ? Number(t.maximumSeatsTogether) : null;
-    var needsAck = together != null && state.qty > Math.max(together, 1);
-
-    if(seatWrap){
-      if(needsAck && !seatWrap.dataset.built){
-        seatWrap.innerHTML =
-          '<div class="mtx-note mtx-warn">' +
-          (together === 0
-            ? '<b>We cannot seat your group together on this night.</b> ' +
-              'Everyone is in the same class, but the seats are apart.'
-            : '<b>We can seat ' + together + ' of your group together.</b> ' +
-              'The rest will be in the same class, but not side by side.') +
-          '<label class="mtx-ack"><input type="checkbox" data-ack>' +
-          '<span>That&rsquo;s fine &mdash; book anyway</span></label></div>';
-        seatWrap.dataset.built = "1";
-      } else if(!needsAck){
-        seatWrap.innerHTML = "";
-        seatWrap.dataset.built = "";
-      }
-    }
-
-    var ack = out.querySelector("[data-ack]");
-    if(go && !state.busy){
-      var blocked = !state.qty || unit == null || (needsAck && !(ack && ack.checked));
-      go.disabled = blocked;
-      go.textContent = !state.qty ? "Select number of tickets"
-                     : blocked ? "Confirm seating above"
-                     : "Reserve your tickets";
-    }
-  }
-
-  
-  function warmCheckout(){
-    if(warmed) return;
-    warmed = true;
-    try {
-      fetch(API + "/create-checkout", {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=UTF-8" },
-        body: JSON.stringify({ action: "warm" }),
-        keepalive: true
-      }).catch(function(){});
-    } catch(e) {}
-  }
-
-  
-  function reserve(){
-    var t = chosen();
-    if(!t || state.busy) return;
-
-    var go = out.querySelector("[data-go]");
-    var fail = out.querySelector("[data-fail]");
-    var ack = out.querySelector("[data-ack]");
-
-    state.busy = true;
-    go.disabled = true;
-    go.textContent = "Reserving your tickets…";
-    if(fail) fail.innerHTML = "";
-
-    var won = readStoredAttribution();
-    var attr = {};
-    if(won) for(var k in won) if(Object.prototype.hasOwnProperty.call(won, k)) attr[k] = won[k];
-    if(!attr.device && mayStoreAttribution()) attr.device = deviceNow();
-
-    call("create-checkout", {
-      eventKey: state.night.event.eventKey,
-      classCode: t.code,
-      quantity: state.qty,
-      currency: state.cur,
-      seatingAcknowledged: !!(ack && ack.checked),
-      attribution: attr,
-      pagePath: pathNow() || undefined,
-      landingPage: readLanding() || undefined
-    }, CHECKOUT_TIMEOUT)
-      .then(function(data){
-        if(!data.checkoutUrl) throw new Error("The secure checkout could not be opened. Please try again.");
-        window.location.assign(data.checkoutUrl);
-      })
-      .catch(function(err){
-        state.busy = false;
-        if(fail) fail.innerHTML = '<div class="mtx-fail">' + esc(err.message) + '</div>';
-
-        if(err.status === 409 && !(err.body && err.body.code === "seating_ack_required")){
-          setTimeout(function(){ openNight(state.date); }, 2200);
-          return;
-        }
-        update();
-      });
-  }
-
-  
-  months.addEventListener("click", function(e){
-    var b = e.target.closest("[data-month]");
-    if(!b) return;
-    state.month = b.getAttribute("data-month");
-    renderMonths();
-    renderCal();
-    revealCalendar();
-  });
-
-  cal.addEventListener("click", function(e){
-    if(e.target.closest("[data-back-seat]")) backToSeats();
-  });
-
-  grid.addEventListener("click", function(e){
-    var b = e.target.closest("[data-date]");
-    if(b) openNight(b.getAttribute("data-date"));
-  });
-
-  function slideTo(track, i){
-    var slides = track.children;
-    if(!slides.length) return;
-    i = Math.max(0, Math.min(slides.length - 1, i));
-    var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: calm ? "auto" : "smooth" });
-  }
-  function slideNow(track){
-    var w = track.clientWidth || 1;
-    return Math.max(0, Math.min(track.children.length - 1, Math.round(track.scrollLeft / w)));
-  }
-  function syncSlider(track){
-    var box = track.closest(".mtx-slider");
-    if(!box) return;
-    var i = slideNow(track);
-    var dots = box.querySelectorAll("[data-slide-to]");
-    for(var d = 0; d < dots.length; d++){
-      if(d === i) dots[d].setAttribute("aria-current", "true"); else dots[d].removeAttribute("aria-current");
-    }
-    var prev = box.querySelector(".mtx-slide-prev"), next = box.querySelector(".mtx-slide-next");
-    if(prev) prev.disabled = i === 0;
-    if(next) next.disabled = i === track.children.length - 1;
-  }
-  out.addEventListener("scroll", function(e){
-    if(e.target && e.target.classList && e.target.classList.contains("mtx-track")){
-      var tr = e.target;
-      if(tr._mtxRaf) return;
-      tr._mtxRaf = requestAnimationFrame(function(){ tr._mtxRaf = 0; syncSlider(tr); });
-    }
-  }, true);
-  out.addEventListener("keydown", function(e){
-    var tr = e.target && e.target.classList && e.target.classList.contains("mtx-track") ? e.target : null;
-    if(!tr) return;
-    if(e.key === "ArrowRight"){ e.preventDefault(); slideTo(tr, slideNow(tr) + 1); }
-    if(e.key === "ArrowLeft"){ e.preventDefault(); slideTo(tr, slideNow(tr) - 1); }
-  });
-
-  out.addEventListener("click", function(e){
-    var step = e.target.closest("[data-slide]");
-    var dot  = e.target.closest("[data-slide-to]");
-    if(step || dot){
-      var tr = (step || dot).closest(".mtx-slider").querySelector(".mtx-track");
-      slideTo(tr, step ? slideNow(tr) + (+step.getAttribute("data-slide")) : +dot.getAttribute("data-slide-to"));
-      return;
-    }
-    if(e.target.closest("[data-retry]")){
-      if(state.date) openNight(state.date);
-      else if(opts.seatsFirst && state.picked) loadNights();
-      else boot();
-      return;
-    }
-    if(e.target.closest("[data-back-date]")){ backToDates(); return; }
-
-    var seat = e.target.closest("[data-seat]");
-    if(seat && seat.getAttribute("data-seat")){ chooseSeat(seat.getAttribute("data-seat")); return; }
-
-    var pick = e.target.closest("[data-pick]");
-    if(pick){
-      warmCheckout();
-      state.cls = pick.getAttribute("data-pick");
-      state.qty = 0;
-      out.querySelector(".mtx-tix").innerHTML = seatStep();
-      update();
-      out.querySelector(".mtx-tix").scrollIntoView({behavior:"smooth", block:"nearest"});
-      return;
-    }
-
-    if(e.target.closest("[data-back-class]")){
-      state.cls = null; state.qty = 0;
-      out.querySelector(".mtx-tix").innerHTML = seatStep();
-      out.querySelector(".mtx-tix").scrollIntoView({behavior:"smooth", block:"nearest"});
-      return;
-    }
-
-    if(e.target.closest("[data-go]") && !e.target.closest("[data-go]").disabled) reserve();
-  });
-
-  out.addEventListener("change", function(e){
-    if(e.target.hasAttribute("data-qty")){ state.qty = e.target.value ? +e.target.value : 0; update(); return; }
-    if(e.target.hasAttribute("data-cur")){ state.cur = e.target.value; update(); return; }
-    if(e.target.hasAttribute("data-ack")) update();
-  });
-
-  window.addEventListener("pageshow", function(){
-    if(!state.busy) return;
-    state.busy = false;
-    var go = out.querySelector("[data-go]");
-    if(go) go.disabled = false;
-    update();
-  });
-
-  boot();
+
+var state = {
+events: {},      // "2026-09-05" -> event summary from the calendar call
+months: [],      // ["2026-09", ...] in order, built from the events themselves
+month: null,
+night: null,     // the availability response for the chosen date
+date: null,
+cls: null,
+qty: 0,
+cur: null,
+busy: false,
+picked: null,
+catalogue: null
+};
+
+var cal    = root.querySelector("[data-cal]");
+var months = root.querySelector("[data-months]");
+var grid   = root.querySelector("[data-grid]");
+var note   = root.querySelector("[data-monthnote]");
+var out    = root.querySelector("[data-out]");
+var seatNote  = root.querySelector("[data-seatnote]");
+var stepMonth = root.querySelector("[data-step-month]");
+var stepDate  = root.querySelector("[data-step-date]");
+
+function esc(s){
+return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+});
+}
+
+function todayAtVenue(){
+var p = new Intl.DateTimeFormat("en-CA", {
+timeZone:"Asia/Bangkok", year:"numeric", month:"2-digit", day:"2-digit"
+}).format(new Date());
+return p;   // en-CA formats as YYYY-MM-DD
+}
+
+function addMonths(iso, n){
+var y = +iso.slice(0,4), m = +iso.slice(5,7) - 1 + n;
+var d = new Date(Date.UTC(y + Math.floor(m/12), ((m%12)+12)%12 + 1, 0));
+return d.toISOString().slice(0,10);
+}
+
+function parts(iso){ return {y:+iso.slice(0,4), m:+iso.slice(5,7)-1, d:+iso.slice(8,10)}; }
+function monthKey(iso){ return iso.slice(0,7); }
+
+function longDate(iso){
+var p = parts(iso);
+var dow = DAYS[new Date(Date.UTC(p.y, p.m, p.d)).getUTCDay()];
+return dow + " " + p.d + " " + MONTHS[p.m] + " " + p.y;
+}
+
+function fmt12(t){
+if(!t) return "";
+var h = +t.slice(0,2), mm = t.slice(3,5);
+return (h % 12 || 12) + (mm === "00" ? "" : ":" + mm) + (h >= 12 ? "pm" : "am");
+}
+
+function money(cur, minor){
+var value = minor / 100;
+try {
+return new Intl.NumberFormat("en-GB", {
+style:"currency", currency:cur.toUpperCase(), currencyDisplay:"narrowSymbol",
+minimumFractionDigits: (minor % 100 === 0) ? 0 : 2, maximumFractionDigits: 2
+}).format(value);
+} catch(e) {
+return cur.toUpperCase() + " " + value.toFixed(2);
+}
+}
+
+function icon(k){
+var a = 'width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"';
+if(k === "cal")   return '<svg '+a+'><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg>';
+if(k === "clock") return '<svg '+a+'><circle cx="8" cy="8" r="6.2"/><path d="M8 4.6V8l2.4 1.4"/></svg>';
+return '<svg '+a+'><path d="M8 14.5s5-4.2 5-8a5 5 0 0 0-10 0c0 3.8 5 8 5 8Z"/><circle cx="8" cy="6.4" r="1.8"/></svg>';
+}
+
+var CURRENCY_BY_REGION = {
+TH:"thb",
+GB:"gbp", IE:"gbp",
+US:"usd", CA:"usd",
+AU:"aud", NZ:"aud",
+CN:"cny", HK:"cny", TW:"cny", SG:"cny", MO:"cny",
+DE:"eur", FR:"eur", ES:"eur", IT:"eur", NL:"eur", BE:"eur", AT:"eur",
+PT:"eur", IE_EU:"eur", FI:"eur", GR:"eur", SK:"eur", SI:"eur", LT:"eur",
+LV:"eur", EE:"eur", LU:"eur", MT:"eur", CY:"eur", HR:"eur"
+};
+
+function regionOfGuest(){
+try {
+var loc = Intl.Locale && navigator.language ? new Intl.Locale(navigator.language) : null;
+var r = loc && (loc.region || (loc.maximize && loc.maximize().region));
+if(r) return String(r).toUpperCase();
+} catch(e) {}
+var tag = String(navigator.language || "");
+var m = tag.match(/[-_]([A-Za-z]{2})\b/);
+return m ? m[1].toUpperCase() : "";
+}
+
+function guessCurrency(prices){
+var have = {};
+(prices || []).forEach(function(p){ have[p.currency] = true; });
+var want = CURRENCY_BY_REGION[regionOfGuest()];
+if(want && have[want]) return want;
+if(have.usd) return "usd";               // the fallback is dollars, not baht
+for(var i = 0; i < (prices || []).length; i++){
+if(prices[i].currency !== "thb") return prices[i].currency;
+}
+return prices && prices[0] ? prices[0].currency : null;
+}
+
+function statusMeta(st, seatsLeft){
+if(st === "available" || st === "limited"){
+return (seatsLeft > 0)
+? {tile:"mtx-avail--go", pill:"mtx-ok", label:"Only " + seatsLeft + " left", low:true, seatsLeft:seatsLeft, live:true}
+: {tile:"mtx-avail--go", pill:"mtx-ok", label:"Available",                   low:false,                    live:true};
+}
+if(st === "fully_booked")   return {tile:"mtx-avail--full", pill:"mtx-full", label:"Sold out",       live:false};
+if(st === "booking_closed") return {tile:"mtx-avail--shut", pill:"mtx-shut", label:"Booking closed", live:false};
+return {tile:"mtx-avail--shut", pill:"mtx-shut", label:"Closed", live:false};
+}
+
+function call(fn, payload, timeout){
+var ctrl = new AbortController();
+var timer = setTimeout(function(){ ctrl.abort(); }, timeout);
+
+return fetch(API + "/" + fn, {
+method: "POST",
+headers: { "Content-Type": "text/plain;charset=UTF-8" },
+body: JSON.stringify(payload),
+signal: ctrl.signal
+}).then(function(res){
+clearTimeout(timer);
+return res.json().catch(function(){ return {}; }).then(function(body){
+if(!res.ok){
+var err = new Error(body.error || "Something went wrong. Please try again.");
+err.status = res.status;
+err.body = body;
+throw err;
+}
+return body;
+});
+}, function(err){
+clearTimeout(timer);
+var e = new Error(err && err.name === "AbortError"
+? "That took longer than expected. Please check your connection and try again."
+: "We could not reach the booking system. Please try again.");
+e.status = 0;
+throw e;
+});
+}
+
+function panel(html){ out.innerHTML = html; }
+
+function showLoading(message, tall){
+panel('<div class="mtx-load' + (tall ? " mtx-load--tall" : "") + '">' +
+'<div class="mtx-spin"></div>' + esc(message) + '&hellip;</div>');
+}
+
+function showProblem(title, message, retryLabel){
+panel(
+'<div class="mtx-state">' +
+'<h3>' + esc(title) + '</h3>' +
+'<p>' + esc(message) + '</p>' +
+'<button class="mtx-retry" data-retry>' + esc(retryLabel || "Try again") + '</button>' +
+'</div>'
+);
+}
+
+function boot(){
+if(opts.eventKey){
+cal.hidden = true;
+state.events[""] = { eventKey: opts.eventKey };
+openNight("", false);
+return;
+}
+if(opts.seatsFirst && !state.picked){ loadSeatClasses(); return; }
+loadNights();
+}
+
+function loadSeatClasses(){
+cal.hidden = true;
+showLoading("Loading seat classes");
+
+var from = todayAtVenue();
+call("availability", { action:"classes", from:from, to:addMonths(from, MONTHS_AHEAD) }, READ_TIMEOUT)
+.then(function(data){
+var list = (data.classes || []);
+if(list.length === 0){
+showProblem("No seats on sale",
+"There are no seat classes open for booking at the moment. Please check back shortly, or message us and we will help.",
+"Check again");
+return;
+}
+state.catalogue = list;
+renderSeatClasses();
+})
+.catch(function(err){
+showProblem("We could not load the seat classes", err.message, "Try again");
+});
+}
+
+function renderSeatClasses(){
+panel(
+'<section class="mtx-tix">' +
+'<div class="mtx-tix-h"><h3><span class="mtx-num">1</span>Select your seat class</h3></div>' +
+'<div class="mtx-picker">' + state.catalogue.map(function(c){
+var off = c.nightsOnSale === 0;
+return '<button class="mtx-pick' + (off ? " mtx-pick--off" : "") + '" data-seat="' + esc(c.code) + '" ' +
+'style="--c:' + esc(c.colour || "#5C5C66") + ';--ci:' + esc(c.ink || "#2E2E34") + '">' +
+'<span class="mtx-pick-bar"></span>' +
+(c.tagline ? '<span class="mtx-pick-why">' + esc(c.tagline) + '</span>' : "") +
+'<span class="mtx-pick-name">' + esc(c.name) + '</span>' +
+'<span class="mtx-pill ' + (off ? "mtx-shut" : "mtx-ok") + '"><i></i>' +
+(off ? "Not currently on sale" : "Available") +
+'</span></button>';
+}).join("") + '</div>' +
+'</section>'
+);
+}
+
+function chooseSeat(code){
+state.picked = code;
+if(stepMonth) stepMonth.textContent = "2";
+if(stepDate)  stepDate.textContent  = "3";
+warmCheckout();
+loadNights();
+}
+
+function backToSeats(){
+state.picked = null;
+state.date = null; state.night = null; state.cls = null; state.qty = 0; state.cur = null;
+state.events = {}; state.months = []; state.month = null;
+if(stepMonth) stepMonth.textContent = "1";
+if(stepDate)  stepDate.textContent  = "2";
+if(seatNote) seatNote.hidden = true;
+cal.hidden = true;
+renderSeatClasses();
+out.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function pickedClass(){
+var list = state.catalogue || [];
+for(var i = 0; i < list.length; i++) if(list[i].code === state.picked) return list[i];
+return null;
+}
+
+function loadNights(){
+cal.hidden = true;
+showLoading("Loading fight nights");
+
+var from = todayAtVenue();
+var ask = { action:"events", from:from, to:addMonths(from, MONTHS_AHEAD) };
+if(state.picked) ask.classCode = state.picked;
+
+call("availability", ask, READ_TIMEOUT)
+.then(function(data){
+state.events = {};
+state.months = [];
+var firstHighlighted = null;
+(data.events || []).forEach(function(ev){
+ev.highlighted = !opts.series
+|| opts.series.indexOf(String(ev.series || "").toLowerCase()) !== -1;
+ev.bookable = ev.highlighted;
+ev.seatLive = !state.picked
+|| ev.classStatus === "available" || ev.classStatus === "limited";
+if(ev.highlighted && ev.seatLive && !firstHighlighted) firstHighlighted = ev.date;
+state.events[ev.date] = ev;
+var k = monthKey(ev.date);
+if(ev.bookable && state.months.indexOf(k) === -1) state.months.push(k);
+});
+state.months.sort();
+
+if(state.months.length === 0){
+showProblem(opts.series ? "No dates on sale for this event" : "No fight nights on sale",
+opts.series
+? "There are no dates open for booking on this page at the moment. Every Rajadamnern Stadium ticket we sell is on the all-tickets page, or message us and we will help."
+: "There are no dates open for booking at the moment. Please check back shortly, or message us and we will help.",
+"Check again");
+return;
+}
+
+state.month = (firstHighlighted && state.months.indexOf(monthKey(firstHighlighted)) !== -1)
+? monthKey(firstHighlighted)
+: state.months[0];
+panel("");
+cal.hidden = false;
+renderSeatNote();
+renderMonths();
+renderCal();
+})
+.catch(function(err){
+showProblem("We could not load the fight nights", err.message, "Try again");
+});
+}
+
+function seatName(){
+var c = pickedClass();
+return c ? c.name : "That seat class";
+}
+
+function renderSeatNote(){
+if(!seatNote) return;
+if(!state.picked){ seatNote.hidden = true; return; }
+var gone = 0, total = 0;
+for(var k in state.events){
+if(!Object.prototype.hasOwnProperty.call(state.events, k)) continue;
+total++;
+if(!state.events[k].seatLive) gone++;
+}
+var cls = pickedClass();
+var name = seatName();
+seatNote.hidden = false;
+seatNote.innerHTML =
+'<span class="mtx-seat-note-k">Booking</span>' +
+'<b>' + esc(name) + '</b>' +
+(cls && cls.description
+? '<span class="mtx-seat-note-d">' + esc(cls.description) + '</span>'
+: "") +
+(gone > 0 && gone < total
+? '<span class="mtx-seat-note-d mtx-seat-note-sold">Faded dates are nights when ' +
+esc(name) + ' has sold out. Open one and you can choose a different seat class for that night.</span>'
+: "") +
+'<button class="mtx-seat-change" data-back-seat>Change seat class</button>';
+}
+
+function renderMonths(){
+months.innerHTML = state.months.map(function(k){
+var m = +k.slice(5,7) - 1, y = k.slice(0,4);
+var on = (k === state.month);
+return '<button class="mtx-mbtn' + (on ? " mtx-on" : "") + '" data-month="' + k + '"' +
+(on ? ' aria-current="true"' : '') + '>' + MONTHS_S[m] + ' ' + y + '</button>';
+}).join("");
+}
+
+function renderCal(){
+if(!state.month) return;
+var y = +state.month.slice(0,4), m = +state.month.slice(5,7) - 1;
+note.textContent = MONTHS[m].toUpperCase() + " " + y;
+
+var lead = (new Date(Date.UTC(y, m, 1)).getUTCDay() + 6) % 7;   // week starts Monday
+var days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+var html = "";
+for(var i = 0; i < lead; i++) html += '<button class="mtx-day mtx-none" disabled></button>';
+
+for(var d = 1; d <= days; d++){
+var key = state.month + "-" + String(d).padStart(2, "0");
+var ev = state.events[key];
+if(!ev){
+html += '<button class="mtx-day mtx-shut" disabled title="No fight this night">' +
+'<span class="mtx-n">' + d + '</span><span class="mtx-tag">No fight</span></button>';
+continue;
+}
+if(ev.bookable === false){
+html += '<button class="mtx-day mtx-shut mtx-elsewhere" disabled ' +
+'aria-label="' + esc(ev.name + ", " + longDate(key) +
+" \u2014 not on sale on this page") + '">' +
+'<span class="mtx-n">' + d + '</span>' +
+'<span class="mtx-tag">' + esc(ev.shortName || "") + '</span></button>';
+continue;
+}
+var seatGone = state.picked && !ev.seatLive;
+var seatWord = ev.classStatus === "fully_booked" ? "sold out"
+: ev.classStatus === "booking_closed" ? "booking closed" : "not on sale";
+html += '<button class="mtx-day' + (state.date === key ? " mtx-sel" : "") +
+(ev.highlighted ? " mtx-hi" : "") + (opts.series ? " mtx-open" : "") +
+(seatGone ? " mtx-off" : "") + '" data-date="' + key + '" ' +
+'style="--evt:' + esc(ev.colour || "#5C5C66") + '" ' +
+'aria-label="' + esc(ev.name + ", " + longDate(key) +
+(seatGone ? " \u2014 " + seatName() + " " + seatWord + ", other seats available" : "")) + '">' +
+'<span class="mtx-n">' + d + '</span>' +
+'<span class="mtx-dot"></span>' +
+'<span class="mtx-tag">' + esc(ev.shortName || "") + '</span></button>';
+}
+grid.innerHTML = html;
+}
+
+function revealCalendar(){
+if(!state.month) return;
+var g = grid.getBoundingClientRect();
+if(g.top >= 0 && g.bottom <= window.innerHeight) return;
+(cal.querySelector(".mtx-gap") || grid).scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function openNight(date, move){
+state.date = date;
+state.cls = null; state.qty = 0; state.cur = null;
+renderCal();
+
+cal.hidden = true;
+showLoading("Checking live availability", move !== false);
+if(move !== false) out.scrollIntoView({behavior:"smooth", block:"start"});
+
+var started = Date.now();
+var eventKey = state.events[date].eventKey;
+
+call("availability", { action:"availability", eventKey:eventKey }, READ_TIMEOUT)
+.then(function(data){
+var wait = Math.max(0, MIN_CHECK_MS - (Date.now() - started));
+setTimeout(function(){
+if(state.date !== date) return;    // the guest moved on while we waited
+state.night = filterClasses(data);
+if(state.picked && state.night.classes.some(function(c){ return c.code === state.picked; })){
+state.cls = state.picked;
+}
+renderNight();
+}, wait);
+})
+.catch(function(err){
+if(state.date !== date) return;
+showProblem("We could not check availability", err.message, "Try this date again");
+});
+}
+
+function filterClasses(data){
+if(opts.seatsFirst) return data;
+if(!opts.classes) return data;
+var want = opts.classes;
+var kept = data.classes.filter(function(c){
+return want.indexOf(c.code.toLowerCase()) !== -1
+|| want.indexOf(c.name.toLowerCase()) !== -1;
+});
+if(kept.length > 0) data.classes = kept;
+return data;
+}
+
+function backToDates(){
+state.date = null; state.night = null; state.cls = null; state.qty = 0; state.cur = null;
+panel("");
+cal.hidden = false;
+renderSeatNote();
+renderCal();
+cal.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function renderNight(){
+var ev = state.night.event;
+panel(
+'<section class="mtx-band">' +
+'<div class="mtx-band-k">Your fight night</div>' +
+'<h2 class="mtx-band-h">' + esc(ev.name) + '</h2>' +
+'<div class="mtx-band-when">' +
+'<span>' + icon("cal") + esc(longDate(ev.date)) + '</span>' +
+(ev.startTime ? '<span>' + icon("clock") + esc(fmt12(ev.startTime) + (ev.endTime ? " – " + fmt12(ev.endTime) : "")) + '</span>' : "") +
+'<span>' + icon("pin") + esc(ev.venue) + '</span>' +
+'</div>' +
+(ev.description ? '<p class="mtx-band-d">' + esc(ev.description) + '</p>' : "") +
+(opts.eventKey ? "" : '<button class="mtx-band-change" data-back-date>Change date</button>') +
+'</section>' +
+'<section class="mtx-tix">' + seatStep() + '</section>'
+);
+if(state.cls) update();
+}
+
+function anythingBuyable(){
+return state.night.classes.some(function(c){ return statusMeta(c.status).live; });
+}
+
+function divertStep(){
+var ev = state.night.event;
+return '<div class="mtx-tix-h"><h3>Booking closed with us</h3></div>' +
+'<div class="mtx-divert">' +
+'<p class="mtx-divert-d">' +
+esc(ev.divertNote || "We are not selling tickets for this fight night. The stadium is still selling them directly.") +
+'</p>' +
+'<a class="mtx-divert-go" href="' + esc(ev.divertUrl) + '" ' +
+'target="_blank" rel="noopener noreferrer">' +
+'Book this night at the stadium' +
+'<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg>' +
+'</a>' +
+'<p class="mtx-divert-n">This opens the stadium\u2019s own website in a new tab.</p>' +
+'</div>';
+}
+
+function seatStep(){
+if(state.night.event.divertUrl && !anythingBuyable()) return divertStep();
+if(!state.cls && state.night.classes.length === 1){
+state.cls = state.night.classes[0].code;
+}
+if(!state.cls){
+return '<div class="mtx-tix-h"><h3><span class="mtx-num">3</span>Select your seat class</h3></div>' +
+'<div class="mtx-picker' + (state.night.classes.some(function(c){ return statusMeta(c.status, c.seatsLeft).live && goodPhotos(c).length > 0; }) ? " mtx-picker--photos" : "") + '">' +
+state.night.classes.map(pickButton).join("") + '</div>';
+}
+return '<div class="mtx-tix-h"><h3><span class="mtx-num">3</span>Your seats</h3></div>' + classDetail(chosen());
+}
+
+function chosen(){
+for(var i = 0; i < state.night.classes.length; i++){
+if(state.night.classes[i].code === state.cls) return state.night.classes[i];
+}
+return null;
+}
+
+var CHEVRON =
+'<svg class="mtx-pick-go" width="17" height="17" viewBox="0 0 16 16" fill="none" ' +
+'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ' +
+'aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>';
+
+var TICK =
+'<svg class="mtx-why-tick" width="18" height="18" viewBox="0 0 16 16" fill="none" ' +
+'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ' +
+'aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>';
+var ARROW_L =
+'<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>';
+var ARROW_R =
+'<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>';
+
+function goodPhotos(t){
+var out2 = [];
+var list = t.photos || [];
+for(var i = 0; i < list.length; i++){
+if(list[i] && typeof list[i].url === "string" && list[i].url.slice(0, 8).toLowerCase() === "https://") out2.push(list[i]);
+}
+return out2;
+}
+
+function seatCard(t, meta, cur, unit, photos){
+var n = photos.length;
+var slides = photos.map(function(p, i){
+return '<li class="mtx-slide" role="group" aria-roledescription="slide" aria-label="Photo ' + (i + 1) + ' of ' + n + '">' +
+'<img src="' + esc(p.url) + '" alt="' + esc(p.alt || "") + '" decoding="async"' +
+(i === 0 ? "" : ' loading="lazy"') + '></li>';
+}).join("");
+var controls = n > 1
+? '<button type="button" class="mtx-slide-btn mtx-slide-prev" data-slide="-1" aria-label="Previous photo" disabled>' + ARROW_L + '</button>' +
+'<button type="button" class="mtx-slide-btn mtx-slide-next" data-slide="1" aria-label="Next photo">' + ARROW_R + '</button>' +
+'<div class="mtx-dots">' + photos.map(function(p, i){
+return '<button type="button" class="mtx-dotb" data-slide-to="' + i + '" aria-label="Photo ' + (i + 1) + ' of ' + n + '"' +
+(i === 0 ? ' aria-current="true"' : "") + '><i></i></button>';
+}).join("") + '</div>'
+: "";
+var lines = (t.benefits || []).map(function(b){
+return '<li>' + TICK + esc(b.text) +
+(b.note ? '<span class="mtx-why-note">' + esc(b.note) + '</span>' : "") + '</li>';
+}).join("");
+
+return '<div class="mtx-seatcard' + (meta.low ? " mtx-seatcard--low" : "") + '">' +
+'<div class="mtx-slider" role="group" aria-roledescription="carousel" aria-label="Photos of ' + esc(t.name) + '">' +
+'<ul class="mtx-track" tabindex="0" aria-label="' + esc(t.name) + ' photos">' + slides + '</ul>' +
+controls +
+'</div>' +
+'<div class="mtx-seatcard-body">' +
+(t.tagline ? '<span class="mtx-pick-why">' + esc(t.tagline) + '</span>' : "") +
+'<span class="mtx-pick-name">' + esc(t.name) + '</span>' +
+(unit != null ? '<span class="mtx-pick-price">' + esc(money(cur, unit)) + ' per ticket</span>' : "") +
+(lines ? '<ul class="mtx-why-list">' + lines + '</ul>' : '<div style="height:14px"></div>') +
+'<button type="button" class="mtx-seatcard-go" data-pick="' + esc(t.code) + '">' +
+(meta.low ? 'Only <b class="mtx-avail-n">' + meta.seatsLeft + '</b> left' : esc(meta.label)) +
+CHEVRON +
+'</button>' +
+'</div>' +
+'</div>';
+}
+
+function pickButton(t){
+var meta = statusMeta(t.status, t.seatsLeft);
+var cur  = state.cur || guessCurrency(t.prices);
+var unit = cur ? priceFor(t, cur) : null;
+var photos = meta.live ? goodPhotos(t) : [];
+if(photos.length > 0) return seatCard(t, meta, cur, unit, photos);
+return '<button class="mtx-pick mtx-pick--' + (meta.live ? "on" : "off") + (meta.low ? " mtx-pick--low" : "") + '" ' +
+'data-pick="' + esc(t.code) + '"' + (meta.live ? "" : " disabled") + '>' +
+'<span class="mtx-pick-bar"></span>' +
+(t.tagline ? '<span class="mtx-pick-why">' + esc(t.tagline) + '</span>' : "") +
+'<span class="mtx-pick-name">' + esc(t.name) + '</span>' +
+(unit != null
+? '<span class="mtx-pick-price">' + esc(money(cur, unit)) + ' per ticket</span>'
+: "") +
+'<span class="mtx-avail ' + meta.tile + '">' +
+(meta.low ? 'Only <b class="mtx-avail-n">' + meta.seatsLeft + '</b> left' : esc(meta.label)) +
+'</span>' +
+(meta.live ? CHEVRON : "") +
+'</button>';
+}
+
+function classDetail(t){
+var meta = statusMeta(t.status, t.seatsLeft);
+var body;
+
+if(t.status === "closed"){
+body = '<div class="mtx-note">' + esc(t.closedExplanation || "This seat class is not on sale for this date.") + '</div>';
+} else if(t.status === "booking_closed"){
+body = '<div class="mtx-note">Online booking has now closed for this fight night. ' +
+'Please choose another date, or message us and we will do what we can.</div>';
+} else if(!meta.live){
+body = '<div class="mtx-note">' + esc(t.name) + ' is now fully booked. ' +
+'Please choose another seat class or another date.</div>';
+} else {
+var cur = state.cur || guessCurrency(t.prices);
+var max = Math.max(1, Math.min(10, t.maxPerOrder || 10));
+if(!state.qty){
+var left = t.seatsLeft > 0 ? Math.min(max, t.seatsLeft) : max;
+var tog = (t.assignedSeating && t.maximumSeatsTogether != null) ? Number(t.maximumSeatsTogether) : null;
+state.qty = (left >= 2 && !(tog != null && 2 > Math.max(tog, 1))) ? 2 : 1;
+}
+body =
+'<div class="mtx-fields">' +
+'<div class="mtx-pair">' +
+'<div class="mtx-f"><label for="mtxQty"><span class="mtx-num">4</span>Number of tickets</label>' +
+'<div class="mtx-sel"><select id="mtxQty" data-qty>' +
+qtyOpts(max, state.qty) +
+'</select></div></div>' +
+'<div class="mtx-f"><label for="mtxCur"><span class="mtx-num">5</span>Choose your currency</label>' +
+'<div class="mtx-sel"><select id="mtxCur" data-cur>' +
+t.prices.map(function(p){
+return '<option value="' + esc(p.currency) + '"' + (p.currency === cur ? " selected" : "") + '>' +
+esc(p.currency.toUpperCase()) + '</option>';
+}).join("") +
+'</select></div></div>' +
+'</div>' +
+'<div data-seatack></div>' +
+'<div class="mtx-sums">' +
+'<div class="mtx-sum"><span>Price per ticket</span><b data-unit>&mdash;</b></div>' +
+'<div class="mtx-sum mtx-sum--total"><span>Total</span><b data-total>&mdash;</b></div>' +
+'</div>' +
+'<button class="mtx-go" data-go disabled>Select number of tickets</button>' +
+'<div data-fail></div>' +
+'</div>';
+}
+
+return '<section class="mtx-detail' + (meta.live ? "" : t.status === "fully_booked" ? " mtx-detail--off" : " mtx-detail--shut") +
+'" style="--c:' + esc(t.colour || "#5C5C66") + '">' +
+'<div class="mtx-detail-k">You have chosen</div>' +
+'<div class="mtx-detail-top">' +
+'<h3 class="mtx-detail-h">' + esc(t.name) + '</h3>' +
+'<span class="mtx-pill ' + meta.pill + '"><i></i>' + (t.status === "fully_booked" ? "Fully booked" : meta.label) + '</span>' +
+'</div>' +
+(t.description ? '<p class="mtx-detail-d">' + esc(t.description) + '</p>' : "") +
+body +
+(state.night.classes.length > 1
+? '<button class="mtx-detail-change" data-back-class>Change seat class</button>' : "") +
+'</section>';
+}
+
+function qtyOpts(max, picked){
+var o = "";
+for(var i = 1; i <= max; i++) o += '<option value="' + i + '"' + (i === picked ? " selected" : "") + '>' + i + (i === 1 ? " ticket" : " tickets") + '</option>';
+return o;
+}
+
+function priceFor(t, cur){
+for(var i = 0; i < t.prices.length; i++) if(t.prices[i].currency === cur) return t.prices[i].unitAmount;
+return null;
+}
+
+function update(){
+var t = chosen();
+if(!t) return;
+var totalEl = out.querySelector("[data-total]");
+if(!totalEl) return;
+
+var unitEl  = out.querySelector("[data-unit]");
+var go      = out.querySelector("[data-go]");
+var seatWrap= out.querySelector("[data-seatack]");
+
+var cur = state.cur || guessCurrency(t.prices);
+state.cur = cur;
+var unit = priceFor(t, cur);
+
+if(unitEl) unitEl.textContent = unit == null ? "—" : money(cur, unit);
+totalEl.textContent = (state.qty && unit != null) ? money(cur, unit * state.qty) : "—";
+
+var together = (t.assignedSeating && t.maximumSeatsTogether != null)
+? Number(t.maximumSeatsTogether) : null;
+var needsAck = together != null && state.qty > Math.max(together, 1);
+
+if(seatWrap){
+if(needsAck && !seatWrap.dataset.built){
+seatWrap.innerHTML =
+'<div class="mtx-note mtx-warn">' +
+(together === 0
+? '<b>We cannot seat your group together on this night.</b> ' +
+'Everyone is in the same class, but the seats are apart.'
+: '<b>We can seat ' + together + ' of your group together.</b> ' +
+'The rest will be in the same class, but not side by side.') +
+'<label class="mtx-ack"><input type="checkbox" data-ack>' +
+'<span>That&rsquo;s fine &mdash; book anyway</span></label></div>';
+seatWrap.dataset.built = "1";
+} else if(!needsAck){
+seatWrap.innerHTML = "";
+seatWrap.dataset.built = "";
+}
+}
+
+var ack = out.querySelector("[data-ack]");
+if(go && !state.busy){
+var blocked = !state.qty || unit == null || (needsAck && !(ack && ack.checked));
+go.disabled = blocked;
+go.textContent = !state.qty ? "Select number of tickets"
+: blocked ? "Confirm seating above"
+: "Reserve your tickets";
+}
+}
+
+function warmCheckout(){
+if(warmed) return;
+warmed = true;
+try {
+fetch(API + "/create-checkout", {
+method: "POST",
+headers: { "Content-Type": "text/plain;charset=UTF-8" },
+body: JSON.stringify({ action: "warm" }),
+keepalive: true
+}).catch(function(){});
+} catch(e) {}
+}
+
+function reserve(){
+var t = chosen();
+if(!t || state.busy) return;
+
+var go = out.querySelector("[data-go]");
+var fail = out.querySelector("[data-fail]");
+var ack = out.querySelector("[data-ack]");
+
+state.busy = true;
+go.disabled = true;
+go.textContent = "Reserving your tickets…";
+if(fail) fail.innerHTML = "";
+
+var won = readStoredAttribution();
+var attr = {};
+if(won) for(var k in won) if(Object.prototype.hasOwnProperty.call(won, k)) attr[k] = won[k];
+if(!attr.device && mayStoreAttribution()) attr.device = deviceNow();
+
+call("create-checkout", {
+eventKey: state.night.event.eventKey,
+classCode: t.code,
+quantity: state.qty,
+currency: state.cur,
+seatingAcknowledged: !!(ack && ack.checked),
+attribution: attr,
+pagePath: pathNow() || undefined,
+landingPage: readLanding() || undefined
+}, CHECKOUT_TIMEOUT)
+.then(function(data){
+if(!data.checkoutUrl) throw new Error("The secure checkout could not be opened. Please try again.");
+window.location.assign(data.checkoutUrl);
+})
+.catch(function(err){
+state.busy = false;
+if(fail) fail.innerHTML = '<div class="mtx-fail">' + esc(err.message) + '</div>';
+
+if(err.status === 409 && !(err.body && err.body.code === "seating_ack_required")){
+setTimeout(function(){ openNight(state.date); }, 2200);
+return;
+}
+update();
+});
+}
+
+months.addEventListener("click", function(e){
+var b = e.target.closest("[data-month]");
+if(!b) return;
+state.month = b.getAttribute("data-month");
+renderMonths();
+renderCal();
+revealCalendar();
+});
+
+cal.addEventListener("click", function(e){
+if(e.target.closest("[data-back-seat]")) backToSeats();
+});
+
+grid.addEventListener("click", function(e){
+var b = e.target.closest("[data-date]");
+if(b) openNight(b.getAttribute("data-date"));
+});
+
+function slideTo(track, i){
+var slides = track.children;
+if(!slides.length) return;
+i = Math.max(0, Math.min(slides.length - 1, i));
+var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: calm ? "auto" : "smooth" });
+}
+function slideNow(track){
+var w = track.clientWidth || 1;
+return Math.max(0, Math.min(track.children.length - 1, Math.round(track.scrollLeft / w)));
+}
+function syncSlider(track){
+var box = track.closest(".mtx-slider");
+if(!box) return;
+var i = slideNow(track);
+var dots = box.querySelectorAll("[data-slide-to]");
+for(var d = 0; d < dots.length; d++){
+if(d === i) dots[d].setAttribute("aria-current", "true"); else dots[d].removeAttribute("aria-current");
+}
+var prev = box.querySelector(".mtx-slide-prev"), next = box.querySelector(".mtx-slide-next");
+if(prev) prev.disabled = i === 0;
+if(next) next.disabled = i === track.children.length - 1;
+}
+out.addEventListener("scroll", function(e){
+if(e.target && e.target.classList && e.target.classList.contains("mtx-track")){
+var tr = e.target;
+if(tr._mtxRaf) return;
+tr._mtxRaf = requestAnimationFrame(function(){ tr._mtxRaf = 0; syncSlider(tr); });
+}
+}, true);
+out.addEventListener("keydown", function(e){
+var tr = e.target && e.target.classList && e.target.classList.contains("mtx-track") ? e.target : null;
+if(!tr) return;
+if(e.key === "ArrowRight"){ e.preventDefault(); slideTo(tr, slideNow(tr) + 1); }
+if(e.key === "ArrowLeft"){ e.preventDefault(); slideTo(tr, slideNow(tr) - 1); }
+});
+
+out.addEventListener("click", function(e){
+var step = e.target.closest("[data-slide]");
+var dot  = e.target.closest("[data-slide-to]");
+if(step || dot){
+var tr = (step || dot).closest(".mtx-slider").querySelector(".mtx-track");
+slideTo(tr, step ? slideNow(tr) + (+step.getAttribute("data-slide")) : +dot.getAttribute("data-slide-to"));
+return;
+}
+if(e.target.closest("[data-retry]")){
+if(state.date) openNight(state.date);
+else if(opts.seatsFirst && state.picked) loadNights();
+else boot();
+return;
+}
+if(e.target.closest("[data-back-date]")){ backToDates(); return; }
+
+var seat = e.target.closest("[data-seat]");
+if(seat && seat.getAttribute("data-seat")){ chooseSeat(seat.getAttribute("data-seat")); return; }
+
+var pick = e.target.closest("[data-pick]");
+if(pick){
+warmCheckout();
+state.cls = pick.getAttribute("data-pick");
+state.qty = 0;
+out.querySelector(".mtx-tix").innerHTML = seatStep();
+update();
+out.querySelector(".mtx-tix").scrollIntoView({behavior:"smooth", block:"nearest"});
+return;
+}
+
+if(e.target.closest("[data-back-class]")){
+state.cls = null; state.qty = 0;
+out.querySelector(".mtx-tix").innerHTML = seatStep();
+out.querySelector(".mtx-tix").scrollIntoView({behavior:"smooth", block:"nearest"});
+return;
+}
+
+if(e.target.closest("[data-go]") && !e.target.closest("[data-go]").disabled) reserve();
+});
+
+out.addEventListener("change", function(e){
+if(e.target.hasAttribute("data-qty")){ state.qty = e.target.value ? +e.target.value : 0; update(); return; }
+if(e.target.hasAttribute("data-cur")){ state.cur = e.target.value; update(); return; }
+if(e.target.hasAttribute("data-ack")) update();
+});
+
+window.addEventListener("pageshow", function(){
+if(!state.busy) return;
+state.busy = false;
+var go = out.querySelector("[data-go]");
+if(go) go.disabled = false;
+update();
+});
+
+boot();
 }
 
 function options(el) {
-  var event = (el.getAttribute("data-event-id") || "").trim();
-  var classes = (el.getAttribute("data-ticket-class") || "")
-    .split(",").map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean);
-  var series = (el.getAttribute("data-series") || "")
-    .split(",").map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean);
-  var seatsFirst = (el.getAttribute("data-start") || "").trim().toLowerCase() === "seats";
-  return {
-    eventKey: event || null,
-    classes: classes.length ? classes : null,
-    series: series.length ? series : null,
-    seatsFirst: seatsFirst && !event,
-  };
+var event = (el.getAttribute("data-event-id") || "").trim();
+var classes = (el.getAttribute("data-ticket-class") || "")
+.split(",").map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean);
+var series = (el.getAttribute("data-series") || "")
+.split(",").map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean);
+var seatsFirst = (el.getAttribute("data-start") || "").trim().toLowerCase() === "seats";
+return {
+eventKey: event || null,
+classes: classes.length ? classes : null,
+series: series.length ? series : null,
+seatsFirst: seatsFirst && !event,
+};
 }
 
 function start() {
-  injectStyles();
-  var found = document.querySelectorAll(MOUNT);
-  for (var i = 0; i < found.length; i++) {
-    var el = found[i];
-    if (el.getAttribute("data-mtx-ready") === "1") continue;   // never twice
-    el.setAttribute("data-mtx-ready", "1");
+injectStyles();
+var found = document.querySelectorAll(MOUNT);
+for (var i = 0; i < found.length; i++) {
+var el = found[i];
+if (el.getAttribute("data-mtx-ready") === "1") continue;   // never twice
+el.setAttribute("data-mtx-ready", "1");
 
-    el.id = "mtx-booking";
-    var opts = options(el);
-    el.innerHTML = shell(opts);
-    try { mount(el, opts); }
-    catch (err) { console.error("MuayTix widget failed to start", err); }
-  }
+el.id = "mtx-booking";
+var opts = options(el);
+el.innerHTML = shell(opts);
+try { mount(el, opts); }
+catch (err) { console.error("MuayTix widget failed to start", err); }
+}
 }
 
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", start, { once: true });
+document.addEventListener("DOMContentLoaded", start, { once: true });
 } else {
-  start();
+start();
 }
 })();
 

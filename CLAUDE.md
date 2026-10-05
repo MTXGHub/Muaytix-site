@@ -149,6 +149,26 @@ node build-paste-block.mjs  > paste-into-tilda.html
 
 The builders write to stdout. They must be redirected or nothing changes.
 
+**Keep the header block small and plain.** On 5 October 2026 a 67 KB header,
+which passed every test in a real browser, went into the Tilda head and the
+widget vanished from every page while the rest of each page was untouched. The
+cause was never confirmed (the live site cannot be read from here). Two things
+set that file apart from every earlier one, so both are now ruled out by
+`tests/header-block.test.mjs`: **under 63,000 bytes** (the last version known
+to work was 58,664) and **no pattern containing a double slash** (simple tools
+that tidy scripts can read it as a comment). Do not write a regular expression
+with `//` in it; use a string test instead. If the block must grow past the
+limit, shrink something else first.
+
+**Stage every header change on one test page.** Tilda only applies new head
+code to a page when that page is published. So: paste the new header, publish
+**one hidden test page** that holds just the widget, check it, and only then
+publish the rest. If it fails, put the previous header back and nothing guests
+see has changed. Never publish all pages on an untested header. Keep the last
+header that worked ready to paste as a rollback (in git: `paste-into-tilda-header.html`
+at commit `68443d0` is the last 58 KB one; `1b8b062` is the one that was live
+on 5 October 2026).
+
 ### Mounting it
 
 ```html

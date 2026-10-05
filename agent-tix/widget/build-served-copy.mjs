@@ -9,5 +9,11 @@ const kept = src.split('\n').filter(l => {
   const t = l.trim();
   return !(t.startsWith('//') || (t.startsWith('/*') && t.endsWith('*/')));
 });
-process.stdout.write(
-  kept.join('\n').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\n{3,}/g, '\n\n'));
+// Indentation is dropped as well, and nothing else. The header block carries the
+// whole widget inside the site's head, and Tilda is not known to take a block of
+// any size, so it is kept as small as it can be without changing a single token.
+// header-block.test.mjs proves the tokens are identical to widget.js.
+const body = kept.join('\n').replace(/\/\*[\s\S]*?\*\//g, '')
+  .split('\n').map(l => l.replace(/^[ \t]+/, '').replace(/[ \t]+$/, '')).join('\n')
+  .replace(/\n{3,}/g, '\n\n');
+process.stdout.write(body);

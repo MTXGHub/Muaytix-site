@@ -951,7 +951,9 @@ function mount(root, opts) {
     var out2 = [];
     var list = t.photos || [];
     for(var i = 0; i < list.length; i++){
-      if(list[i] && typeof list[i].url === "string" && /^https:\/\//i.test(list[i].url)) out2.push(list[i]);
+      // Plain string test, not a pattern: the pattern needed a double slash, which
+      // some tools that tidy a page's scripts read as the start of a comment.
+      if(list[i] && typeof list[i].url === "string" && list[i].url.slice(0, 8).toLowerCase() === "https://") out2.push(list[i]);
     }
     return out2;
   }
