@@ -473,14 +473,14 @@ function mount(root, opts) {
   //
   // Nothing a guest can still buy is red. "Only 3 left" is green like anything
   // else on sale -- the words do the hurrying, and red on a class with seats in
-  // it reads as "gone" and costs us the click. Red belongs to sold out alone.
+  // it reads as "gone" and costs us the click. Red belongs to fully booked alone. Never say "sold out" to a guest: it sends them to other sites (Jason, 5 Oct 2026).
   function statusMeta(st, seatsLeft){
     if(st === "available" || st === "limited"){
       return (seatsLeft > 0)
         ? {tile:"mtx-avail--go", pill:"mtx-ok", label:"Only " + seatsLeft + " left", low:true, seatsLeft:seatsLeft, live:true}
         : {tile:"mtx-avail--go", pill:"mtx-ok", label:"Available",                   low:false,                    live:true};
     }
-    if(st === "fully_booked")   return {tile:"mtx-avail--full", pill:"mtx-full", label:"Sold out",       live:false};
+    if(st === "fully_booked")   return {tile:"mtx-avail--full", pill:"mtx-full", label:"Fully booked",   live:false};
     if(st === "booking_closed") return {tile:"mtx-avail--shut", pill:"mtx-shut", label:"Booking closed", live:false};
     return {tile:"mtx-avail--shut", pill:"mtx-shut", label:"Closed", live:false};
   }
@@ -764,7 +764,7 @@ function mount(root, opts) {
         : "") +
       (gone > 0 && gone < total
         ? '<span class="mtx-seat-note-d mtx-seat-note-sold">Faded dates are nights when ' +
-          esc(name) + ' has sold out. Open one and you can choose a different seat class for that night.</span>'
+          esc(name) + ' is fully booked. Open one and you can choose a different seat class for that night.</span>'
         : "") +
       '<button class="mtx-seat-change" data-back-seat>Change seat class</button>';
   }
@@ -812,7 +812,7 @@ function mount(root, opts) {
       // disabled: the guest can still open it and take a different seat, which
       // is a sale we would otherwise throw away.
       var seatGone = state.picked && !ev.seatLive;
-      var seatWord = ev.classStatus === "fully_booked" ? "sold out"
+      var seatWord = ev.classStatus === "fully_booked" ? "fully booked"
                    : ev.classStatus === "booking_closed" ? "booking closed" : "not on sale";
       html += '<button class="mtx-day' + (state.date === key ? " mtx-sel" : "") +
               (ev.highlighted ? " mtx-hi" : "") + (opts.series ? " mtx-open" : "") +

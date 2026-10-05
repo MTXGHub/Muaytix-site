@@ -101,7 +101,7 @@ console.log('\nStep 2 — the calendar, for that seat');
   // described the widget to itself.
   const noteText = await p.textContent('[data-seatnote]');
   check('and says, in plain words, what a faded date means',
-        noteText.includes('Faded dates are nights when Ringside has sold out')
+        noteText.includes('Faded dates are nights when Ringside is fully booked')
         && noteText.includes('choose a different seat class'), noteText);
   check('and it sells the class rather than describing the widget',
         noteText.includes('Sections 3 to 7'), noteText);

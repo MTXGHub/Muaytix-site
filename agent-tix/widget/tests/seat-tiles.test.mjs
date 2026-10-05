@@ -89,7 +89,7 @@ const grid = text(await page.innerText('.mtx-picker'));
 check('the word "Limited" is gone', !/limited/i.test(grid), grid);
 check('open classes say AVAILABLE', (grid.match(/AVAILABLE/g) || []).length === 2, grid);
 check('the low one says its number', /ONLY 3 LEFT/.test(grid), grid);
-check('a sold-out class says so plainly', /SOLD OUT/i.test(grid), grid);
+check('a fully booked class says so plainly', /FULLY BOOKED/i.test(grid), grid);
 
 // --- the reason to choose ---
 check('each tile carries its reason', await page.locator('.mtx-pick-why').count() === 4);

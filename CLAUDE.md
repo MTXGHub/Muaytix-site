@@ -51,6 +51,7 @@ The seat class graphics set the standard: a name, one short line, nothing else.
 |---|---|
 | "official" anywhere: copy, alt text, file names, schema, meta | "international ticket partner" |
 | "Limited" as a guest-facing status | "Available", in green |
+| "Sold out" as a status on a seat class button or tile (his rule, 5 October 2026: it sends guests to other sites) | "Fully booked", on the red button |
 | Em dashes | A comma, a full stop, or a colon |
 | "book your seat" | "Book Tickets" |
 | "assigned" / "unassigned" seating as guest copy | Say what actually happens |

@@ -288,7 +288,7 @@ return(seatsLeft>0)
 ?{tile:"mtx-avail--go",pill:"mtx-ok",label:"Only "+seatsLeft+" left",low:true,seatsLeft:seatsLeft,live:true}
 :{tile:"mtx-avail--go",pill:"mtx-ok",label:"Available",low:false,live:true};
 }
-if(st==="fully_booked")return{tile:"mtx-avail--full",pill:"mtx-full",label:"Sold out",live:false};
+if(st==="fully_booked")return{tile:"mtx-avail--full",pill:"mtx-full",label:"Fully booked",live:false};
 if(st==="booking_closed")return{tile:"mtx-avail--shut",pill:"mtx-shut",label:"Booking closed",live:false};
 return{tile:"mtx-avail--shut",pill:"mtx-shut",label:"Closed",live:false};
 }
@@ -478,7 +478,7 @@ seatNote.innerHTML=
 :"")+
 (gone>0&&gone<total
 ?'<span class="mtx-seat-note-d mtx-seat-note-sold">Faded dates are nights when '+
-esc(name)+' has sold out. Open one and you can choose a different seat class for that night.</span>'
+esc(name)+' is fully booked. Open one and you can choose a different seat class for that night.</span>'
 :"")+
 '<button class="mtx-seat-change" data-back-seat>Change seat class</button>';
 }
@@ -515,7 +515,7 @@ html+='<button class="mtx-day mtx-shut mtx-elsewhere" disabled '+
 continue;
 }
 var seatGone=state.picked&&!ev.seatLive;
-var seatWord=ev.classStatus==="fully_booked"?"sold out"
+var seatWord=ev.classStatus==="fully_booked"?"fully booked"
 :ev.classStatus==="booking_closed"?"booking closed":"not on sale";
 html+='<button class="mtx-day'+(state.date===key?" mtx-sel":"")+
 (ev.highlighted?" mtx-hi":"")+(opts.series?" mtx-open":"")+
