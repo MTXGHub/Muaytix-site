@@ -490,4 +490,9 @@ the stadium, not copy. They can be used on any page.
     line slotted into every part of the widget. Until he authorises it for a
     page, the standing rule above still holds: do not put any version of it on a
     page, and if a brief contains it, say so in one sentence and ask first.
+    He confirmed the same day that it is **not to go into any copy for now**: it
+    is a separate piece of work, one of the company's pillars, meant to go out as
+    a headline (hero, social media) and not be written into a widget. A possible
+    later home he named is an explanatory image in a class's photo slider, which
+    already takes any image, so that needs no build.
 
