@@ -287,6 +287,9 @@ allocation as equivalent to a Club Class one.
 Third Class is opened by the stadium, usually only once the other classes are
 full or close to it.
 
+**RWS is different, and Jason explained why on 5 October 2026: see section 13,
+"How stock is bought". Never suggest buying more RWS tickets.**
+
 ### Reports that already exist. Use them first.
 
 Said on 4 October 2026: reports were built, with time and credits, so that
@@ -510,4 +513,25 @@ the stadium, not copy. They can be used on any page.
     a headline (hero, social media) and not be written into a widget. A possible
     later home he named is an explanatory image in a class's photo slider, which
     already takes any image, so that needs no build.
-
+- **How stock is bought, and why a sold-out night is not lost sales. Said by
+  Jason on 5 October 2026.**
+  - **RWS tickets are all pre-bought**, in all four classes, forecast from past
+    performance and the season. RWS sells out at the stadium about two weeks
+    before the night, so the tickets for 5 October were bought around 20
+    September. Stadium sell-out timing: Club Class about two weeks before, Ringside
+    about 10 days, LEO about a week. Third Class is bought in the week of the
+    event.
+  - **MuayTix is the pressure valve when the stadium has nothing.** Buying too
+    many is a real write-off: it has written off 1,000 and 1,800 pounds of
+    tickets before. So pre-buying is deliberately cautious, and **selling out
+    early is the goal, not a problem.**
+  - **Guests who arrive for a sold-out RWS night and cannot buy are expected and
+    accepted.** MuayTix will not buy more to serve them: it risks the stadium's
+    goodwill and defeats the plan. **Never present RWS sold-out looks as lost
+    demand to act on, and never suggest buying more RWS tickets.**
+  - **The business aim is to spread sales across all seven nights.** Saturday
+    (RWS) was 68 to 71 per cent of sales. In the 28 days to 5 October it was
+    63.7 per cent of tickets and 61.4 per cent of contribution (booking_attribution,
+    by event weekday).
+  - Note: section 6 says Ringside is not held. That is true for the ordinary
+    nights. For RWS, Jason says all classes including Ringside are pre-bought.
