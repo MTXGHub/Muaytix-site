@@ -73,7 +73,7 @@ const browser = await chromium.launch(
   process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {},
 );
 
-async function open(width, mods) {
+async function open(width, mods, calendar = false) {
   const ctx = await browser.newContext({ viewport: { width, height: 1000 }, locale: 'en-GB' });
   const page = await ctx.newPage();
   await page.route('**/functions/v1/**', async (route) => {
@@ -92,11 +92,11 @@ async function open(width, mods) {
   await page.route('https://muaytix.test/**', r => r.fulfill({
     status: 200, contentType: 'text/html',
     body: `<!doctype html><html><head><meta charset="utf-8"><title>T</title>${frag}</head>
-    <body style="margin:0"><div class="muaytix-ticket-selector" data-event-id="rws_2026_09_19"></div></body></html>`,
+    <body style="margin:0"><div class="muaytix-ticket-selector"${calendar ? "" : ' data-event-id="rws_2026_09_19"'}></div></body></html>`,
   }));
   page.on('pageerror', e => { fail++; console.log('  FAIL page error -> ' + e.message); });
   await page.goto('https://muaytix.test/x', { waitUntil: 'domcontentloaded' });
-  await page.waitForSelector('[data-pick]', { timeout: 12000 });
+  await page.waitForSelector(calendar ? '[data-date]' : '[data-pick]', { timeout: 12000 });
   return page;
 }
 
@@ -237,6 +237,136 @@ for (const w of [1440, 1280, 860, 620, 390]) {
   }
   await page.close();
 }
+
+
+/* ------------------------------------------------------------------------ */
+console.log('\nThe card button says what it does');
+page = await open(1000, LEO_ON);
+const goText2 = text(await page.locator('.mtx-seatcard-go').innerText());
+check('says Available, then Book LEO Tickets', /^AVAILABLE\s*BOOK LEO TICKETS$/i.test(goText2), JSON.stringify(goText2));
+check('the arrow is still there', await page.locator('.mtx-seatcard-go .mtx-pick-go').count() === 1);
+check('a screen reader hears the same thing in one phrase',
+  await page.locator('.mtx-seatcard-go').getAttribute('aria-label') === 'Book LEO tickets, Available');
+check('the layout is still one line of centred text at this width', await page.locator('.mtx-seatcard-go').evaluate(e => e.getBoundingClientRect().height < 60));
+await page.close();
+page = await open(1000, { leo_section: { photos: PHOTOS, benefits: BENEFITS, status: 'limited', seatsLeft: 3 } });
+check('three left still says the number and what to do',
+  /ONLY\s*3\s*LEFT\s*BOOK LEO TICKETS/i.test(text(await page.locator('.mtx-seatcard-go').innerText())));
+await page.close();
+page = await open(390, LEO_ON);
+check('on a phone it wraps cleanly and stays inside the card',
+  await page.locator('.mtx-seatcard-go').evaluate(e => { const r = e.getBoundingClientRect(), p = e.parentElement.getBoundingClientRect(); return r.right <= p.right + 1 && e.scrollWidth <= e.clientWidth + 1; }));
+await page.close();
+
+/* ------------------------------------------------------------------------ */
+console.log('\nThe browser\'s back button');
+const host = (p) => new URL(p.url()).host || p.url();
+// One night, no calendar: seat list -> chosen class.
+page = await open(1000, LEO_ON);
+await page.click('[data-pick="leo_section"]');
+await page.waitForSelector('.mtx-detail');
+await page.goBack();
+await page.waitForSelector('.mtx-seatcard', { timeout: 4000 });
+check('back from the chosen class returns to the seat list', await page.locator('.mtx-detail').count() === 0 && await page.locator('.mtx-seatcard').count() === 1);
+check('and the guest is still on the page', page.url().includes('muaytix.test/x'), page.url());
+await page.goForward();
+await page.waitForTimeout(600);
+check('the forward button does not strand the guest on a half-drawn screen',
+  await page.locator('.mtx-detail').count() === 0 && await page.locator('.mtx-seatcard').count() === 1 && page.url().includes('muaytix.test/x'), page.url());
+await page.click('[data-pick="leo_section"]');
+await page.waitForSelector('.mtx-detail');
+check('choosing again still works after going back', await page.locator('.mtx-detail-h').innerText() === 'LEO Section');
+await page.close();
+
+// The on-page "Change seat class" button and the browser's back are one thing.
+page = await open(1000, LEO_ON);
+await page.click('[data-pick="leo_section"]');
+await page.waitForSelector('.mtx-detail');
+await page.click('[data-back-class]');
+await page.waitForSelector('.mtx-seatcard', { timeout: 4000 });
+check('"Change seat class" returns to the seat list', await page.locator('.mtx-detail').count() === 0);
+await page.goBack();
+await page.waitForTimeout(500);
+check('and leaves no stale step behind: one back press then leaves the page', !page.url().includes('muaytix.test'), page.url());
+await page.close();
+
+// Full calendar: dates -> night -> class.
+page = await open(1000, LEO_ON, true);
+await page.click('[data-date]');
+await page.waitForSelector('[data-pick]', { timeout: 6000 });
+await page.click('[data-pick="leo_section"]');
+await page.waitForSelector('.mtx-detail');
+await page.goBack();
+await page.waitForSelector('.mtx-seatcard', { timeout: 4000 });
+check('calendar: back from the class goes to that night\'s seat list', await page.locator('.mtx-detail').count() === 0 && await page.locator('.mtx-band').count() === 1);
+await page.goBack();
+await page.waitForSelector('[data-grid] [data-date]', { timeout: 4000 });
+check('calendar: back again goes to the dates', await page.locator('.mtx-band').count() === 0 && await page.isVisible('[data-grid]'));
+check('calendar: and the guest is still on the page', page.url().includes('muaytix.test/x'), page.url());
+await page.goBack();
+await page.waitForTimeout(500);
+check('calendar: one more back leaves the page', !page.url().includes('muaytix.test'), page.url());
+await page.close();
+
+page = await open(1000, LEO_ON, true);
+await page.click('[data-date]');
+await page.waitForSelector('[data-pick]', { timeout: 6000 });
+await page.click('[data-back-date]');
+await page.waitForSelector('[data-grid] [data-date]', { timeout: 4000 });
+await page.goBack();
+await page.waitForTimeout(500);
+check('"Change date" and back agree: one press leaves the page', !page.url().includes('muaytix.test'), page.url());
+await page.close();
+
+// Two widgets on one page keep separate places.
+{
+  const ctx = await browser.newContext({ viewport: { width: 1000, height: 1000 }, locale: 'en-GB' });
+  const p2 = await ctx.newPage();
+  await p2.route('**/functions/v1/**', async (route) => {
+    const body = JSON.parse(route.request().postData() || '{}');
+    return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(body.action === 'events' ? events : nightWith(LEO_ON)) });
+  });
+  await p2.route('https://static.tildacdn.com/**', r => r.fulfill({ status: 200, contentType: 'image/svg+xml', body: swatch('X', 200) }));
+  await p2.route('https://muaytix.test/**', r => r.fulfill({ status: 200, contentType: 'text/html',
+    body: `<!doctype html><html><head><meta charset="utf-8">${frag}</head><body><div data-w="a" class="muaytix-ticket-selector" data-event-id="rws_2026_09_19"></div><div data-w="b" class="muaytix-ticket-selector" data-event-id="rws_2026_09_19"></div></body></html>` }));
+  await p2.goto('https://muaytix.test/x', { waitUntil: 'domcontentloaded' });
+  await p2.waitForSelector('[data-w="b"] [data-pick]');
+  await p2.click('[data-w="a"] [data-pick="leo_section"]');
+  await p2.waitForSelector('[data-w="a"] .mtx-detail');
+  await p2.click('[data-w="b"] [data-pick="leo_section"]');
+  await p2.waitForSelector('[data-w="b"] .mtx-detail');
+  await p2.goBack();
+  await p2.waitForTimeout(600);
+  check('two widgets: back undoes the one used last, not both',
+    await p2.locator('[data-w="b"] .mtx-detail').count() === 0 && await p2.locator('[data-w="a"] .mtx-detail').count() === 1);
+  await p2.goBack();
+  await p2.waitForTimeout(600);
+  check('two widgets: back again undoes the other', await p2.locator('[data-w="a"] .mtx-detail').count() === 0);
+  await ctx.close();
+}
+
+/* ------------------------------------------------------------------------ */
+console.log('\nBigger way back, green button to reserve');
+page = await open(1000, LEO_ON);
+await page.click('[data-pick="leo_section"]');
+await page.waitForSelector('.mtx-detail');
+const change = await page.locator('[data-back-class]').evaluate(e => { const r = e.getBoundingClientRect(), c = getComputedStyle(e); return { h: r.height, w: r.width, fs: parseFloat(c.fontSize) }; });
+check('"Change seat class" is at least 48px tall', change.h >= 48, JSON.stringify(change));
+check('and its words are bigger than they were (10.5px)', change.fs >= 14, JSON.stringify(change));
+const reserve = await page.locator('[data-go]').evaluate(e => { const c = getComputedStyle(e), r = e.getBoundingClientRect(); return { bg: c.backgroundColor, fg: c.color, fs: parseFloat(c.fontSize), h: r.height, dis: e.disabled }; });
+check('the reserve button is green while it can be pressed', reserve.bg === 'rgb(0, 165, 80)' && !reserve.dis, JSON.stringify(reserve));
+check('with white words', reserve.fg === 'rgb(255, 255, 255)', JSON.stringify(reserve));
+check('large enough to count as large text for contrast (18.66px or more, bold)', reserve.fs >= 18.66, JSON.stringify(reserve));
+check('and tall enough to press', reserve.h >= 52, JSON.stringify(reserve));
+await page.close();
+page = await open(1000, { leo_section: { photos: PHOTOS, benefits: BENEFITS, assignedSeating: true, maximumSeatsTogether: 1 } });
+await page.click('[data-pick="leo_section"]');
+await page.waitForSelector('.mtx-detail');
+await page.selectOption('[data-qty]', '2');
+await page.waitForTimeout(200);
+const waiting = await page.locator('[data-go]').evaluate(e => { const c = getComputedStyle(e); return { dis: e.disabled, bg: c.backgroundColor, bs: c.borderStyle }; });
+check('while it cannot be pressed it is still the quiet dashed outline, not green', waiting.dis && waiting.bs === 'dashed' && waiting.bg === 'rgba(0, 0, 0, 0)', JSON.stringify(waiting));
+await page.close();
 
 /* ------------------------------------------------------------------------ */
 console.log('\nContrast of every piece of text in the card');

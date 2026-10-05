@@ -158,7 +158,10 @@ set that file apart from every earlier one, so both are now ruled out by
 to work was 58,664) and **no pattern containing a double slash** (simple tools
 that tidy scripts can read it as a comment). Do not write a regular expression
 with `//` in it; use a string test instead. If the block must grow past the
-limit, shrink something else first.
+limit, shrink something else first. The builder already strips every comment and
+every unneeded space (it needs eslint's parser, which this environment has) and
+the test proves the result is the same program token for token; it was about
+61,000 bytes when this was written.
 
 **Stage every header change on one test page.** Tilda only applies new head
 code to a page when that page is published. So: paste the new header, publish
@@ -203,6 +206,12 @@ on 5 October 2026).
   Photos are 3:2, about 1200 x 800, JPEG, uploaded to Tilda for the link. Lines
   are Jason's wording verbatim. A line with a second half has it as a `note`,
   shown in brackets under that line (LEO's guarantee line is the example).
+- **The browser's back button steps back through the widget** (chosen class to
+  seat list, night to dates). Each forward step adds one browser history entry
+  and the on-page "Change ..." buttons go through the same history, so the two
+  never disagree. A photo card's button reads "Available | Book LEO Tickets".
+  "Change seat class" is a large button, and "Reserve your tickets" is green
+  while it can be pressed (it stays the dashed grey outline while it cannot).
 - It never decides whether tickets are on sale. The database cutoff does.
 
 `agent-tix/widget/booking-widget.html` is a **standalone prototype, not the live
