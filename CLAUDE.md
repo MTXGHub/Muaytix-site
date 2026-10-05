@@ -171,9 +171,12 @@ code to a page when that page is published. So: paste the new header, publish
 **one hidden test page** that holds just the widget, check it, and only then
 publish the rest. If it fails, put the previous header back and nothing guests
 see has changed. Never publish all pages on an untested header. Keep the last
-header that worked ready to paste as a rollback (in git: `paste-into-tilda-header.html`
-at commit `68443d0` is the last 58 KB one; `1b8b062` is the one that was live
-on 5 October 2026).
+header that worked ready to paste as a rollback. **Live since the morning of
+5 October 2026 (Bangkok): the header at commit `96304c9`** (photo cards, back
+button, closed card). It went into the site header and all pages were published
+at once, and Jason confirmed it on the Knockout tickets page. **Rollback: the
+header at commit `1b8b062`**, the last one live before it (in git:
+`agent-tix/widget/paste-into-tilda-header.html` at that commit).
 
 ### Mounting it
 
