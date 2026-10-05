@@ -161,7 +161,10 @@ const weekCards = week.map(r => {
      since it's a fact about these two specific occurrences rather than a
      rule about either series. */
   const noDatedPage = data.evergreen_only && data.evergreen_only[`${r.series_slug}:${r.local_date}`];
-  const dest = ev.path ? (noDatedPage ? ev.path : `${ev.path}/${r.local_date}`) : null;
+  /* Jason, 5 October 2026: the dated pages are not written yet, so every row
+     links to its event's own hub page. Dated pages 404 until they exist. When
+     they do, restore:  ev.path ? (noDatedPage ? ev.path : `${ev.path}/${r.local_date}`) : null */
+  const dest = ev.path || null;
 
   let cta = '';
   if (dest) {
