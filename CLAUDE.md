@@ -529,9 +529,11 @@ the stadium, not copy. They can be used on any page.
     accepted.** MuayTix will not buy more to serve them: it risks the stadium's
     goodwill and defeats the plan. **Never present RWS sold-out looks as lost
     demand to act on, and never suggest buying more RWS tickets.**
-  - **The business aim is to spread sales across all seven nights.** Saturday
-    (RWS) was 68 to 71 per cent of sales. In the 28 days to 5 October it was
-    63.7 per cent of tickets and 61.4 per cent of contribution (booking_attribution,
-    by event weekday).
+  - **The business aim is to sell more on the other nights, not fewer on RWS.**
+    RWS sales are at a level he is comfortable with and must not be cut. The
+    Saturday share (68 to 71 per cent of sales, 63.7 per cent of tickets in the
+    28 days to 5 October) should fall on its own as the other nights grow. So
+    the number to watch is **tickets sold for non-RWS nights**, not the Saturday
+    share, and never frame a report as reducing RWS.
   - Note: section 6 says Ringside is not held. That is true for the ordinary
     nights. For RWS, Jason says all classes including Ringside are pre-bought.
