@@ -26,8 +26,12 @@ const wd = iso => DAYS[parts(iso).dow];
 const dm = iso => { const p = parts(iso); return `${p.d} ${MONTHS[p.m - 1]} ${p.y}`; };
 const longDate = iso => `${wd(iso)} ${dm(iso)}`;
 const shortDate = iso => { const p = parts(iso); return `${wd(iso)} ${p.d} ${MONTHS[p.m - 1]}`; };
-const koUrl = iso => `https://muaytix.com/rajadamnern-knockout/${iso}`;
-const spUrl = iso => `${D.specialUrlBase}${iso}`;
+// Jason, 5 October 2026: the dated pages are not all built yet, so every date
+// links to the hub instead of a page that does not exist. When the dated pages
+// exist, restore:  koUrl = iso => `${HUB}/${iso}`  and  spUrl = iso => `${D.specialUrlBase}${iso}`
+const HUB = 'https://muaytix.com/rajadamnern-knockout';
+const koUrl = iso => HUB;
+const spUrl = iso => HUB;
 
 const entries = [
   ...D.knockout.map(iso => ({ iso, kind: 'knockout' })),

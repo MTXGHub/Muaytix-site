@@ -3,6 +3,7 @@
  *
  *   node verify.mjs
  */
+const HUBURL = 'https://muaytix.com/rajadamnern-knockout';
 import { readFileSync, readdirSync } from 'node:fs';
 import pw from '/opt/node22/lib/node_modules/playwright/index.js';
 const { chromium } = pw;
@@ -148,9 +149,9 @@ console.log('\n=== 4. THE DATE ROWS ===');
     if (x.text !== want) { bad++; fail(`${x.date}: date reads "${x.text}"`); }
     if (i && r.rows[i - 1].date >= x.date) { bad++; fail('rows are not in date order at ' + x.date); }
     if (x.kind === 'knockout') {
-      if (x.name !== 'Rajadamnern Knockout' || x.sub !== 'Rajadamnern Stadium, Bangkok' || x.time !== 'Doors 6:00 pm. First fight 7:00 pm.' || x.cta !== 'Book tickets' || x.href !== `https://muaytix.com/rajadamnern-knockout/${x.date}` || x.tag !== null || !x.aria.startsWith('Book tickets for ')) { bad++; fail('standard row differs from the pattern: ' + JSON.stringify(x)); }
+      if (x.name !== 'Rajadamnern Knockout' || x.sub !== 'Rajadamnern Stadium, Bangkok' || x.time !== 'Doors 6:00 pm. First fight 7:00 pm.' || x.cta !== 'Book tickets' || x.href !== HUBURL || x.tag !== null || !x.aria.startsWith('Book tickets for ')) { bad++; fail('standard row differs from the pattern: ' + JSON.stringify(x)); }
     } else {
-      if (x.name !== 'All Star Fight: Elite Fighter' || x.tag !== 'Special event' || x.sub !== 'Special event at Rajadamnern Stadium' || x.cta !== 'View event' || /rajadamnern-knockout\//.test(x.href) || x.href !== `https://muaytix.com/all-star-fight-by-buakaw/${x.date}`) { bad++; fail('special row differs: ' + JSON.stringify(x)); }
+      if (x.name !== 'All Star Fight: Elite Fighter' || x.tag !== 'Special event' || x.sub !== 'Special event at Rajadamnern Stadium' || x.cta !== 'View event' || x.href !== HUBURL) { bad++; fail('special row differs: ' + JSON.stringify(x)); }
       if (/Rajadamnern Knockout/.test(x.all)) { bad++; fail('a special row says Rajadamnern Knockout: ' + x.date); }
     }
     if (x.imgs) { bad++; fail('an image is in the row ' + x.date); }
@@ -257,11 +258,10 @@ console.log('\n=== 6. THE CLOCK (Bangkok time, either side of each boundary) ===
     const r = await p.evaluate(() => { const f = document.querySelector('[data-mtx-next]'); return { hidden: f.hidden, date: f.querySelector('[data-mtx-next-date]').textContent, cta: f.querySelector('[data-mtx-next-cta]').textContent.trim(), href: f.querySelector('[data-mtx-next-cta]').getAttribute('href'),
       shown: [...document.querySelectorAll('.mtx-ks-panel')].filter(x => !x.hidden).map(x => x.getAttribute('data-month')), tabs: [...document.querySelectorAll('[data-mtx-tabs] li')].filter(l => !l.hidden).length, firstRow: (document.querySelector('.mtx-ks-row:not([hidden])') || { getAttribute: () => null }).getAttribute('data-date') }; });
     console.log(`   ${at}  feature ${r.date} -> ${r.href.split('/').pop()}  month open ${r.shown.join()}  tabs ${r.tabs}  first row ${r.firstRow}   (${why})`);
-    if (r.hidden || r.href !== `https://muaytix.com/rajadamnern-knockout/${iso}` || r.cta !== `Book tickets for ${short}` || !r.date.startsWith(short)) fail(`${at}: ${JSON.stringify(r)}`);
+    if (r.hidden || r.href !== HUBURL || r.cta !== `Book tickets for ${short}` || !r.date.startsWith(short)) fail(`${at}: ${JSON.stringify(r)}`);
     if (r.shown.join() !== month) fail(`${at}: month open ${r.shown}, expected ${month}`);
     if (r.firstRow < at.slice(0, 10) && at.slice(11) < '22:00') fail(`${at}: a finished night is still listed`);
-    if (/rajadamnern-knockout\/2026-10-0[1-4]/.test(r.href)) fail('feature points at a finished night');
-    await ctx.close();
+        await ctx.close();
   }
   const { ctx, p } = await open(390, 844, { at: '2026-12-29T22:00' });
   const r = await p.evaluate(() => ({ hidden: document.querySelector('[data-mtx-next]').hidden, rows: [...document.querySelectorAll('.mtx-ks-row')].filter(x => !x.hidden).length }));
@@ -327,7 +327,7 @@ console.log('\n=== 8. STRUCTURE, LINKS, PICTURES, SCHEMA ===');
   let lf = 0;
   for (const l of r.links) {
     if (l.href === '/' || l.href === '/rajadamnern-knockout' || /^#mtx-ks-m-/.test(l.href)) continue;
-    if (/^Book tickets for /.test(l.text)) { if (!/^https:\/\/muaytix\.com\/rajadamnern-knockout\/2026-\d\d-\d\d$/.test(l.href)) { lf++; fail('next-event link ' + l.href); } continue; }
+    if (/^Book tickets for /.test(l.text)) { if (l.href !== HUBURL) { lf++; fail('next-event link ' + l.href); } continue; }
     if (want[l.text] !== l.href) { lf++; fail(`link "${l.text}" -> ${l.href}`); }
   }
   if (!lf) ok('every link goes where the brief says, with the locked anchor text');
