@@ -63,7 +63,7 @@ const BRAND = ['muaytix', 'muay tix', 'muaytix official website'];
 const ALLOWED = ['/rajadamnern-stadium-tickets','/rajadamnern-stadium-seating','/rajadamnern-stadium',
  '/rajadamnern-stadium-seat-map',
  '/rajadamnern-stadium-seating/ringside','/rajadamnern-stadium-seating/club-class','/rajadamnern-stadium-seating/leo-section',
- '/rajadamnern-knockout','/new-power-muay-thai','/petchyindee-muay-thai','/kiatpetch-muay-thai','/rws',
+ '/rajadamnern-knockout','/new-power-muay-thai','/petchyindee-muay-thai','/rajadamnern/petchyindee','/kiatpetch-muay-thai','/rws','/rws/knocktoberfest-10-october-2026',
  '/all-star-fight-by-buakaw',
  'https://wa.me/66922706095','https://www.google.com/maps/search/?api=1&query=Rajadamnern+Stadium'];
 

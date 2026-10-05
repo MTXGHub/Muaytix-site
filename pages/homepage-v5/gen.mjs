@@ -164,7 +164,7 @@ const weekCards = week.map(r => {
   /* Jason, 5 October 2026: the dated pages are not written yet, so every row
      links to its event's own hub page. Dated pages 404 until they exist. When
      they do, restore:  ev.path ? (noDatedPage ? ev.path : `${ev.path}/${r.local_date}`) : null */
-  const dest = ev.path || null;
+  const dest = (data.row_destination && data.row_destination[`${r.series_slug}:${r.local_date}`]) || ev.path || null;
 
   let cta = '';
   if (dest) {

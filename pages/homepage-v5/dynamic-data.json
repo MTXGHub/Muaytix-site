@@ -92,7 +92,7 @@
     },
     "petchyindee": {
       "name": "Petchyindee Traditional Muay Thai",
-      "path": "/petchyindee-muay-thai",
+      "path": "/rajadamnern/petchyindee",
       "accent": "#01A453",
       "short_name": "Petchyindee",
       "accent_source": "Owner, 27 September 2026: green, the same as New Power. No Petchyindee hex is published anywhere in this repository.",
@@ -120,5 +120,7 @@
     "kiatpetch:2026-10-04": true,
     "rajadamnern-knockout:2026-10-05": true
   },
+  "row_destination": { "rws:2026-10-10": "/rws/knocktoberfest-10-october-2026" },
+  "_row_destination_note": "Jason, 5 October 2026: the RWS night of Saturday 10 October links straight to its own written page (Knocktoberfest). Every other row links to its event hub page until its dated page exists.",
   "_evergreen_only_note": "Jason, 1 October 2026: Sunday 4 October (Kiatpetch) and Monday 5 October (Rajadamnern Knockout) on the This Week schedule should link to the evergreen event page, not a dated page, because the dated page for each doesn't exist yet. Checked, not assumed: pages/nights and pages/knockout-dated between them cover Kiatpetch through 27 September and Knockout through 2 October, with nothing for either event past those dates anywhere in this project. This is a fact about these two specific dates, not a rule about either series in general -- Knockout's own dated pages exist and are linked normally for every other date on the board -- so it is data here, not a hardcoded exception in gen.mjs, and needs a new entry (or removing an old one) the day a real dated page for one of these exists."
 }
