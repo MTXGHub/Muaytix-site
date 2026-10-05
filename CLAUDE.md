@@ -80,6 +80,9 @@ they leave.
 - No made-up detail. If a fact is not supplied, leave it out and say so.
 - Trade words are not guest words. "Assigned seating", "general admission",
   "dimmed nights" and "first dispatch" all failed for the same reason.
+  **Two deliberate exceptions, decided by Jason on 5 October 2026, see section
+  13:** "general admission" on Third Class, and "Assigned seating" on the seat
+  class cards.
 - Copy he supplies is used verbatim. You build, he writes. If his copy creates a
   problem, say so in one sentence and build it anyway.
 
@@ -451,3 +454,17 @@ the stadium, not copy. They can be used on any page.
   Knockout schedule page. Do not put it on any page, in any form, unless he
   authorises it for that page. It came from copy he supplied in a brief, so if a
   brief contains it again, say so in one sentence and ask before building it in.
+- **Seat class card copy, decided 5 October 2026.** Do not flag these again:
+  - **"General admission" stays on Third Class.** It is deliberate. Third Class
+    has an image problem because of its name, and "general admission" is what
+    Wimbledon and the rest of the world call a ticket like it.
+  - **"Assigned seating" stays on the Club Class and Ringside cards.** A guest
+    may ask which seat they get. He will deal with that in a later widget
+    update, not in the copy.
+  - **"Opens when the other classes are close to full" stays on Third Class.**
+    Guests may know that. What must never be shown is a ticket count above four
+    left, because that tells competitors how many tickets are being sold. That
+    is the only reason stock is hidden. Telling guests a class is nearly full is
+    not the same thing and is allowed.
+  - **"About 55% of MuayTix guests book Club Class."** His own wording for the
+    same fact as "55 per cent of bookings". Use either.
