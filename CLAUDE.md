@@ -340,6 +340,7 @@ not happen. Say this whenever a window starts before that date.
 | How many abandoned checkouts left an email | `abandoned_capture_by_day` |
 | Bookings that need a refund | `bookings_needing_a_refund` |
 | Weekly pay | `weekly_pay` |
+| Tickets per event per week, and each event's share of the week (Knockout, New Power, Petchyindee, RWS, Kiatpetch, All Star) | `tickets_by_event_by_week` |
 
 Visits that never start a checkout are not recorded anywhere in the database.
 `widget_looks_*` counts people who opened the booking widget, which is the
