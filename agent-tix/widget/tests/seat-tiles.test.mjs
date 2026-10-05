@@ -127,6 +127,12 @@ check('a sold-out tile stays readable', await leo.evaluate(e => {
 }));
 
 // --- the four tiles line up ---
+// Two and two on a tablet or a screen, so the rows can be compared; one to a
+// row on a phone, so each tile is wide enough to read. Jason, 5 October 2026.
+await page.setViewportSize({ width: 900, height: 900 });
+const lefts = await page.locator('.mtx-pick').evaluateAll(
+  els => els.map(e => Math.round(e.getBoundingClientRect().left)));
+check('two tiles to a row on a wider screen', lefts[0] === lefts[2] && lefts[1] > lefts[0] && lefts[3] === lefts[1], lefts.join(' '));
 const boxes = await page.locator('.mtx-pick').evaluateAll(
   els => els.map(e => Math.round(e.getBoundingClientRect().bottom)));
 const rowA = boxes.slice(0, 2), rowB = boxes.slice(2);
@@ -138,6 +144,10 @@ check('all four badges sit on the same baseline in their row',
   Math.abs(badges[0] - badges[1]) <= 1 && Math.abs(badges[2] - badges[3]) <= 1, badges.join(' '));
 check('a badge is a badge, not a blob', await page.locator('.mtx-avail').first()
   .evaluate(e => e.getBoundingClientRect().height < 48));
+await page.setViewportSize({ width: 420, height: 900 });
+const phoneLefts = await page.locator('.mtx-pick').evaluateAll(
+  els => els.map(e => Math.round(e.getBoundingClientRect().left)));
+check('one tile to a row on a phone', phoneLefts.every(x => x === phoneLefts[0]), phoneLefts.join(' '));
 
 // --- the chosen-class panel must not borrow the reserve button's styling ---
 // --- it looks pressable ---

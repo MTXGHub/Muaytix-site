@@ -75,6 +75,33 @@ function hhmm(t: string | null): string | null {
   return t ? t.slice(0, 5) : null;
 }
 
+// Photos and selling lines are free-form JSON in the database, so what leaves
+// here is checked rather than trusted: a photo must be an https address, a line
+// must have words. Anything else is dropped, not repaired, and the widget never
+// sees it.
+function cleanPhotos(raw: unknown): { url: string; alt: string }[] {
+  if (!Array.isArray(raw)) return [];
+  const out: { url: string; alt: string }[] = [];
+  for (const p of raw) {
+    const url = typeof p?.url === "string" ? p.url.trim() : "";
+    if (!/^https:\/\//i.test(url)) continue;
+    out.push({ url, alt: typeof p?.alt === "string" ? p.alt : "" });
+  }
+  return out;
+}
+
+function cleanBenefits(raw: unknown): { text: string; note: string | null }[] {
+  if (!Array.isArray(raw)) return [];
+  const out: { text: string; note: string | null }[] = [];
+  for (const b of raw) {
+    const text = typeof b?.text === "string" ? b.text.trim() : "";
+    if (!text) continue;
+    const note = typeof b?.note === "string" && b.note.trim() ? b.note.trim() : null;
+    out.push({ text, note });
+  }
+  return out;
+}
+
 // What we told them, kept after the fact.
 //
 // Three rules, and all three are the reason this is safe to run on every
@@ -382,14 +409,20 @@ Deno.serve(async (req: Request) => {
         fewLeft.set(row.id, left > 0 && left <= SAY_REMAINING_AT ? left : null);
       }
 
-      // The tagline is the class's own, not the night's, so it comes off
-      // ticket_classes rather than the per-night row.
+      // The tagline, photos and selling lines are the class's own, not the
+      // night's, so they come off ticket_classes rather than the per-night row.
       const { data: taglines, error: taglineError } = await supabase
         .from("ticket_classes")
-        .select("code,tagline");
+        .select("code,tagline,photos,benefits");
       if (taglineError) throw taglineError;
       const taglineFor = new Map<string, string | null>();
-      for (const t of taglines ?? []) taglineFor.set(t.code, t.tagline ?? null);
+      const photosFor = new Map<string, { url: string; alt: string }[]>();
+      const benefitsFor = new Map<string, { text: string; note: string | null }[]>();
+      for (const t of taglines ?? []) {
+        taglineFor.set(t.code, t.tagline ?? null);
+        photosFor.set(t.code, cleanPhotos(t.photos));
+        benefitsFor.set(t.code, cleanBenefits(t.benefits));
+      }
 
       // Counted off the same rows the guest is about to be shown, so the note
       // and the answer can never disagree.
@@ -449,6 +482,10 @@ Deno.serve(async (req: Request) => {
               maximumSeatsTogether: r.maximum_seats_together,
               maxPerOrder: r.max_per_order,
               tagline: taglineFor.get(r.ticket_class_code) ?? null,
+              // Empty lists for a class that has none: the widget then draws the
+              // compact tile exactly as before.
+              photos: photosFor.get(r.ticket_class_code) ?? [],
+              benefits: benefitsFor.get(r.ticket_class_code) ?? [],
               // Null unless it is genuinely down to the last few. See above.
               seatsLeft: (r.status === "available" || r.status === "limited")
                 ? (fewLeft.get(r.event_ticket_class_id) ?? null)

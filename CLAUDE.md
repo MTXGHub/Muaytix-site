@@ -172,6 +172,17 @@ The builders write to stdout. They must be redirected or nothing changes.
   nights.
 - Class name, strapline and section line all come from `ticket_classes`, so
   changing that copy is a database edit, not a release.
+- **Seat tiles sit two and two** on a tablet or screen, one to a row on a phone.
+- **Photos and selling lines** live on the class too (`ticket_classes.photos`
+  and `.benefits`, both JSON lists, shown in the order stored). A class with
+  photos is drawn as a card with a swipeable slider, the photos first and the
+  lines under them. **It only does that while the class can be bought**: sold
+  out, closed or booking closed, the photos go and the compact tile returns.
+  A class with no photos is drawn as it always was, so classes are launched one
+  at a time by filling in their row. Launched: LEO Section (5 October 2026).
+  Photos are 3:2, about 1200 x 800, JPEG, uploaded to Tilda for the link. Lines
+  are Jason's wording verbatim. A line with a second half has it as a `note`,
+  shown in brackets under that line (LEO's guarantee line is the example).
 - It never decides whether tickets are on sale. The database cutoff does.
 
 `agent-tix/widget/booking-widget.html` is a **standalone prototype, not the live
@@ -193,7 +204,7 @@ There is no `widget` edge function. The widget is pasted into Tilda.
 | `event_calendar` | every night: name, local date, start time, venue |
 | `events` | `booking_cutoff_minutes` (30 for every event) |
 | `event_ticket_classes` | per event per class: `total_quantity`, `sold_quantity`, `manual_status`, `maximum_seats_together`, `max_per_order` |
-| `ticket_classes` | name, code, `tagline`, `description`, `margin_minor` |
+| `ticket_classes` | name, code, `tagline`, `description`, `margin_minor`, `photos`, `benefits` |
 | `event_ticket_availability` | the view the widget reads, with the resolved `status` |
 | `checkout_reservations` | every checkout: status, quantity, attribution, guest details |
 
