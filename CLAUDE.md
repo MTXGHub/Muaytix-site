@@ -215,6 +215,13 @@ on 5 October 2026).
   never disagree. A photo card's button reads "Available | Book LEO Tickets".
   "Change seat class" is a large button, and "Reserve your tickets" is green
   while it can be pressed (it stays the dashed grey outline while it cannot).
+- **A closed class says why, on its own tile.** The text is
+  `event_ticket_classes.closed_explanation`, per night. For Third Class it reads
+  "Third Class is currently closed. The stadium opens it when the other seat
+  classes are close to full. This does not happen every night." (set on every
+  not-released night on 5 October 2026; **any night loaded later needs the same
+  text**). Sold-out classes show no explanation. The stadium's own site shows
+  nothing for a closed class, and a guest left wondering buys elsewhere.
 - It never decides whether tickets are on sale. The database cutoff does.
 
 `agent-tix/widget/booking-widget.html` is a **standalone prototype, not the live

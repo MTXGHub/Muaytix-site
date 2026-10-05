@@ -368,6 +368,32 @@ const waiting = await page.locator('[data-go]').evaluate(e => { const c = getCom
 check('while it cannot be pressed it is still the quiet dashed outline, not green', waiting.dis && waiting.bs === 'dashed' && waiting.bg === 'rgba(0, 0, 0, 0)', JSON.stringify(waiting));
 await page.close();
 
+
+/* ------------------------------------------------------------------------ */
+console.log('\nA closed class says why, on the tile');
+const WHY = 'Third Class is currently closed. The stadium opens it when the other seat classes are close to full. This does not happen every night.';
+page = await open(1000, { third_class: { status: 'closed', closedExplanation: WHY }, leo_section: { photos: PHOTOS, benefits: BENEFITS } });
+const closedTile = page.locator('[data-pick="third_class"]');
+check('the closed tile shows the explanation', text(await closedTile.innerText()).includes(WHY), text(await closedTile.innerText()));
+check('word for word, on the tile and not only on the next screen', await closedTile.locator('.mtx-pick-note').count() === 1);
+check('the tile still says Closed and cannot be pressed', /CLOSED/i.test(await closedTile.locator('.mtx-avail').innerText()) && await closedTile.isDisabled());
+check('the explanation is readable (dark on the pale red)', await closedTile.locator('.mtx-pick-note').evaluate(e => { const c = getComputedStyle(e).color; return c === 'rgb(46, 46, 52)'; }));
+check('it stays inside its tile', await closedTile.evaluate(e => { const n = e.querySelector('.mtx-pick-note').getBoundingClientRect(), r = e.getBoundingClientRect(); return n.left >= r.left && n.right <= r.right && n.bottom <= r.bottom; }));
+check('no em dash in it', !/—/.test(WHY));
+await page.close();
+page = await open(1000, { third_class: { status: 'fully_booked', closedExplanation: WHY } });
+check('sold out does not borrow the closed explanation', await page.locator('[data-pick="third_class"] .mtx-pick-note').count() === 0);
+await page.close();
+page = await open(1000, { third_class: { status: 'available', closedExplanation: WHY } });
+check('an open class never shows it', await page.locator('.mtx-pick-note').count() === 0);
+await page.close();
+page = await open(390, { third_class: { status: 'closed', closedExplanation: WHY } });
+check('on a phone it fits without sideways scroll', await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
+await page.close();
+page = await open(1000, { third_class: { status: 'closed', closedExplanation: null } });
+check('a closed class with no explanation shows no empty gap', await page.locator('.mtx-pick-note').count() === 0);
+await page.close();
+
 /* ------------------------------------------------------------------------ */
 console.log('\nContrast of every piece of text in the card');
 page = await open(1000, LEO_ON);
