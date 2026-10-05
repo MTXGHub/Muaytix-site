@@ -468,3 +468,26 @@ the stadium, not copy. They can be used on any page.
     not the same thing and is allowed.
   - **"About 55% of MuayTix guests book Club Class."** His own wording for the
     same fact as "55 per cent of bookings". Use either.
+- **How MuayTix seats guests, and the headline planned around it. Said by Jason
+  on 5 October 2026. A plan, not yet authorised for any page.**
+  - **Seat selection by the guest has been tried and went badly.** Some guests
+    never answer the email or the WhatsApp, which leaves the booking stuck, and
+    some do not want to choose at all. It is not offered now.
+  - **Guests choose badly from a seat map.** Row A is shut because it is level
+    with the ring. B is the first row they can see, so the first guest books it
+    (the pop concert habit of sitting at the front), the next books beside
+    them, and the rows fill in a line. Rajadamnern is the inverse of that habit:
+    the company's view is that **row D and above is the best viewing level.**
+    Nine in ten guests who have not been before end up in seats that are fine
+    but not the best. The stadium gives no help beyond a seat map.
+  - **What MuayTix does instead.** The team books the best seats available at the
+    time of booking, using local knowledge, because they are in the stadium every
+    week. They do not take the next free seat in row B: they go straight to row D
+    and above, and leave B and C untouched even when they are free (December
+    bookings are an example).
+  - **The planned headline:** a guarantee that the team books the guest the best
+    seats available at the time of booking. It is meant as one big message, not a
+    line slotted into every part of the widget. Until he authorises it for a
+    page, the standing rule above still holds: do not put any version of it on a
+    page, and if a brief contains it, say so in one sentence and ask first.
+
