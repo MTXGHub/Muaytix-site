@@ -424,6 +424,14 @@ group size by guessing. His reasoning, for Ringside on the 6 October Knockout:
   section such as Section 4 can be sold out early.
 - Row A in Club Class is flat with the ring and is the last row the stadium
   opens, so it is the last Club Class stock to go.
+- **LEO Section has no seat map on Ticketmelon, so he checks it another way.**
+  He clicks the ticket quantity up to the maximum, which is **15**. If it reaches
+  15, at least 15 are left. If it stops at 10, 8, 5 or any number below 15, the
+  section is about to sell out and he generally closes it there and then. Even
+  stopping at 11 he would not take the risk, because there is no map to see. LEO is
+  where the locals go, so **Wednesday, Thursday and Sunday (the traditional nights)
+  are the LEO demand nights, and LEO usually sells out first.** I cannot do this check;
+  I remind him on a schedule, read our own counts, and close only when he says so.
 - Most bookings are for **two seats**, so pairs are the unit that matters. When
   a class is down to its last few pairs on a same-day night, they can go in
   minutes, and **agents on the ground may buy them** to clear availability down to
