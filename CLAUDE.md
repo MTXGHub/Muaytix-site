@@ -32,6 +32,13 @@ Rajadamnern Stadium tickets in Bangkok.
 - **Do not race ahead.** If he says "hang on", stop and wait. If he is giving a
   list in stages, capture and wait for the rest.
 - **Never use his past mistakes as leverage in an argument.**
+- **RWS ticket numbers are facts, never defaults. Written here three times on
+  purpose, 6 October 2026.** The number Jason gives for an RWS night is the
+  tickets physically in hand: pre-bought, counted against the invoice, the Drive
+  and the bookings. It goes into `total_quantity` exactly as he gave it. Never
+  leave a placeholder, never estimate, never carry one night's number to
+  another. When his number is used up the class is **fully booked, no matter
+  what**. See sections 6 and 13, and the record in `agent-tix/notes/rws-allocations.md`.
 
 ---
 
@@ -290,6 +297,22 @@ full or close to it.
 **RWS is different, and Jason explained why on 5 October 2026: see section 13,
 "How stock is bought". Never suggest buying more RWS tickets.**
 
+**RWS numbers are tickets in hand, and they are never wrong.** Rules, every time:
+
+1. **When he gives an RWS number, set `total_quantity` to it that minute.** Read
+   back every class for that night with total, sold and left, and write it into
+   `agent-tix/notes/rws-allocations.md` with the date. Do not say "done" before
+   all three have happened.
+2. **Whenever you read or show an RWS night, show the counts**, not just the
+   status, and compare them with the record and with anything he has said. If
+   the database differs, say so first, before anything else.
+3. **A number of 25 / 40 / 25 on an RWS night is a placeholder, not stock.** It
+   sits on nights he has not pre-bought yet. Such a night is not safe to sell
+   once he has pre-bought it. If a night inside the pre-buy window shows
+   placeholders, say so and ask for the real counts before it is sold.
+4. **If his number is lower than the database's `sold_quantity`, stop and tell
+   him.** The database will refuse the change; do not work round it.
+
 ### Reports that already exist. Use them first.
 
 Said on 4 October 2026: reports were built, with time and credits, so that
@@ -538,3 +561,27 @@ the stadium, not copy. They can be used on any page.
     share, and never frame a report as reducing RWS.
   - Note: section 6 says Ringside is not held. That is true for the ordinary
     nights. For RWS, Jason says all classes including Ringside are pre-bought.
+- **RWS ticket numbers: the mistake of 6 October 2026, and the rule it made.**
+  Jason: "The numbers we give you of tickets on RWS days are factual numbers of
+  tickets. That's tickets in hand that we've pre-bought and that is it. Once
+  they've sold, it goes to fully booked no matter what. You don't make mistakes
+  on these ones ever." He checks them against the invoice, the Drive and the
+  bookings, and has done every week for 51 weeks.
+  - **What happened.** RWS Saturday 10 October, LEO Section: he told me in this
+    chat at 6:07 am Bangkok on 5 October that there were **10 LEO tickets**. The
+    database held 25. I had just read that night's statuses and did not compare
+    the count with what he had said. All 10 were sold by 3:36 am on 6 October.
+    At 11:32 am a 3-ticket order was taken for tickets that did not exist. Three
+    guests had to be moved to another class, and Jason had to ask the stadium
+    for more tickets four days before the biggest night of the year.
+  - **What I could not establish:** who entered 25, or when. The database keeps
+    no history of ticket counts, and I could not see the earlier chat where he
+    says he gave the number. That is no defence: the count was mine to check.
+  - **What it means.** The three rules in section 6 apply to every RWS night,
+    every time. Show counts, check them against what he has said, write each
+    number into `agent-tix/notes/rws-allocations.md`, and never trust 25 / 40 /
+    25. He has told me he does not trust me with the numbers now: earn it back
+    by never being the reason one is wrong.
+  - **Standing instruction, 6 October 2026:** every RWS seat class for 17, 24
+    and 31 October is closed (`fully_booked`) until he gives real counts and
+    asks for it to be reopened. Third Class on Saturday 10 October stays open.
