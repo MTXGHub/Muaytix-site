@@ -392,9 +392,14 @@ night, and have it unschedule itself, e.g.
 Read `cron.job` back to show him it is active. Still set a reminder to read the
 four classes back at that time. Never claim a timer needs this chat to run.
 
-**How he sets "max seats together", and why (6 October 2026).** He watches the
-stadium's own seat map (Ticketmelon) by eye and decides. I never set a group size
-by guessing. His reasoning, for Ringside on the 6 October Knockout:
+**How he sets "max seats together", and why (6 October 2026). This is judgement
+on the day, not a formula.** He watches the stadium's own seat map (Ticketmelon)
+by eye and decides from how fast seats are selling there. It is **not based on
+MuayTix sales data**, and every event differs in speed, volume and which sections
+are close to selling out. The numbers below (max 2, 1:30 pm, 2:00 pm) are one
+worked example so I understand how he thinks. **Never copy them to another night,
+and never suggest a group size or a closing time from sales data.** I never set a
+group size by guessing. His reasoning, for Ringside on the 6 October Knockout:
 - The stadium's map shows what is really left. On that day one row of 4 together
   and two groups of 3 together were left, against **9 pairs**.
 - Seats go at the stadium in minutes and MuayTix does not see it happen. If a
