@@ -294,6 +294,14 @@ allocation as equivalent to a Club Class one.
 Third Class is opened by the stadium, usually only once the other classes are
 full or close to it.
 
+**Third Class on ordinary nights is bought as we go, not pre-bought** (Jason, 6
+October 2026). The stadium opens a section of about 2,100 seats at around 2 to 3
+pm for a 7 pm night, and there is no way they all sell, so MuayTix buys each
+ticket after the booking arrives. The standard **50** is the working number, not
+a placeholder. When he says it has opened, open it at 50. This applies to
+ordinary nights only: RWS Third Class is different (bought in the week of the
+event) and its number comes from him.
+
 **RWS is different, and Jason explained why on 5 October 2026: see section 13,
 "How stock is bought". Never suggest buying more RWS tickets.**
 
