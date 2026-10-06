@@ -424,6 +424,17 @@ group size by guessing. His reasoning, for Ringside on the 6 October Knockout:
   section such as Section 4 can be sold out early.
 - Row A in Club Class is flat with the ring and is the last row the stadium
   opens, so it is the last Club Class stock to go.
+- Most bookings are for **two seats**, so pairs are the unit that matters. When
+  a class is down to its last few pairs on a same-day night, they can go in
+  minutes, and **agents on the ground may buy them** to clear availability down to
+  singles, which makes the pairs they hold valuable to resell in taxis and hotels
+  for the hours left. Between about 12 and 3 pm is usually quiet.
+- **His biggest pain point is selling a ticket MuayTix does not have**, for him
+  and for the guest. The cause is that there is no real-time view of the stadium's
+  seat availability. He counts the seats and pairs on Ticketmelon by eye, every
+  half hour or so. He wants a way to do what his eyes do: read the seat map, count
+  seats and pairs, and call the run rate. No solution yet. Any idea must respect
+  Ticketmelon's terms and must not hold or touch their inventory.
 
 ---
 
