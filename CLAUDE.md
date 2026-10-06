@@ -574,9 +574,12 @@ the stadium, not copy. They can be used on any page.
     At 11:32 am a 3-ticket order was taken for tickets that did not exist. Three
     guests had to be moved to another class, and Jason had to ask the stadium
     for more tickets four days before the biggest night of the year.
-  - **What it cost.** The operation stopped while the stadium decided whether to
-    release 3 more LEO tickets, and the person who helps pays about 900 Thai baht
-    in commission under the standing arrangement. (Jason, 6 October 2026.)
+  - **What it cost.** The operation stopped while the stadium was asked for 3
+    more LEO tickets. The stadium could not release any for Saturday, so the
+    three guests, already on their way from London, had to be told their LEO
+    tickets could not be honoured and be moved to Third Class. (Jason, 6 October
+    2026. A commission of about 900 Thai baht would have been paid had the
+    stadium helped.)
   - **What I could not establish:** who entered 25, or when. The database keeps
     no history of ticket counts, and I could not see the earlier chat where he
     says he gave the number. That is no defence: the count was mine to check.

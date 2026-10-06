@@ -33,3 +33,10 @@ the stadium decides whether to release 3 more LEO tickets. If they do, MuayTix
 pays the person who helps about **900 Thai baht** in commission, under the
 standing arrangement that rewards whoever helps the stadium out. His words: a
 hole that did not need to be dug, because the exact number had been given.
+
+**Outcome, as Jason told me on 6 October 2026:** the stadium could not release
+more LEO tickets for Saturday 10 October. Only Third Class is available, so no
+commission is paid. The three guests (3 LEO, paid 11:32 am, on their way from
+London) have to be told their tickets cannot be honoured and moved to Third
+Class. They chose LEO from the photos and selling lines. Their booking in the
+database is still LEO until Jason says it is moved.
