@@ -42,8 +42,7 @@ on a timer as a guess ahead of the sell-out.
   about 200 seats, Club Class about 500 and LEO about 300, so for any date more than
   a week away MuayTix knows it can buy any of those three. Checking a few days out
   is easy by eye.
-- **The small, exclusive classes are the problem.** Presidential box (he has said 44
-  seats and also 15 seats; ask which when it matters) and suites with only 4 seats.
+- **The small, exclusive classes are the problem.** **Presidential box seat: 44 seats.** **VIP panoramic balcony: 15 seats.** Suites with only 4 seats.
   One date out of 120 can already be full, and checking every date for every class
   by hand is not possible. That is why VIP stays off sale.
 - A feed would run every published date and tell him which VIP class is sold out
@@ -60,3 +59,22 @@ on a timer as a guess ahead of the sell-out.
 
 Even a daily file or email from the stadium listing remaining seats per class per
 date for the small classes would solve most of it. Not yet asked.
+
+## How Ticketmelon actually works (Jason, 6 October 2026)
+
+- **The front page status is updated by a person, by hand.** For example the front
+  page can say "Club Class available" for an RWS night. It is not tied to the seat
+  map, and it is often wrong or out of date.
+- **The seat map is the truth.** It runs in real time from bookings, which is what
+  he reads by eye.
+- **Why tools fail:** any agent or script stops at the front page, or at a login,
+  and reads the wrong status. It never reaches the seat map. **Never treat the
+  Ticketmelon front page as availability.**
+- They have an API of sorts on the website, but it does not look open to agents.
+  MuayTix once did some tentative scraping, then stopped for fear of being
+  flagged. **No scraping.** The route is the honest one: ask the stadium for agent
+  access.
+- Rough scale of the manual work: on a day like 6 October someone would need to be
+  watching seats and nothing else, today and tomorrow. Thursday and Friday are
+  similar, and Saturday is RWS (pre-bought). Beyond about 7 days the big sections
+  are safe, so only the near dates need eyes.
