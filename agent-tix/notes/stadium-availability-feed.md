@@ -78,3 +78,23 @@ date for the small classes would solve most of it. Not yet asked.
   watching seats and nothing else, today and tomorrow. Thursday and Friday are
   similar, and Saturday is RWS (pre-bought). Beyond about 7 days the big sections
   are safe, so only the near dates need eyes.
+
+## Why the stadium works this way (Jason, 6 October 2026)
+
+- **The stadium sends MuayTix no updates at all.** No daily email, and no WhatsApp
+  or business broadcast when a class sells out, for example LEO fully booked two
+  or three days ahead, or a group taking the Presidential box and every other VIP
+  section on 1 December (one of the most requested dates of the year).
+- **Published dates went from about 45 days to about 120 days** when MuayTix
+  pushed over the last 12 months. He is still pushing for six months and more, up
+  to eight or nine. Publishing involves several layers of decision at the stadium.
+- **It is a short-term, Thai way of working.** Thai and Asian agents (Singapore,
+  Malaysia, China) have short lead times, so planning four to eight months ahead
+  was new to the stadium. In Thailand tickets are advertised weeks or a couple of
+  months before an event, not up to two years as in the West.
+- **The stadium and Thai Ticket Major (Lumpinee) both build for Thai customers**,
+  even though about 95 per cent of guests at Rajadamnern are Western. That is the
+  gap MuayTix fills as a Western ticket company that understands Western
+  travellers.
+- **Cheapest ask to make:** a simple broadcast or email from the stadium whenever a
+  class sells out, with no technology needed. Not yet asked.
