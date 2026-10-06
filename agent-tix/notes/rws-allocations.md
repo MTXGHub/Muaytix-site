@@ -27,3 +27,9 @@ stock.
 LEO Saturday 10 Oct showed 25 in the database when 10 were in hand. All 10 were
 sold by 3:36 am. At 11:32 am a 3-ticket order was taken for tickets that did not
 exist, and three guests had to be moved. See `CLAUDE.md` section 13.
+
+**The cost, as Jason told me on 6 October 2026:** the whole operation stops while
+the stadium decides whether to release 3 more LEO tickets. If they do, MuayTix
+pays the person who helps about **900 Thai baht** in commission, under the
+standing arrangement that rewards whoever helps the stadium out. His words: a
+hole that did not need to be dug, because the exact number had been given.
