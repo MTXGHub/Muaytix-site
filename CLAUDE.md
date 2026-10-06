@@ -432,6 +432,14 @@ group size by guessing. His reasoning, for Ringside on the 6 October Knockout:
   where the locals go, so **Wednesday, Thursday and Sunday (the traditional nights)
   are the LEO demand nights, and LEO usually sells out first.** I cannot do this check;
   I remind him on a schedule, read our own counts, and close only when he says so.
+- **Ringside and Club Class are checked on the seat map, one big section at a time.**
+  He does not open all five Ringside sections (3 to 7). He opens one of the bigger
+  ones, and if it looks healthy, stock is sitting in every section and there is no
+  alarm. Said 7 October 2026 about the next day's New Power Ringside: no check
+  needed, look again at the end of the day. A map that looks half empty is not
+  safe on its own: a night can sell half the stadium in 24 hours, so what matters
+  is how fast the map moves between, say, 3 pm the day before and 3 pm on the day.
+  He does not always get it right; he does the best with what he can see.
 - Most bookings are for **two seats**, so pairs are the unit that matters. When
   a class is down to its last few pairs on a same-day night, they can go in
   minutes, and **agents on the ground may buy them** to clear availability down to
