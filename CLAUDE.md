@@ -375,6 +375,23 @@ Close a class: set `manual_status = 'fully_booked'`. Set a real allocation: set
 `total_quantity`. Limit a group: set `maximum_seats_together`. Always read the
 availability view back afterwards and show him the four classes.
 
+**Timed closings are a safety net, and he wants them used often.** Said by Jason
+on 6 October 2026: he is often pulled away to other tasks, and a class that is
+likely to sell out at the stadium should close on a timer so MuayTix never sells
+what it does not have. His example: Club Class for the 6 October Knockout, where
+he watched the stadium's seats go fast, row A (flat with the ring, so the last
+row the stadium opens) was the last left, and his experience put the sell-out
+between 1:30 and 2:00 pm, so Club Class closed at 1:30 pm and Ringside at 2:00 pm.
+
+**How to do it: put it on the database's own clock, not on a reminder to me.** The
+database has `pg_cron` installed. A reminder only works if this chat is running.
+Schedule a one-off job in UTC (Bangkok is UTC+7, so 1:30 pm Bangkok is `30 6`),
+make it set `manual_status = 'fully_booked'` for that one class on that one
+night, and have it unschedule itself, e.g.
+`select cron.schedule('close-club-knockout-6oct-1330bkk', '30 6 6 10 *', $$update ...; select cron.unschedule('close-club-knockout-6oct-1330bkk');$$)`.
+Read `cron.job` back to show him it is active. Still set a reminder to read the
+four classes back at that time. Never claim a timer needs this chat to run.
+
 ---
 
 ## 7. Time
