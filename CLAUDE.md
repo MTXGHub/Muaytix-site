@@ -524,6 +524,10 @@ Before handing anything over:
 
 ## 12. Notes worth reading
 
+`agent-tix/notes/stadium-availability-feed.md` is **the biggest problem in the
+business** (real-time stadium availability) and what it costs: read it before
+suggesting anything about VIP, group sizes or timed closings.
+
 `agent-tix/notes/` holds older working notes. **`current-state.md` describes the
 previous system** (the `muaytix-stripe-elements` project and nine edge functions)
 and is historical, not current. The current system is section 6 above.
