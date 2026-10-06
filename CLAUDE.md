@@ -392,6 +392,26 @@ night, and have it unschedule itself, e.g.
 Read `cron.job` back to show him it is active. Still set a reminder to read the
 four classes back at that time. Never claim a timer needs this chat to run.
 
+**How he sets "max seats together", and why (6 October 2026).** He watches the
+stadium's own seat map (Ticketmelon) by eye and decides. I never set a group size
+by guessing. His reasoning, for Ringside on the 6 October Knockout:
+- The stadium's map shows what is really left. On that day one row of 4 together
+  and two groups of 3 together were left, against **9 pairs**.
+- Seats go at the stadium in minutes and MuayTix does not see it happen. If a
+  booking of 4 arrives after the 4 are gone, the cost is a refund, the cost of the
+  refund, messages to the guest, offering other options and waiting for a reply
+  while seats keep selling. Not worth the revenue of a couple of seats.
+- So he sets **max 2 together**: 9 pairs means that even if 3 or 4 pairs sell
+  at the stadium unseen, 5 or 6 pairs are still open to MuayTix. Safe first, then
+  revenue.
+- Ringside sells slower than Club Class. When Club Class goes fully booked
+  guests **do not upgrade to Ringside; most simply do not go**, so closing Club
+  Class early costs sales that do not come back.
+- Chinese guests know the stadium well and take the best spots first, so a
+  section such as Section 4 can be sold out early.
+- Row A in Club Class is flat with the ring and is the last row the stadium
+  opens, so it is the last Club Class stock to go.
+
 ---
 
 ## 7. Time
