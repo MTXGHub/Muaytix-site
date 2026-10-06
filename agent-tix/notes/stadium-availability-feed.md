@@ -96,5 +96,15 @@ date for the small classes would solve most of it. Not yet asked.
   even though about 95 per cent of guests at Rajadamnern are Western. That is the
   gap MuayTix fills as a Western ticket company that understands Western
   travellers.
-- **Cheapest ask to make:** a simple broadcast or email from the stadium whenever a
-  class sells out, with no technology needed. Not yet asked.
+- **Ruled out by Jason, 6 October 2026: any update relayed by the stadium** (a
+  broadcast, a WhatsApp or an email from them). Ticketmelon is the source of truth,
+  not the stadium. A relay puts two gaps in the loop (Ticketmelon to stadium, then
+  stadium to MuayTix), and gaps are where it goes wrong. Do not suggest it again.
+
+## The only two options
+
+1. **Data directly from Ticketmelon** (an agent API or feed), or
+2. **Keep working the way MuayTix works now** (Jason's eyes on the seat map,
+   timed closings).
+
+Nothing in between.
