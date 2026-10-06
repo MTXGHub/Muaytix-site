@@ -108,3 +108,5 @@ date for the small classes would solve most of it. Not yet asked.
    timed closings).
 
 Nothing in between.
+
+**Who Ticketmelon is:** the stadium has outsourced its ticket sales to Ticketmelon, so Ticketmelon is the ticket seller and the source of truth. (Jason, 6 October 2026.)
