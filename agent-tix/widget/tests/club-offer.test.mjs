@@ -11,7 +11,10 @@
 //
 //   The offer price is NOT on the class list. Guests who came for Club Class see
 //   the ordinary price. Only a guest who taps the LEO tile is shown the offer.
-//   The red tile still says "Fully booked", always. That wording is a hard rule.
+//   The red button still says "Fully booked", always. That wording is a hard rule.
+//   The way through is a green button UNDER it, the same size and shape as every
+//   other button. Jason, 7 October 2026: a line of small text was not in your
+//   face enough, and an offer built to get a booking has to be seen.
 //
 //   The widget only ASKS. It sends offerFrom with the booking and nothing else:
 //   no price, no discount. The server decides everything.
@@ -109,11 +112,24 @@ console.log('\nThe class list, before anyone taps anything');
 {
   const { page, ctx } = await open({ plan: () => night() });
   await page.waitForSelector('.mtx-pick', { timeout: 12000 });
-  const leo = page.locator('[data-offer="leo_section"]');
-  check('the LEO tile can be pressed', await leo.count() === 1 && await leo.isEnabled());
-  check('it still says Fully booked', /fully booked/i.test(text(await leo.innerText())), text(await leo.innerText()));
-  check('and it is still the red tile', await leo.evaluate(e => e.classList.contains('mtx-pick--off')));
-  check('it carries a line saying there is something to see', /club class offer/i.test(text(await leo.innerText())));
+  const tile = page.locator('.mtx-pick--offer');
+  const btn = tile.locator('[data-offer="leo_section"]');
+  const pill = tile.locator('.mtx-avail');
+  check('LEO has one offer tile', await tile.count() === 1);
+  check('the tile itself is a plain box, not a button', await tile.evaluate(e => e.tagName === 'DIV'));
+  check('it holds a button for the offer, and that button works', await btn.count() === 1 && await btn.isEnabled());
+  check('the button says what it is', /^get club class offer$/i.test(text(await btn.innerText())), text(await btn.innerText()));
+  check('the red "Fully booked" is still there', /^fully booked$/i.test(text(await pill.innerText())), text(await pill.innerText()));
+  check('and it is still red and still not a button',
+        await pill.evaluate(e => getComputedStyle(e).backgroundColor.replace(/\s/g, '') === 'rgb(255,0,0)' && e.tagName !== 'BUTTON'));
+  check('the offer button is green, like every buyable button',
+        await btn.evaluate(e => getComputedStyle(e).backgroundColor.replace(/\s/g, '') === 'rgb(0,165,80)'),
+        await btn.evaluate(e => getComputedStyle(e).backgroundColor));
+  const pillBox = await pill.boundingBox(), btnBox = await btn.boundingBox();
+  check('the button sits UNDER the red one', btnBox.y >= pillBox.y + pillBox.height - 1, JSON.stringify({ pillBox, btnBox }));
+  check('and is as wide as the red one', Math.abs(btnBox.width - pillBox.width) <= 2, btnBox.width + ' vs ' + pillBox.width);
+  check('and as tall as the other buttons (48px or more)', btnBox.height >= 47, String(btnBox.height));
+  check('it carries no small print line any more', !tile.locator('.mtx-pick-note').count() || (await tile.locator('.mtx-pick-note').count()) === 0);
   check('LEO is not a plain pick any more', await page.locator('[data-pick="leo_section"]').count() === 0);
 
   const list = text(await page.innerText('.mtx-picker'));
