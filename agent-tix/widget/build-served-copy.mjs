@@ -44,7 +44,11 @@ function compact(code, espree) {
     // The stylesheet is one long string with a line break and indentation between
     // rules. In CSS any run of white space means the same as one space, so the
     // breaks and indentation go. Nothing else in any other string is touched.
-    if (t.type === 'String' && text.includes('#mtx-booking{')) text = text.replace(/\\n\s*/g, ' ');
+    // Then the spaces CSS does not need: around { } ; , and after a colon. Never
+    // before a colon, where a space means "any descendant" in a selector.
+    if (t.type === 'String' && text.includes('#mtx-booking{')) {
+      text = text.replace(/\\n\s*/g, ' ').replace(/\s*([{};,])\s*/g, '$1').replace(/:\s+/g, ':');
+    }
     if (prev) {
       if (t.loc.start.line !== prev.loc.end.line) out += '\n';
       else if (needSpace(prev, prevText, t, text)) out += ' ';

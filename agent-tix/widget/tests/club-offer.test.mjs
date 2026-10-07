@@ -118,7 +118,7 @@ console.log('\nThe class list, before anyone taps anything');
   check('LEO has one offer tile', await tile.count() === 1);
   check('the tile itself is a plain box, not a button', await tile.evaluate(e => e.tagName === 'DIV'));
   check('it holds a button for the offer, and that button works', await btn.count() === 1 && await btn.isEnabled());
-  check('the button says what it is', /^get club class offer$/i.test(text(await btn.innerText())), text(await btn.innerText()));
+  check('the button says what it is, in Jason\'s words', /^save on club class tickets$/i.test(text(await btn.innerText())), text(await btn.innerText()));
   check('the red "Fully booked" is still there', /^fully booked$/i.test(text(await pill.innerText())), text(await pill.innerText()));
   check('and it is still red and still not a button',
         await pill.evaluate(e => getComputedStyle(e).backgroundColor.replace(/\s/g, '') === 'rgb(255,0,0)' && e.tagName !== 'BUTTON'));
@@ -131,6 +131,12 @@ console.log('\nThe class list, before anyone taps anything');
   check('and as tall as the other buttons (48px or more)', btnBox.height >= 47, String(btnBox.height));
   check('it carries no small print line any more', !tile.locator('.mtx-pick-note').count() || (await tile.locator('.mtx-pick-note').count()) === 0);
   check('LEO is not a plain pick any more', await page.locator('[data-pick="leo_section"]').count() === 0);
+  // Jason, 7 October 2026: it needs a flash or a highlight that gets them to click.
+  check('the button pulses to draw the eye', await btn.evaluate(e => getComputedStyle(e).animationName) === 'mtx-flash',
+        await btn.evaluate(e => getComputedStyle(e).animationName));
+  check('and nothing else on the page pulses',
+        await page.locator('.mtx-pick, .mtx-seatcard-go, .mtx-avail').evaluateAll(
+          els => els.filter(e => !e.closest('.mtx-pick--offer') && getComputedStyle(e).animationName !== 'none').length) === 0);
 
   const list = text(await page.innerText('.mtx-picker'));
   check('the offer price is NOT on the class list ($50)', !/\$\s?50\b/.test(list), list);
@@ -139,6 +145,20 @@ console.log('\nThe class list, before anyone taps anything');
   check('Club Class shows its ordinary price', /\$55/.test(club), club);
   check('the word "sold out" appears nowhere', !/sold out/i.test(text(await page.innerText('#mtx-booking'))));
   check('nothing says limited', !/limited/i.test(list));
+  await ctx.close();
+}
+
+console.log('\nSomeone who has asked their phone for less motion');
+{
+  const sent = [];
+  const ctx = await browser.newContext({ viewport: { width: 1180, height: 1000 }, locale: 'en-GB', reducedMotion: 'reduce' });
+  const page = await ctx.newPage();
+  await page.route('**/functions/v1/**', r => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(JSON.parse(r.request().postData() || '{}').action === 'events' ? events : night()) }));
+  await page.route('https://muaytix.test/**', r => r.fulfill({ status: 200, contentType: 'text/html', body: `<!doctype html><html><head><meta charset="utf-8">${frag}</head><body><div class="muaytix-ticket-selector" data-event-id="rws_2026_09_05"></div></body></html>` }));
+  await page.goto('https://muaytix.test/x', { waitUntil: 'domcontentloaded' });
+  await page.waitForSelector('[data-offer]', { timeout: 12000 });
+  check('the button sits still', await page.locator('[data-offer]').evaluate(e => getComputedStyle(e).animationName) === 'none');
+  check('and is still there and green', await page.locator('[data-offer]').evaluate(e => getComputedStyle(e).backgroundColor.replace(/\s/g, '') === 'rgb(0,165,80)'));
   await ctx.close();
 }
 

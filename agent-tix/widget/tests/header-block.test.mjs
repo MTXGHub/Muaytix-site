@@ -111,7 +111,7 @@ console.log('\nWhat has to be true of the file itself, before it ever reaches Ti
     console.log('  skip the shrunk copy is the same program as widget.js (no parser installed)');
   } else {
     const src = fs.readFileSync(new URL('../widget.js', import.meta.url), 'utf8');
-    const norm = (t) => t.type + ':' + (t.type === 'String' ? (t.value.includes('#mtx-booking{') ? t.value.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\\n/g, ' ').replace(/\s+/g, ' ').trim() : t.value) : t.value);
+    const norm = (t) => t.type + ':' + (t.type === 'String' ? (t.value.includes('#mtx-booking{') ? t.value.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\\n/g, ' ').replace(/\s+/g, ' ').trim().replace(/\s*([{};,])\s*/g, '$1').replace(/:\s+/g, ':') : t.value) : t.value);
     const a = espree.tokenize(src, { ecmaVersion: 'latest' }).map(norm);
     const c = espree.tokenize(script, { ecmaVersion: 'latest' }).map(norm);
     const same = a.length === c.length && a.every((x, i) => x === c[i]);
