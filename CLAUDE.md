@@ -185,7 +185,7 @@ buttons). Jason pasted it on 5 to 6 October 2026 and said it published fine. The
 one before it, **`96304c9`** (photo cards, back button, closed card, live from
 the morning of 5 October), is the **rollback** (in git:
 `agent-tix/widget/paste-into-tilda-header.html` at that commit). **Not yet
-pasted: the Club Class offer header (7 October 2026, 62,649 bytes).** See the
+pasted: the Club Class offer header (7 October 2026, 62,777 bytes).** See the
 offer bullet below, and do not say it is live until he has pasted it and a real
 page shows the red LEO tile as tappable. The database and both functions for it
 **are** live (applied and deployed 7 October 2026: `availability` v12,
@@ -264,7 +264,8 @@ already fully booked), the live header as the rollback, and the new header last.
   to 1, the same as every green button on the site, which is fine for the big
   price and below the usual 4.5 for the small lines; he has been told) (Jason, 7 October 2026: the first version "tells me nothing... I
   would need a magnifying glass"): his words as the headline, the offer price in
-  the biggest type in the panel, "Usual price" with the old price struck through,
+  the biggest type in the panel, "Usual price" with the old price struck through (26px bold with a thin line; at
+  first it was so small the line hid it),
   a white badge saying "Save $4 per ticket" (worked out in the guest's own
   currency), and "LEO Section is fully booked". It follows the currency selector.
   The banner's small wording (everything except his headline) is mine; he is to

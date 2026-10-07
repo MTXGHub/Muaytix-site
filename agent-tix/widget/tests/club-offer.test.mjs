@@ -181,6 +181,10 @@ console.log('\nTapping the LEO tile');
   check('the price is the biggest type in the panel', await bar.locator('[data-now]').evaluate(e => parseFloat(getComputedStyle(e).fontSize) >= 40));
   check('the usual price is there, struck through', text(await bar.locator('[data-was]').innerText()) === '$55' &&
         await bar.locator('[data-was]').evaluate(e => getComputedStyle(e).textDecorationLine.includes('line-through')));
+  // Jason, 7 October 2026: the old price was so small the strike-through nearly hid it.
+  check('the usual price is big enough to read through the line (26px, bold, thin line)',
+        await bar.locator('[data-was]').evaluate(e => { const c = getComputedStyle(e); return parseFloat(c.fontSize) >= 24 && Number(c.fontWeight) >= 700 && parseFloat(c.textDecorationThickness) <= 2.5; }),
+        await bar.locator('[data-was]').evaluate(e => { const c = getComputedStyle(e); return [c.fontSize, c.fontWeight, c.textDecorationThickness].join(' '); }));
   check('the saving is stated in a badge: $55 less $50 is $5', text(await bar.locator('[data-save]').innerText()).toLowerCase() === 'save $5 per ticket', text(await bar.locator('[data-save]').innerText()));
   // Every piece of text in the banner has to be readable: 4.5 to 1 for small type, 3 to 1 for the big price.
   const contrast = await bar.evaluate(root => {
