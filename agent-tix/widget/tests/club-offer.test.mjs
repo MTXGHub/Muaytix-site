@@ -192,7 +192,14 @@ console.log('\nTapping the LEO tile');
       return { cls: el.className, ratio: (hi + .05) / (lo + .05), big: parseFloat(getComputedStyle(el).fontSize) >= 24 };
     });
   });
-  check('all banner text is readable (4.5 to 1, or 3 to 1 for the big price)', contrast.every(c => c.ratio >= (c.big ? 3 : 4.5)), JSON.stringify(contrast.map(c => [c.cls, c.ratio.toFixed(1)])));
+  // Jason, 7 October 2026: the banner is the same bright green as the Reserve button, not a new
+  // shade. White on that green is about 3.2 to 1, which is exactly what every green button on the
+  // site already is, so on it the floor is 3 to 1 (fine for large type, below the usual 4.5 for
+  // small type; he has been told). The white badge, dark green on white, has to clear 4.5.
+  const onGreen = await bar.evaluate(e => getComputedStyle(e).backgroundColor.replace(/\s/g, '') === 'rgb(0,165,80)');
+  check('the banner is the same bright green as the buttons', onGreen);
+  check('all banner text is readable (3 to 1 on the green, 4.5 to 1 on white)',
+        contrast.every(c => c.ratio >= (/save/.test(c.cls) ? 4.5 : 3)), JSON.stringify(contrast.map(c => [c.cls, c.ratio.toFixed(1)])));
   const unit = text(await page.innerText('[data-unit]'));
   check('the price per ticket is the offer price', unit === '$50', unit);
   const total = text(await page.innerText('[data-total]'));
