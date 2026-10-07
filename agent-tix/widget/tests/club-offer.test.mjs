@@ -172,6 +172,27 @@ console.log('\nTapping the LEO tile');
   check('the chosen class is Club Class', /you have chosen club class/i.test(panel), panel);
   check('it says LEO is fully booked', /leo section is fully booked/i.test(panel), panel);
   check('it shows the usual price', /usual price \$55/i.test(panel), panel);
+  // Jason, 7 October 2026: "tell people exactly what the offer is, and make it in your face".
+  const bar = page.locator('.mtx-ob');
+  check('there is an offer banner, at the top of the panel', await bar.count() === 1 &&
+        await bar.evaluate(e => e === e.closest('.mtx-detail').querySelector('.mtx-ob') && e.getBoundingClientRect().top < e.closest('.mtx-detail').querySelector('[data-qty]').getBoundingClientRect().top));
+  check('it carries his words as the headline', /^save on club class tickets$/i.test(text(await bar.locator('.mtx-ob-k').innerText())), text(await bar.locator('.mtx-ob-k').innerText()));
+  check('the offer price is big and says per ticket', text(await bar.locator('[data-now]').innerText()) === '$50 per ticket', text(await bar.locator('[data-now]').innerText()));
+  check('the price is the biggest type in the panel', await bar.locator('[data-now]').evaluate(e => parseFloat(getComputedStyle(e).fontSize) >= 40));
+  check('the usual price is there, struck through', text(await bar.locator('[data-was]').innerText()) === '$55' &&
+        await bar.locator('[data-was]').evaluate(e => getComputedStyle(e).textDecorationLine.includes('line-through')));
+  check('the saving is stated in a badge: $55 less $50 is $5', text(await bar.locator('[data-save]').innerText()).toLowerCase() === 'save $5 per ticket', text(await bar.locator('[data-save]').innerText()));
+  // Every piece of text in the banner has to be readable: 4.5 to 1 for small type, 3 to 1 for the big price.
+  const contrast = await bar.evaluate(root => {
+    const rgb = c => c.match(/[\d.]+/g).slice(0, 3).map(Number);
+    const lum = ([r, g, b]) => { const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return .2126 * f(r) + .7152 * f(g) + .0722 * f(b); };
+    const back = el => { for (let e = el; e; e = e.parentElement) { const c = getComputedStyle(e).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return rgb(c); } return [255, 255, 255]; };
+    return [...root.querySelectorAll('.mtx-ob-k, .mtx-ob-now, .mtx-ob-was, .mtx-ob-save, .mtx-ob-n')].map(el => {
+      const a = lum(rgb(getComputedStyle(el).color)), b = lum(back(el)); const hi = Math.max(a, b), lo = Math.min(a, b);
+      return { cls: el.className, ratio: (hi + .05) / (lo + .05), big: parseFloat(getComputedStyle(el).fontSize) >= 24 };
+    });
+  });
+  check('all banner text is readable (4.5 to 1, or 3 to 1 for the big price)', contrast.every(c => c.ratio >= (c.big ? 3 : 4.5)), JSON.stringify(contrast.map(c => [c.cls, c.ratio.toFixed(1)])));
   const unit = text(await page.innerText('[data-unit]'));
   check('the price per ticket is the offer price', unit === '$50', unit);
   const total = text(await page.innerText('[data-total]'));
@@ -180,6 +201,10 @@ console.log('\nTapping the LEO tile');
 
   await page.selectOption('[data-cur]', 'thb');
   check('in baht the price per ticket is 1,650', text(await page.innerText('[data-unit]')) === '฿1,650', text(await page.innerText('[data-unit]')));
+  check('the banner follows the currency: price, usual price and saving',
+        text(await page.innerText('[data-now]')) === '฿1,650 per ticket' && text(await page.innerText('[data-was]')) === '฿1,800' &&
+        text(await page.innerText('[data-save]')).toLowerCase() === 'save ฿150 per ticket',
+        [await page.innerText('[data-now]'), await page.innerText('[data-was]'), await page.innerText('[data-save]')].join(' | '));
   check('and the usual price follows the currency', /usual price ฿1,800/i.test(text(await page.innerText('.mtx-detail'))), text(await page.innerText('.mtx-detail')));
   await page.selectOption('[data-cur]', 'usd');
 

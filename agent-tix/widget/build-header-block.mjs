@@ -12,20 +12,8 @@ const js = execSync('node ' + new URL('./build-served-copy.mjs', import.meta.url
 if (js.includes('</scr' + 'ipt>')) throw new Error('cannot be inlined');
 process.stdout.write(
 `<!--
-  MuayTix booking widget.
-
-  Paste this ONCE into the site-wide header (Tilda: Site Settings > More >
-  HTML code for the HEAD). Every page that needs the widget then carries only:
-
-      <div class="muaytix-ticket-selector"></div>                  full calendar
-      <div class="muaytix-ticket-selector"
-           data-event-id="rws_2026_09_05"></div>                   one night
-      <div class="muaytix-ticket-selector"
-           data-event-id="rws_2026_09_05"
-           data-ticket-class="Third Class"></div>                  one night, one class
-
-  Changing the widget then means changing this one block, and every page
-  follows. Nothing to re-paste page by page.
+  MuayTix booking widget. Paste once in the site HEAD (Tilda: Site Settings > More > HTML code for the HEAD).
+  A page then needs only <div class="muaytix-ticket-selector"></div>; add data-event-id="..." for one fight night.
 -->
 <script>
 ${js}

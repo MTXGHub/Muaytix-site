@@ -185,7 +185,7 @@ buttons). Jason pasted it on 5 to 6 October 2026 and said it published fine. The
 one before it, **`96304c9`** (photo cards, back button, closed card, live from
 the morning of 5 October), is the **rollback** (in git:
 `agent-tix/widget/paste-into-tilda-header.html` at that commit). **Not yet
-pasted: the Club Class offer header (7 October 2026, 62,600 bytes).** See the
+pasted: the Club Class offer header (7 October 2026, 62,643 bytes).** See the
 offer bullet below, and do not say it is live until he has pasted it and a real
 page shows the red LEO tile as tappable. The database and both functions for it
 **are** live (applied and deployed 7 October 2026: `availability` v12,
@@ -258,8 +258,14 @@ already fully booked), the live header as the rollback, and the new header last.
   offer price, with "LEO Section is fully booked. Club Class usual
   price $54" above the price. **The offer price is never on the class list**:
   guests who came for Club Class see the ordinary price until they tap LEO (Jason
-  accepted that some of them will find it). The panel line ("LEO Section is
-  fully booked. Club Class usual price $54") is mine, not his: he is to rewrite it.
+  accepted that some of them will find it). The panel opens with a **big
+  green banner** (Jason, 7 October 2026: the first version "tells me nothing... I
+  would need a magnifying glass"): his words as the headline, the offer price in
+  the biggest type in the panel, "Usual price" with the old price struck through,
+  a white badge saying "Save $4 per ticket" (worked out in the guest's own
+  currency), and "LEO Section is fully booked". It follows the currency selector.
+  The banner's small wording (everything except his headline) is mine; he is to
+  rewrite it. Every line in it is checked for contrast by the test.
   - **Prices:** 1,650 baht, $50, EUR 44, GBP 37, AUD 72, CNY 330, in
     `class_fallback_offer_prices`. Each is the Club price times 1,650/1,800
     rounded UP, so none falls under the stadium's 10 per cent discount limit
@@ -284,12 +290,17 @@ already fully booked), the live header as the rollback, and the new header last.
     tickets, baht given away, contribution kept. The question it answers is
     whether this brings in guests who would not have booked, or only discounts
     guests who were booking Club Class anyway.
-  - **Header size:** the offer took the header from 62,454 to 62,600 bytes only
+  - **Header size:** the offer took the header from 62,454 to 62,643 bytes only
     because the repeated SVG icons were folded into one helper (`svg()`), one
     dead style went, and the stylesheet lost the spaces CSS does not need (the
     builder now also strips them around `{ } ; ,` and after `:`, and the header
     test normalises the same way; nine screens rendered pixel for pixel and
-    style for style the same before and after). The 63,000 limit is nearly used up. Shrink before adding.
+    style for style the same before and after), the six identical scroll calls
+    became one `glide()` helper, the three repeated tile headings became one
+    `tileHead()`, and the long comment at the top of the header block was cut to
+    two lines. **Use the nine-screen comparison again for any further shrinking:
+    it caught a "reduce motion" rule I had shortened until the pulse no longer
+    stopped.** The 63,000 limit is nearly used up. Shrink before adding.
 
 `agent-tix/widget/booking-widget.html` is a **standalone prototype, not the live
 widget**. It is out of date and still renders "Limited". Its test suite
