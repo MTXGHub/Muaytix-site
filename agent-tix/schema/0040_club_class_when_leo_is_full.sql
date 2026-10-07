@@ -15,6 +15,13 @@
 -- by at most 10 per cent. 1,650 is 8.3 per cent off. The cap is enforced below
 -- by a trigger, so no later edit to this table can break it by accident.
 --
+-- APPLIED 7 October 2026, in small pieces (club_offer_1 to club_offer_8)
+-- rather than as this one file, because the first three attempts were cancelled
+-- by the "drop trigger" line below (now removed). Same statements, same result,
+-- read back afterwards: report totals identical to a snapshot taken before, every
+-- report still security_invoker with no access for the public keys, and the
+-- 10 per cent guard refusing a $40 Club Class offer.
+--
 -- Three things this migration is careful about:
 --
 --  1. RWS must never get it. RWS Club Class is pre-bought and sells out by
@@ -76,7 +83,8 @@ revoke all on class_fallback_offers, class_fallback_offer_prices from anon, auth
 -- The 10 per cent cap, held in the database so it cannot be edited past.
 -- Integer arithmetic on purpose: offer * 10 must be at least standing * 9.
 create or replace function enforce_fallback_offer_floor() returns trigger
-language plpgsql as $$
+language plpgsql
+set search_path = public as $$
 declare
   standing integer;
   target   uuid;
@@ -99,7 +107,10 @@ begin
   return new;
 end $$;
 
-drop trigger if exists fallback_offer_floor on class_fallback_offer_prices;
+-- No "drop trigger if exists" here, on purpose: the trigger is new, so it would do
+-- nothing, and the Supabase migration tool treats a drop as destructive and
+-- cancels the whole migration. That is what blocked this file three times on
+-- 7 October 2026. If this ever has to be re-run, drop the trigger by hand first.
 create trigger fallback_offer_floor
   before insert or update on class_fallback_offer_prices
   for each row execute function enforce_fallback_offer_floor();
