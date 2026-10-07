@@ -102,6 +102,73 @@ function cleanBenefits(raw: unknown): { text: string; note: string | null }[] {
   return out;
 }
 
+// Club Class offered to a guest whose LEO choice is fully booked (schema/0040).
+//
+// Returns, for each fully booked class that has one, what it leads to and the
+// price in every currency. Three rules, in order of importance:
+//
+//   It is only ever an extra. Any failure here, a missing table included, gives
+//   an empty answer and the night is described exactly as it was before. It must
+//   never be the reason a guest cannot see a night.
+//
+//   It is per night and off by default (events.fallback_offer_enabled), so RWS
+//   never carries it unless someone deliberately switches it on.
+//
+//   It is only sent while the class it leads to can actually be bought, and only
+//   with prices that sit between 90 and 100 per cent of what that class costs on
+//   this night, the stadium's 10 per cent limit. create-checkout checks all of
+//   it again; this decides only what is drawn.
+type NightOffer = { toCode: string; prices: { currency: string; unitAmount: number }[] };
+
+async function offersForNight(
+  eventKey: string,
+  rows: Record<string, unknown>[],
+  nightPrices: Map<string, { currency: string; unitAmount: number }[]>,
+): Promise<Map<string, NightOffer>> {
+  const found = new Map<string, NightOffer>();
+  try {
+    const { data: ev } = await supabase
+      .from("events").select("fallback_offer_enabled").eq("event_key", eventKey).maybeSingle();
+    if (!ev?.fallback_offer_enabled) return found;
+
+    const { data: offers } = await supabase
+      .from("class_fallback_offers").select("id,from_class_id,to_class_id").eq("active", true);
+    if (!offers || offers.length === 0) return found;
+
+    const { data: classes } = await supabase.from("ticket_classes").select("id,code");
+    const codeOf = new Map((classes ?? []).map((c) => [c.id as string, c.code as string]));
+    const { data: offerPrices } = await supabase
+      .from("class_fallback_offer_prices").select("offer_id,currency,unit_amount")
+      .in("offer_id", offers.map((o) => o.id));
+
+    for (const o of offers) {
+      const fromCode = codeOf.get(o.from_class_id);
+      const toCode = codeOf.get(o.to_class_id);
+      const from = rows.find((r) => r.ticket_class_code === fromCode);
+      const to = rows.find((r) => r.ticket_class_code === toCode);
+      if (!fromCode || !toCode || !from || !to) continue;
+      if (from.status !== "fully_booked") continue;
+      if (to.status !== "available" && to.status !== "limited") continue;
+
+      // One price for every currency the target class is sold in, or no offer:
+      // a currency with no offer price would leave a guest with a dead button.
+      const standing = nightPrices.get(String(to.event_ticket_class_id)) ?? [];
+      const prices: { currency: string; unitAmount: number }[] = [];
+      for (const std of standing) {
+        const p = (offerPrices ?? []).find((x) => x.offer_id === o.id && x.currency === std.currency);
+        if (!p || p.unit_amount > std.unitAmount || p.unit_amount * 10 < std.unitAmount * 9) break;
+        prices.push({ currency: std.currency, unitAmount: p.unit_amount });
+      }
+      if (standing.length === 0 || prices.length !== standing.length) continue;
+      found.set(fromCode, { toCode, prices });
+    }
+  } catch (err) {
+    console.error("offers could not be read", { eventKey, message: String(err) });
+    return new Map();
+  }
+  return found;
+}
+
 // What we told them, kept after the fact.
 //
 // Three rules, and all three are the reason this is safe to run on every
@@ -424,6 +491,8 @@ Deno.serve(async (req: Request) => {
         benefitsFor.set(t.code, cleanBenefits(t.benefits));
       }
 
+      const offers = await offersForNight(eventKey, rows, byClass);
+
       // Counted off the same rows the guest is about to be shown, so the note
       // and the answer can never disagree.
       const shown = rows.filter((r) => r.status !== "hidden");
@@ -491,6 +560,9 @@ Deno.serve(async (req: Request) => {
                 ? (fewLeft.get(r.event_ticket_class_id) ?? null)
                 : null,
               prices: byClass.get(r.event_ticket_class_id) ?? [],
+              // Only on a fully booked class that has an offer, and only for a
+              // night that has been switched on. See offersForNight.
+              ...(offers.has(String(r.ticket_class_code)) ? { offer: offers.get(String(r.ticket_class_code)) } : {}),
             })),
         },
         200,

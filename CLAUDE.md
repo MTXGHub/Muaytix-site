@@ -179,12 +179,15 @@ code to a page when that page is published. So: paste the new header, publish
 **one hidden test page** that holds just the widget, check it, and only then
 publish the rest. If it fails, put the previous header back and nothing guests
 see has changed. Never publish all pages on an untested header. Keep the last
-header that worked ready to paste as a rollback. **Live since the morning of
-5 October 2026 (Bangkok): the header at commit `96304c9`** (photo cards, back
-button, closed card). It went into the site header and all pages were published
-at once, and Jason confirmed it on the Knockout tickets page. **Rollback: the
-header at commit `1b8b062`**, the last one live before it (in git:
-`agent-tix/widget/paste-into-tilda-header.html` at that commit).
+header that worked ready to paste as a rollback. **Live, as far as I know: the
+header at commit `0472ed1`** ("Fully booked", never "Sold out", on seat class
+buttons). Jason pasted it on 5 to 6 October 2026 and said it published fine. The
+one before it, **`96304c9`** (photo cards, back button, closed card, live from
+the morning of 5 October), is the **rollback** (in git:
+`agent-tix/widget/paste-into-tilda-header.html` at that commit). **Not yet
+pasted: the Club Class offer header (7 October 2026, 62,674 bytes).** See the
+offer bullet below, and do not say it is live until he has pasted it and a real
+page shows the red LEO tile as tappable.
 
 ### Mounting it
 
@@ -238,6 +241,43 @@ header at commit `1b8b062`**, the last one live before it (in git:
   text**). Sold-out classes show no explanation. The stadium's own site shows
   nothing for a closed class, and a guest left wondering buys elsewhere.
 - It never decides whether tickets are on sale. The database cutoff does.
+- **Club Class offer when LEO is fully booked (built 7 October 2026, Jason's
+  decision, 1,650 baht).** LEO sells out first and a guest who wanted LEO does
+  not think to move up, and Third Class is shut. So a fully booked LEO tile is
+  **still red and still says "Fully booked"**, but is tappable, with one line
+  under the name (`OFFER_TILE` at the top of `widget.js`). Tapping it opens Club
+  Class at the offer price, with "LEO Section is fully booked. Club Class usual
+  price $54" above the price. **The offer price is never on the class list**:
+  guests who came for Club Class see the ordinary price until they tap LEO (Jason
+  accepted that some of them will find it). The wording is mine, not his: he is
+  to rewrite it.
+  - **Prices:** 1,650 baht, $50, EUR 44, GBP 37, AUD 72, CNY 330, in
+    `class_fallback_offer_prices`. Each is the Club price times 1,650/1,800
+    rounded UP, so none falls under the stadium's 10 per cent discount limit
+    (floor 1,620 baht). A trigger in the database refuses a price outside 90 to
+    100 per cent of the standing Club price, and the server checks it again
+    against tonight's price.
+  - **Per night, off by default.** `events.fallback_offer_enabled`. Switched on
+    for Knockout, New Power, Petchyindee and Kiatpetch, **off for RWS and All
+    Star on purpose.** **Any night loaded later needs it switching on**, like the
+    Third Class explanation; a night that is not switched on simply has no offer.
+    **Never switch it on for RWS.**
+  - **The browser only asks** (`offerFrom: "leo_section"`). `create-checkout`
+    looks the offer up, confirms LEO really is fully booked at that moment, and
+    charges the database price. Any doubt returns 409 `offer_unavailable`, and
+    the widget reads the night again and the offer disappears. It never sends a
+    price.
+  - **Fails safe both ways.** If the offer cannot be read, `availability`
+    answers exactly as before and the night is untouched.
+  - **The reports take the discount off the margin** (`offer_discount_minor` on
+    the booking), so a discounted ticket does not overstate contribution.
+    `fallback_offer_by_day` says whether it is working: reached checkout, paid,
+    tickets, baht given away, contribution kept. The question it answers is
+    whether this brings in guests who would not have booked, or only discounts
+    guests who were booking Club Class anyway.
+  - **Header size:** the offer took the header from 62,454 to 62,674 bytes only
+    because the repeated SVG icons were folded into one helper (`svg()`) and one
+    dead style went. The 63,000 limit is nearly used up. Shrink before adding.
 
 `agent-tix/widget/booking-widget.html` is a **standalone prototype, not the live
 widget**. It is out of date and still renders "Limited". Its test suite
@@ -372,6 +412,7 @@ not happen. Say this whenever a window starts before that date.
 | Bookings that need a refund | `bookings_needing_a_refund` |
 | Weekly pay | `weekly_pay` |
 | Tickets per event per week, and each event's share of the week (Knockout, New Power, Petchyindee, RWS, Kiatpetch, All Star) | `tickets_by_event_by_week` |
+| Whether the Club Class offer for a fully booked LEO is working: reached checkout, paid, tickets, baht given away, contribution kept | `fallback_offer_by_day` |
 
 Visits that never start a checkout are not recorded anywhere in the database.
 `widget_looks_*` counts people who opened the booking widget, which is the

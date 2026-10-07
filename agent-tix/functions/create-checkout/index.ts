@@ -159,6 +159,75 @@ function pagePathFrom(value: unknown): string | null {
   return cleaned || null;
 }
 
+// Club Class for a guest whose LEO choice is fully booked (schema/0040).
+//
+// The widget only ASKS for this. Nothing here trusts it: whether the offer
+// exists, whether this night is switched on, whether LEO really is fully booked
+// right now, and the price itself all come from the database. A guest cannot
+// obtain the price on a night where LEO is still on sale, or on RWS, or at a
+// price they typed.
+//
+// The cap is checked again in code even though the database refuses to store
+// an offer more than 10 per cent under the standing price: this night's price
+// may be an override, and the cap is against what is actually being charged.
+//
+// Any doubt means no offer. Failing safe here costs a discount that was never
+// given; failing the other way costs margin on a ticket we hold.
+type TakenOffer = { code: string; unitAmount: number; discountMinor: number };
+
+async function resolveOffer(
+  eventKey: string, fromCode: string, toRow: Record<string, unknown>,
+  currency: string, nightUnitAmount: number,
+): Promise<TakenOffer | null> {
+  try {
+    const { data: ev } = await supabase
+      .from("events").select("fallback_offer_enabled").eq("event_key", eventKey).maybeSingle();
+    if (!ev?.fallback_offer_enabled) return null;
+
+    const { data: classes } = await supabase.from("ticket_classes").select("id,code");
+    const idOf = new Map((classes ?? []).map((c) => [c.code as string, c.id as string]));
+    const fromId = idOf.get(fromCode);
+    const toId = idOf.get(String(toRow.ticket_class_code));
+    if (!fromId || !toId) return null;
+
+    const { data: offer } = await supabase
+      .from("class_fallback_offers").select("id,code")
+      .eq("from_class_id", fromId).eq("to_class_id", toId).eq("active", true).maybeSingle();
+    if (!offer) return null;
+
+    // LEO has to be fully booked at this moment, not merely when the page loaded.
+    const { data: fromRows } = await supabase
+      .from("event_ticket_availability").select("status")
+      .eq("event_key", eventKey).eq("ticket_class_code", fromCode).limit(1);
+    if (fromRows?.[0]?.status !== "fully_booked") return null;
+
+    const { data: prices } = await supabase
+      .from("class_fallback_offer_prices").select("currency,unit_amount")
+      .eq("offer_id", offer.id).in("currency", [currency, "thb"]);
+    const offerIn = (c: string) => prices?.find((p) => p.currency === c)?.unit_amount as number | undefined;
+    const unitAmount = offerIn(currency);
+    const offerThb = offerIn("thb");
+    if (!unitAmount || !offerThb) return null;
+
+    // Never above the price it replaces, never more than 10 per cent under it.
+    if (unitAmount > nightUnitAmount || unitAmount * 10 < nightUnitAmount * 9) return null;
+
+    // What the discount is worth to us, in baht, so the reports can take it off
+    // the margin. Measured on baht prices whatever currency the guest pays in.
+    const { data: thbRow } = await supabase
+      .from("event_ticket_prices").select("unit_amount")
+      .eq("event_ticket_class_id", toRow.event_ticket_class_id as string)
+      .eq("currency", "thb").maybeSingle();
+    const discountMinor = thbRow ? Number(thbRow.unit_amount) - offerThb : NaN;
+    if (!Number.isFinite(discountMinor) || discountMinor < 0) return null;
+
+    return { code: String(offer.code), unitAmount, discountMinor };
+  } catch (err) {
+    console.error("offer could not be checked", { eventKey, fromCode, message: String(err) });
+    return null;
+  }
+}
+
 function longDate(iso: string, timeZone: string) {
   return new Intl.DateTimeFormat("en-GB", {
     timeZone, weekday: "long", day: "numeric", month: "long", year: "numeric",
@@ -193,6 +262,7 @@ Deno.serve(async (req: Request) => {
   const quantity = Number(body.quantity);
   const currency = String(body.currency ?? "").trim().toLowerCase();
   const seatingAcknowledged = body.seatingAcknowledged === true;
+  const offerFrom = String(body.offerFrom ?? "").trim().slice(0, 64);
   const attribution = attributionFrom(body.attribution);
   const pagePath = pagePathFrom(body.pagePath);
   const landingPage = pagePathFrom(body.landingPage);
@@ -260,6 +330,21 @@ Deno.serve(async (req: Request) => {
     if (priceError) throw priceError;
     if (!price) return json({ error: "That currency is not available for this ticket." }, 400, origin);
 
+    // What is actually charged. The standing price, unless the guest asked for
+    // the Club Class offer and the database agrees they are entitled to it.
+    let unitAmount: number = price.unit_amount;
+    let offer: TakenOffer | null = null;
+    if (offerFrom) {
+      offer = await resolveOffer(eventKey, offerFrom, row, currency, price.unit_amount);
+      if (!offer) {
+        return json({
+          error: "That offer is no longer available. Please choose your seats again.",
+          code: "offer_unavailable",
+        }, 409, origin);
+      }
+      unitAmount = offer.unitAmount;
+    }
+
     // Hold the stock before going anywhere near Stripe.
     const expiresAt = new Date(Date.now() + HOLD_MINUTES * 60_000);
     const { data: reservation, error: reserveError } = await supabase.rpc("reserve_tickets", {
@@ -291,10 +376,11 @@ Deno.serve(async (req: Request) => {
       ticket_class: row.ticket_class_name,
       quantity: String(quantity),
       currency,
-      unit_amount: String(price.unit_amount),
+      unit_amount: String(unitAmount),
       price_is_override: String(price.is_override === true),
       seating_acknowledged: String(seatingAcknowledged),
     };
+    if (offer) metadata.offer = offer.code;
 
     // The click id goes to Stripe too, so a booking can be traced back to its
     // advert from the payment record alone -- without opening our database, and
@@ -324,7 +410,7 @@ Deno.serve(async (req: Request) => {
         quantity,
         price_data: {
           currency,
-          unit_amount: price.unit_amount,
+          unit_amount: unitAmount,
           // Built here rather than pointing at a stored product, so the payment
           // page names the night and no Stripe object needs creating per date.
           product_data: {
@@ -369,10 +455,13 @@ Deno.serve(async (req: Request) => {
       .update({
         stripe_checkout_session_id: session.id,
         currency,
-        unit_amount: price.unit_amount,
+        unit_amount: unitAmount,
         ...attribution,
         page_path: pagePath,
         landing_page: landingPage,
+        // Last, and only named when an offer was taken, so an ordinary booking
+        // never touches the new columns at all.
+        ...(offer ? { offer_code: offer.code, offer_discount_minor: offer.discountMinor } : {}),
       })
       .eq("id", reservationId);
 
@@ -389,8 +478,8 @@ Deno.serve(async (req: Request) => {
       sessionId: session.id,
       reservationId,
       currency,
-      unitAmount: price.unit_amount,
-      total: price.unit_amount * quantity,
+      unitAmount,
+      total: unitAmount * quantity,
     }, 200, origin);
 
   } catch (err) {
