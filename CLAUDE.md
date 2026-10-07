@@ -185,7 +185,7 @@ buttons). Jason pasted it on 5 to 6 October 2026 and said it published fine. The
 one before it, **`96304c9`** (photo cards, back button, closed card, live from
 the morning of 5 October), is the **rollback** (in git:
 `agent-tix/widget/paste-into-tilda-header.html` at that commit). **Not yet
-pasted: the Club Class offer header (7 October 2026, 62,737 bytes).** See the
+pasted: the Club Class offer header (7 October 2026, 62,794 bytes).** See the
 offer bullet below, and do not say it is live until he has pasted it and a real
 page shows the red LEO tile as tappable. The database and both functions for it
 **are** live (applied and deployed 7 October 2026: `availability` v12,
@@ -248,13 +248,17 @@ already fully booked), the live header as the rollback, and the new header last.
 - **Club Class offer when LEO is fully booked (built 7 October 2026, Jason's
   decision, 1,650 baht).** LEO sells out first and a guest who wanted LEO does
   not think to move up, and Third Class is shut. So a fully booked LEO tile is
-  **still red and still says "Fully booked"**, but is tappable, with one line
-  under the name (`OFFER_TILE` at the top of `widget.js`). Tapping it opens Club
-  Class at the offer price, with "LEO Section is fully booked. Club Class usual
+  **still red and still says "Fully booked"**, with a **green button under it**,
+  the same size as every other button (`OFFER_BTN`, "Get Club Class offer", at
+  the top of `widget.js`). The tile itself is a plain box, not a button. Jason,
+  7 October 2026, after seeing a line of small text: "it needs to go on a
+  button underneath... in your face". Tapping the button opens Club Class at the
+  offer price, with "LEO Section is fully booked. Club Class usual
   price $54" above the price. **The offer price is never on the class list**:
   guests who came for Club Class see the ordinary price until they tap LEO (Jason
   accepted that some of them will find it). The wording is mine, not his: he is
-  to rewrite it.
+  to rewrite it (he suggested "get club class offer", "claim club class", "book
+  reduced" and "get club class discount", and has not picked one).
   - **Prices:** 1,650 baht, $50, EUR 44, GBP 37, AUD 72, CNY 330, in
     `class_fallback_offer_prices`. Each is the Club price times 1,650/1,800
     rounded UP, so none falls under the stadium's 10 per cent discount limit
@@ -279,7 +283,7 @@ already fully booked), the live header as the rollback, and the new header last.
     tickets, baht given away, contribution kept. The question it answers is
     whether this brings in guests who would not have booked, or only discounts
     guests who were booking Club Class anyway.
-  - **Header size:** the offer took the header from 62,454 to 62,674 bytes only
+  - **Header size:** the offer took the header from 62,454 to 62,794 bytes only
     because the repeated SVG icons were folded into one helper (`svg()`) and one
     dead style went. The 63,000 limit is nearly used up. Shrink before adding.
 
