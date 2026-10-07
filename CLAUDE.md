@@ -432,6 +432,12 @@ group size by guessing. His reasoning, for Ringside on the 6 October Knockout:
   where the locals go, so **Wednesday, Thursday and Sunday (the traditional nights)
   are the LEO demand nights, and LEO usually sells out first.** I cannot do this check;
   I remind him on a schedule, read our own counts, and close only when he says so.
+  **Worked example, 6 to 7 October 2026:** at 5 pm the quantity still reached 15 for
+  Wednesday's New Power. He closed LEO on a timer at 9:30 pm, before sleeping, and the
+  next morning he confirmed the stadium had sold LEO out overnight (he does not know
+  the hour). A traditional night's LEO can go between a 5 pm check and morning, so
+  a late timer before he sleeps is the right safety net. His words: "absolutely
+  right to do what we done".
 - **Ringside and Club Class are checked on the seat map, one big section at a time.**
   He does not open all five Ringside sections (3 to 7). He opens one of the bigger
   ones, and if it looks healthy, stock is sitting in every section and there is no
