@@ -185,9 +185,13 @@ buttons). Jason pasted it on 5 to 6 October 2026 and said it published fine. The
 one before it, **`96304c9`** (photo cards, back button, closed card, live from
 the morning of 5 October), is the **rollback** (in git:
 `agent-tix/widget/paste-into-tilda-header.html` at that commit). **Not yet
-pasted: the Club Class offer header (7 October 2026, 62,674 bytes).** See the
+pasted: the Club Class offer header (7 October 2026, 62,737 bytes).** See the
 offer bullet below, and do not say it is live until he has pasted it and a real
-page shows the red LEO tile as tappable.
+page shows the red LEO tile as tappable. The database and both functions for it
+**are** live (applied and deployed 7 October 2026: `availability` v12,
+`create-checkout` v11). Stage it the usual way: the copier page has a test-copy
+header for one hidden page (mount on Thursday's Petchyindee, where LEO is
+already fully booked), the live header as the rollback, and the new header last.
 
 ### Mounting it
 
@@ -551,6 +555,16 @@ September is wrong in November.
 - Chromium is at `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`. Playwright
   is at `/opt/node22/lib/node_modules/playwright` and is CommonJS, so
   `import pw from '...'; const { chromium } = pw;`.
+- **The Supabase migration tool cancels any migration containing `drop`** (for
+  example `drop trigger if exists`), as a destructive statement. It looks like
+  a failed approval click and is not: it cost three attempts on 7 October 2026.
+  Leave the `drop` out when the thing is new, or send the migration in small
+  pieces, which also shows which line is the cause. The plain query tool is not
+  an alternative route to reach for before finding the cause.
+- **`jlwopomkqeawrxlapwpc.supabase.co` is also blocked from the shell**, so a
+  deployed edge function cannot be called from here. Prove the logic with the
+  tests (which run the real decision code against a fake database) and by
+  running the same queries through the database tool.
 - Screenshots above roughly 0.5 MB fail to upload. Split tall pages in half or
   send JPEG.
 
