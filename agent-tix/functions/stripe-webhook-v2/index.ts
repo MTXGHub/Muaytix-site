@@ -23,6 +23,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import Stripe from "npm:stripe@^22";
+import { reportPurchase } from "./rybbit.ts";
 
 const OUR_SOURCE = "agent_tix_v2";
 
@@ -251,6 +252,52 @@ Deno.serve(async (req: Request) => {
             eventId: event.id, reservationId, message: guestError.message,
           });
         }
+      }
+
+      // Analytics, last and last-resort. The booking is banked and the guest
+      // details saved above; this tells Rybbit one sale happened. It cannot
+      // throw (see rybbit.ts) and has its own catch regardless, so nothing in
+      // it can turn this answer into a 500 and make Stripe replay a sale.
+      try {
+        await reportPurchase(session, String(data ?? ""), {
+          apiKey: Deno.env.get("RYBBIT_API_KEY"),
+          siteIds: [Deno.env.get("RYBBIT_SITE_ID") ?? "", Deno.env.get("RYBBIT_SITE_ID_ALT") ?? ""],
+          fetchFn: fetch as never,
+          // Won by exactly one caller per reservation. If the column is not
+          // there yet this errors, which reads as "not claimed": no event.
+          claim: async () => {
+            const { data: won, error: claimError } = await supabase
+              .from("checkout_reservations")
+              .update({ rybbit_purchase_sent_at: new Date().toISOString() })
+              .eq("id", reservationId)
+              .is("rybbit_purchase_sent_at", null)
+              .select("id");
+            if (claimError) {
+              console.error("rybbit claim failed", { sessionId: session.id, message: claimError.message });
+              return false;
+            }
+            return Array.isArray(won) && won.length === 1;
+          },
+          release: async () => {
+            await supabase
+              .from("checkout_reservations")
+              .update({ rybbit_purchase_sent_at: null })
+              .eq("id", reservationId);
+          },
+          eventDate: async () => {
+            const key = String(meta.event_key ?? "").trim();
+            if (!key) return null;
+            const { data: night } = await supabase
+              .from("event_calendar")
+              .select("local_date")
+              .eq("event_key", key)
+              .maybeSingle();
+            return night?.local_date ? String(night.local_date) : null;
+          },
+          log: (level, msg, detail) => console[level](msg, detail),
+        });
+      } catch (err) {
+        console.error("rybbit purchase failed", { sessionId: session.id, message: message(err) });
       }
 
       console.info("agent tix booking completed", {

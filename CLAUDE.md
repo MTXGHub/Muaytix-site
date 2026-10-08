@@ -329,6 +329,15 @@ There is no `widget` edge function. The widget is pasted into Tilda.
 | `event_ticket_availability` | the view the widget reads, with the resolved `status` |
 | `checkout_reservations` | every checkout: status, quantity, attribution, guest details |
 
+**Rybbit "purchase" event (written 8 October 2026, NOT deployed, NOT tested live).**
+`stripe-webhook-v2` calls `rybbit.ts` after a sale is banked and sends one
+`purchase` event to Rybbit per paid Checkout Session. It never throws and never
+changes the answer Stripe gets. One event per sale is enforced by a claim on
+`checkout_reservations.rybbit_purchase_sent_at` (migration 0041, not yet
+applied). It stays silent until the secret `RYBBIT_API_KEY` exists. Env:
+`RYBBIT_API_KEY`, `RYBBIT_SITE_ID`, optional `RYBBIT_SITE_ID_ALT`. No personal
+data is sent. Test: `agent-tix/functions/tests/rybbit-purchase-guards.test.mjs`.
+
 ### Status precedence
 
 ```
