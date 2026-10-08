@@ -500,6 +500,16 @@ Deno.serve(async (req: Request) => {
       }).catch((e) => {
         console.error("rybbit checkout_started failed", { sessionId: session.id, reason: String(e) });
       });
+      // If the platform keep-alive is missing the event is still sent, but it
+      // may be cut off once the response goes. Say so in the log, with the
+      // session id, instead of failing silently.
+      const keepAlive = (globalThis as unknown as { EdgeRuntime?: { waitUntil?: unknown } })
+        .EdgeRuntime?.waitUntil;
+      if (typeof keepAlive !== "function") {
+        console.warn("rybbit checkout_started: EdgeRuntime.waitUntil is not available, the event may be cut off", {
+          sessionId: session.id,
+        });
+      }
       (globalThis as unknown as { EdgeRuntime?: { waitUntil?: (p: Promise<unknown>) => void } })
         .EdgeRuntime?.waitUntil?.(tracked);
     } catch (e) {

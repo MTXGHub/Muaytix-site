@@ -42,6 +42,7 @@ const check = (name, ok, detail = '') => {
 // two second cut-off (AbortSignal.timeout) does not. The fake network has no
 // socket, so this stands in for one.
 const keepAlive = setInterval(() => {}, 100);
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ---------------------------------------------------------------------------
 // The harness
@@ -156,13 +157,16 @@ function build({ rybbit = 'ok', key = 'RYBBIT_TEST_KEY', stripeCreate, rows } = 
           campaign: 'brand_campaign', device: 'm' },
         ...overrides,
       };
+      delete body.edgeRuntime;
       const req = new Request('https://fake.supabase.co/functions/v1/create-checkout', {
         method: 'POST',
         headers: { origin: 'https://muaytix.com', 'content-type': 'application/json' },
         body: JSON.stringify(body),
       });
       const started = Date.now();
-      globalThis.EdgeRuntime = { waitUntil: (p) => state.waits.push(p) };
+      if (overrides.edgeRuntime === 'missing') delete globalThis.EdgeRuntime;
+      else if (overrides.edgeRuntime === 'nowait') globalThis.EdgeRuntime = {};
+      else globalThis.EdgeRuntime = { waitUntil: (p) => state.waits.push(p) };
       const res = await handler(req);
       const text = await res.text();
       const elapsed = Date.now() - started;
@@ -277,6 +281,21 @@ for (const mode of ['http500', 'reject', 'hang']) {
   check('fetch throwing outright: still the same response, logged with the session id',
     r.status === baseline.status && r.text === baseline.text
     && h.state.logs.some(l => l.level === 'error' && JSON.stringify(l.a).includes('cs_test_abc123')));
+}
+
+for (const mode of ['missing', 'nowait']) {
+  const h = build();
+  const r = await h.send({ edgeRuntime: mode });
+  await sleep(20);
+  check('EdgeRuntime ' + mode + ': the response is the same as with it present', r.status === baseline.status && r.text === baseline.text);
+  check('EdgeRuntime ' + mode + ': a warning naming the session id is logged',
+    h.state.logs.some(l => l.level === 'warn' && JSON.stringify(l.a).includes('waitUntil') && JSON.stringify(l.a).includes('cs_test_abc123')));
+  check('EdgeRuntime ' + mode + ': the event is still sent, once, best effort', h.state.rybbitCalls.length === 1);
+}
+{
+  const h = build();
+  await h.send();
+  check('with the keep-alive present there is no warning', !h.state.logs.some(l => l.level === 'warn' && JSON.stringify(l.a).includes('waitUntil')));
 }
 
 // ---------------------------------------------------------------------------
