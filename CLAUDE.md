@@ -330,8 +330,8 @@ There is no `widget` edge function. The widget is pasted into Tilda.
 | `checkout_reservations` | every checkout: status, quantity, attribution, guest details |
 
 **Rybbit "purchase" event (built 8 October 2026; migration 0041 applied and
-`stripe-webhook-v2` v8 deployed 8 October 2026; NOT yet proven by a real test
-booking).** `stripe-webhook-v2` calls `rybbit.ts` after a sale is banked and
+`stripe-webhook-v2` v8 deployed 8 October 2026; seen working: by 8 October
+Rybbit held 3 `purchase` events and two recent bookings carried the claim).** `stripe-webhook-v2` calls `rybbit.ts` after a sale is banked and
 sends one `purchase` event to Rybbit per paid Checkout Session. It never throws
 and never changes the answer Stripe gets. One event per sale is enforced by a
 claim on `checkout_reservations.rybbit_purchase_sent_at`. Secrets:
@@ -344,7 +344,7 @@ seen firing): an `abandoned_checkout` event** for a
 `checkout.session.expired` unpaid session (pathname `/stripe-webhook-abandoned`),
 claimed on its own column `rybbit_abandoned_sent_at` (migration 0042), and
 `quantity` added to the purchase event. **9 October 2026, `create-checkout` v14
-deployed (read back; not yet seen firing): a `checkout_started` event** sent by `create-checkout` once the Stripe session
+deployed and seen firing (Jason's live test at 22:41 UK, one event in Rybbit): a `checkout_started` event** sent by `create-checkout` once the Stripe session
 exists (pathname `/checkout-started`, not awaited, 2 second cut-off,
 `EdgeRuntime.waitUntil`). `rybbit.ts` is copied into `create-checkout/` and a
 test fails if the two copies differ; edit the webhook's copy and copy it across. Every paid sale logs one
