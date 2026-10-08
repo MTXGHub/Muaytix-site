@@ -23,7 +23,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import Stripe from "npm:stripe@^22";
-import { reportPurchase } from "./rybbit.ts";
+import { reportAbandoned, reportPurchase } from "./rybbit.ts";
 
 const OUR_SOURCE = "agent_tix_v2";
 
@@ -349,6 +349,56 @@ Deno.serve(async (req: Request) => {
         console.error("could not save details from a lapsed checkout", {
           eventId: event.id, reservationId, message: lapsedError.message,
         });
+      }
+    }
+
+    // Analytics, after everything above is done: the seats are back and the
+    // address is kept. Only for a checkout that TIMED OUT (not a failed async
+    // payment), and only tells Rybbit once. Same guarantees as the purchase
+    // event: it never raises an error, so it cannot turn this answer into a 500.
+    if (event.type === "checkout.session.expired") {
+      try {
+        const rybbit = await reportAbandoned(session, {
+          apiKey: Deno.env.get("RYBBIT_API_KEY"),
+          userAgent: Deno.env.get("RYBBIT_USER_AGENT") ?? undefined,
+          siteIds: [Deno.env.get("RYBBIT_SITE_ID") ?? "", Deno.env.get("RYBBIT_SITE_ID_ALT") ?? ""],
+          fetchFn: fetch as never,
+          // Its own column, not the purchase one: a booking can be abandoned and
+          // then paid late, and both are real.
+          claim: async () => {
+            const { data: won, error: claimError } = await supabase
+              .from("checkout_reservations")
+              .update({ rybbit_abandoned_sent_at: new Date().toISOString() })
+              .eq("id", reservationId)
+              .is("rybbit_abandoned_sent_at", null)
+              .select("id");
+            if (claimError) {
+              console.error("rybbit abandoned claim failed", { sessionId: session.id, message: claimError.message });
+              return false;
+            }
+            return Array.isArray(won) && won.length === 1;
+          },
+          release: async () => {
+            await supabase
+              .from("checkout_reservations")
+              .update({ rybbit_abandoned_sent_at: null })
+              .eq("id", reservationId);
+          },
+          eventDate: async () => {
+            const key = String(meta.event_key ?? "").trim();
+            if (!key) return null;
+            const { data: night } = await supabase
+              .from("event_calendar")
+              .select("local_date")
+              .eq("event_key", key)
+              .maybeSingle();
+            return night?.local_date ? String(night.local_date) : null;
+          },
+          log: (level, msg, detail) => console[level](msg, detail),
+        });
+        console.info("rybbit abandoned outcome", { sessionId: session.id, outcome: rybbit });
+      } catch (err) {
+        console.error("rybbit abandoned failed", { sessionId: session.id, message: message(err) });
       }
     }
 

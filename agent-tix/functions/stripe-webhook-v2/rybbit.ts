@@ -1,13 +1,15 @@
-// Agent Tix — tells Rybbit analytics that a sale happened.
+// Agent Tix — tells Rybbit analytics that a sale happened, or that a checkout
+// was abandoned.
 //
-// Called by the Stripe webhook AFTER the sale has been banked. It exists so the
-// site's analytics can count purchases; it is not part of fulfilment, and
-// nothing in here may ever stop, delay or undo a booking. Three rules follow:
+// Called by the Stripe webhook AFTER the sale has been banked (purchase) or the
+// seats have been put back (abandoned_checkout). It exists so the site's
+// analytics can count them; it is not part of fulfilment, and nothing in here
+// may ever stop, delay or undo a booking or a release. Three rules follow:
 //
 //   1. It never throws. Every failure is logged with the session id and
 //      swallowed, so the webhook still answers Stripe with 200.
 //
-//   2. It sends at most one event per Checkout Session. The claim is taken in
+//   2. It sends at most one event of each kind per Checkout Session. The claim is taken in
 //      the database BEFORE the call, so two copies of the same event (Stripe
 //      retries, or completed followed by async_payment_succeeded) race for one
 //      claim and only the winner sends. If Rybbit then fails, the claim is
@@ -23,6 +25,13 @@
 export const RYBBIT_TRACK_URL = "https://app.rybbit.io/api/track";
 export const PURCHASE_HOSTNAME = "muaytix.com";
 export const PURCHASE_PATHNAME = "/stripe-webhook-purchase";
+export const ABANDONED_PATHNAME = "/stripe-webhook-abandoned";
+
+export type EventKind = "purchase" | "abandoned_checkout";
+const EVENT_FOR: Record<EventKind, { name: string; pathname: string }> = {
+  purchase: { name: "purchase", pathname: PURCHASE_PATHNAME },
+  abandoned_checkout: { name: "abandoned_checkout", pathname: ABANDONED_PATHNAME },
+};
 
 // Rybbit's bot blocking still reads the user agent on events sent from a
 // server, and the one Deno or Supabase would send by default looks like a
@@ -60,6 +69,7 @@ export type PurchaseFacts = {
   sessionId: string;
   amountMinor: number;
   currency: string;
+  quantity?: number | null;
   ticketClass?: string | null;
   eventName?: string | null;
   eventDate?: string | null;
@@ -77,22 +87,30 @@ export function purchaseProperties(f: PurchaseFacts): string {
     const v = String(value ?? "").trim();
     if (v) props[key] = v;
   };
+  // A whole number of tickets, or nothing. Never a guess.
+  if (Number.isInteger(f.quantity) && (f.quantity as number) > 0) props.quantity = f.quantity as number;
   add("ticket_class", f.ticketClass);
   add("event_name", f.eventName);
   add("event_date", f.eventDate);
   return JSON.stringify(props);
 }
 
-export function purchaseBody(f: PurchaseFacts, siteId: string, userAgent = DEFAULT_USER_AGENT) {
+export function eventBody(
+  kind: EventKind, f: PurchaseFacts, siteId: string, userAgent = DEFAULT_USER_AGENT,
+) {
   return {
     site_id: siteId,
     type: "custom_event",
-    event_name: "purchase",
+    event_name: EVENT_FOR[kind].name,
     hostname: PURCHASE_HOSTNAME,
-    pathname: PURCHASE_PATHNAME,
+    pathname: EVENT_FOR[kind].pathname,
     user_agent: String(userAgent || "").trim() || DEFAULT_USER_AGENT,
     properties: purchaseProperties(f),
   };
+}
+
+export function purchaseBody(f: PurchaseFacts, siteId: string, userAgent = DEFAULT_USER_AGENT) {
+  return eventBody("purchase", f, siteId, userAgent);
 }
 
 export type SendResult =
@@ -111,7 +129,8 @@ const SITE_REJECTED = new Set([400, 404, 422]);
 // and the script tag on the page decides which one /api/track accepts. A
 // network error or a 5xx is never retried: the outcome is unknown and a second
 // send could double count.
-export async function sendPurchase(opts: {
+export async function sendEvent(opts: {
+  kind: EventKind;
   apiKey: string;
   siteIds: string[];
   facts: PurchaseFacts;
@@ -133,7 +152,7 @@ export async function sendPurchase(opts: {
           "Content-Type": "application/json",
           "User-Agent": userAgent,
         },
-        body: JSON.stringify(purchaseBody(opts.facts, siteId, userAgent)),
+        body: JSON.stringify(eventBody(opts.kind, opts.facts, siteId, userAgent)),
         signal: AbortSignal.timeout(opts.timeoutMs ?? 4000),
       });
       if (res.ok) return { ok: true, siteIdUsed: siteId, status: res.status };
@@ -155,6 +174,10 @@ export async function sendPurchase(opts: {
   return last;
 }
 
+export function sendPurchase(opts: Omit<Parameters<typeof sendEvent>[0], "kind">) {
+  return sendEvent({ ...opts, kind: "purchase" });
+}
+
 // What the webhook hands in. Everything that touches the database or the
 // network is passed in, so this runs against fakes in the tests.
 export type PurchaseDeps = {
@@ -172,28 +195,25 @@ export type PurchaseDeps = {
 // (paid_without_stock) is a refund waiting to happen, not a sale to count.
 const COUNTABLE = new Set(["completed", "completed_late", "already_completed"]);
 
-export async function reportPurchase(
-  session: {
-    id: string;
-    payment_status: string | null;
-    amount_total: number | null;
-    currency: string | null;
-    metadata: Record<string, string> | null;
-  },
-  fulfilment: string,
-  deps: PurchaseDeps,
-): Promise<string> {
+type SessionFacts = {
+  id: string;
+  payment_status: string | null;
+  amount_total: number | null;
+  currency: string | null;
+  metadata: Record<string, string> | null;
+};
+
+// The steps both events share, in the order that keeps them safe: claim first,
+// send once, hand the claim back on failure, never throw. The caller has
+// already decided the session qualifies.
+async function deliver(kind: EventKind, session: SessionFacts, deps: PurchaseDeps): Promise<string> {
   const sessionId = session.id;
   try {
-    // Quietly off until the key is set, so deploying this before the key exists
-    // changes nothing.
-    if (!deps.apiKey) return "skipped_no_key";
-    if (session.payment_status !== "paid") return "skipped_not_paid";
-    if (!COUNTABLE.has(fulfilment)) return "skipped_not_a_sale";
     if (typeof session.amount_total !== "number" || !session.currency) {
-      deps.log("warn", "rybbit purchase skipped: session has no amount", { sessionId });
+      deps.log("warn", `rybbit ${kind} skipped: session has no amount`, { sessionId });
       return "skipped_no_amount";
     }
+    if (!deps.apiKey) return "skipped_no_key";
 
     if (!(await deps.claim())) return "skipped_already_sent";
 
@@ -201,7 +221,8 @@ export async function reportPurchase(
     let eventDate: string | null = null;
     try { eventDate = await deps.eventDate(); } catch { eventDate = null; }
 
-    const result = await sendPurchase({
+    const result = await sendEvent({
+      kind,
       apiKey: deps.apiKey,
       siteIds: deps.siteIds,
       userAgent: deps.userAgent,
@@ -210,6 +231,7 @@ export async function reportPurchase(
         sessionId,
         amountMinor: session.amount_total,
         currency: session.currency,
+        quantity: Number(meta.quantity),
         ticketClass: meta.ticket_class,
         eventName: meta.event_name,
         eventDate,
@@ -217,16 +239,52 @@ export async function reportPurchase(
     });
 
     if (result.ok) {
-      deps.log("info", "rybbit purchase sent", { sessionId, siteIdUsed: result.siteIdUsed });
+      deps.log("info", `rybbit ${kind} sent`, { sessionId, siteIdUsed: result.siteIdUsed });
       return "sent";
     }
-    deps.log("error", "rybbit purchase failed", { sessionId, status: result.status, reason: result.reason });
+    deps.log("error", `rybbit ${kind} failed`, { sessionId, status: result.status, reason: result.reason });
     try { await deps.release(); } catch { /* the claim stays; one missed event beats a loop */ }
     return "failed";
   } catch (err) {
-    deps.log("error", "rybbit purchase failed", {
+    deps.log("error", `rybbit ${kind} failed`, {
       sessionId, reason: err instanceof Error ? err.name : "unknown",
     });
+    return "failed";
+  }
+}
+
+// A sale: paid, and the guest has a seat.
+export async function reportPurchase(
+  session: SessionFacts,
+  fulfilment: string,
+  deps: PurchaseDeps,
+): Promise<string> {
+  try {
+    // Quietly off until the key is set, so deploying this before the key exists
+    // changes nothing.
+    if (!deps.apiKey) return "skipped_no_key";
+    if (session.payment_status !== "paid") return "skipped_not_paid";
+    if (!COUNTABLE.has(fulfilment)) return "skipped_not_a_sale";
+    return await deliver("purchase", session, deps);
+  } catch {
+    return "failed";
+  }
+}
+
+// A checkout that timed out unpaid. Only ever an "unpaid" session: a session
+// that somehow carries a payment is a sale, not an abandonment, and is left to
+// the purchase path. Its claim is a different column from the purchase claim,
+// because one booking can legitimately be both (abandoned, then paid late from
+// the page that outlived the hold).
+export async function reportAbandoned(
+  session: SessionFacts,
+  deps: PurchaseDeps,
+): Promise<string> {
+  try {
+    if (!deps.apiKey) return "skipped_no_key";
+    if (session.payment_status !== "unpaid") return "skipped_not_unpaid";
+    return await deliver("abandoned_checkout", session, deps);
+  } catch {
     return "failed";
   }
 }

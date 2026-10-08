@@ -48,7 +48,7 @@ check('no floating point dust: 1999 usd is 19.99', R.majorUnits(1999, 'usd') ===
 // ---------------------------------------------------------------------------
 console.log('\nThe request body');
 const facts = {
-  sessionId: 'cs_test_abc123', amountMinor: 360000, currency: 'thb',
+  sessionId: 'cs_test_abc123', amountMinor: 360000, currency: 'thb', quantity: 2,
   ticketClass: 'Club Class', eventName: 'Petchyindee Traditional Muay Thai', eventDate: '2026-10-08',
 };
 const body = R.purchaseBody(facts, '049ad8e38da6');
@@ -61,16 +61,32 @@ check('an explicit user_agent is in the body, and it is an ordinary browser one'
 check('a custom user agent replaces it', R.purchaseBody(facts, 'x', 'Custom/1').user_agent === 'Custom/1');
 check('a blank one falls back to the default', R.purchaseBody(facts, 'x', '  ').user_agent === R.DEFAULT_USER_AGENT);
 const props = JSON.parse(body.properties);
-check('properties holds amount, currency, session id, class, event, date',
-  props.amount === 3600 && props.currency === 'THB' && props.stripe_session_id === 'cs_test_abc123'
+check('properties holds amount, currency, quantity, session id, class, event, date',
+  props.amount === 3600 && props.quantity === 2 && props.currency === 'THB' && props.stripe_session_id === 'cs_test_abc123'
   && props.ticket_class === 'Club Class' && props.event_name === 'Petchyindee Traditional Muay Thai'
   && props.event_date === '2026-10-08');
 check('only strings and numbers', Object.values(props).every(v => typeof v === 'string' || typeof v === 'number'));
-check('exactly those six property keys', Object.keys(props).sort().join() ===
-  'amount,currency,event_date,event_name,stripe_session_id,ticket_class');
+check('exactly those seven property keys', Object.keys(props).sort().join() ===
+  'amount,currency,event_date,event_name,quantity,stripe_session_id,ticket_class');
+check('quantity is a NUMBER, not a string', typeof props.quantity === 'number');
+for (const bad of ['2', 0, -1, 1.5, NaN, null, undefined]) {
+  const p2 = JSON.parse(R.purchaseBody({ ...facts, quantity: bad }, 'x').properties);
+  check('a quantity of ' + JSON.stringify(bad) + ' is left out, never guessed', !('quantity' in p2));
+}
 check('currency is upper case', props.currency === 'THB');
 const sparse = JSON.parse(R.purchaseBody({ sessionId: 's', amountMinor: 100, currency: 'usd' }, '1').properties);
 check('a missing detail is left out, not sent empty', Object.keys(sparse).sort().join() === 'amount,currency,stripe_session_id');
+const ab = R.eventBody('abandoned_checkout', facts, '049ad8e38da6');
+check('the abandoned event has its own name and pathname',
+  ab.event_name === 'abandoned_checkout' && ab.pathname === '/stripe-webhook-abandoned'
+  && ab.type === 'custom_event' && ab.hostname === 'muaytix.com' && ab.site_id === '049ad8e38da6');
+check('the abandoned event carries the same user agent and a string properties',
+  ab.user_agent === body.user_agent && typeof ab.properties === 'string');
+check('the abandoned properties are the same seven keys, strings and numbers only',
+  Object.keys(JSON.parse(ab.properties)).sort().join() === 'amount,currency,event_date,event_name,quantity,stripe_session_id,ticket_class'
+  && Object.values(JSON.parse(ab.properties)).every(v => typeof v === 'string' || typeof v === 'number'));
+check('the purchase event is unchanged: still purchase on /stripe-webhook-purchase',
+  body.event_name === 'purchase' && body.pathname === '/stripe-webhook-purchase');
 
 // ---------------------------------------------------------------------------
 console.log('\nSending');
@@ -148,7 +164,7 @@ function net(...answers) {
 console.log('\nThe whole step, against a fake claim and a fake network');
 const session = (over = {}) => ({
   id: 'cs_test_abc123', payment_status: 'paid', amount_total: 360000, currency: 'thb',
-  metadata: { source: 'agent_tix_v2', ticket_class: 'Club Class', event_name: 'Petchyindee Traditional Muay Thai', event_key: 'petchyindee_2026_10_08' },
+  metadata: { source: 'agent_tix_v2', quantity: '2', ticket_class: 'Club Class', event_name: 'Petchyindee Traditional Muay Thai', event_key: 'petchyindee_2026_10_08' },
   ...over,
 });
 function deps({ fetchFn, claimed = false, key = 'KEY', dateFails = false } = {}) {  // key: null means "not set"
@@ -171,6 +187,7 @@ function deps({ fetchFn, claimed = false, key = 'KEY', dateFails = false } = {})
   const sent = JSON.parse(d.fetchFn.calls[0].init.body);
   check('a paid, completed sale sends one event', out === 'sent' && d.fetchFn.calls.length === 1);
   check('with the night\'s date from the calendar', JSON.parse(sent.properties).event_date === '2026-10-08');
+  check('and the quantity from the session, as a number', JSON.parse(sent.properties).quantity === 2);
   check('the success is logged with the session id', d.logs.some(l => l.level === 'info' && l.detail.sessionId === 'cs_test_abc123'));
 }
 {
@@ -255,6 +272,73 @@ function deps({ fetchFn, claimed = false, key = 'KEY', dateFails = false } = {})
 }
 
 // ---------------------------------------------------------------------------
+console.log('\nThe abandoned checkout event, against a fake claim and a fake network');
+const expired = (over = {}) => session({ payment_status: 'unpaid', ...over });
+{
+  const d = deps();
+  const out = await R.reportAbandoned(expired(), d);
+  const wire = JSON.parse(d.fetchFn.calls[0].init.body);
+  check('an expired, unpaid session sends one abandoned_checkout event', out === 'sent' && d.fetchFn.calls.length === 1 && wire.event_name === 'abandoned_checkout');
+  check('on /stripe-webhook-abandoned', wire.pathname === '/stripe-webhook-abandoned');
+  const pr = JSON.parse(wire.properties);
+  check('with amount, currency, quantity, class, event, date and session id',
+    pr.amount === 3600 && pr.currency === 'THB' && pr.quantity === 2 && pr.ticket_class === 'Club Class'
+    && pr.event_name === 'Petchyindee Traditional Muay Thai' && pr.event_date === '2026-10-08' && pr.stripe_session_id === 'cs_test_abc123');
+  check('same headers and user agent as the purchase event',
+    d.fetchFn.calls[0].init.headers.Authorization === 'Bearer KEY' && d.fetchFn.calls[0].init.headers['User-Agent'] === wire.user_agent && wire.user_agent.startsWith('Mozilla/5.0'));
+}
+{
+  const d = deps();
+  await R.reportAbandoned(expired(), d);
+  const again = await R.reportAbandoned(expired(), d);
+  check('the same expired event again sends nothing', again === 'skipped_already_sent' && d.fetchFn.calls.length === 1);
+}
+{
+  const d = deps();
+  const [a, b] = await Promise.all([R.reportAbandoned(expired(), d), R.reportAbandoned(expired(), d)]);
+  check('two copies arriving together: exactly one sends', d.fetchFn.calls.length === 1 && [a, b].sort().join() === 'sent,skipped_already_sent');
+}
+{
+  const d = deps();
+  check('a PAID session is never reported as abandoned', (await R.reportAbandoned(session({ payment_status: 'paid' }), d)) === 'skipped_not_unpaid' && d.fetchFn.calls.length === 0);
+}
+{
+  const d = deps({ key: null });
+  check('no key: nothing happens at all', (await R.reportAbandoned(expired(), d)) === 'skipped_no_key' && d.fetchFn.calls.length === 0 && d.state.claimed === false);
+}
+{
+  const d = deps({ fetchFn: net(reply(500)) });
+  const out = await R.reportAbandoned(expired(), d);
+  check('Rybbit down: no throw, logged with the session id, claim handed back, no loop',
+    out === 'failed' && d.logs.some(l => l.level === 'error' && l.detail.sessionId === 'cs_test_abc123') && d.state.released === 1 && d.fetchFn.calls.length === 1);
+}
+{
+  const d = deps({ fetchFn: net(new Error('offline')) });
+  check('network error: no throw', (await R.reportAbandoned(expired(), d)) === 'failed');
+}
+{
+  const d = deps();
+  d.claim = async () => { throw new Error('db'); };
+  check('the claim failing: no throw, nothing sent', (await R.reportAbandoned(expired(), d)) === 'failed' && d.fetchFn.calls.length === 0);
+}
+{
+  const d = deps();
+  const out = await R.reportAbandoned(expired({ amount_total: null }), d);
+  check('no amount: skipped and logged, not guessed', out === 'skipped_no_amount' && d.fetchFn.calls.length === 0);
+}
+{
+  const d = deps();
+  const rich = expired({
+    customer_details: { name: 'Jason Mclellan', email: 'jason@example.com', phone: '+66800000000', address: { line1: '1 Test Street' } },
+    customer_email: 'jason@example.com',
+  });
+  await R.reportAbandoned(rich, d);
+  const wire = d.fetchFn.calls[0].init.body;
+  const leaked = ['Jason', 'Mclellan', 'jason@example.com', '+66800000000', 'Test Street'].filter(x => wire.includes(x));
+  check('no name, email, phone or address in the abandoned request', leaked.length === 0, leaked.join());
+}
+
+// ---------------------------------------------------------------------------
 console.log('\nThe webhook itself (source guards)');
 const flat = (s) => s.replace(/\s+/g, ' ');
 const idx = flat(indexSrc);
@@ -285,6 +369,27 @@ check('no pattern with a double slash anywhere in the new code', !/\/[^/\n]*\/\/
 check('the existing fulfilment calls are untouched',
   idx.includes('supabase.rpc("complete_reservation"') && idx.includes('supabase.rpc("release_reservation"'));
 check('the 500 for a failed booking update is still there', idx.includes('"Booking update failed." }, 500'));
+
+// The expired-session path. The release of the seats is the work that matters,
+// so the Rybbit step must sit strictly after it and after the kept address.
+const rel = at('supabase.rpc("release_reservation"');
+const lapsedSave = at('could not save details from a lapsed checkout');
+const abandoned = at('await reportAbandoned(');
+const releasedLog = at('"agent tix reservation released"');
+const replyLine = at('action: String(data ?? newStatus)');
+check('the abandoned step runs AFTER release_reservation', rel > 0 && rel < abandoned);
+check('and after the lapsed address is kept', lapsedSave > 0 && lapsedSave < abandoned);
+check('and before the existing log line and reply, which are unchanged', abandoned < releasedLog && releasedLog < replyLine);
+check('a failed release still throws into the 500 path, before any analytics',
+  /p_new_status: newStatus,\s*\}\);\s*if \(error\) throw error;/.test(indexSrc) && rel < abandoned);
+check('the abandoned step is only for checkout.session.expired, not async_payment_failed',
+  /if \(event\.type === "checkout\.session\.expired"\) \{\s*try \{\s*const rybbit = await reportAbandoned\(/.test(indexSrc));
+check('it sits in its own try/catch that only logs',
+  /await reportAbandoned\([\s\S]*?\} catch \(err\) \{ console\.error\("rybbit abandoned failed"/.test(idx));
+check('the abandoned claim uses its OWN column, not the purchase one',
+  indexSrc.includes('rybbit_abandoned_sent_at') && !/reportAbandoned[\s\S]{0,2500}rybbit_purchase_sent_at[\s\S]{0,40}reportPurchase/.test(indexSrc));
+check('the lapsed status is still derived the same way',
+  idx.includes('const newStatus = event.type === "checkout.session.expired" ? "expired" : "failed";'));
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
