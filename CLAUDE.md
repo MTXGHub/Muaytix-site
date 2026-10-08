@@ -339,8 +339,10 @@ claim on `checkout_reservations.rybbit_purchase_sent_at`. Secrets:
 script), `RYBBIT_SITE_ID_ALT` (10499), optional `RYBBIT_USER_AGENT`. The request
 carries an explicit browser `user_agent` because Rybbit's bot blocking checks
 server-side events too. No personal data is sent. **Also, 9 October 2026,
-migration 0042 applied and `stripe-webhook-v2` v9 deployed (read back; not yet
-seen firing): an `abandoned_checkout` event** for a
+migration 0042 applied and `stripe-webhook-v2` v9 deployed and seen firing at
+23:12 UK on 8 October (one event in Rybbit, claim set, log line "sent"; the
+string site id 049ad8e38da6 was accepted first time, so the 10499 fallback has
+not been needed): an `abandoned_checkout` event** for a
 `checkout.session.expired` unpaid session (pathname `/stripe-webhook-abandoned`),
 claimed on its own column `rybbit_abandoned_sent_at` (migration 0042), and
 `quantity` added to the purchase event. **9 October 2026, `create-checkout` v14
