@@ -22,6 +22,7 @@ stock.
 | Not on record | Sat 10 Oct | Club Class | Database says 40. Not confirmed by Jason on 6 Oct. | Unknown | 40 |
 | Not on record | 17, 24, 31 Oct | all classes | Not given. Placeholders (25 / 40 / 25) in the database. | none | All classes closed on 6 Oct at Jason's instruction. Reopen only with real counts. |
 | 9 Oct 2026, 3:2x am Bangkok (in chat; confirmed Third Class in a follow-up message) | Sat 10 Oct | Third Class | **6 left to sell** (stadium sold out, no more coming). 11 already sold, so 17 in hand in total. | Jason | total_quantity set to **17** (was 50). Read back: 17 total, 11 sold, 0 reserved, 6 left, Available. |
+| 9 Oct 2026, about 5 am Bangkok (in chat) | Sat 10 Oct | Ringside | **3 left, all solo seats** (matches 9 in hand, 6 sold). Jason first asked for them back on sale with max 1 together, then changed his mind: hold them OFF sale overnight while he offers upgrades to the single-seat guests. | Jason | total_quantity stays **9**. Class left **fully booked**, max seats together empty. (Briefly reopened for about a minute by mistake and put back; no checkout was made in that time.) |
 
 ## What went wrong on 6 October 2026
 
