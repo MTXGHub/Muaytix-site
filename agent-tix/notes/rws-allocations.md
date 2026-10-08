@@ -21,6 +21,7 @@ stock.
 | Not on record | Sat 10 Oct | Ringside | Database says 9. Not confirmed by Jason on 6 Oct. | Unknown | 9 |
 | Not on record | Sat 10 Oct | Club Class | Database says 40. Not confirmed by Jason on 6 Oct. | Unknown | 40 |
 | Not on record | 17, 24, 31 Oct | all classes | Not given. Placeholders (25 / 40 / 25) in the database. | none | All classes closed on 6 Oct at Jason's instruction. Reopen only with real counts. |
+| 9 Oct 2026, 3:2x am Bangkok (in chat; confirmed Third Class in a follow-up message) | Sat 10 Oct | Third Class | **6 left to sell** (stadium sold out, no more coming). 11 already sold, so 17 in hand in total. | Jason | total_quantity set to **17** (was 50). Read back: 17 total, 11 sold, 0 reserved, 6 left, Available. |
 
 ## What went wrong on 6 October 2026
 
