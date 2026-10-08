@@ -9,6 +9,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import Stripe from "npm:stripe@^22";
+import { localDateOf, reportCheckoutStarted } from "./rybbit.ts";
 
 const TENANT = "muaytix";
 // We sell tickets, we do not keep them. A guest deciding at ten past five on a
@@ -471,6 +472,38 @@ Deno.serve(async (req: Request) => {
       console.error("attribution not stored", {
         reservationId, message: attrError.message,
       });
+    }
+
+    // Analytics, last: the hold is made, the session exists, the attribution is
+    // stored and the URL is about to be returned. Tells Rybbit a checkout started.
+    // It is NOT awaited: the guest is never held up for it. It cannot raise an
+    // error (see rybbit.ts) and sits in its own try/catch, so nothing here can
+    // reach the response or the outer catch that gives the seats back.
+    // EdgeRuntime.waitUntil keeps the work alive after the response is sent.
+    try {
+      const tracked = reportCheckoutStarted({
+        sessionId: session.id,
+        amountMinor: typeof session.amount_total === "number" ? session.amount_total : unitAmount * quantity,
+        currency: session.currency ?? currency,
+        quantity,
+        ticketClass: row.ticket_class_name,
+        eventName: row.event_name,
+        eventDate: localDateOf(row.starts_at, row.venue_timezone),
+      }, {
+        apiKey: Deno.env.get("RYBBIT_API_KEY"),
+        userAgent: Deno.env.get("RYBBIT_USER_AGENT") ?? undefined,
+        siteIds: [Deno.env.get("RYBBIT_SITE_ID") ?? "", Deno.env.get("RYBBIT_SITE_ID_ALT") ?? ""],
+        fetchFn: fetch as never,
+        log: (level, msg, detail) => console[level](msg, detail),
+      }).then((outcome) => {
+        console.info("rybbit checkout_started outcome", { sessionId: session.id, outcome });
+      }).catch((e) => {
+        console.error("rybbit checkout_started failed", { sessionId: session.id, reason: String(e) });
+      });
+      (globalThis as unknown as { EdgeRuntime?: { waitUntil?: (p: Promise<unknown>) => void } })
+        .EdgeRuntime?.waitUntil?.(tracked);
+    } catch (e) {
+      console.error("rybbit checkout_started failed", { sessionId: session.id, reason: String(e) });
     }
 
     return json({

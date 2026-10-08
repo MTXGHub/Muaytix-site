@@ -343,7 +343,11 @@ migration 0042 applied and `stripe-webhook-v2` v9 deployed (read back; not yet
 seen firing): an `abandoned_checkout` event** for a
 `checkout.session.expired` unpaid session (pathname `/stripe-webhook-abandoned`),
 claimed on its own column `rybbit_abandoned_sent_at` (migration 0042), and
-`quantity` added to the purchase event. Every paid sale logs one
+`quantity` added to the purchase event. **Built 9 October 2026, NOT deployed:
+a `checkout_started` event** sent by `create-checkout` once the Stripe session
+exists (pathname `/checkout-started`, not awaited, 2 second cut-off,
+`EdgeRuntime.waitUntil`). `rybbit.ts` is copied into `create-checkout/` and a
+test fails if the two copies differ; edit the webhook's copy and copy it across. Every paid sale logs one
 "rybbit purchase outcome" line (sent, skipped_no_key, failed...). Test:
 `agent-tix/functions/tests/rybbit-purchase-guards.test.mjs`.
 
