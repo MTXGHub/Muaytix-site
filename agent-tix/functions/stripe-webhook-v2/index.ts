@@ -259,8 +259,9 @@ Deno.serve(async (req: Request) => {
       // throw (see rybbit.ts) and has its own catch regardless, so nothing in
       // it can turn this answer into a 500 and make Stripe replay a sale.
       try {
-        await reportPurchase(session, String(data ?? ""), {
+        const rybbit = await reportPurchase(session, String(data ?? ""), {
           apiKey: Deno.env.get("RYBBIT_API_KEY"),
+          userAgent: Deno.env.get("RYBBIT_USER_AGENT") ?? undefined,
           siteIds: [Deno.env.get("RYBBIT_SITE_ID") ?? "", Deno.env.get("RYBBIT_SITE_ID_ALT") ?? ""],
           fetchFn: fetch as never,
           // Won by exactly one caller per reservation. If the column is not
@@ -296,6 +297,9 @@ Deno.serve(async (req: Request) => {
           },
           log: (level, msg, detail) => console[level](msg, detail),
         });
+        // One line per sale saying what happened, so a silent skip (no key set,
+        // no migration yet) can be told apart from a send.
+        console.info("rybbit purchase outcome", { sessionId: session.id, outcome: rybbit });
       } catch (err) {
         console.error("rybbit purchase failed", { sessionId: session.id, message: message(err) });
       }

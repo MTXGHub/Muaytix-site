@@ -56,13 +56,17 @@ check('site_id, type, event_name, hostname, pathname',
   body.site_id === '049ad8e38da6' && body.type === 'custom_event' && body.event_name === 'purchase'
   && body.hostname === 'muaytix.com' && body.pathname === '/stripe-webhook-purchase');
 check('properties is a STRING, not an object', typeof body.properties === 'string');
+check('an explicit user_agent is in the body, and it is an ordinary browser one',
+  typeof body.user_agent === 'string' && body.user_agent.startsWith('Mozilla/5.0') && !/deno|supabase|bot|node|curl/i.test(body.user_agent));
+check('a custom user agent replaces it', R.purchaseBody(facts, 'x', 'Custom/1').user_agent === 'Custom/1');
+check('a blank one falls back to the default', R.purchaseBody(facts, 'x', '  ').user_agent === R.DEFAULT_USER_AGENT);
 const props = JSON.parse(body.properties);
 check('properties holds amount, currency, session id, class, event, date',
   props.amount === 3600 && props.currency === 'THB' && props.stripe_session_id === 'cs_test_abc123'
   && props.ticket_class === 'Club Class' && props.event_name === 'Petchyindee Traditional Muay Thai'
   && props.event_date === '2026-10-08');
 check('only strings and numbers', Object.values(props).every(v => typeof v === 'string' || typeof v === 'number'));
-check('exactly those six keys', Object.keys(props).sort().join() ===
+check('exactly those six property keys', Object.keys(props).sort().join() ===
   'amount,currency,event_date,event_name,stripe_session_id,ticket_class');
 check('currency is upper case', props.currency === 'THB');
 const sparse = JSON.parse(R.purchaseBody({ sessionId: 's', amountMinor: 100, currency: 'usd' }, '1').properties);
@@ -92,6 +96,8 @@ function net(...answers) {
     c.init.headers.Authorization === 'Bearer KEY' && c.init.headers['Content-Type'] === 'application/json');
   check('success names the site id that worked', r.ok === true && r.siteIdUsed === '049ad8e38da6');
   check('the body on the wire is the body above', JSON.parse(c.init.body).event_name === 'purchase');
+  check('the User-Agent header matches the user_agent field',
+    c.init.headers['User-Agent'] === JSON.parse(c.init.body).user_agent && c.init.headers['User-Agent'].startsWith('Mozilla/5.0'));
 }
 {
   const f = net(reply(400, 'bad site'), reply(200));
@@ -262,7 +268,10 @@ check('the Rybbit step runs AFTER the booking is completed',
   at('complete_reservation') > 0 && at('complete_reservation') < at('await reportPurchase('));
 check('and after the guest details are saved', at('could not save guest details') < at('await reportPurchase('));
 check('it sits in its own try/catch that only logs',
-  /try \{ await reportPurchase\([\s\S]*?\} catch \(err\) \{ console\.error\("rybbit purchase failed"/.test(idx));
+  /try \{ const rybbit = await reportPurchase\([\s\S]*?\} catch \(err\) \{ console\.error\("rybbit purchase failed"/.test(idx));
+check('the outcome of every sale is logged, so a silent skip can be told from a send',
+  idx.includes('"rybbit purchase outcome"'));
+check('the user agent can be overridden from the environment', indexSrc.includes('Deno.env.get("RYBBIT_USER_AGENT")'));
 check('the key and site ids come from the environment',
   indexSrc.includes('Deno.env.get("RYBBIT_API_KEY")') && indexSrc.includes('Deno.env.get("RYBBIT_SITE_ID")'));
 check('the key is never written into the source',

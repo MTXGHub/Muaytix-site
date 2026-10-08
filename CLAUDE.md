@@ -329,14 +329,18 @@ There is no `widget` edge function. The widget is pasted into Tilda.
 | `event_ticket_availability` | the view the widget reads, with the resolved `status` |
 | `checkout_reservations` | every checkout: status, quantity, attribution, guest details |
 
-**Rybbit "purchase" event (written 8 October 2026, NOT deployed, NOT tested live).**
-`stripe-webhook-v2` calls `rybbit.ts` after a sale is banked and sends one
-`purchase` event to Rybbit per paid Checkout Session. It never throws and never
-changes the answer Stripe gets. One event per sale is enforced by a claim on
-`checkout_reservations.rybbit_purchase_sent_at` (migration 0041, not yet
-applied). It stays silent until the secret `RYBBIT_API_KEY` exists. Env:
-`RYBBIT_API_KEY`, `RYBBIT_SITE_ID`, optional `RYBBIT_SITE_ID_ALT`. No personal
-data is sent. Test: `agent-tix/functions/tests/rybbit-purchase-guards.test.mjs`.
+**Rybbit "purchase" event (built 8 October 2026; migration 0041 applied and
+`stripe-webhook-v2` v8 deployed 8 October 2026; NOT yet proven by a real test
+booking).** `stripe-webhook-v2` calls `rybbit.ts` after a sale is banked and
+sends one `purchase` event to Rybbit per paid Checkout Session. It never throws
+and never changes the answer Stripe gets. One event per sale is enforced by a
+claim on `checkout_reservations.rybbit_purchase_sent_at`. Secrets:
+`RYBBIT_API_KEY`, `RYBBIT_SITE_ID` (049ad8e38da6, the id in the tracking
+script), `RYBBIT_SITE_ID_ALT` (10499), optional `RYBBIT_USER_AGENT`. The request
+carries an explicit browser `user_agent` because Rybbit's bot blocking checks
+server-side events too. No personal data is sent. Every paid sale logs one
+"rybbit purchase outcome" line (sent, skipped_no_key, failed...). Test:
+`agent-tix/functions/tests/rybbit-purchase-guards.test.mjs`.
 
 ### Status precedence
 

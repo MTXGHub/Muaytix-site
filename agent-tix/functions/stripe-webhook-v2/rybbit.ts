@@ -24,6 +24,14 @@ export const RYBBIT_TRACK_URL = "https://app.rybbit.io/api/track";
 export const PURCHASE_HOSTNAME = "muaytix.com";
 export const PURCHASE_PATHNAME = "/stripe-webhook-purchase";
 
+// Rybbit's bot blocking still reads the user agent on events sent from a
+// server, and the one Deno or Supabase would send by default looks like a
+// script. So the request carries an explicit, ordinary browser user agent, in
+// the body (where Rybbit reads it) and in the header. RYBBIT_USER_AGENT can
+// replace it without a redeploy of the code.
+export const DEFAULT_USER_AGENT =
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
+
 // Stripe's own decimal rules (docs.stripe.com/currencies), not a guess from the
 // currency code. Everything not listed here has two decimals, which covers the
 // six currencies the booking widget offers. ISK and UGX are listed by Stripe
@@ -75,13 +83,14 @@ export function purchaseProperties(f: PurchaseFacts): string {
   return JSON.stringify(props);
 }
 
-export function purchaseBody(f: PurchaseFacts, siteId: string) {
+export function purchaseBody(f: PurchaseFacts, siteId: string, userAgent = DEFAULT_USER_AGENT) {
   return {
     site_id: siteId,
     type: "custom_event",
     event_name: "purchase",
     hostname: PURCHASE_HOSTNAME,
     pathname: PURCHASE_PATHNAME,
+    user_agent: String(userAgent || "").trim() || DEFAULT_USER_AGENT,
     properties: purchaseProperties(f),
   };
 }
@@ -107,8 +116,10 @@ export async function sendPurchase(opts: {
   siteIds: string[];
   facts: PurchaseFacts;
   fetchFn: FetchFn;
+  userAgent?: string;
   timeoutMs?: number;
 }): Promise<SendResult> {
+  const userAgent = String(opts.userAgent || "").trim() || DEFAULT_USER_AGENT;
   const ids = opts.siteIds.map((s) => String(s ?? "").trim()).filter(Boolean).slice(0, 2);
   if (ids.length === 0) return { ok: false, status: null, reason: "no site id configured" };
 
@@ -120,8 +131,9 @@ export async function sendPurchase(opts: {
         headers: {
           Authorization: `Bearer ${opts.apiKey}`,
           "Content-Type": "application/json",
+          "User-Agent": userAgent,
         },
-        body: JSON.stringify(purchaseBody(opts.facts, siteId)),
+        body: JSON.stringify(purchaseBody(opts.facts, siteId, userAgent)),
         signal: AbortSignal.timeout(opts.timeoutMs ?? 4000),
       });
       if (res.ok) return { ok: true, siteIdUsed: siteId, status: res.status };
@@ -148,6 +160,7 @@ export async function sendPurchase(opts: {
 export type PurchaseDeps = {
   apiKey: string | undefined;
   siteIds: string[];
+  userAgent?: string;
   fetchFn: FetchFn;
   claim: () => Promise<boolean>;     // true only for the one caller that wins
   release: () => Promise<void>;      // hands the claim back after a failure
@@ -191,6 +204,7 @@ export async function reportPurchase(
     const result = await sendPurchase({
       apiKey: deps.apiKey,
       siteIds: deps.siteIds,
+      userAgent: deps.userAgent,
       fetchFn: deps.fetchFn,
       facts: {
         sessionId,
