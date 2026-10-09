@@ -151,3 +151,17 @@ begin
   return case when v_state = 'held' then 'completed' else 'completed_late' end;
 end;
 $function$;
+
+CREATE OR REPLACE FUNCTION public.expire_stale_reservations()
+ RETURNS integer LANGUAGE plpgsql SECURITY DEFINER SET search_path TO 'public'
+AS $function$
+declare r record; n integer := 0;
+begin
+  for r in select id from public.checkout_reservations where status = 'held' and expires_at < now() order by expires_at
+  loop
+    perform public.release_reservation(r.id, 'expired');
+    n := n + 1;
+  end loop;
+  return n;
+end;
+$function$;

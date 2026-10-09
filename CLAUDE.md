@@ -354,7 +354,7 @@ already fully booked), the live header as the rollback, and the new header last.
     and so on) with a one-line loop that puts them back, so **the stylesheet the
     browser gets is character for character the same**. `header-block.test.mjs`
     unpacks it and compares it with `widget.js` token for token. The header builds at
-    **59,796 bytes**, about 3.2 KB of room. `widget.js` is unchanged in how it reads.
+    **59,968 bytes**, about 3 KB of room. `widget.js` is unchanged in how it reads.
   - **Tests** (need a scratch Postgres, never the live database; see the header of
     each file): `schema/tests/guest_hold.test.sql` and
     `guest_hold_concurrency.test.sh` (two sessions at once),

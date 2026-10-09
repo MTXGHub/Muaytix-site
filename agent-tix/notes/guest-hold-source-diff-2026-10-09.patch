@@ -1,0 +1,952 @@
+diff --git a/agent-tix/functions/availability/index.ts b/agent-tix/functions/availability/index.ts
+index adbf7d7..cbc0f93 100644
+--- a/agent-tix/functions/availability/index.ts
++++ b/agent-tix/functions/availability/index.ts
+@@ -75,6 +75,49 @@ function hhmm(t: string | null): string | null {
+   return t ? t.slice(0, 5) : null;
+ }
+ 
++// A guest's own live hold (schema/0043). The widget sends the reservation id it
++// was given when the guest pressed Reserve; the id is a bearer token for that
++// hold and nothing else. Everything here reads non personal columns only.
++//
++// Strictly an extra. A request with no holdId is answered exactly as it always
++// was, byte for byte, which is what an older copy of the widget cached in a
++// browser sends. A hold that cannot be read leaves the public answer untouched.
++const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
++
++type LiveHold = {
++  hold_id: string; event_key: string; event_ticket_class_id: string;
++  ticket_class_code: string; ticket_class_name: string; quantity: number;
++  currency: string | null; expires_at: string; seconds_left: number;
++};
++
++type HolderView = { status: string; quantity_available: number; max_per_order: number };
++
++function holdIdFrom(value: unknown): string | null {
++  return typeof value === "string" && UUID.test(value.trim()) ? value.trim().toLowerCase() : null;
++}
++
++async function readHold(holdId: string, eventKey: string | null): Promise<LiveHold | null> {
++  const { data, error } = await supabase.rpc("live_hold", {
++    p_reservation_id: holdId,
++    p_event_key: eventKey,
++  });
++  if (error) throw error;
++  return (data as LiveHold[] | null)?.[0] ?? null;
++}
++
++// What the widget needs to draw the notice, and nothing else about the hold.
++function holdForWidget(h: LiveHold) {
++  return {
++    classCode: h.ticket_class_code,
++    className: h.ticket_class_name,
++    eventKey: h.event_key,
++    quantity: h.quantity,
++    currency: h.currency,
++    expiresAt: h.expires_at,
++    secondsLeft: h.seconds_left,
++  };
++}
++
+ // Photos and selling lines are free-form JSON in the database, so what leaves
+ // here is checked rather than trusted: a photo must be an https address, a line
+ // must have words. Anything else is dropped, not repaired, and the widget never
+@@ -395,6 +438,21 @@ Deno.serve(async (req: Request) => {
+       }, 200, origin);
+     }
+ 
++    // ---- is this hold still alive? ----------------------------------------
++    // Asked when a page loads, and when the browser hands back a page it kept
++    // (the back button). The widget will not show a hold it has not just had
++    // confirmed here: held, not past its time. An answer of null means it is
++    // gone and the widget forgets it; an error means "could not tell", and the
++    // widget keeps what it had and shows nothing.
++    //
++    // Not recorded as a look: it is not a guest looking at a night.
++    if (action === "hold") {
++      const holdId = holdIdFrom(body.holdId);
++      if (!holdId) return json({ hold: null }, 200, origin);
++      const found = await readHold(holdId, null);
++      return json({ hold: found ? holdForWidget(found) : null }, 200, origin);
++    }
++
+     // ---- one night ---------------------------------------------------------
+     if (action === "availability") {
+       const eventKey = String(body.eventKey ?? "").trim();
+@@ -476,6 +534,34 @@ Deno.serve(async (req: Request) => {
+         fewLeft.set(row.id, left > 0 && left <= SAY_REMAINING_AT ? left : null);
+       }
+ 
++      // The holder's own seats are added back for the class they hold, so a guest
++      // holding 3 of the last 4 is not told "Only 1 left". Everyone else, and any
++      // request without a holdId, gets the public figures above untouched.
++      const holdId = holdIdFrom(body.holdId);
++      let myHold: LiveHold | null = null;
++      let holdKnown = false;
++      let mine: HolderView | null = null;
++      if (holdId) {
++        try {
++          myHold = await readHold(holdId, eventKey);
++          holdKnown = true;
++          if (myHold) {
++            const { data: view, error: viewError } = await supabase.rpc("class_view_for_holder", {
++              p_event_ticket_class_id: myHold.event_ticket_class_id,
++              p_extra: myHold.quantity,
++            });
++            if (viewError) throw viewError;
++            mine = (view as HolderView[] | null)?.[0] ?? null;
++            if (!mine) myHold = null;
++          }
++        } catch (err) {
++          // Could not read it: answer with the public figures, say nothing about
++          // the hold, and let the widget keep whatever it already had.
++          console.error("hold could not be read", { eventKey, message: String(err) });
++          myHold = null; mine = null; holdKnown = false;
++        }
++      }
++
+       // The tagline, photos and selling lines are the class's own, not the
+       // night's, so they come off ticket_classes rather than the per-night row.
+       const { data: taglines, error: taglineError } = await supabase
+@@ -539,7 +625,13 @@ Deno.serve(async (req: Request) => {
+           // own status. Hiding them is what sends a guest to a competitor.
+           classes: rows
+             .filter((r) => r.status !== "hidden")
+-            .map((r) => ({
++            .map((r0) => {
++              // The class the guest holds is described with their seats added back.
++              const isMine = !!mine && r0.event_ticket_class_id === myHold!.event_ticket_class_id;
++              const r = isMine ? { ...r0, status: mine!.status, max_per_order: mine!.max_per_order } : r0;
++              const fewMine = isMine && mine!.quantity_available > 0 && mine!.quantity_available <= SAY_REMAINING_AT
++                ? mine!.quantity_available : null;
++              return {
+               code: r.ticket_class_code,
+               name: r.ticket_class_name,
+               description: r.ticket_class_description,
+@@ -557,13 +649,18 @@ Deno.serve(async (req: Request) => {
+               benefits: benefitsFor.get(r.ticket_class_code) ?? [],
+               // Null unless it is genuinely down to the last few. See above.
+               seatsLeft: (r.status === "available" || r.status === "limited")
+-                ? (fewLeft.get(r.event_ticket_class_id) ?? null)
++                ? (isMine ? fewMine : (fewLeft.get(r.event_ticket_class_id) ?? null))
+                 : null,
+               prices: byClass.get(r.event_ticket_class_id) ?? [],
+               // Only on a fully booked class that has an offer, and only for a
+               // night that has been switched on. See offersForNight.
+               ...(offers.has(String(r.ticket_class_code)) ? { offer: offers.get(String(r.ticket_class_code)) } : {}),
+-            })),
++              };
++            }),
++          // Present only when the widget sent a holdId and the answer is known:
++          // the hold if it is live on THIS night, null if it is gone. Absent
++          // otherwise, so an older widget sees exactly the response it always did.
++          ...(holdKnown ? { hold: myHold ? holdForWidget(myHold) : null } : {}),
+         },
+         200,
+         origin,
+diff --git a/agent-tix/functions/create-checkout/index.ts b/agent-tix/functions/create-checkout/index.ts
+index 3399ff5..0dbb535 100644
+--- a/agent-tix/functions/create-checkout/index.ts
++++ b/agent-tix/functions/create-checkout/index.ts
+@@ -235,6 +235,103 @@ function longDate(iso: string, timeZone: string) {
+   }).format(new Date(iso));
+ }
+ 
++// ---------------------------------------------------------------------------
++// A guest's own hold (schema/0043)
++//
++// The widget sends the id of the hold it was last given. The id is a bearer
++// token for that one hold, so everything about it is read through the service
++// role functions in 0043, which never touch a personal column. A request with no
++// holdId, or a database without 0043, goes down the path it always did.
++// ---------------------------------------------------------------------------
++const CHANGE_REFUSED = "That choice is not available. Your current seats are still held.";
++const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
++
++function holdIdFrom(value: unknown): string | null {
++  return typeof value === "string" && UUID.test(value.trim()) ? value.trim().toLowerCase() : null;
++}
++
++type LiveHold = {
++  hold_id: string; event_key: string; event_ticket_class_id: string;
++  ticket_class_code: string; quantity: number; currency: string | null;
++  unit_amount: number | null; offer_code: string | null;
++  stripe_checkout_session_id: string | null; expires_at: string; seconds_left: number;
++};
++
++// Never throws. If the hold cannot be read, it is treated as not there, which is
++// exactly how a guest with no hold is treated, so the worst case is today's
++// behaviour.
++async function readHold(holdId: string, eventKey: string): Promise<LiveHold | null> {
++  try {
++    const { data, error } = await supabase.rpc("live_hold", {
++      p_reservation_id: holdId, p_event_key: eventKey,
++    });
++    if (error) throw error;
++    return (data as LiveHold[] | null)?.[0] ?? null;
++  } catch (err) {
++    console.error("hold could not be read", { eventKey, message: String(err) });
++    return null;
++  }
++}
++
++// The status the HOLDER should be judged on for the class they hold: the public
++// figure with their own seats added back, through the same status function the
++// public view uses. null means "could not tell", and the public status stands.
++async function statusForHolder(classRowId: string, held: number): Promise<string | null> {
++  try {
++    const { data, error } = await supabase.rpc("class_view_for_holder", {
++      p_event_ticket_class_id: classRowId, p_extra: held,
++    });
++    if (error) throw error;
++    return (data as { status: string }[] | null)?.[0]?.status ?? null;
++  } catch (err) {
++    console.error("holder status could not be read", { classRowId, message: String(err) });
++    return null;
++  }
++}
++
++// A replaced hold's Stripe page must not stay payable: the seats are no longer
++// reserved for it, and a payment against it would arrive as a late payment on a
++// released reservation. Logged and swallowed. A failure here must never stop the
++// guest, who already has a working new checkout.
++async function expireSession(sessionId: string): Promise<void> {
++  try {
++    await stripe.checkout.sessions.expire(sessionId);
++  } catch (err) {
++    console.error("could not expire the replaced checkout session", { sessionId, message: String(err) });
++  }
++}
++
++// Where Stripe's own back arrow takes a guest. The page they pressed Reserve on,
++// so "I changed my mind" lands them where they were, not on a page that says a
++// payment failed when none was attempted.
++//
++// Only ever a path on the origin the request came from, taken from the path the
++// widget reported (already stripped of query and fragment), and only on a page
++// that is known to carry the widget. Anything else falls back to /payment-failed
++// exactly as before. The reservation id is never in the address.
++//
++// A page not listed here sends its guests to /payment-failed, as today: add the
++// prefix when a new page gets the widget.
++const KNOWN_PAGE_PREFIXES = [
++  "/rajadamnern-knockout",
++  "/rajadamnern-stadium-seating",
++  "/rajadamnern-stadium-seat-map",
++  "/rajadamnern-stadium-seats",
++  "/rajadamnern-stadium-tickets",
++  "/all-star-fight-by-buakaw",
++  "/rws",
++  "/petchyindee-muay-thai",
++  "/new-power-muay-thai",
++  "/kiatpetch-muay-thai",
++];
++
++function cancelUrlFor(origin: string, pagePath: string | null): string | null {
++  if (!pagePath || !/^\/[A-Za-z0-9._~\/-]*$/.test(pagePath)) return null;
++  if (pagePath.includes("//") || pagePath.includes("..")) return null;
++  const known = KNOWN_PAGE_PREFIXES.some((p) => pagePath === p || pagePath.startsWith(p + "/"));
++  return known ? `${origin}${pagePath}?checkout=cancelled` : null;
++}
++
+ Deno.serve(async (req: Request) => {
+   const origin = req.headers.get("origin") ?? "";
+   const origins = await originsForTenant();
+@@ -267,6 +364,7 @@ Deno.serve(async (req: Request) => {
+   const attribution = attributionFrom(body.attribution);
+   const pagePath = pagePathFrom(body.pagePath);
+   const landingPage = pagePathFrom(body.landingPage);
++  const holdId = holdIdFrom(body.holdId);
+ 
+   if (!eventKey || !classCode) return json({ error: "Ticket details are missing." }, 400, origin);
+   if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
+@@ -275,8 +373,14 @@ Deno.serve(async (req: Request) => {
+   if (!/^[a-z]{3}$/.test(currency)) return json({ error: "That currency is not valid." }, 400, origin);
+ 
+   let reservationId: string | null = null;
++  // The Stripe page of a hold this request replaced, being expired. See below.
++  let oldExpiry: Promise<void> | null = null;
+ 
+   try {
++    // Read before anything else so every later step can tell a guest's own seats
++    // from somebody else's. Null for a guest with no live hold on this night.
++    const hold = holdId ? await readHold(holdId, eventKey) : null;
++
+     // The status is re-checked here, server side. What the widget last saw may
+     // be a minute old, and a minute is long enough to sell the last seat.
+     const { data: rows, error } = await supabase
+@@ -290,14 +394,26 @@ Deno.serve(async (req: Request) => {
+     const row = rows?.[0];
+     if (!row) return json({ error: "That ticket class could not be found." }, 404, origin);
+ 
+-    if (row.status === "closed") {
+-      return json({ error: row.closed_explanation ?? "This class is not on sale yet." }, 409, origin);
++    // A guest holding the last seats must not be told the class is full: their own
++    // seats are added back, for the class they hold and no other.
++    const holdsThisClass = hold !== null && hold.ticket_class_code === classCode;
++    const status = (holdsThisClass
++      ? await statusForHolder(row.event_ticket_class_id, hold!.quantity)
++      : null) ?? row.status;
++
++    // A guest who already holds seats keeps them when the new choice is not on
++    // sale: nothing has been touched at this point, and they are told so.
++    const refuse = (message: string) => hold
++      ? json({ error: CHANGE_REFUSED, code: "change_unavailable" }, 409, origin)
++      : json({ error: message }, 409, origin);
++    if (status === "closed") {
++      return refuse(row.closed_explanation ?? "This class is not on sale yet.");
+     }
+-    if (row.status === "booking_closed") {
+-      return json({ error: "Bookings have closed for this fight night." }, 409, origin);
++    if (status === "booking_closed") {
++      return refuse("Bookings have closed for this fight night.");
+     }
+-    if (row.status !== "available" && row.status !== "limited") {
+-      return json({ error: "This class is fully booked." }, 409, origin);
++    if (status !== "available" && status !== "limited") {
++      return refuse("This class is fully booked.");
+     }
+ 
+     // The seating warning has to be enforced here too, not just shown in the
+@@ -346,22 +462,76 @@ Deno.serve(async (req: Request) => {
+       unitAmount = offer.unitAmount;
+     }
+ 
++    // The same choice again while the hold is live: nothing new is made. The guest
++    // is handed the Stripe page they already have, with the time they have left.
++    // Same night, class, number, currency, price and offer, and the page must
++    // still be open at Stripe; anything less is a different choice.
++    if (hold && hold.ticket_class_code === classCode && hold.quantity === quantity &&
++        hold.currency === currency && hold.unit_amount === unitAmount &&
++        (hold.offer_code ?? null) === (offer?.code ?? null) && hold.stripe_checkout_session_id) {
++      try {
++        const existing = await stripe.checkout.sessions.retrieve(hold.stripe_checkout_session_id);
++        if (existing.status === "open" && existing.url) {
++          return json({
++            checkoutUrl: existing.url,
++            sessionId: existing.id,
++            reservationId: hold.hold_id,
++            currency,
++            unitAmount,
++            total: unitAmount * quantity,
++            expiresAt: hold.expires_at,
++            secondsLeft: hold.seconds_left,
++            resumed: true,
++          }, 200, origin);
++        }
++      } catch (err) {
++        console.error("held checkout session could not be reopened", {
++          reservationId: hold.hold_id, message: String(err),
++        });
++      }
++      // Not reachable any more: carry on as a change, which makes a new one.
++    }
++
+     // Hold the stock before going anywhere near Stripe.
+     const expiresAt = new Date(Date.now() + HOLD_MINUTES * 60_000);
+-    const { data: reservation, error: reserveError } = await supabase.rpc("reserve_tickets", {
+-      p_event_ticket_class_id: row.event_ticket_class_id,
+-      p_quantity: quantity,
+-      p_expires_at: expiresAt.toISOString(),
+-    });
++    // A guest who already holds seats on this night swaps them in one database
++    // step: the new seats are taken first and the old ones given back only if
++    // that worked, so a change that cannot be made leaves the old hold exactly as
++    // it was. Everyone else reserves as they always did.
++    const { data: reservation, error: reserveError } = hold
++      ? await supabase.rpc("replace_reservation", {
++          p_old_reservation_id: hold.hold_id,
++          p_event_ticket_class_id: row.event_ticket_class_id,
++          p_quantity: quantity,
++          p_expires_at: expiresAt.toISOString(),
++        })
++      : await supabase.rpc("reserve_tickets", {
++          p_event_ticket_class_id: row.event_ticket_class_id,
++          p_quantity: quantity,
++          p_expires_at: expiresAt.toISOString(),
++        });
+     if (reserveError || !reservation?.[0]) {
++      // If the old hold is still alive the guest keeps it, and is told so.
++      if (hold && await readHold(hold.hold_id, eventKey)) {
++        return json({ error: CHANGE_REFUSED, code: "change_unavailable" }, 409, origin);
++      }
+       return json({ error: reserveError?.message ?? "Those tickets have just gone." }, 409, origin);
+     }
+     reservationId = reservation[0].reservation_id;
+ 
++    // The old hold is gone for good now, so its Stripe page must stop taking
++    // payment. Started here so it runs while the new session is being made, and
++    // awaited before this request answers (or fails).
++    const replaced = Boolean(hold && reservation[0].replaced_reservation_id);
++    const replacedSession: string | null = replaced
++      ? (reservation[0].replaced_stripe_session_id ?? null) : null;
++    if (replacedSession) oldExpiry = expireSession(replacedSession);
++
+     const when = longDate(row.starts_at, row.venue_timezone);
+     const successUrl = safeReturnUrl(
+       body.successUrl, "https://muaytix.com/payment-successful?session_id={CHECKOUT_SESSION_ID}", origins);
+-    const cancelUrl = safeReturnUrl(body.cancelUrl, "https://muaytix.com/payment-failed", origins);
++    const cancelUrl = safeReturnUrl(
++      body.cancelUrl, cancelUrlFor(origin, pagePath) ?? "https://muaytix.com/payment-failed", origins);
+ 
+     // The key is deliberately NOT `reservation_id`. Another system on this same
+     // Stripe account decides a session is its own purely by the presence of
+@@ -516,6 +686,9 @@ Deno.serve(async (req: Request) => {
+       console.error("rybbit checkout_started failed", { sessionId: session.id, reason: String(e) });
+     }
+ 
++    // The old page is expired before the guest is told about the new one.
++    if (oldExpiry) await oldExpiry;
++
+     return json({
+       checkoutUrl: session.url,
+       sessionId: session.id,
+@@ -523,6 +696,11 @@ Deno.serve(async (req: Request) => {
+       currency,
+       unitAmount,
+       total: unitAmount * quantity,
++      // When the hold runs out, so the widget can show a countdown. Additive:
++      // an older widget ignores both.
++      expiresAt: expiresAt.toISOString(),
++      secondsLeft: HOLD_MINUTES * 60,
++      ...(replaced ? { replaced: true } : {}),
+     }, 200, origin);
+ 
+   } catch (err) {
+@@ -534,6 +712,9 @@ Deno.serve(async (req: Request) => {
+         p_new_status: "failed",
+       });
+     }
++    // A hold this request had already replaced is gone either way, so its page
++    // must still be closed.
++    if (oldExpiry) await oldExpiry;
+     console.error("create-checkout failed", { eventKey, classCode, message: String(err) });
+     return json({ error: "The secure checkout could not be started. Please try again." }, 500, origin);
+   }
+diff --git a/agent-tix/functions/stripe-webhook-v2/index.ts b/agent-tix/functions/stripe-webhook-v2/index.ts
+index 6bd3db0..aab867a 100644
+--- a/agent-tix/functions/stripe-webhook-v2/index.ts
++++ b/agent-tix/functions/stripe-webhook-v2/index.ts
+@@ -356,7 +356,14 @@ Deno.serve(async (req: Request) => {
+     // address is kept. Only for a checkout that TIMED OUT (not a failed async
+     // payment), and only tells Rybbit once. Same guarantees as the purchase
+     // event: it never raises an error, so it cannot turn this answer into a 500.
+-    if (event.type === "checkout.session.expired") {
++    //
++    // Not for a hold the guest replaced themselves. When a guest changes their
++    // seats, create-checkout releases the old hold and expires its Stripe page on
++    // purpose (schema/0043), and that expiry arrives here as an ordinary expired
++    // session. It is a guest still booking, not one who left, and counting it
++    // would make every seat change read as an abandoned checkout. Only a hold
++    // released that way is already 'released'; a normal timeout is 'expired'.
++    if (event.type === "checkout.session.expired" && data !== "already_released") {
+       try {
+         const rybbit = await reportAbandoned(session, {
+           apiKey: Deno.env.get("RYBBIT_API_KEY"),
+diff --git a/agent-tix/schema/0043_guest_hold.sql b/agent-tix/schema/0043_guest_hold.sql
+new file mode 100644
+index 0000000..4d7b03f
+--- /dev/null
++++ b/agent-tix/schema/0043_guest_hold.sql
+@@ -0,0 +1,159 @@
++-- Agent Tix — a guest's own hold
++--
++-- NOT APPLIED. Written 9 October 2026 for Jason to approve. Nothing here is
++-- live until he says so, and the code that uses it (create-checkout,
++-- availability) is written so that a database WITHOUT this migration behaves
++-- exactly as it does today: every rpc below that is missing is treated as "no
++-- hold".
++--
++-- The problem. A guest who presses Reserve is holding their seats for five
++-- minutes. For those five minutes the seats are subtracted from what the page
++-- tells THAT SAME GUEST is left, so "4 left, hold 3" reads "Only 1 left" and a
++-- guest who changes their mind about the number is refused their own seats.
++-- Every extra click on Reserve then made another hold and another Stripe
++-- session on top.
++--
++-- Three functions, all read-only except the last, none of them selecting a
++-- personal column from checkout_reservations. All three are for the service
++-- role only: a reservation id is a bearer token for its holder, and the
++-- browser never talks to these directly.
++
++-- 1. Is this hold still alive, and what is it? ------------------------------
++create or replace function public.live_hold(
++  p_reservation_id uuid, p_event_key text default null
++) returns table (
++  hold_id uuid, event_key text, event_ticket_class_id uuid,
++  ticket_class_code text, ticket_class_name text, quantity integer,
++  currency text, unit_amount integer, offer_code text,
++  stripe_checkout_session_id text, page_path text,
++  expires_at timestamptz, seconds_left integer
++)
++language sql stable security definer set search_path = public as $$
++  select r.id, e.event_key, r.event_ticket_class_id, tc.code, tc.name, r.quantity,
++         r.currency, r.unit_amount, r.offer_code,
++         r.stripe_checkout_session_id, r.page_path,
++         r.expires_at,
++         greatest(0, floor(extract(epoch from (r.expires_at - now()))))::integer
++  from public.checkout_reservations r
++  join public.event_ticket_classes etc on etc.id = r.event_ticket_class_id
++  join public.events e on e.id = etc.event_id
++  join public.ticket_classes tc on tc.id = etc.ticket_class_id
++  where r.id = p_reservation_id
++    and r.status = 'held'
++    and r.expires_at > now()
++    and (p_event_key is null or e.event_key = p_event_key);
++$$;
++
++-- 2. What the holder sees of a class: the public figure plus their own seats --
++-- The status uses the same function the public view uses, fed the holder's
++-- number, so cutoffs, manual closures and the "limited" threshold all still
++-- apply. Only the quantity differs.
++create or replace function public.class_view_for_holder(
++  p_event_ticket_class_id uuid, p_extra integer
++) returns table (status text, quantity_available integer, max_per_order integer)
++language sql stable security definer set search_path = public as $$
++  select public.ticket_availability_status(
++           etc.active, etc.release_status, etc.manual_status, q.n,
++           etc.limited_threshold, e.starts_at, e.booking_cutoff_minutes),
++         q.n,
++         least(etc.max_per_order, q.n)
++  from public.event_ticket_classes etc
++  join public.events e on e.id = etc.event_id
++  cross join lateral (
++    select greatest(0, etc.total_quantity - etc.reserved_quantity - etc.sold_quantity
++                       + greatest(coalesce(p_extra, 0), 0))::integer as n
++  ) q
++  where etc.id = p_event_ticket_class_id;
++$$;
++
++-- 3. Change seats without ever letting go of the old ones first --------------
++-- Takes the new seats first and gives the old ones back only if that worked, all
++-- in one transaction. If the new choice cannot be had, the function raises and
++-- Postgres undoes everything: the old hold is exactly as it was, and at no
++-- moment did anybody else see its seats as free.
++--
++-- Lock order matches release_reservation and complete_reservation (the
++-- reservation row, then the class rows) so it cannot deadlock with either, and
++-- the class rows are taken lowest id first so two guests changing in opposite
++-- directions cannot wait on each other.
++--
++-- The old hold only counts if it is still held, not past its time, and on the
++-- same night as the new seats. Otherwise this behaves exactly like
++-- reserve_tickets, which is what a guest with nothing to replace gets.
++create or replace function public.replace_reservation(
++  p_old_reservation_id uuid, p_event_ticket_class_id uuid,
++  p_quantity integer, p_expires_at timestamptz
++) returns table (
++  reservation_id uuid, available_after integer,
++  replaced_reservation_id uuid, replaced_stripe_session_id text
++)
++language plpgsql security definer set search_path = public as $$
++declare
++  v_old_class uuid; v_old_qty integer; v_old_state text; v_old_exp timestamptz;
++  v_old_session text; v_old_live boolean := false;
++  v_tenant uuid; v_total integer; v_resv integer; v_sold integer; v_max integer;
++  v_avail integer; v_id uuid; v_same_night boolean;
++begin
++  if p_quantity is null or p_quantity < 1 then
++    raise exception 'Quantity must be at least 1';
++  end if;
++
++  if p_old_reservation_id is not null then
++    select r.event_ticket_class_id, r.quantity, r.status, r.expires_at, r.stripe_checkout_session_id
++      into v_old_class, v_old_qty, v_old_state, v_old_exp, v_old_session
++    from public.checkout_reservations r
++    where r.id = p_old_reservation_id
++    for update;
++    if found and v_old_state = 'held' and v_old_exp > now() then
++      select (select event_id from public.event_ticket_classes where id = v_old_class)
++           = (select event_id from public.event_ticket_classes where id = p_event_ticket_class_id)
++        into v_same_night;
++      v_old_live := coalesce(v_same_night, false);
++    end if;
++  end if;
++
++  perform 1 from public.event_ticket_classes
++   where id in (p_event_ticket_class_id, v_old_class)
++   order by id
++   for update;
++
++  select tenant_id, total_quantity, reserved_quantity, sold_quantity, max_per_order
++    into v_tenant, v_total, v_resv, v_sold, v_max
++  from public.event_ticket_classes where id = p_event_ticket_class_id;
++  if not found then raise exception 'Ticket class not found'; end if;
++
++  -- Seats the guest already holds in this very class are theirs to reuse.
++  v_avail := greatest(0, v_total - v_resv - v_sold
++    + case when v_old_live and v_old_class = p_event_ticket_class_id then v_old_qty else 0 end);
++
++  if p_quantity > v_max then raise exception 'At most % tickets per order', v_max; end if;
++  if v_avail < p_quantity then raise exception 'Only % remaining', v_avail; end if;
++
++  if v_old_live then
++    update public.event_ticket_classes
++       set reserved_quantity = greatest(0, reserved_quantity - v_old_qty)
++     where id = v_old_class;
++    update public.checkout_reservations set status = 'released'
++     where id = p_old_reservation_id;
++  end if;
++
++  update public.event_ticket_classes
++     set reserved_quantity = reserved_quantity + p_quantity
++   where id = p_event_ticket_class_id;
++
++  insert into public.checkout_reservations (tenant_id, event_ticket_class_id, quantity, expires_at)
++  values (v_tenant, p_event_ticket_class_id, p_quantity, p_expires_at)
++  returning id into v_id;
++
++  return query select v_id, v_avail - p_quantity,
++    case when v_old_live then p_old_reservation_id else null::uuid end,
++    case when v_old_live then v_old_session else null::text end;
++end; $$;
++
++-- Service role only. A reservation id is a bearer token for its holder.
++revoke all on function public.live_hold(uuid, text) from public, anon, authenticated;
++revoke all on function public.class_view_for_holder(uuid, integer) from public, anon, authenticated;
++revoke all on function public.replace_reservation(uuid, uuid, integer, timestamptz) from public, anon, authenticated;
++grant execute on function public.live_hold(uuid, text) to service_role;
++grant execute on function public.class_view_for_holder(uuid, integer) to service_role;
++grant execute on function public.replace_reservation(uuid, uuid, integer, timestamptz) to service_role;
+diff --git a/agent-tix/widget/build-served-copy.mjs b/agent-tix/widget/build-served-copy.mjs
+index c3370de..ffa93d1 100644
+--- a/agent-tix/widget/build-served-copy.mjs
++++ b/agent-tix/widget/build-served-copy.mjs
+@@ -36,6 +36,36 @@ function needSpace(p, pt, n, nt) {
+   if (p.type === 'Numeric' && first === '.') return true;
+   return false;
+ }
++// The stylesheet is 25 KB, most of it the same few phrases over and over: every
++// rule starts with "#mtx-booking .mtx-" (222 times), and "var(--", "background:",
++// "font-weight:" and the like each turn up dozens of times. The header is not
++// allowed to grow, so the served copy writes each phrase once and a stand-in
++// character for the rest, and a short loop puts them back before the stylesheet
++// is used. What reaches the browser is the very same stylesheet, character for
++// character; header-block.test.mjs unpacks the string and proves it, then checks
++// the result against widget.js. widget.js is untouched and stays readable, which
++// is why this is done here and not there.
++//
++// Stand-ins are ASCII characters that appear nowhere in the stylesheet (checked
++// below, and the build stops if one ever does). Never one that is special in
++// HTML, and the replacing is split and join, not a pattern, so there is nothing
++// in it for a tool that tidies scripts to misread. Longest phrase first, so a
++// short phrase never splits a long one.
++const PACKED = [
++  ['~', '#mtx-booking .mtx-'], ['^', 'var(--'], ['|', 'background:'],
++  ['$', 'font-weight:'], ['_', 'font-size:'], ['?', 'border-radius:'],
++];
++function packSelectors(literal) {
++  for (const [code] of PACKED) {
++    if (literal.includes(code)) throw new Error('the stylesheet already contains ' + code + ', pick another stand-in');
++  }
++  let packed = literal;
++  for (const [code, phrase] of [...PACKED].sort((a, b) => b[1].length - a[1].length)) {
++    packed = packed.split(phrase).join(code);
++  }
++  const table = '[' + PACKED.map(([code, phrase]) => '"' + code + '","' + phrase + '"').join(',') + ']';
++  return '(function(s,d){for(var i=0;i<d.length;i+=2)s=s.split(d[i]).join(d[i+1]);return s})(' + packed + ',' + table + ')';
++}
+ function compact(code, espree) {
+   const toks = espree.tokenize(code, { ecmaVersion: 'latest', range: true, loc: true });
+   let out = '', prev = null, prevText = '';
+@@ -48,6 +78,7 @@ function compact(code, espree) {
+     // before a colon, where a space means "any descendant" in a selector.
+     if (t.type === 'String' && text.includes('#mtx-booking{')) {
+       text = text.replace(/\\n\s*/g, ' ').replace(/\s*([{};,])\s*/g, '$1').replace(/:\s+/g, ':');
++      text = packSelectors(text);
+     }
+     if (prev) {
+       if (t.loc.start.line !== prev.loc.end.line) out += '\n';
+diff --git a/agent-tix/widget/widget.js b/agent-tix/widget/widget.js
+index 36a6193..c683a1b 100644
+--- a/agent-tix/widget/widget.js
++++ b/agent-tix/widget/widget.js
+@@ -83,7 +83,7 @@ var DAYS    = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satu
+ /* ---------------------------------------------------------------------------
+    The stylesheet, injected once however many widgets are on the page
+    -------------------------------------------------------------------------*/
+-var CSS = "\n\n#mtx-booking{\n  --ground:#F5F5F6; --surface:#FFFFFF; --surface-2:#FAFAFB;\n  --ink:#111114; --ink-2:#2E2E34; --muted:#5C5C66; --line:#DEDEE3; --line-2:#EDEDF0;\n  --ok-fg:#136B3B; --ok-bg:#E6F2EA;\n  --lim-fg:#1540C9; --lim-bg:#E8EEFF;\n  /* Availability, loud. Green is a fill, not a tint -- it has to be the\n     brightest thing on the seat step. */\n  --go:#00A550; --go-ink:#FFFFFF;\n  --few:#D4351C; --few-ink:#FFFFFF;\n  /* Sold out. Jason's red, not the burgundy --full-fg carries for text on a pale\n     ground -- that one stays where it is, because pure red as type would read\n     worse rather than louder. */\n  --gone:#FF0000;\n  --full-fg:#9C1F1F; --full-bg:#F8E8E8;\n  --shut-fg:#5C5C66; --shut-bg:#EDEDF0;\n  --ring:#C4122F;\n  --shadow:0 1px 2px rgba(20,17,14,.05), 0 8px 24px rgba(20,17,14,.07);\n  --shadow-lg:0 2px 4px rgba(20,17,14,.06), 0 18px 44px rgba(20,17,14,.12);\n  /* Seat class colours are no longer listed here. They arrive with the\n     availability response, from ticket_classes.accent_colour / accent_ink, so\n     a fifth class needs no change to this file. */\n  --blue:#1f5bff; --blue-on:#1540C9; --blue-ink:#FFFFFF;\n  color-scheme:light;\n}\n/* Locked to light. The widget is embedded in a light Tilda page, so following\n   the guest's phone theme would make it look foreign inside its own page. */\n\n#mtx-booking *{box-sizing:border-box}\n#mtx-booking{background:var(--ground);color:var(--ink);\n  font:400 15px/1.55 Barlow,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;\n  -webkit-font-smoothing:antialiased;\n  /* Tilda centres the text in its blocks, and that inherits straight into the\n     widget: every description and label came out centred on the live page.\n     Stated here so the widget reads the same wherever it is embedded. */\n  text-align:left}\n#mtx-booking h1, #mtx-booking h2, #mtx-booking h3, #mtx-booking h4{margin:0;font-family:\"Barlow Condensed\",Barlow,sans-serif;text-wrap:balance;letter-spacing:.005em}\n#mtx-booking p{margin:0}\n#mtx-booking button, #mtx-booking select{font:inherit;color:inherit}\n#mtx-booking :focus-visible{outline:2px solid var(--ring);outline-offset:2px;border-radius:4px}\n@media (prefers-reduced-motion:reduce){#mtx-booking *{animation-duration:.01ms!important;transition-duration:.01ms!important}}\n\n/* numbered step badge */\n#mtx-booking .mtx-num{display:inline-grid;place-items:center;width:20px;height:20px;flex:0 0 auto;border-radius:50%;\n  background:var(--blue);color:var(--blue-ink);font-family:Barlow;font-size:11px;font-weight:700;\n  line-height:1;font-variant-numeric:tabular-nums}\n\n/* ---------- widget shell ---------- */\n#mtx-booking .mtx-stage{padding:0}\n#mtx-booking .mtx-card{max-width:1120px;margin:0 auto;background:var(--surface);border:1px solid var(--line);\n  border-radius:16px;box-shadow:var(--shadow);overflow:hidden;transition:max-width .28s ease}\n\n/* masthead */\n#mtx-booking .mtx-mast{padding:20px 26px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}\n#mtx-booking .mtx-mast-lead{display:block;font-size:12px;font-weight:700;letter-spacing:.14em;\n  text-transform:uppercase;color:var(--blue);margin-bottom:4px}\n#mtx-booking .mtx-mast-venue{display:block;font-family:\"Barlow Condensed\";font-weight:800;\n  font-size:clamp(26px,3.2vw,36px);line-height:1.02;letter-spacing:.005em}\n#mtx-booking .mtx-mast-city{display:block;font-family:\"Barlow Condensed\";font-weight:600;\n  font-size:clamp(18px,2.2vw,24px);line-height:1.15;color:var(--ink);letter-spacing:.03em}\n\n/* section label */\n#mtx-booking .mtx-sec-label{display:flex;align-items:center;gap:9px;margin:0 0 11px;\n  font-size:15px;font-weight:700;letter-spacing:.01em}\n#mtx-booking .mtx-sec-label.mtx-gap{margin-top:36px}\n\n/* month buttons */\n#mtx-booking .mtx-months{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:4px}\n/* border-width stays 3px on every state so selecting a month shifts nothing */\n#mtx-booking .mtx-mbtn{padding:12px 10px;border:3px solid var(--blue);border-radius:11px;background:var(--blue);\n  font-family:\"Barlow Condensed\";font-size:19px;font-weight:700;letter-spacing:.02em;\n  cursor:pointer;transition:.15s;color:var(--blue-ink)}\n#mtx-booking .mtx-mbtn:hover:not(.mtx-on){background:var(--blue-on);border-color:var(--blue-on)}\n/* chosen month reverses out: white fill, blue border, blue type */\n#mtx-booking .mtx-mbtn.mtx-on{background:var(--surface);border-color:var(--blue);color:var(--blue)}\n\n/* which month am I looking at \u2014 guards against picking a date in the wrong month */\n#mtx-booking .mtx-month-note{display:flex;align-items:center;gap:11px;margin:0 0 14px;padding:12px 15px;\n  border:2px solid var(--blue);border-radius:10px;\n  background:color-mix(in srgb, var(--blue) 10%, var(--surface));\n  color:var(--ink-2);font-size:14.5px;font-weight:600;line-height:1.25}\n#mtx-booking .mtx-month-note svg{flex:0 0 auto;color:var(--blue)}\n#mtx-booking .mtx-month-note b{font-family:\"Barlow Condensed\";font-size:20px;font-weight:800;\n  letter-spacing:.035em;color:var(--blue);white-space:nowrap}\n\n/* which seat am I booking \u2014 sits above the calendar in seat-first mode */\n#mtx-booking .mtx-seat-note{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 14px;\n  padding:12px 15px;border:2px solid var(--blue);border-radius:10px;\n  background:color-mix(in srgb, var(--blue) 10%, var(--surface));\n  color:var(--ink-2);font-size:14.5px;font-weight:600;line-height:1.3}\n#mtx-booking .mtx-seat-note-k{font-size:11px;font-weight:800;letter-spacing:.14em;\n  text-transform:uppercase;color:var(--muted)}\n#mtx-booking .mtx-seat-note b{font-family:\"Barlow Condensed\";font-size:20px;font-weight:800;\n  letter-spacing:.035em;color:var(--blue);white-space:nowrap}\n#mtx-booking .mtx-seat-note-d{flex:1 1 100%;font-size:13px;font-weight:500;color:var(--muted)}\n#mtx-booking .mtx-seat-note-sold{margin-top:-4px;font-style:italic}\n#mtx-booking .mtx-seat-change{margin-left:auto;border:1.5px solid var(--blue);background:var(--surface);\n  color:var(--blue);padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;\n  letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-seat-change:hover{background:var(--blue);color:var(--blue-ink)}\n@media (max-width:520px){ #mtx-booking .mtx-seat-change{margin-left:0} }\n\n/* calendar */\n#mtx-booking .mtx-cal{padding:24px 26px 26px}\n#mtx-booking .mtx-dow, #mtx-booking .mtx-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}\n#mtx-booking .mtx-dow{margin-bottom:6px}\n#mtx-booking .mtx-dow span{text-align:center;font-size:13px;font-weight:700;letter-spacing:.09em;\n  text-transform:uppercase;color:var(--muted);padding:2px 0}\n#mtx-booking .mtx-day{position:relative;min-height:62px;padding:7px 5px 6px;border:1.5px solid transparent;\n  border-radius:11px;background:var(--surface-2);cursor:pointer;text-align:center;\n  display:flex;flex-direction:column;align-items:center;gap:5px;transition:.15s}\n#mtx-booking .mtx-day:hover:not(:disabled){border-color:var(--line);transform:translateY(-1px)}\n#mtx-booking .mtx-day:disabled{background:transparent;cursor:default}\n#mtx-booking .mtx-day .mtx-n{font-family:\"Barlow Condensed\";font-weight:700;font-size:20px;line-height:1;\n  font-variant-numeric:tabular-nums}\n#mtx-booking .mtx-day .mtx-tag{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;\n  color:var(--muted);line-height:1.15;max-width:100%;overflow:hidden}\n#mtx-booking .mtx-day .mtx-dot{width:5px;height:5px;border-radius:50%;background:var(--evt,var(--muted))}\n/* The promotion this page is about. On a promotion page these are the only\n   nights that can be booked, so they carry the green that means available\n   everywhere else in the widget rather than the promotion's own accent. */\n#mtx-booking .mtx-day.mtx-hi{border-color:var(--evt,var(--blue));\n  background:color-mix(in srgb, var(--evt,var(--blue)) 9%, var(--surface))}\n#mtx-booking .mtx-day.mtx-hi .mtx-n{font-weight:800}\n#mtx-booking .mtx-day.mtx-open{border-color:var(--go);background:var(--ok-bg)}\n#mtx-booking .mtx-day.mtx-open .mtx-n{color:var(--ok-fg);font-weight:800}\n#mtx-booking .mtx-day.mtx-open .mtx-tag{color:var(--ok-fg)}\n#mtx-booking .mtx-day.mtx-open .mtx-dot{background:var(--go)}\n#mtx-booking .mtx-day.mtx-open:hover:not(:disabled){border-color:var(--go);\n  background:color-mix(in srgb, var(--go) 18%, var(--surface))}\n/* Another promotion's night on a promotion page: scored through, not\n   clickable, but its name stays so the cell never reads as \"no fight\". */\n#mtx-booking .mtx-day.mtx-elsewhere .mtx-tag{opacity:.5;text-decoration:line-through}\n/* Seat-first: the chosen seat is gone this night. Dimmed, never removed \u2014 the night is still open and the other seats are still for sale. */\n#mtx-booking .mtx-day.mtx-off{opacity:.42}\n#mtx-booking .mtx-day.mtx-off:hover:not(:disabled){opacity:1}\n#mtx-booking .mtx-day.mtx-sel{border-color:var(--ink);background:var(--ink)}\n#mtx-booking .mtx-day.mtx-sel .mtx-n{color:var(--ground)} #mtx-booking .mtx-day.mtx-sel .mtx-tag{color:rgba(255,255,255,.72)}\n#mtx-booking .mtx-day.mtx-none .mtx-n{color:var(--muted);opacity:.4}\n#mtx-booking .mtx-day.mtx-shut .mtx-n{color:var(--muted);opacity:.55;text-decoration:line-through}\n\n/* selected event box \u2014 white, framed in blue, blue accents */\n#mtx-booking .mtx-band{margin:0 26px;padding:22px 24px;background:var(--surface);color:var(--ink);\n  border:2px solid var(--blue);border-radius:14px}\n#mtx-booking .mtx-band-k{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;\n  color:var(--blue);margin-bottom:9px}\n#mtx-booking .mtx-band-h{font-size:clamp(24px,3vw,34px);font-weight:800;line-height:1.06;letter-spacing:.01em}\n#mtx-booking .mtx-band-when{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:15px;\n  font-weight:600;color:var(--ink-2)}\n#mtx-booking .mtx-band-when span{display:inline-flex;align-items:center;gap:7px}\n#mtx-booking .mtx-band-when svg{color:var(--blue);flex:0 0 auto}\n#mtx-booking .mtx-band-d{margin-top:13px;font-size:14.5px;line-height:1.55;color:var(--muted);max-width:66ch}\n/* a way back, not a call to action \u2014 sized down so it sits under the event detail */\n#mtx-booking .mtx-band-change{margin-top:15px;border:1.5px solid var(--blue);background:var(--surface);color:var(--blue);\n  padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;letter-spacing:.07em;\n  text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-band-change:hover{background:var(--blue);color:var(--blue-ink)}\n\n/* loading */\n#mtx-booking .mtx-load{padding:56px 26px;text-align:center;color:var(--ink-2);font-size:16px;font-weight:600}\n/* The tall wait. When a guest taps a date the page scrolls this panel flush\n   against the top of the screen, and a short panel leaves the host page's own\n   seat-class copy filling the eye line underneath -- so the guest looks at\n   that rather than at the spinner, and hesitates. Filling the screen puts the\n   spinner in the middle of it with the Stripe line still at the foot.\n   Only the panels we scroll to get this: a widget loading where it stands\n   must not punch a screen-high hole into the page it sits in. */\n#mtx-booking .mtx-load--tall{min-height:calc(100vh - 92px);min-height:calc(100svh - 92px);\n  display:flex;flex-direction:column;align-items:center;justify-content:center;\n  padding-top:26px;padding-bottom:26px}\n#mtx-booking .mtx-spin{width:26px;height:26px;margin:0 auto 14px;border:3px solid var(--line);\n  border-top-color:var(--blue);border-radius:50%;animation:sp .7s linear infinite}\n@keyframes sp{to{transform:rotate(360deg)}}\n\n/* ticket area */\n#mtx-booking .mtx-tix{padding:24px 26px 30px}\n#mtx-booking .mtx-tix-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;margin-bottom:16px}\n#mtx-booking .mtx-tix-h h3{display:flex;align-items:center;gap:9px;font-size:20px;font-weight:700}\n#mtx-booking .mtx-tix-h em{font-style:normal;font-size:12.5px;color:var(--muted)}\n\n/* status pill */\n#mtx-booking .mtx-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;\n  font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}\n#mtx-booking .mtx-pill i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}\n#mtx-booking .mtx-pill.mtx-ok{color:var(--ok-fg);background:var(--ok-bg)}\n#mtx-booking .mtx-pill.mtx-full{color:var(--full-fg);background:var(--full-bg)}\n#mtx-booking .mtx-pill.mtx-shut{color:var(--shut-fg);background:var(--shut-bg)}\n\n/* step 3a \u2014 the four choices, no detail */\n#mtx-booking .mtx-picker{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}\n/* The tile is one button. The strip, the border and the arrow all take a single\n   colour -- green while it can be booked, red once it cannot -- because that is\n   the only thing a guest needs at this step. The seat class colour returns on\n   the next screen, where the guest has chosen and the colour finally means\n   something to them. */\n#mtx-booking .mtx-pick{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:0;\n  padding:15px 34px 14px 21px;border:2px solid var(--st);border-radius:13px;\n  background:var(--surface);cursor:pointer;text-align:left;overflow:hidden;\n  transition:transform .15s ease,box-shadow .15s ease}\n#mtx-booking .mtx-pick{height:100%}\n#mtx-booking .mtx-pick--on{--st:var(--go)}\n/* A handful left needs to be spotted before the guest even reads the\n   pill text. Same green as any other live class -- just a heavier border\n   on that one tile, so it stands out from Available without a new colour. */\n#mtx-booking .mtx-pick--low{box-shadow:0 0 0 2px var(--st)}\n/* Not dimmed. The old wash made the name and price hard to read, which reads as\n   \"broken\" rather than \"gone\" -- and a guest who cannot read it goes looking\n   elsewhere. It is stated plainly and simply cannot be pressed. */\n#mtx-booking .mtx-pick--off{--st:var(--gone);cursor:not-allowed;background:var(--full-bg)}\n#mtx-booking .mtx-pick--offer .mtx-seatcard-go{margin-top:10px;animation:mtx-flash 1.8s ease-out infinite}\n@keyframes mtx-flash{0%,100%{box-shadow:0 0 0 0 rgba(0,165,80,.6)}70%{box-shadow:0 0 0 10px rgba(0,165,80,0)}}\n@media (prefers-reduced-motion:reduce){#mtx-booking .mtx-pick--offer .mtx-seatcard-go{animation:none}}\n#mtx-booking .mtx-ob{margin-bottom:16px;padding:16px 18px;border-radius:12px;background:var(--go);color:var(--go-ink);font-size:16px}\n#mtx-booking .mtx-ob-k{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}\n#mtx-booking .mtx-ob-p{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:10px}\n#mtx-booking .mtx-ob-now{font:800 44px/1 \"Barlow Condensed\"}\n#mtx-booking .mtx-ob-was{font-size:18px}\n#mtx-booking .mtx-ob-was s{font-size:26px;font-weight:700;text-decoration-thickness:2px}\n#mtx-booking .mtx-ob-save{padding:5px 14px;border-radius:99px;background:#fff;color:var(--ok-fg);font-size:14px;font-weight:800;text-transform:uppercase}\n#mtx-booking .mtx-ob-n{margin-top:10px;font-size:14px}\n#mtx-booking .mtx-pick--on:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}\n#mtx-booking .mtx-pick-bar{position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--st)}\n#mtx-booking .mtx-pick-why{font-size:10.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;\n  color:var(--muted);margin-bottom:3px}\n#mtx-booking .mtx-pick-name{font-family:\"Barlow Condensed\";font-size:25px;font-weight:800;line-height:1.0}\n#mtx-booking .mtx-pick-price{margin-top:7px;font-size:15px;font-weight:600;color:var(--ink-2);\n  font-variant-numeric:tabular-nums}\n#mtx-booking .mtx-pick-go{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--st);opacity:.9}\n/* margin-top:auto pins this to the bottom of the tile, so a two-line tagline\n   on one class and a one-line tagline on the next still leave the four badges\n   on the same baseline and the row with one flat edge. */\n#mtx-booking .mtx-avail{display:inline-flex;align-items:center;justify-content:center;margin-top:auto;\n  padding:8px 14px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.08em;\n  text-transform:uppercase;white-space:nowrap;align-self:stretch}\n#mtx-booking .mtx-avail--go{background:var(--go);color:var(--go-ink)}\n/* The number is the whole point of this pill -- it should not read like\n   part of the same uppercase label as everything else. */\n#mtx-booking .mtx-avail-n{font-size:20px;font-weight:900;letter-spacing:0;margin:0 2px}\n/* Sold out is stated, not whispered. A guest set on this class has to be left\n   in no doubt, or they go and look for it somewhere else. */\n#mtx-booking .mtx-avail--full{background:var(--gone);color:#FFFFFF}\n#mtx-booking .mtx-avail--shut{background:var(--shut-fg);color:#FFFFFF}\n\n/* step 3a with photos. A seat class that has photos is drawn as a card, but only\n   while it can be bought. Sold out or closed, it falls back to the compact tile\n   above, so a guest is never shown a seat they cannot have. */\n#mtx-booking .mtx-seatcard{position:relative;display:flex;flex-direction:column;background:var(--surface);\n  border:2px solid var(--go);border-radius:13px;overflow:hidden;text-align:left}\n#mtx-booking .mtx-seatcard--low{box-shadow:0 0 0 2px var(--go)}\n#mtx-booking .mtx-slider{position:relative;background:#0B0B10}\n#mtx-booking .mtx-track{display:flex;margin:0;padding:0;list-style:none;overflow-x:auto;\n  scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}\n#mtx-booking .mtx-track::-webkit-scrollbar{display:none}\n#mtx-booking .mtx-slide{flex:0 0 100%;margin:0;padding:0;list-style:none;scroll-snap-align:start;\n  aspect-ratio:3/2;background:#0B0B10}\n#mtx-booking .mtx-slide img{display:block;width:100%;height:100%;max-width:none;margin:0;object-fit:cover}\n#mtx-booking .mtx-slide-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;padding:0;\n  border:0;border-radius:50%;background:rgba(255,255,255,.94);color:var(--ink);display:flex;\n  align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}\n#mtx-booking .mtx-slide-btn:hover{background:#FFFFFF}\n#mtx-booking .mtx-slide-btn:disabled{opacity:0;pointer-events:none}\n#mtx-booking .mtx-slide-prev{left:8px}\n#mtx-booking .mtx-slide-next{right:8px}\n#mtx-booking .mtx-dots{position:absolute;left:0;right:0;bottom:4px;display:flex;justify-content:center}\n#mtx-booking .mtx-dotb{display:flex;align-items:center;justify-content:center;width:24px;height:24px;\n  padding:0;border:0;background:none;cursor:pointer}\n#mtx-booking .mtx-dotb i{display:block;width:8px;height:8px;border-radius:50%;\n  background:rgba(255,255,255,.6);box-shadow:0 0 0 1px rgba(0,0,0,.45)}\n#mtx-booking .mtx-dotb[aria-current=\"true\"] i{width:10px;height:10px;background:#FFFFFF}\n#mtx-booking .mtx-seatcard-body{display:flex;flex-direction:column;align-items:flex-start;padding:15px 18px 17px}\n#mtx-booking .mtx-why-list{align-self:stretch;list-style:none;margin:13px 0 15px;padding:0;\n  display:flex;flex-direction:column;gap:10px}\n#mtx-booking .mtx-why-list li{position:relative;margin:0;padding:0 0 0 27px;list-style:none;\n  font-size:14.5px;font-weight:600;line-height:1.35;color:var(--ink-2)}\n#mtx-booking .mtx-why-tick{position:absolute;left:0;top:1px;color:var(--ok-fg)}\n#mtx-booking .mtx-why-note{display:block;margin-top:3px;font-size:13.5px;font-weight:500;color:var(--muted)}\n#mtx-booking .mtx-seatcard-go{position:relative;display:flex;align-items:center;justify-content:center;\n  align-self:stretch;min-height:48px;padding:10px 42px 10px 16px;border:0;border-radius:999px;\n  background:var(--go);color:var(--go-ink);font-size:13px;font-weight:800;letter-spacing:.08em;\n  text-transform:uppercase;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}\n#mtx-booking .mtx-seatcard-go:hover{transform:translateY(-1px);box-shadow:var(--shadow)}\n#mtx-booking .mtx-seatcard-go .mtx-pick-go{color:var(--go-ink);opacity:1}\n\n/* step 3b \u2014 the one chosen class, framed in its own colour */\n/* Framed the way the tile it came from was: green while it can be booked, red once it\n   cannot. The seat class colour no longer frames anything. */\n#mtx-booking .mtx-detail{--st:var(--go);border:2px solid var(--st);border-radius:14px;padding:20px 22px;background:var(--surface)}\n#mtx-booking .mtx-detail--off{--st:var(--gone);background:var(--full-bg)}\n#mtx-booking .mtx-detail--shut{--st:var(--shut-fg);background:var(--shut-bg)}\n#mtx-booking .mtx-detail-k{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;\n  color:var(--muted);margin-bottom:8px}\n#mtx-booking .mtx-detail-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:10px}\n#mtx-booking .mtx-detail-h{font-size:clamp(24px,2.6vw,30px);font-weight:800;line-height:1.05}\n#mtx-booking .mtx-detail-d{font-size:14.5px;line-height:1.55;color:var(--muted);max-width:66ch;margin-bottom:16px}\n#mtx-booking .mtx-detail-change{margin-top:15px;border:1.5px solid var(--blue);background:var(--surface);color:var(--blue);\n  padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;letter-spacing:.07em;\n  text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-detail-change:hover{background:var(--blue);color:var(--blue-ink)}\n\n/* The status badge on the chosen class is the tile's own badge: solid, white type. */\n#mtx-booking .mtx-detail .mtx-pill{padding:7px 14px;font-size:12px;font-weight:800;letter-spacing:.08em}\n#mtx-booking .mtx-detail .mtx-pill.mtx-ok{background:var(--go);color:var(--go-ink)}\n#mtx-booking .mtx-detail .mtx-pill.mtx-full{background:var(--gone);color:#FFFFFF}\n#mtx-booking .mtx-detail .mtx-pill.mtx-shut{background:var(--shut-fg);color:#FFFFFF}\n\n/* Sold out has to be the loudest thing on the panel, not a small tag beside the name.\n   Full width, on its own line, the size of the tile's own badge. */\n#mtx-booking .mtx-detail--off .mtx-pill, #mtx-booking .mtx-detail--shut .mtx-pill{flex:1 0 100%;order:5;\n  justify-content:center;min-height:56px;font-size:20px;letter-spacing:.1em;border-radius:999px}\n#mtx-booking .mtx-detail--off .mtx-pill i, #mtx-booking .mtx-detail--shut .mtx-pill i{width:9px;height:9px}\n\n@media (max-width:520px){ #mtx-booking .mtx-detail--off .mtx-pill, #mtx-booking .mtx-detail--shut .mtx-pill{font-size:15px;letter-spacing:.05em;min-height:50px;padding:7px 10px} }\n\n/* No grey bar inside a red or grey panel: the sentence sits on the panel itself. */\n#mtx-booking .mtx-detail--off .mtx-note, #mtx-booking .mtx-detail--shut .mtx-note{background:transparent;padding:0;\n  color:var(--ink);font-size:16px;font-weight:600}\n\n/* the way out to the stadium, when we are not selling the night ourselves */\n#mtx-booking .mtx-divert{border:2px solid var(--blue);border-radius:14px;padding:20px 22px;\n  background:color-mix(in srgb, var(--blue) 7%, var(--surface))}\n#mtx-booking .mtx-divert-d{font-size:15px;line-height:1.55;color:var(--ink-2);max-width:66ch;\n  margin-bottom:16px;font-weight:600}\n#mtx-booking .mtx-divert-go{display:inline-flex;align-items:center;gap:9px;min-height:44px;\n  padding:11px 24px;border-radius:9px;background:var(--blue);color:var(--blue-ink);\n  font-family:\"Barlow Condensed\";font-size:16px;font-weight:700;letter-spacing:.045em;\n  text-transform:uppercase;text-decoration:none;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-divert-go:hover{background:var(--blue-on);transform:translateY(-1px);\n  box-shadow:var(--shadow-lg)}\n#mtx-booking .mtx-divert-n{margin-top:11px;font-size:12.5px;color:var(--muted);font-weight:600}\n@media (max-width:520px){ #mtx-booking .mtx-divert-go{width:100%;justify-content:center} }\n\n#mtx-booking .mtx-note{padding:12px 13px;border-radius:9px;font-size:13.5px;line-height:1.5;\n  background:var(--shut-bg);color:var(--ink-2)}\n#mtx-booking .mtx-note.mtx-warn{background:var(--lim-bg);color:var(--lim-fg)}\n#mtx-booking .mtx-note b{font-weight:700}\n#mtx-booking .mtx-ack{display:flex;gap:8px;align-items:flex-start;margin-top:9px;cursor:pointer;font-weight:600}\n#mtx-booking .mtx-ack input{width:16px;height:16px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--ink)}\n\n#mtx-booking .mtx-fields{display:flex;flex-direction:column;gap:12px}\n#mtx-booking .mtx-pair{display:grid;grid-template-columns:1fr 1fr;gap:17px}\n#mtx-booking .mtx-f label{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.08em;\n  text-transform:uppercase;color:var(--muted);margin-bottom:5px}\n#mtx-booking .mtx-f label .mtx-num{width:17px;height:17px;font-size:10px}\n#mtx-booking .mtx-sel{position:relative}\n#mtx-booking .mtx-sel:after{content:\"\";position:absolute;right:13px;top:50%;width:7px;height:7px;\n  border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);\n  transform:translateY(-70%) rotate(45deg);pointer-events:none}\n/* one border rule for every state, so no select ever looks different from its neighbour */\n#mtx-booking .mtx-sel select{width:100%;min-height:46px;padding:9px 34px 9px 12px;border:1.5px solid var(--line);\n  border-radius:10px;background:var(--surface);color:var(--ink);font-size:15px;font-weight:600;\n  appearance:none;-webkit-appearance:none;cursor:pointer;transition:.15s;outline:none}\n#mtx-booking .mtx-sel select:hover:not(:disabled){border-color:var(--ink-2)}\n#mtx-booking .mtx-sel select:focus-visible{border-color:var(--c,var(--blue));box-shadow:0 0 0 3px color-mix(in srgb, var(--c,var(--blue)) 22%, transparent)}\n#mtx-booking .mtx-sel select:disabled{opacity:.55;cursor:not-allowed;background:var(--surface-2)}\n\n#mtx-booking .mtx-sums{border:1px solid var(--line-2);border-radius:10px;background:var(--surface-2);overflow:hidden}\n#mtx-booking .mtx-sum{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px}\n#mtx-booking .mtx-sum span{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}\n#mtx-booking .mtx-sum b{font-family:\"Barlow Condensed\";font-size:20px;font-weight:700;\n  font-variant-numeric:tabular-nums;line-height:1}\n#mtx-booking .mtx-sum--total{border-top:1px solid var(--line-2);background:var(--surface)}\n#mtx-booking .mtx-sum--total b{font-size:26px;font-weight:800}\n\n/* sized to the words, not the panel \u2014 full width only where the panel is narrow */\n#mtx-booking .mtx-go{min-height:44px;padding:11px 26px;border:0;border-radius:9px;background:var(--ink);\n  color:#FFFFFF;font-family:\"Barlow Condensed\";font-size:15px;font-weight:700;\n  letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.15s;\n  align-self:flex-start;text-align:center}\n#mtx-booking .mtx-go:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-lg)}\n/* waiting, not broken: an outline that reads as \"one more thing to do\" */\n#mtx-booking .mtx-go:disabled{background:transparent;color:var(--muted);border:1.5px dashed var(--line);\n  cursor:not-allowed;transform:none;box-shadow:none}\n\n/* ---------- alignment, stated rather than inherited ----------\n   Setting text-align on the widget root is not enough. A host rule such as\n   `#allrecords *{text-align:center}` matches each element directly, and a\n   direct match beats an inherited value however specific the ancestor rule is.\n   The live page centred every description that way.\n\n   So every element inside the card is told explicitly, at a specificity an id\n   plus a class cannot lose to, and the handful that genuinely centre are told\n   back again one level higher. */\n#mtx-booking,\n#mtx-booking .mtx-card,\n#mtx-booking .mtx-card *{text-align:left}\n\n#mtx-booking .mtx-card .mtx-dow span,\n#mtx-booking .mtx-card .mtx-day,\n#mtx-booking .mtx-card .mtx-load,\n#mtx-booking .mtx-card .mtx-state,\n#mtx-booking .mtx-card button{text-align:center}\n@media (max-width:640px){ #mtx-booking .mtx-go{width:100%;align-self:stretch} }\n\n@media (max-width:560px){ #mtx-booking .mtx-picker{grid-template-columns:1fr} }\n@media (max-width:520px){ #mtx-booking .mtx-pair{grid-template-columns:1fr} }\n\n/* footer strip */\n#mtx-booking .mtx-foot{padding:16px 26px 22px;border-top:1px solid var(--line-2);background:var(--surface-2);\n  display:flex;flex-wrap:wrap;gap:8px 22px;font-size:12px;color:var(--muted);font-weight:600}\n#mtx-booking .mtx-foot span{display:inline-flex;align-items:center;gap:6px}\n\n@media (max-width:720px){\n  #mtx-booking .mtx-mast, #mtx-booking .mtx-cal, #mtx-booking .mtx-tix, #mtx-booking .mtx-foot{padding-left:16px;padding-right:16px}\n  #mtx-booking .mtx-band{margin-left:16px;margin-right:16px;padding:18px 16px}\n  #mtx-booking .mtx-detail{padding:18px 16px}\n  #mtx-booking .mtx-day .mtx-tag{display:none}\n  #mtx-booking .mtx-day{min-height:54px}\n  #mtx-booking .mtx-months{grid-template-columns:repeat(2,1fr)}\n}\n\n/* ---------- states the prototype never had ---------- */\n/* The prototype always had its data. A live widget has to say so when it does\n   not, and give the guest a way to try again rather than a blank rectangle. */\n#mtx-booking .mtx-state{padding:56px 26px;text-align:center;color:var(--ink-2)}\n#mtx-booking .mtx-state h3{font-size:22px;font-weight:700;margin-bottom:8px}\n#mtx-booking .mtx-state p{font-size:15px;color:var(--muted);max-width:46ch;margin:0 auto}\n#mtx-booking .mtx-retry{margin-top:18px;min-height:44px;padding:11px 26px;border:0;border-radius:9px;\n  background:var(--blue);color:var(--blue-ink);font-family:\"Barlow Condensed\";font-size:15px;\n  font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-retry:hover{background:var(--blue-on)}\n/* Errors raised at the point of paying belong beside the button, not in an\n   alert box the guest has to dismiss before they can see what went wrong. */\n#mtx-booking .mtx-fail{margin-top:12px;padding:12px 13px;border-radius:9px;font-size:13.5px;line-height:1.5;\n  background:var(--full-bg);color:var(--full-fg);font-weight:600}\n\n/* Cards in a row are the same height and their buttons line up: the button is pinned to the\n   foot of the card, so a card with a longer list leaves its space above the button. A closed\n   card stays its own height and is not stretched. */\n#mtx-booking .mtx-picker--photos{align-items:stretch}\n#mtx-booking .mtx-picker--photos .mtx-pick{height:100%}\n#mtx-booking .mtx-seatcard-body{flex:1 1 auto}\n#mtx-booking .mtx-seatcard-go{margin-top:auto}\n#mtx-booking .mtx-why-list{margin-bottom:18px}\n#mtx-booking .mtx-seatcard--closed{align-self:start;border-color:var(--gone);background:var(--full-bg)}\n#mtx-booking .mtx-closed-btn{display:flex;align-items:center;justify-content:center;align-self:stretch;min-height:48px;\n  padding:10px 16px;border:0;border-radius:999px;background:var(--shut-fg);color:#FFFFFF;font-size:13px;font-weight:800;\n  letter-spacing:.08em;text-transform:uppercase;cursor:not-allowed}\n#mtx-booking .mtx-seatcard--closed .mtx-seatcard-go--up{margin-top:10px}\n\n/* 5 October 2026, Jason: hold the guest by the hand. The card's button says what it does, the way\n   back is easy to hit, and the button that takes the money is green while it can be pressed. */\n#mtx-booking .mtx-seatcard-go{gap:6px 14px;flex-wrap:wrap}\n#mtx-booking .mtx-pick-note{display:block;margin:9px 0 12px;font-size:13.5px;font-weight:500;line-height:1.45;color:var(--ink-2)}\n#mtx-booking .mtx-go-sep{display:block;width:1px;height:18px;background:currentColor;opacity:.6}\n@media (max-width:440px){ #mtx-booking .mtx-go-sep{display:none} }\n#mtx-booking .mtx-detail-change{min-height:50px;padding:13px 26px;border-width:2px;border-radius:10px;\n  font-size:15px;letter-spacing:.06em}\n@media (max-width:640px){ #mtx-booking .mtx-detail-change{width:100%} }\n#mtx-booking .mtx-go{background:var(--go);color:var(--go-ink);font-size:19px;min-height:54px;padding:12px 32px;\n  border-radius:10px}\n#mtx-booking .mtx-go:hover:not(:disabled){background:#00914A}\n\n/* The hidden attribute loses to any display rule of the same weight, and several\n   blocks above set one. That left the empty seat note drawn as a blue bar. Last,\n   so nothing above can outrank it. */\n#mtx-booking [hidden]{display:none}\n";
++var CSS = "\n\n#mtx-booking{\n  --ground:#F5F5F6; --surface:#FFFFFF; --surface-2:#FAFAFB;\n  --ink:#111114; --ink-2:#2E2E34; --muted:#5C5C66; --line:#DEDEE3; --line-2:#EDEDF0;\n  --ok-fg:#136B3B; --ok-bg:#E6F2EA;\n  --lim-fg:#1540C9; --lim-bg:#E8EEFF;\n  /* Availability, loud. Green is a fill, not a tint -- it has to be the\n     brightest thing on the seat step. */\n  --go:#00A550; --go-ink:#FFFFFF;\n  --few:#D4351C; --few-ink:#FFFFFF;\n  /* Sold out. Jason's red, not the burgundy --full-fg carries for text on a pale\n     ground -- that one stays where it is, because pure red as type would read\n     worse rather than louder. */\n  --gone:#FF0000;\n  --full-fg:#9C1F1F; --full-bg:#F8E8E8;\n  --shut-fg:#5C5C66; --shut-bg:#EDEDF0;\n  --ring:#C4122F;\n  --shadow:0 1px 2px rgba(20,17,14,.05), 0 8px 24px rgba(20,17,14,.07);\n  --shadow-lg:0 2px 4px rgba(20,17,14,.06), 0 18px 44px rgba(20,17,14,.12);\n  /* Seat class colours are no longer listed here. They arrive with the\n     availability response, from ticket_classes.accent_colour / accent_ink, so\n     a fifth class needs no change to this file. */\n  --blue:#1f5bff; --blue-on:#1540C9; --blue-ink:#FFFFFF;\n  color-scheme:light;\n}\n/* Locked to light. The widget is embedded in a light Tilda page, so following\n   the guest's phone theme would make it look foreign inside its own page. */\n\n#mtx-booking *{box-sizing:border-box}\n#mtx-booking{background:var(--ground);color:var(--ink);\n  font:400 15px/1.55 Barlow,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;\n  -webkit-font-smoothing:antialiased;\n  /* Tilda centres the text in its blocks, and that inherits straight into the\n     widget: every description and label came out centred on the live page.\n     Stated here so the widget reads the same wherever it is embedded. */\n  text-align:left}\n#mtx-booking h1, #mtx-booking h2, #mtx-booking h3, #mtx-booking h4{margin:0;font-family:\"Barlow Condensed\",Barlow,sans-serif;text-wrap:balance;letter-spacing:.005em}\n#mtx-booking p{margin:0}\n#mtx-booking button, #mtx-booking select{font:inherit;color:inherit}\n#mtx-booking :focus-visible{outline:2px solid var(--ring);outline-offset:2px;border-radius:4px}\n@media (prefers-reduced-motion:reduce){#mtx-booking *{animation-duration:.01ms!important;transition-duration:.01ms!important}}\n\n/* numbered step badge */\n#mtx-booking .mtx-num{display:inline-grid;place-items:center;width:20px;height:20px;flex:0 0 auto;border-radius:50%;\n  background:var(--blue);color:var(--blue-ink);font-family:Barlow;font-size:11px;font-weight:700;\n  line-height:1;font-variant-numeric:tabular-nums}\n\n/* ---------- widget shell ---------- */\n#mtx-booking .mtx-stage{padding:0}\n#mtx-booking .mtx-card{max-width:1120px;margin:0 auto;background:var(--surface);border:1px solid var(--line);\n  border-radius:16px;box-shadow:var(--shadow);overflow:hidden;transition:max-width .28s ease}\n\n/* masthead */\n#mtx-booking .mtx-mast{padding:20px 26px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}\n#mtx-booking .mtx-mast-lead{display:block;font-size:12px;font-weight:700;letter-spacing:.14em;\n  text-transform:uppercase;color:var(--blue);margin-bottom:4px}\n#mtx-booking .mtx-mast-venue{display:block;font-family:\"Barlow Condensed\";font-weight:800;\n  font-size:clamp(26px,3.2vw,36px);line-height:1.02;letter-spacing:.005em}\n#mtx-booking .mtx-mast-city{display:block;font-family:\"Barlow Condensed\";font-weight:600;\n  font-size:clamp(18px,2.2vw,24px);line-height:1.15;color:var(--ink);letter-spacing:.03em}\n\n/* section label */\n#mtx-booking .mtx-sec-label{display:flex;align-items:center;gap:9px;margin:0 0 11px;\n  font-size:15px;font-weight:700;letter-spacing:.01em}\n#mtx-booking .mtx-sec-label.mtx-gap{margin-top:36px}\n\n/* month buttons */\n#mtx-booking .mtx-months{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:4px}\n/* border-width stays 3px on every state so selecting a month shifts nothing */\n#mtx-booking .mtx-mbtn{padding:12px 10px;border:3px solid var(--blue);border-radius:11px;background:var(--blue);\n  font-family:\"Barlow Condensed\";font-size:19px;font-weight:700;letter-spacing:.02em;\n  cursor:pointer;transition:.15s;color:var(--blue-ink)}\n#mtx-booking .mtx-mbtn:hover:not(.mtx-on){background:var(--blue-on);border-color:var(--blue-on)}\n/* chosen month reverses out: white fill, blue border, blue type */\n#mtx-booking .mtx-mbtn.mtx-on{background:var(--surface);border-color:var(--blue);color:var(--blue)}\n\n/* which month am I looking at \u2014 guards against picking a date in the wrong month */\n#mtx-booking .mtx-month-note{display:flex;align-items:center;gap:11px;margin:0 0 14px;padding:12px 15px;\n  border:2px solid var(--blue);border-radius:10px;\n  background:color-mix(in srgb, var(--blue) 10%, var(--surface));\n  color:var(--ink-2);font-size:14.5px;font-weight:600;line-height:1.25}\n#mtx-booking .mtx-month-note svg{flex:0 0 auto;color:var(--blue)}\n#mtx-booking .mtx-month-note b{font-family:\"Barlow Condensed\";font-size:20px;font-weight:800;\n  letter-spacing:.035em;color:var(--blue);white-space:nowrap}\n\n/* which seat am I booking \u2014 sits above the calendar in seat-first mode */\n#mtx-booking .mtx-seat-note{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 14px;\n  padding:12px 15px;border:2px solid var(--blue);border-radius:10px;\n  background:color-mix(in srgb, var(--blue) 10%, var(--surface));\n  color:var(--ink-2);font-size:14.5px;font-weight:600;line-height:1.3}\n#mtx-booking .mtx-seat-note-k{font-size:11px;font-weight:800;letter-spacing:.14em;\n  text-transform:uppercase;color:var(--muted)}\n#mtx-booking .mtx-seat-note b{font-family:\"Barlow Condensed\";font-size:20px;font-weight:800;\n  letter-spacing:.035em;color:var(--blue);white-space:nowrap}\n#mtx-booking .mtx-seat-note-d{flex:1 1 100%;font-size:13px;font-weight:500;color:var(--muted)}\n#mtx-booking .mtx-seat-note-sold{margin-top:-4px;font-style:italic}\n#mtx-booking .mtx-seat-change{margin-left:auto;border:1.5px solid var(--blue);background:var(--surface);\n  color:var(--blue);padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;\n  letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-seat-change:hover{background:var(--blue);color:var(--blue-ink)}\n@media (max-width:520px){ #mtx-booking .mtx-seat-change{margin-left:0} }\n\n/* calendar */\n#mtx-booking .mtx-cal{padding:24px 26px 26px}\n#mtx-booking .mtx-dow, #mtx-booking .mtx-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}\n#mtx-booking .mtx-dow{margin-bottom:6px}\n#mtx-booking .mtx-dow span{text-align:center;font-size:13px;font-weight:700;letter-spacing:.09em;\n  text-transform:uppercase;color:var(--muted);padding:2px 0}\n#mtx-booking .mtx-day{position:relative;min-height:62px;padding:7px 5px 6px;border:1.5px solid transparent;\n  border-radius:11px;background:var(--surface-2);cursor:pointer;text-align:center;\n  display:flex;flex-direction:column;align-items:center;gap:5px;transition:.15s}\n#mtx-booking .mtx-day:hover:not(:disabled){border-color:var(--line);transform:translateY(-1px)}\n#mtx-booking .mtx-day:disabled{background:transparent;cursor:default}\n#mtx-booking .mtx-day .mtx-n{font-family:\"Barlow Condensed\";font-weight:700;font-size:20px;line-height:1;\n  font-variant-numeric:tabular-nums}\n#mtx-booking .mtx-day .mtx-tag{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;\n  color:var(--muted);line-height:1.15;max-width:100%;overflow:hidden}\n#mtx-booking .mtx-day .mtx-dot{width:5px;height:5px;border-radius:50%;background:var(--evt,var(--muted))}\n/* The promotion this page is about. On a promotion page these are the only\n   nights that can be booked, so they carry the green that means available\n   everywhere else in the widget rather than the promotion's own accent. */\n#mtx-booking .mtx-day.mtx-hi{border-color:var(--evt,var(--blue));\n  background:color-mix(in srgb, var(--evt,var(--blue)) 9%, var(--surface))}\n#mtx-booking .mtx-day.mtx-hi .mtx-n{font-weight:800}\n#mtx-booking .mtx-day.mtx-open{border-color:var(--go);background:var(--ok-bg)}\n#mtx-booking .mtx-day.mtx-open .mtx-n{color:var(--ok-fg);font-weight:800}\n#mtx-booking .mtx-day.mtx-open .mtx-tag{color:var(--ok-fg)}\n#mtx-booking .mtx-day.mtx-open .mtx-dot{background:var(--go)}\n#mtx-booking .mtx-day.mtx-open:hover:not(:disabled){border-color:var(--go);\n  background:color-mix(in srgb, var(--go) 18%, var(--surface))}\n/* Another promotion's night on a promotion page: scored through, not\n   clickable, but its name stays so the cell never reads as \"no fight\". */\n#mtx-booking .mtx-day.mtx-elsewhere .mtx-tag{opacity:.5;text-decoration:line-through}\n/* Seat-first: the chosen seat is gone this night. Dimmed, never removed \u2014 the night is still open and the other seats are still for sale. */\n#mtx-booking .mtx-day.mtx-off{opacity:.42}\n#mtx-booking .mtx-day.mtx-off:hover:not(:disabled){opacity:1}\n#mtx-booking .mtx-day.mtx-sel{border-color:var(--ink);background:var(--ink)}\n#mtx-booking .mtx-day.mtx-sel .mtx-n{color:var(--ground)} #mtx-booking .mtx-day.mtx-sel .mtx-tag{color:rgba(255,255,255,.72)}\n#mtx-booking .mtx-day.mtx-none .mtx-n{color:var(--muted);opacity:.4}\n#mtx-booking .mtx-day.mtx-shut .mtx-n{color:var(--muted);opacity:.55;text-decoration:line-through}\n\n/* selected event box \u2014 white, framed in blue, blue accents */\n#mtx-booking .mtx-band{margin:0 26px;padding:22px 24px;background:var(--surface);color:var(--ink);\n  border:2px solid var(--blue);border-radius:14px}\n#mtx-booking .mtx-band-k{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;\n  color:var(--blue);margin-bottom:9px}\n#mtx-booking .mtx-band-h{font-size:clamp(24px,3vw,34px);font-weight:800;line-height:1.06;letter-spacing:.01em}\n#mtx-booking .mtx-band-when{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:15px;\n  font-weight:600;color:var(--ink-2)}\n#mtx-booking .mtx-band-when span{display:inline-flex;align-items:center;gap:7px}\n#mtx-booking .mtx-band-when svg{color:var(--blue);flex:0 0 auto}\n#mtx-booking .mtx-band-d{margin-top:13px;font-size:14.5px;line-height:1.55;color:var(--muted);max-width:66ch}\n/* a way back, not a call to action \u2014 sized down so it sits under the event detail */\n#mtx-booking .mtx-band-change{margin-top:15px;border:1.5px solid var(--blue);background:var(--surface);color:var(--blue);\n  padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;letter-spacing:.07em;\n  text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-band-change:hover{background:var(--blue);color:var(--blue-ink)}\n\n/* loading */\n#mtx-booking .mtx-load{padding:56px 26px;text-align:center;color:var(--ink-2);font-size:16px;font-weight:600}\n/* The tall wait. When a guest taps a date the page scrolls this panel flush\n   against the top of the screen, and a short panel leaves the host page's own\n   seat-class copy filling the eye line underneath -- so the guest looks at\n   that rather than at the spinner, and hesitates. Filling the screen puts the\n   spinner in the middle of it with the Stripe line still at the foot.\n   Only the panels we scroll to get this: a widget loading where it stands\n   must not punch a screen-high hole into the page it sits in. */\n#mtx-booking .mtx-load--tall{min-height:calc(100vh - 92px);min-height:calc(100svh - 92px);\n  display:flex;flex-direction:column;align-items:center;justify-content:center;\n  padding-top:26px;padding-bottom:26px}\n#mtx-booking .mtx-spin{width:26px;height:26px;margin:0 auto 14px;border:3px solid var(--line);\n  border-top-color:var(--blue);border-radius:50%;animation:sp .7s linear infinite}\n@keyframes sp{to{transform:rotate(360deg)}}\n\n/* ticket area */\n#mtx-booking .mtx-tix{padding:24px 26px 30px}\n#mtx-booking .mtx-tix-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;margin-bottom:16px}\n#mtx-booking .mtx-tix-h h3{display:flex;align-items:center;gap:9px;font-size:20px;font-weight:700}\n#mtx-booking .mtx-tix-h em{font-style:normal;font-size:12.5px;color:var(--muted)}\n\n/* status pill */\n#mtx-booking .mtx-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;\n  font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}\n#mtx-booking .mtx-pill i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}\n#mtx-booking .mtx-pill.mtx-ok{color:var(--ok-fg);background:var(--ok-bg)}\n#mtx-booking .mtx-pill.mtx-full{color:var(--full-fg);background:var(--full-bg)}\n#mtx-booking .mtx-pill.mtx-shut{color:var(--shut-fg);background:var(--shut-bg)}\n\n/* step 3a \u2014 the four choices, no detail */\n#mtx-booking .mtx-picker{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}\n/* The tile is one button. The strip, the border and the arrow all take a single\n   colour -- green while it can be booked, red once it cannot -- because that is\n   the only thing a guest needs at this step. The seat class colour returns on\n   the next screen, where the guest has chosen and the colour finally means\n   something to them. */\n#mtx-booking .mtx-pick{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:0;\n  padding:15px 34px 14px 21px;border:2px solid var(--st);border-radius:13px;\n  background:var(--surface);cursor:pointer;text-align:left;overflow:hidden;\n  transition:transform .15s ease,box-shadow .15s ease}\n#mtx-booking .mtx-pick{height:100%}\n#mtx-booking .mtx-pick--on{--st:var(--go)}\n/* A handful left needs to be spotted before the guest even reads the\n   pill text. Same green as any other live class -- just a heavier border\n   on that one tile, so it stands out from Available without a new colour. */\n#mtx-booking .mtx-pick--low{box-shadow:0 0 0 2px var(--st)}\n/* Not dimmed. The old wash made the name and price hard to read, which reads as\n   \"broken\" rather than \"gone\" -- and a guest who cannot read it goes looking\n   elsewhere. It is stated plainly and simply cannot be pressed. */\n#mtx-booking .mtx-pick--off{--st:var(--gone);cursor:not-allowed;background:var(--full-bg)}\n#mtx-booking .mtx-pick--offer .mtx-seatcard-go{margin-top:10px;animation:mtx-flash 1.8s ease-out infinite}\n@keyframes mtx-flash{0%,100%{box-shadow:0 0 0 0 rgba(0,165,80,.6)}70%{box-shadow:0 0 0 10px rgba(0,165,80,0)}}\n@media (prefers-reduced-motion:reduce){#mtx-booking .mtx-pick--offer .mtx-seatcard-go{animation:none}}\n#mtx-booking .mtx-ob{margin-bottom:16px;padding:16px 18px;border-radius:12px;background:var(--go);color:var(--go-ink);font-size:16px}\n#mtx-booking .mtx-ob-k{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}\n#mtx-booking .mtx-ob-p{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:10px}\n#mtx-booking .mtx-ob-now{font:800 44px/1 \"Barlow Condensed\"}\n#mtx-booking .mtx-ob-was{font-size:18px}\n#mtx-booking .mtx-ob-was s{font-size:26px;font-weight:700;text-decoration-thickness:2px}\n#mtx-booking .mtx-ob-save{padding:5px 14px;border-radius:99px;background:#fff;color:var(--ok-fg);font-size:14px;font-weight:800;text-transform:uppercase}\n#mtx-booking .mtx-ob-n{margin-top:10px;font-size:14px}\n#mtx-booking .mtx-pick--on:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}\n#mtx-booking .mtx-pick-bar{position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--st)}\n#mtx-booking .mtx-pick-why{font-size:10.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;\n  color:var(--muted);margin-bottom:3px}\n#mtx-booking .mtx-pick-name{font-family:\"Barlow Condensed\";font-size:25px;font-weight:800;line-height:1.0}\n#mtx-booking .mtx-pick-price{margin-top:7px;font-size:15px;font-weight:600;color:var(--ink-2);\n  font-variant-numeric:tabular-nums}\n#mtx-booking .mtx-pick-go{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--st);opacity:.9}\n/* margin-top:auto pins this to the bottom of the tile, so a two-line tagline\n   on one class and a one-line tagline on the next still leave the four badges\n   on the same baseline and the row with one flat edge. */\n#mtx-booking .mtx-avail{display:inline-flex;align-items:center;justify-content:center;margin-top:auto;\n  padding:8px 14px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.08em;\n  text-transform:uppercase;white-space:nowrap;align-self:stretch}\n#mtx-booking .mtx-avail--go{background:var(--go);color:var(--go-ink)}\n/* The number is the whole point of this pill -- it should not read like\n   part of the same uppercase label as everything else. */\n#mtx-booking .mtx-avail-n{font-size:20px;font-weight:900;letter-spacing:0;margin:0 2px}\n/* Sold out is stated, not whispered. A guest set on this class has to be left\n   in no doubt, or they go and look for it somewhere else. */\n#mtx-booking .mtx-avail--full{background:var(--gone);color:#FFFFFF}\n#mtx-booking .mtx-avail--shut{background:var(--shut-fg);color:#FFFFFF}\n\n/* step 3a with photos. A seat class that has photos is drawn as a card, but only\n   while it can be bought. Sold out or closed, it falls back to the compact tile\n   above, so a guest is never shown a seat they cannot have. */\n#mtx-booking .mtx-seatcard{position:relative;display:flex;flex-direction:column;background:var(--surface);\n  border:2px solid var(--go);border-radius:13px;overflow:hidden;text-align:left}\n#mtx-booking .mtx-seatcard--low{box-shadow:0 0 0 2px var(--go)}\n#mtx-booking .mtx-slider{position:relative;background:#0B0B10}\n#mtx-booking .mtx-track{display:flex;margin:0;padding:0;list-style:none;overflow-x:auto;\n  scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}\n#mtx-booking .mtx-track::-webkit-scrollbar{display:none}\n#mtx-booking .mtx-slide{flex:0 0 100%;margin:0;padding:0;list-style:none;scroll-snap-align:start;\n  aspect-ratio:3/2;background:#0B0B10}\n#mtx-booking .mtx-slide img{display:block;width:100%;height:100%;max-width:none;margin:0;object-fit:cover}\n#mtx-booking .mtx-slide-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;padding:0;\n  border:0;border-radius:50%;background:rgba(255,255,255,.94);color:var(--ink);display:flex;\n  align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}\n#mtx-booking .mtx-slide-btn:hover{background:#FFFFFF}\n#mtx-booking .mtx-slide-btn:disabled{opacity:0;pointer-events:none}\n#mtx-booking .mtx-slide-prev{left:8px}\n#mtx-booking .mtx-slide-next{right:8px}\n#mtx-booking .mtx-dots{position:absolute;left:0;right:0;bottom:4px;display:flex;justify-content:center}\n#mtx-booking .mtx-dotb{display:flex;align-items:center;justify-content:center;width:24px;height:24px;\n  padding:0;border:0;background:none;cursor:pointer}\n#mtx-booking .mtx-dotb i{display:block;width:8px;height:8px;border-radius:50%;\n  background:rgba(255,255,255,.6);box-shadow:0 0 0 1px rgba(0,0,0,.45)}\n#mtx-booking .mtx-dotb[aria-current=\"true\"] i{width:10px;height:10px;background:#FFFFFF}\n#mtx-booking .mtx-seatcard-body{display:flex;flex-direction:column;align-items:flex-start;padding:15px 18px 17px}\n#mtx-booking .mtx-why-list{align-self:stretch;list-style:none;margin:13px 0 15px;padding:0;\n  display:flex;flex-direction:column;gap:10px}\n#mtx-booking .mtx-why-list li{position:relative;margin:0;padding:0 0 0 27px;list-style:none;\n  font-size:14.5px;font-weight:600;line-height:1.35;color:var(--ink-2)}\n#mtx-booking .mtx-why-tick{position:absolute;left:0;top:1px;color:var(--ok-fg)}\n#mtx-booking .mtx-why-note{display:block;margin-top:3px;font-size:13.5px;font-weight:500;color:var(--muted)}\n#mtx-booking .mtx-seatcard-go{position:relative;display:flex;align-items:center;justify-content:center;\n  align-self:stretch;min-height:48px;padding:10px 42px 10px 16px;border:0;border-radius:999px;\n  background:var(--go);color:var(--go-ink);font-size:13px;font-weight:800;letter-spacing:.08em;\n  text-transform:uppercase;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}\n#mtx-booking .mtx-seatcard-go:hover{transform:translateY(-1px);box-shadow:var(--shadow)}\n#mtx-booking .mtx-seatcard-go .mtx-pick-go{color:var(--go-ink);opacity:1}\n\n/* step 3b \u2014 the one chosen class, framed in its own colour */\n/* Framed the way the tile it came from was: green while it can be booked, red once it\n   cannot. The seat class colour no longer frames anything. */\n#mtx-booking .mtx-detail{--st:var(--go);border:2px solid var(--st);border-radius:14px;padding:20px 22px;background:var(--surface)}\n#mtx-booking .mtx-detail--off{--st:var(--gone);background:var(--full-bg)}\n#mtx-booking .mtx-detail--shut{--st:var(--shut-fg);background:var(--shut-bg)}\n#mtx-booking .mtx-detail-k{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;\n  color:var(--muted);margin-bottom:8px}\n#mtx-booking .mtx-detail-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:10px}\n#mtx-booking .mtx-detail-h{font-size:clamp(24px,2.6vw,30px);font-weight:800;line-height:1.05}\n#mtx-booking .mtx-detail-d{font-size:14.5px;line-height:1.55;color:var(--muted);max-width:66ch;margin-bottom:16px}\n#mtx-booking .mtx-detail-change{margin-top:15px;border:1.5px solid var(--blue);background:var(--surface);color:var(--blue);\n  padding:6px 11px;border-radius:7px;font-size:10.5px;font-weight:700;letter-spacing:.07em;\n  text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-detail-change:hover{background:var(--blue);color:var(--blue-ink)}\n\n/* The status badge on the chosen class is the tile's own badge: solid, white type. */\n#mtx-booking .mtx-detail .mtx-pill{padding:7px 14px;font-size:12px;font-weight:800;letter-spacing:.08em}\n#mtx-booking .mtx-detail .mtx-pill.mtx-ok{background:var(--go);color:var(--go-ink)}\n#mtx-booking .mtx-detail .mtx-pill.mtx-full{background:var(--gone);color:#FFFFFF}\n#mtx-booking .mtx-detail .mtx-pill.mtx-shut{background:var(--shut-fg);color:#FFFFFF}\n\n/* Sold out has to be the loudest thing on the panel, not a small tag beside the name.\n   Full width, on its own line, the size of the tile's own badge. */\n#mtx-booking .mtx-detail--off .mtx-pill, #mtx-booking .mtx-detail--shut .mtx-pill{flex:1 0 100%;order:5;\n  justify-content:center;min-height:56px;font-size:20px;letter-spacing:.1em;border-radius:999px}\n#mtx-booking .mtx-detail--off .mtx-pill i, #mtx-booking .mtx-detail--shut .mtx-pill i{width:9px;height:9px}\n\n@media (max-width:520px){ #mtx-booking .mtx-detail--off .mtx-pill, #mtx-booking .mtx-detail--shut .mtx-pill{font-size:15px;letter-spacing:.05em;min-height:50px;padding:7px 10px} }\n\n/* No grey bar inside a red or grey panel: the sentence sits on the panel itself. */\n#mtx-booking .mtx-detail--off .mtx-note, #mtx-booking .mtx-detail--shut .mtx-note{background:transparent;padding:0;\n  color:var(--ink);font-size:16px;font-weight:600}\n\n/* the way out to the stadium, when we are not selling the night ourselves */\n#mtx-booking .mtx-divert{border:2px solid var(--blue);border-radius:14px;padding:20px 22px;\n  background:color-mix(in srgb, var(--blue) 7%, var(--surface))}\n#mtx-booking .mtx-divert-d{font-size:15px;line-height:1.55;color:var(--ink-2);max-width:66ch;\n  margin-bottom:16px;font-weight:600}\n#mtx-booking .mtx-divert-go{display:inline-flex;align-items:center;gap:9px;min-height:44px;\n  padding:11px 24px;border-radius:9px;background:var(--blue);color:var(--blue-ink);\n  font-family:\"Barlow Condensed\";font-size:16px;font-weight:700;letter-spacing:.045em;\n  text-transform:uppercase;text-decoration:none;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-divert-go:hover{background:var(--blue-on);transform:translateY(-1px);\n  box-shadow:var(--shadow-lg)}\n#mtx-booking .mtx-divert-n{margin-top:11px;font-size:12.5px;color:var(--muted);font-weight:600}\n@media (max-width:520px){ #mtx-booking .mtx-divert-go{width:100%;justify-content:center} }\n\n#mtx-booking .mtx-note{padding:12px 13px;border-radius:9px;font-size:13.5px;line-height:1.5;\n  background:var(--shut-bg);color:var(--ink-2)}\n#mtx-booking .mtx-note.mtx-warn{background:var(--lim-bg);color:var(--lim-fg)}\n#mtx-booking .mtx-note b{font-weight:700}\n#mtx-booking .mtx-ack{display:flex;gap:8px;align-items:flex-start;margin-top:9px;cursor:pointer;font-weight:600}\n#mtx-booking .mtx-ack input{width:16px;height:16px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--ink)}\n\n#mtx-booking .mtx-fields{display:flex;flex-direction:column;gap:12px}\n#mtx-booking .mtx-pair{display:grid;grid-template-columns:1fr 1fr;gap:17px}\n#mtx-booking .mtx-f label{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.08em;\n  text-transform:uppercase;color:var(--muted);margin-bottom:5px}\n#mtx-booking .mtx-f label .mtx-num{width:17px;height:17px;font-size:10px}\n#mtx-booking .mtx-sel{position:relative}\n#mtx-booking .mtx-sel:after{content:\"\";position:absolute;right:13px;top:50%;width:7px;height:7px;\n  border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);\n  transform:translateY(-70%) rotate(45deg);pointer-events:none}\n/* one border rule for every state, so no select ever looks different from its neighbour */\n#mtx-booking .mtx-sel select{width:100%;min-height:46px;padding:9px 34px 9px 12px;border:1.5px solid var(--line);\n  border-radius:10px;background:var(--surface);color:var(--ink);font-size:15px;font-weight:600;\n  appearance:none;-webkit-appearance:none;cursor:pointer;transition:.15s;outline:none}\n#mtx-booking .mtx-sel select:hover:not(:disabled){border-color:var(--ink-2)}\n#mtx-booking .mtx-sel select:focus-visible{border-color:var(--c,var(--blue));box-shadow:0 0 0 3px color-mix(in srgb, var(--c,var(--blue)) 22%, transparent)}\n#mtx-booking .mtx-sel select:disabled{opacity:.55;cursor:not-allowed;background:var(--surface-2)}\n\n#mtx-booking .mtx-sums{border:1px solid var(--line-2);border-radius:10px;background:var(--surface-2);overflow:hidden}\n#mtx-booking .mtx-sum{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px}\n#mtx-booking .mtx-sum span{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}\n#mtx-booking .mtx-sum b{font-family:\"Barlow Condensed\";font-size:20px;font-weight:700;\n  font-variant-numeric:tabular-nums;line-height:1}\n#mtx-booking .mtx-sum--total{border-top:1px solid var(--line-2);background:var(--surface)}\n#mtx-booking .mtx-sum--total b{font-size:26px;font-weight:800}\n\n/* sized to the words, not the panel \u2014 full width only where the panel is narrow */\n#mtx-booking .mtx-go{min-height:44px;padding:11px 26px;border:0;border-radius:9px;background:var(--ink);\n  color:#FFFFFF;font-family:\"Barlow Condensed\";font-size:15px;font-weight:700;\n  letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.15s;\n  align-self:flex-start;text-align:center}\n#mtx-booking .mtx-go:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-lg)}\n/* waiting, not broken: an outline that reads as \"one more thing to do\" */\n#mtx-booking .mtx-go:disabled{background:transparent;color:var(--muted);border:1.5px dashed var(--line);\n  cursor:not-allowed;transform:none;box-shadow:none}\n\n/* ---------- alignment, stated rather than inherited ----------\n   Setting text-align on the widget root is not enough. A host rule such as\n   `#allrecords *{text-align:center}` matches each element directly, and a\n   direct match beats an inherited value however specific the ancestor rule is.\n   The live page centred every description that way.\n\n   So every element inside the card is told explicitly, at a specificity an id\n   plus a class cannot lose to, and the handful that genuinely centre are told\n   back again one level higher. */\n#mtx-booking,\n#mtx-booking .mtx-card,\n#mtx-booking .mtx-card *{text-align:left}\n\n#mtx-booking .mtx-card .mtx-dow span,\n#mtx-booking .mtx-card .mtx-day,\n#mtx-booking .mtx-card .mtx-load,\n#mtx-booking .mtx-card .mtx-state,\n#mtx-booking .mtx-card button{text-align:center}\n@media (max-width:640px){ #mtx-booking .mtx-go{width:100%;align-self:stretch} }\n\n@media (max-width:560px){ #mtx-booking .mtx-picker{grid-template-columns:1fr} }\n@media (max-width:520px){ #mtx-booking .mtx-pair{grid-template-columns:1fr} }\n\n/* footer strip */\n#mtx-booking .mtx-foot{padding:16px 26px 22px;border-top:1px solid var(--line-2);background:var(--surface-2);\n  display:flex;flex-wrap:wrap;gap:8px 22px;font-size:12px;color:var(--muted);font-weight:600}\n#mtx-booking .mtx-foot span{display:inline-flex;align-items:center;gap:6px}\n\n@media (max-width:720px){\n  #mtx-booking .mtx-mast, #mtx-booking .mtx-cal, #mtx-booking .mtx-tix, #mtx-booking .mtx-foot{padding-left:16px;padding-right:16px}\n  #mtx-booking .mtx-band{margin-left:16px;margin-right:16px;padding:18px 16px}\n  #mtx-booking .mtx-detail{padding:18px 16px}\n  #mtx-booking .mtx-day .mtx-tag{display:none}\n  #mtx-booking .mtx-day{min-height:54px}\n  #mtx-booking .mtx-months{grid-template-columns:repeat(2,1fr)}\n}\n\n/* ---------- states the prototype never had ---------- */\n/* The prototype always had its data. A live widget has to say so when it does\n   not, and give the guest a way to try again rather than a blank rectangle. */\n#mtx-booking .mtx-state{padding:56px 26px;text-align:center;color:var(--ink-2)}\n#mtx-booking .mtx-state h3{font-size:22px;font-weight:700;margin-bottom:8px}\n#mtx-booking .mtx-state p{font-size:15px;color:var(--muted);max-width:46ch;margin:0 auto}\n#mtx-booking .mtx-retry{margin-top:18px;min-height:44px;padding:11px 26px;border:0;border-radius:9px;\n  background:var(--blue);color:var(--blue-ink);font-family:\"Barlow Condensed\";font-size:15px;\n  font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.15s}\n#mtx-booking .mtx-retry:hover{background:var(--blue-on)}\n/* Errors raised at the point of paying belong beside the button, not in an\n   alert box the guest has to dismiss before they can see what went wrong. */\n#mtx-booking .mtx-fail{margin-top:12px;padding:12px 13px;border-radius:9px;font-size:13.5px;line-height:1.5;\n  background:var(--full-bg);color:var(--full-fg);font-weight:600}\n\n/* Cards in a row are the same height and their buttons line up: the button is pinned to the\n   foot of the card, so a card with a longer list leaves its space above the button. A closed\n   card stays its own height and is not stretched. */\n#mtx-booking .mtx-picker--photos{align-items:stretch}\n#mtx-booking .mtx-picker--photos .mtx-pick{height:100%}\n#mtx-booking .mtx-seatcard-body{flex:1 1 auto}\n#mtx-booking .mtx-seatcard-go{margin-top:auto}\n#mtx-booking .mtx-why-list{margin-bottom:18px}\n#mtx-booking .mtx-seatcard--closed{align-self:start;border-color:var(--gone);background:var(--full-bg)}\n#mtx-booking .mtx-closed-btn{display:flex;align-items:center;justify-content:center;align-self:stretch;min-height:48px;\n  padding:10px 16px;border:0;border-radius:999px;background:var(--shut-fg);color:#FFFFFF;font-size:13px;font-weight:800;\n  letter-spacing:.08em;text-transform:uppercase;cursor:not-allowed}\n#mtx-booking .mtx-seatcard--closed .mtx-seatcard-go--up{margin-top:10px}\n\n/* 5 October 2026, Jason: hold the guest by the hand. The card's button says what it does, the way\n   back is easy to hit, and the button that takes the money is green while it can be pressed. */\n#mtx-booking .mtx-seatcard-go{gap:6px 14px;flex-wrap:wrap}\n#mtx-booking .mtx-pick-note{display:block;margin:9px 0 12px;font-size:13.5px;font-weight:500;line-height:1.45;color:var(--ink-2)}\n#mtx-booking .mtx-go-sep{display:block;width:1px;height:18px;background:currentColor;opacity:.6}\n@media (max-width:440px){ #mtx-booking .mtx-go-sep{display:none} }\n#mtx-booking .mtx-detail-change{min-height:50px;padding:13px 26px;border-width:2px;border-radius:10px;\n  font-size:15px;letter-spacing:.06em}\n@media (max-width:640px){ #mtx-booking .mtx-detail-change{width:100%} }\n#mtx-booking .mtx-go{background:var(--go);color:var(--go-ink);font-size:19px;min-height:54px;padding:12px 32px;\n  border-radius:10px}\n#mtx-booking .mtx-go:hover:not(:disabled){background:#00914A}\n\n/* The seats this guest is holding. Sits above everything and stays while the hold lives. */\n#mtx-booking .mtx-hold{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:16px 26px;padding:14px 18px;\n  border:2px solid var(--go);border-radius:12px;background:var(--ok-bg)}\n#mtx-booking .mtx-hold-t{flex:1 1 240px;font-size:16px;font-weight:600}\n#mtx-booking .mtx-hold-t b{font-variant-numeric:tabular-nums}\n#mtx-booking .mtx-hold .mtx-go{min-height:46px;padding:9px 22px;font-size:17px}\n#mtx-booking .mtx-hold-c{padding:8px 4px;border:0;background:none;color:var(--blue-on);font-weight:700;text-decoration:underline;cursor:pointer}\n@media (max-width:720px){ #mtx-booking .mtx-hold{margin:14px 16px} }\n\n/* The hidden attribute loses to any display rule of the same weight, and several\n   blocks above set one. That left the empty seat note drawn as a blue bar. Last,\n   so nothing above can outrank it. */\n#mtx-booking [hidden]{display:none}\n";
+ 
+ /* ---------------------------------------------------------------------------
+    Which advert paid for this booking
+@@ -275,6 +275,7 @@ function shell(opts) {
+         '<span class="mtx-mast-venue">Rajadamnern Stadium</span>' +
+         '<span class="mtx-mast-city">Bangkok</span>' +
+       '</div>') +
++    '<div class="mtx-hold" data-hold hidden></div>' +
+     '<section class="mtx-cal" data-cal hidden>' +
+       '<div class="mtx-sec-label"><span class="mtx-num" data-step-month>1</span>Select your month</div>' +
+       '<div class="mtx-months" data-months></div>' +
+@@ -295,6 +296,42 @@ function shell(opts) {
+     '</div></div>';
+ }
+ 
++/* ---------------------------------------------------------------------------
++   A guest's own hold, and Rybbit
++   -------------------------------------------------------------------------*/
++// After a guest presses Reserve their seats are held for five minutes. The page
++// remembers which hold is theirs, in this browser only, so that coming back from
++// Stripe (back button, X, Stripe's own back arrow) they can pick up where they
++// were, see the seats they hold counted as theirs, and change them without ever
++// letting go of the old ones first. The server decides everything: this holds an
++// id, never a price or a count, and nothing personal.
++//
++//   r reservation id   s Stripe session id   u Stripe address   e when it ends
++//   x the same moment on THIS device's clock   k night   c class   n class name
++//   q tickets   m currency
++var HOLD_KEY = "mtx_hold";
++function storedHold(){
++  try {
++    var h = JSON.parse(localStorage.getItem(HOLD_KEY));
++    if(h && h.x > Date.now()) return h;
++    localStorage.removeItem(HOLD_KEY);          // run out: forget it
++  } catch(e){}
++  return null;
++}
++function keepHold(h){
++  try { if(h) localStorage.setItem(HOLD_KEY, JSON.stringify(h)); else localStorage.removeItem(HOLD_KEY); } catch(e){}
++}
++// One small Rybbit event, carrying the Stripe session id and nothing else. Rybbit
++// sends with a keep-alive request, so it finishes after the page has gone and no
++// delay is added. Wrapped so that a missing, blocked or broken Rybbit can never
++// stop a redirect.
++function track(name, sid){
++  try {
++    var rb = window.rybbit;
++    if(typeof sid === "string" && sid && rb && typeof rb.event === "function") rb.event(name, { stripe_session_id: sid });
++  } catch(e){}
++}
++
+ // Warming the checkout is a page-wide job, not a per-widget one.
+ var warmed = false;
+ var historyIds = 0;
+@@ -317,6 +354,7 @@ function mount(root, opts) {
+     qty: 0,
+     cur: null,
+     busy: false,
++    hold: null,      // the hold on show, as stored: see showHold
+     // Seat-first mode only: the class chosen before any date was picked, and
+     // the catalogue it was chosen from.
+     picked: null,
+@@ -361,6 +399,7 @@ function mount(root, opts) {
+   var grid   = root.querySelector("[data-grid]");
+   var note   = root.querySelector("[data-monthnote]");
+   var out    = root.querySelector("[data-out]");
++  var holdBox   = root.querySelector("[data-hold]");
+   var seatNote  = root.querySelector("[data-seatnote]");
+   var stepMonth = root.querySelector("[data-step-month]");
+   var stepDate  = root.querySelector("[data-step-date]");
+@@ -870,12 +909,13 @@ function mount(root, opts) {
+     var started = Date.now();
+     var eventKey = state.events[date].eventKey;
+ 
+-    call("availability", { action:"availability", eventKey:eventKey }, READ_TIMEOUT)
++    var mine = storedHold(), ask = ++asks;
++    call("availability", { action:"availability", eventKey:eventKey, holdId: mine ? mine.r : undefined }, READ_TIMEOUT)
+       .then(function(data){
+         // Hold the message on screen long enough to be read.
+         var wait = Math.max(0, MIN_CHECK_MS - (Date.now() - started));
+         setTimeout(function(){
+-          if(state.date !== date) return;    // the guest moved on while we waited
++          if(state.date !== date || ask !== asks) return;    // the guest moved on while we waited
+           state.night = filterClasses(data);
+           // Seat first: open straight onto the seat they already chose. Not
+           // filtered to it — if it is sold out that night they need the others
+@@ -887,7 +927,7 @@ function mount(root, opts) {
+         }, wait);
+       })
+       .catch(function(err){
+-        if(state.date !== date) return;
++        if(state.date !== date || ask !== asks) return;
+         showProblem("We could not check availability", err.message, "Try this date again");
+       });
+   }
+@@ -1330,6 +1370,102 @@ function mount(root, opts) {
+     } catch(e) {}
+   }
+ 
++  /* ---------------------------------------------------------------------------
++     The seats this guest is holding
++     -------------------------------------------------------------------------*/
++  // Shown above everything else, whatever the guest is looking at, for as long as
++  // the hold lives. It is drawn only from a hold the server has just confirmed
++  // (held, not run out): a stored id alone is never trusted.
++  var holdTimer = 0;
++  var asks = 0;        // the newest availability read wins: an older answer arriving late is dropped
++
++  function showHold(h){
++    clearInterval(holdTimer);
++    state.hold = h;
++    if(!h){ holdBox.hidden = true; return; }
++    holdBox.innerHTML =
++      '<p class="mtx-hold-t">Your ' + h.q + " " + esc(h.n) + (h.q === 1 ? " seat is" : " seats are") +
++      ' held for <b data-left></b></p>' +
++      '<button class="mtx-go" data-resume>Continue to payment</button>' +
++      '<button class="mtx-hold-c" data-change-hold>Change seats</button>';
++    holdBox.hidden = false;
++    tick();
++    holdTimer = setInterval(tick, 1000);
++  }
++
++  function tick(){
++    var left = Math.ceil((state.hold.x - Date.now()) / 1000);
++    if(left <= 0){ keepHold(null); showHold(null); refreshNight(); return; }
++    holdBox.querySelector("[data-left]").textContent = Math.floor(left / 60) + ":" + ("0" + left % 60).slice(-2);
++  }
++
++  // Asks the server whether the stored hold is still alive, and draws it only if
++  // so. Run when the page loads and when the browser hands back a page it kept
++  // (the back button), which is exactly when what is on screen may be stale.
++  // "Could not tell" shows nothing and forgets nothing.
++  function checkHold(){
++    var h = storedHold();
++    if(!h){ showHold(null); return; }
++    call("availability", { action:"hold", holdId:h.r }, READ_TIMEOUT).then(function(d){
++      var live = d.hold;
++      if(!live){ keepHold(null); showHold(null); refreshNight(); return; }
++      // A page for one night does not show another night's hold.
++      if(opts.eventKey && live.eventKey !== opts.eventKey){ showHold(null); return; }
++      h.x = Date.now() + live.secondsLeft * 1000;
++      h.q = live.quantity; h.n = live.className;
++      keepHold(h);
++      showHold(h);
++    }).catch(function(){ showHold(null); });
++  }
++
++  // Read the night again where it stands, keeping the guest's place. Used when a
++  // hold ends and when a page comes back from the browser's cache, so the counts
++  // on screen are never the ones from before.
++  function refreshNight(){
++    if(state.date === null || !state.night || state.busy) return;
++    var date = state.date, mine = storedHold(), ask = ++asks;
++    var where = state.cls + "|" + state.qty;
++    call("availability", { action:"availability", eventKey:state.events[date].eventKey, holdId: mine ? mine.r : undefined }, READ_TIMEOUT)
++      .then(function(data){
++        // Not if a newer read has started, the guest has moved on, or there is a
++        // message on screen they have not finished reading.
++        if(state.date !== date || ask !== asks || state.busy || where !== state.cls + "|" + state.qty || out.querySelector(".mtx-fail")) return;
++        state.night = filterClasses(data);
++        var t = chosen();
++        if(state.cls && !t) state.cls = null;
++        if(t && state.qty > Math.max(1, t.maxPerOrder || 10)) state.qty = 0;
++        renderNight();
++      }).catch(function(){});
++  }
++
++  // Back to the choice of seats, on the night the hold is for.
++  function changeSeats(){
++    var h = state.hold, date = null;
++    if(opts.eventKey) date = "";
++    else for(var d in state.events) if(state.events[d].eventKey === h.k) date = d;
++    if(date === null) return;
++    if(state.date === date){
++      // Already open, or already being opened: the class list is what it shows.
++      if(state.night){
++        if(state.cls) goBack("class", backToClassList);
++        glide(out, "start");
++      }
++      return;
++    }
++    if(!opts.eventKey) pushStep("night", backToDates);
++    openNight(date);
++  }
++
++  holdBox.addEventListener("click", function(e){
++    var h = state.hold;
++    if(!h) return;
++    if(e.target.closest("[data-change-hold]")){ changeSeats(); return; }
++    if(e.target.closest("[data-resume]") && h.u.indexOf("https://checkout.stripe.com/") === 0){
++      track("hold_resumed", h.s);
++      window.location.assign(h.u);
++    }
++  });
++
+   /* ---------------------------------------------------------------------------
+      Handing over to Stripe
+      -------------------------------------------------------------------------*/
+@@ -1357,6 +1493,7 @@ function mount(root, opts) {
+     if(won) for(var k in won) if(Object.prototype.hasOwnProperty.call(won, k)) attr[k] = won[k];
+     if(!attr.device && mayStoreAttribution()) attr.device = deviceNow();
+ 
++    var held = storedHold();
+     call("create-checkout", {
+       eventKey: state.night.event.eventKey,
+       classCode: t.code,
+@@ -1368,7 +1505,10 @@ function mount(root, opts) {
+       // Read live rather than from storage: this is the page they are standing
+       // on right now, which is the whole point of recording it.
+       pagePath: pathNow() || undefined,
+-      landingPage: readLanding() || undefined
++      landingPage: readLanding() || undefined,
++      // The hold this guest already has, if any. The server decides whether it
++      // is the same choice, a change, or no longer there.
++      holdId: held ? held.r : undefined
+     }, CHECKOUT_TIMEOUT)
+       .then(function(data){
+         if(!data.checkoutUrl) throw new Error("The secure checkout could not be opened. Please try again.");
+@@ -1376,17 +1516,16 @@ function mount(root, opts) {
+         // that comes back to life for a moment invites a second click and a
+         // second held seat.
+         //
+-        // One analytics note on the way out: Rybbit's own sender uses a
+-        // keep-alive request, so it completes after the page has gone and no
+-        // delay is added. The Stripe session id is the only thing sent, to tie
+-        // this click to the payment later. Wrapped so that a missing, blocked or
+-        // broken Rybbit can never stop the redirect. state.busy above means this
+-        // runs once per hand-off, not once per click.
+-        try {
+-          var rb = window.rybbit;
+-          if(typeof data.sessionId === "string" && data.sessionId && rb && typeof rb.event === "function")
+-            rb.event("checkout_handoff", { stripe_session_id: data.sessionId });
+-        } catch(e) {}
++        // Remember the hold, so a guest who comes back has it. A change of seats
++        // says so (data.replaced) and the old session id is the one it replaced.
++        if(data.replaced) track("hold_replaced", held && held.s);
++        if(typeof data.secondsLeft === "number"){
++          keepHold({ r: data.reservationId, s: data.sessionId, u: data.checkoutUrl, e: data.expiresAt,
++            x: Date.now() + data.secondsLeft * 1000, k: state.night.event.eventKey,
++            c: t.code, n: t.name, q: state.qty, m: state.cur });
++        }
++        // The Stripe session id is the only thing sent. See track().
++        track("checkout_handoff", data.sessionId);
+         window.location.assign(data.checkoutUrl);
+       })
+       .catch(function(err){
+@@ -1397,7 +1536,7 @@ function mount(root, opts) {
+         // or booking closed while they were deciding. Re-reading the night is the
+         // only honest response — leaving the old status on screen would let them
+         // try again against stock that is not there.
+-        if(err.status === 409 && !(err.body && err.body.code === "seating_ack_required")){
++        if(err.status === 409 && !(err.body && (err.body.code === "seating_ack_required" || err.body.code === "change_unavailable"))){
+           setTimeout(function(){ openNight(state.date); }, 2200);
+           return;
+         }
+@@ -1538,15 +1677,20 @@ function mount(root, opts) {
+   // The hold they abandoned expires on its own within minutes, and reserve()
+   // re-checks stock server-side before it does anything, so letting them try
+   // again cannot oversell.
+-  window.addEventListener("pageshow", function(){
+-    if(!state.busy) return;
+-    state.busy = false;
+-    var go = out.querySelector("[data-go]");
+-    if(go) go.disabled = false;
+-    update();
++  window.addEventListener("pageshow", function(e){
++    if(state.busy){
++      state.busy = false;
++      var go = out.querySelector("[data-go]");
++      if(go) go.disabled = false;
++      update();
++    }
++    // A page the browser kept is as it was when the guest left, so the hold and
++    // the counts on it may both be old. Ask again.
++    if(e.persisted){ checkHold(); refreshNight(); }
+   });
+ 
+   boot();
++  checkHold();
+ }
+ 
+ /* ---------------------------------------------------------------------------
