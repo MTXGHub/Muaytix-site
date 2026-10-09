@@ -11,6 +11,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { stripTypeScriptTypes } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -187,4 +188,75 @@ export function fakeStripe({ createFails = false, expireFails = false, retrieveF
     }
   }
   return { FakeStripe, sessions, calls };
+}
+
+// ---------------------------------------------------------------------------
+// The real edge functions, built around the scratch database and a fake Stripe.
+// Each returns { handle(Request) -> Response, log, stripe }.
+// ---------------------------------------------------------------------------
+const FUNCTIONS = path.join(HERE, '..');
+const swapImports = (code, extra = []) => {
+  const swap = (re, to) => { if (!re.test(code)) throw new Error('import not found: ' + re); code = code.replace(re, to); };
+  swap(/import "jsr:[^"]+";/, '');
+  swap(/import \{ createClient \} from "npm:[^"]+";/, 'const createClient = __cc;');
+  for (const [re, to] of extra) swap(re, to);
+  return code;
+};
+
+let rybbitModule = null;
+async function rybbit() {
+  if (!rybbitModule) {
+    const src = fs.readFileSync(path.join(FUNCTIONS, 'create-checkout', 'rybbit.ts'), 'utf8');
+    rybbitModule = await import('data:text/javascript;base64,' + Buffer.from(stripTypeScriptTypes(src)).toString('base64'));
+  }
+  return rybbitModule;
+}
+
+export async function buildCreateCheckout(db, { stripe = {}, source } = {}) {
+  const src = source ?? fs.readFileSync(path.join(FUNCTIONS, 'create-checkout', 'index.ts'), 'utf8');
+  const env = { STRIPE_SECRET_KEY: 'sk_test_fake', SUPABASE_URL: 'https://fake.supabase.co', SUPABASE_SERVICE_ROLE_KEY: 'service_fake' };
+  const log = { rpcs: [], logs: [] };
+  const S = fakeStripe(stripe);
+  const client = fakeClient(db, {
+    fixed: { tenants: { allowed_origins: ['https://muaytix.com'] } },
+    onRpc: (name, args) => log.rpcs.push({ name, args }),
+  });
+  let handler = null;
+  const Deno = { env: { get: (k) => env[k] }, serve: (h) => { handler = h; } };
+  const logger = (level) => (...a) => log.logs.push({ level, a });
+  const fakeConsole = { info: logger('info'), warn: logger('warn'), error: logger('error'), log: logger('info') };
+  const code = swapImports(stripTypeScriptTypes(src), [
+    [/import Stripe from "npm:[^"]+";/, 'const Stripe = __Stripe;'],
+    [/import \{ ([^}]+) \} from "\.\/rybbit\.ts";/, 'const { $1 } = __R;'],
+  ]);
+  new Function('Deno', '__cc', '__Stripe', '__R', 'fetch', 'console', code)(
+    Deno, () => client, S.FakeStripe, await rybbit(), async () => ({ ok: true, status: 200, text: async () => '' }), fakeConsole);
+  return { log, stripe: S, handle: (req) => handler(req) };
+}
+
+export const HEADER_ROW = { event_key: 'test_night_1', local_date: '2026-10-11', event_name: 'Test night 1', short_name: 'Test',
+  accent_colour: '#B0342E', event_description: 'A test night.', local_start_time: '19:00:00', local_end_time: '21:00:00',
+  venue_name: 'Test stadium', venue_timezone: 'Asia/Bangkok', divert_url: null, divert_note: null };
+
+export function buildAvailability(db, { source, failRpc = [] } = {}) {
+  const src = source ?? fs.readFileSync(path.join(FUNCTIONS, 'availability', 'index.ts'), 'utf8');
+  const env = { SUPABASE_URL: 'https://fake.supabase.co', SUPABASE_SERVICE_ROLE_KEY: 'service_fake' };
+  const log = [];
+  const client = fakeClient(db, {
+    failRpc,
+    fixed: {
+      tenants: { allowed_origins: ['https://muaytix.com'] },
+      event_calendar: HEADER_ROW,
+      ticket_classes: [{ code: 'club_class', tagline: 'Elevated view', photos: [], benefits: [] },
+        { code: 'ringside', tagline: 'Closest', photos: [], benefits: [] }, { code: 'third_class', tagline: null, photos: [], benefits: [] }],
+      events: { fallback_offer_enabled: false },
+      widget_looks: [],
+    },
+  });
+  let handler = null;
+  const Deno = { env: { get: (k) => env[k] }, serve: (h) => { handler = h; } };
+  const cons = { info() {}, warn() {}, log() {}, error: (...a) => log.push(a) };
+  const code = swapImports(stripTypeScriptTypes(src));
+  new Function('Deno', '__cc', 'console', code)(Deno, () => client, cons);
+  return { log, handle: (req) => handler(req) };
 }

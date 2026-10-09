@@ -306,6 +306,62 @@ already fully booked), the live header as the rollback, and the new header last.
     it caught a "reduce motion" rule I had shortened until the pulse no longer
     stopped.** The 63,000 limit is nearly used up. Shrink before adding.
 
+- **A guest's own hold (built 9 October 2026, Jason's brief. NOT applied, NOT
+  deployed, NOT pasted: nothing in this bullet is live until he says go and it is
+  read back).** Three problems: a guest's own five minute hold was subtracted from
+  what the page showed that same guest ("Only 1 left" after holding 3 of 4), every
+  click on Reserve made another hold and Stripe session, and Stripe's back arrow
+  sent guests to `/payment-failed`, which says a payment failed when none was
+  attempted. `HOLD_MINUTES` (5) and `SESSION_MINUTES` (31) are untouched.
+  - **Database, `schema/0043_guest_hold.sql`, not applied.** `live_hold`,
+    `class_view_for_holder` and `replace_reservation`, service role only, no
+    personal column read. `replace_reservation` takes the new seats first and
+    gives the old hold back only if that worked, all in one transaction (reservation
+    row locked first, then the class rows lowest id first, the same order the
+    existing functions use, so no deadlock). A change that cannot be made leaves
+    the old hold untouched and it never looks free to anyone else. The existing
+    functions and `complete_reservation`'s late payment behaviour are byte for
+    byte unchanged (the test proves it).
+  - **`availability`** takes an optional `holdId`. Without one the answer is
+    byte for byte what it was (proved against the previous version from git), so
+    an older widget cached in a browser is unaffected. With one, the guest's own
+    seats are added back for the class they hold (count, status, max per order),
+    for nobody else. A new `hold` action says whether a hold is still alive.
+  - **`create-checkout`** (with a `holdId`): same choice again returns the same
+    Stripe page, no new reservation, no new session; a different choice swaps
+    atomically and then expires the replaced Stripe session (logged and carried on
+    if that fails); a refused change answers 409 `change_unavailable` with "That
+    choice is not available. Your current seats are still held." The response
+    gained `expiresAt`, `secondsLeft` and (on a swap) `replaced`. `cancel_url` is
+    now the page the guest pressed Reserve on, plus `?checkout=cancelled`, only on a
+    known page (`KNOWN_PAGE_PREFIXES` in `create-checkout/index.ts`: **a new page
+    that carries the widget needs its prefix added**, or its guests get
+    `/payment-failed` as before), never with the reservation id in it.
+  - **The webhook** no longer reports a replaced hold as an abandoned checkout
+    (the old Stripe page expiring arrives as an ordinary expiry; a replaced hold is
+    already `released` by then, a real timeout is not).
+  - **The widget** keeps the hold in `localStorage` (`mtx_hold`: ids, quantity,
+    class, times, currency, nothing personal), asks the server whether it is alive
+    on page load and when the browser hands back a kept page, and only then draws
+    "Your N Class seats are held for m:ss" with Continue to payment and Change
+    seats. Three Rybbit events, each carrying `stripe_session_id` only:
+    `checkout_handoff`, `hold_resumed`, `hold_replaced` (the old session's id).
+    Deploy order matters: **database, then the two functions and the webhook, then
+    the header.** The server is built so an older header keeps working.
+  - **Header size.** The feature added 3.8 KB, which the header could not take
+    (62,968 of 63,000). `build-served-copy.mjs` now writes the stylesheet's most
+    repeated phrases once ("#mtx-booking .mtx-" 222 times, "var(--", "background:",
+    and so on) with a one-line loop that puts them back, so **the stylesheet the
+    browser gets is character for character the same**. `header-block.test.mjs`
+    unpacks it and compares it with `widget.js` token for token. The header builds at
+    **59,796 bytes**, about 3.2 KB of room. `widget.js` is unchanged in how it reads.
+  - **Tests** (need a scratch Postgres, never the live database; see the header of
+    each file): `schema/tests/guest_hold.test.sql` and
+    `guest_hold_concurrency.test.sh` (two sessions at once),
+    `functions/tests/guest-hold-guards.test.mjs`, `availability-hold-guards.test.mjs`,
+    `webhook-replaced-hold-guards.test.mjs`, and `widget/tests/guest-hold.test.mjs`
+    (the real widget, the real functions, the scratch database and a fake Stripe).
+
 `agent-tix/widget/booking-widget.html` is a **standalone prototype, not the live
 widget**. It is out of date and still renders "Limited". Its test suite
 (`booking-widget.test.mjs`) fails and has done for a long time. Do not confuse it

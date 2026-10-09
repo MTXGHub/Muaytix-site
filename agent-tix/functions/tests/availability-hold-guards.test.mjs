@@ -21,9 +21,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { stripTypeScriptTypes } from 'node:module';
 import { fileURLToPath } from 'node:url';
-import { makeDb, fakeClient, seed, resetClub, IDS } from './pg-harness.mjs';
+import { makeDb, buildAvailability, seed, resetClub, IDS } from './pg-harness.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.join(HERE, '..', '..', '..');
@@ -43,34 +42,12 @@ try { db.create(); } catch (e) {
 }
 seed(db);
 
-const HEADER = { event_key: 'test_night_1', local_date: '2026-10-11', event_name: 'Test night 1', short_name: 'Test',
-  accent_colour: '#B0342E', event_description: 'A test night.', local_start_time: '19:00:00', local_end_time: '21:00:00',
-  venue_name: 'Test stadium', venue_timezone: 'Asia/Bangkok', divert_url: null, divert_note: null };
-
 function build(src, { failRpc = [] } = {}) {
-  const env = { SUPABASE_URL: 'https://fake.supabase.co', SUPABASE_SERVICE_ROLE_KEY: 'service_fake' };
-  const log = [];
-  const client = fakeClient(db, {
-    failRpc,
-    fixed: {
-      tenants: { allowed_origins: ['https://muaytix.com'] },
-      event_calendar: HEADER,
-      ticket_classes: [{ code: 'club_class', tagline: 'Elevated view', photos: [], benefits: [] },
-        { code: 'ringside', tagline: 'Closest', photos: [], benefits: [] }, { code: 'third_class', tagline: null, photos: [], benefits: [] }],
-      events: { fallback_offer_enabled: false },
-      widget_looks: [],
-    },
-  });
-  let handler = null;
-  const Deno = { env: { get: (k) => env[k] }, serve: (h) => { handler = h; } };
-  const cons = { info() {}, warn() {}, log() {}, error: (...a) => log.push(a) };
-  let code = stripTypeScriptTypes(src);
-  code = code.replace(/import "jsr:[^"]+";/, '').replace(/import \{ createClient \} from "npm:[^"]+";/, 'const createClient = __cc;');
-  new Function('Deno', '__cc', 'console', code)(Deno, () => client, cons);
+  const h = buildAvailability(db, { source: src, failRpc });
   return {
-    log,
+    log: h.log,
     async ask(body) {
-      const res = await handler(new Request('https://fake.supabase.co/functions/v1/availability', {
+      const res = await h.handle(new Request('https://fake.supabase.co/functions/v1/availability', {
         method: 'POST', headers: { origin: 'https://muaytix.com', 'content-type': 'application/json', referer: 'https://muaytix.com/rws' },
         body: JSON.stringify(body) }));
       const text = await res.text();

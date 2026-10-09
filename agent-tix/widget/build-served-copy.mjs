@@ -36,6 +36,36 @@ function needSpace(p, pt, n, nt) {
   if (p.type === 'Numeric' && first === '.') return true;
   return false;
 }
+// The stylesheet is 25 KB, most of it the same few phrases over and over: every
+// rule starts with "#mtx-booking .mtx-" (222 times), and "var(--", "background:",
+// "font-weight:" and the like each turn up dozens of times. The header is not
+// allowed to grow, so the served copy writes each phrase once and a stand-in
+// character for the rest, and a short loop puts them back before the stylesheet
+// is used. What reaches the browser is the very same stylesheet, character for
+// character; header-block.test.mjs unpacks the string and proves it, then checks
+// the result against widget.js. widget.js is untouched and stays readable, which
+// is why this is done here and not there.
+//
+// Stand-ins are ASCII characters that appear nowhere in the stylesheet (checked
+// below, and the build stops if one ever does). Never one that is special in
+// HTML, and the replacing is split and join, not a pattern, so there is nothing
+// in it for a tool that tidies scripts to misread. Longest phrase first, so a
+// short phrase never splits a long one.
+const PACKED = [
+  ['~', '#mtx-booking .mtx-'], ['^', 'var(--'], ['|', 'background:'],
+  ['$', 'font-weight:'], ['_', 'font-size:'], ['?', 'border-radius:'],
+];
+function packSelectors(literal) {
+  for (const [code] of PACKED) {
+    if (literal.includes(code)) throw new Error('the stylesheet already contains ' + code + ', pick another stand-in');
+  }
+  let packed = literal;
+  for (const [code, phrase] of [...PACKED].sort((a, b) => b[1].length - a[1].length)) {
+    packed = packed.split(phrase).join(code);
+  }
+  const table = '[' + PACKED.map(([code, phrase]) => '"' + code + '","' + phrase + '"').join(',') + ']';
+  return '(function(s,d){for(var i=0;i<d.length;i+=2)s=s.split(d[i]).join(d[i+1]);return s})(' + packed + ',' + table + ')';
+}
 function compact(code, espree) {
   const toks = espree.tokenize(code, { ecmaVersion: 'latest', range: true, loc: true });
   let out = '', prev = null, prevText = '';
@@ -48,6 +78,7 @@ function compact(code, espree) {
     // before a colon, where a space means "any descendant" in a selector.
     if (t.type === 'String' && text.includes('#mtx-booking{')) {
       text = text.replace(/\\n\s*/g, ' ').replace(/\s*([{};,])\s*/g, '$1').replace(/:\s+/g, ':');
+      text = packSelectors(text);
     }
     if (prev) {
       if (t.loc.start.line !== prev.loc.end.line) out += '\n';

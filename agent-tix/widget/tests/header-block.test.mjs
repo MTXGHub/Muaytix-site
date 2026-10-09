@@ -113,7 +113,19 @@ console.log('\nWhat has to be true of the file itself, before it ever reaches Ti
     const src = fs.readFileSync(new URL('../widget.js', import.meta.url), 'utf8');
     const norm = (t) => t.type + ':' + (t.type === 'String' ? (t.value.includes('#mtx-booking{') ? t.value.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\\n/g, ' ').replace(/\s+/g, ' ').trim().replace(/\s*([{};,])\s*/g, '$1').replace(/:\s+/g, ':') : t.value) : t.value);
     const a = espree.tokenize(src, { ecmaVersion: 'latest' }).map(norm);
-    const c = espree.tokenize(script, { ecmaVersion: 'latest' }).map(norm);
+    // The served copy writes the stylesheet's most repeated phrases once and a
+    // stand-in character for the rest (build-served-copy.mjs, packSelectors).
+    // Unpack it by running the one expression that does so, then compare what the
+    // browser would be handed with widget.js, token for token.
+    let flat = script;
+    const k = flat.indexOf('var CSS=');
+    const end = flat.indexOf(';\n', k);
+    check('the stylesheet is packed, and by the one loop that unpacks it', k >= 0 && flat.slice(k, end).includes('s=s.split(d[i]).join(d[i+1])'));
+    const unpacked = vm.runInNewContext(flat.slice(k + 8, end));
+    check('and unpacks to a stylesheet that still starts every rule at #mtx-booking',
+      /^\s*#mtx-booking\{/.test(unpacked) && !/[~^|$_?]/.test(unpacked), unpacked.slice(0, 60));
+    flat = flat.slice(0, k + 8) + JSON.stringify(unpacked) + flat.slice(end);
+    const c = espree.tokenize(flat, { ecmaVersion: 'latest' }).map(norm);
     const same = a.length === c.length && a.every((x, i) => x === c[i]);
     check('the shrunk copy is the same program as widget.js, token for token', same,
       same ? '' : 'first difference near token ' + a.findIndex((x, i) => x !== c[i]));
