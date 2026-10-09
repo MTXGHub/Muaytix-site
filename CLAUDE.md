@@ -411,6 +411,10 @@ event) and its number comes from him.
    placeholders, say so and ask for the real counts before it is sold.
 4. **If his number is lower than the database's `sold_quantity`, stop and tell
    him.** The database will refuse the change; do not work round it.
+5. **"Put four seats on sale" means exactly four left to sell** (Jason, 9 October
+   2026, confirming the Club Class change for 10 October). Set `total_quantity`
+   to sold plus that number, reopen, read back. Do not ask what he means and do
+   not add a max-seats-together unless he asks.
 
 ### Reports that already exist. Use them first.
 
