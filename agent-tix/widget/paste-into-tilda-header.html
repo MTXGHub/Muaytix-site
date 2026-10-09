@@ -911,6 +911,11 @@ landingPage:readLanding()||undefined
 },CHECKOUT_TIMEOUT)
 .then(function(data){
 if(!data.checkoutUrl)throw new Error("The secure checkout could not be opened. Please try again.");
+try{
+var rb=window.rybbit;
+if(typeof data.sessionId==="string"&&data.sessionId&&rb&&typeof rb.event==="function")
+rb.event("checkout_handoff",{stripe_session_id:data.sessionId});
+}catch(e){}
 window.location.assign(data.checkoutUrl);
 })
 .catch(function(err){

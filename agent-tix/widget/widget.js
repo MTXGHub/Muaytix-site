@@ -1375,6 +1375,18 @@ function mount(root, opts) {
         // Deliberately no reset of state.busy. The page is leaving, and a button
         // that comes back to life for a moment invites a second click and a
         // second held seat.
+        //
+        // One analytics note on the way out: Rybbit's own sender uses a
+        // keep-alive request, so it completes after the page has gone and no
+        // delay is added. The Stripe session id is the only thing sent, to tie
+        // this click to the payment later. Wrapped so that a missing, blocked or
+        // broken Rybbit can never stop the redirect. state.busy above means this
+        // runs once per hand-off, not once per click.
+        try {
+          var rb = window.rybbit;
+          if(typeof data.sessionId === "string" && data.sessionId && rb && typeof rb.event === "function")
+            rb.event("checkout_handoff", { stripe_session_id: data.sessionId });
+        } catch(e) {}
         window.location.assign(data.checkoutUrl);
       })
       .catch(function(err){
