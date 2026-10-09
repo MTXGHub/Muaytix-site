@@ -75,6 +75,49 @@ function hhmm(t: string | null): string | null {
   return t ? t.slice(0, 5) : null;
 }
 
+// A guest's own live hold (schema/0043). The widget sends the reservation id it
+// was given when the guest pressed Reserve; the id is a bearer token for that
+// hold and nothing else. Everything here reads non personal columns only.
+//
+// Strictly an extra. A request with no holdId is answered exactly as it always
+// was, byte for byte, which is what an older copy of the widget cached in a
+// browser sends. A hold that cannot be read leaves the public answer untouched.
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+type LiveHold = {
+  hold_id: string; event_key: string; event_ticket_class_id: string;
+  ticket_class_code: string; ticket_class_name: string; quantity: number;
+  currency: string | null; expires_at: string; seconds_left: number;
+};
+
+type HolderView = { status: string; quantity_available: number; max_per_order: number };
+
+function holdIdFrom(value: unknown): string | null {
+  return typeof value === "string" && UUID.test(value.trim()) ? value.trim().toLowerCase() : null;
+}
+
+async function readHold(holdId: string, eventKey: string | null): Promise<LiveHold | null> {
+  const { data, error } = await supabase.rpc("live_hold", {
+    p_reservation_id: holdId,
+    p_event_key: eventKey,
+  });
+  if (error) throw error;
+  return (data as LiveHold[] | null)?.[0] ?? null;
+}
+
+// What the widget needs to draw the notice, and nothing else about the hold.
+function holdForWidget(h: LiveHold) {
+  return {
+    classCode: h.ticket_class_code,
+    className: h.ticket_class_name,
+    eventKey: h.event_key,
+    quantity: h.quantity,
+    currency: h.currency,
+    expiresAt: h.expires_at,
+    secondsLeft: h.seconds_left,
+  };
+}
+
 // Photos and selling lines are free-form JSON in the database, so what leaves
 // here is checked rather than trusted: a photo must be an https address, a line
 // must have words. Anything else is dropped, not repaired, and the widget never
@@ -395,6 +438,21 @@ Deno.serve(async (req: Request) => {
       }, 200, origin);
     }
 
+    // ---- is this hold still alive? ----------------------------------------
+    // Asked when a page loads, and when the browser hands back a page it kept
+    // (the back button). The widget will not show a hold it has not just had
+    // confirmed here: held, not past its time. An answer of null means it is
+    // gone and the widget forgets it; an error means "could not tell", and the
+    // widget keeps what it had and shows nothing.
+    //
+    // Not recorded as a look: it is not a guest looking at a night.
+    if (action === "hold") {
+      const holdId = holdIdFrom(body.holdId);
+      if (!holdId) return json({ hold: null }, 200, origin);
+      const found = await readHold(holdId, null);
+      return json({ hold: found ? holdForWidget(found) : null }, 200, origin);
+    }
+
     // ---- one night ---------------------------------------------------------
     if (action === "availability") {
       const eventKey = String(body.eventKey ?? "").trim();
@@ -476,6 +534,34 @@ Deno.serve(async (req: Request) => {
         fewLeft.set(row.id, left > 0 && left <= SAY_REMAINING_AT ? left : null);
       }
 
+      // The holder's own seats are added back for the class they hold, so a guest
+      // holding 3 of the last 4 is not told "Only 1 left". Everyone else, and any
+      // request without a holdId, gets the public figures above untouched.
+      const holdId = holdIdFrom(body.holdId);
+      let myHold: LiveHold | null = null;
+      let holdKnown = false;
+      let mine: HolderView | null = null;
+      if (holdId) {
+        try {
+          myHold = await readHold(holdId, eventKey);
+          holdKnown = true;
+          if (myHold) {
+            const { data: view, error: viewError } = await supabase.rpc("class_view_for_holder", {
+              p_event_ticket_class_id: myHold.event_ticket_class_id,
+              p_extra: myHold.quantity,
+            });
+            if (viewError) throw viewError;
+            mine = (view as HolderView[] | null)?.[0] ?? null;
+            if (!mine) myHold = null;
+          }
+        } catch (err) {
+          // Could not read it: answer with the public figures, say nothing about
+          // the hold, and let the widget keep whatever it already had.
+          console.error("hold could not be read", { eventKey, message: String(err) });
+          myHold = null; mine = null; holdKnown = false;
+        }
+      }
+
       // The tagline, photos and selling lines are the class's own, not the
       // night's, so they come off ticket_classes rather than the per-night row.
       const { data: taglines, error: taglineError } = await supabase
@@ -539,7 +625,13 @@ Deno.serve(async (req: Request) => {
           // own status. Hiding them is what sends a guest to a competitor.
           classes: rows
             .filter((r) => r.status !== "hidden")
-            .map((r) => ({
+            .map((r0) => {
+              // The class the guest holds is described with their seats added back.
+              const isMine = !!mine && r0.event_ticket_class_id === myHold!.event_ticket_class_id;
+              const r = isMine ? { ...r0, status: mine!.status, max_per_order: mine!.max_per_order } : r0;
+              const fewMine = isMine && mine!.quantity_available > 0 && mine!.quantity_available <= SAY_REMAINING_AT
+                ? mine!.quantity_available : null;
+              return {
               code: r.ticket_class_code,
               name: r.ticket_class_name,
               description: r.ticket_class_description,
@@ -557,13 +649,18 @@ Deno.serve(async (req: Request) => {
               benefits: benefitsFor.get(r.ticket_class_code) ?? [],
               // Null unless it is genuinely down to the last few. See above.
               seatsLeft: (r.status === "available" || r.status === "limited")
-                ? (fewLeft.get(r.event_ticket_class_id) ?? null)
+                ? (isMine ? fewMine : (fewLeft.get(r.event_ticket_class_id) ?? null))
                 : null,
               prices: byClass.get(r.event_ticket_class_id) ?? [],
               // Only on a fully booked class that has an offer, and only for a
               // night that has been switched on. See offersForNight.
               ...(offers.has(String(r.ticket_class_code)) ? { offer: offers.get(String(r.ticket_class_code)) } : {}),
-            })),
+              };
+            }),
+          // Present only when the widget sent a holdId and the answer is known:
+          // the hold if it is live on THIS night, null if it is gone. Absent
+          // otherwise, so an older widget sees exactly the response it always did.
+          ...(holdKnown ? { hold: myHold ? holdForWidget(myHold) : null } : {}),
         },
         200,
         origin,

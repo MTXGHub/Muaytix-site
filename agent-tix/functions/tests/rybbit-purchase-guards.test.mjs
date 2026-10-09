@@ -382,8 +382,10 @@ check('and after the lapsed address is kept', lapsedSave > 0 && lapsedSave < aba
 check('and before the existing log line and reply, which are unchanged', abandoned < releasedLog && releasedLog < replyLine);
 check('a failed release still throws into the 500 path, before any analytics',
   /p_new_status: newStatus,\s*\}\);\s*if \(error\) throw error;/.test(indexSrc) && rel < abandoned);
-check('the abandoned step is only for checkout.session.expired, not async_payment_failed',
-  /if \(event\.type === "checkout\.session\.expired"\) \{\s*try \{\s*const rybbit = await reportAbandoned\(/.test(indexSrc));
+// 9 October 2026: also not for a hold the guest replaced themselves (it is already
+// 'released' by the time Stripe's expiry arrives). See webhook-replaced-hold-guards.
+check('the abandoned step is only for checkout.session.expired, not async_payment_failed, and not for a replaced hold',
+  /if \(event\.type === "checkout\.session\.expired" && data !== "already_released"\) \{\s*try \{\s*const rybbit = await reportAbandoned\(/.test(indexSrc));
 check('it sits in its own try/catch that only logs',
   /await reportAbandoned\([\s\S]*?\} catch \(err\) \{ console\.error\("rybbit abandoned failed"/.test(idx));
 check('the abandoned claim uses its OWN column, not the purchase one',

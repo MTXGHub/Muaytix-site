@@ -177,6 +177,12 @@ function build({ rybbit = 'ok', key = 'RYBBIT_TEST_KEY', stripeCreate, rows } = 
 }
 
 const parse = (call) => JSON.parse(call.init.body);
+// expiresAt is "now plus five minutes", so two runs differ by a few milliseconds
+// there and nowhere else.
+const sameButTime = (a, b) => {
+  const strip = (t) => JSON.stringify({ ...JSON.parse(t), expiresAt: 'T' });
+  return strip(a) === strip(b);
+};
 
 // ---------------------------------------------------------------------------
 console.log('\nSent once, after the session exists');
@@ -186,8 +192,10 @@ let baseline;
   const r = await h.send();
   baseline = r;
   check('the guest still gets the checkout URL, status 200', r.status === 200 && JSON.parse(r.text).checkoutUrl === 'https://checkout.stripe.com/c/pay/cs_test_abc123');
-  check('and the response has exactly the same fields as before',
-    Object.keys(JSON.parse(r.text)).join() === 'checkoutUrl,sessionId,reservationId,currency,unitAmount,total');
+  // 9 October 2026: expiresAt and secondsLeft were added so the widget can count
+  // down a hold (schema/0043). They are additive; nothing that was there moved.
+  check('and the response has the same fields as before, plus the hold time',
+    Object.keys(JSON.parse(r.text)).join() === 'checkoutUrl,sessionId,reservationId,currency,unitAmount,total,expiresAt,secondsLeft');
   check('exactly one Rybbit request', h.state.rybbitCalls.length === 1);
   const c = h.state.rybbitCalls[0];
   const b = parse(c);
@@ -255,7 +263,7 @@ console.log('\nCheckout is never changed by Rybbit');
 for (const mode of ['http500', 'reject', 'hang']) {
   const h = build({ rybbit: mode });
   const r = await h.send();
-  check('Rybbit ' + mode + ': the response is byte for byte the same as with Rybbit working', r.status === baseline.status && r.text === baseline.text);
+  check('Rybbit ' + mode + ': the response is byte for byte the same as with Rybbit working', r.status === baseline.status && sameButTime(r.text, baseline.text));
   check('Rybbit ' + mode + ': the guest did not wait for it (' + r.elapsed + ' ms)', r.elapsed < 400);
   const t0 = Date.now();
   await h.state.waits[0];
@@ -270,7 +278,7 @@ for (const mode of ['http500', 'reject', 'hang']) {
 {
   const h = build({ key: null });
   const r = await h.send();
-  check('no RYBBIT_API_KEY: the response is the same and nothing is sent', r.status === baseline.status && r.text === baseline.text && h.state.rybbitCalls.length === 0);
+  check('no RYBBIT_API_KEY: the response is the same and nothing is sent', r.status === baseline.status && sameButTime(r.text, baseline.text) && h.state.rybbitCalls.length === 0);
 }
 {
   // The tracker itself blowing up (here fetch throws before returning anything)
@@ -279,7 +287,7 @@ for (const mode of ['http500', 'reject', 'hang']) {
   const r = await h.send();
   await h.state.waits[0];
   check('fetch throwing outright: still the same response, logged with the session id',
-    r.status === baseline.status && r.text === baseline.text
+    r.status === baseline.status && sameButTime(r.text, baseline.text)
     && h.state.logs.some(l => l.level === 'error' && JSON.stringify(l.a).includes('cs_test_abc123')));
 }
 
@@ -287,7 +295,7 @@ for (const mode of ['missing', 'nowait']) {
   const h = build();
   const r = await h.send({ edgeRuntime: mode });
   await sleep(20);
-  check('EdgeRuntime ' + mode + ': the response is the same as with it present', r.status === baseline.status && r.text === baseline.text);
+  check('EdgeRuntime ' + mode + ': the response is the same as with it present', r.status === baseline.status && sameButTime(r.text, baseline.text));
   check('EdgeRuntime ' + mode + ': a warning naming the session id is logged',
     h.state.logs.some(l => l.level === 'warn' && JSON.stringify(l.a).includes('waitUntil') && JSON.stringify(l.a).includes('cs_test_abc123')));
   check('EdgeRuntime ' + mode + ': the event is still sent, once, best effort', h.state.rybbitCalls.length === 1);
@@ -337,8 +345,8 @@ check('after the attribution is stored', at('attribution not stored') < at('repo
 check('and right before the response is returned', at('reportCheckoutStarted({') < at('return json({ checkoutUrl: session.url'));
 check('it is outside the catch that gives the seats back', at('reportCheckoutStarted({') < at('If anything failed after the hold'));
 check('it is not awaited', !/await reportCheckoutStarted/.test(checkoutSrc));
-check('the response fields are unchanged',
-  idx.includes('return json({ checkoutUrl: session.url, sessionId: session.id, reservationId, currency, unitAmount, total: unitAmount * quantity, }, 200, origin);'));
+check('the response fields are unchanged, with the hold time added after them',
+  idx.includes('return json({ checkoutUrl: session.url, sessionId: session.id, reservationId, currency, unitAmount, total: unitAmount * quantity,'));
 check('the error response and the seat release are unchanged',
   idx.includes('The secure checkout could not be started. Please try again.') && idx.includes('p_new_status: "failed"'));
 check('the metadata is unchanged', idx.includes('source: "agent_tix_v2", v2_reservation_id: String(reservationId), event_key: row.event_key,'));

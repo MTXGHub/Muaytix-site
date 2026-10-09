@@ -235,6 +235,103 @@ function longDate(iso: string, timeZone: string) {
   }).format(new Date(iso));
 }
 
+// ---------------------------------------------------------------------------
+// A guest's own hold (schema/0043)
+//
+// The widget sends the id of the hold it was last given. The id is a bearer
+// token for that one hold, so everything about it is read through the service
+// role functions in 0043, which never touch a personal column. A request with no
+// holdId, or a database without 0043, goes down the path it always did.
+// ---------------------------------------------------------------------------
+const CHANGE_REFUSED = "That choice is not available. Your current seats are still held.";
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function holdIdFrom(value: unknown): string | null {
+  return typeof value === "string" && UUID.test(value.trim()) ? value.trim().toLowerCase() : null;
+}
+
+type LiveHold = {
+  hold_id: string; event_key: string; event_ticket_class_id: string;
+  ticket_class_code: string; quantity: number; currency: string | null;
+  unit_amount: number | null; offer_code: string | null;
+  stripe_checkout_session_id: string | null; expires_at: string; seconds_left: number;
+};
+
+// Never throws. If the hold cannot be read, it is treated as not there, which is
+// exactly how a guest with no hold is treated, so the worst case is today's
+// behaviour.
+async function readHold(holdId: string, eventKey: string): Promise<LiveHold | null> {
+  try {
+    const { data, error } = await supabase.rpc("live_hold", {
+      p_reservation_id: holdId, p_event_key: eventKey,
+    });
+    if (error) throw error;
+    return (data as LiveHold[] | null)?.[0] ?? null;
+  } catch (err) {
+    console.error("hold could not be read", { eventKey, message: String(err) });
+    return null;
+  }
+}
+
+// The status the HOLDER should be judged on for the class they hold: the public
+// figure with their own seats added back, through the same status function the
+// public view uses. null means "could not tell", and the public status stands.
+async function statusForHolder(classRowId: string, held: number): Promise<string | null> {
+  try {
+    const { data, error } = await supabase.rpc("class_view_for_holder", {
+      p_event_ticket_class_id: classRowId, p_extra: held,
+    });
+    if (error) throw error;
+    return (data as { status: string }[] | null)?.[0]?.status ?? null;
+  } catch (err) {
+    console.error("holder status could not be read", { classRowId, message: String(err) });
+    return null;
+  }
+}
+
+// A replaced hold's Stripe page must not stay payable: the seats are no longer
+// reserved for it, and a payment against it would arrive as a late payment on a
+// released reservation. Logged and swallowed. A failure here must never stop the
+// guest, who already has a working new checkout.
+async function expireSession(sessionId: string): Promise<void> {
+  try {
+    await stripe.checkout.sessions.expire(sessionId);
+  } catch (err) {
+    console.error("could not expire the replaced checkout session", { sessionId, message: String(err) });
+  }
+}
+
+// Where Stripe's own back arrow takes a guest. The page they pressed Reserve on,
+// so "I changed my mind" lands them where they were, not on a page that says a
+// payment failed when none was attempted.
+//
+// Only ever a path on the origin the request came from, taken from the path the
+// widget reported (already stripped of query and fragment), and only on a page
+// that is known to carry the widget. Anything else falls back to /payment-failed
+// exactly as before. The reservation id is never in the address.
+//
+// A page not listed here sends its guests to /payment-failed, as today: add the
+// prefix when a new page gets the widget.
+const KNOWN_PAGE_PREFIXES = [
+  "/rajadamnern-knockout",
+  "/rajadamnern-stadium-seating",
+  "/rajadamnern-stadium-seat-map",
+  "/rajadamnern-stadium-seats",
+  "/rajadamnern-stadium-tickets",
+  "/all-star-fight-by-buakaw",
+  "/rws",
+  "/petchyindee-muay-thai",
+  "/new-power-muay-thai",
+  "/kiatpetch-muay-thai",
+];
+
+function cancelUrlFor(origin: string, pagePath: string | null): string | null {
+  if (!pagePath || !/^\/[A-Za-z0-9._~\/-]*$/.test(pagePath)) return null;
+  if (pagePath.includes("//") || pagePath.includes("..")) return null;
+  const known = KNOWN_PAGE_PREFIXES.some((p) => pagePath === p || pagePath.startsWith(p + "/"));
+  return known ? `${origin}${pagePath}?checkout=cancelled` : null;
+}
+
 Deno.serve(async (req: Request) => {
   const origin = req.headers.get("origin") ?? "";
   const origins = await originsForTenant();
@@ -267,6 +364,7 @@ Deno.serve(async (req: Request) => {
   const attribution = attributionFrom(body.attribution);
   const pagePath = pagePathFrom(body.pagePath);
   const landingPage = pagePathFrom(body.landingPage);
+  const holdId = holdIdFrom(body.holdId);
 
   if (!eventKey || !classCode) return json({ error: "Ticket details are missing." }, 400, origin);
   if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
@@ -275,8 +373,14 @@ Deno.serve(async (req: Request) => {
   if (!/^[a-z]{3}$/.test(currency)) return json({ error: "That currency is not valid." }, 400, origin);
 
   let reservationId: string | null = null;
+  // The Stripe page of a hold this request replaced, being expired. See below.
+  let oldExpiry: Promise<void> | null = null;
 
   try {
+    // Read before anything else so every later step can tell a guest's own seats
+    // from somebody else's. Null for a guest with no live hold on this night.
+    const hold = holdId ? await readHold(holdId, eventKey) : null;
+
     // The status is re-checked here, server side. What the widget last saw may
     // be a minute old, and a minute is long enough to sell the last seat.
     const { data: rows, error } = await supabase
@@ -290,14 +394,26 @@ Deno.serve(async (req: Request) => {
     const row = rows?.[0];
     if (!row) return json({ error: "That ticket class could not be found." }, 404, origin);
 
-    if (row.status === "closed") {
-      return json({ error: row.closed_explanation ?? "This class is not on sale yet." }, 409, origin);
+    // A guest holding the last seats must not be told the class is full: their own
+    // seats are added back, for the class they hold and no other.
+    const holdsThisClass = hold !== null && hold.ticket_class_code === classCode;
+    const status = (holdsThisClass
+      ? await statusForHolder(row.event_ticket_class_id, hold!.quantity)
+      : null) ?? row.status;
+
+    // A guest who already holds seats keeps them when the new choice is not on
+    // sale: nothing has been touched at this point, and they are told so.
+    const refuse = (message: string) => hold
+      ? json({ error: CHANGE_REFUSED, code: "change_unavailable" }, 409, origin)
+      : json({ error: message }, 409, origin);
+    if (status === "closed") {
+      return refuse(row.closed_explanation ?? "This class is not on sale yet.");
     }
-    if (row.status === "booking_closed") {
-      return json({ error: "Bookings have closed for this fight night." }, 409, origin);
+    if (status === "booking_closed") {
+      return refuse("Bookings have closed for this fight night.");
     }
-    if (row.status !== "available" && row.status !== "limited") {
-      return json({ error: "This class is fully booked." }, 409, origin);
+    if (status !== "available" && status !== "limited") {
+      return refuse("This class is fully booked.");
     }
 
     // The seating warning has to be enforced here too, not just shown in the
@@ -346,22 +462,76 @@ Deno.serve(async (req: Request) => {
       unitAmount = offer.unitAmount;
     }
 
+    // The same choice again while the hold is live: nothing new is made. The guest
+    // is handed the Stripe page they already have, with the time they have left.
+    // Same night, class, number, currency, price and offer, and the page must
+    // still be open at Stripe; anything less is a different choice.
+    if (hold && hold.ticket_class_code === classCode && hold.quantity === quantity &&
+        hold.currency === currency && hold.unit_amount === unitAmount &&
+        (hold.offer_code ?? null) === (offer?.code ?? null) && hold.stripe_checkout_session_id) {
+      try {
+        const existing = await stripe.checkout.sessions.retrieve(hold.stripe_checkout_session_id);
+        if (existing.status === "open" && existing.url) {
+          return json({
+            checkoutUrl: existing.url,
+            sessionId: existing.id,
+            reservationId: hold.hold_id,
+            currency,
+            unitAmount,
+            total: unitAmount * quantity,
+            expiresAt: hold.expires_at,
+            secondsLeft: hold.seconds_left,
+            resumed: true,
+          }, 200, origin);
+        }
+      } catch (err) {
+        console.error("held checkout session could not be reopened", {
+          reservationId: hold.hold_id, message: String(err),
+        });
+      }
+      // Not reachable any more: carry on as a change, which makes a new one.
+    }
+
     // Hold the stock before going anywhere near Stripe.
     const expiresAt = new Date(Date.now() + HOLD_MINUTES * 60_000);
-    const { data: reservation, error: reserveError } = await supabase.rpc("reserve_tickets", {
-      p_event_ticket_class_id: row.event_ticket_class_id,
-      p_quantity: quantity,
-      p_expires_at: expiresAt.toISOString(),
-    });
+    // A guest who already holds seats on this night swaps them in one database
+    // step: the new seats are taken first and the old ones given back only if
+    // that worked, so a change that cannot be made leaves the old hold exactly as
+    // it was. Everyone else reserves as they always did.
+    const { data: reservation, error: reserveError } = hold
+      ? await supabase.rpc("replace_reservation", {
+          p_old_reservation_id: hold.hold_id,
+          p_event_ticket_class_id: row.event_ticket_class_id,
+          p_quantity: quantity,
+          p_expires_at: expiresAt.toISOString(),
+        })
+      : await supabase.rpc("reserve_tickets", {
+          p_event_ticket_class_id: row.event_ticket_class_id,
+          p_quantity: quantity,
+          p_expires_at: expiresAt.toISOString(),
+        });
     if (reserveError || !reservation?.[0]) {
+      // If the old hold is still alive the guest keeps it, and is told so.
+      if (hold && await readHold(hold.hold_id, eventKey)) {
+        return json({ error: CHANGE_REFUSED, code: "change_unavailable" }, 409, origin);
+      }
       return json({ error: reserveError?.message ?? "Those tickets have just gone." }, 409, origin);
     }
     reservationId = reservation[0].reservation_id;
 
+    // The old hold is gone for good now, so its Stripe page must stop taking
+    // payment. Started here so it runs while the new session is being made, and
+    // awaited before this request answers (or fails).
+    const replaced = Boolean(hold && reservation[0].replaced_reservation_id);
+    const replacedSession: string | null = replaced
+      ? (reservation[0].replaced_stripe_session_id ?? null) : null;
+    if (replacedSession) oldExpiry = expireSession(replacedSession);
+
     const when = longDate(row.starts_at, row.venue_timezone);
     const successUrl = safeReturnUrl(
       body.successUrl, "https://muaytix.com/payment-successful?session_id={CHECKOUT_SESSION_ID}", origins);
-    const cancelUrl = safeReturnUrl(body.cancelUrl, "https://muaytix.com/payment-failed", origins);
+    const cancelUrl = safeReturnUrl(
+      body.cancelUrl, cancelUrlFor(origin, pagePath) ?? "https://muaytix.com/payment-failed", origins);
 
     // The key is deliberately NOT `reservation_id`. Another system on this same
     // Stripe account decides a session is its own purely by the presence of
@@ -516,6 +686,9 @@ Deno.serve(async (req: Request) => {
       console.error("rybbit checkout_started failed", { sessionId: session.id, reason: String(e) });
     }
 
+    // The old page is expired before the guest is told about the new one.
+    if (oldExpiry) await oldExpiry;
+
     return json({
       checkoutUrl: session.url,
       sessionId: session.id,
@@ -523,6 +696,11 @@ Deno.serve(async (req: Request) => {
       currency,
       unitAmount,
       total: unitAmount * quantity,
+      // When the hold runs out, so the widget can show a countdown. Additive:
+      // an older widget ignores both.
+      expiresAt: expiresAt.toISOString(),
+      secondsLeft: HOLD_MINUTES * 60,
+      ...(replaced ? { replaced: true } : {}),
     }, 200, origin);
 
   } catch (err) {
@@ -534,6 +712,9 @@ Deno.serve(async (req: Request) => {
         p_new_status: "failed",
       });
     }
+    // A hold this request had already replaced is gone either way, so its page
+    // must still be closed.
+    if (oldExpiry) await oldExpiry;
     console.error("create-checkout failed", { eventKey, classCode, message: String(err) });
     return json({ error: "The secure checkout could not be started. Please try again." }, 500, origin);
   }

@@ -356,7 +356,14 @@ Deno.serve(async (req: Request) => {
     // address is kept. Only for a checkout that TIMED OUT (not a failed async
     // payment), and only tells Rybbit once. Same guarantees as the purchase
     // event: it never raises an error, so it cannot turn this answer into a 500.
-    if (event.type === "checkout.session.expired") {
+    //
+    // Not for a hold the guest replaced themselves. When a guest changes their
+    // seats, create-checkout releases the old hold and expires its Stripe page on
+    // purpose (schema/0043), and that expiry arrives here as an ordinary expired
+    // session. It is a guest still booking, not one who left, and counting it
+    // would make every seat change read as an abandoned checkout. Only a hold
+    // released that way is already 'released'; a normal timeout is 'expired'.
+    if (event.type === "checkout.session.expired" && data !== "already_released") {
       try {
         const rybbit = await reportAbandoned(session, {
           apiKey: Deno.env.get("RYBBIT_API_KEY"),
