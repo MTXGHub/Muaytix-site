@@ -416,6 +416,14 @@ event) and its number comes from him.
    to sold plus that number, reopen, read back. Do not ask what he means and do
    not add a max-seats-together unless he asks.
 
+**Last solo seats go on sale one at a time (Jason, 9 October 2026).** When a
+class is down to single seats that cannot sit together, guests tick the
+"not seated together" warning without reading it and then expect to sit
+together at the stadium (it happened with the last two Ringside seats the
+weekend before). He has no better fix yet, so he puts them on one seat at a
+time, which also strings out the sale. Do not suggest wording changes unless he
+asks. If he says "one seat on sale", that is exactly one left to sell.
+
 ### Reports that already exist. Use them first.
 
 Said on 4 October 2026: reports were built, with time and credits, so that
