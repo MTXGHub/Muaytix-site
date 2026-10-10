@@ -307,14 +307,18 @@ already fully booked), the live header as the rollback, and the new header last.
     it caught a "reduce motion" rule I had shortened until the pulse no longer
     stopped.** The 63,000 limit is nearly used up. Shrink before adding.
 
-- **A guest's own hold (built 9 October 2026, Jason's brief. NOT applied, NOT
-  deployed, NOT pasted: nothing in this bullet is live until he says go and it is
-  read back).** Three problems: a guest's own five minute hold was subtracted from
+- **A guest's own hold (built 9 October 2026, Jason's brief. On 10 October 2026,
+  after his "go": the database migration is APPLIED and the three functions are
+  DEPLOYED and read back (`availability` v15, `create-checkout` v15,
+  `stripe-webhook-v2` v10; `live_hold` returns nothing for an unknown id and all
+  three new functions exist). The HEADER IS NOT PASTED: the guest sees no change
+  until Jason pastes it and a real page is checked. Not exercised against a real
+  Stripe session or a real checkout yet.)** Three problems: a guest's own five minute hold was subtracted from
   what the page showed that same guest ("Only 1 left" after holding 3 of 4), every
   click on Reserve made another hold and Stripe session, and Stripe's back arrow
   sent guests to `/payment-failed`, which says a payment failed when none was
   attempted. `HOLD_MINUTES` (5) and `SESSION_MINUTES` (31) are untouched.
-  - **Database, `schema/0043_guest_hold.sql`, not applied.** `live_hold`,
+  - **Database, `schema/0043_guest_hold.sql`, applied 10 October 2026.** `live_hold`,
     `class_view_for_holder` and `replace_reservation`, service role only, no
     personal column read. `replace_reservation` takes the new seats first and
     gives the old hold back only if that worked, all in one transaction (reservation
