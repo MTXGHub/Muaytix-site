@@ -363,8 +363,24 @@ already fully booked), the live header as the rollback, and the new header last.
     repeated phrases once ("#mtx-booking .mtx-" 222 times, "var(--", "background:",
     and so on) with a one-line loop that puts them back, so **the stylesheet the
     browser gets is character for character the same**. `header-block.test.mjs`
-    unpacks it and compares it with `widget.js` token for token. The header builds at
-    **59,968 bytes**, about 3 KB of room. `widget.js` is unchanged in how it reads.
+    unpacks it and compares it with `widget.js` token for token. The header built at
+    **59,968 bytes** before the landing fix below. `widget.js` is unchanged in how it reads.
+  - **Where a guest lands from Stripe's back arrow (10 October 2026, Jason's live
+    test of the first header).** The arrow opens the page with `?checkout=cancelled`:
+    a fresh visit, so the browser starts at the top (the page heading), and the widget
+    never moved the page by itself, so the green bar sat far below. Found by running
+    it (scroll position stayed 0 with the bar about 790px down in the test page).
+    Fix in `widget.js` (`cameBack`, `menuGap`, `bring`, `land`): only with
+    `?checkout=cancelled`, and only after the server has confirmed the hold and the bar
+    is drawn, the page scrolls so the bar sits just under the site's fixed menu (the
+    menu is measured, not assumed). Hold gone, not found or unreadable: lands at the
+    top of the widget instead. Also on a page the browser hands back from its cache.
+    It holds the position for 3 seconds while pictures above the widget finish loading,
+    and a guest who scrolls (wheel, touch move, a key) or taps is never moved again.
+    Any other visit is untouched. Tested by `widget/tests/guest-hold-scroll.test.mjs`
+    (17 checks, desktop and phone, with a fixed header and a late picture). The cache
+    restore is tested by firing the same `pageshow` event, not a real restore. Header
+    now builds at 61,640 bytes (limit 63,000). **Not live until Jason pastes it.**
   - **Guest-facing words.** "tickets", never "seats": "Your 3 Club Class tickets
     are held for 4:31", "Continue to payment", "Change tickets", and "That choice is
     not available. Your current tickets are still held." (Jason, 10 October 2026.)

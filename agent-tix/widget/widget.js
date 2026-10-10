@@ -332,6 +332,68 @@ function track(name, sid){
   } catch(e){}
 }
 
+// Stripe's back arrow opens the page again with ?checkout=cancelled. That is a
+// brand new visit, so the browser starts at the top (the page heading) and the
+// widget, which never moves the page by itself, leaves it there. The held bar is
+// far below, and does not exist until the hold has been fetched. So the widget
+// brings it into view once it is drawn, clear of the site's fixed menu, and puts
+// the guest at the top of the widget when there is no bar to show.
+// One guest, one page: shared by every widget on it.
+var arrival = { moved: false, bar: false, aim: null, timer: 0, ro: null };
+
+function cameBack(){
+  try { return /[?&]checkout=cancelled(&|$)/.test(window.location.search); } catch(e){ return false; }
+}
+
+// How far down the screen the site's own fixed or sticky menu reaches. Measured,
+// not guessed: whatever sits at the very top of the screen and is fixed or
+// sticky. Anything taller than a menu (a full screen banner) is ignored.
+function menuGap(){
+  var low = 0;
+  try {
+    var at = document.elementsFromPoint(Math.round(window.innerWidth / 2), 2);
+    for(var i = 0; i < at.length; i++)
+      for(var n = at[i]; n && n !== document.documentElement; n = n.parentElement){
+        var p = window.getComputedStyle(n).position;
+        if(p === "fixed" || p === "sticky"){
+          var b = n.getBoundingClientRect().bottom;
+          if(b < window.innerHeight * 0.4) low = Math.max(low, b);
+          break;
+        }
+      }
+  } catch(e){}
+  return low + 12;
+}
+
+function bring(){
+  if(arrival.moved || !arrival.aim) return;
+  var y = Math.max(0, Math.round(arrival.aim.getBoundingClientRect().top + window.pageYOffset - menuGap()));
+  try { window.scrollTo({ left: 0, top: y, behavior: "instant" }); } catch(e){ window.scrollTo(0, y); }
+}
+
+// A guest who scrolls, or taps anything, after we have landed them is never moved again.
+function land(el, isBar){
+  if(!cameBack() || arrival.moved) return;
+  if(isBar) arrival.bar = true; else if(arrival.aim) return;
+  var first = !arrival.aim;
+  arrival.aim = el;
+  bring();
+  if(first) window.addEventListener("pointerdown", function(){ arrival.moved = true; }, { once: true, passive: true });
+  // Pictures and fonts above the widget finish loading after it has drawn and
+  // push it down. Keep it in place for a few seconds while the page settles.
+  if(window.ResizeObserver){
+    if(arrival.ro) arrival.ro.disconnect();
+    clearTimeout(arrival.timer);
+    var ro = arrival.ro = new ResizeObserver(bring);
+    ro.observe(document.body);
+    arrival.timer = setTimeout(function(){ ro.disconnect(); }, 3000);
+  }
+}
+
+["wheel", "touchmove", "keydown"].forEach(function(t){
+  window.addEventListener(t, function(){ arrival.moved = true; }, { passive: true });
+});
+
 // Warming the checkout is a page-wide job, not a per-widget one.
 var warmed = false;
 var historyIds = 0;
@@ -1403,19 +1465,24 @@ function mount(root, opts) {
   // so. Run when the page loads and when the browser hands back a page it kept
   // (the back button), which is exactly when what is on screen may be stale.
   // "Could not tell" shows nothing and forgets nothing.
-  function checkHold(){
+  //
+  // Back from Stripe's arrow (arriving), the guest is then taken to the bar once
+  // it is drawn, or to the top of the widget when there is no bar to show.
+  function checkHold(arriving){
+    var rest = function(){ if(arriving) land(root, false); };
     var h = storedHold();
-    if(!h){ showHold(null); return; }
+    if(!h){ showHold(null); rest(); return; }
     call("availability", { action:"hold", holdId:h.r }, READ_TIMEOUT).then(function(d){
       var live = d.hold;
-      if(!live){ keepHold(null); showHold(null); refreshNight(); return; }
+      if(!live){ keepHold(null); showHold(null); refreshNight(); rest(); return; }
       // A page for one night does not show another night's hold.
-      if(opts.eventKey && live.eventKey !== opts.eventKey){ showHold(null); return; }
+      if(opts.eventKey && live.eventKey !== opts.eventKey){ showHold(null); rest(); return; }
       h.x = Date.now() + live.secondsLeft * 1000;
       h.q = live.quantity; h.n = live.className;
       keepHold(h);
       showHold(h);
-    }).catch(function(){ showHold(null); });
+      if(arriving) land(holdBox, true);
+    }).catch(function(){ showHold(null); rest(); });
   }
 
   // Read the night again where it stands, keeping the guest's place. Used when a
@@ -1686,11 +1753,14 @@ function mount(root, opts) {
     }
     // A page the browser kept is as it was when the guest left, so the hold and
     // the counts on it may both be old. Ask again.
-    if(e.persisted){ checkHold(); refreshNight(); }
+    if(e.persisted){
+      arrival.moved = false; arrival.bar = false; arrival.aim = null;
+      checkHold(cameBack()); refreshNight();
+    }
   });
 
   boot();
-  checkHold();
+  checkHold(cameBack());
 }
 
 /* ---------------------------------------------------------------------------
