@@ -380,7 +380,7 @@ already fully booked), the live header as the rollback, and the new header last.
     Any other visit is untouched. Tested by `widget/tests/guest-hold-scroll.test.mjs`
     (17 checks, desktop and phone, with a fixed header and a late picture). The cache
     restore is tested by firing the same `pageshow` event, not a real restore. Header
-    now builds at 61,640 bytes (limit 63,000). **Not live until Jason pastes it.**
+    now builds at 61,640 bytes (limit 63,000). **Jason pasted it and tested it on 10 October 2026: "it works perfectly" (his words; I have not seen the live page).**
   - **Guest-facing words.** "tickets", never "seats": "Your 3 Club Class tickets
     are held for 4:31", "Continue to payment", "Change tickets", and "That choice is
     not available. Your current tickets are still held." (Jason, 10 October 2026.)

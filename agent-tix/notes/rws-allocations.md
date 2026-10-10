@@ -27,6 +27,7 @@ stock.
 | 9 Oct 2026, evening Bangkok (in chat) | Sat 10 Oct | Club Class | **1 seat available** (3 of the 4 had sold since the last change; sold was 36). | Jason | total_quantity set to **37** (36 sold + 1). Read back: 37 total, 36 sold, 1 left. |
 | 9 Oct 2026, evening Bangkok (in chat) | Sat 10 Oct | Ringside | **1 seat on sale** (of the 3 solo seats held off sale since the morning). | Jason | total_quantity set to **7** (6 sold + 1; was 9). Reopened. Read back: 7 total, 6 sold, 1 left. The other 2 solo seats are still held, not in the total. Max seats together left empty (one seat). |
 | 10 Oct 2026 (in chat) | Sat 10 Oct | Club Class | **1 seat on sale.** Database matched the record: 37 total, 37 sold. | Jason | total_quantity set to **38** (37 sold + 1). Manual status clear. Read back: 38 total, 37 sold, 1 left, shows "limited" (guests see "1 left"). |
+| 10 Oct 2026 (in chat) | Sat 10 Oct | Ringside | **1 seat on sale.** Database matched the record: 7 total, 7 sold. | Jason | total_quantity set to **8** (7 sold + 1). Manual status clear. Read back: 8 total, 7 sold, 0 reserved, 1 left. Max seats together left empty (one seat). |
 
 ## What went wrong on 6 October 2026
 
