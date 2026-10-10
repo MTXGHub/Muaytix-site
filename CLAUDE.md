@@ -179,8 +179,9 @@ code to a page when that page is published. So: paste the new header, publish
 **one hidden test page** that holds just the widget, check it, and only then
 publish the rest. If it fails, put the previous header back and nothing guests
 see has changed. Never publish all pages on an untested header. Keep the last
-header that worked ready to paste as a rollback. **Live, as far as I know: the
-header at commit `0472ed1`** ("Fully booked", never "Sold out", on seat class
+header that worked ready to paste as a rollback. **Live, confirmed 10 October 2026
+(Jason pasted the live text back; it matches git by its markers, not byte for byte):
+the header at commit `0472ed1`**, ready to paste as `agent-tix/widget/rollback/paste-into-tilda-header-0472ed1.html` ("Fully booked", never "Sold out", on seat class
 buttons). Jason pasted it on 5 to 6 October 2026 and said it published fine. The
 one before it, **`96304c9`** (photo cards, back button, closed card, live from
 the morning of 5 October), is the **rollback** (in git:
