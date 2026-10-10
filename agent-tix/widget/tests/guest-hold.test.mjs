@@ -142,8 +142,8 @@ console.log('\nHold 3 of the last 4: others see 1, the holder can choose 4');
   await a.page.goBack().catch(() => {});
   await a.page.waitForSelector('.mtx-hold:not([hidden])', { timeout: 15000 });
   const n = await a.notice();
-  check('the holder, back from Stripe, sees the notice with their seats', /Your 3 Club Class seats are held for \d:\d\d/.test(n), n);
-  check('and a Continue to payment button and a way to change seats', /Continue to payment/.test(n) && /Change seats/.test(n), n);
+  check('the holder, back from Stripe, sees the notice with their tickets', /Your 3 Club Class tickets are held for \d:\d\d/.test(n), n);
+  check('and a Continue to payment button and a way to change tickets', /Continue to payment/.test(n) && /Change tickets/.test(n), n);
   await a.pickClub().catch(() => {});
   const opts = await a.page.waitForSelector('#mtxQty', { timeout: 15000 }).then(() => a.maxQty());
   check('the holder may choose up to 4 tickets (their 3 plus the 1 left)', opts === 4, String(opts));
@@ -209,7 +209,7 @@ console.log('\nChange seats: 3 to 2');
   const st = await a.stored();
   check('the browser now remembers the new hold, not the old one', st && st.r === now[0].id && st.q === 2 && st.s === newSession, JSON.stringify(st));
   check('and what it remembers is only ids, quantities and times', st && Object.keys(st).sort().join() === 'c,e,k,m,n,q,r,s,u,x', st && Object.keys(st).sort().join());
-  check('the notice now says 2 seats', /Your 2 Club Class seats are held/.test(await a.notice()), await a.notice());
+  check('the notice now says 2 tickets', /Your 2 Club Class tickets are held/.test(await a.notice()), await a.notice());
   await a.ctx.close();
 }
 
@@ -237,7 +237,7 @@ console.log('\nChange to something that is not available: the old hold stays');
     await a.page.click('[data-go]');
     await a.page.waitForSelector('[data-fail] .mtx-fail', { timeout: 15000 });
     const msg = await a.page.textContent('[data-fail] .mtx-fail');
-    check('the guest is told the new choice is not available and that their seats are still held', /not available/i.test(msg) && /still held/i.test(msg), msg);
+    check('the guest is told the new choice is not available and that their tickets are still held', /not available/i.test(msg) && /still held/i.test(msg), msg);
     check('the page stays where it is (no redirect)', /muaytix\.com/.test(a.page.url()));
     check('the notice is still there', (await a.notice()) !== null);
   } else {
@@ -280,7 +280,7 @@ console.log('\nA page restored from the browser cache is checked again');
   await a.page.goBack().catch(() => {});
   await a.page.waitForSelector('.mtx-hold:not([hidden])', { timeout: 15000 });
   const navType = await a.page.evaluate(() => performance.getEntriesByType('navigation')[0].type);
-  check('coming back, the notice and count are right however the browser rebuilt the page (' + navType + ')', /Your 3 Club Class seats/.test(await a.notice()));
+  check('coming back, the notice and count are right however the browser rebuilt the page (' + navType + ')', /Your 3 Club Class tickets/.test(await a.notice()));
   // The same thing the browser does for a kept page: a pageshow with persisted set.
   await a.page.click('[data-change-hold]');
   await a.page.waitForSelector('[data-pick="club_class"]');
@@ -350,7 +350,7 @@ console.log('\nStripe back arrow lands on the page the guest came from');
   // Stripe's arrow takes the guest there: a fresh page load of that address.
   await a.page.goto(session.params.cancel_url, { waitUntil: 'domcontentloaded' });
   await a.page.waitForSelector('.mtx-hold:not([hidden])', { timeout: 15000 });
-  check('and there the guest sees their seats held, with a way back to payment', /Your 2 Club Class seats are held/.test(await a.notice()) && /Continue to payment/.test(await a.notice()), await a.notice());
+  check('and there the guest sees their tickets held, with a way back to payment', /Your 2 Club Class tickets are held/.test(await a.notice()) && /Continue to payment/.test(await a.notice()), await a.notice());
   await a.ctx.close();
 }
 

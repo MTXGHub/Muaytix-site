@@ -189,7 +189,7 @@ pasted: the Club Class offer header (7 October 2026, 62,777 bytes).** See the
 offer bullet below, and do not say it is live until he has pasted it and a real
 page shows the red LEO tile as tappable. The database and both functions for it
 **are** live (applied and deployed 7 October 2026: `availability` v12,
-`create-checkout` v11). Stage it the usual way: the copier page has a test-copy
+`create-checkout` v11; read back on 10 October 2026: `availability` is v14 and `create-checkout` v14, the code at git `ef0209b`). Stage it the usual way: the copier page has a test-copy
 header for one hidden page (mount on Thursday's Petchyindee, where LEO is
 already fully booked), the live header as the rollback, and the new header last.
 
@@ -334,9 +334,14 @@ already fully booked), the live header as the rollback, and the new header last.
     choice is not available. Your current seats are still held." The response
     gained `expiresAt`, `secondsLeft` and (on a swap) `replaced`. `cancel_url` is
     now the page the guest pressed Reserve on, plus `?checkout=cancelled`, only on a
-    known page (`KNOWN_PAGE_PREFIXES` in `create-checkout/index.ts`: **a new page
-    that carries the widget needs its prefix added**, or its guests get
-    `/payment-failed` as before), never with the reservation id in it.
+    known page, never with the reservation id in it. Known means a page in
+    `KNOWN_PAGES` (`create-checkout/index.ts`: every page a booking has been made
+    from as of 10 October 2026) or a dated page by pattern, `/rws/YYYY-MM-DD`,
+    `/rajadamnern-knockout/YYYY-MM-DD` and `/petchyindee-muay-thai/YYYY-MM-DD`, so
+    new nights on those need no change. **A new page that carries the widget and is
+    not dated needs adding to `KNOWN_PAGES`**, or its guests get `/payment-failed`
+    as before. Any other series' dated pages (New Power, Kiatpetch, All Star) are not
+    in the pattern yet.
   - **The webhook** no longer reports a replaced hold as an abandoned checkout
     (the old Stripe page expiring arrives as an ordinary expiry; a replaced hold is
     already `released` by then, a real timeout is not).
@@ -355,6 +360,20 @@ already fully booked), the live header as the rollback, and the new header last.
     browser gets is character for character the same**. `header-block.test.mjs`
     unpacks it and compares it with `widget.js` token for token. The header builds at
     **59,968 bytes**, about 3 KB of room. `widget.js` is unchanged in how it reads.
+  - **Guest-facing words.** "tickets", never "seats": "Your 3 Club Class tickets
+    are held for 4:31", "Continue to payment", "Change tickets", and "That choice is
+    not available. Your current tickets are still held." (Jason, 10 October 2026.)
+    Code and database names keep "seat".
+  - **Rollback.** `schema/0043_guest_hold_rollback.sql` (three `drop function if
+    exists` lines, tested on the scratch copy; the migration tool may cancel it
+    because of the word drop, see section 9) and the three functions exactly as they
+    were live in `functions/live-before-guest-hold/` (read back from the live
+    project and compared with git: availability v14, create-checkout v14,
+    stripe-webhook-v2 v9, where the webhook's `rybbit.ts` is the older `3d69cb2`
+    copy, not the repo's current one). Order back: header, functions, then SQL.
+    **Pasting the new header when the live one is `0472ed1` also switches on the
+    Club Class offer button** (the server side is already live), because the new
+    header is built from the current `widget.js`.
   - **Tests** (need a scratch Postgres, never the live database; see the header of
     each file): `schema/tests/guest_hold.test.sql` and
     `guest_hold_concurrency.test.sh` (two sessions at once),

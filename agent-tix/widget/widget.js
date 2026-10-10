@@ -1384,10 +1384,10 @@ function mount(root, opts) {
     state.hold = h;
     if(!h){ holdBox.hidden = true; return; }
     holdBox.innerHTML =
-      '<p class="mtx-hold-t">Your ' + h.q + " " + esc(h.n) + (h.q === 1 ? " seat is" : " seats are") +
+      '<p class="mtx-hold-t">Your ' + h.q + " " + esc(h.n) + (h.q === 1 ? " ticket is" : " tickets are") +
       ' held for <b data-left></b></p>' +
       '<button class="mtx-go" data-resume>Continue to payment</button>' +
-      '<button class="mtx-hold-c" data-change-hold>Change seats</button>';
+      '<button class="mtx-hold-c" data-change-hold>Change tickets</button>';
     holdBox.hidden = false;
     tick();
     holdTimer = setInterval(tick, 1000);

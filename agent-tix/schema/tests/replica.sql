@@ -9,12 +9,16 @@
 --
 --   createdb holdtest && psql holdtest -f replica.sql -f ../0043_guest_hold.sql -f guest_hold.test.sql
 
+-- Supabase gives anon, authenticated and service_role EXECUTE on every function
+-- created in public, and Postgres gives PUBLIC the same. The scratch copy does
+-- the same, so a revoke in 0043 is a real test and not a no-op.
 do $$ begin
   if not exists (select 1 from pg_roles where rolname = 'anon') then create role anon nologin; end if;
   if not exists (select 1 from pg_roles where rolname = 'authenticated') then create role authenticated nologin; end if;
   if not exists (select 1 from pg_roles where rolname = 'service_role') then create role service_role nologin; end if;
 end $$;
 
+alter default privileges in schema public grant execute on functions to anon, authenticated, service_role;
 create table tenants (id uuid primary key default gen_random_uuid(), slug text not null);
 create table venues (id uuid primary key default gen_random_uuid(), tenant_id uuid not null, name text not null,
   timezone text not null default 'Asia/Bangkok');

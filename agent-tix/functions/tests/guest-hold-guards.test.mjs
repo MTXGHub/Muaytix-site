@@ -141,7 +141,8 @@ console.log('\nHold 3, change to a sold out class: refused, old hold untouched')
   const creates = h.stripe.calls.filter((c) => c.op === 'create').length;
   const r = await h.send({ classCode: 'ringside', quantity: 1, holdId: first.body.reservationId });
   check('the new choice is refused with a 409', r.status === 409, r.text);
-  check('and the guest is told so, in words', r.body.code === 'change_unavailable' && /not available/i.test(r.body.error) && /still held/i.test(r.body.error), r.text);
+  check('and the guest is told so, in words', r.body.code === 'change_unavailable' && r.body.error === 'That choice is not available. Your current tickets are still held.', r.text);
+  check('in guest words: tickets, never seats', !/seat/i.test(r.body.error), r.body.error);
   check('the old hold is still held, same size', reservation(first.body.reservationId).status === 'held' && reservation(first.body.reservationId).quantity === 3);
   check('the old seats never came back to the public', club().reserved === 3 && club().avail === 1);
   check('no new Stripe session was made', h.stripe.calls.filter((c) => c.op === 'create').length === creates);
@@ -240,30 +241,53 @@ console.log('\nA holder moves to a different class on the same night');
 // ---------------------------------------------------------------------------
 console.log('\nStripe back arrow: where it goes');
 {
+  const back = (p) => 'https://muaytix.com' + p + '?checkout=cancelled';
+  const FAIL = 'https://muaytix.com/payment-failed';
   const cases = [
-    ['/rajadamnern-knockout/2026-10-12', 'https://muaytix.com/rajadamnern-knockout/2026-10-12?checkout=cancelled', 'a dated Knockout page'],
-    ['/rws/knocktoberfest-10-october-2026', 'https://muaytix.com/rws/knocktoberfest-10-october-2026?checkout=cancelled', 'an RWS page'],
-    ['/rws', 'https://muaytix.com/rws?checkout=cancelled', 'the RWS prefix itself'],
-    ['/rajadamnern-stadium-tickets', 'https://muaytix.com/rajadamnern-stadium-tickets?checkout=cancelled', 'the tickets page'],
-    ['/rajadamnern-stadium-seating/club-class', 'https://muaytix.com/rajadamnern-stadium-seating/club-class?checkout=cancelled', 'a seat class page'],
-    ['/some-other-page', 'https://muaytix.com/payment-failed', 'an unknown page falls back'],
-    ['/rwsx', 'https://muaytix.com/payment-failed', 'a prefix is a whole path part: /rwsx is not /rws'],
-    ['/rws/../admin', 'https://muaytix.com/payment-failed', 'path traversal falls back'],
-    ['//evil.example/rws', 'https://muaytix.com/payment-failed', 'a protocol relative address falls back'],
-    ['https://evil.example/rws', 'https://muaytix.com/payment-failed', 'a full address falls back'],
-    ['/rws/a b', 'https://muaytix.com/payment-failed', 'spaces fall back'],
-    ['/rws/%2e%2e/x', 'https://muaytix.com/payment-failed', 'encoded dots fall back'],
-    ['/rws/page?x=1#y', 'https://muaytix.com/rws/page?checkout=cancelled', 'a query string and fragment are cut off, not carried'],
-    [undefined, 'https://muaytix.com/payment-failed', 'no page reported falls back'],
-    ['/', 'https://muaytix.com/payment-failed', 'the home page is not a known widget page: falls back'],
+    // The pages Jason named on 10 October 2026: each must send the guest back to itself.
+    ['/', back('/'), 'the home page'],
+    ['/rajadamnern-stadium-tickets', back('/rajadamnern-stadium-tickets'), 'the tickets page'],
+    ['/rws/tickets', back('/rws/tickets'), 'RWS tickets'],
+    ['/rws/tickets/', back('/rws/tickets/'), 'RWS tickets with a trailing slash'],
+    ['/rws/knocktoberfest-10-october-2026', back('/rws/knocktoberfest-10-october-2026'), 'the Knocktoberfest page'],
+    ['/rajadamnern-knockout', back('/rajadamnern-knockout'), 'the Knockout hub'],
+    ['/kiatpetch-muay-thai', back('/kiatpetch-muay-thai'), 'the Kiatpetch hub'],
+    ['/new-power-muay-thai', back('/new-power-muay-thai'), 'the New Power hub'],
+    ['/rajadamnern-stadium-seating', back('/rajadamnern-stadium-seating'), 'the seating page'],
+    ['/rajadamnern-stadium-seating/club-class', back('/rajadamnern-stadium-seating/club-class'), 'the Club Class page'],
+    ['/rajadamnern-stadium-seating/ringside', back('/rajadamnern-stadium-seating/ringside'), 'the Ringside page'],
+    ['/rajadamnern-stadium-seating/leo-section', back('/rajadamnern-stadium-seating/leo-section'), 'the LEO Section page'],
+    // Dated pages match by pattern, so a new night needs no code change.
+    ['/rws/2026-10-03', back('/rws/2026-10-03'), 'a dated RWS page'],
+    ['/rws/2027-03-14', back('/rws/2027-03-14'), 'a dated RWS page nobody has made yet'],
+    ['/rajadamnern-knockout/2026-09-22', back('/rajadamnern-knockout/2026-09-22'), 'a dated Knockout page'],
+    ['/rajadamnern-knockout/2026-12-31/', back('/rajadamnern-knockout/2026-12-31/'), 'a dated Knockout page with a trailing slash'],
+    ['/petchyindee-muay-thai/2026-10-01', back('/petchyindee-muay-thai/2026-10-01'), 'a dated Petchyindee page'],
+    // Everything else falls back, as it always did.
+    ['/rws', FAIL, 'the bare /rws is not a booking page, so it falls back'],
+    ['/rws/2026-10-3', FAIL, 'a malformed date falls back'],
+    ['/rws/2026-10-03/extra', FAIL, 'a date with more path after it falls back'],
+    ['/new-power-muay-thai/2026-10-14', FAIL, 'a dated page for a series not in the pattern falls back (add it to DATED_PAGE if wanted)'],
+    ['/some-other-page', FAIL, 'an unknown page falls back'],
+    ['/rwsx/tickets', FAIL, '/rwsx is not /rws'],
+    ['/rws/../admin', FAIL, 'path traversal falls back'],
+    ['//evil.example/rws', FAIL, 'a protocol relative address falls back'],
+    ['https://evil.example/rws', FAIL, 'a full address falls back'],
+    ['/rws/tickets x', FAIL, 'spaces fall back'],
+    ['/rws/%2e%2e/x', FAIL, 'encoded dots fall back'],
+    ['/rws/tickets?x=1#y', back('/rws/tickets'), 'a query string and fragment are cut off, not carried'],
+    [undefined, FAIL, 'no page reported falls back'],
   ];
+  const table = [];
   for (const [pagePath, want, label] of cases) {
     resetClub(db);
     const h = await build();
     const r = await h.send({ quantity: 1, pagePath });
     const params = h.stripe.sessions.get(r.body.sessionId).params;
     check(label + ' -> ' + want.replace('https://muaytix.com', ''), params.cancel_url === want, params.cancel_url);
+    table.push([pagePath ?? '(none)', params.cancel_url === want ? 'PASS' : 'FAIL', params.cancel_url.replace('https://muaytix.com', '')]);
   }
+  if (process.env.SHOW_TABLE) console.log('\n' + table.map((r) => r.join('  |  ')).join('\n'));
   resetClub(db);
   const h = await build();
   const r = await h.send({ quantity: 1, pagePath: '/rws/tickets' });

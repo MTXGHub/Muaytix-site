@@ -18,6 +18,12 @@ create temp table before_defs as
   where pronamespace = 'public'::regnamespace
     and proname in ('reserve_tickets','release_reservation','complete_reservation','ticket_availability_status');
 
+-- Who may run each existing function BEFORE 0043: compared again after it, and
+-- after the rollback. The migration's revokes must touch only its own functions.
+create temp table before_acls as
+  select p.oid::regprocedure::text as sig, coalesce(p.proacl::text, 'default') as acl from pg_proc p
+  where p.pronamespace = 'public'::regnamespace;
+
 \ir ../0043_guest_hold.sql
 
 -- ---- a night with 10 Club seats (6 sold), a sold out Ringside, a free Third ---
@@ -172,6 +178,41 @@ select pg_temp.check('no new function mentions a guest column',
   (select count(*) from pg_proc where pronamespace = 'public'::regnamespace
     and proname in ('live_hold','class_view_for_holder','replace_reservation')
     and (prosrc ilike '%guest_email%' or prosrc ilike '%guest_name%' or pg_get_function_result(oid) ilike '%guest%')) = 0);
+
+-- ---- the access changes touch only the new functions ----------------------
+select pg_temp.check('every function that existed before 0043 has exactly the access it had',
+  (select count(*) from before_acls b join pg_proc p on p.oid::regprocedure::text = b.sig
+    where coalesce(p.proacl::text, 'default') <> b.acl) = 0);
+select pg_temp.check('the only functions 0043 added are the three new ones',
+  (select string_agg(p.oid::regprocedure::text, ', ' order by 1) from pg_proc p
+    where p.pronamespace = 'public'::regnamespace
+      and p.oid::regprocedure::text not in (select sig from before_acls))
+  = 'class_view_for_holder(uuid,integer), live_hold(uuid,text), replace_reservation(uuid,uuid,integer,timestamp with time zone)');
+
+-- ---- and the rollback puts everything back --------------------------------
+create temp table after_defs as
+  select proname, md5(pg_get_functiondef(oid)) h from pg_proc
+  where pronamespace = 'public'::regnamespace
+    and proname in ('reserve_tickets','release_reservation','complete_reservation','ticket_availability_status','expire_stale_reservations');
+\ir ../0043_guest_hold_rollback.sql
+select pg_temp.check('the rollback removes the three new functions',
+  (select count(*) from pg_proc where pronamespace = 'public'::regnamespace
+    and proname in ('live_hold','class_view_for_holder','replace_reservation')) = 0);
+select pg_temp.check('and leaves exactly the functions that were there before, with the same access',
+  (select count(*) from pg_proc p where p.pronamespace = 'public'::regnamespace) = (select count(*) from before_acls)
+  and (select count(*) from before_acls b join pg_proc p on p.oid::regprocedure::text = b.sig
+        where coalesce(p.proacl::text, 'default') = b.acl) = (select count(*) from before_acls));
+select pg_temp.check('and the existing functions are still byte for byte what they were',
+  (select count(*) from after_defs a join pg_proc p on p.proname = a.proname and p.pronamespace = 'public'::regnamespace
+    where a.h = md5(pg_get_functiondef(p.oid))) = 5);
+select pg_temp.check('the reservations and class counts the swaps left behind are untouched by it',
+  (select count(*) from checkout_reservations) > 0);
+\ir ../0043_guest_hold_rollback.sql
+-- and the migration can go back on after a rollback, leaving the copy ready for the
+-- concurrency test that runs next
+\ir ../0043_guest_hold.sql
+select pg_temp.check('the migration applies again after a rollback',
+  (select count(*) from pg_proc where pronamespace = 'public'::regnamespace and proname in ('live_hold','class_view_for_holder','replace_reservation')) = 3);
 
 do $$ declare bad integer; begin
   select count(*) into bad from results where not ok;
