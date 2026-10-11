@@ -107,7 +107,7 @@ const hub = `  <header class="mtx-as__hero">
     <div class="mtx-as__shell">
       <h2>${T('hub.facts.h2')}</h2>
       <dl class="mtx-as__facts">
-${factsRow('hub', ['event', 'venue', 'schedule', 'format', 'rounds', 'doors'])}
+${factsRow('hub', ['event', 'venue', 'schedule', 'format', 'rounds', 'doors', 'seating'])}
       </dl>
       <p class="mtx-as__note">${T('hub.facts.note')}</p>
     </div>

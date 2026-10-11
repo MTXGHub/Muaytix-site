@@ -390,6 +390,8 @@
 .mtx-as__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--as-line); border: 1px solid var(--as-line); margin: 0; }
 .mtx-as .mtx-as__facts { margin-top: 28px; }
 .mtx-as__fact { background: #fff; padding: 18px 20px; }
+
+.mtx-as__facts .mtx-as__fact:last-child:nth-child(3n+1) { grid-column: 1 / -1; }
 .mtx-as__fact dt {
   font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800;
   font-size: 12px; letter-spacing: .13em; text-transform: uppercase; color: var(--as-muted);
@@ -469,6 +471,10 @@
           <div class="mtx-as__fact">
             <dt>Doors</dt>
             <dd>Normally from 18:00</dd>
+          </div>
+          <div class="mtx-as__fact">
+            <dt>Seating</dt>
+            <dd>Guaranteed seats</dd>
           </div>
       </dl>
       <p class="mtx-as__note">Event dates, start times and fight cards should always be checked against the confirmed dated event before travelling.</p>

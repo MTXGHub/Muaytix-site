@@ -68,6 +68,13 @@ Doors
 [hub.facts.value.doors]
 Normally from 18:00
 
+# Added by Jason, 11 October 2026: "it needs to say guaranteed seats. Somewhere."
+[hub.facts.label.seating]
+Seating
+
+[hub.facts.value.seating]
+Guaranteed seats
+
 [hub.facts.note]
 Event dates, start times and fight cards should always be checked against the confirmed dated event before travelling.
 
