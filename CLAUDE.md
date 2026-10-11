@@ -909,6 +909,10 @@ the stadium, not copy. They can be used on any page.
     number into `agent-tix/notes/rws-allocations.md`, and never trust 25 / 40 /
     25. He has told me he does not trust me with the numbers now: earn it back
     by never being the reason one is wrong.
-  - **Standing instruction, 6 October 2026:** every RWS seat class for 17, 24
-    and 31 October is closed (`fully_booked`) until he gives real counts and
-    asks for it to be reopened. Third Class on Saturday 10 October stays open.
+  - **Standing instruction, 6 October 2026, lifted 11 October 2026:** every RWS
+    seat class for 17, 24 and 31 October had been closed until he gave real
+    counts. On 11 October he gave the real counts for 17 October (Ringside 0,
+    Club Class 1, LEO 30, Third Class 50, opened) and told me to set 24 October
+    onwards at 25 each for Ringside, Club Class and LEO with Third Class
+    unopened. Those 25s are his working numbers, **not counted stock**: replace
+    them the moment he gives real counts, and say so whenever they are shown.
