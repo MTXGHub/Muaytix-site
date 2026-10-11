@@ -263,11 +263,12 @@ console.log('\nStripe back arrow: where it goes');
     ['/rajadamnern-knockout/2026-09-22', back('/rajadamnern-knockout/2026-09-22'), 'a dated Knockout page'],
     ['/rajadamnern-knockout/2026-12-31/', back('/rajadamnern-knockout/2026-12-31/'), 'a dated Knockout page with a trailing slash'],
     ['/petchyindee-muay-thai/2026-10-01', back('/petchyindee-muay-thai/2026-10-01'), 'a dated Petchyindee page'],
+    ['/new-power-muay-thai/2026-10-14', back('/new-power-muay-thai/2026-10-14'), 'a dated New Power page'],
     // Everything else falls back, as it always did.
     ['/rws', FAIL, 'the bare /rws is not a booking page, so it falls back'],
     ['/rws/2026-10-3', FAIL, 'a malformed date falls back'],
     ['/rws/2026-10-03/extra', FAIL, 'a date with more path after it falls back'],
-    ['/new-power-muay-thai/2026-10-14', FAIL, 'a dated page for a series not in the pattern falls back (add it to DATED_PAGE if wanted)'],
+    ['/not-a-real-page/2026-10-14', FAIL, 'a dated address for a page that is not listed and matches no dated pattern falls back'],
     ['/some-other-page', FAIL, 'an unknown page falls back'],
     ['/rwsx/tickets', FAIL, '/rwsx is not /rws'],
     ['/rws/../admin', FAIL, 'path traversal falls back'],
