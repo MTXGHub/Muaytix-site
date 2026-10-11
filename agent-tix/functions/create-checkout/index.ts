@@ -317,8 +317,10 @@ async function expireSession(sessionId: string): Promise<void> {
 //   that carries the widget and is not dated needs its path added here, or its
 //   guests get /payment-failed as before.
 //
-//   Dated pages, by pattern: /rws/YYYY-MM-DD, /rajadamnern-knockout/YYYY-MM-DD and
-//   /petchyindee-muay-thai/YYYY-MM-DD. A new night on one of those needs no change.
+//   Dated pages, by pattern: /rws/YYYY-MM-DD, /rajadamnern-knockout/YYYY-MM-DD,
+//   /petchyindee-muay-thai/YYYY-MM-DD, /all-star-fight-by-buakaw/YYYY-MM-DD,
+//   /new-power-muay-thai/YYYY-MM-DD and /kiatpetch-muay-thai/YYYY-MM-DD.
+//   A new night on one of those needs no change.
 //
 // A trailing slash is the same page.
 const KNOWN_PAGES = new Set([
@@ -333,8 +335,11 @@ const KNOWN_PAGES = new Set([
   "/rajadamnern-knockout",
   "/kiatpetch-muay-thai",
   "/new-power-muay-thai",
+  "/muay-thai-bangkok-tonight",
+  "/petchyindee-muay-thai",
+  "/rajadamnern/petchyindee",
 ]);
-const DATED_PAGE = /^\/(rws|rajadamnern-knockout|petchyindee-muay-thai)\/\d{4}-\d{2}-\d{2}$/;
+const DATED_PAGE = /^\/(rws|rajadamnern-knockout|petchyindee-muay-thai|all-star-fight-by-buakaw|new-power-muay-thai|kiatpetch-muay-thai)\/\d{4}-\d{2}-\d{2}$/;
 
 function cancelUrlFor(origin: string, pagePath: string | null): string | null {
   if (!pagePath || !/^\/[A-Za-z0-9._~\/-]*$/.test(pagePath)) return null;
