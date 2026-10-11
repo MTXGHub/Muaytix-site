@@ -1,0 +1,70 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What time does Muay Thai start tonight in Bangkok?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Doors open one hour before the first bout. Monday, Tuesday and Friday start at 7:00 PM, Saturday at 7:10 PM, and Wednesday, Thursday and Sunday at 6:00 PM."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I book Muay Thai tickets for tonight in Bangkok?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can book online for tonight's event at Rajadamnern Stadium while tickets are available."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I buy tickets at the door for Rajadamnern Stadium tonight?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The stadium does not hold tickets back for walk-up buyers, so the better sections can sell out before the doors open. Booking online first is the safe option."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is fighting at Rajadamnern tonight?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The line-up changes each night. See the RWS fight card and the Rajadamnern Knockout fight card for the latest."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which Muay Thai night is best for a first visit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Rajadamnern Knockout nights on Monday, Tuesday and Friday are a fast, high-impact introduction. Saturday's RWS adds a bigger production, and every night includes the Immersive Muay Thai Experience."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much are Muay Thai tickets tonight?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Muay Thai tickets at Rajadamnern Stadium start from 2,500 THB for Ringside, 1,800 THB for Club Class and 1,500 THB for LEO Section. Third Class is 1,000 THB when it is open for sale. Select tonight's date in the live availability to see the exact price in your currency."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where to watch Muay Thai in Bangkok tonight?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Rajadamnern Stadium puts on a live Muay Thai fight card every night of the week. MuayTix sells official tickets for every night."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I arrive early for LEO Section or Third Class?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. LEO Section and Third Class are unassigned, so arrive when the doors open for the best choice. Ringside and Club Class are numbered, so there is no need to rush."
+      }
+    }
+  ]
+}

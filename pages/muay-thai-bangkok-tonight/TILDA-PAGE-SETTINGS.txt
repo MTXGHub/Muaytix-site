@@ -1,0 +1,38 @@
+MUAY THAI BANGKOK TONIGHT
+Tilda page settings. These are NOT in the HTML block (a block has no head).
+Paste them into the page's own settings in Tilda. The text is the brief's, exact.
+
+PAGE ADDRESS (the original address, restored)
+  /muay-thai-bangkok-tonight
+  Before this is published, check that no redirect still points away from it:
+  Cloudflare (Rules, Redirect Rules and Bulk Redirects) and Tilda (the page's own
+  settings and Site Settings, Redirects). A leftover redirect stops the page loading.
+
+CANONICAL
+  https://muaytix.com/muay-thai-bangkok-tonight
+
+DOCUMENT TITLE
+  Muay Thai Bangkok Tonight | Rajadamnern Stadium | MuayTix
+
+META DESCRIPTION
+  Muay Thai in Bangkok tonight at Rajadamnern Stadium. See start times, what is on and book tickets.
+
+ROBOTS
+  index,follow
+
+OPEN GRAPH
+  type        website
+  site name   MuayTix
+  url         https://muaytix.com/muay-thai-bangkok-tonight
+  title       Muay Thai in Bangkok Tonight | Official Stadium Booking
+  description See tonight's Muay Thai at Rajadamnern Stadium, check start times and book tickets in your currency.
+  image       NOT SET. The brief names none. Send the image and I will fill it in.
+              I cannot see Tilda's pictures from here.
+
+X (TWITTER) CARD
+  card        summary_large_image
+  title       Muay Thai in Bangkok Tonight | Official Stadium Booking
+  description See tonight's Muay Thai at Rajadamnern Stadium, check start times and book tickets in your currency.
+  image       NOT SET. Same image as the Open Graph one.
+
+DO NOT ADD: meta keywords, a second title tag, a second canonical, any "today" metadata.

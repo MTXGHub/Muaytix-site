@@ -1,0 +1,88 @@
+<script type="application/ld+json">
+@@SCHEMA@@
+</script>
+
+<script type="application/json" id="mtx-tn-data">@@DATA@@</script>
+
+<script>
+/* Three behaviours, plain JavaScript, nothing loaded from outside: which night
+   is shown as Tonight or Tomorrow, the anchor jumps, and the phone bar. The
+   accordions are native details elements and need no script. */
+(function () {
+  var root = document.getElementById('mtx-tn');
+  if (root === null) return;
+  var slot = document.getElementById('mtx-tn-book');
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 1. Tonight, or Tomorrow from 7:00 PM. Bangkok is UTC+7 with no daylight
+     saving, so the clock there is the UTC clock moved on by seven hours and
+     read with the UTC getters, whatever zone the guest's own device is in. */
+  var holder = document.getElementById('mtx-tn-data');
+  var band = root.querySelector('[data-mtx-tn-tonight]');
+  if (holder && band) {
+    var data;
+    try { data = JSON.parse(holder.textContent); } catch (e) { data = null; }
+    if (data) {
+      var paint = function () {
+        var bkk = new Date(Date.now() + 7 * 3600000);
+        var after = bkk.getUTCHours() >= 19;
+        var day = (bkk.getUTCDay() + (after ? 1 : 0)) % 7;
+        var row = null;
+        for (var i = 0; i < data.rows.length; i++) if (data.rows[i].day === day) row = data.rows[i];
+        if (row === null) return;
+        band.querySelector('[data-tn-label]').textContent = after ? data.tomorrow : data.tonight;
+        band.querySelector('[data-tn-line]').textContent = data.line
+          .replace('[Event name]', row.event).replace('[doors time]', row.doors).replace('[first bout time]', row.first);
+        band.hidden = false;
+        var trs = root.querySelectorAll('.mtx-tn-table tbody tr');
+        for (var j = 0; j < trs.length; j++) {
+          var on = +trs[j].getAttribute('data-day') === day;
+          trs[j].className = on ? 'is-now' : '';
+          if (on) trs[j].setAttribute('aria-current', 'date'); else trs[j].removeAttribute('aria-current');
+        }
+      };
+      paint();
+      /* A page left open across 7:00 PM changes over by itself. */
+      window.setInterval(paint, 60000);
+    }
+  }
+
+  /* 2. Every button that says book scrolls to the widget on this page, and the
+     secondary button scrolls to the start times. */
+  var jump = function (hash, target) {
+    var links = root.querySelectorAll('a[href="' + hash + '"]');
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', function (e) {
+        if (target === null) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
+      });
+    }
+  };
+  jump('#mtx-tn-book', slot);
+  jump('#mtx-tn-times', document.getElementById('mtx-tn-times'));
+
+  /* 3. The phone bar. On once the guest is past the first button and the
+     widget is off screen, off again as soon as the widget is in view. CSS keeps
+     it off a screen 760px or wider. */
+  var bar = root.querySelector('[data-mtx-tn-bar]');
+  var first = root.querySelector('.mtx-tn-hero .mtx-tn-btn');
+  if (bar && slot && first) {
+    var queued = false;
+    var update = function () {
+      queued = false;
+      var past = first.getBoundingClientRect().bottom < 0;
+      var w = slot.getBoundingClientRect();
+      var seen = w.bottom > 0 && w.top < window.innerHeight;
+      bar.className = 'mtx-tn-bar' + (past && !seen ? ' is-on' : '');
+    };
+    var queue = function () {
+      if (queued === false) { queued = true; window.requestAnimationFrame(update); }
+    };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    update();
+  }
+})();
+</script>
+</div>

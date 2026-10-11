@@ -1,0 +1,260 @@
+{
+  "1": {
+    "_name": "SEO METADATA",
+    "Title": [
+      "Muay Thai Bangkok Tonight | Rajadamnern Stadium | MuayTix"
+    ],
+    "Meta description": [
+      "Muay Thai in Bangkok tonight at Rajadamnern Stadium. See start times, what is on and book tickets."
+    ],
+    "Social title": [
+      "Muay Thai in Bangkok Tonight | Official Stadium Booking"
+    ],
+    "Social description": [
+      "See tonight's Muay Thai at Rajadamnern Stadium, check start times and book tickets in your currency."
+    ]
+  },
+  "2": {
+    "_name": "HERO",
+    "H1": [
+      "Muay Thai Bangkok Tonight"
+    ],
+    "Subheadline": [
+      "Live fights at Rajadamnern Stadium. Every night of the week."
+    ],
+    "Body": [
+      "See what is on tonight, when it starts and which tickets are left. Book online in minutes and go straight to the stadium."
+    ],
+    "Detail line": [
+      "Bangkok's oldest Muay Thai stadium, running since 1945."
+    ],
+    "Primary button": [
+      "Book Tickets"
+    ],
+    "Secondary button": [
+      "See Start Times"
+    ]
+  },
+  "3": {
+    "_name": "TONIGHT BLOCK",
+    "Label before 7:00 PM Bangkok time": [
+      "Tonight at Rajadamnern Stadium"
+    ],
+    "Label from 7:00 PM Bangkok time (shows the next night)": [
+      "Tomorrow at Rajadamnern Stadium"
+    ],
+    "Line, filled from the table for the current night": [
+      "[Event name]. Doors open [doors time]. First bout [first bout time]."
+    ]
+  },
+  "4": {
+    "_name": "WHAT IS ON",
+    "H2": [
+      "Muay Thai tonight at Rajadamnern Stadium"
+    ],
+    "Intro": [
+      "Rajadamnern Stadium puts on a live muay thai fight tonight and every other night of the week. If you are searching for muay thai tonight bangkok, this is the night by night guide to what is on."
+    ],
+    "Block 1 headline": [
+      "Rajadamnern Knockout: Monday, Tuesday and Friday"
+    ],
+    "Block 1 body": [
+      "Seven fast three-round bouts with an 80% knockout rate. Doors open at 6:00 PM and the first bell is at 7:00 PM."
+    ],
+    "Block 2 headline": [
+      "New Power: Wednesday"
+    ],
+    "Block 2 body": [
+      "Eight traditional five-round bouts in front of a loud local crowd and one of the biggest legal betting scenes in Muay Thai. Doors open at 5:00 PM and the first bout is at 6:00 PM."
+    ],
+    "Block 3 headline": [
+      "Petchyindee: Thursday"
+    ],
+    "Block 3 body": [
+      "Eight to nine five-round bouts of technical, tactical Muay Thai. Doors open at 5:00 PM and the first bout is at 6:00 PM."
+    ],
+    "Block 4 headline": [
+      "RWS Rajadamnern World Series: Saturday"
+    ],
+    "Block 4 body": [
+      "Seven to eleven bouts, mostly three rounds, with five-round title fights and open scoring after every round. Doors open at 6:00 PM and the first bout is at 7:10 PM."
+    ],
+    "Block 5 headline": [
+      "Kiatpetch: Sunday"
+    ],
+    "Block 5 body": [
+      "Eight to nine bouts with three-round and five-round fights on the same card. Doors open at 5:00 PM and the first bout is at 6:00 PM."
+    ]
+  },
+  "5": {
+    "_name": "START TIMES",
+    "H2": [
+      "Muay Thai tonight time: doors, first bout and finish"
+    ],
+    "Table header": [
+      "Night | Event | Doors open | First bout | Usually finishes"
+    ],
+    "Table rows": [
+      "Monday | Rajadamnern Knockout | 6:00 PM | 7:00 PM | 9:00 to 9:30 PM",
+      "Tuesday | Rajadamnern Knockout | 6:00 PM | 7:00 PM | 9:00 to 9:30 PM",
+      "Wednesday | New Power | 5:00 PM | 6:00 PM | 10:00 PM",
+      "Thursday | Petchyindee | 5:00 PM | 6:00 PM | 10:00 PM",
+      "Friday | Rajadamnern Knockout | 6:00 PM | 7:00 PM | 9:00 to 9:30 PM",
+      "Saturday | RWS Rajadamnern World Series | 6:00 PM | 7:10 PM | 10:00 PM",
+      "Sunday | Kiatpetch | 5:00 PM | 6:00 PM | 10:00 PM"
+    ],
+    "Note under table": [
+      "All times are Bangkok time. Doors open one hour before the first bout. There is an interval at around 8:00 PM, followed by the Immersive Muay Thai Experience at around 8:10 PM. Finish times are approximate and depend on the length of the bouts."
+    ]
+  },
+  "6": {
+    "_name": "CHOOSING A NIGHT",
+    "H2": [
+      "Choose your muay thai fight tonight in Bangkok"
+    ],
+    "Intro": [
+      "Each night has its own style, so the muay thai fight bangkok tonight is not the same as the one tomorrow. Pick the night that suits you."
+    ],
+    "Block 1 headline": [
+      "Fast and furious"
+    ],
+    "Block 1 body": [
+      "Rajadamnern Knockout nights are a high-impact introduction to Muay Thai, built around finishes. See the Rajadamnern Knockout nights."
+    ],
+    "Block 2 headline": [
+      "Traditional and tactical"
+    ],
+    "Block 2 body": [
+      "New Power on Wednesday and Petchyindee on Thursday are five-round nights for fans of technique. See New Power and Petchyindee."
+    ],
+    "Block 3 headline": [
+      "A bigger production"
+    ],
+    "Block 3 body": [
+      "Saturday's RWS adds open scoring and a larger show, with title fights in the mix. See the RWS Saturday schedule."
+    ],
+    "Block 4 headline": [
+      "A mixed card"
+    ],
+    "Block 4 body": [
+      "Kiatpetch on Sunday puts three-round and five-round bouts on one card. See Kiatpetch."
+    ],
+    "Closing line for the section": [
+      "Every night at Rajadamnern Stadium includes the Immersive Muay Thai Experience."
+    ]
+  },
+  "7": {
+    "_name": "TICKETS",
+    "H2": [
+      "Muay Thai Bangkok tickets tonight"
+    ],
+    "Intro": [
+      "Rajadamnern Stadium tickets are priced by ticket type. Prices below are starting prices."
+    ],
+    "Ringside, from 2,500 THB": [
+      "Floor level, inches from the ring. Every punch and clinch right in front of you."
+    ],
+    "Club Class, from 1,800 THB": [
+      "Elevated, numbered tickets at ring height. The clearest view in the stadium."
+    ],
+    "LEO Section, from 1,500 THB": [
+      "Same view as Club Class. Louder, unassigned and lower priced."
+    ],
+    "Third Class, from 1,000 THB": [
+      "A 360-degree view from the top of the stadium. Only released when the other sections are close to full."
+    ],
+    "Closing line": [
+      "Availability changes through the day. Check live availability for tonight below. Compare every section in the seating guide."
+    ]
+  },
+  "8": {
+    "_name": "HOW TO BOOK",
+    "H2": [
+      "How to book Muay Thai tickets for tonight"
+    ],
+    "Step 1 headline": [
+      "Pick tonight's event"
+    ],
+    "Step 1 body": [
+      "Choose tonight's date and your ticket type in the live availability below."
+    ],
+    "Step 2 headline": [
+      "Pay in your currency"
+    ],
+    "Step 2 body": [
+      "Pay securely online in your own currency."
+    ],
+    "Step 3 headline": [
+      "Get your tickets"
+    ],
+    "Step 3 body": [
+      "You receive a booking confirmation straight away and your QR tickets by email."
+    ],
+    "Support line": [
+      "Questions before you book? WhatsApp Us."
+    ]
+  },
+  "9": {
+    "_name": "FAQS",
+    "H2": [
+      "Muay Thai Bangkok tonight: your questions answered"
+    ],
+    "Q1": [
+      "What time does Muay Thai start tonight in Bangkok?"
+    ],
+    "A1": [
+      "Doors open one hour before the first bout. Monday, Tuesday and Friday start at 7:00 PM, Saturday at 7:10 PM, and Wednesday, Thursday and Sunday at 6:00 PM."
+    ],
+    "Q2": [
+      "Can I book Muay Thai tickets for tonight in Bangkok?"
+    ],
+    "A2": [
+      "Yes. You can book online for tonight's event at Rajadamnern Stadium while tickets are available."
+    ],
+    "Q3": [
+      "Can I buy tickets at the door for Rajadamnern Stadium tonight?"
+    ],
+    "A3": [
+      "The stadium does not hold tickets back for walk-up buyers, so the better sections can sell out before the doors open. Booking online first is the safe option."
+    ],
+    "Q4": [
+      "Who is fighting at Rajadamnern tonight?"
+    ],
+    "A4": [
+      "The line-up changes each night. See the RWS fight card and the Rajadamnern Knockout fight card for the latest."
+    ],
+    "Q5": [
+      "Which Muay Thai night is best for a first visit?"
+    ],
+    "A5": [
+      "Rajadamnern Knockout nights on Monday, Tuesday and Friday are a fast, high-impact introduction. Saturday's RWS adds a bigger production, and every night includes the Immersive Muay Thai Experience."
+    ],
+    "Q6": [
+      "How much are Muay Thai tickets tonight?"
+    ],
+    "A6": [
+      "Muay Thai tickets at Rajadamnern Stadium start from 2,500 THB for Ringside, 1,800 THB for Club Class and 1,500 THB for LEO Section. Third Class is 1,000 THB when it is open for sale. Select tonight's date in the live availability to see the exact price in your currency."
+    ],
+    "Q7": [
+      "Where to watch Muay Thai in Bangkok tonight?"
+    ],
+    "A7": [
+      "Rajadamnern Stadium puts on a live Muay Thai fight card every night of the week. MuayTix sells official tickets for every night."
+    ],
+    "Q8": [
+      "Should I arrive early for LEO Section or Third Class?"
+    ],
+    "A8": [
+      "Yes. LEO Section and Third Class are unassigned, so arrive when the doors open for the best choice. Ringside and Club Class are numbered, so there is no need to rush."
+    ]
+  },
+  "10": {
+    "_name": "FINAL CALL TO ACTION",
+    "Headline": [
+      "Book tonight's Muay Thai"
+    ],
+    "Button": [
+      "Book Tickets"
+    ]
+  }
+}

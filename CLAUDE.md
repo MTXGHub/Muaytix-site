@@ -136,6 +136,23 @@ HTML blocks that Jason pastes into a Tilda HTML block (T123).
   to produce the paste-ready copy. **Generate the paste file, never hand-edit it**,
   or the two drift apart.
 
+### Muay Thai Bangkok Tonight (built 11 October 2026, NOT published)
+
+`pages/muay-thai-bangkok-tonight/`. Restores the page deleted by mistake in
+September, same address `/muay-thai-bangkok-tonight`. `brief.txt` is Jason's
+master brief; Part B is the copy and is used word for word (`extract-copy.mjs`
+reads it, `gen.mjs` only decides presentation, `verify.mjs` reads the built page
+back and checks it against the brief: 61 checks). Paste file:
+`muay-thai-bangkok-tonight-PASTE-INTO-TILDA.html`; Tilda settings text:
+`TILDA-PAGE-SETTINGS.txt`. The "Tonight" band shows the Bangkok night, and the
+next night labelled "Tomorrow" from 7:00 PM Bangkok. **Before it is published:**
+check no redirect points away from the address (Cloudflare and Tilda, not
+checkable from here), and add `/muay-thai-bangkok-tonight` to `KNOWN_PAGES` in
+`create-checkout/index.ts` (needs a deploy, so ask first) or its guests get
+`/payment-failed` from Stripe's back arrow. Part B contains four lines the house
+style bans ("official" twice, "unassigned" twice); Jason was told and they are
+built as written.
+
 ### Fonts
 
 **Barlow** for body, **Barlow Condensed** for headings and buttons. No page loads
