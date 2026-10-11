@@ -337,7 +337,6 @@ const KNOWN_PAGES = new Set([
   "/new-power-muay-thai",
   "/muay-thai-bangkok-tonight",
   "/petchyindee-muay-thai",
-  "/rajadamnern/petchyindee",
 ]);
 const DATED_PAGE = /^\/(rws|rajadamnern-knockout|petchyindee-muay-thai|all-star-fight-by-buakaw|new-power-muay-thai|kiatpetch-muay-thai)\/\d{4}-\d{2}-\d{2}$/;
 
