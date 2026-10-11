@@ -1,5 +1,5 @@
 MUAYTIX MASTER BRIEF: MUAY THAI BANGKOK TONIGHT PAGE
-Version 1, 11 Oct 2026. Self-contained file for Claude Code.
+Version 3, 11 Oct 2026. Self-contained file for Claude Code.
 
 =====================================================
 PART A. INSTRUCTIONS (NOT COPY, DO NOT PUBLISH THIS PART)
@@ -10,11 +10,17 @@ PART A. INSTRUCTIONS (NOT COPY, DO NOT PUBLISH THIS PART)
 3. All copy in Part B is final. Do not change a single word, punctuation mark or capital letter. Claude Code decides presentation only.
 4. Build as a Tilda draft, read it back to check it matches Part B word for word, then wait for Jason's separate explicit publish approval.
 5. Tonight highlight: show the event for the current day of the week in Bangkok time (Asia/Bangkok) as "Tonight" using the table in section 3. Page must work for any day of the week with no manual updates. From 7:00 PM Bangkok time onwards, highlight the next night instead and label it "Tomorrow" (Jason confirmed this rule on 11 Oct 2026). Before 7:00 PM the label is "Tonight".
-6. Booking widget: use the existing live booking widget, placed at the bottom of the page. The "Book Tickets" buttons anchor-scroll to it. No scarcity lines or percentage booked lines anywhere.
-7. FAQPage schema: the schema text must match the visible FAQ text word for word.
-8. Layout follows the existing day page template (hero, fact strip, content blocks, FAQs, widget). Brand colours: Blue #1f5bff, Red #ff0000, Green #55f21d, Black #000000, Off-white #f2f2f2. No navy.
-9. Internal links (anchor text exactly as written in Part B): /rws/schedule, /rajadamnern-knockout, /new-power-muay-thai, /rajadamnern/petchyindee, /rws, /kiatpetch-muay-thai, /rajadamnern-stadium-seating, /rws/fight-card, /rajadamnern-knockout/fight-card/
-10. This page owns the "tonight" keyword cluster only. It must not use "today" phrases, which belong to a separate page still to be written.
+6. All Star Monday (Jason confirmed 11 Oct 2026): the last Monday of every month is All Star Fight by Buakaw. Work it out by rule, not a fixed list: 28 Sep, 26 Oct, 30 Nov, 28 Dec 2026 and so on. The rule applies to the Bangkok date of the night being shown, so after 7:00 PM on Sunday 25 Oct the Tomorrow block must say All Star Fight by Buakaw. Times, number of bouts and finish time are identical to the Monday row (Jason confirmed 11 Oct 2026). Only the event name changes. The name All Star Fight by Buakaw is confirmed.
+7. Booking widget: use the existing live booking widget, placed at the bottom of the page. The "Book Tickets" buttons anchor-scroll to it. No scarcity lines or percentage booked lines anywhere.
+8. FAQPage schema: the schema text must match the visible FAQ text word for word.
+9. Layout follows the existing day page template (hero, fact strip, content blocks, FAQs, widget). Brand colours: Blue #1f5bff, Red #ff0000, Green #55f21d, Black #000000, Off-white #f2f2f2. No navy.
+10. Internal links (anchor text exactly as written in Part B): /rws/schedule, /rajadamnern-knockout, /new-power-muay-thai, /rajadamnern/petchyindee, /rws, /kiatpetch-muay-thai, /rajadamnern-stadium-seating, /rws/fight-card, /rajadamnern-knockout/fight-card/
+11. This page owns the "tonight" keyword cluster only. It must not use "today" phrases, which belong to a separate page still to be written.
+
+NOTES FOR CLAUDE CODE (not copy):
+- The word "official" is permitted in all MuayTix copy. Jason's rule. Do not flag it.
+- These claims are confirmed in the MuayTix project files, so build them as written: "running since 1945" (stadium opened 23 Dec 1945, also in the MuayTix copy brief); 80% knockout rate (Rajadamnern Knockout event docs and the MuayTix event description); the stadium does not hold tickets back for walk-up buyers (seating master fact sheet); QR tickets by email (MuayTix copy brief and the live homepage meta description).
+- Doors times are given per night in the table and in the What is on blocks. There is no "one hour before" claim anywhere in the copy.
 
 OPEN CHECKS FOR JASON (not copy):
 - RWS first bout time: project file confirmed 7:10 PM, the general event doc says 7:00 PM. Part B uses 7:10 PM.
@@ -70,6 +76,8 @@ Tomorrow at Rajadamnern Stadium
 Line, filled from the table for the current night:
 [Event name]. Doors open [doors time]. First bout [first bout time].
 
+(Build note, not copy) All Star Monday: if the night shown is the last Monday of its month (Bangkok date), use the event name All Star Fight by Buakaw instead of Rajadamnern Knockout. Doors and first bout times stay as the Monday row.
+
 4. WHAT IS ON
 
 H2:
@@ -96,7 +104,7 @@ Eight to nine five-round bouts of technical, tactical Muay Thai. Doors open at 5
 Block 4 headline:
 RWS Rajadamnern World Series: Saturday
 Block 4 body:
-Seven to eleven bouts, mostly three rounds, with five-round title fights and open scoring after every round. Doors open at 6:00 PM and the first bout is at 7:10 PM.
+Mostly three-round bouts, with five-round title fights and open scoring after every round. Doors open at 6:00 PM and the first bout is at 7:10 PM.
 
 Block 5 headline:
 Kiatpetch: Sunday
@@ -121,7 +129,10 @@ Saturday | RWS Rajadamnern World Series | 6:00 PM | 7:10 PM | 10:00 PM
 Sunday | Kiatpetch | 5:00 PM | 6:00 PM | 10:00 PM
 
 Note under table:
-All times are Bangkok time. Doors open one hour before the first bout. There is an interval at around 8:00 PM, followed by the Immersive Muay Thai Experience at around 8:10 PM. Finish times are approximate and depend on the length of the bouts.
+All times are Bangkok time. There is an interval at around 8:00 PM, followed by the Immersive Muay Thai Experience at around 8:10 PM. Finish times are approximate and depend on the length of the bouts.
+
+Extra note under table (All Star Monday):
+The last Monday of each month is All Star Fight by Buakaw instead of Rajadamnern Knockout.
 
 6. CHOOSING A NIGHT
 
@@ -169,7 +180,7 @@ Club Class, from 1,800 THB:
 Elevated, numbered tickets at ring height. The clearest view in the stadium.
 
 LEO Section, from 1,500 THB:
-Same view as Club Class. Louder, unassigned and lower priced.
+Same view as Club Class. Louder, not numbered and lower priced.
 
 Third Class, from 1,000 THB:
 A 360-degree view from the top of the stadium. Only released when the other sections are close to full.
@@ -208,7 +219,7 @@ Muay Thai Bangkok tonight: your questions answered
 Q1:
 What time does Muay Thai start tonight in Bangkok?
 A1:
-Doors open one hour before the first bout. Monday, Tuesday and Friday start at 7:00 PM, Saturday at 7:10 PM, and Wednesday, Thursday and Sunday at 6:00 PM.
+Monday, Tuesday and Friday start at 7:00 PM, Saturday at 7:10 PM, and Wednesday, Thursday and Sunday at 6:00 PM. Doors open at 6:00 PM on Monday, Tuesday, Friday and Saturday, and at 5:00 PM on Wednesday, Thursday and Sunday.
 
 Q2:
 Can I book Muay Thai tickets for tonight in Bangkok?
@@ -218,7 +229,7 @@ Yes. You can book online for tonight's event at Rajadamnern Stadium while ticket
 Q3:
 Can I buy tickets at the door for Rajadamnern Stadium tonight?
 A3:
-The stadium does not hold tickets back for walk-up buyers, so the better sections can sell out before the doors open. Booking online first is the safe option.
+The stadium does not hold tickets back for walk-up buyers, so the better sections can sell out before you get there. Booking online first is the safe option.
 
 Q4:
 Who is fighting at Rajadamnern tonight?
@@ -243,7 +254,7 @@ Rajadamnern Stadium puts on a live Muay Thai fight card every night of the week.
 Q8:
 Should I arrive early for LEO Section or Third Class?
 A8:
-Yes. LEO Section and Third Class are unassigned, so arrive when the doors open for the best choice. Ringside and Club Class are numbered, so there is no need to rush.
+Yes. LEO Section and Third Class are not numbered, so arrive when the doors open for the best choice. Ringside and Club Class are numbered, so there is no need to rush.
 
 10. FINAL CALL TO ACTION
 

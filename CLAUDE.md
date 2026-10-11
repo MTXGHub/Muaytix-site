@@ -56,7 +56,6 @@ The seat class graphics set the standard: a name, one short line, nothing else.
 
 | Banned | Use instead |
 |---|---|
-| "official" anywhere: copy, alt text, file names, schema, meta | "international ticket partner" |
 | "Limited" as a guest-facing status | "Available", in green |
 | "Sold out" as a status on a seat class button or tile (his rule, 5 October 2026: it sends guests to other sites) | "Fully booked", on the red button |
 | Em dashes | A comma, a full stop, or a colon |
@@ -65,6 +64,11 @@ The seat class graphics set the standard: a name, one short line, nothing else.
 | Scarcity copy: "selling fast", "70% booked", "hurry" | Nothing |
 | Delivery timescales he has not set | Nothing |
 | Alcohol brand names in copy (Singha is allowed in alt text only) | "Ringside" |
+
+**"Official" is permitted** (Jason's rule, stated in the Muay Thai Bangkok Tonight
+brief, version 3, 11 October 2026: "permitted in all MuayTix copy... Do not flag
+it"). It was banned before that. Use it where it is true and never flag it.
+"Limited" and the rest of the table above still stand.
 
 ### Call it out before you build it
 
@@ -140,18 +144,20 @@ HTML blocks that Jason pastes into a Tilda HTML block (T123).
 
 `pages/muay-thai-bangkok-tonight/`. Restores the page deleted by mistake in
 September, same address `/muay-thai-bangkok-tonight`. `brief.txt` is Jason's
-master brief; Part B is the copy and is used word for word (`extract-copy.mjs`
-reads it, `gen.mjs` only decides presentation, `verify.mjs` reads the built page
-back and checks it against the brief: 61 checks). Paste file:
-`muay-thai-bangkok-tonight-PASTE-INTO-TILDA.html`; Tilda settings text:
-`TILDA-PAGE-SETTINGS.txt`. The "Tonight" band shows the Bangkok night, and the
-next night labelled "Tomorrow" from 7:00 PM Bangkok. **Before it is published:**
-check no redirect points away from the address (Cloudflare and Tilda, not
-checkable from here), and add `/muay-thai-bangkok-tonight` to `KNOWN_PAGES` in
-`create-checkout/index.ts` (needs a deploy, so ask first) or its guests get
-`/payment-failed` from Stripe's back arrow. Part B contains four lines the house
-style bans ("official" twice, "unassigned" twice); Jason was told and they are
-built as written.
+master brief (version 3, 11 October 2026); Part B is the copy and is used word
+for word (`extract-copy.mjs` reads it, `gen.mjs` only decides presentation,
+`verify.mjs` reads the built page back and checks it against the brief: 64
+checks). Paste file: `muay-thai-bangkok-tonight-PASTE-INTO-TILDA.html`; Tilda
+settings text: `TILDA-PAGE-SETTINGS.txt`. The "Tonight" band shows the Bangkok
+night, and the next night labelled "Tomorrow" from 7:00 PM Bangkok. **The last
+Monday of every month is All Star Fight by Buakaw** (Jason, 11 October 2026),
+worked out by rule on the Bangkok date of the night shown (28 Sep, 26 Oct,
+30 Nov, 28 Dec 2026), same times as the Monday row; the page also says so under
+the table. **Before it is published:** check no redirect points away from the
+address (Cloudflare and Tilda, not checkable from here), and add
+`/muay-thai-bangkok-tonight` to `KNOWN_PAGES` in `create-checkout/index.ts`
+(needs a deploy, so ask first) or its guests get `/payment-failed` from Stripe's
+back arrow.
 
 ### Fonts
 
@@ -802,9 +808,10 @@ the stadium, not copy. They can be used on any page.
   not book on the number or order of the fights, and the fight card lives on its
   own page.
 - **First bell is 7:10 pm for RWS, doors 6:00 pm, finishing around 10:00 pm.**
-- **"Official" and "limited".** Banned in section 2, but on 3 October 2026 he
-  said to leave both in the RWS Knocktoberfest page copy because no advertising
+- **"Official" and "limited".** "Limited" is banned in section 2, but on 3 October
+  2026 he said to leave it in the RWS Knocktoberfest page copy because no advertising
   (Google, Facebook) is running at the moment. If ads start again, ask first.
+  "Official" is now permitted everywhere (11 October 2026, see section 2).
 - **"Best available seats are allocated in your chosen section at the time of
   booking."** Said on 4 October 2026: it hurts conversion. Removed from the
   Knockout schedule page. Do not put it on any page, in any form, unless he

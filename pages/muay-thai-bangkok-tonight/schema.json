@@ -7,7 +7,7 @@
       "name": "What time does Muay Thai start tonight in Bangkok?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Doors open one hour before the first bout. Monday, Tuesday and Friday start at 7:00 PM, Saturday at 7:10 PM, and Wednesday, Thursday and Sunday at 6:00 PM."
+        "text": "Monday, Tuesday and Friday start at 7:00 PM, Saturday at 7:10 PM, and Wednesday, Thursday and Sunday at 6:00 PM. Doors open at 6:00 PM on Monday, Tuesday, Friday and Saturday, and at 5:00 PM on Wednesday, Thursday and Sunday."
       }
     },
     {
@@ -23,7 +23,7 @@
       "name": "Can I buy tickets at the door for Rajadamnern Stadium tonight?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The stadium does not hold tickets back for walk-up buyers, so the better sections can sell out before the doors open. Booking online first is the safe option."
+        "text": "The stadium does not hold tickets back for walk-up buyers, so the better sections can sell out before you get there. Booking online first is the safe option."
       }
     },
     {
@@ -63,7 +63,7 @@
       "name": "Should I arrive early for LEO Section or Third Class?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. LEO Section and Third Class are unassigned, so arrive when the doors open for the best choice. Ringside and Club Class are numbered, so there is no need to rush."
+        "text": "Yes. LEO Section and Third Class are not numbered, so arrive when the doors open for the best choice. Ringside and Club Class are numbered, so there is no need to rush."
       }
     }
   ]

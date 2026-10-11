@@ -21,6 +21,7 @@ for (const line of partB) {
   const head = line.match(/^(\d+)\. ([A-Z][A-Z ]+)(?: \(.*\))?$/);
   if (head) { sec = head[1]; copy[sec] = { _name: head[2].trim() }; label = null; continue; }
   if (sec === null || line.trim() === '') continue;
+  if (line.startsWith('(Build note')) continue;              // an instruction to the builder, not copy
   if (line.trimEnd().endsWith(':')) { label = line.trimEnd().slice(0, -1); copy[sec][label] = []; continue; }
   if (label === null) throw new Error(`Text before any label in section ${sec}: ${line}`);
   copy[sec][label].push(line.trimEnd());

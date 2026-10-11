@@ -55,6 +55,8 @@
 .mtx-tn-page .mtx-tn-lead { margin-top: 14px; max-width: 68ch; font-size: 18px; }
 .mtx-tn-page .mtx-tn-note { margin-top: 20px; max-width: 68ch; padding: 14px 16px; background: var(--paper); border-left: 5px solid var(--blue); font-size: 16.5px; }
 
+.mtx-tn-page .mtx-tn-note.mtx-tn-note--next { margin-top: 10px; }
+
 .mtx-tn-page .mtx-tn-sec { padding: 40px 0; }
 .mtx-tn-page .mtx-tn-sec--white { background: var(--white); }
 .mtx-tn-page .mtx-tn-sec--paper { background: var(--paper); }

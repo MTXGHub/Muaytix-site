@@ -26,13 +26,22 @@
       var paint = function () {
         var bkk = new Date(Date.now() + 7 * 3600000);
         var after = bkk.getUTCHours() >= 19;
-        var day = (bkk.getUTCDay() + (after ? 1 : 0)) % 7;
+        /* The night shown, as a Bangkok calendar date (from 7:00 PM, tomorrow's). */
+        var shown = new Date(Date.UTC(bkk.getUTCFullYear(), bkk.getUTCMonth(), bkk.getUTCDate() + (after ? 1 : 0)));
+        var day = shown.getUTCDay();
         var row = null;
         for (var i = 0; i < data.rows.length; i++) if (data.rows[i].day === day) row = data.rows[i];
         if (row === null) return;
+        /* The last Monday of the month is All Star: a Monday whose date a week
+           on falls in the next month. Worked out, never listed. */
+        var name = row.event;
+        if (day === 1 && data.allStar &&
+            new Date(Date.UTC(shown.getUTCFullYear(), shown.getUTCMonth(), shown.getUTCDate() + 7)).getUTCMonth() !== shown.getUTCMonth()) {
+          name = data.allStar;
+        }
         band.querySelector('[data-tn-label]').textContent = after ? data.tomorrow : data.tonight;
         band.querySelector('[data-tn-line]').textContent = data.line
-          .replace('[Event name]', row.event).replace('[doors time]', row.doors).replace('[first bout time]', row.first);
+          .replace('[Event name]', name).replace('[doors time]', row.doors).replace('[first bout time]', row.first);
         band.hidden = false;
         var trs = root.querySelectorAll('.mtx-tn-table tbody tr');
         for (var j = 0; j < trs.length; j++) {

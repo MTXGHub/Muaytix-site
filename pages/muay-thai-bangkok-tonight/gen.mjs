@@ -82,6 +82,13 @@ const data = {
     return { day, night: r[0], event: r[1], doors: r[2], first: r[3] };
   }),
 };
+/* All Star Monday. The name is read from the brief's own sentence, and the build
+   stops if it is not the confirmed one. The rule itself (the last Monday of the
+   month, on the Bangkok date of the night shown) runs in the page's script. */
+const extraNote = one('5', 'Extra note under table (All Star Monday)');
+const allStar = (extraNote.match(/ is (.+?) instead of /) || [])[1];
+if (allStar !== 'All Star Fight by Buakaw') throw new Error('All Star name not found in the extra note: ' + allStar);
+data.allStar = allStar;
 for (const t of ['[Event name]', '[doors time]', '[first bout time]']) if (!data.line.includes(t)) throw new Error('the tonight line has no ' + t);
 
 /* ------------------------------------------------------ 3. the tonight band */
@@ -126,6 +133,7 @@ ${rows.map(r => `            <tr data-day="${DAYS.indexOf(r[0])}"><th scope="row
         </table>
       </div>
       <p class="mtx-tn-note">${esc(one('5', 'Note under table'))}</p>
+      <p class="mtx-tn-note mtx-tn-note--next">${esc(extraNote)}</p>
     </div>
   </section>`;
 

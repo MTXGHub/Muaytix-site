@@ -102,7 +102,7 @@ sec('1. Every word of Part B is on the page, in order, and nothing else');
     one('3', 'Label before 7:00 PM Bangkok time'), 'New Power. Doors open 5:00 PM. First bout 6:00 PM.',
     one('4', 'H2'), one('4', 'Intro'),
     ...[1, 2, 3, 4, 5].flatMap((n) => [one('4', `Block ${n} headline`), one('4', `Block ${n} body`)]),
-    one('5', 'H2'), ...one('5', 'Table header').split(' | '), ...rowsIn.flat(), one('5', 'Note under table'),
+    one('5', 'H2'), ...one('5', 'Table header').split(' | '), ...rowsIn.flat(), one('5', 'Note under table'), one('5', 'Extra note under table (All Star Monday)'),
     one('6', 'H2'), one('6', 'Intro'),
     ...[1, 2, 3, 4].flatMap((n) => [one('6', `Block ${n} headline`), one('6', `Block ${n} body`)]), one('6', 'Closing line for the section'),
     one('7', 'H2'), one('7', 'Intro'),
@@ -126,7 +126,7 @@ sec('1. Every word of Part B is on the page, in order, and nothing else');
   check('the page threw no errors', errors.length === 0, errors.join(' | '));
   // Every line of Part B in the brief file is a line of the page (the brief is the source of truth, not copy.json).
   const partB = brief.slice(brief.indexOf('PART B. COPY (PASTE READY)'));
-  const lines = partB.split('\n').map((l) => l.trim()).filter((l) => l && !/:$/.test(l) && !/^\d+\. [A-Z ]+/.test(l) && !/^=+$/.test(l) && !/^PART B/.test(l));
+  const lines = partB.split('\n').map((l) => l.trim()).filter((l) => l && !/:$/.test(l) && !/^\d+\. [A-Z ]+/.test(l) && !/^=+$/.test(l) && !/^PART B/.test(l) && !l.startsWith('(Build note'));
   const metaOnly = new Set([one('1', 'Title'), one('1', 'Meta description'), one('1', 'Social title'), one('1', 'Social description'),
     one('3', 'Label from 7:00 PM Bangkok time (shows the next night)'), one('3', 'Line, filled from the table for the current night')]);
   const tableLines = new Set([...C['5']['Table rows'], one('5', 'Table header')]);
@@ -193,6 +193,73 @@ sec('3. Tonight, and Tomorrow from 7:00 PM, for every night, in any time zone');
   check('Saturday morning reads RWS with the 7:10 PM first bout', first.line === 'RWS Rajadamnern World Series. Doors open 6:00 PM. First bout 7:10 PM.', first.line);
   check('the band sits straight under the hero', first.prev.includes('mtx-tn-hero'), first.prev);
   await ctx.close();
+}
+
+// ---------------------------------------------------------------------------
+sec('3b. All Star Monday: the last Monday of every month, worked out by rule');
+{
+  const NAME = 'All Star Fight by Buakaw';
+  const lineKO = 'Rajadamnern Knockout. Doors open 6:00 PM. First bout 7:00 PM.';
+  const lineAS = `${NAME}. Doors open 6:00 PM. First bout 7:00 PM.`;
+  const tonightL = one('3', 'Label before 7:00 PM Bangkok time'), tomorrowL = one('3', 'Label from 7:00 PM Bangkok time (shows the next night)');
+  const cases = [
+    // [year, month, day, hour, minute, label, line, why]
+    [2026, 9, 28, 10, 0, tonightL, lineAS, 'Mon 28 Sep, the first one, before 7 PM'],
+    [2026, 9, 27, 19, 0, tomorrowL, lineAS, 'Sun 27 Sep from 7 PM shows Tomorrow = 28 Sep'],
+    [2026, 10, 26, 6, 0, tonightL, lineAS, 'Mon 26 Oct'],
+    [2026, 10, 25, 18, 59, tonightL, 'Kiatpetch. Doors open 5:00 PM. First bout 6:00 PM.', 'Sun 25 Oct at 6:59 PM is still Sunday'],
+    [2026, 10, 25, 19, 0, tomorrowL, lineAS, 'Sun 25 Oct from 7 PM: the brief\'s own example'],
+    [2026, 10, 25, 23, 59, tomorrowL, lineAS, 'Sun 25 Oct 11:59 PM'],
+    [2026, 10, 26, 19, 0, tomorrowL, lineKO, 'Mon 26 Oct from 7 PM shows Tuesday 27 Oct, an ordinary night'],
+    [2026, 11, 30, 12, 0, tonightL, lineAS, 'Mon 30 Nov, a 30-day month'],
+    [2026, 11, 29, 20, 0, tomorrowL, lineAS, 'Sun 29 Nov from 7 PM'],
+    [2026, 12, 28, 12, 0, tonightL, lineAS, 'Mon 28 Dec'],
+    [2026, 12, 21, 12, 0, tonightL, lineKO, 'Mon 21 Dec is NOT the last (28 Dec follows)'],
+    [2026, 10, 19, 12, 0, tonightL, lineKO, 'Mon 19 Oct is not the last'],
+    [2026, 10, 5, 12, 0, tonightL, lineKO, 'Mon 5 Oct is not the last'],
+    [2026, 11, 23, 12, 0, tonightL, lineKO, 'Mon 23 Nov is not the last (30 Nov follows)'],
+    [2027, 1, 25, 12, 0, tonightL, lineAS, 'Mon 25 Jan 2027, next year'],
+    [2027, 1, 18, 12, 0, tonightL, lineKO, 'Mon 18 Jan 2027 is not the last'],
+    [2027, 5, 31, 12, 0, tonightL, lineAS, 'Mon 31 May 2027, a Monday on the 31st'],
+    [2027, 5, 24, 12, 0, tonightL, lineKO, 'Mon 24 May 2027 is not the last (31 May follows)'],
+    [2027, 3, 29, 12, 0, tonightL, lineAS, 'Mon 29 Mar 2027'],
+    [2027, 2, 22, 12, 0, tonightL, lineAS, 'Mon 22 Feb 2027, February (28 days)'],
+    [2027, 2, 28, 22, 0, tomorrowL, lineKO, 'Sun 28 Feb 2027 from 7 PM shows Mon 1 Mar, not the last'],
+    [2026, 12, 31, 21, 0, tomorrowL, 'Rajadamnern Knockout. Doors open 6:00 PM. First bout 7:00 PM.', 'Thu 31 Dec from 7 PM shows Friday 1 Jan, across the year end'],
+  ];
+  const bad = [];
+  for (const [y, mo, d, h, mi, label, line, why] of cases) {
+    for (const tz of ['Asia/Bangkok', 'America/Los_Angeles']) {
+      const { ctx, page } = await open({ widget: false, now: bkk(y, mo, d, h, mi), tz });
+      const got = await page.evaluate(() => ({ label: document.querySelector('[data-tn-label]').textContent, line: document.querySelector('[data-tn-line]').textContent }));
+      // Thursday 31 Dec shows Friday: the table says Rajadamnern Knockout, 7:00 PM, which is lineKO.
+      if (got.label !== label || got.line !== line) bad.push(`${why} (${tz}): ${JSON.stringify(got)} wanted ${label} / ${line}`);
+      await ctx.close();
+    }
+  }
+  check(`${cases.length} dates right in two time zones, including the brief's own example (25 Oct, after 7 PM)`, bad.length === 0, bad.slice(0, 3).join('\n'));
+  // Every Monday of 2026 and 2027, worked out independently here, against the page.
+  const lastMondays = new Set();
+  for (let y = 2026; y <= 2027; y++) for (let m = 0; m < 12; m++) {
+    for (let d = new Date(Date.UTC(y, m + 1, 0)).getUTCDate(); d >= 1; d--) { if (new Date(Date.UTC(y, m, d)).getUTCDay() === 1) { lastMondays.add(Date.UTC(y, m, d)); break; } }
+  }
+  check('the four dates in the brief are the last Mondays: 28 Sep, 26 Oct, 30 Nov, 28 Dec 2026', [[2026, 8, 28], [2026, 9, 26], [2026, 10, 30], [2026, 11, 28]].every(([y, m, d]) => lastMondays.has(Date.UTC(y, m, d))));
+  // Every Monday from October 2026 to December 2027, by the page against the independent list above:
+  // the Monday itself at noon, and the Sunday before it from 7:00 PM, which shows that Monday as Tomorrow.
+  const wrong = [];
+  let n = 0;
+  for (let t = Date.UTC(2026, 9, 5); t <= Date.UTC(2027, 11, 27); t += 7 * 86400000) {
+    const mon = new Date(t), sun = new Date(t - 86400000);
+    const last = lastMondays.has(t);
+    for (const [when, label] of [[bkk(mon.getUTCFullYear(), mon.getUTCMonth() + 1, mon.getUTCDate(), 12, 0), tonightL], [bkk(sun.getUTCFullYear(), sun.getUTCMonth() + 1, sun.getUTCDate(), 19, 30), tomorrowL]]) {
+      const { ctx, page } = await open({ widget: false, now: when });
+      const got = await page.evaluate(() => ({ label: document.querySelector('[data-tn-label]').textContent, line: document.querySelector('[data-tn-line]').textContent }));
+      n++;
+      if (got.label !== label || got.line !== (last ? lineAS : lineKO)) wrong.push(`${mon.toISOString().slice(0, 10)}: ${JSON.stringify(got)} wanted ${last ? 'All Star' : 'Knockout'}`);
+      await ctx.close();
+    }
+  }
+  check(`every Monday to the end of 2027 is right, ${n} checks (${[...lastMondays].filter((m) => m >= Date.UTC(2026, 9, 1)).length} are All Star)`, wrong.length === 0, wrong.slice(0, 3).join('\n'));
 }
 
 // ---------------------------------------------------------------------------
@@ -308,7 +375,7 @@ sec('7. Phone bar, page order, and words that must not appear');
 
   // For Jason, not a pass or fail: copy in Part B that the house style bans.
   const flags = [];
-  for (const [re, why] of [[/\bofficial\b/i, 'official (banned)'], [/\bunassigned\b/i, 'unassigned (banned)'], [/\bassigned\b/i, 'assigned (banned)'],
+  for (const [re, why] of [[/\bunassigned\b/i, 'unassigned (banned)'], [/\bassigned\b/i, 'assigned (banned)'],
     [/\blimited\b/i, 'limited (banned)'], [/sold out/i, 'sold out (banned)']]) {
     for (const l of brief.slice(brief.indexOf('PART B. COPY')).split('\n')) if (re.test(l)) flags.push(`${why}: ${l.trim().slice(0, 90)}`);
   }
