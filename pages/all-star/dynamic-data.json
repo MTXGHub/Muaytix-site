@@ -12,7 +12,7 @@
   "event_key": "all_star_buakaw_2026_09_28",
 
   "dates": [
-    { "iso": "2026-09-28", "label": "Monday 28 September 2026", "doors": "18:00", "starts": "19:00",
+    { "iso": "2026-09-28", "label": "Monday 28 September 2026", "doors": "18:00", "starts": "19:00", "on_hub": false,
       "cutoff_utc": "2026-09-28T11:30:00Z", "path": "/all-star-fight-by-buakaw/2026-09-28" },
     { "iso": "2026-10-26", "label": "Monday 26 October 2026", "doors": "18:00", "starts": "19:00",
       "cutoff_utc": "2026-10-26T11:30:00Z", "path": null },

@@ -561,13 +561,23 @@
       <h1>All Star Fight by Buakaw at Rajadamnern Stadium</h1>
       <p class="mtx-as__lede">Buakaw’s monthly Muay Thai event brings seven three-round bouts to Rajadamnern Stadium, with Thai fighters facing international opponents from across the global fight scene.</p>
       <p class="mtx-as__actions">
-        <a class="mtx-as__btn mtx-as__btn--blue" href="/all-star-fight-by-buakaw/2026-09-28">See Upcoming Dates</a>
+        <a class="mtx-as__btn mtx-as__btn--blue" href="#book">See Upcoming Dates</a>
         <a class="mtx-as__btn mtx-as__btn--ghost" href="/rajadamnern-stadium-seating">Choose Your Seats</a>
       </p>
     </div>
   </header>
 
-  <section class="mtx-as__band mtx-as__band--paper">
+  <!-- Booking widget on the hub (Jason, 11 October 2026). Series mount: it sells
+       All Star Fight by Buakaw nights and nothing else, so only the last Monday
+       of each month can be booked. Same pattern as the Petchyindee and New Power
+       hubs. -->
+  <section class="mtx-as__band mtx-as__band--paper" id="book">
+    <div class="mtx-as__shell">
+      <div class="muaytix-ticket-selector" data-series="all-star-buakaw"></div>
+    </div>
+  </section>
+
+  <section class="mtx-as__band mtx-as__band">
     <div class="mtx-as__shell">
       <h2>All Star Fight at a glance</h2>
       <dl class="mtx-as__facts">
@@ -707,12 +717,6 @@
     <div class="mtx-as__shell">
       <h2>Upcoming All Star Fight dates</h2>
       <ul class="mtx-as__dates" data-mtx-dates>
-        <li class="mtx-as__datecard" data-mtx-cutoff="2026-09-28T11:30:00Z">
-          <h3>Monday 28 September 2026</h3>
-          <p class="mtx-as__times">Doors 18:00 &middot; Event starts 19:00</p>
-          <p class="mtx-as__cardbtn"><a class="mtx-as__btn mtx-as__btn--outline" href="/all-star-fight-by-buakaw/2026-09-28">View event details</a></p>
-        </li>
-
         <li class="mtx-as__datecard" data-mtx-cutoff="2026-10-26T11:30:00Z">
           <h3>Monday 26 October 2026</h3>
           <p class="mtx-as__times">Doors 18:00 &middot; Event starts 19:00</p>
@@ -781,7 +785,7 @@
       <h2>Choose your All Star Fight date</h2>
       <p>See the next confirmed All Star Fight by Buakaw event and choose your seating section.</p>
       <p class="mtx-as__ctarow">
-        <a class="mtx-as__btn mtx-as__btn--blue" href="/all-star-fight-by-buakaw/2026-09-28">See Upcoming All Star Fight Dates</a>
+        <a class="mtx-as__btn mtx-as__btn--blue" href="#book">See Upcoming All Star Fight Dates</a>
       </p>
     </div>
   </section>

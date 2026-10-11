@@ -69,7 +69,7 @@ function factsRow(page, keys) {
 }
 
 /* ================= PAGE 1: EVERGREEN HUB ================= */
-const dateCards = data.dates.map(d => {
+const dateCards = data.dates.filter(d => d.on_hub !== false).map(d => {
   let cta = '';
   if (d.path) {
     cta = `\n          <p class="mtx-as__cardbtn"><a class="mtx-as__btn mtx-as__btn--outline" href="${esc(d.path)}">${T('hub.dates.cta')}</a></p>`;
@@ -87,13 +87,23 @@ const hub = `  <header class="mtx-as__hero">
       <h1>${T('hub.h1')}</h1>
       <p class="mtx-as__lede">${T('hub.hero.body')}</p>
       <p class="mtx-as__actions">
-        <a class="mtx-as__btn mtx-as__btn--blue" href="${esc(D.dated)}">${T('hub.hero.cta_primary')}</a>
+        <a class="mtx-as__btn mtx-as__btn--blue" href="#book">${T('hub.hero.cta_primary')}</a>
         <a class="mtx-as__btn mtx-as__btn--ghost" href="${esc(D.seating)}">${T('hub.hero.cta_secondary')}</a>
       </p>
     </div>
   </header>
 
-  <section class="mtx-as__band mtx-as__band--paper">
+  <!-- Booking widget on the hub (Jason, 11 October 2026). Series mount: it sells
+       All Star Fight by Buakaw nights and nothing else, so only the last Monday
+       of each month can be booked. Same pattern as the Petchyindee and New Power
+       hubs. -->
+  <section class="mtx-as__band mtx-as__band--paper" id="book">
+    <div class="mtx-as__shell">
+      <div class="muaytix-ticket-selector" data-series="all-star-buakaw"></div>
+    </div>
+  </section>
+
+  <section class="mtx-as__band mtx-as__band">
     <div class="mtx-as__shell">
       <h2>${T('hub.facts.h2')}</h2>
       <dl class="mtx-as__facts">
@@ -206,7 +216,7 @@ ${faq('hub', 7)}
       <h2>${T('hub.final.h2')}</h2>
       <p>${T('hub.final.copy')}</p>
       <p class="mtx-as__ctarow">
-        <a class="mtx-as__btn mtx-as__btn--blue" href="${esc(D.dated)}">${T('hub.final.cta')}</a>
+        <a class="mtx-as__btn mtx-as__btn--blue" href="#book">${T('hub.final.cta')}</a>
       </p>
     </div>
   </section>

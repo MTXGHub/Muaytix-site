@@ -53,6 +53,9 @@ const fail = m => { fails++; console.log('   FAIL  ' + m); };
 const INTENTIONALLY_OMITTED = new Set(
   Object.entries(data.dated_seat_classes).filter(([k, v]) => k !== '_note' && v === 'closed')
     .flatMap(([k]) => [`dated.seats.name.${k}`, `dated.seats.descriptor.${k}`, `dated.seats.copy.${k}`]));
+/* The hub lists only the dates marked for it. While none of them has a dated
+   page, no card carries the "View event details" button, so its copy is absent. */
+if (!data.dates.some(d => d.on_hub !== false && d.path)) INTENTIONALLY_OMITTED.add('hub.dates.cta');
 const omit = m => { omitted++; console.log('   OMITTED  ' + m); };
 
 for (const P of [{ key: 'hub', prefix: 'hub', faqs: 7, kw: CL037 },
