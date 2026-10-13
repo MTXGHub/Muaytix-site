@@ -159,7 +159,7 @@ const confidence = `  <section class="mtx-kh-sec mtx-kh-sec--blue mtx-kh-conf">
 
 /* ------------------------------------------------------------ 11. FAQ */
 const S11 = 'FAQ';
-const faqs = [1, 2, 3, 4, 5].map(n => ({ q: one(S11, `Question ${n}`), a: one(S11, `Answer ${n}`) }));
+const faqs = [1, 2, 3, 4, 5, 6, 7, 8].map(n => ({ q: one(S11, `Question ${n}`), a: one(S11, `Answer ${n}`) }));
 const answer = (a) => {
   const m = a.match(/^\[LINK: (.+)\]$/);
   if (!m) return esc(a);

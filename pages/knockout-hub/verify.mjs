@@ -64,7 +64,8 @@ const visibleOf = p => p.evaluate(() => { const c = document.querySelector('#mtx
   for (const l of lines) if (!flat.includes(l)) { missing++; fail('brief line not on the page: ' + l); }
   if (!missing) ok(`all ${lines.length} copy lines from the brief are on the page, word for word`);
   const bans = [[/!/, 'exclamation mark'], [/book your seat/i, 'book your seat'], [/unassigned|assigned seating/i, 'assigned seating'],
-    [/selling fast|hurry|% booked/i, 'scarcity'], [/singha|chang beer|leo beer/i, 'alcohol brand'], [/live[- ]?stream/i, 'live stream']];
+    [/selling fast|hurry|% booked/i, 'scarcity'], [/singha|chang beer|leo beer/i, 'alcohol brand']];
+/* Not a banned phrase any more: Jason's FAQ answer 'Where can I watch Rajadamnern Knockout?' (11 October 2026) says MuayTix has no live stream and names the AIS Play app. */
   const before = fails;
   for (const [re, name] of bans) { const m = flat.match(re); if (m) fail(`banned: ${name} (${m[0]})`); }
   if (fails === before) ok('no em dashes, exclamation marks, scarcity, alcohol or live-stream words');
@@ -179,7 +180,7 @@ console.log('\n=== 6. PICTURES, STRUCTURE, LINKS, SCHEMA ===');
   }));
   if (r.h1 !== 1) fail(`${r.h1} h1 elements`); else ok('one h1');
   if (r.facts !== 6) fail(`${r.facts} fact cards`); else ok('six fact cards');
-  if (r.details !== 5 || !r.answers) fail(`${r.details} FAQ items`); else ok('five FAQ questions, every answer is in the page at load');
+  if (r.details !== 8 || !r.answers) fail(`${r.details} FAQ items`); else ok('eight FAQ questions, every answer is in the page at load');
   if (r.widget !== 'rajadamnern-knockout') fail('widget is not the Knockout series: ' + r.widget); else ok('widget mounted with data-series="rajadamnern-knockout"');
   const order = ['crumbs', 'hero', 'Rajadamnern Knockout at a glance', 'Choose your Rajadamnern Knockout date', 'What is Rajadamnern Knockout?', 'New to Muay Thai? You are in the right place.', 'What to expect at Rajadamnern Knockout', 'The Rajadamnern Dome Experience', 'Is Rajadamnern Knockout right for you?', 'Book with MuayTix', 'Rajadamnern Knockout FAQs', 'Plan your Rajadamnern Knockout night'];
   if (r.secs.join('|') !== order.join('|')) fail('section order differs:\n     ' + r.secs.join(' | ')); else ok('twelve sections in the briefed order');

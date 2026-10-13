@@ -366,15 +366,27 @@
         </details>
         <details class="mtx-kh-det">
           <summary><span class="mtx-kh-q">What time does Rajadamnern Knockout start?</span><svg class="mtx-kh-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
-          <div class="mtx-kh-det-b"><p>Doors open at 6:00 pm and the first fight begins at 7:00 pm. Fights start on time.</p></div>
+          <div class="mtx-kh-det-b"><p>Doors open at 6pm and the first fight starts at 7pm. The main card begins after the halftime interval, at around 8:10pm to 8:15pm every night.</p></div>
         </details>
         <details class="mtx-kh-det">
           <summary><span class="mtx-kh-q">How long does Rajadamnern Knockout last?</span><svg class="mtx-kh-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
-          <div class="mtx-kh-det-b"><p>The event usually finishes between 9:00 pm and 9:30 pm. Later timings can vary with the length of the fights.</p></div>
+          <div class="mtx-kh-det-b"><p>The full night finishes between 9pm and 9:30pm, depending on the length of the fights.</p></div>
+        </details>
+        <details class="mtx-kh-det">
+          <summary><span class="mtx-kh-q">How many fights are on the card?</span><svg class="mtx-kh-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="mtx-kh-det-b"><p>Every Rajadamnern Knockout night features seven professional Muay Thai fights.</p></div>
         </details>
         <details class="mtx-kh-det">
           <summary><span class="mtx-kh-q">Which nights is Rajadamnern Knockout held?</span><svg class="mtx-kh-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
-          <div class="mtx-kh-det-b"><p>Rajadamnern Knockout takes place every Monday, Tuesday and Friday.</p></div>
+          <div class="mtx-kh-det-b"><p>Rajadamnern Knockout runs every Monday, Tuesday and Friday, except the last Monday of each month. That night is All Star Fight: Elite Fighter by Buakaw Banchamek, a monthly guest appearance where the Thai legend puts his promoter hat on. Check the date shown on this page to confirm the next Knockout night.</p></div>
+        </details>
+        <details class="mtx-kh-det">
+          <summary><span class="mtx-kh-q">How much are tickets for Rajadamnern Knockout?</span><svg class="mtx-kh-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="mtx-kh-det-b"><p>Ticket prices are the same on every night. Ringside is 2,500 Thai baht, Club Class is 1,800 Thai baht and LEO Section is 1,500 Thai baht. Third Class is 1,000 Thai baht when it is open. It is not always open, and in the quieter periods of the year it is not released.</p></div>
+        </details>
+        <details class="mtx-kh-det">
+          <summary><span class="mtx-kh-q">Where can I watch Rajadamnern Knockout?</span><svg class="mtx-kh-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
+          <div class="mtx-kh-det-b"><p>Tickets booked through MuayTix give you a seat inside Rajadamnern Stadium for the live event. MuayTix does not offer a live stream. Viewers inside Thailand can watch the live stream on the AIS Play app.</p></div>
         </details>
         <details class="mtx-kh-det">
           <summary><span class="mtx-kh-q">Where can I see the latest line-up?</span><svg class="mtx-kh-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></summary>
