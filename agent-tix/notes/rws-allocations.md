@@ -37,6 +37,7 @@ stock.
 | 16 Oct 2026, 1:52 am Bangkok (in chat) | Sat 17 Oct | Club Class | **Second Club Class ticket put on sale** (of Jason's 3 in hand, one at a time). The first sold: database 1 total, 1 sold. | Jason | total_quantity set to **2** (1 sold + 1). Manual status clear. Read back: 2 total, 1 sold, 1 left. 1 ticket still in hand and off sale. |
 | 16 Oct 2026, late morning Bangkok (in chat) | Sat 24 Oct | Club Class, Ringside | **Club Class closed fully booked** (6 sold of the 25 working number, total left alone). **Ringside cut to 2 for sale.** Still working numbers, not counted stock. | Jason | Club Class manual status fully_booked (25 total, 6 sold). Ringside total_quantity set to **4** (2 sold + 2 on sale), manual status clear. Read back: Ringside 4 total, 2 sold, 2 left, Club Class shows fully booked. LEO 25/0, Third Class unreleased unchanged. |
 | 16 Oct 2026, 7:23 pm Bangkok (in chat) | Sat 17 Oct | Club Class | **Last of Jason's 3 Club Class tickets put on sale.** The second sold (database 2 total, 2 sold, 0 left). All 3 in hand are now on sale. | Jason | total_quantity set to **3** (2 sold + 1). Manual status clear. Read back: 3 total, 2 sold, 1 left. |
+| 17 Oct 2026, 1:45 am Bangkok (in chat) | Sat 17 Oct | Third Class | **10 more Third Class tickets bought: 20 in hand in total.** Database held 10, 5 sold. | Jason | total_quantity set to **20**. Manual status clear. Read back: Third Class 20 total, 5 sold, 15 left. Whole night: Ringside 4/4, Club Class 3/2, LEO 30/21, Third Class 20/5. |
 
 ## What went wrong on 6 October 2026
 
