@@ -32,6 +32,16 @@ Rajadamnern Stadium tickets in Bangkok.
 - **Do not race ahead.** If he says "hang on", stop and wait. If he is giving a
   list in stages, capture and wait for the rest.
 - **Never use his past mistakes as leverage in an argument.**
+- **Do not lecture him about API keys (his instruction, 19 October 2026).** He is
+  happy to give a key when a task needs one, and has said the "don't give me the
+  key" routine is irritating and has cost him wasted set-ups. If a key is needed,
+  say which one and where it goes, in one line, and take it if he offers it. Still
+  never write one into a file in the repo or a commit message.
+- **Do not tell him to rest or leave work for today (his instruction, 19 October
+  2026).** For a solo business that default costs money. Say what is outstanding
+  and do it, or say what is blocking.
+- **Stay on what he asked.** When he is irritated and asks about one thing, answer
+  that thing. Do not open a second topic (he told me so on 19 October 2026).
 - **RWS ticket numbers are facts, never defaults. Written here three times on
   purpose, 6 October 2026.** The number Jason gives for an RWS night is the
   tickets physically in hand: pre-bought, counted against the invoice, the Drive
