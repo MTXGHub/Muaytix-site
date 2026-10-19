@@ -33,3 +33,15 @@ coming back. That is wrong: the class is only paused.
 - Possible simplifications noted: one card for photo and plain tiles; one
   pattern for the special screens (closed, fully booked, offer, held);
   fewer ways to start the widget. No dead code found (19 October check).
+
+## 3. Seat cards and photos (19 October 2026, thinking aloud, nothing decided)
+
+- Photos per class today (database, read 19 Oct): Club Class 5, LEO 4, Ringside 4,
+  Third Class 4. Selling lines: 5 each. Photos are links to Tilda-hosted images,
+  so they use no head code; they only affect page speed (not checked whether
+  they load all at once).
+- Jason asked whether the four (soon five, with Presidential Box) seat cards
+  could merge into one card with a selection step. Trade-off: guests lose the
+  side-by-side comparison; Club Class is about 55% of bookings. Middle option
+  noted: four compact tiles, tap to expand one at a time. Decide after looking at
+  how guests use the cards now (Rybbit has the clicks on each class).
