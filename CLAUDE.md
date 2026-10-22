@@ -516,11 +516,25 @@ the date, or it offers tickets nobody can buy.
 
 This is the fact behind most trading decisions, and it is not in the database.
 
-**Club Class and LEO Section are real tickets already bought and in hand.**
-They can be sold down to zero safely: the seats exist, so the last one sold is
-still a seat someone gets.
+**CORRECTED 22 October 2026 (Jason): only RWS Saturdays are pre-bought.** On every
+other night, **no seat class is held in advance**: the 25s in the database on
+ordinary nights (Ringside, Club Class, LEO Section) are working numbers, not
+tickets in hand, and Third Class is bought as we go. An earlier version of this
+file said Club Class and LEO were real tickets in hand and could be sold down to
+zero safely. That is **wrong for ordinary nights**: a sale after the stadium has
+sold out is an oversell on any class. Pre-booked stock exists only where Jason
+says so for a particular night (for example RWS, or the LEO he told me he bought
+for 24 and 31 Oct). Do not describe ordinary-night stock to a guest as pre-booked.
 
-**Ringside is not held.** It is sold against the stadium's own remaining stock,
+**High season (from about late October 2026):** the stadium is starting to close
+a seat class the day before a night, as it already does for RWS. That is going to
+be normal. Whether to pre-buy some LEO or Club Class for ordinary nights, as a
+deliberate gamble to avoid selling mostly Third Class at low profit, is **Jason's
+open decision** (22 October 2026, "let me just think about that"). Do not push it,
+and never suggest buying more RWS tickets (section 13). The stadium's availability
+tracker (`agent-tix/notes/stadium-availability-tracker.md`) is the early warning.
+
+**Ringside is not held, and neither is Club Class or LEO on ordinary nights.** It is sold against the stadium's own remaining stock,
 so a sale after the stadium sells out is an oversell and a problem. That is why
 Ringside gets closed early, by his call, rather than being left to run out on
 its own. Do not suggest letting it run down, and never treat a Ringside
@@ -826,7 +840,9 @@ the stadium, not copy. They can be used on any page.
 - **Pre-booked, guaranteed tickets.** MuayTix secures its allocation in advance
   of a sell-out, for last-minute bookings. That is why an event can show sold
   out at the stadium while MuayTix still has tickets. The tickets it holds are
-  guaranteed, pre-booked and waiting to go.
+  guaranteed, pre-booked and waiting to go. **Narrowed 22 October 2026: this is
+  true of RWS Saturdays only.** On other nights nothing is pre-booked, so do not
+  put "pre-booked" or "guaranteed allocation" wording on a non-RWS page.
 - **Face value.** No markups and no booking fees.
 - **Every RWS card has seven bouts.** Do not ask how many fights there are, and
   do not name or count fights on an event page unless he asks for it. Guests do
