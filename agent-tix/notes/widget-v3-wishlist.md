@@ -45,3 +45,12 @@ coming back. That is wrong: the class is only paused.
   side-by-side comparison; Club Class is about 55% of bookings. Middle option
   noted: four compact tiles, tap to expand one at a time. Decide after looking at
   how guests use the cards now (Rybbit has the clicks on each class).
+
+## 4. A proper "Stadium Closed" day (22 October 2026)
+
+The stadium's tracker can mark a whole day Closed (first: Sun 21 Feb 2027). Jason
+wants that date to stay visible on the calendar, marked Stadium Closed, with no
+event. Done for now as data only: that night's event is renamed "Stadium Closed",
+detached from its series, all classes Booking closed. Known rough edges: it still
+carries a 6:00 pm start time and shows four Booking closed tiles. A real closed-day
+state in the widget (date marked, no classes, no time) belongs in V3.
