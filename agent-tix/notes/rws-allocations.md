@@ -58,6 +58,7 @@ stock.
 | 22 Oct 2026, evening Bangkok (in chat) | Sat 21 Nov | Club Class | **One Club Class ticket put on sale** (exactly 1 left to sell). Database held 25 (working number), 0 sold, Fully booked from the stadium's Stop Sale. | Jason | total_quantity 25 -> **1** (0 sold + 1), manual status cleared. Read back: Club Class 1 total, 0 sold, **1 left**, Available. |
 | 22 Oct 2026, evening Bangkok (in chat) | Sat 21 Nov | LEO Section | **LEO tickets available for sale set to 30** (left to sell). Database held 25 (working number), 1 sold, 24 left. | Jason | total_quantity 25 -> **31** (1 sold + 30). Read back: see the line below in the chat reply; LEO 31 total, 1 sold, **30 left**. |
 | 22 Oct 2026, evening Bangkok (in chat) | Sat 28 Nov | Club Class | **20 Club Class tickets put on sale** (exactly 20 left to sell). Database held 25 (working number), 1 sold, 24 left. | Jason | total_quantity 25 -> **21** (1 sold + 20), manual status clear. Read back: Club Class 21 total, 1 sold, **20 left**. |
+| 22 Oct 2026, evening Bangkok (in chat) | Sat 31 Oct | Third Class | **Opened at 50 as a working number, not counted stock.** The stadium tracker showed Third Class On Sale for 31 Oct from 17:19 Bangkok (a change from Not Yet On Sale, caught by the watcher). Jason: "just open it at 50". | Jason | Third Class released, total_quantity 50, manual status clear. Read back: Third Class available. **Replace the 50 the moment he gives the real count.** |
 
 ## What went wrong on 6 October 2026
 
