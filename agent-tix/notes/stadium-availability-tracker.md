@@ -89,3 +89,12 @@ automatically, day and night, without any chat being open.
   channel). Until then, read `stadium_changes`.
 - The tracker address is stored in `stadium_sync_settings.tracker_url` in the database,
   never in git.
+
+## 2027 Q1 paused (22 October 2026, Jason)
+
+New stadium rates were issued for 2027. All four classes on all 90 nights, 1 Jan to 31 Mar 2027,
+were set to `manual_status = 'booking_closed'` (356 rows changed; the four 21 Feb "Stadium Closed"
+rows were already closed). Nothing else was touched: stock, prices and release status are as loaded.
+Read back: all Ringside, Club Class and LEO rows show `booking_closed`; Third Class shows closed.
+To reopen a night later: set `manual_status = null` for its classes. The stadium follower will not
+reopen these (it only reopens classes it closed itself), so reopening is always by hand.
