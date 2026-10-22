@@ -1,5 +1,16 @@
 # The biggest problem: real-time stadium availability
 
+> **UPDATE 22 October 2026: the stadium has now provided a feed.** An availability
+> tracker (a Google Apps Script page) shows, for every day, whether each seat type is
+> On Sale, Stop Sale or Not Yet On Sale, rebuilt about every 6 minutes. It covers
+> VIP types too (Presidential Box Seat, Panoramic Balcony, Couple Suite), so selling
+> VIP is now possible to manage. It does NOT give seat counts or run rates, only the
+> moment a type stops or opens. We follow it automatically; see
+> `stadium-availability-tracker.md`. Ticketmelon still has no API.
+> Jason pushed for this for months; the final push was the 14 Nov bookings taken
+> after the stadium had already sold out four weeks early.
+
+
 Jason, 6 October 2026. **Availability is the biggest challenge in the business,
 full stop.** MuayTix has no real-time view of what the stadium (Ticketmelon) has
 left. He counts seats and pairs by eye, every half hour or so, and closes classes
