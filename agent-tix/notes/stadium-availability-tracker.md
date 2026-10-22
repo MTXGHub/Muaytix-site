@@ -56,5 +56,5 @@ upper limit they **reopen LEO for another batch** (his example: the next 35). So
 **a LEO Stop Sale is not always a sell-out**: it can be a pause that reverses.
 Seen once already: LEO on Tue 8 Dec went Stop Sale on 21 Oct (13:58) and back to On
 Sale on 22 Oct (15:24). Matters for any automation: a LEO Stop Sale should be
-reported to Jason as "paused, may reopen", not treated as final. Jason had not
-finished this explanation when it was saved.
+reported to Jason as "paused, may reopen", not treated as final. Jason
+confirmed that was the whole explanation: background only, it does not always happen.
