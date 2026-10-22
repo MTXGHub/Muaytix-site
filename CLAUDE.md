@@ -45,7 +45,11 @@ Rajadamnern Stadium tickets in Bangkok.
 - **RWS ticket numbers are facts, never defaults. Written here three times on
   purpose, 6 October 2026.** The number Jason gives for an RWS night is the
   tickets physically in hand: pre-bought, counted against the invoice, the Drive
-  and the bookings. It goes into `total_quantity` exactly as he gave it. Never
+  and the bookings. **"In hand" means tickets we physically have that can still be
+  sold. It does NOT include earlier sales** (Jason, 22 October 2026). So his number
+  is the **left to sell**, and `total_quantity` = `sold_quantity` + his number.
+  Never mix this up: setting `total_quantity` to his number when some are already
+  sold under-sells. Never
   leave a placeholder, never estimate, never carry one night's number to
   another. When his number is used up the class is **fully booked, no matter
   what**. See sections 6 and 13, and the record in `agent-tix/notes/rws-allocations.md`.
@@ -556,7 +560,9 @@ event) and its number comes from him.
 
 **RWS numbers are tickets in hand, and they are never wrong.** Rules, every time:
 
-1. **When he gives an RWS number, set `total_quantity` to it that minute.** Read
+1. **When he gives an RWS number, make it the tickets left to sell that minute**
+   (`total_quantity` = `sold_quantity` + his number; his number excludes earlier
+   sales, so with nothing sold the two are the same). Read
    back every class for that night with total, sold and left, and write it into
    `agent-tix/notes/rws-allocations.md` with the date. Do not say "done" before
    all three have happened.
