@@ -40,3 +40,7 @@ Third Class: the stadium shows it On Sale for 24 Oct and 14 Nov only.
 
 - Rebuild cycle about every 6 minutes, and an immediate rebuild when the stadium edits something (watched 22 Oct 2026).
 - On 22 Oct the tracker grew from 365 days to 455 (1 Jan to 31 Mar 2027, all On Sale, Third Class Not Yet On Sale).
+
+## Last Mondays of 2027 (22 October 2026)
+
+The stadium's own programme shows the last Monday of each month in 2027 as Rajadamnern Knockout. Jason will check with the stadium whether they are loading those separately as All Star Elite Fighter by Buakaw. Until he says, 25 Jan, 22 Feb and 29 Mar 2027 are loaded as **Rajadamnern Knockout** (they were first loaded as All Star by the weekly rule in `0044_load_2027_q1.sql`, then switched back at his request; no sales on them). If the stadium confirms All Star, switch them back: series, name, event key `all_star_buakaw_YYYY_MM_DD`, and Club Class offer off.
