@@ -58,3 +58,34 @@ Seen once already: LEO on Tue 8 Dec went Stop Sale on 21 Oct (13:58) and back to
 Sale on 22 Oct (15:24). Matters for any automation: a LEO Stop Sale should be
 reported to Jason as "paused, may reopen", not treated as final. Jason
 confirmed that was the whole explanation: background only, it does not always happen.
+
+## It now runs by itself (built and switched on 22 October 2026, evening)
+
+Jason, going to bed after two nights without sleep: "you're going to make the change
+based on what's coming out of the stadium data." So the tracker is followed
+automatically, day and night, without any chat being open.
+
+- **What runs:** the database's own clock (`pg_cron`, every 3 minutes) calls the
+  `stadium-sync` edge function (`agent-tix/functions/stadium-sync/`), which reads the
+  tracker, compares it with the previous read and hands every change to
+  `stadium_apply_change()` (`schema/0045_stadium_sync.sql`), where the rules live.
+- **The rules** act on changes the stadium makes, not on standing differences:
+  A -> F on Ringside / Club / LEO / Third: close ours as Fully booked, unless it is on
+  `stadium_hold` (stock Jason holds himself: left open, logged). F -> A: reopen only a
+  class this automation closed and nobody has touched since. Third Class N -> A: open it
+  at whatever total it carries (50). A whole day Closed: pause all four classes (Booking
+  closed); reopening is Jason's. Everything else is logged. Quantities are never changed.
+- **What to read to see what it did:** `stadium_changes` (rows with built = 'TEST'
+  are the 22 Oct tests). Health: `stadium_sync_settings.last_run_at` and `last_error`.
+- **Stop it:** `update stadium_sync_settings set enabled = false` (does nothing at all),
+  or `dry_run = true` (logs what it would do, changes nothing).
+- **Limits and safety:** a read with more than 25 changes applies none and says so;
+  a page that does not parse as expected changes nothing; the call needs a shared
+  token held in `stadium_sync_settings`.
+- **Holds:** add a class to `stadium_hold` whenever Jason pre-buys stock for it. At setup
+  it holds: 23 Oct Knockout LEO; RWS 24 Oct Ringside and LEO, 31 Oct LEO, 7 Nov Ringside
+  and LEO, 14 Nov LEO, 21 Nov Club and LEO, 28 Nov Club.
+- **Not built yet:** a message to Jason when something happens (he has not chosen a
+  channel). Until then, read `stadium_changes`.
+- The tracker address is stored in `stadium_sync_settings.tracker_url` in the database,
+  never in git.
