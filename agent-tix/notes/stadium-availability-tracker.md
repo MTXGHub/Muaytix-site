@@ -16,6 +16,7 @@ cloud environment's network settings (Jason added it on 22 October 2026).
 - `events`: one row per calendar day, all of 2026 (365 rows when read), each
   `{d: "2026-10-22", o: 1, z: "AAAAAAN"}`. `z` is one letter per zone in the
   order above: **A = On Sale, F = Stop Sale, N = Not Yet On Sale.**
+- `o` on each day: **1 = a normal show day, 0 = the stadium has marked the whole day Closed** (first seen 22 Oct 2026 13:42 Bangkok on Sun 21 Feb 2027). The log then carries `t: 'day'`, `s: 'C'`, with no zones. A closed day means no show: take that night off sale.
 - `log`: the latest changes, 39 entries when read (the page itself shows only
   the 20 most recent): `{at, t, d, s, z}` = when, kind, the night, new status
   letter, which zones.
@@ -34,3 +35,8 @@ by Jason because MuayTix holds its own tickets) and 28 Nov Ringside and Club
 close a class automatically without a way for Jason to say "I hold these"**.
 
 Third Class: the stadium shows it On Sale for 24 Oct and 14 Nov only.
+
+## Watching it
+
+- Rebuild cycle about every 6 minutes, and an immediate rebuild when the stadium edits something (watched 22 Oct 2026).
+- On 22 Oct the tracker grew from 365 days to 455 (1 Jan to 31 Mar 2027, all On Sale, Third Class Not Yet On Sale).
