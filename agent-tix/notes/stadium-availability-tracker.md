@@ -44,3 +44,17 @@ Third Class: the stadium shows it On Sale for 24 Oct and 14 Nov only.
 ## Last Mondays of 2027 (22 October 2026)
 
 The stadium's own programme shows the last Monday of each month in 2027 as Rajadamnern Knockout. Jason will check with the stadium whether they are loading those separately as All Star Elite Fighter by Buakaw. Until he says, 25 Jan, 22 Feb and 29 Mar 2027 are loaded as **Rajadamnern Knockout** (they were first loaded as All Star by the weekly rule in `0044_load_2027_q1.sql`, then switched back at his request; no sales on them). If the stadium confirms All Star, switch them back: series, name, event key `all_star_buakaw_YYYY_MM_DD`, and Club Class offer off.
+
+## LEO Section's "safety net" (Jason, 22 October 2026, his explanation, numbers hypothetical)
+
+LEO is an unassigned area, so it has some give that Ringside and Club Class do not.
+When bookings arrive in a sudden surge, a **safety net** closes LEO (Stop Sale)
+pending a check of the numbers. It sits roughly 50 below capacity (capacity about
+300), so it tends to trip around 250 bookings, but only on a surge, not every time.
+The stadium then checks what has really been booked; if they are still under the
+upper limit they **reopen LEO for another batch** (his example: the next 35). So
+**a LEO Stop Sale is not always a sell-out**: it can be a pause that reverses.
+Seen once already: LEO on Tue 8 Dec went Stop Sale on 21 Oct (13:58) and back to On
+Sale on 22 Oct (15:24). Matters for any automation: a LEO Stop Sale should be
+reported to Jason as "paused, may reopen", not treated as final. Jason had not
+finished this explanation when it was saved.
