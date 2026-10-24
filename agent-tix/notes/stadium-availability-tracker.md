@@ -106,7 +106,11 @@ What Jason saw on the seat maps, read out to me, not checked by me:
 - Presidential Box (zones A and B): both fully booked. Agrees with Stop Sale.
 - Panoramic Balcony: 14 sold, 1 available (the rate card says 15 seats).
 - Couple Suite: 2 seats sold, 2 available.
-So Stop Sale is not always sold out. It looks like the stadium stops a zone when a few seats are left,
-not only when none are, but that is a guess from three zones on one night, not a rule.
+So Stop Sale is not always sold out. Jason (24 Oct 2026): the stadium's own instructions to agents say
+Stop Sale does not mean a section is fully booked; it is a buffer to stop agents overselling, and he is
+fine with that. Unless a big group takes the whole section. Couple Suite is 4 suites of 2 seats, 2 suites
+booked, so he thinks the trigger there is about 50 per cent, to be confirmed by him. Not one percentage
+fits every zone: Panoramic Balcony was stopped with 1 of 15 left, Couple Suite with 2 of 4, and
+Presidential Box Thu 12 Nov with about 27 of 44 left, so any buffer is probably set zone by zone.
 Earlier example: Presidential Box Thu 12 Nov was on Stop Sale with about 27 of 44 seats still open;
 by 24 Oct the tracker shows it On Sale again, after Jason's feedback to the stadium.
