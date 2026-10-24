@@ -79,3 +79,4 @@ commission is paid. The three guests (3 LEO, paid 11:32 am, on their way from
 London) have to be told their tickets cannot be honoured and moved to Third
 Class. They chose LEO from the photos and selling lines. Their booking in the
 database is still LEO until Jason says it is moved.
+| 24 Oct 2026, 11:15 Bangkok (in chat) | Sat 24 Oct | Third Class | **7 Third Class left to sell.** Database held 50 (working number), 9 sold, Available. | Jason | total_quantity 50 -> **16** (9 sold + 7). Read back: Third Class 16 total, 9 sold, **7 left**, Available. The 9 sold match the five paid bookings (1+2+3+2+1); the last was 1 ticket at 11:10 Bangkok. |
