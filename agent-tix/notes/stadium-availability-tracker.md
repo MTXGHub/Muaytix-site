@@ -98,3 +98,15 @@ rows were already closed). Nothing else was touched: stock, prices and release s
 Read back: all Ringside, Club Class and LEO rows show `booking_closed`; Third Class shows closed.
 To reopen a night later: set `manual_status = null` for its classes. The stadium follower will not
 reopen these (it only reopens classes it closed itself), so reopening is always by hand.
+
+## Stop Sale against real seats, Sun 25 Oct 2026 (Jason's own look at the stadium's seat maps, 24 Oct about 15:10 Bangkok)
+
+Tracker (build 15:06): Panoramic Balcony, Couple Suite and Presidential Box all Stop Sale for Sun 25 Oct.
+What Jason saw on the seat maps, read out to me, not checked by me:
+- Presidential Box (zones A and B): both fully booked. Agrees with Stop Sale.
+- Panoramic Balcony: 14 sold, 1 available (the rate card says 15 seats).
+- Couple Suite: 2 seats sold, 2 available.
+So Stop Sale is not always sold out. It looks like the stadium stops a zone when a few seats are left,
+not only when none are, but that is a guess from three zones on one night, not a rule.
+Earlier example: Presidential Box Thu 12 Nov was on Stop Sale with about 27 of 44 seats still open;
+by 24 Oct the tracker shows it On Sale again, after Jason's feedback to the stadium.
