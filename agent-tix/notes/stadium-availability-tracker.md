@@ -115,7 +115,7 @@ Presidential Box Thu 12 Nov with about 27 of 44 left, so any buffer is probably 
 Earlier example: Presidential Box Thu 12 Nov was on Stop Sale with about 27 of 44 seats still open;
 by 24 Oct the tracker shows it On Sale again, after Jason's feedback to the stadium.
 
-## Pushover alerts (built 25 October 2026, switched OFF until Jason says)
+## Pushover alerts (built 25 October 2026, switched ON by Jason the same evening)
 
 Phone alerts through Pushover (app "MuayTix Updates"). Keys are in `stadium_sync_settings`
 (`pushover_user_key`, `pushover_app_token`, never in git). Switch: `pushover_enabled` (false = silent).
