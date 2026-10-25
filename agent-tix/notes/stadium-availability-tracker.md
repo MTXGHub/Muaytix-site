@@ -114,3 +114,19 @@ fits every zone: Panoramic Balcony was stopped with 1 of 15 left, Couple Suite w
 Presidential Box Thu 12 Nov with about 27 of 44 left, so any buffer is probably set zone by zone.
 Earlier example: Presidential Box Thu 12 Nov was on Stop Sale with about 27 of 44 seats still open;
 by 24 Oct the tracker shows it On Sale again, after Jason's feedback to the stadium.
+
+## Pushover alerts (built 25 October 2026, switched OFF until Jason says)
+
+Phone alerts through Pushover (app "MuayTix Updates"). Keys are in `stadium_sync_settings`
+(`pushover_user_key`, `pushover_app_token`, never in git). Switch: `pushover_enabled` (false = silent).
+Built entirely in the database (`schema/0046` and `0047`), so the payment function and the follower
+function are unchanged.
+- **Every paid booking:** trigger on `checkout_reservations` when status becomes `completed`:
+  "Sat 14 Nov, 2 x LEO Section, paid 3,000 THB". No name, email or card country (Jason's choice).
+  A booking that becomes `paid_without_stock` sends a high-priority "PAID, NO TICKETS LEFT".
+- **Follower actions:** trigger on `stadium_changes`: every row except `baseline` and `TEST`. Errors and
+  "NOT APPLIED" are high priority. VIP zone changes are not logged, so they do not alert.
+- Both triggers swallow every error so an alert can never stop a sale or a log row.
+- To turn off: `update stadium_sync_settings set pushover_enabled = false where id = 1`.
+- Tested 25 Oct: a plain test message, a sample booking message (an old booking, labelled TEST) and a
+  fake follower row (marked TEST afterwards) all reached Pushover with status 1.
