@@ -130,3 +130,5 @@ function are unchanged.
 - To turn off: `update stadium_sync_settings set pushover_enabled = false where id = 1`.
 - Tested 25 Oct: a plain test message, a sample booking message (an old booking, labelled TEST) and a
   fake follower row (marked TEST afterwards) all reached Pushover with status 1.
+
+Jason calls the stadium follower "the watcher" (25 Oct 2026). Use that name with him; the alert title is "Stadium watcher" (schema/0048).
