@@ -544,6 +544,16 @@ Ringside gets closed early, by his call, rather than being left to run out on
 its own. Do not suggest letting it run down, and never treat a Ringside
 allocation as equivalent to a Club Class one.
 
+**Ringside has extension seats (Jason, 27 October 2026).** The stadium adds extra seats
+to the bigger Ringside sections (5, 6 and 7, seat numbers like 23X and 11X) during the day, by
+request, one or two on some rows, and he estimates another 20 to 25 could be added. So an empty
+Ringside seat map does not mean a booking cannot be filled: Ringside is the easiest class to
+fulfil, while Club Class is landlocked and LEO is the hardest when it sells out (it has its
+safety net). It is also why the stadium can leave Ringside on sale when the map looks almost
+gone. Tonight's example: about 8 seats visible, no Stop Sale. He still caps our number as a
+precaution (2 left to sell on Tue 27 Oct) and waits for the stadium's Stop Sale. Do not treat
+this as permission to leave a big Ringside number open.
+
 Third Class is opened by the stadium, usually only once the other classes are
 full or close to it.
 
