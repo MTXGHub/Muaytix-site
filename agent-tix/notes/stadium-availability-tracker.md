@@ -132,3 +132,12 @@ function are unchanged.
   fake follower row (marked TEST afterwards) all reached Pushover with status 1.
 
 Jason calls the stadium follower "the watcher" (25 Oct 2026). Use that name with him; the alert title is "Stadium watcher" (schema/0048).
+
+## Decision, 29 October 2026: stay on the tracker, do not connect to the stadium's Google Sheet
+
+The stadium offered access to the sheet that feeds the tracker (tabs Admins, Log, Events; a row per night with a
+status per zone and an "Updated At" time). Jason decided to stay on the tracker: it was built for agents, the
+stadium's technical side is thin, and he does not want to risk breaking anything or being blamed for it. If it
+is ever revisited: read-only, Events and Log tabs only, preferably "publish to the web" so no login is shared, and
+ask first whether any column holds seat counts or a Stop Sale reason, which is the thing that would change trading.
+The watcher only reads the tracker (one request about every 3 minutes) and never writes anything to the stadium.
