@@ -1,3 +1,10 @@
+> **Update, 6 November 2026 (Jason's way of working now).** Jason does not run SQL. He refunds in Stripe, then
+> tells Claude the guest and how many tickets. Claude records it with `refund_reservation_tickets(booking, n)`
+> (schema 0050): the booking drops by n, the night's sold count drops by n, `refunded_quantity` keeps the total,
+> and refunding every ticket makes it a full refund. **Do not also add the ticket to the night's total**: the
+> refund already puts it back on sale (that mistake was made once, on 21 Nov, and corrected the same day).
+> The whole-booking tool below still works. The notes below are the older, SQL way.
+
 # Putting a seat back after a refund
 
 Refunds run at one or two a month, so this is a two-minute job done by hand, not
