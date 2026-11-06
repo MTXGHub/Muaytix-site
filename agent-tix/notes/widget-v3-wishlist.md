@@ -54,3 +54,34 @@ event. Done for now as data only: that night's event is renamed "Stadium Closed"
 detached from its series, all classes Booking closed. Known rough edges: it still
 carries a 6:00 pm start time and shows four Booking closed tiles. A real closed-day
 state in the widget (date marked, no classes, no time) belongs in V3.
+
+## 5. "On request" booking for a class that is nearly gone (7 November 2026)
+
+Jason's idea, while checking VIP availability on the stadium's site: when a class is
+down to its last seats (for example Presidential Box, or when the stadium puts it on
+Stop Sale), flip the widget from a normal sale to a booking request. The guest asks,
+the team checks with the stadium, and only then is the guest charged.
+
+**Chosen option (Jason, 7 Nov 2026): reserve the card, charge on confirmation.**
+- The guest enters card details in checkout, which is their commitment. The card is
+  authorised, not charged.
+- The guest ticks a box saying, in effect: if your seats are available, we will charge
+  your card and book them. **Wording is Jason's to write; not drafted.**
+- The team checks the stadium. Seats there: capture the payment, booking completes
+  as normal. No seats: release the card, nothing is charged.
+- The other option, a plain request form followed by a payment link, was set aside.
+
+**Not yet checked (guesses, not findings):** Stripe's card authorisations expire
+after about 7 days, which needs testing against last-minute nights; whether the
+existing webhook and stock logic can handle a booking that is authorised first and
+captured later; how a request appears to the team (phone alert like a booking alert,
+and a list to work through). No stock should be taken until the capture.
+
+**Switch:** a per-class, per-night "on request" setting beside Available and Fully
+booked. It could be set by hand, or by the stadium follower on Stop Sale. The
+follower currently ignores the VIP zones (it only records them), so an automatic
+switch for VIP needs a small change first.
+
+**Risks to weigh (said to Jason, not yet decided):** guests who must wait for a
+confirmation may buy elsewhere. Any line telling the guest when to expect a reply is
+a delivery timescale Jason has not set, so none is promised.
