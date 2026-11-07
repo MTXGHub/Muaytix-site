@@ -17,3 +17,4 @@ system, so the booking has to be recorded by hand.
 
 Open question: whether Stripe's Adaptive Pricing is on for payment links. If it is, a guest may be shown their
 own currency on the link. It cannot be read from here; check in Stripe settings.
+| 7 Nov 2026, ~10:00 Bangkok | Third Class, Sat 7 Nov | 2 | 60 USD (30 USD each) | Jason's instruction in USD, an exception to the GBP-only rule. Link made, single use. https://buy.stripe.com/28E4gAbj91yn5TNcOy4Ja2k . The 2 tickets are in hand (Jason bought one more). Not yet paid. When it pays, sold_quantity needs +2 by hand. |
