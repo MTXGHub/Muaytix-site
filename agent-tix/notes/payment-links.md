@@ -14,7 +14,7 @@ system, so the booking has to be recorded by hand.
 | 3 Nov 2026 | none made | n/a | Stripe was signed out |
 | 5 Nov 2026 | 4 Ringside, RWS Sat 5 Dec | 10,000 THB and 300 USD | before the GBP rule; send only one |
 | 6 Nov 2026 | Couple Suite, RWS Sat 20 Mar 2027 | 200 GBP (9,000 THB, rounded down) | first GBP-only link |
+| 7 Nov 2026 | 2 Third Class, RWS Sat 7 Nov | 60 USD (30 each) | Jason asked for USD, an exception to the GBP-only rule. Single use. https://buy.stripe.com/28E4gAbj91yn5TNcOy4Ja2k . Not yet paid: when it pays, add 2 to sold_quantity by hand. |
 
 Open question: whether Stripe's Adaptive Pricing is on for payment links. If it is, a guest may be shown their
 own currency on the link. It cannot be read from here; check in Stripe settings.
-| 7 Nov 2026, ~10:00 Bangkok | Third Class, Sat 7 Nov | 2 | 60 USD (30 USD each) | Jason's instruction in USD, an exception to the GBP-only rule. Link made, single use. https://buy.stripe.com/28E4gAbj91yn5TNcOy4Ja2k . The 2 tickets are in hand (Jason bought one more). Not yet paid. When it pays, sold_quantity needs +2 by hand. |
