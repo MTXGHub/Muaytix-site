@@ -35,7 +35,7 @@ html = html.replace(/\n{3,}/g, "\n\n");                            // no more th
 // The banned list from CLAUDE.md section 2. A build that lets one of these
 // through is worse than no build at all, so it fails rather than warns.
 const banned = [
-  [/\bofficial/i, '"official" is banned in guest copy, alt text, file names and schema'],
+  // "Official" is permitted everywhere since 11 October 2026 (CLAUDE.md section 2), so it is no longer here.
   [/\bLimited\b/, '"Limited" is not a guest-facing status; use Available'],
   [/—/, "em dash; use a comma, a full stop or a colon"],
   [/book your seat/i, 'use "Book Tickets"'],
