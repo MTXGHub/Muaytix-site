@@ -215,11 +215,22 @@ async function resolveOffer(
 
     // What the discount is worth to us, in baht, so the reports can take it off
     // the margin. Measured on baht prices whatever currency the guest pays in.
-    const { data: thbRow } = await supabase
-      .from("event_ticket_prices").select("unit_amount")
-      .eq("event_ticket_class_id", toRow.event_ticket_class_id as string)
+    // Read from the standing price and this night's override directly, not through
+    // event_ticket_prices: baht is no longer offered to guests (8 November 2026), so
+    // that view has no baht row, but the baht price is still what the margin is measured on.
+    const { data: classRow } = await supabase
+      .from("event_ticket_classes").select("ticket_class_id")
+      .eq("id", toRow.event_ticket_class_id as string).maybeSingle();
+    const { data: thbStanding } = await supabase
+      .from("ticket_class_prices").select("unit_amount")
+      .eq("ticket_class_id", classRow?.ticket_class_id as string)
       .eq("currency", "thb").maybeSingle();
-    const discountMinor = thbRow ? Number(thbRow.unit_amount) - offerThb : NaN;
+    const { data: thbNight } = await supabase
+      .from("event_ticket_price_overrides").select("unit_amount")
+      .eq("event_ticket_class_id", toRow.event_ticket_class_id as string)
+      .eq("currency", "thb").eq("active", true).maybeSingle();
+    const thbPrice = thbNight?.unit_amount ?? thbStanding?.unit_amount;
+    const discountMinor = thbPrice != null ? Number(thbPrice) - offerThb : NaN;
     if (!Number.isFinite(discountMinor) || discountMinor < 0) return null;
 
     return { code: String(offer.code), unitAmount, discountMinor };

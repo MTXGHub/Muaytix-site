@@ -477,6 +477,14 @@ There is no `widget` edge function. The widget is pasted into Tilda.
 | `event_ticket_availability` | the view the widget reads, with the resolved `status` |
 | `checkout_reservations` | every checkout: status, quantity, attribution, guest details |
 
+**Currencies offered to guests (8 November 2026, Jason): USD, EUR, GBP and AUD only.** Yuan and baht are switched
+off for every night (`ticket_class_prices.active = false`; the figures stay in the table). Baht is still read
+by `create-checkout` for the Club Class offer's discount (v21), so do not delete the baht prices or revert that
+function without checking the offer. A single night can also withdraw a currency
+(`event_ticket_price_overrides.withdrawn`, migration 0052), and per-night prices use the same table. Third Class
+standing prices are GBP 25, EUR 30, USD 30, AUD 45. The "THB" figures elsewhere in this file are the stadium's
+prices, kept for margins, not something a guest can choose.
+
 **Rybbit "purchase" event (built 8 October 2026; migration 0041 applied and
 `stripe-webhook-v2` v8 deployed 8 October 2026; seen working: by 8 October
 Rybbit held 3 `purchase` events and two recent bookings carried the claim).** `stripe-webhook-v2` calls `rybbit.ts` after a sale is banked and

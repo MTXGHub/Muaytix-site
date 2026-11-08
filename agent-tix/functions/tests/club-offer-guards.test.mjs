@@ -92,10 +92,17 @@ const world = () => ({
   event_ticket_availability: [
     { event_key: 'new_power_x', ticket_class_code: 'leo_section', status: 'fully_booked' },
   ],
+  // Baht is no longer offered to guests (8 November 2026), so the guest-facing price
+  // view has no baht row; the baht price is read from the standing price instead.
   event_ticket_prices: [
-    { event_ticket_class_id: 'ETC', currency: 'thb', unit_amount: 180000 },
     { event_ticket_class_id: 'ETC', currency: 'usd', unit_amount: 5400 },
   ],
+  event_ticket_classes: [{ id: 'ETC', ticket_class_id: 'C' }],
+  ticket_class_prices: [
+    { ticket_class_id: 'C', currency: 'thb', unit_amount: 180000, active: false },
+    { ticket_class_id: 'C', currency: 'usd', unit_amount: 5400, active: true },
+  ],
+  event_ticket_price_overrides: [],
 });
 const CLUB_ROW = { ticket_class_code: 'club_class', event_ticket_class_id: 'ETC' };
 
@@ -138,8 +145,15 @@ console.log('\nresolveOffer: the checkout decides, not the browser');
   check('no offer price in the guest\'s currency: nothing', await run(w) === null);
   w = world(); w.class_fallback_offer_prices = w.class_fallback_offer_prices.filter(p => p.currency !== 'thb');
   check('no baht price to measure the discount by: nothing', await run(w) === null);
-  w = world(); w.event_ticket_prices = w.event_ticket_prices.filter(p => p.currency !== 'thb');
+  w = world(); w.ticket_class_prices = w.ticket_class_prices.filter(p => p.currency !== 'thb');
   check('no baht price for the night: nothing', await run(w) === null);
+  w = world(); w.event_ticket_price_overrides = [
+    { event_ticket_class_id: 'ETC', currency: 'thb', unit_amount: 170000, active: true }];
+  check('a night with its own baht price measures the discount against that: 1,700 less 1,650 is 50',
+        (await run(w))?.discountMinor === 5000, JSON.stringify(await run(w)));
+  w = world(); w.event_ticket_price_overrides = [
+    { event_ticket_class_id: 'ETC', currency: 'thb', unit_amount: 170000, active: false }];
+  check('a switched-off override is ignored', (await run(w))?.discountMinor === 15000);
 
   // The 10 per cent limit, against what is actually being charged tonight.
   w = world(); w.class_fallback_offer_prices.find(p => p.currency === 'usd').unit_amount = 4860;
