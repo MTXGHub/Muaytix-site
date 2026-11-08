@@ -1,0 +1,15 @@
+-- 8 November 2026 (Jason): (1) Chinese yuan is no longer offered on any night; (2) RWS 81 Anniversary,
+-- Sat 26 Dec 2026, is opened at 20 tickets a class. APPLIED to agent-tix-build the same day (data only).
+--
+-- (1) ticket_class_prices.active = false for currency 'cny' (4 rows). The widget and create-checkout read
+--     prices through event_ticket_prices, which only joins active standing prices, so yuan disappears from every
+--     night. The Club Class offer is unaffected: it needs one offer price per currency still sold, and its yuan
+--     price is simply no longer asked for. Read back: usd, eur, gbp, aud 848 price rows each, thb 844 (the 4 missing
+--     are the withdrawn baht rows on 26 Dec), cny none.
+--     NOT DONE: baht. create-checkout reads a night's baht price to work out the Club Class offer discount
+--     (create-checkout/index.ts, resolveOffer), so switching baht off for every night would break that offer
+--     until the function is changed and redeployed. Waiting for Jason's go.
+-- (2) 26 Dec: every class total_quantity = sold (0) + 20, released, no manual status, event published.
+--     Start 19:10 (Jason, from the stadium graphic, 7.10 PM ICT). THB and CNY withdrawn for the night (0052).
+--     The 20 per class is Jason's "for now" number, not a count of tickets bought.
+update public.ticket_class_prices set active = false where currency = 'cny' and active;
