@@ -868,6 +868,12 @@ the stadium, not copy. They can be used on any page.
   guaranteed, pre-booked and waiting to go. **Narrowed 22 October 2026: this is
   true of RWS Saturdays only.** On other nights nothing is pre-booked, so do not
   put "pre-booked" or "guaranteed allocation" wording on a non-RWS page.
+- **When tickets arrive: "within 24 hours" (Jason, 8 November 2026).** The thank-you page says
+  "Your tickets will arrive within 24 hours." and nothing else about timing: no "usually much sooner", no
+  dispatch times, no date. Reason: a fixed line gives the team a buffer (tickets may need an extra release from
+  the stadium) and takes pressure off. A timed promise ("in the next hour") is one the team cannot always keep.
+  Same-day guests may still worry; he knows and has accepted it. He is close to pulling out of the last-minute
+  market because of the WhatsApp load it causes. Do not add dispatch times unless he asks.
 - **Face value.** No markups and no booking fees.
 - **Every RWS card has seven bouts.** Do not ask how many fights there are, and
   do not name or count fights on an event page unless he asks for it. Guests do

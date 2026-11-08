@@ -66,7 +66,7 @@
     <h1>Thank you for booking with us.</h1>
 
     <div class="mtx-ok__card mtx-ok__card--when">
-      <p class="mtx-ok__when">Your tickets will be arriving by email before midnight, Bangkok Time<span data-day></span>, usually much sooner.</p>
+      <p class="mtx-ok__when">Your tickets will arrive within 24 hours.</p>
     </div>
 
     <div class="mtx-ok__card mtx-ok__card--seats">
@@ -80,21 +80,5 @@
     </div>
 
   </div>
-
-<script>
-(function () {
-  try {
-    var now = new Date();
-    var bkk = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 7 * 3600000);
-    var days = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August",
-                  "September", "October", "November", "December"];
-    var d = bkk.getDate();
-    var tail = (d % 100 >= 11 && d % 100 <= 13) ? "th" : ({ 1: "st", 2: "nd", 3: "rd" }[d % 10] || "th");
-    var el = document.querySelector(".mtx-ok [data-day]");
-    if (el) el.innerHTML = " on <b>" + days[bkk.getDay()] + " " + d + tail + " " + months[bkk.getMonth()] + "</b>";
-  } catch (e) {}
-})();
-</script>
 
 </div>
