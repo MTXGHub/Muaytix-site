@@ -1,0 +1,38 @@
+# Whole-site pause (Jason, 14 November 2026, 16:26 Bangkok)
+
+Jason asked for all bookings on the website to be blocked and sent to the stadium's own site.
+
+## What was done (read back from the database)
+
+- Every class on every night from 14 Nov 2026 onwards (138 nights, 552 class rows) set to `booking_closed`.
+- Every one of those nights given `divert_url = https://rajadamnern.com/tickets/` (no note, so the standard wording shows).
+- Read back: 0 class rows still buyable, 0 nights without the link.
+- Nothing was deleted. Before the change, each class's old `manual_status` and each night's old divert link and note were saved
+  in the table `site_pause_backup` (taken 14 Nov 2026 about 16:26 Bangkok; service role only).
+
+## What a guest sees
+
+Choosing a night shows "Booking closed with us" and a button to the stadium's page. The calendar itself still lists the nights.
+**Not checked on the live site** (muaytix.com cannot be reached from here).
+
+## What is NOT blocked
+
+- Checkouts already started: a guest on Stripe's page can still pay for up to 31 minutes after starting.
+- Stripe sessions and payment links made by hand: the VIP ones for 29 Dec (Panoramic and Couple Suite) and 2 Jan, until they expire.
+- The stadium watcher cannot undo this: it only reopens a class it closed itself, and only from Fully booked, and Third Class
+  opening keeps any pause (migration 0049). It will log changes but not reopen anything.
+
+## How to undo
+
+Do it only on Jason's word, and for the nights he names. A blind restore of everything would overwrite counts and statuses
+changed after 14 Nov 16:26. The old values are in `site_pause_backup`:
+
+```sql
+-- statuses (kind 'class'):
+update public.event_ticket_classes etc set manual_status = b.manual_status
+  from public.site_pause_backup b where b.kind = 'class' and b.event_ticket_class_id = etc.id;
+-- divert link and note (kind 'event'):
+update public.events e set divert_url = b.divert_url, divert_note = b.divert_note
+  from public.site_pause_backup b where b.kind = 'event' and b.event_id = e.id;
+```
+Add `and etc.event_id in (...)` to limit it to chosen nights, then read the four classes back for each.
