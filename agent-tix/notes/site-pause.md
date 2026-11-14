@@ -36,3 +36,7 @@ update public.events e set divert_url = b.divert_url, divert_note = b.divert_not
   from public.site_pause_backup b where b.kind = 'event' and b.event_id = e.id;
 ```
 Add `and etc.event_id in (...)` to limit it to chosen nights, then read the four classes back for each.
+
+## Reopened since the pause
+
+- 14 Nov 2026 ~16:35 Bangkok: RWS Sat 21 Nov, Third Class (Jason). Status restored from the backup (open). Read back: 34 total, 6 sold, 28 left, Available. The other three classes that night and the night's stadium link were left as the pause set them (Ringside shows Booking closed; Club Class and LEO are sold out and show Fully booked).
