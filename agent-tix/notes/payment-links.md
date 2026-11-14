@@ -15,6 +15,7 @@ system, so the booking has to be recorded by hand.
 | 5 Nov 2026 | 4 Ringside, RWS Sat 5 Dec | 10,000 THB and 300 USD | before the GBP rule; send only one |
 | 6 Nov 2026 | Couple Suite, RWS Sat 20 Mar 2027 | 200 GBP (9,000 THB, rounded down) | first GBP-only link |
 | 7 Nov 2026 | 2 Third Class, RWS Sat 7 Nov | 60 USD (30 each) | Jason asked for USD, an exception to the GBP-only rule. Single use. https://buy.stripe.com/28E4gAbj91yn5TNcOy4Ja2k . Not yet paid: when it pays, add 2 to sold_quantity by hand. |
+| 14 Nov 2026 | 2 VIP Panoramic Balcony, RWS Sat 2 Jan 2027 | 446 GBP (2 x 223; stadium price 10,000 THB each) | GBP only, single use, collects name and phone. Ticket details are in the link and payment metadata (source payment_link, event_key rws_2027_01_02, class, quantity). https://buy.stripe.com/14A4gA4ULb8X4PJ15Q4Ja2l . Not paid yet. **Not recorded in our database:** there is no VIP Panoramic class yet and the webhook ignores payment-link sales. |
 
 Open question: whether Stripe's Adaptive Pricing is on for payment links. If it is, a guest may be shown their
 own currency on the link. It cannot be read from here; check in Stripe settings.
