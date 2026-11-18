@@ -8,10 +8,10 @@ Decision: Third Class tickets on all nights are priced and charged in GBP only. 
 1. **Widget** (built 18 Nov, `widget.js`, test `widget/tests/one-currency.test.mjs`, 7 checks pass): when the class on screen has exactly one
    currency, the widget shows "<Class> tickets are charged in <CUR> only. No booking fee." under the quantity and currency boxes.
    Nothing shows for a class with several currencies. New header `widget/paste-into-tilda-header.html` is 61,865 bytes (limit 63,000);
-   `header-block.test.mjs` 20 pass; seat-tiles, divert and seats-apart tests pass. **Not yet pasted into Tilda.**
+   `header-block.test.mjs` 20 pass; seat-tiles, divert and seats-apart tests pass. **Pasted into the Tilda site head and all pages published by Jason on 18 Nov 2026** (he skipped the hidden test page; I have not seen the live page).
    Rollback header (the one before this change): `widget/rollback/paste-into-tilda-header-04cd91d.html`.
    Stage it the usual way: paste the new header, publish ONE hidden test page, check it, then the rest.
-2. **Prices: NOT YET SWITCHED.** Only after the header is live, or guests see GBP alone with no explanation. One statement:
+2. **Prices: SWITCHED ON 18 Nov 2026**, right after Jason said the header was pasted and published. Read back: all 212 Third Class rows offer GBP only (GBP 25; 26 Dec GBP 35). The statement used:
 
 ```sql
 -- switch on: Third Class offered in GBP only (every night; per-night overrides in the other currencies are then ignored)
