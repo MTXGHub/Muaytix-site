@@ -1306,7 +1306,7 @@ function mount(root, opts) {
           '</div>' +
           (t.prices.length === 1
             ? '<p class="mtx-onecur">' + esc(t.name) + ' tickets are charged in ' + esc(t.prices[0].currency.toUpperCase()) +
-              ' only. This keeps the price low with no booking fee. Your bank will convert from your own currency.</p>'
+              ' only. No booking fee.</p>'
             : '') +
           '<div data-seatack></div>' +
           '<div class="mtx-sums">' +
