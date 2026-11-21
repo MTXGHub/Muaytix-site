@@ -40,3 +40,4 @@ Recipe for a night and class that exist in the database:
    onto the reservation row.
 Paid: the webhook completes it. Unpaid: the session's expiry event releases the tickets.
 VIP classes cannot use this until they exist in the database.
+| 21 Nov 2026 | 2 LEO, Knockout Mon 23 Nov, USD 90 | CANCELLED by Jason (guest booked on the website). Hold d01598ff released. Stripe session cs_live_aguu83ys... could not be expired from here (no expire operation in the Stripe tool); left to lapse Sun 22 Nov 10:53 Bangkok. Session id was never written to the reservation row. |
