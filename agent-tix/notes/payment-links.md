@@ -41,3 +41,4 @@ Recipe for a night and class that exist in the database:
 Paid: the webhook completes it. Unpaid: the session's expiry event releases the tickets.
 VIP classes cannot use this until they exist in the database.
 | 21 Nov 2026 | 2 LEO, Knockout Mon 23 Nov, USD 90 | CANCELLED by Jason (guest booked on the website). Hold d01598ff released. Stripe session cs_live_aguu83ys... could not be expired from here (no expire operation in the Stripe tool); left to lapse Sun 22 Nov 10:53 Bangkok. Session id was never written to the reservation row. |
+| 22 Nov 2026 | 4 Third Class, Kiatpetch Sun 22 Nov, GBP 100 (4 x 25) | Checkout session cs_live_agkOP776... (adaptive pricing off, name and phone collected), expires 17:00 Bangkok. Self-recording: reservation 326f7a7b held, page_path /payment-link, utm payment_link/manual. Third Class was closed by hand (fully_booked) on this night; link sold it deliberately at Jason request. |
