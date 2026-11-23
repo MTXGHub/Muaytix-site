@@ -58,3 +58,4 @@ Jason: "put the redirects on all bookings... redirect them into the Stadium webs
 - Not blocked: checkouts already started (31 minutes) and the hand-made Stripe link for 4 Third Class, Kiatpetch 22 Nov (expires 17:00 Bangkok).
 - The timer `close-club-allstar-30nov-1700bkk` is still set; it would change Club Class 30 Nov from Booking closed to Fully booked at 17:00.
 - On lifting: re-apply any stadium Stop Sale the watcher logged as "already paused" during this pause (see the 16 Nov note), or those classes reopen against a Stop Sale.
+- 23 Nov 2026 ~11:15 Bangkok: RWS Sat 28 Nov (all classes) and Sat 5 Dec (Club, LEO, Ringside) reopened by Jason; statuses restored from the 23 Nov backup and the stadium link removed from both nights. 5 Dec Third Class deliberately left Booking closed (working number 50, no real count). Other nights still paused.
