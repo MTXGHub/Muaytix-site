@@ -49,3 +49,12 @@ Add `and etc.event_id in (...)` to limit it to chosen nights, then read the four
 - **Stop Sales that happened during the pause were re-applied.** The watcher had logged them as "already paused, left as is", so a plain restore would have left those classes open against a stadium Stop Sale. 12 classes closed as Fully booked and logged as automation closes (so a stadium reopening will undo them): 16 Nov LEO; 17 Nov Ringside, Club, LEO; 18 Nov Ringside, Club, LEO; 19 Nov Ringside, Club; 20 Nov LEO; 22 Nov Ringside, Club. Held-list classes were left open, as the watcher does.
 - Third Class opened by the stadium during the pause (16, 17, 18, 19, 22 Nov) is now open at the 50 working number.
 - The backup table is kept in case it is needed again.
+
+## Second pause (Jason, 23 November 2026, about 11:00 Bangkok)
+
+Jason: "put the redirects on all bookings... redirect them into the Stadium website".
+- Every class on every night from 23 Nov 2026 onwards (129 nights, 516 class rows) set to `booking_closed`; each night given `divert_url = https://rajadamnern.com/tickets/`. Read back: 0 classes still buyable, 129 of 129 nights with the link.
+- Fresh backup of the old statuses and links is in `site_pause_backup` (taken 23 Nov). The first pause's backup is kept as `site_pause_backup_14nov`. The undo SQL above works on the new backup unchanged.
+- Not blocked: checkouts already started (31 minutes) and the hand-made Stripe link for 4 Third Class, Kiatpetch 22 Nov (expires 17:00 Bangkok).
+- The timer `close-club-allstar-30nov-1700bkk` is still set; it would change Club Class 30 Nov from Booking closed to Fully booked at 17:00.
+- On lifting: re-apply any stadium Stop Sale the watcher logged as "already paused" during this pause (see the 16 Nov note), or those classes reopen against a Stop Sale.
