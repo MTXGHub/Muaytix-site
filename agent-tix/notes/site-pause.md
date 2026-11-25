@@ -59,3 +59,8 @@ Jason: "put the redirects on all bookings... redirect them into the Stadium webs
 - The timer `close-club-allstar-30nov-1700bkk` is still set; it would change Club Class 30 Nov from Booking closed to Fully booked at 17:00.
 - On lifting: re-apply any stadium Stop Sale the watcher logged as "already paused" during this pause (see the 16 Nov note), or those classes reopen against a Stop Sale.
 - 23 Nov 2026 ~11:15 Bangkok: RWS Sat 28 Nov (all classes) and Sat 5 Dec (Club, LEO, Ringside) reopened by Jason; statuses restored from the 23 Nov backup and the stadium link removed from both nights. 5 Dec Third Class deliberately left Booking closed (working number 50, no real count). Other nights still paused.
+
+## Second pause lifted (Jason, 25 November 2026, about 22:35 Bangkok)
+
+- Restored from the 23 Nov backup, only for classes still marked Booking closed on nights from 25 Nov onwards (139 class rows). Classes changed since the backup (28 Nov and 5 Dec reopened, Club Class 30 Nov closed by its timer) were left as they were. Stadium link removed from every night from 25 Nov. Read back: 0 future nights diverted, 102 classes on sale, 360 still Booking closed (the 2027 nights awaiting pricing, as before). 6 past nights keep the link, which does nothing.
+- Stadium cross-check: the watcher logged Stop Sales as "already paused" during the pause for 25 Nov Ringside and Club (night over), 30 Nov Ringside and Club (both closed anyway) and **25 Dec Ringside**. 25 Dec Ringside re-applied as Fully booked (logged as an automation close). Then compared the stadium's latest snapshot with ours for every future night: the only classes open against a stadium Stop Sale are 28 Nov Third Class, 5 Dec LEO and Ringside and 12 Dec Club Class, all on the held list on purpose.
