@@ -51,6 +51,7 @@
   color: var(--ok-ink);
 }
 .mtx-ok .mtx-ok__when b { font-weight: 800; }
+.mtx-ok .mtx-ok__dispatch { margin-top: 12px; font-size: clamp(18px, 2.6vw, 24px); font-weight: 600; }
 .mtx-ok__card--seats { border-left: 8px solid var(--ok-blue); background: var(--ok-wash); border-color: #cfdaff; border-left-color: var(--ok-blue); }
 .mtx-ok h2 {
   font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
@@ -72,6 +73,8 @@
 
     <div class="mtx-ok__card mtx-ok__card--when">
       <p class="mtx-ok__when">Your tickets will arrive within 24 hours.</p>
+      <p class="mtx-ok__when mtx-ok__dispatch" id="mtx-ok-dispatch">The next ticket dispatch will be at 7:00 PM Bangkok time and 12:00 noon UK time.</p>
+      <script>(function(){var el=document.getElementById("mtx-ok-dispatch");if(el&&Date.now()>=Date.UTC(2026,10,27,12,0,0)){el.parentNode.removeChild(el);}})();</script>
     </div>
 
     <div class="mtx-ok__card mtx-ok__card--seats">
